@@ -31,8 +31,11 @@ function rodUrl(){
   return (i >= 0 ? p.slice(0, i) : '') + '/api/kid';
 }
 function rodPost(payload){
+  const ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  const t = setTimeout(() => { try{ if (ctl) ctl.abort(); }catch(e){} }, 12000);
   return fetch(rodUrl(), {method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload), cache: 'no-store'}).then(r => r.json());
+    body: JSON.stringify(payload), cache: 'no-store', signal: ctl ? ctl.signal : undefined})
+    .then(r => r.json()).finally(() => clearTimeout(t));
 }
 function rodNormCode(v){
   let s = String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -209,6 +212,13 @@ function rodRefresh(){
 function rodDate(ts){ if (!ts) return '—'; const d = new Date(ts); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + ' ' +
   ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2); }
 
+function rodStale(){
+  if (!ROD.updated) return '';
+  const days = Math.floor((Date.now() - ROD.updated) / 86400000);
+  if (days < 3) return '';
+  return `<div class="small" style="margin-top:6px;color:#e8a08f">Данных нет уже ${days} ${days % 10 === 1 && days % 100 !== 11 ? 'день' : (days % 10 >= 2 && days % 10 <= 4 && (days % 100 < 12 || days % 100 > 14) ? 'дня' : 'дней')} —
+    проверьте, что приложение ребёнка открывалось и устройство привязано.</div>`;
+}
 function rodTop(){
   const lim = +((ROD.limits || {}).minutes || 0);
   const notes = (ROD.notes || []).slice(-6).reverse();
@@ -225,6 +235,7 @@ function rodTop(){
           <div class="small" style="font-size:11px;letter-spacing:.18em;text-transform:uppercase">ученик</div>
           <div style="font-size:19px;color:var(--brass)">${rodChildLine()}</div>
           <div class="small">Обновлено: ${rodDate(ROD.updated)} · лимит: <b>${lim ? lim + ' мин/день' : 'не задан'}</b></div>
+          ${rodStale()}
         </div>
         <div class="small" style="min-width:150px">Код: <b style="color:var(--brass)">${esc(ROD.code)}</b><br>
           Устройство: <b>${ROD.linked ? 'привязано' : 'отвязано'}</b></div>

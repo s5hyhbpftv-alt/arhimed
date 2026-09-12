@@ -297,7 +297,11 @@ function renderDashboard(){
   const p=DB.profile; if(!p) return;
   rpStyles();
   const period=pvPeriod(), M=pvMetrics(period), LS=pvLessons(), TK=pvTasks(), S=pvSubjects(), f=forecast();
-  const lim=p.limitMin||45, over=M.today>=lim;
+  /* в приложении родителя лимит настоящий (хранится на сервере),
+     в детском приложении он только показывается — менять его может родитель */
+  const inParentApp=(typeof rodPost==='function');
+  const kidLim=(typeof kidLimit==='function')?kidLimit():0;
+  const lim=(inParentApp?(p.limitMin||45):(kidLim||p.limitMin||45)), over=M.today>=lim;
   const totalD=M.days.length? M.periodMin/M.days.length : 0;
   const lPct=LS.total?Math.round(LS.done/LS.total*100):0;
   const tPct=TK.total?Math.round(TK.done/TK.total*100):0;
@@ -432,9 +436,10 @@ function renderDashboard(){
   <div class="rp-sec"><b>Лимит времени</b><span>${M.today} из ${lim} мин</span><i></i></div>
   <div class="rp-card">
     <div class="rp-bar"><i style="width:${Math.min(100,M.today/lim*100)}%;background:${over?'#e86a5a':'linear-gradient(90deg,#7fb8a0,#e7bd6a)'}"></i></div>
-    <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
-      <input type="number" id="limIn" value="${lim}" min="10" max="240" style="width:76px;font-size:14px;padding:6px 8px;border:1px solid rgba(217,164,65,.25);border-radius:8px;background:#0c1812;color:var(--ivory);font-family:inherit">
-      <button class="rp-link" onclick="setLimit()">сохранить лимит</button>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap">
+      ${inParentApp?`<input type="number" id="limIn" value="${lim}" min="10" max="240" style="width:76px;font-size:14px;padding:6px 8px;border:1px solid rgba(217,164,65,.25);border-radius:8px;background:#0c1812;color:var(--ivory);font-family:inherit">
+        <button class="rp-link" onclick="setLimit()">сохранить лимит</button>`
+      :`<span class="rp-sub">${kidLim?('Лимит '+kidLim+' мин в день задан родителем — изменить его можно в приложении родителя.'):'Лимит пока не задан. Его задаёт родитель в приложении «Родитель».'}</span>`}
       <span class="rp-sub" style="margin-left:auto">${over?'перерыв ⏸':''}</span>
     </div>
   </div>

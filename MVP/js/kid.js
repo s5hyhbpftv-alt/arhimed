@@ -30,10 +30,14 @@ function kidSt(){ DB.kid = DB.kid || {}; return DB.kid; }
 function kidReady(){ const k = kidSt(); return !!(k.code && k.token); }
 function kidCode(){ const k = kidSt(); return k.code || ''; }
 
-function kidPost(payload){
+function kidFetch(payload, timeoutMs){
+  const ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  const t = setTimeout(() => { try{ if (ctl) ctl.abort(); }catch(e){} }, timeoutMs || 12000);
   return fetch(kidApiUrl(), {method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload), cache: 'no-store'}).then(r => r.json());
+    body: JSON.stringify(payload), cache: 'no-store', signal: ctl ? ctl.signal : undefined})
+    .then(r => r.json()).finally(() => clearTimeout(t));
 }
+function kidPost(payload){ return kidFetch(payload, 12000); }
 
 /* --- 1. код создаётся при первом входе --- */
 function kidEnsure(){
@@ -54,9 +58,9 @@ function kidEnsure(){
 }
 
 /* --- 2. снимок прогресса: только то, что нужно отчёту --- */
-function kidSnapshot(){
+function kidSnapshot(short){
   const days = {};
-  Object.keys(DB.days || {}).sort().slice(-120).forEach(key => {
+  Object.keys(DB.days || {}).sort().slice(short ? -45 : -120).forEach(key => {
     const r = DB.days[key] || {};
     days[key] = {min: r.min || 0, tasks: r.tasks || 0, wrong: r.wrong || 0,
       lessonSteps: r.lessonSteps || 0, lessons: r.lessons || 0};
@@ -73,7 +77,7 @@ function kidSnapshot(){
     const r = DB.lessons[id] || {};
     lessons[id] = {done: !!r.done, stars: r.stars || 0, tasks: (r.tasks || []).length};
   });
-  const events = (DB.events || []).slice(-300).map(e => ({ts: e.ts, type: e.type, id: e.id, ok: e.ok, stars: e.stars, steps: e.steps}));
+  const events = (DB.events || []).slice(short ? -60 : -300).map(e => ({ts: e.ts, type: e.type, id: e.id, ok: e.ok, stars: e.stars, steps: e.steps}));
   return {profile: DB.profile || {}, points: DB.points || 0, streak: DB.streak || 0, best: DB.best || 0,
     totalMin: DB.totalMin || 0,
     today: {date: (DB.today || {}).date || null, minutes: (DB.today || {}).minutes || 0},
@@ -284,10 +288,20 @@ function kidUnlocked(){
   }catch(e){ return false; }
 }
 function kidUnlock(){ try{ sessionStorage.setItem(KID_SESSION, JSON.stringify({code: kidCode(), ts: Date.now()})); }catch(e){} }
+/* пока приложение открыто и видно — вход не сбрасываем; при возврате после паузы спросим PIN */
+function kidTouch(){
+  try{
+    if (!kidUnlocked()) return;
+    const s = JSON.parse(sessionStorage.getItem(KID_SESSION) || 'null');
+    if (s && Date.now() - (s.ts || 0) > 20000) kidUnlock();
+  }catch(e){}
+}
 function kidLock(){ try{ sessionStorage.removeItem(KID_SESSION); }catch(e){} }
 function parentNoteAllowed(){ return !kidBound() || kidUnlocked(); }
 
 /* первый вход: ребёнок придумывает свой PIN и привязывает устройство */
+let _kidPendingPin = '';              /* PIN, который не успел уехать из-за связи (только в памяти) */
+let _kidPendingAt = 0;
 function kidBindFlow(){
   const k = kidSt();
   if (k.binding || PinPad.isOpen()) return;
@@ -295,9 +309,14 @@ function kidBindFlow(){
   PinPad.set({}).then(pin => {
     k.binding = 0;
     if (!pin) return;
-    kidPost({act: 'device', code: k.code, token: k.token, pin: pin}).then(r => {
+    kidSendPin(pin);
+  });
+}
+function kidSendPin(pin){
+  const k = kidSt();
+  kidPost({act: 'device', code: k.code, token: k.token, pin: pin}).then(r => {
       if (r && r.ok){
-        k.dpin = 1; k.linked = 1;
+        k.dpin = 1; k.linked = 1; _kidPendingPin = '';
         kidSaveState(); kidUnlock(); kidRender();
         kidPush(1); kidPull();
         try{ toast('PIN создан — запомни его'); }catch(e){}
@@ -306,9 +325,12 @@ function kidBindFlow(){
       }
       if (r && r.err === 'pinset'){ k.dpin = 1; kidSaveState(); kidUnlock(); kidRender(); return; }
       if (r && r.err === 'unlinked'){ kidUnlinkedScreen(); return; }
-      try{ toast('Не получилось сохранить PIN — проверим связь'); }catch(e){}
-    }).catch(() => { try{ toast('Нет связи: PIN сохранится, когда появится интернет'); }catch(e){} });
-  });
+      _kidPendingPin = pin; _kidPendingAt = Date.now();
+      try{ toast('Не получилось сохранить PIN — попробуем снова, когда появится связь'); }catch(e){}
+    }).catch(() => {
+      _kidPendingPin = pin; _kidPendingAt = Date.now();
+      try{ toast('Нет связи. PIN запомнен — отправим, когда интернет вернётся'); }catch(e){}
+    });
 }
 
 /* вход: только свой PIN */
@@ -397,7 +419,7 @@ function kidNewCode(confirmed){
   kidAskClose();
   const k = kidSt();
   k.code = ''; k.token = ''; k.dpin = 0; k.linked = 0; k.introShown = 0; k.notes = []; k.limits = {};
-  k.noteSeen = 0; k.noteToast = 0;
+  k.noteSeen = 0; k.noteToast = 0; k.binding = 0; _kidPendingPin = '';
   kidSaveState(); kidLock(); kidUnlinkedDone();
   try{ localStorage.removeItem(KID_KEY); }catch(e){}
   kidEnsure().then(() => kidBindFlow());
@@ -417,7 +439,12 @@ function kidGate(){
     if (!k.code || !k.token){ kidEnsure(); return; }
     /* PIN был, а устройство отвязали родителем — предлагаем привязаться заново */
     if (k.dpin && k.linked === 0){ kidUnlinkedScreen(); return; }
-    if (!k.dpin){ kidBindFlow(); return; }        /* первое устройство: свой PIN */
+    if (!k.dpin){
+      /* PIN уже придуман, но не уехал из-за связи — повторяем сами */
+      if (_kidPendingPin && Date.now() - _kidPendingAt > 8000){ _kidPendingAt = Date.now(); kidSendPin(_kidPendingPin); return; }
+      if (!_kidPendingPin) kidBindFlow();
+      return;
+    }
     if (!kidUnlocked()) kidLockScreen();
   }catch(e){}
 }
@@ -430,6 +457,17 @@ function kidBoot(){
   setInterval(kidPull, 60000);
   /* проверяем заметки и сами: если ребёнок только что закончил знакомство */
   setInterval(() => { kidGate(); }, 4000);
+  setInterval(() => { if (document.visibilityState === 'visible') kidTouch(); }, 30000);
+  ['click','keydown','touchstart','pointerdown'].forEach(ev => {
+    try{ document.addEventListener(ev, kidTouch, {passive: true, capture: true}); }catch(e){}
+  });
+  try{
+    let hiddenAt = 0;
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') hiddenAt = Date.now();
+      else if (hiddenAt && Date.now() - hiddenAt > KID_UNLOCK_SEC * 1000){ kidLock(); kidGate(); }
+    });
+  }catch(e){}
   setInterval(() => { if (typeof noteFullCheck === 'function') noteFullCheck(); }, 20000);
   setTimeout(() => { if (typeof noteFullCheck === 'function') noteFullCheck(); }, 3000);
   try{
@@ -443,8 +481,17 @@ function kidBoot(){
       if (!kidReady()) return;
       const k = kidSt();
       if (!k.dpin || k.linked === 0) return;
-      const body = JSON.stringify({act: 'sync', code: k.code, token: k.token, data: kidSnapshot()});
-      try{ navigator.sendBeacon(kidApiUrl(), new Blob([body], {type: 'application/json'})); }catch(e){}
+      let body = JSON.stringify({act: 'sync', code: k.code, token: k.token, data: kidSnapshot()});
+      /* у sendBeacon лимит около 64 КБ: если снимок больше — отправляем обрезанный */
+      if (body.length > 60000) body = JSON.stringify({act: 'sync', code: k.code, token: k.token, data: kidSnapshot(true)});
+      let sent = false;
+      try{ sent = navigator.sendBeacon(kidApiUrl(), new Blob([body], {type: 'application/json'})); }catch(e){ sent = false; }
+      if (!sent){
+        try{
+          fetch(kidApiUrl(), {method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: body, cache: 'no-store', keepalive: true}).catch(() => {});
+        }catch(e){}
+      }
     });
   }catch(e){}
 }

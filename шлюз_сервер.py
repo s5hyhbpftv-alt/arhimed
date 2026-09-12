@@ -145,6 +145,9 @@ async def kid_api(request):
             return bad('toomany', wait=int(3600 - (now_ts - seen[0])))
         seen.append(now_ts)
         _new_calls[ip] = seen
+        if len(_new_calls) > 2000:          # чтобы словарь не рос бесконечно
+            for k in [k for k, v in _new_calls.items() if not [t for t in v if now_ts - t < 3600]][:1000]:
+                _new_calls.pop(k, None)
         async with _tlock:
             for _ in range(6):
                 c = new_code()
@@ -162,198 +165,201 @@ async def kid_api(request):
 
     if not CODE_RE.match(code):
         return bad('code')
+    # весь разбор записи идёт под одним замком: иначе параллельные запросы теряют
+    # изменения друг друга (например, заметка родителя при одновременной синхронизации)
+    async with _tlock:
 
-    rec = load_kid(code)
-    if not rec:
-        return bad('notfound')
-    rec = norm_rec(rec)
+        rec = load_kid(code)
+        if not rec:
+            return bad('notfound')
+        rec = norm_rec(rec)
 
-    # --- что известно про код: нужен ли PIN родителя, привязано ли устройство ---
-    if act == 'probe':
-        return web.json_response({'ok': True, 'code': code,
-                                  'pinSet': bool(rec.get('ppin')),
-                                  'childPin': bool(rec.get('dpin')),
-                                  'linked': int(rec.get('linked') or 0),
-                                  'unlinked': rec.get('unlinked') or 0}, headers=no_store)
+        # --- что известно про код: нужен ли PIN родителя, привязано ли устройство ---
+        if act == 'probe':
+            return web.json_response({'ok': True, 'code': code,
+                                      'pinSet': bool(rec.get('ppin')),
+                                      'childPin': bool(rec.get('dpin')),
+                                      'linked': int(rec.get('linked') or 0),
+                                      'unlinked': rec.get('unlinked') or 0}, headers=no_store)
 
-    def check_pin(which, pin):
-        """Проверка PIN: у ребёнка свой, у родителя свой; с блокировкой после 8 промахов."""
-        field = 'dpin' if which == 'd' else 'ppin'
-        salt = rec.get('salt') if which == 'd' else rec.get('psalt')
-        fails = 'fails_d' if which == 'd' else 'fails_p'
-        until = 'blocked_d_until' if which == 'd' else 'blocked_p_until'
-        now = time.time()
-        if rec.get(until, 0) > now:
-            return ('blocked', int(rec[until] - now))
-        if not re.match(r'^\d{4}$', pin):
-            return ('pin4', None)
-        if not rec.get(field):
-            return ('nopin', None)
-        if pin_hash(salt or '', pin) != rec[field]:
-            rec[fails] = int(rec.get(fails) or 0) + 1
-            if rec[fails] >= 8:
-                rec[until] = now + 600
-                rec[fails] = 0
+        def check_pin(which, pin):
+            """Проверка PIN: у ребёнка свой, у родителя свой; с блокировкой после 8 промахов."""
+            field = 'dpin' if which == 'd' else 'ppin'
+            salt = rec.get('salt') if which == 'd' else rec.get('psalt')
+            fails = 'fails_d' if which == 'd' else 'fails_p'
+            until = 'blocked_d_until' if which == 'd' else 'blocked_p_until'
+            now = time.time()
+            if rec.get(until, 0) > now:
                 return ('blocked', int(rec[until] - now))
-            return ('pin', rec[fails])
-        rec[fails] = 0
-        rec[until] = 0
-        return (None, None)
+            if not re.match(r'^\d{4}$', pin):
+                return ('pin4', None)
+            if not rec.get(field):
+                return ('nopin', None)
+            if pin_hash(salt or '', pin) != rec[field]:
+                rec[fails] = int(rec.get(fails) or 0) + 1
+                if rec[fails] >= 8:
+                    rec[until] = now + 600
+                    rec[fails] = 0
+                    return ('blocked', int(rec[until] - now))
+                return ('pin', rec[fails])
+            rec[fails] = 0
+            rec[until] = 0
+            return (None, None)
 
-    # --- устройство ребёнка: первый вход, свой PIN ---
-    if act == 'device':
-        if rec.get('unlinked'):
-            return bad('unlinked')
-        if str(body.get('token') or '') != rec.get('token'):
-            return bad('token')
-        pin = str(body.get('pin') or '').strip()
-        if not re.match(r'^\d{4}$', pin):
-            return bad('pin4')
-        if rec.get('dpin'):
-            return bad('pinset')
-        rec['dpin'] = pin_hash(rec['salt'], pin)
-        rec['linked'] = 1
-        rec['unlinked'] = 0
-        async with _tlock:
-            save_kid(rec)
-        return web.json_response({'ok': True, 'code': rec['code'], 'linked': 1}, headers=no_store)
+        # --- устройство ребёнка: первый вход, свой PIN ---
+        if act == 'device':
+            if rec.get('unlinked'):
+                return bad('unlinked')
+            if str(body.get('token') or '') != rec.get('token'):
+                return bad('token')
+            pin = str(body.get('pin') or '').strip()
+            if not re.match(r'^\d{4}$', pin):
+                return bad('pin4')
+            if rec.get('dpin'):
+                return bad('pinset')
+            rec['dpin'] = pin_hash(rec['salt'], pin)
+            rec['linked'] = 1
+            rec['unlinked'] = 0
+            if not save_kid(rec):
+                return bad('storage')
+            return web.json_response({'ok': True, 'code': rec['code'], 'linked': 1}, headers=no_store)
 
-    # --- вход ребёнка: только свой PIN (устройство уже привязано) ---
-    if act == 'enter':
-        if rec.get('unlinked') or not rec.get('linked'):
-            return bad('unlinked')
-        err, extra = check_pin('d', str(body.get('pin') or '').strip())
-        if err:
-            if err in ('pin', 'blocked'):
-                async with _tlock:
-                    save_kid(rec)
-            return bad(err, **({'fails': extra} if err == 'pin' and extra is not None else
-                               ({'wait': extra} if err == 'blocked' and extra is not None else {})))
-        async with _tlock:
-            save_kid(rec)
-        return web.json_response({'ok': True, 'code': rec['code'], 'limits': rec.get('limits') or {},
-                                  'notes': rec.get('notes') or [], 'updated': rec.get('updated') or 0},
-                                 headers=no_store)
+        # --- вход ребёнка: только свой PIN (устройство уже привязано) ---
+        if act == 'enter':
+            if rec.get('unlinked') or not rec.get('linked'):
+                return bad('unlinked')
+            err, extra = check_pin('d', str(body.get('pin') or '').strip())
+            if err:
+                if err in ('pin', 'blocked'):
+                    if not save_kid(rec):
+                        return bad('storage')
+                return bad(err, **({'fails': extra} if err == 'pin' and extra is not None else
+                                   ({'wait': extra} if err == 'blocked' and extra is not None else {})))
+            if not save_kid(rec):
+                return bad('storage')
+            return web.json_response({'ok': True, 'code': rec['code'], 'limits': rec.get('limits') or {},
+                                      'notes': rec.get('notes') or [], 'updated': rec.get('updated') or 0},
+                                     headers=no_store)
 
-    # --- привязка заново (родитель отвязал устройство, ребёнок вводит свой PIN) ---
-    if act == 'rebind':
-        err, extra = check_pin('d', str(body.get('pin') or '').strip())
-        if err:
-            if err in ('pin', 'blocked'):
-                async with _tlock:
-                    save_kid(rec)
-            return bad(err, **({'fails': extra} if err == 'pin' and extra is not None else
-                               ({'wait': extra} if err == 'blocked' and extra is not None else {})))
-        rec['token'] = secrets.token_hex(16)
-        rec['linked'] = 1
-        rec['unlinked'] = 0
-        async with _tlock:
-            save_kid(rec)
-        return web.json_response({'ok': True, 'code': rec['code'], 'token': rec['token']}, headers=no_store)
+        # --- привязка заново (родитель отвязал устройство, ребёнок вводит свой PIN) ---
+        if act == 'rebind':
+            err, extra = check_pin('d', str(body.get('pin') or '').strip())
+            if err:
+                if err in ('pin', 'blocked'):
+                    if not save_kid(rec):
+                        return bad('storage')
+                return bad(err, **({'fails': extra} if err == 'pin' and extra is not None else
+                                   ({'wait': extra} if err == 'blocked' and extra is not None else {})))
+            rec['token'] = secrets.token_hex(16)
+            rec['linked'] = 1
+            rec['unlinked'] = 0
+            if not save_kid(rec):
+                return bad('storage')
+            return web.json_response({'ok': True, 'code': rec['code'], 'token': rec['token']}, headers=no_store)
 
-    # --- ребёнок присылает прогресс ---
-    if act == 'sync':
-        if not rec.get('linked') or rec.get('unlinked'):
-            return bad('unlinked')
-        if str(body.get('token') or '') != rec.get('token'):
-            return bad('token')
-        data = body.get('data')
-        if not isinstance(data, dict):
-            return bad('data')
-        try:
-            if len(json.dumps(data, ensure_ascii=False)) > MAX_BODY:
-                return bad('big')
-        except Exception:
-            return bad('data')
-        rec['data'] = data
-        rec['updated'] = int(time.time() * 1000)
-        async with _tlock:
-            save_kid(rec)
-        return web.json_response({'ok': True, 'limits': rec.get('limits') or {},
-                                  'notes': rec.get('notes') or [], 'updated': rec['updated']},
-                                 headers=no_store)
+        # --- ребёнок присылает прогресс ---
+        if act == 'sync':
+            if not rec.get('linked') or rec.get('unlinked'):
+                return bad('unlinked')
+            if str(body.get('token') or '') != rec.get('token'):
+                return bad('token')
+            data = body.get('data')
+            if not isinstance(data, dict):
+                return bad('data')
+            try:
+                if len(json.dumps(data, ensure_ascii=False)) > MAX_BODY:
+                    return bad('big')
+            except Exception:
+                return bad('data')
+            rec['data'] = data
+            rec['updated'] = int(time.time() * 1000)
+            if not save_kid(rec):
+                return bad('storage')
+            return web.json_response({'ok': True, 'limits': rec.get('limits') or {},
+                                      'notes': rec.get('notes') or [], 'updated': rec['updated']},
+                                     headers=no_store)
 
-    # --- ребёнок забирает лимит и заметки ---
-    if act == 'take':
-        if not rec.get('linked') or rec.get('unlinked'):
-            return bad('unlinked')
-        if str(body.get('token') or '') != rec.get('token'):
-            return bad('token')
-        return web.json_response({'ok': True, 'limits': rec.get('limits') or {},
-                                  'notes': rec.get('notes') or [],
-                                  'updated': rec.get('updated') or 0}, headers=no_store)
+        # --- ребёнок забирает лимит и заметки ---
+        if act == 'take':
+            if not rec.get('linked') or rec.get('unlinked'):
+                return bad('unlinked')
+            if str(body.get('token') or '') != rec.get('token'):
+                return bad('token')
+            return web.json_response({'ok': True, 'limits': rec.get('limits') or {},
+                                      'notes': rec.get('notes') or [],
+                                      'updated': rec.get('updated') or 0}, headers=no_store)
 
-    # --- родитель: первый вход задаёт свой PIN, дальше только проверка ---
-    if act in ('claim', 'get', 'set', 'unlink', 'delparent'):
-        pin = str(body.get('pin') or '').strip()
-        now = time.time()
-        if rec.get('blocked_p_until', 0) > now:
-            return bad('blocked', wait=int(rec['blocked_p_until'] - now))
-        if not re.match(r'^\d{4}$', pin):
-            return bad('pin4')
-        if not rec.get('ppin'):
-            if act != 'claim':
-                return bad('nopin')
-            rec['ppin'] = pin_hash(rec['psalt'], pin)
-            first = True
-        else:
-            if pin_hash(rec['psalt'], pin) != rec['ppin']:
-                rec['fails_p'] = int(rec.get('fails_p') or 0) + 1
-                if rec['fails_p'] >= 8:
-                    rec['blocked_p_until'] = now + 600
-                    rec['fails_p'] = 0
-                    async with _tlock:
-                        save_kid(rec)
-                    return bad('blocked', wait=int(rec['blocked_p_until'] - now))
-                async with _tlock:
-                    save_kid(rec)
-                return bad('pin', fails=rec['fails_p'])
-            first = False
-        rec['fails_p'] = 0
-        rec['blocked_p_until'] = 0
+        # --- родитель: первый вход задаёт свой PIN, дальше только проверка ---
+        if act in ('claim', 'get', 'set', 'unlink', 'delparent'):
+            pin = str(body.get('pin') or '').strip()
+            now = time.time()
+            if rec.get('blocked_p_until', 0) > now:
+                return bad('blocked', wait=int(rec['blocked_p_until'] - now))
+            if not re.match(r'^\d{4}$', pin):
+                return bad('pin4')
+            if not rec.get('ppin'):
+                if act != 'claim':
+                    return bad('nopin')
+                rec['ppin'] = pin_hash(rec['psalt'], pin)
+                first = True
+            else:
+                if pin_hash(rec['psalt'], pin) != rec['ppin']:
+                    rec['fails_p'] = int(rec.get('fails_p') or 0) + 1
+                    if rec['fails_p'] >= 8:
+                        rec['blocked_p_until'] = now + 600
+                        rec['fails_p'] = 0
+                        if not save_kid(rec):
+                            return bad('storage')
+                        return bad('blocked', wait=int(rec['blocked_p_until'] - now))
+                    if not save_kid(rec):
+                        return bad('storage')
+                    return bad('pin', fails=rec['fails_p'])
+                first = False
+            rec['fails_p'] = 0
+            rec['blocked_p_until'] = 0
 
-        if act == 'unlink':
-            rec['token'] = ''            # старое устройство больше не пустят
-            rec['linked'] = 0
-            rec['unlinked'] = int(time.time() * 1000)
-            async with _tlock:
-                save_kid(rec)
-            return web.json_response({'ok': True, 'linked': 0}, headers=no_store)
+            if act == 'unlink':
+                rec['token'] = ''            # старое устройство больше не пустят
+                rec['linked'] = 0
+                rec['unlinked'] = int(time.time() * 1000)
+                if not save_kid(rec):
+                    return bad('storage')
+                return web.json_response({'ok': True, 'linked': 0}, headers=no_store)
 
-        if act == 'delparent':
-            # удаляем всё, что принадлежит родителю: PIN, лимит, заметки, отчёт
-            rec['ppin'] = None
-            rec['psalt'] = secrets.token_hex(8)
-            rec['notes'] = []
-            rec['limits'] = {'minutes': 0}
-            rec['data'] = None
-            rec['updated'] = 0
-            rec['token'] = ''
-            rec['linked'] = 0
-            rec['unlinked'] = int(time.time() * 1000)
-            async with _tlock:
-                save_kid(rec)
-            return web.json_response({'ok': True, 'deleted': 1}, headers=no_store)
+            if act == 'delparent':
+                # удаляем всё, что принадлежит родителю: PIN, лимит, заметки, отчёт
+                rec['ppin'] = None
+                rec['psalt'] = secrets.token_hex(8)
+                rec['notes'] = []
+                rec['limits'] = {'minutes': 0}
+                rec['data'] = None
+                rec['updated'] = 0
+                rec['token'] = ''
+                rec['linked'] = 0
+                rec['unlinked'] = int(time.time() * 1000)
+                if not save_kid(rec):
+                    return bad('storage')
+                return web.json_response({'ok': True, 'deleted': 1}, headers=no_store)
 
-        if act == 'set':
-            lim = body.get('limits')
-            if isinstance(lim, dict):
-                try:
-                    m = int(lim.get('minutes') or 0)
-                except Exception:
-                    m = 0
-                rec['limits'] = {'minutes': max(0, min(600, m))}
-            note = str(body.get('note') or '').strip()[:400]
-            if note:
-                notes = rec.get('notes') or []
-                notes.append({'ts': int(time.time() * 1000), 'text': note})
-                rec['notes'] = notes[-MAX_NOTES:]
+            if act == 'set':
+                lim = body.get('limits')
+                if isinstance(lim, dict):
+                    try:
+                        m = int(lim.get('minutes') or 0)
+                    except Exception:
+                        m = 0
+                    rec['limits'] = {'minutes': max(0, min(600, m))}
+                note = str(body.get('note') or '').strip()[:400]
+                if note:
+                    notes = rec.get('notes') or []
+                    notes.append({'ts': int(time.time() * 1000), 'text': note})
+                    rec['notes'] = notes[-MAX_NOTES:]
 
-        async with _tlock:
-            save_kid(rec)
-        out = public_rec(rec)
-        out['first'] = first
-        return web.json_response(out, headers=no_store)
+            if not save_kid(rec):
+                return bad('storage')
+            out = public_rec(rec)
+            out['first'] = first
+            return web.json_response(out, headers=no_store)
 
     return bad('act')
 
@@ -452,6 +458,36 @@ async def agent_relay(request):
     return browser
 
 
+# Что нельзя отдавать наружу: ключи, пароли, исходники, служебные каталоги.
+# Раньше статика раздавала весь корень проекта, и /ключ_яндекса.txt скачивался
+# обычным GET-запросом — это закрыто.
+DENY_EXT = {'.txt', '.env', '.py', '.sh', '.log', '.db', '.sqlite', '.sqlite3', '.pem', '.key',
+            '.crt', '.ini', '.cfg', '.bak', '.swp', '.lock', '.local'}
+DENY_DIRS = {'.git', '.github', '.py-libs', '.venv', 'venv', 'deploy', '__pycache__',
+             'данные_родителей', 'node_modules'}
+
+
+def path_denied(rel):
+    """True, если файл отдавать нельзя."""
+    rel = (rel or '').replace('\\', '/')
+    parts = [p for p in rel.split('/') if p and p not in ('.', '..')]
+    if not parts:
+        return False
+    for part in parts:
+        low = part.lower()
+        if low.startswith('.') and low not in ('.well-known',):
+            return True
+        if low in DENY_DIRS:
+            return True
+    name = parts[-1].lower()
+    if name.endswith('.local.env') or name.endswith('.local'):
+        return True
+    ext = os.path.splitext(name)[1]
+    if ext in DENY_EXT:
+        return True
+    return False
+
+
 def apply_cache(resp, path):
     """HTML/JS/SW — не кэшировать. Картинки — можно."""
     low = str(path).lower()
@@ -491,6 +527,8 @@ def make_app():
 
 async def static_handler(request):
     rel = request.match_info['tail'] or ''
+    if rel and path_denied(rel):
+        raise web.HTTPNotFound()
     if not rel:
         resp = web.FileResponse(os.path.join(ROOT, 'index.html'))
         return apply_cache(resp, 'index.html')
@@ -504,7 +542,7 @@ async def static_handler(request):
             return apply_cache(resp, candidate)
         # листинг папки
         items = sorted(os.listdir(path))
-        links = ''.join(f'<div><a href="{rel.rstrip("/")}/{x}">{x}</a></div>' for x in items if not x.startswith('.'))
+        links = ''.join(f'<div><a href="{rel.rstrip("/")}/{x}">{x}</a></div>' for x in items if not path_denied(x))
         resp = web.Response(text=f'<meta charset="utf-8"><body style="font-family:Georgia;background:#0b1712;color:#e8e0cc;padding:20px"><h2>АРХИМЕД</h2>{links}</body>', content_type='text/html')
         return apply_cache(resp, 'index.html')
     if os.path.isfile(path):
