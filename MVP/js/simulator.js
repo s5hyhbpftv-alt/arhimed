@@ -44,7 +44,7 @@ function renderTourScreen(){
     const bestN=best.length? Math.max(...best.map(t=>t.score)) : null;
     const last=best.length? best[0] : null;
     return `<div class="tour-card path-island" style="animation-delay:${0.07*i}s" onclick="UI.tourIsl='${I.name}';startTour()">
-      <div class="tc-icon">${I.ico}</div>
+      <div class="tc-icon">${I.img?`<img src="${I.img}" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:50%;display:block">`:I.ico}</div>
       <div style="flex:1;min-width:0">
         <div class="tc-name">${esc(I.name)}</div>
         <div class="small" style="color:var(--muted);margin-top:2px">${esc(I.dsc)} · ${st.done}/${st.total} решено</div>

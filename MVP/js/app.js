@@ -958,14 +958,14 @@ function renderLibrary(){
     done: doneFit, total: allFit.length }];
   const tabIsls = islands.map(I=>{
     const items=tasksFit(window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)));
-    return { key:I.name, ico:I.ico, name:I.name, items, done: items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length, total: items.length };
+    return { key:I.name, ico:I.ico, img:I.img, name:I.name, items, done: items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length, total: items.length };
   }).filter(g=>g.total>0);
   const tabs=[...tabAll, ...tabIsls];
   const tabHTML=tabs.map(g=>{
     const on = selIsl===g.key;
     const p=g.total? Math.round(g.done/g.total*100):0;
     return `<button class="btab ${on?'on':''}" onclick="libPick('island','${g.key}')">
-      <span class="bt-ico">${g.ico}</span>
+      <span class="bt-ico">${g.img?`<img src="${g.img}" alt="" style="width:26px;height:26px;object-fit:contain;border-radius:50%;display:block">`:g.ico}</span>
       <span class="bt-name">${g.key==='all'? 'Все': esc(g.name)}</span>
       <span class="bt-bar"><i style="width:${p}%"></i></span>
     </button>`;}).join('');
