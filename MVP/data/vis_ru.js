@@ -2318,17 +2318,18 @@ window.RUQMARK = (function(){
         <stop offset="1" stop-color="#fff3c4" stop-opacity="0"/>
       </linearGradient>
       <radialGradient id="rkgqBloom" cx=".5" cy=".5" r=".5">
-        <stop offset="0" stop-color="#ffd76a" stop-opacity=".5"/>
-        <stop offset=".6" stop-color="#ffb43c" stop-opacity=".16"/>
+        <stop offset="0" stop-color="#ffe08a" stop-opacity=".42"/>
+        <stop offset=".55" stop-color="#ffb43c" stop-opacity=".13"/>
         <stop offset="1" stop-color="#ffb43c" stop-opacity="0"/>
       </radialGradient>
       <filter id="rkgqPhoto" x="-60%" y="-60%" width="220%" height="220%">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="1.05" result="soft"/>
-        <feSpecularLighting in="soft" surfaceScale="3.4" specularConstant="1.15" specularExponent="20" lighting-color="#fff7d6" result="spec">
-          <fePointLight x="-34" y="-46" z="58"/>
+        <feGaussianBlur in="SourceAlpha" stdDeviation=".85" result="soft"/>
+        <feSpecularLighting in="soft" surfaceScale="3.6" specularConstant="1.4" specularExponent="34" lighting-color="#fff9e4" result="spec">
+          <fePointLight x="-26" y="-56" z="46"/>
         </feSpecularLighting>
         <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn"/>
-        <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="specIn"/></feMerge>
+        <feDropShadow dx="0" dy="1.2" stdDeviation="1.6" flood-color="#c98f1e" flood-opacity=".5" result="shad"/>
+        <feMerge><feMergeNode in="shad"/><feMergeNode in="SourceGraphic"/><feMergeNode in="specIn"/></feMerge>
       </filter>
     </defs></svg>`;
   const CSS = `
@@ -2345,7 +2346,7 @@ window.RUQMARK = (function(){
   @keyframes rkgqGlow{0%,100%{opacity:.6}50%{opacity:1}}
   @keyframes rkgqShine{0%,100%{opacity:.35}50%{opacity:1}}
   .rkgq-slot{display:inline-flex;align-items:center;justify-content:center;pointer-events:none}
-  .rkgq-svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 7px rgba(255,215,106,.6))}
+  .rkgq-svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 5px rgba(255,215,106,.45))}
   @media (prefers-reduced-motion: reduce){
     .rkgq-spin,.rkgq-bloom,.rkgq-shine{animation:none!important}
   }`;
@@ -2360,17 +2361,23 @@ window.RUQMARK = (function(){
     }catch(e){}
     ready = true;
   }
-  /* тело знака: локальные координаты, центр (0,0), высота около 35 */
-  const HOOK = 'M-6.8 -3.6 C-6.8 -13 6.8 -13 6.8 -3.6 C6.8 3.6 0 4.6 0 10.8';
+  /* Тело знака — одна форма: золотая заливка градиентом и внутренний блеск.
+     Никаких сдвинутых копий-подложек: на мелком размере они читались как
+     двойные линии. Объём даёт свет — feSpecularLighting по альфе (фотоэффект)
+     и мягкое свечение позади. Вьюбокс обрезан по чернилам, поэтому знак садится
+     в строку ровно и ничего не срезается. */
+  const HOOK = 'M-6.6 -3.2 C-6.6 -12.6 6.6 -12.6 6.6 -3.2 C6.6 3.4 0 4.4 0 10.6';
   function body(){
-    return `<circle class="rkgq-bloom" cx="0" cy="4" r="19" fill="url(#rkgqBloom)"/>`
+    return `<circle class="rkgq-bloom" cx="0" cy="3" r="13" fill="url(#rkgqBloom)"/>`
       + `<g filter="url(#rkgqPhoto)">`
-      +   `<path d="${HOOK}" fill="none" stroke="#7a4d10" stroke-width="8.4" stroke-linecap="round" opacity=".85" transform="translate(.9,1.1)"/>`
-      +   `<circle cx="0" cy="17.6" r="4.4" fill="#7a4d10" opacity=".85" transform="translate(.9,1.1)"/>`
-      +   `<path d="${HOOK}" fill="none" stroke="url(#rkgqGold)" stroke-width="7.6" stroke-linecap="round"/>`
-      +   `<circle cx="0" cy="17.6" r="3.9" fill="url(#rkgqGold)" stroke="url(#rkgqEdge)" stroke-width=".7"/>`
-      +   `<path class="rkgq-shine" d="${HOOK}" fill="none" stroke="url(#rkgqSpec)" stroke-width="2.6" stroke-linecap="round" transform="translate(-1.5,-1.7)"/>`
-      +   `<circle cx="-1.6" cy="16.1" r="1.15" fill="#fffdf2" opacity=".95"/>`
+      /* кромка тёмного золота — концентрическая, по тому же контуру: это фаска,
+         а не сдвинутая копия, поэтому двойной линии не даёт */
+      +   `<path d="${HOOK}" fill="none" stroke="#7d4f0f" stroke-width="8.6" stroke-linecap="round" opacity=".85"/>`
+      +   `<circle cx="0" cy="17.4" r="4.1" fill="#7d4f0f" opacity=".85"/>`
+      +   `<path d="${HOOK}" fill="none" stroke="url(#rkgqGold)" stroke-width="7.2" stroke-linecap="round"/>`
+      +   `<circle cx="0" cy="17.4" r="3.5" fill="url(#rkgqGold)"/>`
+      +   `<path class="rkgq-shine" d="${HOOK}" fill="none" stroke="url(#rkgqSpec)" stroke-width="2.7" stroke-linecap="round" transform="translate(-1.1,-1.3)"/>`
+      +   `<circle cx="-1.2" cy="16.3" r="1" fill="#fffdf2" opacity=".95"/>`
       + `</g>`;
   }
   /* в SVG-сцену: (x,y) — место на месте буквы, s — масштаб */
@@ -2382,7 +2389,7 @@ window.RUQMARK = (function(){
   /* в HTML-страницу: размер задаётся кеглем родителя (em) */
   function html(){
     ensure();
-    return `<span class="rkgq-slot" aria-hidden="true"><svg class="rkgq-svg" viewBox="-24 -24 48 50" preserveAspectRatio="xMidYMid meet">`
+    return `<span class="rkgq-slot" aria-hidden="true"><svg class="rkgq-svg" viewBox="-12 -18 24 41" preserveAspectRatio="xMidYMid meet">`
       + `<g class="rkgq-spin">${body()}</g></svg></span>`;
   }
   return {ensure:ensure, group:group, html:html, HOOK:HOOK};
@@ -2451,31 +2458,6 @@ window.RUKEXAM = (function(){
     return out;
   }
 
-  /* слово с прорезью: подчёркивание делаем невидимым, а на его место встаёт
-     золотой знак вопроса. Место считаем после вставки в документ: только тогда
-     SVG умеет измерить подстроку (getSubStringLength) и знак не «уезжает». */
-  function gapWord(it){
-    const w = String(it.word||''), g = w.indexOf('_');
-    if(g < 0) return T(196, 74, w, PALE, {fs:26});
-    return `<text class="pk-t" id="rkwWord" x="196" y="74" text-anchor="middle" font-size="26" fill="${PALE}">`
-      + `<tspan>${w.slice(0,g)}</tspan><tspan fill="none">_</tspan><tspan>${w.slice(g+1)}</tspan></text>`;
-  }
-  function placeGapMark(root, it){
-    try{
-      if(!root || !window.RUQMARK) return;
-      const t = root.querySelector('#rkwWord'); if(!t) return;
-      const w = String(it.word||''), g = w.indexOf('_'); if(g < 0) return;
-      const total = t.getSubStringLength(0, w.length);
-      const before = t.getSubStringLength(0, g);
-      const gapW = t.getSubStringLength(g, 1) || 14;
-      const x = 196 - total/2 + before + gapW/2;      /* центр прорези */
-      const ns = 'http://www.w3.org/2000/svg';
-      const tmp = document.createElementNS(ns, 'svg');
-      tmp.innerHTML = window.RUQMARK.group(x, 64.6, Math.max(0.34, Math.min(0.62, gapW/24)));
-      if(tmp.firstElementChild) t.parentNode.appendChild(tmp.firstElementChild);
-    }catch(e){}
-  }
-
   /* конструктор проверочной работы: одна функция — три работы */
   function build(cfg){
     const items = cfg.items;
@@ -2527,7 +2509,7 @@ window.RUKEXAM = (function(){
           <rect x="22" y="28" width="292" height="118" rx="14" fill="rgba(255,255,255,.05)"
             stroke="${shown ? (ok?GREEN:RED) : '#3d5c49'}" stroke-width="1.7"/>
           ${icon(it.icon, 34, 44, 0.62)}
-          ${gapWord(it)}
+          ${T(196,74,it.word,PALE,{fs:26})}
           ${T2(196,100, it.ask, MUTED, {fs:11})}
           ${shown? T2(196,124, ok ? 'верно: '+it.spell : 'правильно: '+it.spell, ok?GREEN:RED, {fs:12}) : T2(196,124,'выбери вариант', MUTED, {fs:11})}
           ${R.rule(156, shown ? (ok?'Молодец':'Запомни') : 'Памятка',
@@ -2586,7 +2568,6 @@ window.RUKEXAM = (function(){
             <div class="wv-sml" style="color:${MUTED}">${picked!=null ? 'нажми другой вариант, если хочешь исправить ответ' : 'выбери верное написание'}</div>`;
         }
         el.innerHTML = `<div class="wv"><div class="wv-col">${scene(step, st)}${extra}</div></div>`;
-        if(qi >= 0 && qi < items.length) placeGapMark(el, items[qi]);
       }catch(e){ el.innerHTML = ''; }
     }
 
@@ -4003,13 +3984,12 @@ window.RUWORK = (function(){
   #lvis .rk .halo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:230px;height:120px;pointer-events:none;
     background:radial-gradient(closest-side,rgba(255,215,106,.22),transparent 72%);filter:blur(6px);animation:haloPulse 2.6s ease-in-out infinite}
   #lvis .rk .word{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
-  #lvis .rk .cell{position:relative;min-width:52px;height:70px;padding:0 12px;display:flex;align-items:center;justify-content:center;
+  #lvis .rk .cell{min-width:52px;height:70px;padding:0 12px;display:flex;align-items:center;justify-content:center;
     font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em;color:#f8f2e4;
     background:linear-gradient(180deg,#26402f,#17271f);border:1.5px solid var(--line);border-radius:16px;
     box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);
     animation:cellIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*30ms)}
   #lvis .rk .cell.gap{border-style:dashed;border-color:rgba(255,215,106,.85);color:transparent;animation:cellIn 240ms ${OUT} both,gapPulse 1.9s ease-in-out infinite}
-  #lvis .rk .cell.gap .rkgq-slot{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:.6em;height:.92em}
   #lvis .rk .cell.ok{border-color:var(--ok);background:linear-gradient(180deg,#254634,#17281f);
     box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 0 26px rgba(143,209,168,.3);animation:land 320ms ${OUT} both;position:relative}
   #lvis .rk .cell.ok::after{content:'';position:absolute;left:6px;right:6px;bottom:6px;height:3px;border-radius:3px;
@@ -4050,7 +4030,6 @@ window.RUWORK = (function(){
   function css(){ try{ let e=document.getElementById('rk-style'); if(!e){ e=document.createElement('style'); e.id='rk-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
   function render(el, id, qi, it, total, st){
     css();
-    if(window.RUQMARK) window.RUQMARK.ensure();
     const picked = st.ans ? st.ans[qi] : null;
     const done = picked != null;
     const ok = picked === it.ans;
@@ -4058,8 +4037,7 @@ window.RUWORK = (function(){
     const cells = parts.map((ch,k)=>{
       const isGap = (ch==='_'||ch==='?');
       const cls = isGap ? (done ? (ok?'cell ok':'cell no') : 'cell gap') : 'cell';
-      /* пока ответа нет, в прорези стоит золотой вращающийся знак вопроса */
-      const txt = isGap ? (done ? picked : window.RUQMARK.html()) : ch;
+      const txt = isGap ? (done ? picked : '') : ch;
       return `<div class="${cls}" style="--i:${k}" ${isGap?'id="rkGap"':''}>${txt}</div>`;
     }).join('');
     const opts = (it.opts || [it.ans]).map(o=>{
@@ -4166,19 +4144,13 @@ window.RUWORK611 = (function(){
   #lvis .ms .inscribe{position:relative;margin:clamp(14px,4vw,26px) 0 8px;padding:clamp(10px,3vw,18px) 4px clamp(14px,4vw,22px);text-align:center;max-width:100%}
   #lvis .ms .ink{font-size:clamp(26px,10.6vw,52px);line-height:1.05;font-weight:600;letter-spacing:.01em;display:inline-flex;gap:2px;align-items:flex-end;flex-wrap:wrap;justify-content:center;max-width:100%}
   #lvis .ms .ink span{animation:inkIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*24ms)}
-  #lvis .ms .ink span.seat{position:relative;min-width:42px;color:transparent;
-    border-bottom:3px solid rgba(255,215,106,.85);box-shadow:0 12px 22px -10px rgba(255,215,106,.55)}
-  /* Знак вопроса на месте буквы: раньше это был бледный псевдоэлемент (35 %
-     прозрачности, top:46 %) — он уезжал от строки. Теперь это золотой знак из
-     RUQMARK: сидит в прорези по центру, вращается и блестит. */
-  /* Пустая ячейка прорези схлопывается по высоте (внутри только рамка), поэтому
-     знак нельзя ставить от top:%-высоты — он уезжал под буквы. Ставим от низа
-     строки: все буквы выровнены по базовой линии, и знак садится на неё. */
-  #lvis .ms .ink span.seat .rkgq-slot{position:absolute;left:50%;bottom:.06em;transform:translateX(-50%);
-    width:.62em;height:.92em}
-  #lvis .ms .ink span.seat.lit,#lvis .ms .ink span.seat.bad{border-bottom-color:transparent;box-shadow:none}
-  #lvis .ms .ink span.seat::after{content:'';position:absolute;left:50%;bottom:-6px;width:26px;height:2px;transform:translateX(-50%);
-    background:var(--gold);opacity:.85;animation:candle 1.8s ease-in-out infinite}
+  /* Прорезь — пустое место шириной с букву, без своей черты: короткая линия
+     под прорезью вместе с длинной линией строки читалась как двойная. Знак
+     ставится от базовой линии и по размеру равен букве (.44em × .75em — ровно
+     столько занимает знак вопроса в Georgia при том же кегле). */
+  #lvis .ms .ink span.seat{position:relative;min-width:.5em;color:transparent}
+  #lvis .ms .ink span.seat .rkgq-slot{position:absolute;left:50%;bottom:.02em;transform:translateX(-50%);
+    width:.44em;height:.75em}
   #lvis .ms .ink span.lit{color:#fff6dd;text-shadow:0 0 22px rgba(255,215,106,.9),0 0 46px rgba(255,190,90,.5);animation:bloom 360ms ${OUT} both}
   #lvis .ms .ink span.lit::after{content:'';position:absolute;left:-4px;right:-4px;bottom:-8px;height:3px;border-radius:3px;
     background:linear-gradient(90deg,rgba(255,215,106,0),#ffd76a 25%,#ffd76a 75%,rgba(255,215,106,0));
