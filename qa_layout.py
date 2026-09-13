@@ -25,10 +25,22 @@ JS = r"""()=>{
     if(st.display==='none'||st.visibility==='hidden'||parseFloat(st.opacity||'1')<0.05) return;
     const b=e.getBoundingClientRect();
     if(b.width<2||b.height<2) return;
-    const rotated=(st.transform&&st.transform!=='none');
-    const softer=(st.filter&&st.filter!=='none');
+    /* Раньше здесь стояло `if(rotated||softer||deco) … return;` — и ЛЮБОЙ элемент
+       с transform или filter выпадал из проверки целиком: ни обрезки, ни выхода
+       за край для него не считалось. Именно поэтому знак вопроса, который уехал
+       вправо на 21 px и налезал на букву, давал «проблемных шагов 0»: у знака и
+       фильтр, и анимация. Теперь исключаем только настоящую декорацию; элементу
+       с transform/filter считаем обрезку и выход за край (но не сдвиг центра —
+       иначе блики уводят центр кадра). Наложения таких элементов между собой
+       проверяет отдельный быстрый инструмент qa_frame.py: там сравниваются
+       чернила (текстовые узлы и фигуры), а фигуры одного рисунка исключены. */
     const deco=e.closest(DECO);
-    if(rotated||softer||deco) { if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e}); return; }
+    const animated=(st.transform&&st.transform!=='none')||(st.filter&&st.filter!=='none');
+    if(deco) { if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e}); return; }
+    if(animated) { if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e});
+      if(b.left<hb.left-2||b.right>hb.right+2||b.bottom>hb.bottom+2)
+        out.push({k:'анимированное за краем', t:(e.textContent||e.className||'').toString().trim().slice(0,18), c:Math.round(b.left)+'…'+Math.round(b.right)});
+      return; }
     // обрезка: элемент вылезает за #lvis или за контейнер с overflow hidden.
     // Полноэкранные кадры (.rk-scene) и их контейнеры намеренно шире #lvis — их не судим,
     // у них своя проверка: содержимое не должно выходить за края экрана.
