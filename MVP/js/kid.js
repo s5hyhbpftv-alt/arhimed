@@ -190,7 +190,7 @@ function kidCodeCard(){
       <button class="btn ghost" style="min-height:36px;padding:6px 12px" onclick="kidCopyCode()">Скопировать</button>
     </div>
     <div class="small" style="margin-top:8px">Родитель открывает <a href="parent/" style="color:var(--brass)">123.teramont.pro/MVP/parent/</a>,
-      вводит этот код и придумывает PIN из 4 цифр. Тогда ему будет виден отчёт о занятиях.</div>
+      вводит этот код, придумывает PIN из 4 цифр и нажимает «Ввод». Тогда ему будет виден отчёт о занятиях.</div>
     <div class="rod-row" style="margin-top:8px">
       <a class="btn ghost" style="text-decoration:none;display:inline-flex;align-items:center;min-height:38px;padding:7px 12px" href="parent/">Открыть приложение родителя →</a>
     </div>
@@ -214,7 +214,7 @@ function kidRender(){
       </div>
       <div class="small" style="margin-top:8px">Покажи код родителю: он откроет
         <a href="parent/" style="color:var(--brass)">123.teramont.pro/MVP/parent/</a>, введёт код,
-        придумает PIN — и увидит отчёт о твоих занятиях.</div>
+        придумает свой PIN и нажмёт «Ввод» — увидит отчёт о твоих занятиях.</div>
       <div class="rod-row" style="margin-top:8px">
         <a class="btn ghost" style="text-decoration:none;display:inline-flex;align-items:center;min-height:38px;padding:7px 12px" href="parent/">Я родитель — открыть →</a>
         <button class="btn" style="min-height:38px;padding:7px 14px" onclick="kidIntroDone()">Понятно</button>
@@ -306,7 +306,11 @@ function kidBindFlow(){
   const k = kidSt();
   if (k.binding || PinPad.isOpen()) return;
   k.binding = 1;
-  PinPad.set({}).then(pin => {
+  PinPad.set({
+    title: 'Придумай свой PIN',
+    subtitle: 'Четыре цифры — ими будешь входить в приложение',
+    foot: 'Нажми «Ввод», когда набрал. Запомни PIN.'
+  }).then(pin => {
     k.binding = 0;
     if (!pin) return;
     kidSendPin(pin);
@@ -314,6 +318,7 @@ function kidBindFlow(){
 }
 function kidSendPin(pin){
   const k = kidSt();
+  _kidPendingPin = pin; _kidPendingAt = Date.now();
   kidPost({act: 'device', code: k.code, token: k.token, pin: pin}).then(r => {
       if (r && r.ok){
         k.dpin = 1; k.linked = 1; _kidPendingPin = '';
@@ -323,12 +328,10 @@ function kidSendPin(pin){
         if (!k.introShown) setTimeout(() => { try{ kidRender(); }catch(e){} }, 300);
         return;
       }
-      if (r && r.err === 'pinset'){ k.dpin = 1; kidSaveState(); kidUnlock(); kidRender(); return; }
+      if (r && r.err === 'pinset'){ k.dpin = 1; kidSaveState(); kidUnlock(); kidRender(); _kidPendingPin = ''; return; }
       if (r && r.err === 'unlinked'){ kidUnlinkedScreen(); return; }
-      _kidPendingPin = pin; _kidPendingAt = Date.now();
       try{ toast('Не получилось сохранить PIN — попробуем снова, когда появится связь'); }catch(e){}
     }).catch(() => {
-      _kidPendingPin = pin; _kidPendingAt = Date.now();
       try{ toast('Нет связи. PIN запомнен — отправим, когда интернет вернётся'); }catch(e){}
     });
 }
@@ -340,7 +343,7 @@ function kidLockScreen(){
   PinPad.ask({
     avatar: kidAvatar(),
     title: 'Привет, ' + (p.name || 'друг') + '!',
-    subtitle: 'Введи свой PIN — четыре цифры',
+    subtitle: 'Свой PIN — четыре цифры, потом «Ввод»',
     foot: 'Забыл PIN? <span class="pp-link" onclick="kidForgotPin()">Создать новый код</span>',
     verify: pin => kidPost({act: 'enter', code: kidCode(), pin: pin}).then(r => {
       if (r && r.ok){ kidUnlock(); kidTake(r); kidPush(1); return true; }
@@ -378,7 +381,7 @@ function kidRebind(){
   PinPad.ask({
     avatar: kidAvatar(),
     title: 'Привязка заново',
-    subtitle: 'Введи свой PIN — четыре цифры',
+    subtitle: 'Свой PIN — четыре цифры, потом «Ввод»',
     cancel: true,
     foot: 'Код и заметки родителя останутся прежними',
     verify: pin => kidPost({act: 'rebind', code: kidCode(), pin: pin}).then(r => {
@@ -441,8 +444,11 @@ function kidGate(){
     if (k.dpin && k.linked === 0){ kidUnlinkedScreen(); return; }
     if (!k.dpin){
       /* PIN уже придуман, но не уехал из-за связи — повторяем сами */
-      if (_kidPendingPin && Date.now() - _kidPendingAt > 8000){ _kidPendingAt = Date.now(); kidSendPin(_kidPendingPin); return; }
-      if (!_kidPendingPin) kidBindFlow();
+      if (_kidPendingPin){
+        if (Date.now() - _kidPendingAt > 8000){ _kidPendingAt = Date.now(); kidSendPin(_kidPendingPin); }
+        return;
+      }
+      kidBindFlow();
       return;
     }
     if (!kidUnlocked()) kidLockScreen();

@@ -72,6 +72,10 @@ function rodAva(c, size){
     border-radius:50%;font-size:${Math.round(s * 0.46)}px;background:${col}22;border:2px solid ${col};
     box-shadow:0 0 22px -10px ${col}">${g}</span>`;
 }
+function rodAvaFace(c){
+  c = c || {};
+  return c.gender === 'girl' ? '👧' : (c.gender === 'boy' ? '👦' : (c.name ? String(c.name).trim()[0].toUpperCase() : '🧒'));
+}
 function rodChildLine(){
   const c = ROD.card || ROD.child || {};
   return `${esc(c.name || 'Ученик')}${c.klass ? ' · ' + esc(c.klass) + ' класс' : ''}`;
@@ -85,25 +89,26 @@ function rodEmpty(){
 /* ---------- первый вход: код ребёнка ---------- */
 function rodScreenLogin(){
   rodEmpty();
-  document.getElementById('screen').innerHTML = `<div class="card" style="max-width:440px;margin:18px auto">
-    <div style="text-align:center"><div style="font-size:38px">🛡</div>
+  document.getElementById('screen').innerHTML = `<div class="card rod-login">
+    <div style="text-align:center"><div class="rod-login-ico" aria-hidden="true">🛡</div>
       <h2 style="margin:6px 0">Кабинет родителя</h2>
-      <div class="small" style="margin-bottom:10px">Введите код ребёнка — он показан в детском приложении
-        в карточке «Твой код для родителя».</div></div>
-    <label class="small">Код ребёнка</label>
+      <div class="small" style="margin-bottom:12px">Код ребёнка написан в детском приложении —
+        карточка «Твой код для родителя». Дальше попросим ваш PIN из 4 цифр.</div></div>
+    <label class="small" for="rodCode">Код ребёнка</label>
     <input class="gate-in code" id="rodCode" value="${esc(ROD.code || '')}" placeholder="ARH-XXXX-XX"
-      autocomplete="off" spellcheck="false">
-    <label class="small" style="display:flex;gap:8px;align-items:center;margin:8px 0 2px">
+      autocomplete="off" spellcheck="false" autocapitalize="characters" inputmode="text" maxlength="12">
+    <label class="small rod-check">
       <input type="checkbox" id="rodRemember" ${ROD.remember ? 'checked' : ''}> запомнить вход на этом устройстве
     </label>
     <div class="rod-err" id="rodErr"></div>
-    <button class="btn" style="width:100%" onclick="rodByCode()">Продолжить →</button>
-    <div class="small" style="margin-top:8px">Код создаётся сам при первом входе ребёнка в общее приложение.</div>
+    <button class="btn rod-go" id="rodGo" type="button" onclick="rodByCode()">Продолжить</button>
+    <div class="small" style="margin-top:10px">Код появляется сам при первом входе ребёнка.
+      PIN родителя и PIN ребёнка — разные.</div>
   </div>`;
   const c = document.getElementById('rodCode');
-  c.addEventListener('input', () => { c.value = rodNormCode(c.value); });
+  c.addEventListener('input', () => { c.value = rodNormCode(c.value); rodErr(''); });
   c.addEventListener('keydown', e => { if (e.key === 'Enter') rodByCode(); });
-  c.focus();
+  try{ c.focus(); c.setSelectionRange(c.value.length, c.value.length); }catch(e){ try{ c.focus(); }catch(x){} }
 }
 
 function rodReadCode(){
@@ -119,14 +124,21 @@ function rodByCode(){
   const code = rodReadCode();
   rodErr('');
   if (!/^ARH-[A-Z0-9]{4}-[A-Z0-9]{2}$/.test(code)){ rodErr('Код выглядит так: ARH-4K7Q-2M'); return; }
+  const btn = document.getElementById('rodGo');
+  if (btn){ btn.disabled = true; btn.textContent = 'Проверяем…'; }
   rodPost({act: 'probe', code: code}).then(r => {
     if (!r || !r.ok){
       rodErr(r && r.err === 'notfound' ? 'Такого кода нет. Проверьте код в детском приложении.' : 'Нет связи с сервером.');
       return;
     }
+    ROD.code = code;
+    rodStateSave();
     if (!r.pinSet) rodCreatePin(r);
     else rodEnterPin(r);
-  }).catch(() => rodErr('Нет связи с сервером.'));
+  }).catch(() => rodErr('Нет связи с сервером.')).finally(() => {
+    const b = document.getElementById('rodGo');
+    if (b){ b.disabled = false; b.textContent = 'Продолжить'; }
+  });
 }
 
 /* первый раз: родитель придумывает свой PIN (дважды) */
@@ -134,14 +146,17 @@ function rodCreatePin(){
   PinPad.set({
     title: 'Придумайте свой PIN',
     subtitle: 'Четыре цифры — их будет спрашивать кабинет родителя',
-    foot: 'PIN знаете только вы'
+    foot: 'PIN знаете только вы · нажмите «Ввод»',
+    cancel: 'Назад к коду',
+    onCancel: () => { setTimeout(rodScreenLogin, 40); }
   }).then(pin => {
-    if (!pin) return;
+    if (!pin){ rodScreenLogin(); return; }
     rodPost({act: 'claim', code: ROD.code, pin: pin}).then(r => {
       if (r && r.ok){ rodAfterLogin(r, pin); return; }
       if (r && r.err === 'pin'){ rodEnterPin(); return; }
       toast('Не получилось привязаться — проверьте связь');
-    }).catch(() => toast('Нет связи с сервером'));
+      rodScreenLogin();
+    }).catch(() => { toast('Нет связи с сервером'); rodScreenLogin(); });
   });
 }
 
@@ -150,12 +165,13 @@ function rodEnterPin(){
   const c = ROD.card || {};
   const known = !!(c.name || c.klass);
   PinPad.ask({
-    avatar: known ? rodAva(c, 64) : '🔐',
+    avatar: known ? rodAvaFace(c) : '🔐',
     title: known ? rodChildLine() : 'PIN родителя',
-    subtitle: known ? 'Введите свой PIN — четыре цифры'
-                    : 'Код ' + esc(ROD.code) + ' · введите PIN, который задали при привязке',
-    cancel: true,
-    foot: `<span class="pp-link" onclick="rodAnotherCode()">Другой код ребёнка</span>`,
+    subtitle: known ? 'Ваш PIN — четыре цифры, затем «Ввод»'
+                    : 'Код ' + esc(ROD.code) + ' · PIN, который задали при привязке',
+    cancel: 'Другой код ребёнка',
+    onCancel: rodAnotherCode,
+    foot: 'PIN родителя и PIN ребёнка — разные',
     verify: pin => rodPost({act: 'get', code: ROD.code, pin: pin}).then(r => {
       if (r && r.ok){ rodAfterLogin(r, pin); return true; }
       if (r && r.err === 'pin') return 'PIN не подходит';
@@ -164,6 +180,8 @@ function rodEnterPin(){
       if (r && r.err === 'notfound') return 'Код больше не существует';
       return 'Нет связи с сервером';
     })
+  }).then(pin => {
+    if (!pin && !ROD.pin) rodScreenLogin();
   });
 }
 
@@ -172,6 +190,11 @@ function rodAfterLogin(r, pin){
   if (r.child && (r.child.name || r.child.klass)) ROD.card = r.child;
   rodStateSave();
   rodApply(r);
+  /* ребёнок мог только что задать PIN — подождём снимок, чтобы имя и «привязано» подтянулись */
+  if (!ROD.linked || !(ROD.card && ROD.card.name)){
+    setTimeout(rodRefresh, 1200);
+    setTimeout(rodRefresh, 3500);
+  }
 }
 
 /* сменить код (другой ребёнок) */

@@ -192,6 +192,15 @@ function rpStyles(){
   .rp-dots i.ok{background:var(--glass)}
   .rp-dots i.no{background:#e86a5a}
   .rp-dots i.now{box-shadow:0 0 0 3px rgba(217,164,65,.22);background:var(--brass)}
+  .rp-foot button{min-height:44px}
+  @media (max-width:400px){
+    .rp-hero{flex-wrap:wrap}
+    .rp-hero .big{font-size:32px}
+    .rp-hero .side{text-align:left;width:100%}
+    .rp-name{font-size:18px}
+    .rp-rings{gap:4px}
+    .rp-line .t{white-space:normal}
+  }
   `;
   document.head.appendChild(st);
 }
