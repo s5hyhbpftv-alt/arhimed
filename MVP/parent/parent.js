@@ -124,7 +124,7 @@ function rodEmpty(){
 function rodScreenLogin(){
   rodEmpty();
   document.getElementById('screen').innerHTML = `<div class="card rod-login">
-    <div style="text-align:center"><div class="rod-login-ico" aria-hidden="true">🛡</div>
+    <div style="text-align:center"><div class="rod-login-ico" aria-hidden="true"><img src="../img/icons/parent-192.png" width="84" height="84" alt=""></div>
       <h2 style="margin:6px 0">Кабинет родителя</h2>
       <div class="small" style="margin-bottom:12px">Код ребёнка написан в детском приложении —
         карточка «Твой код для родителя». Дальше попросим ваш PIN из 4 цифр.</div></div>

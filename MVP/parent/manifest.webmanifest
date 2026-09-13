@@ -1,0 +1,19 @@
+{
+  "name": "АРХИМЕД · приложение родителя",
+  "short_name": "АРХИМЕД · Род",
+  "description": "Кабинет родителя: прогресс ребёнка, PIN, заметки и лимиты.",
+  "lang": "ru",
+  "id": "/MVP/parent/",
+  "start_url": "index.html",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c161a",
+  "theme_color": "#0c161a",
+  "categories": ["education"],
+  "icons": [
+    { "src": "../img/icons/parent-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "../img/icons/parent-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "../img/icons/parent-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

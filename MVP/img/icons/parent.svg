@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="bgp" cx="34%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#203848"/>
+      <stop offset="100%" stop-color="#0c161a"/>
+    </radialGradient>
+    <linearGradient id="brassp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e0a0"/>
+      <stop offset="45%" stop-color="#d9a441"/>
+      <stop offset="100%" stop-color="#8a6020"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bgp)"/>
+  <path fill="#0e1a20" stroke="url(#brassp)" stroke-width="28"
+        d="M210,220 C210,188 232,168 264,168 H760 C792,168 814,188 814,220
+           V500 C814,700 680,820 512,888 C344,820 210,700 210,500 Z"/>
+  <path fill="#0a1418"
+        d="M258,228 C258,214 270,204 286,204 H738 C754,204 766,214 766,228
+           V498 C766,672 654,778 512,836 C370,778 258,672 258,498 Z"/>
+  <circle cx="512" cy="494" r="118" fill="none" stroke="#d9a441" stroke-width="10"/>
+  <polygon fill="#f7e0a0" points="512,398 528,494 512,590 496,494"/>
+  <polygon fill="#d9a441" points="416,494 512,478 608,494 512,510"/>
+  <circle cx="512" cy="494" r="18" fill="#f7e0a0"/>
+  <circle cx="484" cy="682" r="8" fill="#f7e0a0"/>
+  <circle cx="512" cy="682" r="8" fill="#f7e0a0"/>
+  <circle cx="540" cy="682" r="8" fill="#f7e0a0"/>
+</svg>

@@ -9,9 +9,13 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0b1712">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="../МОБ_ПРИЛОЖЕНИЕ/icons/apple-touch-icon.png">
-<title>АРХИМЕД · MVP-приложение</title>
+<meta name="apple-mobile-web-app-title" content="АРХИМЕД">
+<link rel="icon" type="image/svg+xml" href="img/icons/favicon-student.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icons/student-32.png">
+<link rel="apple-touch-icon" href="img/icons/student-apple.png">
+<title>АРХИМЕД · приложение ученика</title>
 <style>
   :root { --deep:#0b1712; --panel:#13251c; --card:#182f24; --card2:#101f18;
     --brass:#d9a441; --brass-d:#a3762a; --ivory:#e8e0cc; --muted:#8fa08f;
@@ -25,8 +29,11 @@
   .wrap { max-width:900px; margin:0 auto; padding:14px 14px 140px; }
   header { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
     border-bottom:1px solid var(--hairline); padding-bottom:10px; margin-bottom:12px; }
-  .logo { font-size:20px; color:var(--brass); letter-spacing:.05em; }
+  .logo { font-size:20px; color:var(--brass); letter-spacing:.05em; display:flex; align-items:center; gap:10px; }
   .logo small { display:block; font-size:11.5px; color:var(--muted); letter-spacing:.02em; margin-top:2px; }
+  .logo .app-mark { width:40px; height:40px; border-radius:10px; flex-shrink:0;
+    box-shadow:0 4px 16px -6px rgba(217,164,65,.6); }
+  .logo .logo-txt { line-height:1.15; }
   .hud { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
   .chip { background:var(--panel); border:1px solid var(--hairline); border-radius:999px; padding:5px 12px; font-size:12.5px; }
   .chip b { color:var(--brass); }
@@ -794,7 +801,10 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="logo">АРХИМЕД<small id="hdrSub">Острова Познания · MVP</small></div>
+    <div class="logo">
+      <img class="app-mark" src="img/icons/student-192.png" width="40" height="40" alt="">
+      <span class="logo-txt">АРХИМЕД<small id="hdrSub">Острова Познания · ученик</small></span>
+    </div>
     <div class="hud">
       <span class="chip" id="hName"></span>
       <span class="chip">⭐ <b id="hPoints">0</b></span>
@@ -817,43 +827,43 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=592"></script>
-<script src="data/tasks_ru.js?v=592"></script>
-<script src="data/tasks_mishutka.js?v=592"></script>
-<script src="data/tasks_fg6.js?v=592"></script>
-<script src="data/tasks_dict.js?v=592"></script>
-<script src="data/tasks_dict_1_6.js?v=592"></script>
-<script src="data/lessons.js?v=592"></script>
-<script src="data/lessons_draft.js?v=592"></script>
-<script src="data/comics_12.js?v=592"></script>
-<script src="data/sim_phys.js?v=592"></script>
-<script src="data/vis_bw.js?v=592"></script>
-<script src="data/vis_pw.js?v=592"></script>
-<script src="data/vis_ru.js?v=592"></script>
-<script src="data/lessons_fg6.js?v=592"></script>
-<script src="data/vis_cw.js?v=592"></script>
-<script src="data/vis_dw.js?v=592"></script>
-<script src="data/vis_ew.js?v=592"></script>
-<script src="data/vis_kl.js?v=592"></script>
-<script src="data/vis_wk.js?v=592"></script>
-<script src="data/inf_56.js?v=592"></script>
-<script src="js/comic.js?v=592"></script>
-<script src="js/core.js?v=592"></script>
-<script src="js/engine.js?v=592"></script>
-<script src="js/app.js?v=592"></script>
-<script src="js/dashboard.js?v=592"></script>
-<script src="js/pinpad.js?v=592"></script>
-<script src="js/kid.js?v=592"></script>
-<script src="js/notemodal.js?v=592"></script>
-<script src="js/lessons.js?v=592"></script>
-<script src="js/wave_guard.js?v=592"></script>
-<script src="js/legend.js?v=592"></script>
-<script src="js/simulator.js?v=592"></script>
-<script src="js/duel.js?v=592"></script>
-<script src="js/agent.js?v=592"></script>
-<script src="js/voice.js?v=592"></script>
-<script src="js/assistant.js?v=592"></script>
-<script src="js/agentlive.js?v=592"></script>
+<script src="data/tasks.js?v=593"></script>
+<script src="data/tasks_ru.js?v=593"></script>
+<script src="data/tasks_mishutka.js?v=593"></script>
+<script src="data/tasks_fg6.js?v=593"></script>
+<script src="data/tasks_dict.js?v=593"></script>
+<script src="data/tasks_dict_1_6.js?v=593"></script>
+<script src="data/lessons.js?v=593"></script>
+<script src="data/lessons_draft.js?v=593"></script>
+<script src="data/comics_12.js?v=593"></script>
+<script src="data/sim_phys.js?v=593"></script>
+<script src="data/vis_bw.js?v=593"></script>
+<script src="data/vis_pw.js?v=593"></script>
+<script src="data/vis_ru.js?v=593"></script>
+<script src="data/lessons_fg6.js?v=593"></script>
+<script src="data/vis_cw.js?v=593"></script>
+<script src="data/vis_dw.js?v=593"></script>
+<script src="data/vis_ew.js?v=593"></script>
+<script src="data/vis_kl.js?v=593"></script>
+<script src="data/vis_wk.js?v=593"></script>
+<script src="data/inf_56.js?v=593"></script>
+<script src="js/comic.js?v=593"></script>
+<script src="js/core.js?v=593"></script>
+<script src="js/engine.js?v=593"></script>
+<script src="js/app.js?v=593"></script>
+<script src="js/dashboard.js?v=593"></script>
+<script src="js/pinpad.js?v=593"></script>
+<script src="js/kid.js?v=593"></script>
+<script src="js/notemodal.js?v=593"></script>
+<script src="js/lessons.js?v=593"></script>
+<script src="js/wave_guard.js?v=593"></script>
+<script src="js/legend.js?v=593"></script>
+<script src="js/simulator.js?v=593"></script>
+<script src="js/duel.js?v=593"></script>
+<script src="js/agent.js?v=593"></script>
+<script src="js/voice.js?v=593"></script>
+<script src="js/assistant.js?v=593"></script>
+<script src="js/agentlive.js?v=593"></script>
 <script>
   /* сброс кэша при новой сборке: номер берём из адресов самих скриптов,
      поэтому после каждой выкладки старый кэш и старый service worker снимаются сами */
@@ -880,7 +890,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=592').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=593').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{

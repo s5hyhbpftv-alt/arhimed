@@ -11,8 +11,8 @@ const ASSETS = [
   'ПРОТОТИП_ХИМИЯ_ТРЕНАЖЕР.html',
   'ПРОТОТИП_ОНБОРДИНГ.html',
   'ХАБ_ПРОТОТИП.html',
-  'МОБ_ПРИЛОЖЕНИЕ/icons/icon-192.png',
-  'МОБ_ПРИЛОЖЕНИЕ/icons/icon-512.png',
+  'MVP/img/icons/student-192.png',
+  'MVP/img/icons/student-512.png',
   'manifest.webmanifest'
 ];
 
