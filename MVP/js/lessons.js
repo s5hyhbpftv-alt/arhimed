@@ -102,8 +102,8 @@ function bookIcoHTML(subj, meta, big){
   /* значок предмета; у «Пути Мишутки» вместо эмодзи — картинка медвежонка:
      в шапке раздела — в полный рост, в тесных местах (таб, строка урока, секция) — только голова */
   if(subj==='mish') return big
-    ? `<img class="subj-img lg" src="img/mishutka.png" alt="">`
-    : `<img class="subj-img" src="img/mishutka-head.png" alt="">`;
+    ? `<img class="subj-img lg" src="img/mishutka-path.png" alt="">`
+    : `<img class="subj-img" src="img/mishutka-path-head.png" alt="">`;
   return meta.ico;
 }
 function renderBookList(){
@@ -112,7 +112,7 @@ function renderBookList(){
   const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
   const totalL=pool.length;
   const junior=typeof isJunior==='function'&&isJunior();
-  const order=junior? ['jun'] : ['all','mish','math','rus','phys','chem','inf'];
+  const order=junior? ['jun'] : ['all','math','rus','phys','chem','inf','mish'];
   const grouped=order.filter(s=>s==='all'||pool.some(L=>subjOf(L)===s)).map(subj=>{
     if(subj==='all') return { subj:'all', meta:{ico:'📚',name:'Все предметы'}, items:pool };
     const meta=SUBJ_META[subj]; return { subj, meta, items:pool.filter(L=>subjOf(L)===subj) };

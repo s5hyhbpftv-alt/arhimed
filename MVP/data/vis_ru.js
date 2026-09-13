@@ -4547,7 +4547,7 @@ window.RU615 = (function(){
          kind:'unit',ans:315,tol:0,
          hints:['210 — это две трети, значит одна треть в два раза меньше.','Одна треть — 105, а мест в зале три трети.'],
          sol:'105 × 3 = 315 мест.'}
-      ],img:'img/mishutka-head.png'});
+      ],img:'img/mishutka.png'});
   }
   if(window.WAVE_B) window.WAVE_B[615]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
   return {render:render,data:Q,art:ART};
@@ -4629,7 +4629,7 @@ window.RU615PAPER = (function(){
     el.innerHTML=`<div class="pp">
       <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div>
         <div class="of" style="display:flex;align-items:center;gap:8px">
-          <img src="img/mishutka-head.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">Путь Мишутки</div></div>
+          <img src="img/mishutka.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">Путь Мишутки</div></div>
       <h2>${it.t}</h2>
       ${art}
       <div class="q">${it.q}</div>
@@ -6127,7 +6127,7 @@ window.RUPAPER = (function(){
     el.innerHTML=`<div class="pp">
       <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div>
         <div class="of" style="display:flex;align-items:center;gap:8px">
-          <img src="img/mishutka-head.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">${cfg.brand||'Путь Мишутки'}</div></div>
+          <img src="img/mishutka.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">${cfg.brand||'Путь Мишутки'}</div></div>
       <h2>${it.t}</h2>
       <div class="fig">${String(cfg.art[it.k]())}</div>
       <div class="q">${it.q}</div>
@@ -6208,7 +6208,7 @@ window.RUPAPER = (function(){
     };
     if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===cfg.id)){
       window.ARH_LESSONS.push({id:cfg.id,title:cfg.title,ico:cfg.ico,src:cfg.src,subj:'rus',group:cfg.group||'mish',
-        explain:cfg.data.map((x,i)=>(i+1)+'. '+x.t),check:cfg.check,tasks:cfg.tasks,img:'img/mishutka-head.png'});
+        explain:cfg.data.map((x,i)=>(i+1)+'. '+x.t),check:cfg.check,tasks:cfg.tasks,img:'img/mishutka.png'});
     }
   }
   return {mount:mount,css:css};
