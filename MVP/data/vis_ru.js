@@ -7,29 +7,6 @@ window.RUKIT = (function(){
   const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f', PALE='#e8dcc8';
   const T = K.l, T2 = K.l2, SV = K.sv, CARDS = K.cards;
 
-  /* --- Пояснение кадра и вопрос-проверка: свой кегль для русского направления ---
-     Раньше русские уроки брали компоненты у PKIT (физика и математика), а там
-     пояснение 13,5 px и вопрос 13 px — ниже стандарта (основной текст не меньше
-     16). Трогать PKIT нельзя: это общий движок других предметов. Поэтому здесь
-     свои компоненты по шкале: вопрос 18, пояснение 16, кнопка ответа 16,
-     цель касания не меньше 52 px. */
-  const RCSS=`
-  #lvis .ru-note{width:min(100%,340px);text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-    border:1px solid #3d5c49;border-radius:14px;padding:14px 16px}
-  #lvis .ru-note .t{color:${GOLD};font-size:20px;line-height:1.25;font-weight:600;margin-bottom:8px}
-  #lvis .ru-note .b{color:${PALE};font-size:16px;line-height:1.55}
-  #lvis .ru-pred{width:min(100%,340px);text-align:left}
-  #lvis .ru-pred .q{color:${GOLD};font-size:18px;line-height:1.4;margin-bottom:10px}
-  #lvis .ru-pred .r{display:flex;gap:10px;flex-wrap:wrap}
-  #lvis .ru-pred button{flex:1 1 44%;min-height:52px;padding:14px 16px;font-family:Georgia,'Times New Roman',serif;
-    font-size:16px;line-height:1.35;border-radius:14px;border:1.5px solid rgba(255,215,106,.28);
-    background:rgba(255,255,255,.05);color:${PALE};cursor:pointer;transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 160ms}
-  #lvis .ru-pred button:active{transform:translateY(2px)}
-  #lvis .ru-pred button:focus-visible{outline:3px solid ${GOLD};outline-offset:3px}
-  #lvis .ru-pred .fb{margin-top:10px;font-size:16px;line-height:1.5}
-  `;
-  function rcss(){ try{ let e=document.getElementById('ruk-style'); if(!e){ e=document.createElement('style'); e.id='ruk-style'; document.head.appendChild(e); } if(e.textContent!==RCSS) e.textContent=RCSS; }catch(e){} }
-
   /* --- Общий каркас кадра по стандарту кеглей (шаг 2 редизайна) ---
      Кадры уроков 601–610 должны читаться без увеличения: заголовок 24, лид 20,
      служебная подпись 16, буква-задание 44. Урок 601 живёт в этой вёрстке с
@@ -88,7 +65,7 @@ window.RUKIT = (function(){
   body:has(#lvis .pp) .avatar,body:has(#lvis .pp) .mascot,body:has(#lvis .pp) .assistant{display:none!important}
   #lvis .s6 .crate{flex:1 1 30%;min-width:104px;padding:16px 12px;text-align:center}
   #lvis .s6 .crate .ic{font-size:30px}
-  #lvis .s6 .crate .nm{font-size:17px;font-weight:600;color:var(--gold);margin-top:8px;white-space:nowrap}
+  #lvis .s6 .crate .nm{font-size:16px;font-weight:600;color:var(--gold);margin-top:8px;white-space:nowrap}
   #lvis .s6 .crate .ex{font-size:14px;line-height:1.3;color:var(--mut);margin-top:4px}
   #lvis .s6 .crate.hit{border-color:var(--ok);box-shadow:0 0 0 4px rgba(143,209,168,.18);animation:bump 320ms ${FRAME_OUT}}
   #lvis .s6 .crate.miss{border-color:var(--no);animation:nudge 150ms ease-out}
@@ -123,7 +100,7 @@ window.RUKIT = (function(){
   #lvis .s6 .morph{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;align-items:flex-end}
   #lvis .s6 .morph .m{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 14px;border-radius:14px;
     border:1.6px solid var(--c,#ffd76a);background:rgba(255,255,255,.045);min-width:56px}
-  #lvis .s6 .morph .m b{font-size:34px;line-height:1.05;font-weight:600;color:var(--c,#ffd76a)}
+  #lvis .s6 .morph .m b{font-size:32px;line-height:1.05;font-weight:600;color:var(--c,#ffd76a)}
   #lvis .s6 .morph .m i{font-style:normal;font-size:14px;line-height:1.2;color:var(--mut)}
   #lvis .s6 .pair{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
   #lvis .s6 .pair .card{flex:1 1 42%;min-width:150px}
@@ -132,11 +109,10 @@ window.RUKIT = (function(){
     border:1.5px solid var(--line);background:linear-gradient(180deg,#22362c,#17261e)}
   #lvis .s6 .steps .st .n{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
     font-size:16px;color:#20180a;background:linear-gradient(180deg,#ffd76a,#e2b23f)}
-  #lvis .s6 .steps .st .t{font-size:17px;line-height:1.3}
+  #lvis .s6 .steps .st .t{font-size:16px;line-height:1.3}
   #lvis .s6 .steps .st .t small{display:block;font-size:14px;color:var(--mut);margin-top:2px}
     `;
   function frameCss(){
-    rcss();
     try{
       let e=document.getElementById('s6-style');
       if(!e){ e=document.createElement('style'); e.id='s6-style'; document.head.appendChild(e); }
@@ -297,10 +273,10 @@ window.RUKIT = (function(){
   .rk-note{width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
     border:1px solid rgba(255,215,106,.28);border-left:4px solid #ffd76a;border-radius:16px;padding:14px 16px;
     animation:rkRise .5s cubic-bezier(.22,.9,.24,1) both;animation-delay:.1s}
-  .rk-note .rk-kicker{color:#ffd76a;font:600 12.5px/1 Georgia,serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+  .rk-note .rk-kicker{color:#ffd76a;font:600 14px/1 Georgia,serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
   .rk-note .rk-body{color:#f1e8d6;font-size:16px;line-height:1.62;font-family:Georgia,serif}
   .rk-pred{width:100%;text-align:left}
-  .rk-pred .rk-q{color:#ffd76a;font:600 15.5px/1.4 Georgia,serif;margin-bottom:10px}
+  .rk-pred .rk-q{color:#ffd76a;font:600 16px/1.4 Georgia,serif;margin-bottom:10px}
   .rk-pred .rk-opts{display:flex;flex-wrap:wrap;gap:10px}
   .rk-pred .rk-opt{flex:1 1 44%;min-width:140px;font-size:16px!important;padding:14px 12px!important;border-radius:14px!important}
   .rk-pred .rk-said{color:#d8e4d8;font-size:14px;margin-top:8px;opacity:.9}
@@ -694,6 +670,7 @@ window.RUKIT = (function(){
     ['Формы и родственники','Лес и леса — формы. Лес и лесник — родственники, разные слова.'],
     ['Тренажёр','Смотри, где стоит часть: перед корнем, после корня или в самом конце.']
   ];
+  window.RUEXTRA=window.RUEXTRA||{}; window.RUEXTRA[602]={pred:PRED602,notes:NOTES602};
 
   function visB602(el){
     try{
@@ -876,6 +853,7 @@ window.RUKIT = (function(){
     ['Проверка вслух','Произнеси проверочное слово: под ударением буква слышится ясно.'],
     ['Алгоритм','Найди корень → подбери проверку с ударением → напиши букву → проверь себя.']
   ];
+  window.RUEXTRA=window.RUEXTRA||{}; window.RUEXTRA[603]={pred:PRED603,notes:NOTES603};
   function visB603(el){
     try{
       const step=LV.step||0;
@@ -1053,6 +1031,7 @@ window.RUKIT = (function(){
     ['Удвоенные','Класс, суббота, аллея — словарные слова.'],
     ['Алгоритм','Найди сомнительную согласную → подбери проверку → послушай → напиши.']
   ];
+  window.RUEXTRA=window.RUEXTRA||{}; window.RUEXTRA[604]={pred:PRED604,notes:NOTES604};
   function visB604(el){
     try{
       const step=LV.step||0;
@@ -1229,6 +1208,7 @@ window.RUKIT = (function(){
     ['Разбор','Границы частей видно при разборе по составу: при-ех-а-л.'],
     ['Алгоритм','Можно вставить слово → предлог, раздельно. Нельзя → приставка, слитно.']
   ];
+  window.RUEXTRA=window.RUEXTRA||{}; window.RUEXTRA[605]={pred:PRED605,notes:NOTES605};
   function visB605(el){
     try{
       const step=LV.step||0;
@@ -1405,6 +1385,7 @@ window.RUKIT = (function(){
     ['Шипящие','Женский род с ь (рожь, мышь), мужской без ь (нож, ключ).'],
     ['Алгоритм','Начальная форма → он/она/оно → род; затем проверь число.']
   ];
+  window.RUEXTRA=window.RUEXTRA||{}; window.RUEXTRA[606]={pred:PRED606,notes:NOTES606};
   function visB606(el){
     try{
       const step=LV.step||0;
@@ -1589,6 +1570,7 @@ window.RUKIT = (function(){
     ['Предложный','О ком? о чём? — всегда с предлогом; в, на, о, при.'],
     ['Как определить','Задай вопрос от слова, с которым связано существительное.']
   ];
+  window.RUEXTRA=window.RUEXTRA||{}; window.RUEXTRA[607]={pred:PRED607,notes:NOTES607};
   function visB607(el){
     try{
       const step=LV.step||0;
@@ -1769,6 +1751,7 @@ window.RUKIT = (function(){
     ['Не путай','У прошедшего времени нет лица, есть род.'],
     ['Алгоритм','Вопрос → время → местоимение → лицо и число.']
   ];
+  window.RUEXTRA=window.RUEXTRA||{}; window.RUEXTRA[608]={pred:PRED608,notes:NOTES608};
   function visB608(el){
     try{
       const step=LV.step||0;
@@ -1946,6 +1929,7 @@ window.RUKIT = (function(){
     ['Сравни','Не хочу (частица) и ненавижу (без «не» нельзя).'],
     ['Алгоритм','Вопрос → мягкий знак. Для «не»: проверь, живёт ли слово без «не».']
   ];
+  window.RUEXTRA=window.RUEXTRA||{}; window.RUEXTRA[609]={pred:PRED609,notes:NOTES609};
   function visB609(el){
     try{
       const step=LV.step||0;
@@ -2132,6 +2116,7 @@ window.RUKIT = (function(){
     ['Сложное','Две и более основ — запятая между частями.'],
     ['Алгоритм','Найди однородные → проверь союзы; найди обращение → запятые; посчитай основы.']
   ];
+  window.RUEXTRA=window.RUEXTRA||{}; window.RUEXTRA[610]={pred:PRED610,notes:NOTES610};
   function visB610(el){
     try{
       const step=LV.step||0;
@@ -3530,7 +3515,7 @@ window.RU601V2 = (function(){
   body:has(#lvis .pp) .avatar,body:has(#lvis .pp) .mascot,body:has(#lvis .pp) .assistant{display:none!important}
   #lvis .s6 .crate{flex:1 1 30%;min-width:104px;padding:16px 12px;text-align:center}
   #lvis .s6 .crate .ic{font-size:30px}
-  #lvis .s6 .crate .nm{font-size:17px;font-weight:600;color:var(--gold);margin-top:8px;white-space:nowrap}
+  #lvis .s6 .crate .nm{font-size:16px;font-weight:600;color:var(--gold);margin-top:8px;white-space:nowrap}
   #lvis .s6 .crate .ex{font-size:14px;line-height:1.3;color:var(--mut);margin-top:4px}
   #lvis .s6 .crate.hit{border-color:var(--ok);box-shadow:0 0 0 4px rgba(143,209,168,.18);animation:bump 320ms ${OUT}}
   #lvis .s6 .crate.miss{border-color:var(--no);animation:nudge 150ms ease-out}
@@ -4445,12 +4430,12 @@ window.RU615PAPER = (function(){
     background:linear-gradient(180deg,rgba(200,90,100,0),rgba(200,90,100,.5) 8%,rgba(200,90,100,.5) 92%,rgba(200,90,100,0))}
   #lvis .pp .head{position:static;width:auto;display:flex;justify-content:space-between;align-items:baseline;gap:10px;
     border-bottom:1px solid ${RULE};padding-bottom:8px}
-  #lvis .pp .num{font-size:clamp(12px,3.4vw,14px);letter-spacing:.1em;text-transform:uppercase;color:${MUT}}
-  #lvis .pp .of{font-size:clamp(12px,3.4vw,14px);color:${MUT};font-variant-numeric:tabular-nums}
-  #lvis .pp h2{font-size:clamp(19px,5.4vw,23px);line-height:1.18;font-weight:600;margin:0;color:${INK};letter-spacing:-.01em}
+  #lvis .pp .num{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:${MUT}}
+  #lvis .pp .of{font-size:14px;color:${MUT};font-variant-numeric:tabular-nums}
+  #lvis .pp h2{font-size:20px;line-height:1.2;font-weight:600;margin:0;color:${INK};letter-spacing:-.01em}
   #lvis .pp .fig{border:1px solid ${RULE};border-radius:10px;background:rgba(255,253,247,.92);padding:10px 8px}
   #lvis .pp .fig svg *{stroke-linecap:round}
-  #lvis .pp .q{font-size:clamp(15.5px,4.3vw,17px);line-height:1.55;color:${INK}}
+  #lvis .pp .q{font-size:16px;line-height:1.55;color:${INK}}
   #lvis .pp .opts{display:flex;flex-direction:column;gap:10px}
   #lvis .pp .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
     padding:clamp(11px,3.2vw,14px) clamp(12px,3.4vw,16px);border-radius:10px;border:1px solid ${RULE};
@@ -4469,7 +4454,7 @@ window.RU615PAPER = (function(){
     animation:ppIn 260ms cubic-bezier(.23,1,.32,1) both}
   #lvis .pp .mark svg{flex:none;width:26px;height:26px}
   #lvis .pp .mark .d{stroke-dasharray:34;stroke-dashoffset:34;animation:ppDraw 360ms cubic-bezier(.2,1,.32,1) 120ms both}
-  #lvis .pp .mark p{margin:0;font-size:clamp(14.5px,4vw,16px);line-height:1.5}
+  #lvis .pp .mark p{margin:0;font-size:16px;line-height:1.5}
   #lvis .pp .mark.ok p{color:${OKC}}#lvis .pp .mark.no p{color:${NOC}}
   @keyframes ppIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   @keyframes ppDraw{to{stroke-dashoffset:0}}
@@ -4957,7 +4942,7 @@ window.RU615PAPER = (function(){
   const GAME602=[['приехать','приставка','приставка при-'],['лесник','суффикс','суффикс -ник'],
     ['леса','окончание','окончание -а'],['переход','приставка','приставка пере-'],
     ['домик','суффикс','суффикс -ик'],['книгу','окончание','окончание -у']];
-  const chip=(t,c)=>`<span class="tag" style="font-size:18px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
+  const chip=(t,c)=>`<span class="tag" style="font-size:16px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
 
   function frame(step, st){
     if(step===0) return `
@@ -5035,7 +5020,12 @@ window.RU615PAPER = (function(){
       if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={};
       const st=CHS[lk];
       R.frameCss();
-      el.innerHTML=`<div class="s6">${frame(step, st)}</div>`;
+      if(R.injectCss) R.injectCss();
+      const ex=(window.RUEXTRA||{})[602]||{};
+      const pv=ex.pred&&ex.pred[step], nt=ex.notes&&ex.notes[step];
+      el.innerHTML=`<div class="s6">${frame(step, st)}
+        ${pv?R.PRED(st,pv[0],pv[1],pv[2]):''}
+        ${nt?R.NOTE(nt[0],nt[1]):''}</div>`;
       if(step===8 && st.gRes!=null){                 /* отклик на ответ — тот же RUFEED */
         const it=GAME602[(st.gIdx||0)%GAME602.length];
         const box=document.createElement('div');
@@ -5068,7 +5058,21 @@ window.RULESSON=function(cfg){
       const st=CHS[lk];
       if(!cfg.frames[step]) return prev(el);      /* кадр остаётся у прежнего движка (603, 604 — тренажёр) */
       R.frameCss();
-      el.innerHTML=`<div class="s6">${cfg.frames[step](st)}</div>`;
+      /* Стили пояснения и вопроса-проверки (.rk-note, .rk-pred) выкладывает
+         injectCss(): раньше его вызывала отрисовка SVG-сцены, а в новом каркасе
+         сцены нет — и пояснение с кнопками оставались без оформления (кегль
+         брался из общего .btn приложения, 14,5 px вне шкалы). */
+      if(R.injectCss) R.injectCss();
+      /* Пояснение кадра и вопрос-проверка: у уроков 602–610 они были и до
+         перекладки, но при переносе кадров в новый каркас я их потерял —
+         остались только сцены. Возвращаем: пояснение объясняет правило,
+         вопрос-проверка спрашивает по кадру. */
+      const ex=(window.RUEXTRA||{})[cfg.id]||{};
+      const pv=ex.pred&&ex.pred[step], nt=ex.notes&&ex.notes[step];
+      window.__dbg={id:cfg.id, step:step, hasEx:!!(ex&&ex.pred), plen:ex&&ex.pred?ex.pred.length:-1, pv:!!pv, nt:!!nt, keys:Object.keys(window.RUEXTRA||{})};
+      el.innerHTML=`<div class="s6">${cfg.frames[step](st)}
+        ${pv?R.PRED(st,pv[0],pv[1],pv[2]):''}
+        ${nt?R.NOTE(nt[0],nt[1]):''}</div>`;
       if(step===8 && st.gRes!=null){
         const it=cfg.game[(st.gIdx||0)%cfg.game.length];
         const box=document.createElement('div');
@@ -5079,7 +5083,7 @@ window.RULESSON=function(cfg){
         else el.appendChild(box.firstChild);
       }
       return;
-    }catch(e){}
+    }catch(e){ try{ console.error('кадр '+cfg.id+':', e); }catch(_){} }
     return prev(el);
   };
 };
@@ -5088,7 +5092,7 @@ window.RULESSON=function(cfg){
   const R=window.RUKIT; if(!R) return;
   const GOLD=R.GOLD, GREEN=R.GREEN, BLUE=R.BLUE, MUTED=R.MUTED, CYAN='#7fd1ff', PINK='#e8a0d8';
   const M=R.frameMorph;
-  const chip=(t,c)=>`<span class="tag" style="font-size:18px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
+  const chip=(t,c)=>`<span class="tag" style="font-size:16px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
   const cards=(items)=>`<div class="row">${items.map(([nm,ex,ic])=>
     `<div class="card">${ic?`<div class="ic">${ic}</div>`:''}<div class="nm">${nm}</div><div class="ex">${ex}</div></div>`).join('')}</div>`;
   const pair=(a,b)=>`<div class="pair">${a}${b}</div>`;
@@ -5200,7 +5204,7 @@ window.RULESSON=function(cfg){
 (function(){
   const R=window.RUKIT; if(!R) return;
   const GOLD=R.GOLD, GREEN=R.GREEN, BLUE=R.BLUE, MUTED=R.MUTED, CYAN='#7fd1ff', PINK='#e8a0d8';
-  const chip=(t,c)=>`<span class="tag" style="font-size:18px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
+  const chip=(t,c)=>`<span class="tag" style="font-size:16px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
   const card=(nm,ex)=>`<div class="card"><div class="nm">${nm}</div><div class="ex">${ex}</div></div>`;
   const cards=(items)=>`<div class="row">${items.map(([nm,ex])=>card(nm,ex)).join('')}</div>`;
   const pair=(a,b)=>`<div class="pair">${a}${b}</div>`;
@@ -5392,7 +5396,7 @@ window.RULESSON=function(cfg){
   const R=window.RUKIT; if(!R) return;
   const GOLD=R.GOLD, GREEN=R.GREEN, MUTED=R.MUTED, CYAN='#7fd1ff', PINK='#e8a0d8';
   const M=R.frameMorph;
-  const chip=(t,c)=>`<span class="tag" style="font-size:18px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
+  const chip=(t,c)=>`<span class="tag" style="font-size:16px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
   const card=(nm,ex)=>`<div class="card"><div class="nm">${nm}</div><div class="ex">${ex}</div></div>`;
   const pair=(a,b)=>`<div class="pair">${a}${b}</div>`;
   const cards=(items)=>`<div class="row">${items.map(([nm,ex])=>card(nm,ex)).join('')}</div>`;
@@ -5501,19 +5505,19 @@ window.RUPAPER = (function(){
     background:linear-gradient(180deg,rgba(200,90,100,0),rgba(200,90,100,.5) 8%,rgba(200,90,100,.5) 92%,rgba(200,90,100,0))}
   #lvis .pp .head{position:static;width:auto;display:flex;justify-content:space-between;align-items:baseline;gap:10px;
     border-bottom:1px solid ${RULE};padding-bottom:8px}
-  #lvis .pp .num{font-size:clamp(12px,3.4vw,14px);letter-spacing:.1em;text-transform:uppercase;color:${MUT}}
-  #lvis .pp .of{font-size:clamp(12px,3.4vw,14px);color:${MUT};font-variant-numeric:tabular-nums}
-  #lvis .pp h2{font-size:clamp(19px,5.4vw,23px);line-height:1.18;font-weight:600;margin:0;color:${INK};letter-spacing:-.01em}
+  #lvis .pp .num{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:${MUT}}
+  #lvis .pp .of{font-size:14px;color:${MUT};font-variant-numeric:tabular-nums}
+  #lvis .pp h2{font-size:20px;line-height:1.2;font-weight:600;margin:0;color:${INK};letter-spacing:-.01em}
   #lvis .pp .fig{border:1px solid ${RULE};border-radius:10px;background:rgba(255,253,247,.92);padding:10px 8px}
   #lvis .pp .fig svg *{stroke-linecap:round}
-  #lvis .pp .q{font-size:clamp(15.5px,4.3vw,17px);line-height:1.55;color:${INK}}
-  #lvis .pp .hint{font-size:clamp(14px,3.8vw,15px);line-height:1.45;color:${MUT}}
+  #lvis .pp .q{font-size:16px;line-height:1.55;color:${INK}}
+  #lvis .pp .hint{font-size:14px;line-height:1.45;color:${MUT}}
   #lvis .pp .opts,#lvis .pp .seq,#lvis .pp .frag{display:flex;flex-direction:column;gap:10px}
   #lvis .pp .opt,#lvis .pp .fr{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
     padding:clamp(11px,3.2vw,14px) clamp(12px,3.4vw,16px);border-radius:10px;border:1px solid ${RULE};
-    background:${PAPER2};font-family:${F};font-size:clamp(15px,4.2vw,17px);color:${INK};box-sizing:border-box;
+    background:${PAPER2};font-family:${F};font-size:16px;color:${INK};box-sizing:border-box;
     transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 140ms,background 140ms}
-  #lvis .pp .fr{font-size:clamp(15px,4.2vw,16.5px);line-height:1.5}
+  #lvis .pp .fr{font-size:16px;line-height:1.5}
   #lvis .pp .opt:hover,#lvis .pp .fr:hover{border-color:#b9a67f}
   #lvis .pp .opt:active,#lvis .pp .fr:active{transform:translateY(1px)}
   #lvis .pp .opt:focus-visible,#lvis .pp .fr:focus-visible,#lvis .pp .check:focus-visible,#lvis .pp .short input:focus-visible{outline:3px solid ${INK};outline-offset:3px}
@@ -5526,29 +5530,29 @@ window.RUPAPER = (function(){
   #lvis .pp .opt.bad .k,#lvis .pp .fr.bad .k{border-color:${NOC};color:${NOC}}
   #lvis .pp .check{width:100%;min-height:52px;padding:12px 16px;border-radius:10px;cursor:pointer;
     border:1px solid ${RULE};background:linear-gradient(180deg,#ffd76a,#e2b23f);color:#20180a;
-    font-family:${F};font-size:clamp(15px,4.2vw,17px);font-weight:600}
+    font-family:${F};font-size:16px;font-weight:600}
   #lvis .pp .check:disabled{background:${PAPER2};color:${MUT};cursor:default}
   #lvis .pp .check:active{transform:translateY(1px)}
   #lvis .pp .open{display:flex;flex-direction:column;gap:10px}
   #lvis .pp .open textarea{width:100%;box-sizing:border-box;min-height:96px;padding:12px 14px;border-radius:10px;
-    border:1px solid ${RULE};background:${PAPER2};font-family:${F};font-size:clamp(16px,4.4vw,18px);color:${INK};
+    border:1px solid ${RULE};background:${PAPER2};font-family:${F};font-size:16px;color:${INK};
     line-height:1.5;resize:vertical}
   #lvis .pp .open textarea:focus-visible{outline:3px solid ${INK};outline-offset:3px}
   #lvis .pp .self{border-top:1px solid ${RULE};padding-top:10px;animation:ppIn 260ms cubic-bezier(.23,1,.32,1) both}
-  #lvis .pp .self .ttl{font-size:clamp(15px,4.2vw,17px);font-weight:600;color:${INK};margin-bottom:8px}
-  #lvis .pp .self .model{font-size:clamp(14.5px,4vw,16px);line-height:1.5;color:${OKC};
+  #lvis .pp .self .ttl{font-size:20px;font-weight:600;color:${INK};margin-bottom:8px}
+  #lvis .pp .self .model{font-size:16px;line-height:1.5;color:${OKC};
     background:#eef6ef;border:1px solid ${OKC};border-radius:10px;padding:10px 12px}
   #lvis .pp .self ul{margin:10px 0 0;padding-left:20px}
-  #lvis .pp .self li{font-size:clamp(14.5px,4vw,16px);line-height:1.5;color:${INK};margin-bottom:4px}
+  #lvis .pp .self li{font-size:16px;line-height:1.5;color:${INK};margin-bottom:4px}
   #lvis .pp .short{display:flex;gap:10px;align-items:stretch}
   #lvis .pp .short input{flex:1 1 auto;min-width:0;min-height:52px;padding:12px 14px;border-radius:10px;border:1px solid ${RULE};
-    background:${PAPER2};font-family:${F};font-size:clamp(16px,4.4vw,18px);color:${INK}}
+    background:${PAPER2};font-family:${F};font-size:16px;color:${INK}}
   #lvis .pp .short .check{width:auto;flex:0 0 auto;padding:12px 18px}
   #lvis .pp .mark{display:flex;gap:10px;align-items:flex-start;border-top:1px solid ${RULE};padding-top:10px;
     animation:ppIn 260ms cubic-bezier(.23,1,.32,1) both}
   #lvis .pp .mark svg{flex:none;width:26px;height:26px}
   #lvis .pp .mark .d{stroke-dasharray:34;stroke-dashoffset:34;animation:ppDraw 360ms cubic-bezier(.2,1,.32,1) 120ms both}
-  #lvis .pp .mark p{margin:0;font-size:clamp(14.5px,4vw,16px);line-height:1.5}
+  #lvis .pp .mark p{margin:0;font-size:16px;line-height:1.5}
   #lvis .pp .mark.ok p{color:${OKC}}#lvis .pp .mark.no p{color:${NOC}}
   @keyframes ppIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   @keyframes ppDraw{to{stroke-dashoffset:0}}

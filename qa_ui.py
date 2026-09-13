@@ -9,7 +9,12 @@ EXE="/Users/mihaildrozdov/Documents/DPsek/браузеры/chromium_headless_she
 BASE=sys.argv[1] if len(sys.argv)>1 else "http://127.0.0.1:8123/"
 SCALE={12,14,16,20,24,32,48,64,72}
 JS = r"""()=>{
-  const RU=e=>!!e.closest('.r1,.rl-wrap,.th-wrap,.rk-scene,.rk-note,.wv-col');
+  /* Что считать русским направлением. Раньше в списке были только контейнеры
+     прежних сцен, и находки новых русских кадров (.s6 у 601–610, .pp у листов
+     615–618, .ms у рукописного 611) попадали в раздел оболочки приложения —
+     то есть «в русском направлении нарушений нет» было не доказательством,
+     а следствием того, что мы просто не смотрели. */
+  const RU=e=>!!e.closest('.r1,.rl-wrap,.th-wrap,.rk-scene,.rk-note,.wv-col,.s6,.pp,.ms,.rk,.ru-note,.ru-pred,.fb');
   const lum=c=>{const [r,g,b]=c.map(v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4)});return .2126*r+.7152*g+.0722*b;};
   const parse=s=>{const m=/rgba?\(([^)]+)\)/.exec(s||''); if(!m) return null; const p=m[1].split(',').map(x=>parseFloat(x)); return {c:p.slice(0,3), a:p.length>3?p[3]:1};};
   const bgOf=el=>{let e=el; while(e&&e!==document.body){const b=parse(getComputedStyle(e).backgroundColor); if(b&&b.a>0.5) return b.c; e=e.parentElement;} return [22,36,29];};
@@ -50,7 +55,10 @@ if __name__=="__main__":
                 pg.wait_for_timeout(250)
                 if pg.evaluate("()=>typeof DB==='object' && typeof openLessonView==='function'"): break
             pg.evaluate("()=>{DB.profile={name:'Вика',klass:'6',color:'#d9a441',gender:'girl'};save();}")
-            for kind,lid in (("урок 601","601"),("работа 611","611")):
+            # Смотрим не только 601 и 611: 602 — переложенный урок в новом каркасе
+            # (.s6), 617 — бумажный лист с форматами ответов (.pp). Раньше эти
+            # поверхности аудит не открывал вовсе.
+            for kind,lid in (("урок 601","601"),("урок 602","602"),("работа 611","611"),("лист 617","617")):
                 pg.evaluate("(l)=>{openLessonView(l);}", int(lid)); pg.wait_for_timeout(700)
                 for _ in range(4): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(60)
                 pg.wait_for_timeout(400)
