@@ -738,6 +738,28 @@
   @keyframes l16Slide { 0%{transform:translateX(0)} 100%{transform:translateX(var(--dx,120px))} }
   .l16-sway { animation:l16Sway 1.8s ease-in-out infinite; }
   @keyframes l16Sway { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
+
+  /* ---- телефон (узкий экран) ----
+     Кегли и отступы в оболочке заданы в пикселях и одинаковы на всех
+     устройствах: на планшете это выглядит собранно, а на телефоне 320–360 px
+     тот же размер занимает половину экрана — шапка, карточки и кнопки распирают
+     кадр, и приложение кажется «не подогнанным» под устройство. Здесь тот же
+     макет, но плотнее: размеры остаются по шкале 12/14/16/20, меняется шаг. */
+  @media (max-width:400px){
+    .wrap { padding:8px 8px 92px; }
+    header { gap:8px; padding-bottom:8px; margin-bottom:10px; }
+    .logo small { font-size:12px; }
+    .chip { font-size:12px; padding:5px 10px; }
+    .logout { font-size:12px; padding:5px 10px; }
+    .card { padding:12px; margin-bottom:10px; }
+    .btn { font-size:14px; padding:11px 14px; }
+    .story { font-size:14px; }
+    .hint-box, .fb, .task-row .tt { font-size:14px; }
+    .avatar { width:52px; height:52px; }
+    .asst { right:8px; bottom:66px; }
+    .abubble { max-width:190px; font-size:12px; }
+  }
+
 </style>
 </head>
 <body>
@@ -766,42 +788,42 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=571"></script>
-<script src="data/tasks_ru.js?v=571"></script>
-<script src="data/tasks_mishutka.js?v=571"></script>
-<script src="data/tasks_fg6.js?v=571"></script>
-<script src="data/tasks_dict.js?v=571"></script>
-<script src="data/lessons.js?v=571"></script>
-<script src="data/lessons_draft.js?v=571"></script>
-<script src="data/comics_12.js?v=571"></script>
-<script src="data/sim_phys.js?v=571"></script>
-<script src="data/vis_bw.js?v=571"></script>
-<script src="data/vis_pw.js?v=571"></script>
-<script src="data/vis_ru.js?v=571"></script>
-<script src="data/lessons_fg6.js?v=571"></script>
-<script src="data/vis_cw.js?v=571"></script>
-<script src="data/vis_dw.js?v=571"></script>
-<script src="data/vis_ew.js?v=571"></script>
-<script src="data/vis_kl.js?v=571"></script>
-<script src="data/vis_wk.js?v=571"></script>
-<script src="data/inf_56.js?v=571"></script>
-<script src="js/comic.js?v=571"></script>
-<script src="js/core.js?v=571"></script>
-<script src="js/engine.js?v=571"></script>
-<script src="js/app.js?v=571"></script>
-<script src="js/dashboard.js?v=571"></script>
-<script src="js/pinpad.js?v=571"></script>
-<script src="js/kid.js?v=571"></script>
-<script src="js/notemodal.js?v=571"></script>
-<script src="js/lessons.js?v=571"></script>
-<script src="js/wave_guard.js?v=571"></script>
-<script src="js/legend.js?v=571"></script>
-<script src="js/simulator.js?v=571"></script>
-<script src="js/duel.js?v=571"></script>
-<script src="js/agent.js?v=571"></script>
-<script src="js/voice.js?v=571"></script>
-<script src="js/assistant.js?v=571"></script>
-<script src="js/agentlive.js?v=571"></script>
+<script src="data/tasks.js?v=572"></script>
+<script src="data/tasks_ru.js?v=572"></script>
+<script src="data/tasks_mishutka.js?v=572"></script>
+<script src="data/tasks_fg6.js?v=572"></script>
+<script src="data/tasks_dict.js?v=572"></script>
+<script src="data/lessons.js?v=572"></script>
+<script src="data/lessons_draft.js?v=572"></script>
+<script src="data/comics_12.js?v=572"></script>
+<script src="data/sim_phys.js?v=572"></script>
+<script src="data/vis_bw.js?v=572"></script>
+<script src="data/vis_pw.js?v=572"></script>
+<script src="data/vis_ru.js?v=572"></script>
+<script src="data/lessons_fg6.js?v=572"></script>
+<script src="data/vis_cw.js?v=572"></script>
+<script src="data/vis_dw.js?v=572"></script>
+<script src="data/vis_ew.js?v=572"></script>
+<script src="data/vis_kl.js?v=572"></script>
+<script src="data/vis_wk.js?v=572"></script>
+<script src="data/inf_56.js?v=572"></script>
+<script src="js/comic.js?v=572"></script>
+<script src="js/core.js?v=572"></script>
+<script src="js/engine.js?v=572"></script>
+<script src="js/app.js?v=572"></script>
+<script src="js/dashboard.js?v=572"></script>
+<script src="js/pinpad.js?v=572"></script>
+<script src="js/kid.js?v=572"></script>
+<script src="js/notemodal.js?v=572"></script>
+<script src="js/lessons.js?v=572"></script>
+<script src="js/wave_guard.js?v=572"></script>
+<script src="js/legend.js?v=572"></script>
+<script src="js/simulator.js?v=572"></script>
+<script src="js/duel.js?v=572"></script>
+<script src="js/agent.js?v=572"></script>
+<script src="js/voice.js?v=572"></script>
+<script src="js/assistant.js?v=572"></script>
+<script src="js/agentlive.js?v=572"></script>
 <script>
   /* сброс кэша при новой сборке: номер берём из адресов самих скриптов,
      поэтому после каждой выкладки старый кэш и старый service worker снимаются сами */
@@ -828,7 +850,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=571').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=572').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{
