@@ -5507,20 +5507,32 @@ window.RUPAPER = (function(){
   #lvis .pp .fig{border:1px solid ${RULE};border-radius:10px;background:rgba(255,253,247,.92);padding:10px 8px}
   #lvis .pp .fig svg *{stroke-linecap:round}
   #lvis .pp .q{font-size:clamp(15.5px,4.3vw,17px);line-height:1.55;color:${INK}}
-  #lvis .pp .opts{display:flex;flex-direction:column;gap:10px}
-  #lvis .pp .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+  #lvis .pp .hint{font-size:clamp(14px,3.8vw,15px);line-height:1.45;color:${MUT}}
+  #lvis .pp .opts,#lvis .pp .seq,#lvis .pp .frag{display:flex;flex-direction:column;gap:10px}
+  #lvis .pp .opt,#lvis .pp .fr{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
     padding:clamp(11px,3.2vw,14px) clamp(12px,3.4vw,16px);border-radius:10px;border:1px solid ${RULE};
     background:${PAPER2};font-family:${F};font-size:clamp(15px,4.2vw,17px);color:${INK};box-sizing:border-box;
     transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 140ms,background 140ms}
-  #lvis .pp .opt:hover{border-color:#b9a67f}
-  #lvis .pp .opt:active{transform:translateY(1px)}
-  #lvis .pp .opt:focus-visible{outline:3px solid ${INK};outline-offset:3px}
-  #lvis .pp .opt .k{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid ${RULE};
+  #lvis .pp .fr{font-size:clamp(15px,4.2vw,16.5px);line-height:1.5}
+  #lvis .pp .opt:hover,#lvis .pp .fr:hover{border-color:#b9a67f}
+  #lvis .pp .opt:active,#lvis .pp .fr:active{transform:translateY(1px)}
+  #lvis .pp .opt:focus-visible,#lvis .pp .fr:focus-visible,#lvis .pp .check:focus-visible,#lvis .pp .short input:focus-visible{outline:3px solid ${INK};outline-offset:3px}
+  #lvis .pp .opt .k,#lvis .pp .fr .k{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid ${RULE};
     display:flex;align-items:center;justify-content:center;font-size:14px;color:${MUT}}
-  #lvis .pp .opt.good{border-color:${OKC};background:#eef6ef}
-  #lvis .pp .opt.good .k{border-color:${OKC};color:${OKC}}
-  #lvis .pp .opt.bad{border-color:${NOC};background:#fbeeec}
-  #lvis .pp .opt.bad .k{border-color:${NOC};color:${NOC}}
+  #lvis .pp .opt.sel{border-color:#b9a67f;background:#f6efdd}
+  #lvis .pp .opt.good,#lvis .pp .fr.good{border-color:${OKC};background:#eef6ef}
+  #lvis .pp .opt.good .k,#lvis .pp .fr.good .k{border-color:${OKC};color:${OKC}}
+  #lvis .pp .opt.bad,#lvis .pp .fr.bad{border-color:${NOC};background:#fbeeec}
+  #lvis .pp .opt.bad .k,#lvis .pp .fr.bad .k{border-color:${NOC};color:${NOC}}
+  #lvis .pp .check{width:100%;min-height:52px;padding:12px 16px;border-radius:10px;cursor:pointer;
+    border:1px solid ${RULE};background:linear-gradient(180deg,#ffd76a,#e2b23f);color:#20180a;
+    font-family:${F};font-size:clamp(15px,4.2vw,17px);font-weight:600}
+  #lvis .pp .check:disabled{background:${PAPER2};color:${MUT};cursor:default}
+  #lvis .pp .check:active{transform:translateY(1px)}
+  #lvis .pp .short{display:flex;gap:10px;align-items:stretch}
+  #lvis .pp .short input{flex:1 1 auto;min-width:0;min-height:52px;padding:12px 14px;border-radius:10px;border:1px solid ${RULE};
+    background:${PAPER2};font-family:${F};font-size:clamp(16px,4.4vw,18px);color:${INK}}
+  #lvis .pp .short .check{width:auto;flex:0 0 auto;padding:12px 18px}
   #lvis .pp .mark{display:flex;gap:10px;align-items:flex-start;border-top:1px solid ${RULE};padding-top:10px;
     animation:ppIn 260ms cubic-bezier(.23,1,.32,1) both}
   #lvis .pp .mark svg{flex:none;width:26px;height:26px}
@@ -5537,40 +5549,159 @@ window.RUPAPER = (function(){
     if(typeof CHS==='undefined') window.CHS={};
     if(!CHS[lk]) CHS[lk]={};
     if(!CHS[lk].ans) CHS[lk].ans={};
+    if(!CHS[lk].ok) CHS[lk].ok={};
     return CHS[lk];
   }
+  const esc=s=>String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;');
+  const redraw=()=>{ if(typeof chRender==='function') chRender(0); };
+
+  /* Что считается верным ответом. Форматы взяты из спецификации МЦКО:
+     один верный ответ, несколько верных ответов, установление
+     последовательности, выделение фрагмента текста и краткий ответ. */
+  function right(it,val){
+    const t=it.type||'single';
+    if(t==='multi'){
+      const a=(it.ans||[]).slice().sort().join('§'), b=((val&&val.length)?val:[]).slice().sort().join('§');
+      return !!b && a===b;
+    }
+    if(t==='order') return (val||[]).join('§')===(it.ans||[]).join('§');
+    if(t==='short'){
+      const norm=s=>String(s==null?'':s).trim().toLowerCase()
+        .replace(/ё/g,'е').replace(/\s+/g,' ').replace(',', '.')
+        .replace(/\s*(рублей|рубля|руб|см2|см²|см|мм|дней|дня|день|плиток|плитки|жетонов|жетона|конвертов|конверта|сумок|сумки|мест|человека|человек|раза|раз)\s*$/,'')
+        .replace(/\s/g,'');
+      const v=norm(val);
+      return v!=='' && (it.alts||[it.ans]).some(x=>norm(x)===v);
+    }
+    return val===it.ans;
+  }
+
+  function body(it,picked,checked,ok){
+    const t=it.type||'single';
+    if(t==='multi'){
+      const sel=picked||[];
+      return `<div class="opts">${it.opts.map((o,i)=>{
+        const isSel=sel.indexOf(o)>=0, isRight=(it.ans||[]).indexOf(o)>=0;
+        const cls='opt'+(isSel?' sel':'')+(checked?(isRight?' good':(isSel?' bad':'')):'');
+        return `<button type="button" class="${cls}" onclick="ruPaperToggle(${it._id},${it._step},'${esc(o)}')">
+          <span class="k">${isSel?'✓':i+1}</span><span>${o}</span></button>`;}).join('')}</div>`+
+        (checked?'':`<button type="button" class="check" ${sel.length?'':'disabled'} onclick="ruPaperCheck(${it._id},${it._step})">Проверить</button>`);
+    }
+    if(t==='order'){
+      const seq=picked||[];
+      return `<div class="seq">${it.items.map((x,i)=>{
+        const pos=seq.indexOf(x);
+        const cls='opt'+(checked?(it.ans[i]===x?' good':' bad'):(pos>=0?' sel':''));
+        return `<button type="button" class="${cls}" onclick="ruPaperOrder(${it._id},${it._step},'${esc(x)}')">
+          <span class="k">${pos>=0?(pos+1):'·'}</span><span>${x}</span></button>`;}).join('')}</div>`+
+        (checked?'':
+          `<div class="hint">Нажимай по порядку — цифра покажет место в цепочке.</div>
+           <button type="button" class="check" ${seq.length===it.items.length?'':'disabled'} onclick="ruPaperCheck(${it._id},${it._step})">Проверить</button>`);
+    }
+    if(t==='fragment'){
+      return `<div class="frag">${it.text.map((s,i)=>{
+        const cls='fr'+(picked===i?' '+(checked?(it.ans===i?'good':'bad'):'sel'):'');
+        return `<button type="button" class="${cls}" onclick="ruPaperFrag(${it._id},${it._step},${i})">
+          <span class="k">${i+1}</span><span>${s}</span></button>`;}).join('')}</div>`;
+    }
+    if(t==='short'){
+      return `<div class="short">
+        <input type="text" inputmode="text" autocomplete="off" value="${picked==null?'':String(picked).replace(/"/g,'&quot;')}"
+          placeholder="${it.ph||'запиши ответ'}" oninput="ruPaperType(${it._id},${it._step},this.value)"
+          ${checked?'disabled':''}>
+        ${checked?'':`<button type="button" class="check" onclick="ruPaperCheck(${it._id},${it._step})">Проверить</button>`}</div>`;
+    }
+    return `<div class="opts">${it.opts.map((o,i)=>{
+      const cls='opt'+(checked?(o===it.ans?' good':(o===picked?' bad':'')):'');
+      return `<button type="button" class="${cls}" onclick="ruPaperPick(${it._id},${it._step},'${esc(o)}')">
+        <span class="k">${i+1}</span><span>${o}</span></button>`;}).join('')}</div>`;
+  }
+
   function render(el,cfg){
     css();
     try{ document.body.classList.add('paper-mode'); }catch(e){}
     const st=state(cfg.id);
     const Q=cfg.data;
     const step=Math.max(0,Math.min(Q.length-1,((typeof LV!=='undefined'&&LV.step)||0)));
-    const it=Q[step], picked=st.ans[step], done=picked!=null, ok=picked===it.ans;
-    const artHtml=String(cfg.art[it.k]());
+    const it=Object.assign({_id:cfg.id,_step:step},Q[step]);
+    const picked=st.ans[step];
+    const checked=st.ok[step]!=null;
+    const ok=checked?right(it,picked):false;
+    const type=it.type||'single';
+    const taskHint={multi:'Выбери все верные ответы и нажми «Проверить».',
+                    order:'Расставь по порядку и нажми «Проверить».',
+                    fragment:'Нажми на предложение, о котором спрашивают.',
+                    short:'Запиши ответ и нажми «Проверить».'}[type];
     el.innerHTML=`<div class="pp">
       <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div>
         <div class="of" style="display:flex;align-items:center;gap:8px">
           <img src="img/mishutka.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">${cfg.brand||'Путь Мишутки'}</div></div>
       <h2>${it.t}</h2>
-      <div class="fig">${artHtml}</div>
+      <div class="fig">${String(cfg.art[it.k]())}</div>
       <div class="q">${it.q}</div>
-      <div class="opts">${it.opts.map((o,i)=>`<button type="button" class="opt ${done?(o===it.ans?'good':(o===picked?'bad':'')):''}" onclick="ruPaperPick(${cfg.id},${step},'${String(o).replace(/'/g,"\\'")}')">
-        <span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div>
-      ${done ? `<div class="mark ${ok?'ok':'no'}">
+      ${taskHint?`<div class="hint">${taskHint}</div>`:''}
+      ${body(it,picked,checked,ok)}
+      ${checked ? `<div class="mark ${ok?'ok':'no'}">
           <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
             :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
-          <p>${ok?'Верно. ':'Правильно «'+it.ans+'». '}${it.why}</p></div>`
+          <p>${ok?'Верно. ':'Правильно: '+(Array.isArray(it.ans)?it.ans.join(' · '):it.ans)+'. '}${it.why}</p></div>`
         : `<div class="q" style="color:${MUT}">${cfg.source||''}</div>`}
     </div>`;
   }
+
+  /* Реестр листов: движок один, а ключи ответов у каждого листа свои.
+     Проверка идёт по данным листа, поэтому реестр обязателен. */
+  const REG={};
+  function checkNow(id,step){
+    const cfg=REG[id]; if(!cfg) return true;
+    return right(cfg.data[step], state(id).ans[step]);
+  }
   window.ruPaperPick=function(id,step,opt){
     const st=state(id);
-    if(st.ans[step]!=null) return;
+    if(st.ok[step]!=null) return;
     st.ans[step]=opt;
-    if(typeof chRender==='function') chRender(0);
+    st.ok[step]=checkNow(id,step);
+    redraw();
+  };
+  window.ruPaperFrag=function(id,step,i){
+    const st=state(id);
+    if(st.ok[step]!=null) return;
+    st.ans[step]=i;
+    st.ok[step]=checkNow(id,step);
+    redraw();
+  };
+  window.ruPaperToggle=function(id,step,opt){
+    const st=state(id);
+    if(st.ok[step]!=null) return;
+    const cur=Array.isArray(st.ans[step])?st.ans[step].slice():[];
+    const k=cur.indexOf(opt);
+    if(k>=0) cur.splice(k,1); else cur.push(opt);
+    st.ans[step]=cur;
+    redraw();
+  };
+  window.ruPaperOrder=function(id,step,item){
+    const st=state(id);
+    if(st.ok[step]!=null) return;
+    const cur=Array.isArray(st.ans[step])?st.ans[step].slice():[];
+    const k=cur.indexOf(item);
+    if(k>=0) cur.splice(k,1); else cur.push(item);
+    st.ans[step]=cur;
+    redraw();
+  };
+  window.ruPaperType=function(id,step,v){       /* без перерисовки: иначе поле теряет фокус */
+    const st=state(id);
+    if(st.ok[step]!=null) return;
+    st.ans[step]=v;
+  };
+  window.ruPaperCheck=function(id,step){
+    const st=state(id);
+    if(st.ok[step]!=null) return;
+    st.ok[step]=checkNow(id,step);
+    redraw();
   };
   /* cfg: {id, title, ico, src, brand, source, data, art, check, tasks} */
   function mount(cfg){
+    REG[cfg.id]=cfg;
     window.WAVE_B[cfg.id]=function(el){
       try{ render(el,cfg); }catch(e){ el.innerHTML=''; }
       /* персонаж приложения пересоздаётся после отрисовки — гасим его, пока открыт лист */
