@@ -2340,13 +2340,21 @@ window.RUQMARK = (function(){
   .rkgq-bloom{animation:rkgqGlow 1.9s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
   .rkgq-shine{animation:rkgqShine 2.6s ease-in-out infinite}
   @keyframes rkgqSpin{
-    0%,46%{transform:perspective(170px) rotateY(0deg)}
-    100%{transform:perspective(170px) rotateY(360deg)}
+    0%,100%{transform:perspective(340px) rotateY(-15deg)}
+    50%{transform:perspective(340px) rotateY(15deg)}
   }
   @keyframes rkgqGlow{0%,100%{opacity:.6}50%{opacity:1}}
   @keyframes rkgqShine{0%,100%{opacity:.35}50%{opacity:1}}
   .rkgq-slot{display:inline-flex;align-items:center;justify-content:center;pointer-events:none}
-  .rkgq-svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 5px rgba(255,215,106,.45))}
+  .rkgq-svg{width:100%;height:100%;overflow:visible;line-height:0;
+    transform-origin:50% 54%;animation:rkgqSpin 4.4s ease-in-out infinite;
+    filter:drop-shadow(0 0 4px rgba(255,215,106,.45))}
+  /* знак — та же гарнитура и тот же кегль, что у букв слова (100 единиц вьюбокса
+     равны 1em); тёмная кромка идёт ПОД заливкой (paint-order), поэтому она даёт
+     чёткий контур, а не вторую линию */
+  .rkgq-t{font-family:Georgia,'Times New Roman',serif;font-weight:700;font-size:80px}
+  .rkgq-base{fill:url(#rkgqGold);filter:drop-shadow(0 .6px .7px rgba(60,32,0,.55))}
+  .rkgq-hi{fill:url(#rkgqSpec);opacity:.45}
   @media (prefers-reduced-motion: reduce){
     .rkgq-spin,.rkgq-bloom,.rkgq-shine{animation:none!important}
   }`;
@@ -2367,7 +2375,7 @@ window.RUQMARK = (function(){
      и мягкое свечение позади. Вьюбокс обрезан по чернилам, поэтому знак садится
      в строку ровно и ничего не срезается. */
   const HOOK = 'M-6.6 -3.2 C-6.6 -12.6 6.6 -12.6 6.6 -3.2 C6.6 3.4 0 4.4 0 10.6';
-  function body(){
+  function drawn(){
     return `<circle class="rkgq-bloom" cx="0" cy="3" r="13" fill="url(#rkgqBloom)"/>`
       + `<g filter="url(#rkgqPhoto)">`
       /* кромка тёмного золота — концентрическая, по тому же контуру: это фаска,
@@ -2384,15 +2392,21 @@ window.RUQMARK = (function(){
   function group(x,y,s){
     ensure();
     return `<g class="rkgq" transform="translate(${(+x).toFixed(1)},${(+y).toFixed(1)}) scale(${(+s||0.46).toFixed(3)})">`
-      + `<g class="rkgq-spin">${body()}</g></g>`;
+      + `<g class="rkgq-spin">${drawn()}</g></g>`;
   }
-  /* в HTML-страницу: размер задаётся кеглем родителя (em) */
+  /* в HTML-страницу (урок 611): настоящий знак вопроса тем же шрифтом и кеглем,
+     что буквы слова. Пропорции и посадка на базовую линию — от шрифта, рисовать
+     форму руками не нужно. Размер слота: 1em в ширину и 1.2em в высоту, базовая
+     линия знака — на 100/120 высоты, поэтому низ слота совпадает с низом буквы. */
   function html(){
     ensure();
-    return `<span class="rkgq-slot" aria-hidden="true"><svg class="rkgq-svg" viewBox="-12 -18 24 41" preserveAspectRatio="xMidYMid meet">`
-      + `<g class="rkgq-spin">${body()}</g></svg></span>`;
+    return `<span class="rkgq-slot" aria-hidden="true">`
+      + `<svg class="rkgq-svg" viewBox="0 0 100 120" preserveAspectRatio="xMidYMid meet">`
+      +   `<text class="rkgq-t rkgq-base" x="50" y="100" text-anchor="middle">?</text>`
+      +   `<text class="rkgq-t rkgq-hi" x="50" y="99.2" text-anchor="middle">?</text>`
+      + `</svg></span>`;
   }
-  return {ensure:ensure, group:group, html:html, HOOK:HOOK};
+  return {ensure:ensure, group:group, html:html, HOOK:HOOK,drawn:drawn};
 })();
 
 /* ================= ПРОВЕРОЧНЫЕ РАБОТЫ (кадровый формат) ================= */
@@ -4148,9 +4162,13 @@ window.RUWORK611 = (function(){
      под прорезью вместе с длинной линией строки читалась как двойная. Знак
      ставится от базовой линии и по размеру равен букве (.44em × .75em — ровно
      столько занимает знак вопроса в Georgia при том же кегле). */
-  #lvis .ms .ink span.seat{position:relative;min-width:.5em;color:transparent}
-  #lvis .ms .ink span.seat .rkgq-slot{position:absolute;left:50%;bottom:.02em;transform:translateX(-50%);
-    width:.44em;height:.75em}
+  #lvis .ms .ink span.seat{position:relative;min-width:.66em;color:transparent}
+  /* Позиция считается без transform: у span внутри .ink играет анимация inkIn
+     с fill-mode both, её конечный кадр (transform:none) перебивает нашу
+     трансформацию — из-за этого знак стоял не по центру прорези, а сдвинутым
+     вправо и налезал на следующую букву. */
+  #lvis .ms .ink span.seat .rkgq-slot{position:absolute;left:calc(50% - .5em);bottom:0;
+    width:1em;height:1.2em}
   #lvis .ms .ink span.lit{color:#fff6dd;text-shadow:0 0 22px rgba(255,215,106,.9),0 0 46px rgba(255,190,90,.5);animation:bloom 360ms ${OUT} both}
   #lvis .ms .ink span.lit::after{content:'';position:absolute;left:-4px;right:-4px;bottom:-8px;height:3px;border-radius:3px;
     background:linear-gradient(90deg,rgba(255,215,106,0),#ffd76a 25%,#ffd76a 75%,rgba(255,215,106,0));
