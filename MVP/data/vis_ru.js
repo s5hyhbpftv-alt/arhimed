@@ -361,23 +361,30 @@ window.RUKIT = (function(){
     id: 601, title: 'Части речи: что называет слово', ico: '📖',
     src: 'Русский язык · 5–6 класс · Части речи', subj: 'rus',
     explain: [
-      'Каждое слово в русском языке — не просто набор букв, а работник со своей должностью. Эта должность называется часть речи. Определить её просто: задай к слову вопрос и посмотри, что слово называет — предмет, признак или действие.',
-      'Имя существительное отвечает на вопросы кто? или что? и называет предмет: кот, дом, радость. Даже то, что нельзя потрогать, может быть существительным: смех, бег, доброта.',
-      'Имя прилагательное отвечает на вопросы какой? какая? какое? какие? и называет признак: рыжий, тёплый, деревянный. Прилагательное всегда цепляется к существительному и объясняет его.',
-      'Глагол отвечает на вопрос что делает? (что делал? что будет делать?) и называет действие или состояние: бежит, светит, спит. В предложении глагол чаще всего и есть самое главное слово про действие.',
-      'Местоимение не называет, а указывает: я, ты, он, она, мы, вы, они. Оно работает вместо имени, чтобы не повторять одно слово десять раз: «Маша читает. Она читает» — об одном и том же.',
-      'Имя числительное отвечает на вопросы сколько? или который? и называет число или порядок при счёте: пять, третий, двое. Числительных в речи немного, но без них не обойтись.',
-      'Наречие отвечает на вопросы как? где? когда? куда? и называет признак действия: быстро, вдали, вечером. Наречие обычно прилипает к глаголу: бежит быстро, живёт вдали.',
-      'Есть и служебные части речи: предлог (в, на, под), союз (и, но, потому что), частица (не, бы, же). Они ничего не называют — они служат: связывают слова и помогают выразить смысл.',
-      'Алгоритм простой: назови, что слово делает в речи, задай вопрос, и часть речи определится сама. Потренируйся: ниже показывают слово, а ты выбери, кто он — существительное, прилагательное или глагол.'
+      'Смотри: «Рыжий кот быстро прыгнул на стол». Слова стоят рядом, а работы у них разные. Кликни слово — увидишь вопрос и должность. Должность слова и есть часть речи.',
+      'Морфология — наука о частях речи. Часть речи узнают не по буквам, а по трём делам: что слово называет, на какой вопрос отвечает и чем работает в предложении.',
+      'Части речи живут двумя семьями. Самостоятельные называют что-то и отвечают на вопрос — из них собирается предложение. Служебные ничего не называют: они только служат. Из «и на но» предложения не выйдет.',
+      'Имя существительное отвечает на кто? или что? и называет предмет. Кот, дом, мама, река. Кто? — если живое. Что? — всё остальное.',
+      'Предмет — не только то, что можно потрогать. Смех, бег, доброта, радость — тоже существительные: они отвечают на что? Не путай: бег — это предмет, бежит — уже действие.',
+      'Одушевлённые отвечают на кто?: кот, друг, мама. Неодушевлённые — на что?: дом, книга, радость. Кукла похожа на человека, но для языка это что? — неодушевлённое.',
+      'Имя прилагательное отвечает на какой? какая? какое? какие? и называет признак. Оно всегда цепляется к существительному и меняет окончание вместе с ним: рыжий кот, рыжая лиса, рыжее солнце.',
+      'Глагол отвечает на что делает? что делать? что сделать? и называет действие или состояние. Бежит — действие. Спит, болеет, радуется — тоже глаголы, только про состояние.',
+      'Местоимение не называет, а указывает: я, ты, он, она, мы, вы, они. «Маша читает» и «Она читает» — об одном человеке. Имя не повторяем — речь становится легче.',
+      'Имя числительное называет число или порядок. Сколько? — пять, двое, сто. Который? — третий, пятый. «Пятый» — это всё ещё число, а не признак вроде «рыжий».',
+      'Наречие — признак действия: как? где? когда? куда? Главный секрет: наречие не изменяется, у него нет окончания. Быстрый кот — прилагательное. Бежит быстро — наречие.',
+      'Одно гнездо — разные должности. Бег, бежит, быстрый, быстро: смысл рядом, части речи разные. Кликни каждое — и вопрос сам покажет, кто есть кто.',
+      'Предлог — мостик: он ставит существительное рядом с другим словом. Кот НА столе, БЕЗ стола, К столу. Это отдельное слово, его пишут раздельно. Это не приставка.',
+      'Союз связывает слова и предложения: и, а, но. Частица даёт оттенок: не, бы, же, ли. «Не спит» — два слова. Из одних служебных «и не бы же» предложения не собрать.',
+      'Четыре шага — и часть речи найдена. Задай вопрос. Скажи, что слово называет. Посмотри, изменяется ли. Реши: член предложения или служит. Дальше потренируемся.',
+      'Теперь сам. Задай вопрос к слову и положи его в нужный ящик. Здесь шесть самостоятельных частей речи, которые мы разобрали.'
     ],
-    check: { q: 'На какие вопросы отвечает имя прилагательное?', choices: ['кто? что?', 'какой? какая? какое?', 'что делает?'], ans: 1,
-      exp: 'Прилагательное называет признак: какой? какая? какое? какие?' },
+    check: { q: 'Чем наречие отличается от прилагательного?', choices: ['наречие не изменяется', 'наречие называет предмет', 'наречие отвечает кто? что?'], ans: 0,
+      exp: 'Наречие — признак действия и не изменяется: быстро всегда быстро. Прилагательное — признак предмета и меняет окончание: быстрый, быстрая, быстрое.' },
     tasks: [
-      { q: 'Какое слово — глагол?', kind: 'choice', choices: ['бежит', 'быстрый', 'бег'], ans: 0,
-        hints: ['Задай вопрос: что делает?', '«Бежит» отвечает на вопрос что делает?'], sol: 'бежит' },
-      { q: 'Сколько существительных в списке: дом, тёплый, смех, бежать?', kind: 'unit', ans: 2, tol: 0,
-        hints: ['Существительное отвечает на кто? что?', 'Дом и смех — существительные.'], sol: '2' }
+      { q: 'Какое слово — имя существительное?', kind: 'choice', choices: ['бег', 'бежит', 'быстрый'], ans: 0,
+        hints: ['Задай вопрос: кто? что? — это существительное.', '«Бежит» — что делает? Это глагол.', '«Бег» отвечает на вопрос что?'], sol: 'бег — предмет, отвечает на что?' },
+      { q: 'Сколько самостоятельных слов в предложении «Кот спит на столе»?', kind: 'unit', ans: 3, tol: 0,
+        hints: ['Самостоятельные называют и отвечают на вопрос.', '«На» — предлог, служебное слово.', 'Кот, спит, столе — три самостоятельных.'], sol: '3: кот, спит, столе. «На» — предлог.' }
     ]
   };
 
@@ -3754,202 +3761,322 @@ window.RU601 = (function(){
   return {render:render};
 })();
 
-/* ================= 601 заново: девять кадров, у каждого своя хореография =================
-   Сверено со скилами motion-principles / animate / typeset / emil-design-eng / accessibility-ux:
-   вход 260 мс ease-out, отклик 120 мс, смена состояния 200 мс, только transform и opacity,
-   масштаб не ниже 0,9, ease-in на входе нет, reduced-motion выключает движение,
-   у каждого кадра своё осмысленное движение и своё действие ребёнка. */
+/* ================= 601 заново: 16 кадров по Ладыженской §15 =================
+   Повторение частей речи в 5 классе: вопрос как ключ, самостоятельные и
+   служебные, ловушки «бег/бежит» и «быстрый/быстро», алгоритм из четырёх шагов.
+   Живой рисовальщик — этот блок: visB601 и RU601 ниже перекрыты. */
 window.RU601V2 = (function(){
-  const F="Georgia,'Times New Roman',serif";
-  const EASE="cubic-bezier(.2,0,0,1)";          /* snappy UI из motion-principles */
-  const OUT="cubic-bezier(.23,1,.32,1)";        /* вход: приезжает и успокаивается   */
+  const GOLD='#ffd76a', GREEN='#8fd1a8', BLUE='#7fd1ff', MUTED='#d8c9a6';
   const CSS=`
-  #lvis .s6{--gold:#ffd76a;--ink:#f6efe0;--mut:#d8c9a6;--line:rgba(255,215,106,.28);--ok:#8fd1a8;--no:#e86a5a;
-    box-sizing:border-box;max-width:100%;font-family:${F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:16px;padding-bottom:56px}
-  #lvis .s6 .kicker{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-variant-numeric:tabular-nums}
-  #lvis .s6 h2{font-size:24px;line-height:1.12;font-weight:600;color:var(--gold);letter-spacing:-.02em;margin:0;text-wrap:balance}
-  #lvis .s6 p{margin:0}
-  #lvis .s6 .lead{font-size:20px;line-height:1.5;text-wrap:pretty}
-  #lvis .s6 .cap{font-size:16px;line-height:1.5;color:var(--mut)}
-  #lvis .s6 .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-  #lvis .s6 .card{box-sizing:border-box;flex:1 1 30%;min-width:104px;padding:16px 14px;border-radius:18px;text-align:center;
-    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);box-shadow:0 10px 24px rgba(0,0,0,.38)}
-  #lvis .s6 .card .ic{font-size:30px;line-height:1}
-  #lvis .s6 .card .nm{font-size:16px;font-weight:600;color:var(--gold);margin-top:8px}
-  #lvis .s6 .card .ex{font-size:16px;line-height:1.25;color:var(--mut);margin-top:4px}
-  #lvis .s6 button{font-family:${F};cursor:pointer;border-radius:16px;border:1.5px solid var(--line);
-    background:rgba(255,255,255,.05);color:var(--ink);transition:transform 120ms ${EASE},background 160ms ease-out,border-color 160ms ease-out}
-  #lvis .s6 button:active{transform:translateY(2px)}
-  #lvis .s6 button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-  #lvis .s6 .chip{padding:14px 20px;font-size:24px;font-weight:600;line-height:1.2}
-  #lvis .s6 .chip.on{border-color:var(--gold);background:rgba(255,215,106,.14)}
-  #lvis .s6 .chip.ok{border-color:var(--ok);background:rgba(143,209,168,.16)}
-  #lvis .s6 .chip.no{border-color:var(--no);background:rgba(232,106,90,.14)}
-  #lvis .s6 .word{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:nowrap;white-space:nowrap;padding:14px 18px;border-radius:18px;
-    background:linear-gradient(180deg,#24382d,#17261e);border:1.5px solid var(--line);box-shadow:0 12px 28px rgba(0,0,0,.42)}
-  #lvis .s6 .word b{font-size:44px;font-weight:600;line-height:1;letter-spacing:-.02em}
-  #lvis .s6 .word i{font-style:normal;font-size:16px;color:var(--mut)}
-  /* длинная фраза в плашке: на 320 px «кот · столе · спит» не влезала в строку —
-     разрешаем перенос и держим кегль по шкале (26 px вместо 28) */
-  #lvis .s6 .word.wide{white-space:normal;flex-wrap:wrap;justify-content:center;text-align:center;max-width:100%}
-  #lvis .s6 .word.wide b{font-size:26px;line-height:1.25;letter-spacing:0}
-  #lvis .s6 .tag{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:12px;
-    background:rgba(255,215,106,.12);border:1px solid var(--line);font-size:16px;color:var(--gold)}
-  #lvis .s6 .cta{width:100%;padding:17px 18px;font-size:20px;font-weight:600;line-height:1.2;
-    border-color:var(--gold);background:linear-gradient(180deg,#ffd76a,#e2b23f);color:#20180a}
-  #lvis .s6 .verdict{font-size:16px;line-height:1.55}
-  #lvis .s6 .verdict.ok{color:#b8e8cc}#lvis .s6 .verdict.no{color:#f3b3aa}
-  #lvis .s6 .score{font-size:16px;color:var(--mut);font-variant-numeric:tabular-nums}
-  #lvis .s6 .col{display:flex;flex-direction:column;gap:12px}
-  #lvis .s6 .split{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
-  #lvis .s6 .rail{display:flex;gap:14px;justify-content:center;padding:10px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line)}
-  #lvis .s6 .crates{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:86%;margin:0 auto}
-  /* персонаж-помощник не должен закрывать содержимое русского тренажёра */
-  body:has(#lvis .s6) .avatar,body:has(#lvis .s6) .mascot,body:has(#lvis .s6) .assistant,body:has(#lvis .s6) .guide,
-  body:has(#lvis .ms) .avatar,body:has(#lvis .ms) .mascot,body:has(#lvis .ms) .assistant,body:has(#lvis .ms) .guide,
-  body:has(#lvis .rl-wrap) .avatar,body:has(#lvis .rl-wrap) .mascot{display:none!important}
-  body:has(#lvis .pp) .avatar,body:has(#lvis .pp) .mascot,body:has(#lvis .pp) .assistant{display:none!important}
-  #lvis .s6 .crate{flex:1 1 30%;min-width:104px;padding:16px 12px;text-align:center}
-  #lvis .s6 .crate .ic{font-size:30px}
-  #lvis .s6 .crate .nm{font-size:16px;font-weight:600;color:var(--gold);margin-top:8px;white-space:nowrap}
-  #lvis .s6 .crate .ex{font-size:14px;line-height:1.3;color:var(--mut);margin-top:4px}
-  #lvis .s6 .crate.hit{border-color:var(--ok);box-shadow:0 0 0 4px rgba(143,209,168,.18);animation:bump 320ms ${OUT}}
-  #lvis .s6 .crate.miss{border-color:var(--no);animation:nudge 150ms ease-out}
-  /* --- хореография: у каждого кадра своя --- */
-  #lvis .s6 [data-anim]{animation-duration:260ms;animation-timing-function:${OUT};animation-fill-mode:both;animation-delay:calc(var(--i,0)*40ms)}
-  #lvis .s6[data-frame="1"] [data-anim]{animation-name:rise}
-  #lvis .s6[data-frame="2"] [data-anim]{animation-name:pop}
-  #lvis .s6[data-frame="3"] [data-anim]{animation-name:rise}
-  #lvis .s6[data-frame="4"] [data-anim]{animation-name:slideX}
-  #lvis .s6[data-frame="5"] [data-anim]{animation-name:swap}
-  #lvis .s6[data-frame="6"] [data-anim]{animation-name:pop}
-  #lvis .s6[data-frame="7"] [data-anim]{animation-name:slideX}
-  #lvis .s6[data-frame="8"] [data-anim]{animation-name:drop}
-  #lvis .s6[data-frame="9"] [data-anim]{animation-name:rise}
-  #lvis .s6 .draw{stroke-dasharray:220;stroke-dashoffset:220;animation:draw 420ms ${OUT} 160ms both}
-  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  @keyframes pop{0%{opacity:0;transform:scale(.9)}70%{transform:scale(1.02)}100%{opacity:1;transform:none}}
-  @keyframes slideX{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
-  @keyframes drop{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
-  @keyframes swap{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:none}}
-  @keyframes draw{to{stroke-dashoffset:0}}
-  @keyframes bump{0%{transform:none}40%{transform:translateY(-8px)}100%{transform:none}}
-  @keyframes nudge{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-  #lvis .s6 .fly{position:fixed;z-index:340;pointer-events:none;font-family:${F};font-weight:600;color:#ffe9a8;
-    text-shadow:0 0 14px rgba(255,215,106,.7);transition:transform 260ms ${EASE},opacity 260ms ease-out}
+  #lvis .s6.l601{gap:14px}
+  #lvis .s6.l601 .sent{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  #lvis .s6.l601 .sent button{min-height:48px;min-width:48px;padding:10px 14px;font-size:20px;font-weight:600}
+  #lvis .s6.l601 .job{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 16px;border-radius:16px;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);text-align:center}
+  #lvis .s6.l601 .job b{font-size:24px;line-height:1.15;color:var(--gold);letter-spacing:-.02em}
+  #lvis .s6.l601 .job i{font-style:normal;font-size:16px;line-height:1.35;color:var(--mut)}
+  #lvis .s6.l601 .fam{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+  #lvis .s6.l601 .fam button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:56px;
+    padding:12px 14px;text-align:left}
+  #lvis .s6.l601 .fam button b{font-size:24px;line-height:1.1;color:var(--gold)}
+  #lvis .s6.l601 .fam button i{font-style:normal;font-size:14px;color:var(--mut)}
+  #lvis .s6.l601 .bridge{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%}
+  #lvis .s6.l601 .bridge .word{max-width:100%}
+  #lvis .s6.l601 .bridge .prep{min-width:64px;min-height:48px;padding:10px 16px;font-size:20px;font-weight:600;color:#20180a;
+    border-color:var(--gold);background:linear-gradient(180deg,#ffd76a,#e2b23f)}
+  #lvis .s6.l601 .askrow{display:flex;gap:10px;flex-wrap:wrap;justify-content:stretch}
+  #lvis .s6.l601 .askrow button{flex:1 1 42%;min-height:48px;padding:12px 12px;font-size:16px;font-weight:600;line-height:1.25}
+  #lvis .s6.l601 .ghost{opacity:.38;border-style:dashed}
+  #lvis .s6.l601 .end{color:var(--gold);font-weight:600}
+  #lvis .s6.l601 .casebtns button.hit{border-color:var(--ok);animation:bump 320ms cubic-bezier(.23,1,.32,1)}
+  #lvis .s6.l601 .casebtns button.miss{border-color:var(--no);animation:nudge 150ms ease-out}
+  #lvis .s6.l601[data-frame="1"] [data-anim]{animation-name:l601rise}
+  #lvis .s6.l601[data-frame="2"] [data-anim]{animation-name:l601slide}
+  #lvis .s6.l601[data-frame="3"] [data-anim]{animation-name:l601side}
+  #lvis .s6.l601[data-frame="4"] [data-anim]{animation-name:l601pop}
+  #lvis .s6.l601[data-frame="5"] [data-anim]{animation-name:l601morph}
+  #lvis .s6.l601[data-frame="6"] [data-anim]{animation-name:l601side}
+  #lvis .s6.l601[data-frame="7"] [data-anim]{animation-name:l601attach}
+  #lvis .s6.l601[data-frame="8"] [data-anim]{animation-name:l601slide}
+  #lvis .s6.l601[data-frame="9"] [data-anim]{animation-name:l601swap}
+  #lvis .s6.l601[data-frame="10"] [data-anim]{animation-name:l601pop}
+  #lvis .s6.l601[data-frame="11"] [data-anim]{animation-name:l601attach}
+  #lvis .s6.l601[data-frame="12"] [data-anim]{animation-name:l601pop}
+  #lvis .s6.l601[data-frame="13"] [data-anim]{animation-name:l601bridge}
+  #lvis .s6.l601[data-frame="14"] [data-anim]{animation-name:l601drop}
+  #lvis .s6.l601[data-frame="15"] [data-anim]{animation-name:l601slide}
+  #lvis .s6.l601[data-frame="16"] [data-anim]{animation-name:l601rise}
+  @keyframes l601rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes l601slide{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+  @keyframes l601side{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+  @keyframes l601pop{0%{opacity:0;transform:scale(.92)}70%{transform:scale(1.03)}100%{opacity:1;transform:none}}
+  @keyframes l601morph{0%{opacity:0;transform:translateY(10px) scale(.96)}100%{opacity:1;transform:none}}
+  @keyframes l601attach{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+  @keyframes l601swap{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:none}}
+  @keyframes l601bridge{from{opacity:0;transform:scaleX(.86)}to{opacity:1;transform:none}}
+  @keyframes l601drop{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+  @media (max-width:370px){
+    #lvis .s6.l601 .fam{grid-template-columns:1fr}
+    #lvis .s6.l601 .sent button{font-size:18px}
+  }
   @media (prefers-reduced-motion: reduce){
-    #lvis .s6 *, #lvis .s6 *::before, #lvis .s6 *::after{
-      animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-    #lvis .s6 .fly{display:none!important}
+    #lvis .s6.l601 [data-anim]{animation:none!important}
   }`;
-  /* каркас кадра один на всё русское направление — он лежит в RUKIT.frameCss() */
-  function css(){ try{ if(window.RUKIT&&RUKIT.frameCss) RUKIT.frameCss(); }catch(e){} }
+  function css(){
+    try{
+      if(window.RUKIT&&RUKIT.frameCss) RUKIT.frameCss();
+      let e=document.getElementById('l601-style');
+      if(!e){ e=document.createElement('style'); e.id='l601-style'; document.head.appendChild(e); }
+      if(e.textContent!==CSS) e.textContent=CSS;
+    }catch(e){}
+  }
   const S=()=>{ const lk=lidKey(601); if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; };
-  const T=(tag,i,cls,html,extra)=>`<${tag} data-anim style="--i:${i}" class="${cls||''}" ${extra||''}>${html}</${tag}>`;
-  const BTN=(i,cls,html,on,extra)=>`<button type="button" data-anim style="--i:${i}" class="${cls}" onclick="${on}" ${extra||''}>${html}</button>`;
-  const P={1:['Что называет существительное?','предмет','признак'],
-           2:['Какие слова отвечают на «кто? что?»','смех и бег','только живое'],
-           3:['Что делает прилагательное?','цепляется к предмету','действует само'],
-           4:['Глагол называет…','действие или состояние','только движение'],
-           5:['Зачем нужно местоимение?','чтобы не повторять слово','чтобы удлинить фразу'],
-           6:['«Третий» отвечает на вопрос…','который?','сколько?'],
-           7:['«Быстро» отвечает на вопрос…','как?','кто?'],
-           8:['Предлог, союз, частица…','служат для связи','называют предмет']};
-  const SC=[['снег','кто? что?','н'],['пушистый','какой?','п'],['летит','что делает?','г'],['дорога','кто? что?','н'],
-            ['весёлый','какой?','п'],['рисует','что делает?','г'],['радость','кто? что?','н'],['зимний','какой?','п'],['светит','что делает?','г']];
-  const CR=[['н','🧱','сущ.','кто? что?'],['п','🎨','прил.','какой?'],['г','⚡','гл.','что делает?']];
-  window.RUGAME=window.RUGAME||{}; window.RUGAME[601]=SC;   /* тренажёр 601 виден гейту отклика */
-  function v(s,i){ const q=s['q'+i]; return q==null?`<p class="verdict">Выбери ответ:</p>`:`<p class="verdict ${q===0?'ok':'no'}">${q===0?'✅ верно.':'❌ не так — подумай ещё раз.'}</p>`; }
-  function pred(i,body){ return body + (P[i]?`<div class="row">
-      ${BTN(90,'chip',P[i][1],`s6Pred(${i},0)`)}${BTN(91,'chip',P[i][2],`s6Pred(${i},1)`)}</div>${v(S(),i)}`:'') }
-  function frames(s){
-    const on=(k)=>k==null?'chip':(k===1?'chip ok':'chip no');
-    return {
-    1:`${T('div',0,'kicker','01 · Что называет слово')}
-       ${T('h2',1,'','Части речи: что называет слово')}
-       ${T('p',2,'lead','Каждое слово — работник со своей должностью.<br>Должность и есть часть речи.')}
-       <div class="row">${T('div',3,'card','<div class="ic">🧱</div><div class="nm">предмет</div><div class="ex">кто? что?</div>')}
-       ${T('div',4,'card','<div class="ic">🎨</div><div class="nm">признак</div><div class="ex">какой?</div>')}
-       ${T('div',5,'card','<div class="ic">⚡</div><div class="nm">действие</div><div class="ex">что делает?</div>')}</div>
-       ${T('p',6,'cap','Вопрос к слову — самый быстрый способ узнать должность.')}`,
-    2:`${T('div',0,'kicker','02 · Имя существительное')}
-       <div class="split">${T('span',1,'word','<b>смех</b><i>кто? что?</i>')}</div>
-       ${T('p',2,'lead','Отвечает на <b style="color:#ffd76a">кто?</b> или <b style="color:#ffd76a">что?</b> и называет предмет.')}
-       <div class="row">${['кот','дом','смех'].map((w,k)=>BTN(3+k,on(s['w'+w]),w,`s6Word('${w}')`)).join('')}</div>
-       <div class="split">${T('span',7,'tag','кто? — живое')}${T('span',8,'tag','что? — остальное')}</div>
-       ${T('p',9,'verdict '+(s.wкот==null?'':'ok'), s.wкот==null?'Нажми на слово — покажу вопрос к нему.':'Смех и бег тоже существительные: они отвечают на вопрос что?')}`,
-    3:`${T('div',0,'kicker','03 · Имя прилагательное')}
-       ${T('p',1,'lead','Признак не живёт сам: он <b style="color:#ffd76a">цепляется</b> к предмету.')}
-       <div class="split">${T('span',2,'word','<b>рыжий</b><i>какой?</i>')}
-         <svg width="72" height="24" style="flex:none"><line class="draw" x1="4" y1="12" x2="66" y2="12" stroke="#ffd76a" stroke-width="2.5" stroke-linecap="round"/></svg>
-         ${T('span',3,'word','<b>кот</b><i>кто?</i>')}</div>
-       <div class="row">${['тёплая → вода','деревянное → окно','зимний → день'].map((p,k)=>BTN(4+k,'chip',p,`s6Toggle(this)`)).join('')}</div>
-       ${T('p',7,'cap','Нажми на пару — подсветится связь.')}`,
-    4:`${T('div',0,'kicker','04 · Глагол')}
-       ${T('p',1,'lead','Отвечает на <b style="color:#ffd76a">что делает?</b> и называет действие или состояние.')}
-       <div class="row">${['бежит','светит','спит'].map((w,k)=>BTN(2+k,on(s['v'+w]===1?'ok':null),w,`s6Verb('${w}')`)).join('')}</div>
-       <div class="rail">${T('span',5,'tag','действие: бежит, светит')}${T('span',6,'tag','состояние: спит')}</div>
-       ${T('p',7,'score',s.vN==null?'Нажми на глаголы — они уедут на ленту.':'Отмечено глаголов: '+s.vN)}`,
-    5:`${T('div',0,'kicker','05 · Местоимение')}
-       ${T('p',1,'lead','Не называет, а <b style="color:#ffd76a">указывает</b>: я, ты, он, она, мы, вы, они.')}
-       <div class="col">
-         <div class="split">${T('span',2,'word', s.p==null?'<b>Маша</b><i>имя</i>':'<b>Она</b><i>указывает</i>')}${T('span',3,'word','<b>читает</b>')}</div>
-         ${s.p==null?'':T('div',4,'cap','Слово «Маша» ушло, смысл остался: местоимение заменило имя.')}
-       </div>
-       ${BTN(5,'cta', s.p==null?'Показать, как короче':'Вернуть имя',`s6Pron()`)}`,
-    6:`${T('div',0,'kicker','06 · Имя числительное')}
-       ${T('p',1,'lead','Называет число или порядок при счёте — и всегда отвечает на свой вопрос.')}
-       <div class="row">${T('div',2,'card','<div class="nm">сколько?</div><div class="ex">пять, сто</div>')}${T('div',3,'card','<div class="nm">который?</div><div class="ex">третий, пятый</div>')}</div>
-       <div class="row">${[['пять','сколько?'],['третий','который?'],['сто','сколько?']].map((p,k)=>BTN(4+k,'chip',p[0],`s6Num(this,'${p[1]}')`)).join('')}</div>
-       ${T('p',7,'cap','Нажми — покажу вопрос.')}`,
-    7:`${T('div',0,'kicker','07 · Наречие')}
-       ${T('p',1,'lead','Признак действия: как? где? когда? Наречие не изменяется — у него нет окончания.')}
-       <div class="col">
-         ${[['бежит','быстро · как?'],['живёт','вдали · где?'],['вернулся','вечером · когда?']].map((p,k)=>
-           T('div',2+k,'split',`<span class="word"><b style="font-size:32px">${p[0]}</b></span><span class="tag">${p[1]}</span>`)).join('')}
-       </div>`,
-    8:`${T('div',0,'kicker','08 · Служебные части речи')}
-       ${T('p',1,'lead','Ничего не называют — <b style="color:#ffd76a">служат</b>: связывают слова.')}
-       <div class="row">${T('div',2,'card','<div class="ic">🔗</div><div class="nm">предлог</div><div class="ex">в, на, под</div>')}
-       ${T('div',3,'card','<div class="ic">➕</div><div class="nm">союз</div><div class="ex">и, но, а</div>')}
-       ${T('div',4,'card','<div class="ic">❕</div><div class="nm">частица</div><div class="ex">не, бы, же</div>')}</div>
-       <div class="split">${T('span',5,'word wide', s.sv==null?'<b>кот · столе · спит</b><i>без службы</i>':'<b>кот <span style="color:#ffd76a">на</span> столе <span style="color:#ffd76a">и</span> спит</b><i>служебные на месте</i>')}</div>
-       ${BTN(6,'cta', s.sv==null?'Собрать фразу':'Разобрать снова',`s6Serv()`)}`,
-    9:(()=>{ const i=(s.gIdx||0)%SC.length, it=SC[i], got=s.gRes, done=got!=null, ok=got===it[2];
-      return `${T('div',0,'kicker','09 · Тренажёр')}
-       <div class="split">${T('span',1,'word',`<b>${it[0]}</b><i>${it[1]}</i>`)}</div>
-       ${done
-         ? (ok ? window.RUFEED.note('ok','верно',it[0]+' — '+CR.filter(c=>c[0]===it[2])[0][2])
-               : window.RUFEED.note('no','исправить','<b>'+it[0]+'</b> — это '+CR.filter(c=>c[0]===it[2])[0][2]+', а не '+CR.filter(c=>c[0]===got)[0][2]))
-         : `<div class="verdict">Выбери ящик для слова.</div>`}
-       <div class="crates">${CR.map((c,k)=>{ const cls='crate'+(done&&got===c[2]?(c[2]===it[2]?' hit':' miss'):'');
-         return BTN(2+k,cls,`<div class="ic">${c[1]}</div><div class="nm">${c[2]}</div><div class="ex">${c[3]}</div>`,`s6Sort('${c[0]}')`); }).join('')}</div>
-       <p class="score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${SC.length}</p>
-       <p class="cap">${done?'Нажми любой ящик — следующее слово.':'Каждое слово — в свой ящик.'}</p>`; })()
-    };
+  const T=(tag,i,cls,html)=>`<${tag} data-anim style="--i:${i}" class="${cls||''}">${html}</${tag}>`;
+  const BTN=(i,cls,html,on)=>`<button type="button" data-anim style="--i:${i}" class="${cls}" onclick="${on}">${html}</button>`;
+  const SENT=[['Рыжий','какой?','прилагательное','признак предмета'],
+              ['кот','кто?','существительное','предмет'],
+              ['быстро','как?','наречие','признак действия'],
+              ['прыгнул','что сделал?','глагол','действие'],
+              ['на','—','предлог','служебное: мостик'],
+              ['стол','что?','существительное','предмет']];
+  const P={
+    1:['Часть речи — это…',[{k:'a',t:'работа слова в речи',ok:1,fb:'верно: не буквы, а должность'},{k:'b',t:'количество букв',ok:0,fb:'буквы тут ни при чём'}]],
+    2:['С чего начинают определение?',[{k:'a',t:'считают слоги',ok:0,fb:'слоги — это фонетика'},{k:'b',t:'задают вопрос',ok:1,fb:'верно: вопрос — ключ'}]],
+    3:['Из служебных слов предложение…',[{k:'a',t:'собрать нельзя',ok:1,fb:'верно: они только служат'},{k:'b',t:'легко собрать',ok:0,fb:'«и на но» — это не предложение'}]],
+    4:['«Дом» отвечает на вопрос…',[{k:'a',t:'что?',ok:1,fb:'верно: это существительное'},{k:'b',t:'какой?',ok:0,fb:'какой? — вопрос прилагательного'}]],
+    5:['«Смех» — это…',[{k:'a',t:'глагол',ok:0,fb:'глагол отвечает что делает?'},{k:'b',t:'существительное',ok:1,fb:'верно: смех — что?'}]],
+    6:['К слову «книга» вопрос…',[{k:'a',t:'что?',ok:1,fb:'верно: неодушевлённое'},{k:'b',t:'кто?',ok:0,fb:'кто? — только к живому'}]],
+    7:['Прилагательное без предмета…',[{k:'a',t:'живёт само',ok:0,fb:'признак всегда чей-то'},{k:'b',t:'цепляется к предмету',ok:1,fb:'верно: рыжий — это кто?'}]],
+    8:['«Спит» — это…',[{k:'a',t:'глагол-состояние',ok:1,fb:'верно: что делает? — спит'},{k:'b',t:'существительное',ok:0,fb:'существительное — сон, а не спит'}]],
+    9:['Зачем местоимение?',[{k:'a',t:'не повторять имя',ok:1,fb:'верно: она вместо Маша'},{k:'b',t:'назвать число',ok:0,fb:'число называет числительное'}]],
+    10:['«Третий» отвечает на…',[{k:'a',t:'сколько?',ok:0,fb:'сколько? — пять, двое'},{k:'b',t:'который?',ok:1,fb:'верно: это порядок'}]],
+    11:['Чем наречие отличается?',[{k:'a',t:'не изменяется',ok:1,fb:'верно: быстро всегда быстро'},{k:'b',t:'отвечает кто? что?',ok:0,fb:'это вопрос существительного'}]],
+    12:['«Быстро» и «быстрый» — это…',[{k:'a',t:'одно слово',ok:0,fb:'разные должности, разные части речи'},{k:'b',t:'разные части речи',ok:1,fb:'верно: наречие и прилагательное'}]],
+    13:['Предлог пишется…',[{k:'a',t:'отдельно',ok:1,fb:'верно: на столе — два слова'},{k:'b',t:'слитно, как приставка',ok:0,fb:'приставка — часть слова, предлог — отдельное'}]],
+    14:['Частица «не» — это…',[{k:'a',t:'часть глагола',ok:0,fb:'не спит — два слова'},{k:'b',t:'отдельное служебное слово',ok:1,fb:'верно: частица пишется отдельно'}]],
+    15:['Первый шаг алгоритма — …',[{k:'a',t:'задай вопрос',ok:1,fb:'верно: вопрос открывает должность'},{k:'b',t:'найди корень',ok:0,fb:'корень — это состав слова, урок 602'}]]
+  };
+  const SC=[['кот','кто?','существительное'],['радость','что?','существительное'],
+            ['рыжий','какой?','прилагательное'],['зимний','какой?','прилагательное'],
+            ['летит','что делает?','глагол'],['спит','что делает?','глагол'],
+            ['она','кто? указывает','местоимение'],['мы','кто? указывает','местоимение'],
+            ['пять','сколько?','числительное'],['третий','который?','числительное'],
+            ['быстро','как?','наречие'],['вчера','когда?','наречие']];
+  const BOX=[['существительное','кто? что?'],['прилагательное','какой?'],
+             ['глагол','что делает?'],['местоимение','указывает'],
+             ['числительное','сколько? который?'],['наречие','как? где? когда?']];
+  window.RUGAME=window.RUGAME||{}; window.RUGAME[601]=SC;
+
+  function pred(f,body){
+    const p=P[f]; if(!p) return body;
+    const s=S(), cur=s['q'+f];
+    const pick=p[1].find(o=>o.k===cur);
+    const fb=cur
+      ? `<p class="verdict ${pick&&pick.ok?'ok':'no'}">${pick&&pick.ok?'верно. '+pick.fb:'не так. '+(pick?pick.fb:'подумай ещё')}</p>`
+      : `<p class="verdict">Выбери ответ:</p>`;
+    return body+`<div class="askrow">${p[1].map((o,i)=>BTN(8+i,'chip'+(cur===o.k?(o.ok?' ok':' no'):''),o.t,`s6Pred(${f},'${o.k}')`)).join('')}</div>`+fb;
   }
+
+  function body(s,f){
+    if(f===1){
+      const cur=SENT.find(x=>x[0]===s.tap);
+      return `${T('div',0,'kicker','01 · Слова-работники')}
+        ${T('h2',1,'','В одном предложении — разные работы')}
+        ${T('p',2,'lead','Кликни слово: рядом появятся вопрос и должность.')}
+        <div class="sent">${SENT.map((w,i)=>BTN(3+i,s.tap===w[0]?'chip on':'chip',w[0],`s6Tap('${w[0]}')`)).join('')}</div>
+        ${cur?`<div class="job" data-anim style="--i:10"><b>${cur[1]}</b><i>${cur[0]} — ${cur[2]}. ${cur[3]}.</i></div>`
+             :T('p',10,'cap','Пока не нажал — слово молчит. Начни с «кот».')}`;
+    }
+    if(f===2){
+      return `${T('div',0,'kicker','02 · Три признака')}
+        ${T('h2',1,'','Часть речи узнают по трём делам')}
+        <div class="steps">
+          ${T('div',2,'st','<span class="n">1</span><span class="t">Что называет?<small>предмет, признак, действие, число</small></span>')}
+          ${T('div',3,'st','<span class="n">2</span><span class="t">На какой вопрос отвечает?<small>кто? какой? что делает? как?</small></span>')}
+          ${T('div',4,'st','<span class="n">3</span><span class="t">Чем работает в предложении?<small>подлежащее, сказуемое — или только служит</small></span>')}
+        </div>
+        ${T('p',5,'cap','Не смотри на буквы. Смотри на работу.')}`;
+    }
+    if(f===3){
+      return `${T('div',0,'kicker','03 · Две семьи')}
+        ${T('h2',1,'','Самостоятельные и служебные')}
+        <div class="pair">
+          ${T('div',2,'card','<div class="nm">самостоятельные</div><div class="ex">называют<br>отвечают на вопрос<br>могут быть членами предложения<br><br>кот · рыжий · спит</div>')}
+          ${T('div',3,'card','<div class="nm">служебные</div><div class="ex">ничего не называют<br>вопроса нет<br>членами не бывают<br><br>на · и · не</div>')}
+        </div>
+        <div class="split">${T('span',4,'word wide', s.sv?'<b>и на но</b><i>из служебных предложения нет</i>':'<b>Кот спит на столе</b><i>самостоятельные держат смысл</i>')}</div>
+        ${BTN(5,'cta', s.sv?'Вернуть нормальную фразу':'Показать одни служебные',`s6Serv()`)}`;
+    }
+    if(f===4){
+      const on=k=>s['w'+k]?'chip ok':'chip';
+      return `${T('div',0,'kicker','04 · Имя существительное')}
+        <div class="split">${T('span',1,'word','<b>кот</b><i>кто?</i>')}</div>
+        ${T('p',2,'lead','Отвечает на <b style="color:#ffd76a">кто?</b> или <b style="color:#ffd76a">что?</b> и называет предмет.')}
+        <div class="row">${BTN(3,on('кот'),'кот',`s6Word('кот')`)}${BTN(4,on('дом'),'дом',`s6Word('дом')`)}${BTN(5,on('мама'),'мама',`s6Word('мама')`)}</div>
+        <div class="split">${T('span',6,'tag','кто? — живое')}${T('span',7,'tag','что? — остальное')}</div>
+        ${T('p',8,'cap',s.wкот?'«Кот» и «мама» — кто?, «дом» — что?. Все трое — существительные.':'Нажми слово — подпишу вопрос.')}`;
+    }
+    if(f===5){
+      const show=s.trap===1;
+      return `${T('div',0,'kicker','05 · Невидимый предмет')}
+        ${T('h2',1,'','Даже то, что нельзя потрогать')}
+        ${T('p',2,'lead','<b style="color:#ffd76a">Бежит</b> — действие. А <b style="color:#ffd76a">бег</b> — уже предмет: отвечает на что?')}
+        <div class="split">
+          ${T('span',3,'word', show?'<b>бег</b><i>что?</i>':'<b>бежит</b><i>что делает?</i>')}
+        </div>
+        ${BTN(4,'cta', show?'Вернуть глагол':'Превратить в существительное',`s6Trap()`)}
+        ${T('p',5,'cap','Смех, доброта, радость — та же ловушка: выглядят «как действие», а это существительные.')}`;
+    }
+    if(f===6){
+      return `${T('div',0,'kicker','06 · Кто? и что?')}
+        ${T('h2',1,'','Одушевлённые и неодушевлённые')}
+        <div class="pair">
+          ${T('div',2,'card','<div class="nm">кто?</div><div class="ex">кот · мама · друг<br>живое существо</div>')}
+          ${T('div',3,'card','<div class="nm">что?</div><div class="ex">дом · книга · радость<br>всё остальное</div>')}
+        </div>
+        ${T('p',4,'ex-line','Ловушка: <b>кукла</b> похожа на человека, но вопрос — <b>что?</b> Для языка она неодушевлённая.')}
+        ${T('p',5,'cap','Смотри на вопрос, а не на картинку в голове.')}`;
+    }
+    if(f===7){
+      const ADJ=[{n:'кот',e:'ий',q:'какой?',nq:'кто?'},{n:'лиса',e:'ая',q:'какая?',nq:'кто?'},{n:'солнце',e:'ее',q:'какое?',nq:'что?'}];
+      const i=s.adj||0, a=ADJ[i];
+      return `${T('div',0,'kicker','07 · Имя прилагательное')}
+        ${T('p',1,'lead','Признак <b style="color:#ffd76a">цепляется</b> к предмету и меняет окончание вместе с ним.')}
+        <div class="split">
+          ${T('span',2,'word',`<b>рыж<span class="end">${a.e}</span></b><i>${a.q}</i>`)}
+          <svg width="56" height="18" style="flex:none" aria-hidden="true"><line class="draw" x1="4" y1="9" x2="52" y2="9" stroke="#ffd76a" stroke-width="2.4" stroke-linecap="round"/></svg>
+          ${T('span',3,'word',`<b>${a.n}</b><i>${a.nq}</i>`)}
+        </div>
+        <div class="row">${ADJ.map((x,k)=>BTN(4+k,i===k?'chip on':'chip',x.n,`s6Adj(${k})`)).join('')}</div>
+        ${T('p',7,'cap','Одно слово «рыжий», три окончания — потому что три разных существительных.')}`;
+    }
+    if(f===8){
+      const V=[['бежит','действие'],['светит','действие'],['спит','состояние'],['радуется','состояние']];
+      const n=V.filter(x=>s['v'+x[0]]).length;
+      return `${T('div',0,'kicker','08 · Глагол')}
+        ${T('p',1,'lead','Отвечает на <b style="color:#ffd76a">что делает?</b> Действие и состояние — оба глаголы.')}
+        <div class="row">${V.map((x,k)=>BTN(2+k,s['v'+x[0]]?'chip ok':'chip',x[0],`s6Verb('${x[0]}')`)).join('')}</div>
+        <div class="rail">${T('span',6,'tag','действие: бежит, светит')}${T('span',7,'tag','состояние: спит, радуется')}</div>
+        ${T('p',8,'score', n?('Отмечено глаголов: '+n+' из 4. Все четыре отвечают «что делает?».'):'Нажми глаголы — они отметятся.')}`;
+    }
+    if(f===9){
+      return `${T('div',0,'kicker','09 · Местоимение')}
+        ${T('p',1,'lead','Не называет, а <b style="color:#ffd76a">указывает</b>: я, ты, он, она, мы, вы, они.')}
+        <div class="col">
+          <div class="split">${T('span',2,'word', s.p?'<b>Она</b><i>указывает</i>':'<b>Маша</b><i>имя</i>')}${T('span',3,'word','<b>читает</b>')}</div>
+          ${s.p?T('p',4,'cap','Слово «Маша» ушло, смысл остался. Местоимение заменило имя.'):T('p',4,'cap','Имя повторяется — речь тяжёлая. Нажми кнопку.')}
+        </div>
+        ${BTN(5,'cta', s.p?'Вернуть имя':'Показать, как короче',`s6Pron()`)}`;
+    }
+    if(f===10){
+      const N=[['пять','сколько?'],['двое','сколько?'],['сто','сколько?'],['третий','который?'],['пятый','который?']];
+      return `${T('div',0,'kicker','10 · Имя числительное')}
+        ${T('p',1,'lead','Называет число или порядок при счёте — и всегда держит свой вопрос.')}
+        <div class="pair">
+          ${T('div',2,'card','<div class="nm">сколько?</div><div class="ex">пять · двое · сто<br>количество</div>')}
+          ${T('div',3,'card','<div class="nm">который?</div><div class="ex">третий · пятый<br>порядок</div>')}
+        </div>
+        <div class="row">${N.map((x,k)=>BTN(4+k,s['n'+x[0]]?'chip on':'chip', s['n'+x[0]]?(x[0]+' — '+x[1]):x[0], `s6Num('${x[0]}','${x[1]}')`)).join('')}</div>
+        ${T('p',9,'cap','Нажми числительное — подпишу вопрос. «Пятый» — это число, а не признак.')}`;
+    }
+    if(f===11){
+      const A=[['бежит','быстро','как?'],['живёт','вдали','где?'],['пришёл','вечером','когда?']];
+      const i=s.adv||0, a=A[i];
+      return `${T('div',0,'kicker','11 · Наречие')}
+        ${T('p',1,'lead','Признак действия. И оно <b style="color:#ffd76a">не изменяется</b> — окончания нет.')}
+        <div class="split">
+          ${T('span',2,'word',`<b>${a[0]}</b>`)}
+          ${T('span',3,'tag', a[1]+' · '+a[2])}
+        </div>
+        <div class="row">${A.map((x,k)=>BTN(4+k,i===k?'chip on':'chip',x[1],`s6Adv(${k})`)).join('')}</div>
+        ${T('p',7,'ex-line','Сравни: <b>быстрый</b> кот (какой? — прилагательное) и бежит <b>быстро</b> (как? — наречие).')}`;
+    }
+    if(f===12){
+      const F=[['бег','что?','существительное'],['бежит','что делает?','глагол'],['быстрый','какой?','прилагательное'],['быстро','как?','наречие']];
+      const cur=F.find(x=>x[0]===s.fam);
+      return `${T('div',0,'kicker','12 · Одно гнездо')}
+        ${T('h2',1,'','Смысл рядом — должности разные')}
+        <div class="fam">${F.map((x,k)=>BTN(2+k,s.fam===x[0]?'chip on':'chip',`<b>${x[0]}</b><i>${x[1]}</i>`,`s6Fam('${x[0]}')`)).join('')}</div>
+        ${cur?`<div class="job" data-anim style="--i:8"><b>${cur[2]}</b><i>вопрос ${cur[1]} — поэтому это ${cur[2]}</i></div>`
+             :T('p',8,'cap','Кликни слово из гнезда — увидишь, почему оно не сосед.')}`;
+    }
+    if(f===13){
+      const on=s.br!==0;
+      return `${T('div',0,'kicker','13 · Предлог')}
+        ${T('p',1,'lead','Предлог — <b style="color:#ffd76a">мостик</b> к существительному. Это отдельное слово, не приставка.')}
+        <div class="bridge">
+          ${T('span',2,'word','<b>кот</b>')}
+          ${on?BTN(3,'prep','на',`s6Bridge()`):T('span',3,'tag','мостик убрали')}
+          ${T('span',4,'word','<b>столе</b>')}
+        </div>
+        ${BTN(5,'cta', on?'Убрать предлог':'Вернуть мостик',`s6Bridge()`)}
+        ${T('p',6,'cap', on?'Кот на столе — два самостоятельных и мостик между ними.':'Без предлога связь рассыпалась: кот … столе.')}`;
+    }
+    if(f===14){
+      return `${T('div',0,'kicker','14 · Союз и частица')}
+        ${T('h2',1,'','Один связывает, другая даёт оттенок')}
+        <div class="pair">
+          ${T('div',2,'card','<div class="nm">союз</div><div class="ex">и · а · но<br>кот <b>и</b> пёс<br>связывает слова и предложения</div>')}
+          ${T('div',3,'card','<div class="nm">частица</div><div class="ex">не · бы · же · ли<br><b>не</b> спит<br>оттенок: отрицание, вопрос</div>')}
+        </div>
+        ${T('p',4,'ex-line','«Не спит» — <b>два слова</b>. Частица не приросла к глаголу.')}
+        ${T('p',5,'cap','Проверка: из «и не бы же» предложения не собрать. Служебные без самостоятельных не живут.')}`;
+    }
+    if(f===15){
+      return `${T('div',0,'kicker','15 · Алгоритм')}
+        ${T('h2',1,'','Четыре шага — и часть речи найдена')}
+        <div class="steps">
+          ${T('div',2,'st','<span class="n">1</span><span class="t">Задай вопрос<small>кто? какой? что делает? как? сколько?</small></span>')}
+          ${T('div',3,'st','<span class="n">2</span><span class="t">Что называет?<small>предмет, признак, действие, число — или указывает</small></span>')}
+          ${T('div',4,'st','<span class="n">3</span><span class="t">Изменяется ли?<small>наречие не изменяется; служебные — тоже</small></span>')}
+          ${T('div',5,'st','<span class="n">4</span><span class="t">Член предложения или служит?<small>если вопроса нет — это служебное</small></span>')}
+        </div>
+        ${T('p',6,'cap','Дальше — ящик: положи слово на его должность.')}`;
+    }
+    const i=(s.gIdx||0)%SC.length, it=SC[i], got=s.gRes, done=got!=null, ok=got===it[2];
+    const why=BOX.filter(c=>c[0]===it[2])[0];
+    return `${T('div',0,'kicker','16 · Тренажёр')}
+      <div class="split">${T('span',1,'word',`<b>${it[0]}</b><i>${it[1]}</i>`)}</div>
+      ${done
+        ? (ok ? window.RUFEED.note('ok','верно',it[0]+' — '+it[2]+(why?' · '+why[1]:''))
+              : window.RUFEED.note('no','исправить','<b>'+it[0]+'</b> — это '+it[2]+', а не '+got))
+        : `<p class="verdict">Задай вопрос и выбери часть речи.</p>`}
+      <div class="casebtns">${BOX.map((c,k)=>
+        `<button type="button" data-anim style="--i:${2+k}" class="${done&&got===c[0]?(ok?'hit':'miss'):''}" onclick="s6Sort('${c[0]}')"><span class="nm">${c[0]}</span><span class="qs">${c[1]}</span></button>`).join('')}</div>
+      <p class="score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${SC.length}</p>
+      <p class="cap">${done?'Нажми любую кнопку — следующее слово.':'Вопрос на карточке — уже подсказка.'}</p>`;
+  }
+
   function render(el){
-    css(); const s=S(); const st=(typeof LV!=='undefined'&&LV.step)||0; const f=Math.min(9,Math.max(1,st+1));  /* шаги 0–8 → кадры 1–9 */
-    const body=frames(s)[f];
-    el.innerHTML=`<div class="s6" data-frame="${f}">${pred(f,body)}</div>`;
+    css();
+    const s=S();
+    const st=(typeof LV!=='undefined'&&LV.step)||0;
+    const f=Math.min(16, Math.max(1, st+1));
+    el.innerHTML=`<div class="s6 l601" data-frame="${f}">${pred(f, body(s,f))}</div>`;
   }
-  window.s6Pred=(i,q)=>{ const s=S(); s['q'+i]=q; chRender(0); };
-  window.s6Word=(w)=>{ const s=S(); s['w'+w]=1; chRender(0); };
-  window.s6Toggle=(b)=>{ try{ b.classList.toggle('on'); }catch(e){} };
-  window.s6Verb=(w)=>{ const s=S(); s['v'+w]=1; s.vN=Object.keys(s).filter(k=>/^v[^N]/.test(k)).length; chRender(0); };
-  window.s6Pron=()=>{ const s=S(); s.p=s.p==null?1:null; chRender(0); };
-  window.s6Num=(b,q)=>{ try{ b.classList.add('on'); b.textContent=b.textContent.replace(/\s*—.*/,'')+' — '+q; }catch(e){} };
-  window.s6Serv=()=>{ const s=S(); s.sv=s.sv==null?1:null; chRender(0); };
+
+  window.s6Pred=(f,k)=>{ S()['q'+f]=k; chRender(0); };
+  window.s6Tap=(w)=>{ S().tap=w; chRender(0); };
+  window.s6Word=(w)=>{ S()['w'+w]=1; chRender(0); };
+  window.s6Trap=()=>{ const s=S(); s.trap=s.trap===1?0:1; chRender(0); };
+  window.s6Adj=(i)=>{ S().adj=i; chRender(0); };
+  window.s6Verb=(w)=>{ const s=S(); s['v'+w]=1; chRender(0); };
+  window.s6Pron=()=>{ const s=S(); s.p=s.p?0:1; chRender(0); };
+  window.s6Num=(w,q)=>{ S()['n'+w]=q; chRender(0); };
+  window.s6Adv=(i)=>{ S().adv=i; chRender(0); };
+  window.s6Fam=(w)=>{ S().fam=w; chRender(0); };
+  window.s6Bridge=()=>{ const s=S(); s.br=(s.br===0)?1:0; chRender(0); };
+  window.s6Serv=()=>{ const s=S(); s.sv=s.sv?0:1; chRender(0); };
   window.s6Sort=(key)=>{
     let from=null,to=null,txt='';
     try{
       const s=S(), i=(s.gIdx||0)%SC.length, it=SC[i];
       if(s.gRes!=null){ s.gIdx=(s.gIdx||0)+1; s.gRes=null; chRender(0); return; }
-      const crate=document.querySelector('#lvis .s6 .crate[onclick*="'+key+'"]')||[...document.querySelectorAll('#lvis .s6 .crate')].find(c=>(c.getAttribute('onclick')||'').indexOf("'"+key+"'")>0);
       const card=document.querySelector('#lvis .s6 .word');
+      const crate=[...document.querySelectorAll('#lvis .s6 .casebtns button')].find(b=>(b.getAttribute('onclick')||'').indexOf("'"+key+"'")>0);
       if(card) from=card.getBoundingClientRect(); if(crate) to=crate.getBoundingClientRect(); txt=it[0];
       s.gRes=key; if(key===it[2]) s.gOk=(s.gOk||0)+1; else s.gBad=(s.gBad||0)+1;
-      chRender(0);                                  /* состояние видно сразу, даже без анимации */
+      chRender(0);
     }catch(e){}
     try{
       if(!from||!to) return;
@@ -3957,10 +4084,11 @@ window.RU601V2 = (function(){
       c.style.left=from.left+'px'; c.style.top=from.top+'px'; c.style.fontSize=Math.min(42,to.height*0.5)+'px';
       document.body.appendChild(c);
       const dx=(to.left+to.width/2)-(from.left+from.width/2), dy=(to.top+to.height/2)-(from.top+from.height/2);
-      requestAnimationFrame(()=>{ c.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px) scale(.9)'; c.style.opacity='.08'; });
+      requestAnimationFrame(()=>{ c.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px) scale(.92)'; c.style.opacity='.08'; });
       setTimeout(()=>{ try{ c.remove(); }catch(e){} }, 300);
     }catch(e){}
   };
+
   if(window.WAVE_B){
     const prev=window.WAVE_B[601];
     window.WAVE_B[601]=function(el){ try{ render(el); }catch(e){ try{ prev(el); }catch(e2){} } };
