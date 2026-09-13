@@ -904,10 +904,25 @@ function ptCss(){
     background:var(--panel);color:var(--ivory);font-family:inherit;font-size:14px;cursor:pointer}
   .pt-tool:active{transform:translateY(1px)}
   .pt-note{font-size:14px;line-height:1.5;color:var(--muted);margin:8px 2px 0}
-  .pt-link{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:10px 12px;margin-top:16px;
-    background:rgba(255,255,255,.03);border:1px solid var(--hairline);border-radius:14px;color:var(--ivory);
-    font-family:inherit;text-align:left;cursor:pointer}
-  .pt-link:active{transform:translateY(1px)}
+  /* Слово Архимеда вверху экрана: послание ученику + ссылка на легенду.
+     Раньше легенда стояла в самом низу, под «личным маршрутом», и до неё
+     никто не доходил. */
+  .pt-arch{margin-top:12px;padding:12px 14px;border-radius:16px;
+    background:linear-gradient(135deg,rgba(127,209,255,.07),rgba(217,164,65,.06));
+    border:1px solid rgba(127,209,255,.3)}
+  .pt-arch-who{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+  .pt-arch-say{font-size:16px;line-height:1.5;color:#e2e8f4;margin-top:6px}
+  .pt-arch-link{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;margin-top:10px;
+    padding:8px 10px;border-radius:12px;border:1px solid var(--hairline);background:rgba(255,255,255,.04);
+    color:var(--ivory);font-family:inherit;text-align:left;cursor:pointer;
+    transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 160ms}
+  .pt-arch-link:active{transform:translateY(1px)}
+  .pt-arch-link:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+  .pt-arch-ic{font-size:20px;line-height:1}
+  .pt-arch-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+  .pt-arch-t b{font-size:14px;color:var(--glow)}
+  .pt-arch-t span{font-size:12px;color:var(--muted)}
+  .pt-arch-arr{color:var(--brass);font-size:16px}
   .pt-cta{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:84;
     padding:8px 8px 10px;pointer-events:none;
     background:linear-gradient(180deg,rgba(11,23,18,0) 0%,rgba(11,23,18,.94) 42%)}
@@ -922,6 +937,28 @@ function ptCss(){
   @media (prefers-reduced-motion: reduce){ .pt-cta.go{animation:none} .pt-bar i{transition:none} }
   `;
   document.head.appendChild(st);
+}
+/* ---------- послание ученику ---------- */
+/* Склонение: 1 задача, 2 задачи, 5 задач */
+function rusPlural(n,one,few,many){
+  const m10=Math.abs(n)%10, m100=Math.abs(n)%100;
+  if(m10===1 && m100!==11) return one;
+  if(m10>=2 && m10<=4 && (m100<10 || m100>=20)) return few;
+  return many;
+}
+/* Архимед говорит с учеником по его настоящим числам, а не по шаблону.
+   Числа прогресса и серию не повторяем: они стоят в шапке прямо над этим
+   блоком, и второй раз читать их незачем. Выдуманной похвалы нет: не решено
+   ни одной задачи — так и говорим, но объясняем, что ошибаться можно. */
+function pathSay(doneN,total){
+  const nm=String((DB.profile&&DB.profile.name)||'').trim();
+  const you=nm? nm+', ':'';
+  const left=Math.max(0,(total||0)-doneN);
+  const kid=typeof isJunior==='function' && isJunior();
+  if(!total) return you+'для твоего класса задач пока нет. Нажми «открыть весь мир» под списком островов.';
+  if(!left) return you+'вся карта пройдена: '+total+' '+rusPlural(total,'задача','задачи','задач')+'. Теперь бери посложнее — они в банке задач.';
+  if(!doneN) return you+'начнём с одной '+(kid?'задачки':'задачи')+'. Ошибаться можно: подсказка и разбор — мои.';
+  return you+'сложное — это просто то, что ещё не решено. Возьмись за одну задачу.';
 }
 function renderPath(){
   pdCss(); ptCss();
@@ -982,17 +1019,21 @@ function renderPath(){
     : `<div class="pt-cta go"><button class="btn" onclick="go('library')">
          <span class="t1">🏆 Все задачи решены</span><span class="t2">выбрать что-то из банка задач</span></button></div>`;
 
-  const legend=`<div class="pt-link" onclick="go('legend')">
-      <span style="font-size:24px">📜</span>
-      <span style="flex:1;text-align:left"><b style="color:var(--glow)">Легенда об Архимеде</b><br>
-      <span style="font-size:14px;color:var(--muted)">кто он и откуда острова</span></span>
-      <span style="color:var(--brass)">→</span></div>`;
+  const legend=`<div class="pt-arch">
+      <div class="pt-arch-who">◈ Архимед</div>
+      <div class="pt-arch-say">${esc(pathSay(doneN,pool.length))}</div>
+      <button type="button" class="pt-arch-link" onclick="go('legend')">
+        <span class="pt-arch-ic">📜</span>
+        <span class="pt-arch-t"><b>Легенда об Архимеде</b><span>кто он и откуда острова</span></span>
+        <span class="pt-arch-arr">→</span>
+      </button>
+    </div>`;
 
   s.innerHTML=hero
+    + legend
     + `<div class="pt-h">Острова</div>` + islRows
     + tools
     + (planDash()? `<div class="pt-h">Личный маршрут</div>` + planDash() : '')
-    + legend
     + `<div class="pt-spacer"></div>`
     + cta;
   requestAnimationFrame(function(){
