@@ -55,7 +55,10 @@ with sync_playwright() as p:
     pg.evaluate("()=>{DB.profile={name:'Вика',klass:'6',color:'#d9a441',gender:'girl'};save();}")
     for lid,label in LESSONS:
         pg.evaluate(STEP8, int(lid)); pg.wait_for_timeout(200)
-        for _ in range(8): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(45)
+        # тренажёр — последний кадр; у 603 и 604 кадров стало больше
+        # (первым идёт список словарных слов), поэтому шаг считаем по уроку
+        n = pg.evaluate("(l)=>(((lessonById(l)||{}).explain)||[]).length", int(lid))
+        for _ in range(max(0, (n or 9) - 1)): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(45)
         pg.wait_for_timeout(350)
         marks=[]
         for n,want in enumerate(('wrong','right')):

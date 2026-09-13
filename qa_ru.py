@@ -16,7 +16,8 @@ import json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 LESSONS_MAP = {
-    601: 9, 602: 9, 603: 9, 604: 9, 605: 9, 606: 9, 607: 9, 608: 9, 609: 9, 610: 9,
+    # 603 и 604 — 10 кадров: первым идёт список словарных слов урока
+    601: 9, 602: 9, 603: 10, 604: 10, 605: 9, 606: 9, 607: 9, 608: 9, 609: 9, 610: 9,
     611: 17, 612: 17, 613: 17, 614: 22, 615: 13, 616: 6, 617: 10, 618: 7,
 }
 ok, bad = [], []
@@ -41,14 +42,22 @@ def node(code):
     global.navigator = { userAgent:'node', language:'ru' };
     global.location = { href:'http://localhost/', search:'', pathname:'/' };
     global.requestAnimationFrame = (f)=>setTimeout(f,0);
+    /* esc() живёт в js/core.js, а данные его используют: без него проверка
+       списка словарных слов падала на «esc is not defined» */
+    global.esc = (s)=>String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
     require('%s/MVP/data/tasks.js');
     require('%s/MVP/data/lessons.js');
     require('%s/MVP/data/tasks_ru.js');
+    /* словарные слова: и старый список 5–6 класса, и добавленный 1–6 класса —
+       раньше эти файлы в проверку не подключались, и словарные задачи
+       не проходили машинные проверки вовсе */
+    require('%s/MVP/data/tasks_dict.js');
+    require('%s/MVP/data/tasks_dict_1_6.js');
     require('%s/MVP/data/vis_pw.js');
     require('%s/MVP/data/vis_ru.js');
     try{ require('%s/MVP/data/lessons_fg6.js'); }catch(e){}
     %s
-    """ % (ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, code)
+    """ % (ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, code)
     # в vis_ru.js при загрузке стартует сторож кадров (setInterval), из-за него
     # node не завершается сам: выходим явно и всё равно ограничиваем время
     src += "\nprocess.stdout.write('', ()=>{ process.exit(0); });\n"
@@ -78,9 +87,51 @@ for L in data:
           'вопрос %s, задач %s' % (L['check'], L['tasks']))
     check('урок %d: класс указан в подписи' % L['id'], re.search(r'\d\s*(?:–|-)?\s*\d?\s*класс', L['src'] or '') is not None, L['src'])
 
+print('\n=== 1б. Словарные уроки младшей школы (619, 620) ===')
+junion = json.loads(node("""
+  const out=[];
+  [619,620].forEach(id=>{
+    const L=(window.ARH_LESSONS||[]).find(x=>x.id===id);
+    out.push(L ? {id:id, title:L.title, src:L.src, steps:(L.explain||[]).length,
+                  tasks:(L.tasks||[]).length, check:!!(L.check&&L.check.q),
+                  subj:L.subj, wave:typeof window.WAVE_B[id]==='function'} : {id:id, missing:true});
+  });
+  console.log(JSON.stringify(out));
+"""))
+for L in junion:
+    check('урок %d есть в каталоге' % L['id'], not L.get('missing'), L.get('title'))
+    if L.get('missing'):
+        continue
+    check('урок %d: девять кадров и свой рисовальщик' % L['id'],
+          L['steps'] == 9 and L['wave'], 'кадров %s, рисовальщик %s' % (L['steps'], L['wave']))
+    check('урок %d: есть итоговый вопрос и две задачи' % L['id'], L['check'] and L['tasks'] >= 2,
+          'вопрос %s, задач %s' % (L['check'], L['tasks']))
+    check('урок %d: младшая школа и класс в подписи' % L['id'],
+          L['subj'] == 'jun' and re.search(r'\d\s*[–-]\s*\d\s*класс', L['src'] or '') is not None, L['src'])
+
+# первый кадр урока про словарные слова — список слов, не меньше двадцати
+lists = json.loads(node("""
+  const cnt=s=>(String(s).match(/class="rw-w"/g)||[]).length;
+  const W=window.RUWORDS||{};
+  const out={counts:{}, first:{}};
+  [603,604,619,620].forEach(id=>{
+    out.counts[id]=W[id]?cnt(W[id]()):-1;
+    const L=(window.ARH_LESSONS||[]).find(x=>x.id===id);
+    out.first[id]=L?String((L.explain||[])[0]||''):'';
+  });
+  console.log(JSON.stringify(out));
+"""))
+for lid in (603, 604, 619, 620):
+    check('кадр %d: список слов не меньше двадцати' % lid, lists['counts'].get(str(lid), -1) >= 20,
+          'слов %s' % lists['counts'].get(str(lid)))
+    check('урок %d: первый кадр объявлен списком слов' % lid,
+          'список' in lists['first'].get(str(lid), ''), lists['first'].get(str(lid), '')[:60])
+
 print('\n=== 2. Банк задач ===')
 ts = json.loads(node("""
-  const T=(window.ARH_TASKS||[]).filter(t=>t.island==='Русский язык');
+  /* словарные слова 1–4 класса живут на острове «Начальная школа»: берём их
+     по признаку dict, иначе половина словарных задач выпадала из проверки */
+  const T=(window.ARH_TASKS||[]).filter(t=>t.island==='Русский язык'||t.dict);
   console.log(JSON.stringify(T));
 """))
 check('задач на острове не меньше 70', len(ts) >= 70, len(ts))
@@ -108,6 +159,23 @@ for t in ts:
         check('задача %s: класс в теме' % tid, False, t.get('theme'))
 check('у всех задач есть правило, подсказки, ответ в границах и класс в теме',
       not [x for x in bad if x.startswith('задача')], 'проблем: %d' % len([x for x in bad if x.startswith('задача')]))
+
+# словарные слова: подстановка верной буквы обязана давать ровно это слово,
+# и на каждый класс 1–6 должно быть не меньше двадцати слов
+words = json.loads(node("""
+  const T=(window.ARH_TASKS||[]).filter(t=>t.dict);
+  console.log(JSON.stringify({total:T.length,
+    bad:T.filter(t=>String(t.gap||'').replace('_',String(t.ans||''))!==t.word).map(t=>t.word),
+    nostory:T.filter(t=>!/класс|кл/.test(String(t.theme||''))).map(t=>t.word),
+    byCls:T.reduce((a,t)=>{const c=t.cls||(String(t.lesson)==='603'||String(t.lesson)==='604'?'5-6':'?');
+      a[c]=(a[c]||0)+1;return a;},{})}));
+"""))
+check('словарных слов не меньше 300', words['total'] >= 300, words['total'])
+check('подстановка верной буквы даёт слово', not words['bad'], words['bad'][:5])
+check('у каждого словарного слова класс в теме', not words['nostory'], words['nostory'][:5])
+for c in (1, 2, 3, 4, 5, 6):
+    check('словарных слов класса %d не меньше двадцати' % c, words['byCls'].get(str(c), 0) >= 20,
+          'слов %d' % words['byCls'].get(str(c), 0))
 
 print('\n=== 3. Проверочные работы: баллы и ключи ===')
 works = json.loads(node("""

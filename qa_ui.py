@@ -62,10 +62,11 @@ if __name__=="__main__":
                 if pg.evaluate("()=>typeof DB==='object' && typeof openLessonView==='function'"): break
             pg.evaluate("()=>{DB.profile={name:'Вика',klass:'6',color:'#d9a441',gender:'girl'};save();}")
             # Смотрим не только 601 и 611: 602 — переложенный урок в новом каркасе
-            # (.s6), 617 — бумажный лист с форматами ответов (.pp). Раньше эти
+            # (.s6), 617 — бумажный лист с форматами ответов (.pp), 619 — урок
+            # словарных слов младшей школы с кадром-списком (.rw). Раньше эти
             # поверхности аудит не открывал вовсе.
             for kind,lid in (("урок 601","601"),("урок 602","602"),("урок 607","607"),
-                             ("работа 611","611"),("лист 617","617")):
+                             ("работа 611","611"),("лист 617","617"),("слова 619","619")):
                 pg.evaluate("(l)=>{openLessonView(l);}", int(lid)); pg.wait_for_timeout(700)
                 for _ in range(4): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(60)
                 pg.wait_for_timeout(400)
