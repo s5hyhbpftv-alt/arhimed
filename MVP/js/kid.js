@@ -277,7 +277,8 @@ function kidCss(){
 }
 function kidAvatar(){
   const p = DB.profile || {};
-  return p.gender === 'girl' ? '👧' : (p.gender === 'boy' ? '👦' : '🙂');
+  const kind = p.gender === 'girl' ? 'girl' : 'boy';
+  return `<img src="img/ava/${kind}.png?v=591" alt="" draggable="false">`;
 }
 function kidBound(){ const k = kidSt(); return !!(k.code && k.token && k.linked !== 0); }
 function kidPinSet(){ return !!kidSt().dpin; }
@@ -307,6 +308,7 @@ function kidBindFlow(){
   if (k.binding || PinPad.isOpen()) return;
   k.binding = 1;
   PinPad.set({
+    avatar: kidAvatar(),
     title: 'Придумай свой PIN',
     subtitle: 'Четыре цифры — ими будешь входить в приложение',
     foot: 'Нажми «Ввод», когда набрал. Запомни PIN.'

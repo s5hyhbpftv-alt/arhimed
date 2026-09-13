@@ -73,6 +73,18 @@ h2 { font-size:19px; color:var(--brass); font-weight:normal; }
 .rod-note .d { font-size:11px; color:var(--muted); margin-top:2px; }
 .rod-err { color:var(--danger); font-size:13px; min-height:18px; margin-top:2px; }
 .rod-ok { color:var(--ok); font-size:13px; min-height:18px; margin-top:2px; }
+.rod-ava img { width:100%; height:100%; object-fit:cover; object-position:center 18%; display:block; }
+.rod-who { display:flex; gap:10px; justify-content:center; margin:0 0 14px; }
+.rod-who-btn { flex:1 1 120px; max-width:168px; display:flex; flex-direction:column; align-items:center; gap:6px;
+  background:#20382b; color:var(--ivory); border:2px solid var(--hairline); border-radius:16px;
+  padding:10px 8px 8px; cursor:pointer; font-family:inherit; font-size:14px; min-height:104px; }
+.rod-who-btn img { width:56px; height:56px; border-radius:50%; object-fit:cover; object-position:center 18%;
+  display:block; box-shadow:0 0 0 2px rgba(217,164,65,.28); background:#0d1a13; }
+.rod-who-btn.sel { border-color:var(--brass); background:rgba(217,164,65,.18); color:var(--brass); font-weight:bold; }
+.rod-who-btn.sel img { box-shadow:0 0 0 2px var(--brass); }
+.rod-who-mini { font-family:inherit; font-size:12.5px; cursor:pointer; color:var(--ivory);
+  background:#20382b; border:1px solid var(--hairline); border-radius:999px; padding:4px 12px; margin-left:4px; }
+.rod-who-mini.sel { border-color:var(--brass); color:var(--brass); background:rgba(217,164,65,.18); }
 .toast { position:fixed; left:50%; bottom:86px; transform:translateX(-50%) translateY(20px); opacity:0;
   background:rgba(19,37,28,.97); border:1px solid var(--hairline); border-radius:12px; padding:10px 16px;
   font-size:13.5px; pointer-events:none; transition:.25s; z-index:96; max-width:88vw; text-align:center; }

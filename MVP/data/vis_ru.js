@@ -1216,15 +1216,22 @@ function ruWords604(){
     id: 605, title: 'Приставки и предлоги. Твёрдый знак', ico: '🧷',
     src: 'Русский язык · 5–6 класс · Приставки и предлоги', subj: 'rus',
     explain: [
-      'Приставка и предлог часто звучат одинаково, но устроены по-разному. Приставка — часть слова, она приросла к корню. Предлог — отдельное маленькое слово, которое стоит перед другим словом.',
-      'Различить их легко: между предлогом и словом можно вставить другое слово или вопрос. «В доме» → в (каком?) доме. С приставкой так не получится: «вошёл» не разорвать.',
-      'Приставки пишутся слитно: приехал, ушёл, зашёл, отнёс. Предлоги пишутся раздельно: в лесу, на столе, за домом, под деревом.',
-      'Сравни: «зашёл за другом». В первом слове за- — приставка (слитно), во втором за — предлог (раздельно). Смысл разный, и написание разное.',
-      'Отдельное правило — твёрдый знак после приставки. Он пишется, если приставка оканчивается на согласную, а корень начинается с е, ё, ю, я: съел, объявил, подъезд, предъюбилейный.',
-      'Если приставка оканчивается на гласную, твёрдый знак не нужен: заехал, поехал, приехал. И внутри корня его не бывает: яма, семья — здесь мягкий знак, а не твёрдый.',
-      'Приставки пишутся единообразно: под-, от-, над-, об-, про- не меняются, как бы они ни звучали. «Отдал» и «отплыл» — везде от-.',
-      'Не путай также приставку с корнем: в слове «приехал» нет предлога, а есть приставка при- и корень -ех-. Разбор по составу помогает увидеть это точно.',
-      'Алгоритм: проверь, можно ли вставить слово — можно, значит предлог, пишем раздельно. Нельзя — это приставка, пишем слитно. И отдельно следи за твёрдым знаком после приставки на согласную.'
+      '«Зашёл» и «за домом» звучат почти одинаково. А пишутся по-разному: одно слово и два. Кликни — увидишь, где шов.',
+      'Приставка приросла к корню. Это не сосед, это часть тела слова. «Зашёл» не разорвать: за- уже внутри.',
+      'Предлог — отдельное маленькое слово. Оно стоит перед другим и держит паузу: за домом, в лесу, на столе.',
+      'Проверка одна. Вставь слово или вопрос: в (каком?) доме. Получилось — перед нами предлог, пишем раздельно.',
+      'С приставкой вставка ломает слово. Во(каком?)шёл — так не говорят. Значит, это не предлог, пишем слитно.',
+      'Поэтому приставки пишут слитно: приехал, ушёл, зашёл, отнёс. Предлоги — с пробелом: в лесу, на столе, за домом.',
+      'В одной фразе оба гостя: «зашёл за другом». Первое «за» — приставка. Второе — предлог. Одни звуки, разная работа.',
+      'Твёрдый знак — клин на стыке. Приставка кончилась согласной, корень начался с е, ё, ю, я: съел, объявил, подъезд.',
+      'Собери слово: с + ъ + ел. Без клина получится «сел» — уже другое слово. Знак бережёт смысл.',
+      'Если приставка на гласную — клина нет: заехал, поехал, приехал. И внутри корня ъ не живёт: яма, семья.',
+      'Приставки пишут одинаково, как бы они ни звучали. Отдал и отплыл — везде от-. Не «аддал».',
+      'Ловушка. «Подоконник» — одно слово, приставка. «Под окном» — два слова, предлог. Вставь «самым»: под (самым) окном.',
+      'Разбор по составу показывает шов: при-ех-а-л. Предлог в состав слова не входит никогда.',
+      'Алгоритм. Можно вставить слово? Да — предлог, раздельно. Нет — приставка, слитно. На стыке согласная + е, ё, ю, я — ъ.',
+      'Три фразы в карман. Приставка внутри слова. Предлог — сосед с пробелом. ъ — только на стыке.',
+      'Теперь сам. Слитно или раздельно? Попробуй вставить слово — и ответ придёт сам.'
     ],
     check: { q: 'Как отличить предлог от приставки?', choices: ['между предлогом и словом можно вставить слово', 'предлог длиннее', 'по ударению'], ans: 0,
       exp: 'В (каком?) доме — можно вставить слово, значит «в» — предлог, пишем раздельно.' },
@@ -1322,9 +1329,10 @@ function ruWords604(){
     }
     return SV(`${T(168,120,'Сцена готовится',GOLD,{fs:14})}`);
   }
-  const GAME605=[['(за)шёл','слитно','зашёл — приставка'],['(на)столе','раздельно','на столе — предлог'],
-    ['(под)ъезд','слитно','подъезд — приставка'],['(в)лесу','раздельно','в лесу — предлог'],
-    ['(от)нёс','слитно','отнёс — приставка'],['(за)домом','раздельно','за домом — предлог']];
+  const GAME605=[['(за)шёл','слитно','зашёл — приставка приросла к корню'],['(на)столе','раздельно','на столе — предлог, можно вставить «новом»'],
+    ['(под)ъезд','слитно','подъезд — приставка, и ещё ъ'],['(в)лесу','раздельно','в лесу — предлог'],
+    ['(от)нёс','слитно','отнёс — приставка'],['(за)домом','раздельно','за домом — предлог'],
+    ['(с)ел','слитно','съел — приставка с- и твёрдый знак'],['(под)окном','раздельно','под окном — предлог']];
   window.RUGAME=window.RUGAME||{}; window.RUGAME[605]=GAME605;
   window.ru605Game=function(k){
     try{
@@ -1393,15 +1401,22 @@ function ruWords604(){
     id: 606, title: 'Имя существительное: род и число', ico: '🧱',
     src: 'Русский язык · 5–6 класс · Имя существительное', subj: 'rus',
     explain: [
-      'У имени существительного есть постоянный признак — род. Он не меняется: дом всегда мужского рода, а книга — женского, сколько бы раз мы их ни называли.',
-      'Род определяют по трём словам-помощникам: он — мужской род, она — женский, оно — средний. Он стол, она парта, оно окно.',
-      'Определить род можно и по окончанию в начальной форме: мужской род часто без окончания (стол, конь), женский — с -а, -я (парта, земля), средний — с -о, -е (окно, поле).',
-      'Есть слова с мягким знаком на конце, и тут помощник особенно нужен: он день — мужской род, она ночь — женский. Смотри на смысл и проверяй по словарю.',
-      'Второй признак — число. Существительное бывает в единственном числе (стол) или во множественном (столы). Число меняется: это не постоянный признак.',
-      'Некоторые слова живут только в одном числе. Только в единственном: молоко, сахар, храбрость. Только во множественном: ножницы, каникулы, брюки — у них нет формы единственного числа.',
-      'Важно: у существительных во множественном числе род не определяют. «Столы» — это не «они», а форма множественного числа слова «стол» мужского рода.',
-      'Отдельное правило про мягкий знак после шипящих. У существительных женского рода он пишется: рожь, ночь, мышь, помощь. У мужского рода — не пишется: нож, врач, ключ, товарищ.',
-      'Алгоритм: поставь слово в начальную форму, подставь он, она или оно — и род найдён. Затем посмотри, меняется ли слово по числам. Потренируйся ниже.'
+      'Дом всегда «он», книга всегда «она». Сколько ни называй — род не меняется. Это постоянный признак слова, как цвет глаз.',
+      'Три помощника — он, она, оно. Подставь местоимение: он стол, она парта, оно окно. Род скажет сам.',
+      'В начальной форме род часто виден по окончанию. Без окончания — мужской: стол, конь. На -а, -я — женский: парта, земля. На -о, -е — средний: окно, поле.',
+      'Мягкий знак на конце род не подскажет. Он день — мужской. Она ночь — женский. Сомневаешься — в словарь, не угадывай.',
+      'Число — другой признак. Один предмет — стол. Много — столы. Число меняется: это не постоянный признак.',
+      'Есть слова, которые живут только в единственном: молоко, сахар, храбрость. Формы «молока» в смысле «два молока» у них нет.',
+      'А есть те, что живут только во множественном: ножницы, каникулы, брюки. «Ножница» не говорят — второй формы просто нет.',
+      'Во множественном числе род не определяют. «Столы» — не «они», а форма слова «стол» мужского рода. Сначала верни слово в единственное.',
+      'После шипящих мягкий знак решает род. Рожь, ночь, мышь, помощь — женский, пишем ь. Нож, мяч, ключ, товарищ — мужской, без ь.',
+      'Сравни «рожь» и «нож». Оба кончаются на ж. У одного ь есть, у другого нет. Подставь она или он — и знак встанет сам.',
+      '«Мышь» — она, поэтому мышь. «Ключ» — он, поэтому ключ. Не смотри на шипящую: смотри на род.',
+      'Ловушка. «День» с ь, но мужской род. «Ночь» с ь, и женский. Знак сам по себе род не ставит. Ставит местоимение.',
+      'Алгоритм. Поставь слово в начальную форму. Подставь он, она, оно. Посмотри число: меняется ли. После шипящих — ещё раз проверь род, прежде чем писать ь.',
+      'Частая ошибка: писать ь у «ключ» «на всякий случай». Не надо. Мужской род после шипящих мягкий знак не просит.',
+      'Три фразы в карман. Род не меняется. Число меняется. После шипящих ь — только у женского рода.',
+      'Теперь сам. Подставь он, она или оно — и род найдётся.'
     ],
     check: { q: 'Какие слова-помощники определяют род?', choices: ['он, она, оно', 'один, два, три', 'кто, что'], ans: 0,
       exp: 'Он — мужской, она — женский, оно — средний род.' },
@@ -1500,8 +1515,9 @@ function ruWords604(){
     }
     return SV(`${T(168,120,'Сцена готовится',GOLD,{fs:14})}`);
   }
-  const GAME606=[['ночь','она','женский род'],['стол','он','мужской род'],['окно','оно','средний род'],
-    ['мышь','она','женский род'],['ключ','он','мужской род'],['поле','оно','средний род']];
+  const GAME606=[['ночь','она','женский род: она ночь, поэтому ь'],['стол','он','мужской род'],['окно','оно','средний род'],
+    ['мышь','она','женский род: она мышь, пишем ь'],['ключ','он','мужской род: после шипящей ь не пишем'],['поле','оно','средний род'],
+    ['рожь','она','женский род, после шипящей — ь'],['нож','он','мужской род, после шипящей без ь']];
   window.RUGAME=window.RUGAME||{}; window.RUGAME[606]=GAME606;
   window.ru606Game=function(k){
     try{
@@ -1773,15 +1789,22 @@ function ruWords604(){
     id: 608, title: 'Глагол: время, лицо, число', ico: '⏱',
     src: 'Русский язык · 5–6 класс · Глагол', subj: 'rus',
     explain: [
-      'Глагол называет действие или состояние и отвечает на вопросы что делает? что делал? что будет делать? Это самая «живая» часть речи: в предложении она чаще всего и есть сказуемое.',
-      'Глагол изменяется по временам. Настоящее время — действие идёт сейчас: читает, бежит. Прошлое — действие уже было: читал, бежал. Будущее — действие ещё будет: прочитает, будет читать.',
-      'Прошлое время узнать легко: у него суффикс -л. В единственном числе оно меняется по родам: он читал, она читала, оно читало. Во множественном роде нет: они читали.',
-      'Будущее время бывает простым и сложным. Простое — одно слово: прочитаю, напишу. Сложное — два слова: буду читать, буду писать. Оба варианта правильные.',
-      'Лицо глагола показывает, кто действует. Первое лицо — я, мы: читаю, читаем. Второе — ты, вы: читаешь, читаете. Третье — он, она, они: читает, читают.',
-      'Число глагола — единственное или множественное: читает — читают. Число и лицо вместе называют спряжением формы: по ним видно, кто и сколько действует.',
-      'У глагола есть начальная форма — неопределённая. Она отвечает на вопросы что делать? что сделать? и оканчивается на -ть, -ти, -чь: читать, идти, беречь. В ней не видно ни времени, ни лица.',
-      'Важно не путать время и лицо: «читал» — прошедшее время, а лица у него нет, есть род. «Читает» — настоящее время и третье лицо. А «будет читать» — будущее время.',
-      'Алгоритм: задай вопрос к глаголу, определи время, затем лицо и число по местоимению. Потренируйся: ниже показан глагол с местоимением, выбери время и лицо.'
+      'Глагол — самая живая часть речи. Он называет действие или состояние: бежит, спит, будет читать. В предложении чаще всего это сказуемое.',
+      'Три времени — три «когда». Вчера читал. Сейчас читает. Завтра прочитает или будет читать. Время показывает, когда действие происходит.',
+      'Настоящее — действие идёт сейчас. Читает, бежит, светит. Подставь «сейчас»: если фраза живая — это настоящее.',
+      'Прошедшее узнают по суффиксу -л. Он читал, она читала, оно читало. В единственном числе прошедшее меняется по родам.',
+      'Во множественном роде нет: они читали. Один глагол на всех. Не ищи «читалиа» — такой формы нет.',
+      'Будущее бывает простым и сложным. Простое — одно слово: прочитаю, напишу. Сложное — два: буду читать, буду писать. Смысл один: ещё не случилось.',
+      'Лицо показывает, кто действует. Я читаю — первое. Ты читаешь — второе. Он читает — третье. Лицо видно по окончанию.',
+      'Число глагола — сколько действующих. Читает — один. Читают — много. Лицо и число живут вместе: это форма глагола.',
+      'Начальная форма отвечает на вопросы что делать? что сделать? и кончается на -ть, -ти, -чь: читать, идти, беречь. В ней не видно ни времени, ни лица.',
+      'Не путай время и лицо. «Читал» — прошедшее, лица нет, есть род. «Читает» — настоящее, третье лицо. «Будет читать» — будущее, хотя «читает» рядом.',
+      'Разберём «читала». Что делала? — прошедшее. Кто? — она, женский род, единственное число. Лица у прошедшего нет.',
+      'Ловушка. «Буду читать» кажется настоящим из-за «читать». Нет: «буду» несёт будущее. Два слова — одно время.',
+      'Алгоритм. Задай вопрос: что делает, что делал, что будет делать. По вопросу — время. По местоимению — лицо и число. У прошедшего вместо лица смотри род.',
+      'Ещё одна проверка времени: вчера, сейчас, завтра. Подставь — и «когда» станет ясно.',
+      'Три фразы в карман. -л — прошедшее. Буду + глагол — будущее сложное. У прошедшего лица нет, есть род.',
+      'Теперь сам. Какое это время? Подставь вчера, сейчас или завтра.'
     ],
     check: { q: 'По каким признакам изменяется глагол?', choices: ['по временам, лицам и числам', 'по падежам', 'по родам во множественном числе'], ans: 0,
       exp: 'Глагол меняется по временам, лицам и числам; род есть только в прошедшем времени единственного числа.' },
@@ -1883,9 +1906,10 @@ function ruWords604(){
     }
     return SV(`${T(168,120,'Сцена готовится',GOLD,{fs:14})}`);
   }
-  const GAME608=[['читает','наст','настоящее время'],['читал','прош','прошедшее время'],
-    ['прочитает','буд','будущее время'],['будет читать','буд','будущее сложное'],
-    ['читали','прош','прошедшее время'],['читаю','наст','настоящее время']];
+  const GAME608=[['читает','наст','настоящее: действие идёт сейчас'],['читал','прош','прошедшее: суффикс -л'],
+    ['прочитает','буд','будущее простое: одно слово'],['будет читать','буд','будущее сложное: два слова'],
+    ['читали','прош','прошедшее, множественное — рода нет'],['читаю','наст','настоящее, первое лицо'],
+    ['напишет','буд','будущее простое'],['бежала','прош','прошедшее, женский род']];
   window.RUGAME=window.RUGAME||{}; window.RUGAME[608]=GAME608;
   window.ru608Game=function(k){
     try{
@@ -4154,15 +4178,21 @@ window.RUWORK = (function(){
   #lvis .rk .divider{display:flex;align-items:center;gap:10px;color:var(--line)}
   #lvis .rk .divider span{flex:1;height:1px;background:currentColor}
   #lvis .rk .divider b{font-size:12px;color:rgba(255,215,106,.55)}
-  #lvis .rk .wordwrap{position:relative;display:flex;justify-content:center;padding:8px 0 4px}
-  #lvis .rk .halo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:230px;height:120px;pointer-events:none;
+  #lvis .rk .wordwrap{position:relative;display:flex;justify-content:center;align-items:center;padding:8px 0 4px;width:100%;max-width:100%;overflow:visible}
+  #lvis .rk .halo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(230px,80%);height:120px;pointer-events:none;
     background:radial-gradient(closest-side,rgba(255,215,106,.22),transparent 72%);filter:blur(6px);animation:haloPulse 2.6s ease-in-out infinite}
-  #lvis .rk .word{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
-  #lvis .rk .cell{min-width:52px;height:70px;padding:0 12px;display:flex;align-items:center;justify-content:center;
-    font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em;color:#f8f2e4;
-    background:linear-gradient(180deg,#26402f,#17271f);border:1.5px solid var(--line);border-radius:16px;
+  /* Словарное слово всегда в одну строку: плитки сжимаются под ширину кадра,
+     перенос запрещён. --n задаёт число букв, от него считаются зазор и кегль. */
+  #lvis .rk .word{display:flex;flex-wrap:nowrap;justify-content:center;align-items:center;
+    gap:clamp(2px, calc(10px * 7 / var(--n, 7)), 9px);width:100%;max-width:100%;white-space:nowrap}
+  #lvis .rk .cell{box-sizing:border-box;flex:1 1 0;min-width:0;max-width:52px;
+    height:clamp(32px, calc(240px / var(--n, 7) * 1.2), 70px);padding:0 1px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:clamp(12px, calc(210px / var(--n, 7)), 44px);font-weight:600;line-height:1;letter-spacing:-.03em;color:#f8f2e4;
+    background:linear-gradient(180deg,#26402f,#17271f);border:1.5px solid var(--line);border-radius:clamp(7px,1.8vw,16px);
     box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);
-    animation:cellIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*30ms)}
+    animation:cellIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*30ms);overflow:visible;white-space:nowrap}
+  #lvis .rk .cell.wide{flex-grow:1.4;letter-spacing:-.06em;font-size:clamp(10px, calc(160px / var(--n, 7)), 32px)}
   #lvis .rk .cell.gap{border-style:dashed;border-color:rgba(255,215,106,.85);color:transparent;animation:cellIn 240ms ${OUT} both,gapPulse 1.9s ease-in-out infinite}
   #lvis .rk .cell.ok{border-color:var(--ok);background:linear-gradient(180deg,#254634,#17281f);
     box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 0 26px rgba(143,209,168,.3);animation:land 320ms ${OUT} both;position:relative}
@@ -4197,22 +4227,57 @@ window.RUWORK = (function(){
   @keyframes sheen{to{left:120%}}
   #lvis .rk .fly{position:fixed;z-index:340;pointer-events:none;font-family:${F};font-weight:600;color:#ffe9a8;
     text-shadow:0 0 16px rgba(255,215,106,.75);transition:transform 260ms ${EASE},opacity 260ms ease-out}
+  @media (max-width:400px){
+    #lvis .rk{padding:14px 10px 16px;gap:12px}
+    #lvis .rk .cell{border-radius:10px}
+  }
+  @media (max-height:480px) and (orientation:landscape){
+    #lvis .rk{padding:10px 12px 12px;gap:8px}
+    #lvis .rk .cell{height:clamp(28px,14vh,48px)}
+  }
   @media (prefers-reduced-motion: reduce){
     #lvis .rk *,#lvis .rk *::before,#lvis .rk *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
     #lvis .rk .fly{display:none!important}}
   `;
   function css(){ try{ let e=document.getElementById('rk-style'); if(!e){ e=document.createElement('style'); e.id='rk-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  /* Если плитки всё же шире кадра (очень длинное слово на узком экране) —
+     сжимаем всю строку целиком, не давая буквам перенестись на вторую. */
+  function fitWord(root){
+    try{
+      const w=root.querySelector('.word'); if(!w) return;
+      w.style.transform=''; w.style.marginTop=''; w.style.marginBottom='';
+      const wrap=root.querySelector('.wordwrap')||w.parentElement;
+      const avail=wrap.clientWidth, need=w.scrollWidth;
+      if(avail>0 && need>avail+0.5){
+        const s=Math.max(0.42, avail/need);
+        w.style.transformOrigin='center center';
+        w.style.transform='scale('+s.toFixed(3)+')';
+        const raw=w.offsetHeight;
+        w.style.marginTop=(((s-1)*raw)/2).toFixed(1)+'px';
+        w.style.marginBottom=(((s-1)*raw)/2).toFixed(1)+'px';
+      }
+    }catch(e){}
+  }
+  if(!window._rkFitBound){
+    window._rkFitBound=1;
+    window.addEventListener('resize', function(){
+      const host=document.getElementById('lvis');
+      if(host && host.querySelector('.rk .word')) fitWord(host);
+    });
+  }
   function render(el, id, qi, it, total, st){
     css();
     const picked = st.ans ? st.ans[qi] : null;
     const done = picked != null;
     const ok = picked === it.ans;
     const parts = String(it.word||'').split('');
+    const n = Math.max(parts.length, 4);
     const cells = parts.map((ch,k)=>{
       const isGap = (ch==='_'||ch==='?');
-      const cls = isGap ? (done ? (ok?'cell ok':'cell no') : 'cell gap') : 'cell';
       const txt = isGap ? (done ? picked : '') : ch;
-      return `<div class="${cls}" style="--i:${k}" ${isGap?'id="rkGap"':''}>${txt}</div>`;
+      const wide = isGap && String(done ? (picked||'') : (it.ans||'')).length > 1;
+      const cls = isGap ? (done ? (ok?'cell ok':'cell no') : 'cell gap') : 'cell';
+      return `<div class="${cls}${wide?' wide':''}" style="--i:${k}" ${isGap?'id="rkGap"':''}>${txt}</div>`;
     }).join('');
     const opts = (it.opts || [it.ans]).map(o=>{
       const cls='opt'+(picked===o?' picked'+(o===it.ans?' ok':''):'');
@@ -4224,7 +4289,7 @@ window.RUWORK = (function(){
       <div class="top"><div class="kick">Проверочная работа · ${id}</div><div class="qnum">${qi+1} / ${total}</div></div>
       <div class="bar"><i style="transform:scaleX(${((qi+ (done?1:0))/total).toFixed(3)})"></i></div>
       <div class="divider"><span></span><b>◆</b><span></span></div>
-      <div class="wordwrap"><div class="halo"></div><div class="word">${cells}</div></div>
+      <div class="wordwrap"><div class="halo"></div><div class="word" style="--n:${n}">${cells}</div></div>
       <p class="ask">${it.ask||'Выбери верное написание'}</p>
       <div class="opts">${opts}</div>
       ${done
@@ -4233,6 +4298,7 @@ window.RUWORK = (function(){
         : `<p class="verdict" aria-live="polite">Выбери букву — она встанет в слово.</p>`}
       <p class="score">верно: ${st.ok||0} · ошибок: ${st.bad||0} · всего: ${total}</p>
     </div>`;
+    requestAnimationFrame(()=>fitWord(el));
   }
   /* буква влетает в гнездо: только transform и opacity, масштаб не ниже 0,9 */
   const origPick = window.RU_EXAM_PICK;
@@ -4640,8 +4706,10 @@ window.RUWORKEDGES = (function(){
   #lvis .rkw .back button{flex:1 1 44%;padding:13px 16px;border-radius:14px;border:1.5px solid rgba(255,215,106,.3);
     background:rgba(255,255,255,.05);color:#f6efe0;font-family:${F};font-size:clamp(15px,4vw,17px);cursor:pointer}
   #lvis .rkw .rev{display:flex;flex-direction:column;gap:6px}
-  #lvis .rkw .rev div{display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.04);
-    font-size:clamp(15px,4.2vw,16px)}
+  #lvis .rkw .rev div{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.04);
+    font-size:clamp(13px,3.8vw,16px);flex-wrap:nowrap;white-space:nowrap}
+  #lvis .rkw .rev div span:first-child{min-width:0}
+  #lvis .rkw .rev div span:last-child{flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
   #lvis .rkw .rev .ok{color:#b8e8cc}#lvis .rkw .rev .no{color:#f3b3aa}
   @media (prefers-reduced-motion: reduce){#lvis .rkw *{animation:none!important;transition:none!important}}
   `;
@@ -7561,5 +7629,873 @@ window.RU604V2 = (function(){
     const prev=window.WAVE_B[604];
     window.WAVE_B[604]=function(el){ try{ render(el); }catch(e){ try{ prev(el); }catch(e2){} } };
   }
+  return {render:render};
+})();
+
+/* ================= УРОКИ 605, 606, 608 заново · 16 кадров, живой язык ================
+   Как 601, 610, 603: свой рендерер поверх WAVE_B. У каждого кадра своя сцена,
+   клики, вопрос-проверка внутри, тренажёр — последний кадр. Ключи RUGAME и
+   ru605Game / ru606Game / ru608Game сохранены. Методика — Ладыженская, 5 класс:
+   приставка и предлог, ъ; род и число существительного; глагол — время, лицо, число.
+   Не три одинаковые карточки, не канцелярит. */
+window.RU605V2 = (function(){
+  const CSS=`
+  #lvis .s6.l605{gap:14px}
+  #lvis .s6.l605 .glue{display:flex;align-items:stretch;justify-content:center;gap:0;width:100%;flex-wrap:nowrap}
+  #lvis .s6.l605 .tile{flex:1 1 0;min-width:0;padding:14px 8px;text-align:center;border:1.5px solid var(--line);
+    background:linear-gradient(180deg,#22362c,#17261e);font-size:22px;font-weight:600;line-height:1.2;color:var(--gold)}
+  #lvis .s6.l605 .tile b{display:block;font-size:14px;font-weight:600;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+  #lvis .s6.l605 .tile.left{border-radius:16px 0 0 16px}
+  #lvis .s6.l605 .tile.right{border-radius:0 16px 16px 0}
+  #lvis .s6.l605 .tile.gap{margin:0 8px;border-radius:16px;flex:0 0 auto;min-width:52px;background:rgba(255,215,106,.12)}
+  #lvis .s6.l605 .seam{width:10px;background:linear-gradient(180deg,#ffd76a,#e2b23f);box-shadow:0 0 18px rgba(255,215,106,.55)}
+  #lvis .s6.l605 .wedge{display:flex;align-items:flex-end;justify-content:center;gap:4px;width:100%;flex-wrap:nowrap}
+  #lvis .s6.l605 .wedge .m{min-width:0;flex:1 1 0;padding:12px 6px;border-radius:14px;border:1.5px solid var(--line);
+    background:linear-gradient(180deg,#22362c,#17261e);text-align:center}
+  #lvis .s6.l605 .wedge .m b{display:block;font-size:28px;line-height:1.05;color:var(--gold)}
+  #lvis .s6.l605 .wedge .m i{display:block;font-style:normal;font-size:13px;color:var(--mut);margin-top:4px}
+  #lvis .s6.l605 .wedge .m.gold{border-color:#ffd76a;background:linear-gradient(180deg,#ffd76a,#e2b23f);color:#20180a}
+  #lvis .s6.l605 .wedge .m.gold b{color:#20180a}
+  #lvis .s6.l605 .wedge .m.gold i{color:#4a3a12}
+  #lvis .s6.l605 .probe{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}
+  #lvis .s6.l605 .askrow{display:flex;gap:10px;flex-wrap:wrap;justify-content:stretch}
+  #lvis .s6.l605 .askrow button{flex:1 1 42%;min-height:48px;padding:12px;font-size:16px;font-weight:600;line-height:1.25}
+  #lvis .s6.l605 .pkt{display:flex;flex-direction:column;gap:10px;width:100%}
+  #lvis .s6.l605 .pkt button{min-height:56px;text-align:left;padding:14px 16px;font-size:16px}
+  #lvis .s6.l605 .pkt button b{display:block;font-size:20px;color:var(--gold);line-height:1.2}
+  #lvis .s6.l605 .pkt button i{display:block;font-style:normal;font-size:14px;color:var(--mut);margin-top:4px}
+  #lvis .s6.l605 .job{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 16px;border-radius:16px;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);text-align:center}
+  #lvis .s6.l605 .job b{font-size:22px;line-height:1.15;color:var(--gold)}
+  #lvis .s6.l605 .job i{font-style:normal;font-size:16px;line-height:1.35;color:var(--mut)}
+  #lvis .s6.l605 .casebtns button.hit{border-color:var(--ok)}
+  #lvis .s6.l605 .casebtns button.miss{border-color:var(--no)}
+  #lvis .s6.l605 .word{white-space:nowrap;flex-wrap:nowrap}
+  #lvis .s6.l605 .word.wide{white-space:normal;flex-wrap:wrap}
+#lvis .s6.l605[data-frame="1"] [data-anim]{animation-name:l605f1}
+#lvis .s6.l605[data-frame="2"] [data-anim]{animation-name:l605f2}
+#lvis .s6.l605[data-frame="3"] [data-anim]{animation-name:l605f3}
+#lvis .s6.l605[data-frame="4"] [data-anim]{animation-name:l605f4}
+#lvis .s6.l605[data-frame="5"] [data-anim]{animation-name:l605f5}
+#lvis .s6.l605[data-frame="6"] [data-anim]{animation-name:l605f6}
+#lvis .s6.l605[data-frame="7"] [data-anim]{animation-name:l605f7}
+#lvis .s6.l605[data-frame="8"] [data-anim]{animation-name:l605f8}
+#lvis .s6.l605[data-frame="9"] [data-anim]{animation-name:l605f9}
+#lvis .s6.l605[data-frame="10"] [data-anim]{animation-name:l605f10}
+#lvis .s6.l605[data-frame="11"] [data-anim]{animation-name:l605f11}
+#lvis .s6.l605[data-frame="12"] [data-anim]{animation-name:l605f12}
+#lvis .s6.l605[data-frame="13"] [data-anim]{animation-name:l605f13}
+#lvis .s6.l605[data-frame="14"] [data-anim]{animation-name:l605f14}
+#lvis .s6.l605[data-frame="15"] [data-anim]{animation-name:l605f15}
+#lvis .s6.l605[data-frame="16"] [data-anim]{animation-name:l605f16}
+
+  @keyframes l605f1{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes l605f2{0%{opacity:0;transform:scale(.92)}70%{transform:scale(1.03)}100%{opacity:1;transform:none}}
+  @keyframes l605f3{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+  @keyframes l605f4{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+  @keyframes l605f5{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+  @keyframes l605f6{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes l605f7{0%{opacity:0;transform:scaleX(.88)}100%{opacity:1;transform:none}}
+  @keyframes l605f8{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes l605f9{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:none}}
+  @keyframes l605f10{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+  @keyframes l605f11{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+  @keyframes l605f12{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes l605f13{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+  @keyframes l605f14{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes l605f15{0%{opacity:0;transform:scale(.94)}100%{opacity:1;transform:none}}
+  @keyframes l605f16{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @media (max-width:370px){
+    #lvis .s6.l605 .tile{font-size:18px;padding:12px 6px}
+    #lvis .s6.l605 .wedge .m b{font-size:22px}
+    #lvis .s6.l605 .word b{font-size:32px}
+  }
+  @media (prefers-reduced-motion: reduce){#lvis .s6.l605 [data-anim]{animation:none!important}}`;
+  function css(){ try{ if(window.RUKIT&&RUKIT.frameCss) RUKIT.frameCss();
+    let e=document.getElementById('l605-style'); if(!e){ e=document.createElement('style'); e.id='l605-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  const S=()=>{ const lk=lidKey(605); if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; };
+  const T=(tag,i,cls,html)=>`<${tag} data-anim style="--i:${i}" class="${cls||''}">${html}</${tag}>`;
+  const BTN=(i,cls,html,on)=>`<button type="button" data-anim style="--i:${i}" class="${cls}" onclick="${on}">${html}</button>`;
+  const P={
+    1:['«Зашёл» — это…',[{k:'a',t:'одно слово, приставка внутри',ok:1,fb:'верно: за- приросла к корню'},{k:'b',t:'два слова',ok:0,fb:'зашёл пишется слитно'}]],
+    2:['Приставка — это…',[{k:'a',t:'часть слова',ok:1,fb:'верно: она внутри слова'},{k:'b',t:'отдельное слово',ok:0,fb:'отдельное слово — предлог'}]],
+    3:['Предлог пишут…',[{k:'a',t:'раздельно, с пробелом',ok:1,fb:'верно: за домом — два слова'},{k:'b',t:'слитно',ok:0,fb:'слитно пишут приставку'}]],
+    4:['Как проверить предлог?',[{k:'a',t:'вставить слово между',ok:1,fb:'верно: в (каком?) доме'},{k:'b',t:'посмотреть на длину',ok:0,fb:'длина тут ни при чём'}]],
+    5:['«Вошёл» можно разорвать?',[{k:'a',t:'нет: это приставка',ok:1,fb:'верно: во(каком?)шёл не говорят'},{k:'b',t:'да, как «в доме»',ok:0,fb:'с приставкой вставка ломает слово'}]],
+    6:['«Приехал» пишется…',[{k:'a',t:'слитно',ok:1,fb:'верно: при- — приставка'},{k:'b',t:'раздельно',ok:0,fb:'приехал — одно слово'}]],
+    7:['В «зашёл за другом» сколько разных «за»?',[{k:'a',t:'два: приставка и предлог',ok:1,fb:'верно: одно слитно, другое раздельно'},{k:'b',t:'одно и то же дважды',ok:0,fb:'работа разная, и написание разное'}]],
+    8:['Когда пишется ъ?',[{k:'a',t:'после приставки на согласную перед е, ё, ю, я',ok:1,fb:'верно: съел, подъезд'},{k:'b',t:'всегда после приставки',ok:0,fb:'заехал — без ъ'}]],
+    9:['Без ъ «съел» станет…',[{k:'a',t:'другим словом: сел',ok:1,fb:'верно: знак бережёт смысл'},{k:'b',t:'тем же словом',ok:0,fb:'сел и съел — разные слова'}]],
+    10:['«Заехал» — нужен ъ?',[{k:'a',t:'нет: приставка на гласную',ok:1,fb:'верно'},{k:'b',t:'да: заъехал',ok:0,fb:'так не пишут'}]],
+    11:['«Отдал» и «отплыл» — приставка?',[{k:'a',t:'одна и та же от-',ok:1,fb:'верно: приставки единообразны'},{k:'b',t:'разные: ад- и от-',ok:0,fb:'всегда от-'}]],
+    12:['«Под окном» — это…',[{k:'a',t:'предлог: можно вставить слово',ok:1,fb:'верно: под (самым) окном'},{k:'b',t:'приставка, как подоконник',ok:0,fb:'подоконник — одно слово, под окном — два'}]],
+    13:['Предлог входит в состав слова?',[{k:'a',t:'нет никогда',ok:1,fb:'верно: предлог — отдельное слово'},{k:'b',t:'да, как приставка',ok:0,fb:'приставка входит, предлог — нет'}]],
+    14:['Первый шаг алгоритма — …',[{k:'a',t:'попробовать вставить слово',ok:1,fb:'верно'},{k:'b',t:'сразу писать слитно',ok:0,fb:'сначала проверка, потом написание'}]],
+    15:['ъ живёт…',[{k:'a',t:'только на стыке приставки и корня',ok:1,fb:'верно'},{k:'b',t:'внутри корня',ok:0,fb:'в корне бывает ь, не ъ'}]]
+  };
+  function pred(f,body){
+    const p=P[f]; if(!p) return body;
+    const s=S(), cur=s['q'+f];
+    const pick=p[1].find(o=>o.k===cur);
+    const fb=cur
+      ? `<p class="verdict ${pick&&pick.ok?'ok':'no'}">${pick&&pick.ok?'верно. '+pick.fb:'не так. '+(pick?pick.fb:'подумай ещё')}</p>`
+      : `<p class="verdict">Выбери ответ:</p>`;
+    return body+`<div class="askrow">${p[1].map((o,i)=>BTN(8+i,'chip'+(cur===o.k?(o.ok?' ok':' no'):''),o.t,`r605Pred(${f},'${o.k}')`)).join('')}</div>`+fb;
+  }
+  function body(s,f){
+    if(f===1){
+      const on=!!s.seam;
+      return `${T('div',0,'kicker','01 · Одни звуки, разный шов')}
+        ${T('h2',1,'','«Зашёл» и «за домом»')}
+        ${T('p',2,'lead','Звучат почти одинаково. Пишутся по-разному: одно слово и два.')}
+        <div class="glue" data-anim style="--i:3">
+          ${on
+            ? `<div class="tile left"><b>приставка</b>за</div><div class="seam"></div><div class="tile right"><b>корень</b>шёл</div>`
+            : `<div class="tile left" style="border-radius:16px"><b>предлог</b>за</div><div class="tile gap"> </div><div class="tile right" style="border-radius:16px"><b>слово</b>домом</div>`}
+        </div>
+        ${BTN(4,'cta', on?'Показать предлог: за домом':'Показать приставку: зашёл','r605Seam()')}
+        ${T('p',5,'cap', on?'Шов внутри слова: за- приросла к корню.':'Пауза между словами: предлог стоит отдельно.')}`;
+    }
+    if(f===2){
+      return `${T('div',0,'kicker','02 · Приставка')}
+        ${T('h2',1,'','Часть тела слова')}
+        ${T('p',2,'lead','Это не сосед. Это кусок слова, который прирос к корню.')}
+        <div class="wedge" data-anim style="--i:3">
+          <div class="m"><b>за</b><i>приставка</i></div>
+          <div class="m"><b>шё</b><i>корень</i></div>
+          <div class="m"><b>л</b><i></i></div>
+        </div>
+        ${T('p',4,'cap','«Зашёл» не разорвать. Во(каком?)шёл — так не говорят.')}`;
+    }
+    if(f===3){
+      return `${T('div',0,'kicker','03 · Предлог')}
+        ${T('h2',1,'','Отдельное маленькое слово')}
+        ${T('p',2,'lead','Оно стоит перед другим и держит паузу.')}
+        <div class="glue" data-anim style="--i:3">
+          <div class="tile left" style="border-radius:16px"><b>предлог</b>за</div>
+          <div class="tile gap"> </div>
+          <div class="tile right" style="border-radius:16px"><b>слово</b>домом</div>
+        </div>
+        <div class="row">${T('span',4,'tag','в лесу')}${T('span',5,'tag','на столе')}${T('span',6,'tag','под деревом')}</div>
+        ${T('p',7,'cap','Пробел — это и есть предлог: он не прирос.')}`;
+    }
+    if(f===4){
+      const on=!!s.ins;
+      return `${T('div',0,'kicker','04 · Проверка')}
+        ${T('h2',1,'','Вставь слово между')}
+        ${T('p',2,'lead','Получилось — перед нами предлог. Пишем раздельно.')}
+        <div class="probe">
+          <div class="split">${T('span',3,'word wide', on?'<b>в каком доме</b><i>слово встало — это предлог</i>':'<b>в доме</b><i>попробуй вставить вопрос</i>')}</div>
+        </div>
+        ${BTN(4,'cta', on?'Убрать вставку':'Вставить «каком?»','r605Ins()')}
+        ${T('p',5,'cap', on?'В (каком?) доме. Значит «в» — предлог.':'Это самый быстрый способ отличить предлог от приставки.')}`;
+    }
+    if(f===5){
+      const on=!!s.brk;
+      return `${T('div',0,'kicker','05 · С приставкой')}
+        ${T('h2',1,'','Вставка ломает слово')}
+        ${T('p',2,'lead','Вошёл — одно слово. Разорвать его нельзя.')}
+        <div class="split">${T('span',3,'word wide', on?'<b>во каком шёл</b><i>так не говорят</i>':'<b>вошёл</b><i>попробуй разорвать</i>')}</div>
+        ${BTN(4,'cta', on?'Собрать слово':'Попробовать вставить','r605Brk()')}
+        ${T('p',5,'cap', on?'Сломалось — значит, это приставка, пишем слитно.':'Если вставка звучит дико, перед тобой не предлог.')}`;
+    }
+    if(f===6){
+      const i=s.how||0;
+      return `${T('div',0,'kicker','06 · Слитно и раздельно')}
+        ${T('h2',1,'','Два правила — две полки')}
+        ${T('p',2,'lead','Приставка живёт внутри слова. Предлог живёт рядом, с пробелом.')}
+        <div class="row">
+          ${BTN(3,i===1?'chip on':'chip','приехал · ушёл · зашёл',`r605How(1)`)}
+          ${BTN(4,i===2?'chip on':'chip','в лесу · на столе · за домом',`r605How(2)`)}
+        </div>
+        ${i?`<div class="job" data-anim style="--i:6"><b>${i===1?'Слитно: это приставки':'Раздельно: это предлоги'}</b><i>${i===1?'Часть слова, отделять нельзя.':'Отдельное слово, всегда с пробелом.'}</i></div>`
+           :T('p',6,'cap','Нажми полку — увидишь правило.')}`;
+    }
+    if(f===7){
+      const k=s.za||0;
+      return `${T('div',0,'kicker','07 · Оба гостя в одной фразе')}
+        ${T('h2',1,'','Зашёл за другом')}
+        ${T('p',2,'lead','Одни звуки — разная работа. Кликни каждое «за».')}
+        <div class="row">
+          ${BTN(3,k===1?'chip on':'chip','зашёл',`r605Za(1)`)}
+          ${BTN(4,k===2?'chip on':'chip','за другом',`r605Za(2)`)}
+        </div>
+        ${k?`<div class="job" data-anim style="--i:6"><b>${k===1?'за- — приставка, слитно':'за — предлог, раздельно'}</b><i>${k===1?'Приросла к «шёл».':'Стоит перед «другом», можно вставить «своим».'}</i></div>`
+           :T('p',6,'cap','Одно и то же сочетание звуков в одном предложении пишется по-разному.')}`;
+    }
+    if(f===8){
+      return `${T('div',0,'kicker','08 · Твёрдый знак')}
+        ${T('h2',1,'','Клин на стыке')}
+        ${T('p',2,'lead','Приставка кончилась согласной, корень начался с <b style="color:#ffd76a">е, ё, ю, я</b>.')}
+        <div class="wedge" data-anim style="--i:3">
+          <div class="m"><b>с</b><i>приставка</i></div>
+          <div class="m gold"><b>ъ</b><i>клин</i></div>
+          <div class="m"><b>ел</b><i>корень на е</i></div>
+        </div>
+        <div class="row">${T('span',4,'tag','съел')}${T('span',5,'tag','объявил')}${T('span',6,'tag','подъезд')}</div>
+        ${T('p',7,'cap','Без клина согласная и гласная слипнутся не в то слово.')}`;
+    }
+    if(f===9){
+      const on=!!s.wedge;
+      return `${T('div',0,'kicker','09 · Собери слово')}
+        ${T('h2',1,'','С + ъ + ел')}
+        ${T('p',2,'lead','Без клина получится «сел» — уже другое слово.')}
+        <div class="wedge" data-anim style="--i:3">
+          <div class="m"><b>с</b><i>приставка</i></div>
+          ${on?'<div class="m gold"><b>ъ</b><i>клин</i></div>':''}
+          <div class="m"><b>ел</b><i>корень</i></div>
+        </div>
+        ${BTN(4,'cta', on?'Убрать клин — станет «сел»':'Поставить ъ — будет «съел»','r605Wedge()')}
+        ${T('p',5,'cap', on?'Съел. Знак бережёт смысл.':'Сел на стул и съел яблоко — разные слова.')}`;
+    }
+    if(f===10){
+      const i=s.no||0;
+      const L=[['заехал','приставка на гласную — клина нет'],['яма','ъ внутри корня не живёт'],['семья','здесь мягкий знак, не твёрдый']];
+      return `${T('div',0,'kicker','10 · Когда знака нет')}
+        ${T('h2',1,'','Не каждый стык просит ъ')}
+        <div class="pkt">${L.map((x,k)=>BTN(2+k,i===k+1?'chip on':'chip',
+          `<b>${x[0]}</b>${i===k+1?`<i>${x[1]}</i>`:''}`,`r605No(${k+1})`)).join('')}</div>
+        ${T('p',5,'cap', i?'Твёрдый знак живёт только на стыке приставки и корня.':'Нажми слово — откроется, почему знака нет.')}`;
+    }
+    if(f===11){
+      const i=s.uni||0;
+      return `${T('div',0,'kicker','11 · Единообразие')}
+        ${T('h2',1,'','Как ни звучи — пиши от-')}
+        ${T('p',2,'lead','«Отдал» и «отплыл». В одном д звонкий, в другом п глухой. Приставка одна.')}
+        <div class="row">${['отдал','отплыл','надписал','обрубил'].map((w,k)=>
+          BTN(3+k,i===k?'chip on':'chip',w,`r605Uni(${k})`)).join('')}</div>
+        ${T('p',7,'cap','Не «аддал». Приставки под-, от-, над-, об-, про- не меняют букв.')}`;
+    }
+    if(f===12){
+      const k=s.trap||0;
+      return `${T('div',0,'kicker','12 · Ловушка')}
+        ${T('h2',1,'','Подоконник и под окном')}
+        ${T('p',2,'lead','Одни звуки. Разный шов. Вставь «самым».')}
+        <div class="row">
+          ${BTN(3,k===1?'chip on':'chip','подоконник',`r605Trap(1)`)}
+          ${BTN(4,k===2?'chip on':'chip','под окном',`r605Trap(2)`)}
+        </div>
+        ${k?`<div class="job" data-anim style="--i:6"><b>${k===1?'Одно слово, приставка':'Два слова, предлог'}</b><i>${k===1?'По-до-кон-ник. Вставить слово нельзя.':'Под (самым) окном. Вставка прошла — пишем раздельно.'}</i></div>`
+           :T('p',6,'cap','Если вставка проходит — это предлог. Если нет — приставка.')}`;
+    }
+    if(f===13){
+      return `${T('div',0,'kicker','13 · Разбор')}
+        ${T('h2',1,'','Шов видно по составу')}
+        ${T('p',2,'lead','При-ех-а-л. Предлог в этот разбор не входит никогда.')}
+        <div class="wedge" data-anim style="--i:3">
+          <div class="m"><b>при</b><i>приставка</i></div>
+          <div class="m"><b>ех</b><i>корень</i></div>
+          <div class="m"><b>а</b><i>суффикс</i></div>
+          <div class="m"><b>л</b><i></i></div>
+        </div>
+        ${T('p',4,'cap','Границы частей показывают, где слово, а где сосед.')}`;
+    }
+    if(f===14){
+      const n=s.alg||0;
+      const ST=[['1','Вставь слово','получилось — предлог, раздельно'],['2','Не получилось','приставка, слитно'],
+                ['3','Смотри стык','приставка на согласную + е, ё, ю, я'],['4','Поставь ъ','только на этом стыке']];
+      return `${T('div',0,'kicker','14 · Алгоритм')}
+        ${T('h2',1,'','Четыре шага — и написание на месте')}
+        <div class="steps">${ST.map((x,i)=>
+          T('div',2+i,'st'+(n===i+1?' on':(n&&i+1!==n?' dim':'')),
+            `<span class="n">${x[0]}</span><span class="t">${x[1]}<small>${x[2]}</small></span>`)).join('')}</div>
+        ${BTN(6,'cta', n>=4?'Сначала':'Следующий шаг','r605Alg()')}
+        ${T('p',7,'cap', n?('Шаг '+n+' из 4. Не пиши «на слух» — сначала вставка.'):'Нажимай: шаги загорятся по одному.')}`;
+    }
+    if(f===15){
+      const i=s.pkt||0;
+      const C=[['Приставка внутри слова','зашёл, приехал, отнёс'],
+               ['Предлог — сосед с пробелом','за домом, в лесу, на столе'],
+               ['ъ — только на стыке','съел, объявил, подъезд']];
+      return `${T('div',0,'kicker','15 · В карман')}
+        ${T('h2',1,'','Три фразы, которые стоит унести')}
+        <div class="pkt">${C.map((x,k)=>BTN(2+k,i===k+1?'chip on':'chip',
+          `<b>${x[0]}</b>${i===k+1?`<i>${x[1]}</i>`:''}`,`r605Pkt(${k+1})`)).join('')}</div>
+        ${T('p',5,'cap', i?'Держи эти три. Дальше сам: слитно или раздельно.':'Нажми карточку — фраза перевернётся.')}`;
+    }
+    const G=(window.RUGAME&&window.RUGAME[605])||[];
+    const i=(s.gIdx||0)%(G.length||1), it=G[i]||['','',''], got=s.gRes, done=got!=null;
+    return `${T('div',0,'kicker','16 · Тренажёр')}
+      <div class="split">${T('span',1,'word wide',`<b>${it[0]}</b><i>слитно или раздельно?</i>`)}</div>
+      ${done ? (got ? window.RUFEED.note('ok','верно',it[2]) : window.RUFEED.note('no','исправить','Правильно: '+it[2]))
+             : `<p class="verdict">Попробуй вставить слово. Получилось — предлог.</p>`}
+      <div class="casebtns">${[['слитно','слитно','приставка внутри'],['раздельно','раздельно','предлог с пробелом']].map((b,k)=>
+        `<button type="button" data-anim style="--i:${2+k}" class="${done&&it[1]===b[0]?(got?'hit':''):''}" onclick="ru605Game('${b[0]}')"><span class="nm">${b[1]}</span><span class="qs">${b[2]}</span></button>`).join('')}</div>
+      <p class="score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${G.length}</p>
+      <p class="cap">${done?'Нажми любую кнопку — следующее слово.':'Сначала вставка, потом написание.'}</p>`;
+  }
+  function render(el){
+    css();
+    const s=S();
+    const st=(typeof LV!=='undefined'&&LV.step)||0;
+    const f=Math.min(16, Math.max(1, st+1));
+    el.innerHTML=`<div class="s6 l605" data-frame="${f}">${pred(f, body(s,f))}</div>`;
+  }
+  window.r605Pred=(f,k)=>{ S()['q'+f]=k; chRender(0); };
+  window.r605Seam=()=>{ const s=S(); s.seam=s.seam?0:1; chRender(0); };
+  window.r605Ins=()=>{ const s=S(); s.ins=s.ins?0:1; chRender(0); };
+  window.r605Brk=()=>{ const s=S(); s.brk=s.brk?0:1; chRender(0); };
+  window.r605How=(i)=>{ S().how=i; chRender(0); };
+  window.r605Za=(i)=>{ S().za=i; chRender(0); };
+  window.r605Wedge=()=>{ const s=S(); s.wedge=s.wedge?0:1; chRender(0); };
+  window.r605No=(i)=>{ S().no=i; chRender(0); };
+  window.r605Uni=(i)=>{ S().uni=i; chRender(0); };
+  window.r605Trap=(i)=>{ S().trap=i; chRender(0); };
+  window.r605Alg=()=>{ const s=S(); s.alg=s.alg>=4?0:(s.alg||0)+1; chRender(0); };
+  window.r605Pkt=(i)=>{ S().pkt=i; chRender(0); };
+  if(window.WAVE_B){ const prev=window.WAVE_B[605]; window.WAVE_B[605]=function(el){ try{ render(el); }catch(e){ try{ prev(el); }catch(e2){} } }; }
+  return {render:render};
+})();
+
+window.RU606V2 = (function(){
+  const CSS=`
+  #lvis .s6.l606{gap:14px}
+  #lvis .s6.l606 .seats{display:flex;gap:10px;width:100%;flex-wrap:nowrap;justify-content:center}
+  #lvis .s6.l606 .seat{flex:1 1 0;min-width:0;padding:14px 8px;border-radius:16px;border:1.5px solid var(--line);
+    background:linear-gradient(180deg,#22362c,#17261e);text-align:center;cursor:pointer}
+  #lvis .s6.l606 .seat b{display:block;font-size:28px;line-height:1.05;color:var(--gold)}
+  #lvis .s6.l606 .seat i{display:block;font-style:normal;font-size:14px;color:var(--mut);margin-top:4px}
+  #lvis .s6.l606 .seat.on{border-color:var(--gold);background:rgba(255,215,106,.14)}
+  #lvis .s6.l606 .pairw{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;flex-wrap:wrap}
+  #lvis .s6.l606 .askrow{display:flex;gap:10px;flex-wrap:wrap;justify-content:stretch}
+  #lvis .s6.l606 .askrow button{flex:1 1 42%;min-height:48px;padding:12px;font-size:16px;font-weight:600;line-height:1.25}
+  #lvis .s6.l606 .pkt{display:flex;flex-direction:column;gap:10px;width:100%}
+  #lvis .s6.l606 .pkt button{min-height:56px;text-align:left;padding:14px 16px;font-size:16px}
+  #lvis .s6.l606 .pkt button b{display:block;font-size:20px;color:var(--gold);line-height:1.2}
+  #lvis .s6.l606 .pkt button i{display:block;font-style:normal;font-size:14px;color:var(--mut);margin-top:4px}
+  #lvis .s6.l606 .job{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 16px;border-radius:16px;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);text-align:center}
+  #lvis .s6.l606 .job b{font-size:22px;line-height:1.15;color:var(--gold)}
+  #lvis .s6.l606 .job i{font-style:normal;font-size:16px;line-height:1.35;color:var(--mut)}
+  #lvis .s6.l606 .tail{display:inline-flex;align-items:flex-end;gap:2px}
+  #lvis .s6.l606 .tail .soft{font-size:36px;color:var(--gold);line-height:1;font-weight:700}
+  #lvis .s6.l606 .steps .st.dim{opacity:.4}
+  #lvis .s6.l606 .steps .st.on{border-color:var(--gold)}
+  #lvis .s6.l606 .casebtns button.hit{border-color:var(--ok)}
+  #lvis .s6.l606 .casebtns button.miss{border-color:var(--no)}
+  #lvis .s6.l606 .word{white-space:nowrap}
+#lvis .s6.l606[data-frame="1"] [data-anim]{animation-name:l606f1}
+#lvis .s6.l606[data-frame="2"] [data-anim]{animation-name:l606f2}
+#lvis .s6.l606[data-frame="3"] [data-anim]{animation-name:l606f3}
+#lvis .s6.l606[data-frame="4"] [data-anim]{animation-name:l606f4}
+#lvis .s6.l606[data-frame="5"] [data-anim]{animation-name:l606f5}
+#lvis .s6.l606[data-frame="6"] [data-anim]{animation-name:l606f6}
+#lvis .s6.l606[data-frame="7"] [data-anim]{animation-name:l606f7}
+#lvis .s6.l606[data-frame="8"] [data-anim]{animation-name:l606f8}
+#lvis .s6.l606[data-frame="9"] [data-anim]{animation-name:l606f9}
+#lvis .s6.l606[data-frame="10"] [data-anim]{animation-name:l606f10}
+#lvis .s6.l606[data-frame="11"] [data-anim]{animation-name:l606f11}
+#lvis .s6.l606[data-frame="12"] [data-anim]{animation-name:l606f12}
+#lvis .s6.l606[data-frame="13"] [data-anim]{animation-name:l606f13}
+#lvis .s6.l606[data-frame="14"] [data-anim]{animation-name:l606f14}
+#lvis .s6.l606[data-frame="15"] [data-anim]{animation-name:l606f15}
+#lvis .s6.l606[data-frame="16"] [data-anim]{animation-name:l606f16}
+@keyframes l606f1{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes l606f2{0%{opacity:0;transform:scale(.92)}70%{transform:scale(1.03)}100%{opacity:1;transform:none}}
+@keyframes l606f3{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+@keyframes l606f4{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+@keyframes l606f5{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+@keyframes l606f6{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes l606f7{0%{opacity:0;transform:scaleX(.88)}100%{opacity:1;transform:none}}
+@keyframes l606f8{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes l606f9{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:none}}
+@keyframes l606f10{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+@keyframes l606f11{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+@keyframes l606f12{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes l606f13{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes l606f14{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes l606f15{0%{opacity:0;transform:scale(.94)}100%{opacity:1;transform:none}}
+@keyframes l606f16{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  @media (max-width:370px){
+    #lvis .s6.l606 .seats{flex-direction:column}
+    #lvis .s6.l606 .seat b{font-size:24px}
+    #lvis .s6.l606 .word b{font-size:32px}
+  }
+  @media (prefers-reduced-motion: reduce){#lvis .s6.l606 [data-anim]{animation:none!important}}`;
+  function css(){ try{ if(window.RUKIT&&RUKIT.frameCss) RUKIT.frameCss();
+    let e=document.getElementById('l606-style'); if(!e){ e=document.createElement('style'); e.id='l606-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  const S=()=>{ const lk=lidKey(606); if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; };
+  const T=(tag,i,cls,html)=>`<${tag} data-anim style="--i:${i}" class="${cls||''}">${html}</${tag}>`;
+  const BTN=(i,cls,html,on)=>`<button type="button" data-anim style="--i:${i}" class="${cls}" onclick="${on}">${html}</button>`;
+  const P={
+    1:['Род существительного — признак…',[{k:'a',t:'постоянный',ok:1,fb:'верно: он не меняется'},{k:'b',t:'изменяемый',ok:0,fb:'меняется число, а не род'}]],
+    2:['Какие слова-помощники?',[{k:'a',t:'он, она, оно',ok:1,fb:'верно'},{k:'b',t:'кто, что',ok:0,fb:'это вопросы, не помощники рода'}]],
+    3:['«Парта» — какой род?',[{k:'a',t:'женский: она парта',ok:1,fb:'верно'},{k:'b',t:'мужской',ok:0,fb:'он парта — не бывает'}]],
+    4:['«Окно» — какой род?',[{k:'a',t:'средний: оно окно',ok:1,fb:'верно'},{k:'b',t:'женский',ok:0,fb:'она окно — неверно'}]],
+    5:['Мягкий знак на конце род…',[{k:'a',t:'не подсказывает',ok:1,fb:'верно: день — он, ночь — она'},{k:'b',t:'всегда значит женский',ok:0,fb:'день тоже с ь, а род мужской'}]],
+    6:['Число — признак…',[{k:'a',t:'изменяемый',ok:1,fb:'верно: стол — столы'},{k:'b',t:'постоянный',ok:0,fb:'постоянный — род'}]],
+    7:['«Молоко» живёт…',[{k:'a',t:'только в единственном',ok:1,fb:'верно: формы множественного нет'},{k:'b',t:'в обоих числах',ok:0,fb:'«два молока» в обычной речи нет'}]],
+    8:['«Ножницы» — что за слово?',[{k:'a',t:'только множественное',ok:1,fb:'верно: «ножница» не говорят'},{k:'b',t:'только единственное',ok:0,fb:'это как раз множественное'}]],
+    9:['У «столы» род…',[{k:'a',t:'не определяют: сначала единственное',ok:1,fb:'верно: стол — он'},{k:'b',t:'средний, потому что «они»',ok:0,fb:'«они» — не род'}]],
+    10:['«Рожь» — нужен ь?',[{k:'a',t:'да: женский род',ok:1,fb:'верно'},{k:'b',t:'нет: мужской род',ok:0,fb:'рожь — она'}]],
+    11:['«Ключ» — нужен ь?',[{k:'a',t:'нет: мужской род',ok:1,fb:'верно'},{k:'b',t:'да: после шипящей всегда',ok:0,fb:'у мужского рода после шипящих ь не пишут'}]],
+    12:['«Мышь» — какой род?',[{k:'a',t:'женский: она мышь',ok:1,fb:'верно, поэтому ь'},{k:'b',t:'мужской',ok:0,fb:'она мышь'}]],
+    13:['«День» с ь. Какой род?',[{k:'a',t:'мужской: он день',ok:1,fb:'верно: знак род не ставит'},{k:'b',t:'женский, раз есть ь',ok:0,fb:'знак сам по себе род не ставит'}]],
+    14:['Первый шаг алгоритма — …',[{k:'a',t:'поставить в начальную форму',ok:1,fb:'верно'},{k:'b',t:'сразу писать ь',ok:0,fb:'сначала форма, потом помощник'}]],
+    15:['После шипящих ь пишут…',[{k:'a',t:'только у женского рода',ok:1,fb:'верно: рожь — да, нож — нет'},{k:'b',t:'всегда',ok:0,fb:'у мужского рода знака нет'}]]
+  };
+  function pred(f,body){
+    const p=P[f]; if(!p) return body;
+    const s=S(), cur=s['q'+f];
+    const pick=p[1].find(o=>o.k===cur);
+    const fb=cur
+      ? `<p class="verdict ${pick&&pick.ok?'ok':'no'}">${pick&&pick.ok?'верно. '+pick.fb:'не так. '+(pick?pick.fb:'подумай ещё')}</p>`
+      : `<p class="verdict">Выбери ответ:</p>`;
+    return body+`<div class="askrow">${p[1].map((o,i)=>BTN(8+i,'chip'+(cur===o.k?(o.ok?' ok':' no'):''),o.t,`r606Pred(${f},'${o.k}')`)).join('')}</div>`+fb;
+  }
+  function body(s,f){
+    if(f===1){
+      const w=s.w||'дом';
+      return `${T('div',0,'kicker','01 · Род не меняется')}
+        ${T('h2',1,'','Как цвет глаз у слова')}
+        ${T('p',2,'lead','Дом всегда «он», книга всегда «она». Сколько ни называй.')}
+        <div class="row">${BTN(3,w==='дом'?'chip on':'chip','дом',`r606W('дом')`)}${BTN(4,w==='книга'?'chip on':'chip','книга',`r606W('книга')`)}</div>
+        <div class="split">${T('span',5,'word', w==='дом'?'<b>он дом</b><i>мужской род</i>':'<b>она книга</b><i>женский род</i>')}</div>
+        ${T('p',6,'cap','Род — постоянный признак. Слово его не меняет.')}`;
+    }
+    if(f===2){
+      const k=s.pr||0;
+      const A=[['он','стол, конь, дом','мужской'],['она','парта, земля, книга','женский'],['оно','окно, поле, море','средний']];
+      return `${T('div',0,'kicker','02 · Три помощника')}
+        ${T('h2',1,'','он · она · оно')}
+        ${T('p',2,'lead','Подставь местоимение — и род скажет сам.')}
+        <div class="seats">${A.map((x,i)=>`<button type="button" data-anim style="--i:${3+i}" class="seat${k===i+1?' on':''}" onclick="r606Pr(${i+1})"><b>${x[0]}</b><i>${x[1]}</i></button>`).join('')}</div>
+        ${k?`<div class="job" data-anim style="--i:7"><b>${A[k-1][2]} род</b><i>${A[k-1][0]} ${A[k-1][1].split(',')[0]}</i></div>`
+           :T('p',6,'cap','Нажми помощника — сядет к своим словам.')}`;
+    }
+    if(f===3){
+      const k=s.end||0;
+      const E=[['без окончания','стол, конь, дом','мужской'],['-а, -я','парта, земля','женский'],['-о, -е','окно, поле','средний']];
+      return `${T('div',0,'kicker','03 · Окончание начальной формы')}
+        ${T('h2',1,'','Род часто виден с края')}
+        <div class="pkt">${E.map((x,i)=>BTN(2+i,k===i+1?'chip on':'chip',
+          `<b>${x[0]}</b>${k===i+1?`<i>${x[1]} — ${x[2]}</i>`:`<i>${x[1]}</i>`}`,`r606End(${i+1})`)).join('')}</div>
+        ${T('p',5,'cap','Это окончание начальной формы, не любой.')}`;
+    }
+    if(f===4){
+      const k=s.soft||0;
+      return `${T('div',0,'kicker','04 · Мягкий знак не подскажет')}
+        ${T('h2',1,'','Он день — она ночь')}
+        ${T('p',2,'lead','Оба с ь на конце. Род разный. Смотри на помощника, не на знак.')}
+        <div class="row">${BTN(3,k===1?'chip on':'chip','день',`r606Soft(1)`)}${BTN(4,k===2?'chip on':'chip','ночь',`r606Soft(2)`)}</div>
+        ${k?`<div class="job" data-anim style="--i:6"><b>${k===1?'он день — мужской':'она ночь — женский'}</b><i>Знак род не ставит. Ставит местоимение.</i></div>`
+           :T('p',6,'cap','Сомневаешься — в словарь, не угадывай.')}`;
+    }
+    if(f===5){
+      const on=!!s.num;
+      return `${T('div',0,'kicker','05 · Число меняется')}
+        ${T('h2',1,'','Один или много')}
+        ${T('p',2,'lead','Стол — один. Столы — много. Это уже не постоянный признак.')}
+        <div class="pairw">
+          ${T('span',3,'word', on?'<b>столы</b><i>множественное</i>':'<b>стол</b><i>единственное</i>')}
+          ${T('span',4,'tag', on?'← много':'один →')}
+        </div>
+        ${BTN(5,'cta', on?'Вернуть один':'Сделать много','r606Num()')}
+        ${T('p',6,'cap','Число слово меняет. Род — нет.')}`;
+    }
+    if(f===6){
+      const k=s.one||0;
+      return `${T('div',0,'kicker','06 · Только единственное')}
+        ${T('h2',1,'','Слова без «много»')}
+        ${T('p',2,'lead','Молоко, сахар, храбрость. Второй формы у них нет.')}
+        <div class="row">${['молоко','сахар','храбрость'].map((w,i)=>BTN(3+i,k===i+1?'chip on':'chip',w,`r606One(${i+1})`)).join('')}</div>
+        ${T('p',6,'cap', k?'Не говори «два молока» в смысле числа. Это вещество, не штуки.':'Нажми слово — оно так и живёт: в одном числе.')}`;
+    }
+    if(f===7){
+      const k=s.pl||0;
+      return `${T('div',0,'kicker','07 · Только множественное')}
+        ${T('h2',1,'','Слова без «одного»')}
+        ${T('p',2,'lead','Ножницы, каникулы, брюки. «Ножница» не говорят.')}
+        <div class="row">${['ножницы','каникулы','брюки'].map((w,i)=>BTN(3+i,k===i+1?'chip on':'chip',w,`r606Pl(${i+1})`)).join('')}</div>
+        ${T('p',6,'cap','У них нет формы единственного. Это не ошибка — так устроено слово.')}`;
+    }
+    if(f===8){
+      const on=!!s.back;
+      return `${T('div',0,'kicker','08 · У «столы» рода нет')}
+        ${T('h2',1,'','Сначала верни в единственное')}
+        ${T('p',2,'lead','«Столы» — не «они». Это форма слова «стол» мужского рода.')}
+        <div class="split">${T('span',3,'word', on?'<b>стол</b><i>он — мужской род</i>':'<b>столы</b><i>множественное: род не определяют</i>')}</div>
+        ${BTN(4,'cta', on?'Вернуть во множественное':'Поставить в единственное','r606Back()')}
+        ${T('p',5,'cap','Род смотрим у начальной формы, не у любой.')}`;
+    }
+    if(f===9){
+      const k=s.hiss||0;
+      return `${T('div',0,'kicker','09 · После шипящих')}
+        ${T('h2',1,'','Ь решает род')}
+        ${T('p',2,'lead','Женский — с мягким знаком. Мужской — без.')}
+        <div class="row">
+          ${BTN(3,k===1?'chip on':'chip','рожь · ночь · мышь',`r606Hiss(1)`)}
+          ${BTN(4,k===2?'chip on':'chip','нож · мяч · ключ',`r606Hiss(2)`)}
+        </div>
+        ${k?`<div class="job" data-anim style="--i:6"><b>${k===1?'Женский род — пишем ь':'Мужской род — без ь'}</b><i>${k===1?'Она рожь, она ночь, она мышь.':'Он нож, он мяч, он ключ.'}</i></div>`
+           :T('p',6,'cap','Не смотри на шипящую. Смотри на род.')}`;
+    }
+    if(f===10){
+      const k=s.vs||0;
+      return `${T('div',0,'kicker','10 · Сравни')}
+        ${T('h2',1,'','Рожь и нож')}
+        ${T('p',2,'lead','Оба кончаются на ж. У одного ь есть, у другого нет.')}
+        <div class="row">${BTN(3,k===1?'chip on':'chip','рожь',`r606Vs(1)`)}${BTN(4,k===2?'chip on':'chip','нож',`r606Vs(2)`)}</div>
+        ${k?`<div class="job" data-anim style="--i:6"><b>${k===1?'она рожь — пишем ь':'он нож — без ь'}</b><i>Подставь местоимение — и знак встанет сам.</i></div>`
+           :T('p',6,'cap','Кликни слово — подставим помощника.')}`;
+    }
+    if(f===11){
+      const k=s.ms||0;
+      return `${T('div',0,'kicker','11 · Мышь и ключ')}
+        ${T('h2',1,'','Шипящая одна — род разный')}
+        <div class="row">${BTN(3,k===1?'chip on':'chip','мышь',`r606Ms(1)`)}${BTN(4,k===2?'chip on':'chip','ключ',`r606Ms(2)`)}</div>
+        ${k?`<div class="job" data-anim style="--i:5"><b>${k===1?'она мышь — с ь':'он ключ — без ь'}</b><i>Не смотри на шипящую. Смотри на род.</i></div>`
+           :T('p',5,'cap','Один звук на конце — два разных решения про ь.')}`;
+    }
+    if(f===12){
+      const k=s.trap||0;
+      return `${T('div',0,'kicker','12 · Ловушка')}
+        ${T('h2',1,'','День с ь — и всё равно он')}
+        ${T('p',2,'lead','Знак сам по себе род не ставит.')}
+        <div class="row">${BTN(3,k===1?'chip on':'chip','день',`r606Trap(1)`)}${BTN(4,k===2?'chip on':'chip','ночь',`r606Trap(2)`)}</div>
+        ${k?`<div class="job" data-anim style="--i:6"><b>${k===1?'он день — мужской, ь есть':'она ночь — женский, ь есть'}</b><i>У обоих ь. Род разный. Решает местоимение.</i></div>`
+           :T('p',6,'cap','Не пиши ь «на всякий случай». Спроси он или она.')}`;
+    }
+    if(f===13){
+      const n=s.alg||0;
+      const ST=[['1','Начальная форма','не «столы», а «стол»'],['2','Подставь он, она, оно','род скажет сам'],
+                ['3','Проверь число','меняется ли слово'],['4','После шипящих — ещё раз род','прежде чем писать ь']];
+      return `${T('div',0,'kicker','13 · Алгоритм')}
+        ${T('h2',1,'','Четыре шага — и род на месте')}
+        <div class="steps">${ST.map((x,i)=>
+          T('div',2+i,'st'+(n===i+1?' on':(n&&i+1!==n?' dim':'')),
+            `<span class="n">${x[0]}</span><span class="t">${x[1]}<small>${x[2]}</small></span>`)).join('')}</div>
+        ${BTN(6,'cta', n>=4?'Сначала':'Следующий шаг','r606Alg()')}
+        ${T('p',7,'cap', n?('Шаг '+n+' из 4.'):'Нажимай: шаги загорятся по одному.')}`;
+    }
+    if(f===14){
+      return `${T('div',0,'kicker','14 · Частая ошибка')}
+        ${T('h2',1,'','Ь у «ключ» «на всякий случай»')}
+        ${T('p',2,'lead','Не надо. Мужской род после шипящих мягкий знак не просит.')}
+        <div class="split">${T('span',3,'word','<b>ключ</b><i>он — без ь</i>')}${T('span',4,'word','<b>ночь</b><i>она — с ь</i>')}</div>
+        ${T('p',5,'cap','Сначала помощник, потом знак. Никогда наоборот.')}`;
+    }
+    if(f===15){
+      const i=s.pkt||0;
+      const C=[['Род не меняется','он дом, она книга, оно окно'],
+               ['Число меняется','стол — столы'],
+               ['После шипящих ь — только у женского','рожь — да, нож — нет']];
+      return `${T('div',0,'kicker','15 · В карман')}
+        ${T('h2',1,'','Три фразы, которые стоит унести')}
+        <div class="pkt">${C.map((x,k)=>BTN(2+k,i===k+1?'chip on':'chip',
+          `<b>${x[0]}</b>${i===k+1?`<i>${x[1]}</i>`:''}`,`r606Pkt(${k+1})`)).join('')}</div>
+        ${T('p',5,'cap', i?'Держи эти три. Дальше сам: подставь местоимение.':'Нажми карточку — фраза перевернётся.')}`;
+    }
+    const G=(window.RUGAME&&window.RUGAME[606])||[];
+    const i=(s.gIdx||0)%(G.length||1), it=G[i]||['','',''], got=s.gRes, done=got!=null;
+    return `${T('div',0,'kicker','16 · Тренажёр')}
+      <div class="split">${T('span',1,'word',`<b>${it[0]}</b><i>подставь местоимение</i>`)}</div>
+      ${done ? (got ? window.RUFEED.note('ok','верно',it[2]) : window.RUFEED.note('no','исправить','Правильно: '+it[2]))
+             : `<p class="verdict">Он, она или оно?</p>`}
+      <div class="casebtns">${[['он','он','мужской'],['она','она','женский'],['оно','оно','средний']].map((b,k)=>
+        `<button type="button" data-anim style="--i:${2+k}" class="${done&&it[1]===b[0]?(got?'hit':''):''}" onclick="ru606Game('${b[0]}')"><span class="nm">${b[1]}</span><span class="qs">${b[2]}</span></button>`).join('')}</div>
+      <p class="score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${G.length}</p>
+      <p class="cap">${done?'Нажми любую кнопку — следующее слово.':'Сначала помощник, потом род.'}</p>`;
+  }
+  function render(el){
+    css();
+    const s=S();
+    const st=(typeof LV!=='undefined'&&LV.step)||0;
+    const f=Math.min(16, Math.max(1, st+1));
+    el.innerHTML=`<div class="s6 l606" data-frame="${f}">${pred(f, body(s,f))}</div>`;
+  }
+  window.r606Pred=(f,k)=>{ S()['q'+f]=k; chRender(0); };
+  window.r606W=(w)=>{ S().w=w; chRender(0); };
+  window.r606Pr=(i)=>{ S().pr=i; chRender(0); };
+  window.r606End=(i)=>{ S().end=i; chRender(0); };
+  window.r606Soft=(i)=>{ S().soft=i; chRender(0); };
+  window.r606Num=()=>{ const s=S(); s.num=s.num?0:1; chRender(0); };
+  window.r606One=(i)=>{ S().one=i; chRender(0); };
+  window.r606Pl=(i)=>{ S().pl=i; chRender(0); };
+  window.r606Back=()=>{ const s=S(); s.back=s.back?0:1; chRender(0); };
+  window.r606Hiss=(i)=>{ S().hiss=i; chRender(0); };
+  window.r606Vs=(i)=>{ S().vs=i; chRender(0); };
+  window.r606Ms=(i)=>{ S().ms=i; chRender(0); };
+  window.r606Trap=(i)=>{ S().trap=i; chRender(0); };
+  window.r606Alg=()=>{ const s=S(); s.alg=s.alg>=4?0:(s.alg||0)+1; chRender(0); };
+  window.r606Pkt=(i)=>{ S().pkt=i; chRender(0); };
+  if(window.WAVE_B){ const prev=window.WAVE_B[606]; window.WAVE_B[606]=function(el){ try{ render(el); }catch(e){ try{ prev(el); }catch(e2){} } }; }
+  return {render:render};
+})();
+
+window.RU608V2 = (function(){
+  const CSS=`
+  #lvis .s6.l608{gap:14px}
+  #lvis .s6.l608 .tl{display:flex;gap:8px;width:100%;flex-wrap:nowrap;justify-content:center}
+  #lvis .s6.l608 .tl button{flex:1 1 0;min-width:0;min-height:88px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:14px}
+  #lvis .s6.l608 .tl button b{font-size:22px;line-height:1.1;color:var(--gold)}
+  #lvis .s6.l608 .tl button i{font-style:normal;font-size:13px;color:var(--mut)}
+  #lvis .s6.l608 .who3{display:flex;gap:8px;width:100%;flex-wrap:nowrap}
+  #lvis .s6.l608 .who3 button{flex:1 1 0;min-width:0;min-height:76px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:4px}
+  #lvis .s6.l608 .who3 button b{font-size:20px;color:var(--gold);line-height:1.15}
+  #lvis .s6.l608 .who3 button i{font-style:normal;font-size:13px;color:var(--mut)}
+  #lvis .s6.l608 .askrow{display:flex;gap:10px;flex-wrap:wrap;justify-content:stretch}
+  #lvis .s6.l608 .askrow button{flex:1 1 42%;min-height:48px;padding:12px;font-size:16px;font-weight:600;line-height:1.25}
+  #lvis .s6.l608 .pkt{display:flex;flex-direction:column;gap:10px;width:100%}
+  #lvis .s6.l608 .pkt button{min-height:56px;text-align:left;padding:14px 16px;font-size:16px}
+  #lvis .s6.l608 .pkt button b{display:block;font-size:20px;color:var(--gold);line-height:1.2}
+  #lvis .s6.l608 .pkt button i{display:block;font-style:normal;font-size:14px;color:var(--mut);margin-top:4px}
+  #lvis .s6.l608 .job{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 16px;border-radius:16px;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);text-align:center}
+  #lvis .s6.l608 .job b{font-size:22px;line-height:1.15;color:var(--gold)}
+  #lvis .s6.l608 .job i{font-style:normal;font-size:16px;line-height:1.35;color:var(--mut)}
+  #lvis .s6.l608 .ell{color:var(--gold);font-weight:700}
+  #lvis .s6.l608 .steps .st.dim{opacity:.4}
+  #lvis .s6.l608 .steps .st.on{border-color:var(--gold)}
+  #lvis .s6.l608 .casebtns button.hit{border-color:var(--ok)}
+  #lvis .s6.l608 .casebtns button.miss{border-color:var(--no)}
+  #lvis .s6.l608 .word.wide{white-space:normal}
+#lvis .s6.l608[data-frame="1"] [data-anim]{animation-name:l608f1}
+#lvis .s6.l608[data-frame="2"] [data-anim]{animation-name:l608f2}
+#lvis .s6.l608[data-frame="3"] [data-anim]{animation-name:l608f3}
+#lvis .s6.l608[data-frame="4"] [data-anim]{animation-name:l608f4}
+#lvis .s6.l608[data-frame="5"] [data-anim]{animation-name:l608f5}
+#lvis .s6.l608[data-frame="6"] [data-anim]{animation-name:l608f6}
+#lvis .s6.l608[data-frame="7"] [data-anim]{animation-name:l608f7}
+#lvis .s6.l608[data-frame="8"] [data-anim]{animation-name:l608f8}
+#lvis .s6.l608[data-frame="9"] [data-anim]{animation-name:l608f9}
+#lvis .s6.l608[data-frame="10"] [data-anim]{animation-name:l608f10}
+#lvis .s6.l608[data-frame="11"] [data-anim]{animation-name:l608f11}
+#lvis .s6.l608[data-frame="12"] [data-anim]{animation-name:l608f12}
+#lvis .s6.l608[data-frame="13"] [data-anim]{animation-name:l608f13}
+#lvis .s6.l608[data-frame="14"] [data-anim]{animation-name:l608f14}
+#lvis .s6.l608[data-frame="15"] [data-anim]{animation-name:l608f15}
+#lvis .s6.l608[data-frame="16"] [data-anim]{animation-name:l608f16}
+@keyframes l608f1{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes l608f2{0%{opacity:0;transform:scale(.92)}70%{transform:scale(1.03)}100%{opacity:1;transform:none}}
+@keyframes l608f3{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+@keyframes l608f4{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+@keyframes l608f5{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+@keyframes l608f6{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes l608f7{0%{opacity:0;transform:scaleX(.88)}100%{opacity:1;transform:none}}
+@keyframes l608f8{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes l608f9{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:none}}
+@keyframes l608f10{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+@keyframes l608f11{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+@keyframes l608f12{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes l608f13{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes l608f14{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes l608f15{0%{opacity:0;transform:scale(.94)}100%{opacity:1;transform:none}}
+@keyframes l608f16{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  @media (max-width:370px){
+    #lvis .s6.l608 .tl,#lvis .s6.l608 .who3{flex-direction:column}
+    #lvis .s6.l608 .tl button,#lvis .s6.l608 .who3 button{min-height:56px}
+    #lvis .s6.l608 .word b{font-size:32px}
+  }
+  @media (prefers-reduced-motion: reduce){#lvis .s6.l608 [data-anim]{animation:none!important}}`;
+  function css(){ try{ if(window.RUKIT&&RUKIT.frameCss) RUKIT.frameCss();
+    let e=document.getElementById('l608-style'); if(!e){ e=document.createElement('style'); e.id='l608-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  const S=()=>{ const lk=lidKey(608); if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; };
+  const T=(tag,i,cls,html)=>`<${tag} data-anim style="--i:${i}" class="${cls||''}">${html}</${tag}>`;
+  const BTN=(i,cls,html,on)=>`<button type="button" data-anim style="--i:${i}" class="${cls}" onclick="${on}">${html}</button>`;
+  const P={
+    1:['Глагол отвечает на вопрос…',[{k:'a',t:'что делает?',ok:1,fb:'верно'},{k:'b',t:'какой?',ok:0,fb:'какой? — прилагательное'}]],
+    2:['Сколько времён у глагола?',[{k:'a',t:'три',ok:1,fb:'верно: прошлое, настоящее, будущее'},{k:'b',t:'два',ok:0,fb:'времён три'}]],
+    3:['«Читает» — какое время?',[{k:'a',t:'настоящее',ok:1,fb:'верно: действие идёт сейчас'},{k:'b',t:'прошедшее',ok:0,fb:'прошедшее — читал'}]],
+    4:['«Читал» узнают по…',[{k:'a',t:'суффиксу -л',ok:1,fb:'верно'},{k:'b',t:'приставке',ok:0,fb:'время держит суффикс -л'}]],
+    5:['«Читали» — какой род?',[{k:'a',t:'рода нет: множественное',ok:1,fb:'верно'},{k:'b',t:'мужской',ok:0,fb:'во множественном роде нет'}]],
+    6:['«Будет читать» — это…',[{k:'a',t:'будущее сложное',ok:1,fb:'верно: два слова, одно время'},{k:'b',t:'настоящее',ok:0,fb:'«буду» несёт будущее'}]],
+    7:['«Читаешь» — какое лицо?',[{k:'a',t:'второе: ты',ok:1,fb:'верно'},{k:'b',t:'третье',ok:0,fb:'третье — он читает'}]],
+    8:['«Читают» — какое число?',[{k:'a',t:'множественное',ok:1,fb:'верно: они читают'},{k:'b',t:'единственное',ok:0,fb:'единственное — читает'}]],
+    9:['Начальная форма глагола — это…',[{k:'a',t:'читать: что делать?',ok:1,fb:'верно: -ть, -ти, -чь'},{k:'b',t:'читает',ok:0,fb:'это уже настоящее время'}]],
+    10:['Есть ли лицо у «читал»?',[{k:'a',t:'нет: есть род и число',ok:1,fb:'верно'},{k:'b',t:'да, третье',ok:0,fb:'у прошедшего лица нет'}]],
+    11:['«Читала» — разбор?',[{k:'a',t:'прошедшее, женский род, ед. число',ok:1,fb:'верно'},{k:'b',t:'настоящее, третье лицо',ok:0,fb:'-л — прошедшее, лица нет'}]],
+    12:['«Буду читать» кажется настоящим из-за…',[{k:'a',t:'слова «читать», но время несёт «буду»',ok:1,fb:'верно'},{k:'b',t:'это и есть настоящее',ok:0,fb:'настоящее — читает'}]],
+    13:['Первый шаг алгоритма — …',[{k:'a',t:'задать вопрос к глаголу',ok:1,fb:'верно'},{k:'b',t:'сразу искать лицо',ok:0,fb:'сначала время, потом лицо'}]],
+    14:['Подставь «вчера / сейчас / завтра», чтобы…',[{k:'a',t:'увидеть время',ok:1,fb:'верно'},{k:'b',t:'увидеть падеж',ok:0,fb:'у глагола падежа нет'}]],
+    15:['У прошедшего времени…',[{k:'a',t:'лица нет, есть род',ok:1,fb:'верно: он читал, она читала'},{k:'b',t:'всегда третье лицо',ok:0,fb:'лица у прошедшего нет'}]]
+  };
+  function pred(f,body){
+    const p=P[f]; if(!p) return body;
+    const s=S(), cur=s['q'+f];
+    const pick=p[1].find(o=>o.k===cur);
+    const fb=cur
+      ? `<p class="verdict ${pick&&pick.ok?'ok':'no'}">${pick&&pick.ok?'верно. '+pick.fb:'не так. '+(pick?pick.fb:'подумай ещё')}</p>`
+      : `<p class="verdict">Выбери ответ:</p>`;
+    return body+`<div class="askrow">${p[1].map((o,i)=>BTN(8+i,'chip'+(cur===o.k?(o.ok?' ok':' no'):''),o.t,`r608Pred(${f},'${o.k}')`)).join('')}</div>`+fb;
+  }
+  function body(s,f){
+    if(f===1){
+      const k=s.act||0;
+      const A=[['бежит','действие'],['спит','состояние'],['будет читать','ещё будет']];
+      return `${T('div',0,'kicker','01 · Глагол')}
+        ${T('h2',1,'','Самая живая часть речи')}
+        ${T('p',2,'lead','Называет действие или состояние. В предложении чаще всего сказуемое.')}
+        <div class="row">${A.map((x,i)=>BTN(3+i,k===i+1?'chip on':'chip',x[0],`r608Act(${i+1})`)).join('')}</div>
+        ${k?`<div class="job" data-anim style="--i:7"><b>${A[k-1][0]}</b><i>${A[k-1][1]}. Вопрос: что делает? что делал? что будет делать?</i></div>`
+           :T('p',6,'cap','Нажми глагол — увидишь, какую работу он делает.')}`;
+    }
+    if(f===2){
+      const k=s.tm||0;
+      const Tm=[['читал','вчера','прошедшее'],['читает','сейчас','настоящее'],['прочитает','завтра','будущее']];
+      return `${T('div',0,'kicker','02 · Три «когда»')}
+        ${T('h2',1,'','Вчера · сейчас · завтра')}
+        <div class="tl">${Tm.map((x,i)=>BTN(2+i,k===i+1?'chip on':'chip',`<b>${x[0]}</b><i>${x[1]}</i>`, `r608Tm(${i+1})`)).join('')}</div>
+        ${k?`<div class="job" data-anim style="--i:6"><b>${Tm[k-1][2]}</b><i>Подставь ${Tm[k-1][1]} — фраза живая.</i></div>`
+           :T('p',5,'cap','Время показывает, когда действие происходит.')}`;
+    }
+    if(f===3){
+      return `${T('div',0,'kicker','03 · Настоящее')}
+        ${T('h2',1,'','Действие идёт сейчас')}
+        ${T('p',2,'lead','Читает, бежит, светит. Подставь «сейчас»: если фраза живая — это настоящее.')}
+        <div class="row">${T('span',3,'tag','читает')}${T('span',4,'tag','бежит')}${T('span',5,'tag','светит')}</div>
+        <div class="split">${T('span',6,'word','<b>сейчас читает</b><i>живёт</i>')}</div>`;
+    }
+    if(f===4){
+      const k=s.past||0;
+      const G=[['читал','он'],['читала','она'],['читало','оно']];
+      return `${T('div',0,'kicker','04 · Прошедшее: суффикс -л')}
+        ${T('h2',1,'','Он · она · оно — меняется род')}
+        ${T('p',2,'lead','В единственном числе прошедшее держит род.')}
+        <div class="who3">${G.map((x,i)=>BTN(3+i,k===i+1?'chip on':'chip',`<b>${x[0]}</b><i>${x[1]}</i>`,`r608Past(${i+1})`)).join('')}</div>
+        ${T('p',6,'cap','Ищи <span class="ell">-л</span>. Это метка прошедшего.')}`;
+    }
+    if(f===5){
+      return `${T('div',0,'kicker','05 · Во множественном рода нет')}
+        ${T('h2',1,'','Они читали')}
+        ${T('p',2,'lead','Один глагол на всех. Не ищи «читалиа» — такой формы нет.')}
+        <div class="split">${T('span',3,'word','<b>читали</b><i>множественное — рода нет</i>')}</div>
+        ${T('p',4,'cap','Сравни: он читал, она читала, они читали.')}`;
+    }
+    if(f===6){
+      const on=!!s.fut;
+      return `${T('div',0,'kicker','06 · Будущее: простое и сложное')}
+        ${T('h2',1,'','Одно слово или два')}
+        ${T('p',2,'lead','Смысл один: ещё не случилось.')}
+        <div class="split">${T('span',3,'word wide', on?'<b>буду читать</b><i>сложное: два слова</i>':'<b>прочитаю</b><i>простое: одно слово</i>')}</div>
+        ${BTN(4,'cta', on?'Простое: прочитаю':'Сложное: буду читать','r608Fut()')}
+        ${T('p',5,'cap','Оба правильные. Не путай сложное с настоящим.')}`;
+    }
+    if(f===7){
+      const k=s.face||0;
+      const F=[['я читаю','1-е'],['ты читаешь','2-е'],['он читает','3-е']];
+      return `${T('div',0,'kicker','07 · Лицо')}
+        ${T('h2',1,'','Кто действует')}
+        ${T('p',2,'lead','Лицо видно по окончанию.')}
+        <div class="who3">${F.map((x,i)=>BTN(3+i,k===i+1?'chip on':'chip',`<b>${x[0]}</b><i>${x[1]} лицо</i>`,`r608Face(${i+1})`)).join('')}</div>
+        ${T('p',6,'cap','Я, ты, он — три двери. За каждой своё окончание.')}`;
+    }
+    if(f===8){
+      const on=!!s.num;
+      return `${T('div',0,'kicker','08 · Число')}
+        ${T('h2',1,'','Один или много')}
+        ${T('p',2,'lead','Читает — один. Читают — много. Лицо и число живут вместе.')}
+        <div class="split">${T('span',3,'word', on?'<b>читают</b><i>множественное</i>':'<b>читает</b><i>единственное</i>')}</div>
+        ${BTN(4,'cta', on?'Один: читает':'Много: читают','r608Num()')}
+        ${T('p',5,'cap','Форма глагола отвечает сразу на два вопроса: кто и сколько.')}`;
+    }
+    if(f===9){
+      const k=s.inf||0;
+      const I=[['читать','-ть'],['идти','-ти'],['беречь','-чь']];
+      return `${T('div',0,'kicker','09 · Начальная форма')}
+        ${T('h2',1,'','Что делать? Что сделать?')}
+        ${T('p',2,'lead','В ней не видно ни времени, ни лица. Только действие как идея.')}
+        <div class="row">${I.map((x,i)=>BTN(3+i,k===i+1?'chip on':'chip',x[0],`r608Inf(${i+1})`)).join('')}</div>
+        ${k?`<div class="job" data-anim style="--i:7"><b>${I[k-1][0]}</b><i>оканчивается на ${I[k-1][1]}</i></div>`
+           :T('p',6,'cap','-ть, -ти, -чь — три конца одной формы.')}`;
+    }
+    if(f===10){
+      const k=s.mix||0;
+      const M=[['читал','прошедшее: лица нет, есть род'],['читает','настоящее: третье лицо'],['будет читать','будущее сложное']];
+      return `${T('div',0,'kicker','10 · Не путай время и лицо')}
+        ${T('h2',1,'','Разные признаки')}
+        <div class="pkt">${M.map((x,i)=>BTN(2+i,k===i+1?'chip on':'chip',
+          `<b>${x[0]}</b>${k===i+1?`<i>${x[1]}</i>`:''}`,`r608Mix(${i+1})`)).join('')}</div>
+        ${T('p',5,'cap','У прошедшего лица нет. Есть род: он читал, она читала.')}`;
+    }
+    if(f===11){
+      const n=s.par||0;
+      const ST=[['вопрос','что делала? — прошедшее'],['кто','она — женский род'],['сколько','одна — единственное число'],['лицо','у прошедшего лица нет']];
+      return `${T('div',0,'kicker','11 · Разбор «читала»')}
+        ${T('h2',1,'','Четыре ярлыка на одном слове')}
+        <div class="steps">${ST.map((x,i)=>
+          T('div',2+i,'st'+(n===i+1?' on':(n&&i+1!==n?' dim':'')),
+            `<span class="n">${i+1}</span><span class="t">${x[0]}<small>${x[1]}</small></span>`)).join('')}</div>
+        ${BTN(6,'cta', n>=4?'Сначала':'Следующий ярлык','r608Par()')}
+        ${T('p',7,'cap', n?('Ярлык '+n+' из 4.'):'Нажимай — разберём по косточкам.')}`;
+    }
+    if(f===12){
+      const on=!!s.trap;
+      return `${T('div',0,'kicker','12 · Ловушка')}
+        ${T('h2',1,'','«Буду читать» — не настоящее')}
+        ${T('p',2,'lead','Кажется настоящим из-за «читать». Нет: время несёт «буду».')}
+        <div class="split">${T('span',3,'word wide', on?'<b>буду читать</b><i>будущее: два слова, одно время</i>':'<b>читает</b><i>настоящее</i>')}</div>
+        ${BTN(4,'cta', on?'Сравнить с «читает»':'Показать «буду читать»','r608Trap()')}
+        ${T('p',5,'cap','Два слова — одно будущее. Не путай с «читает».')}`;
+    }
+    if(f===13){
+      const n=s.alg||0;
+      const ST=[['1','Задай вопрос','что делает? что делал? что будет делать?'],
+                ['2','По вопросу — время','-л прошедшее; буду+ — будущее'],
+                ['3','По местоимению — лицо и число','я, ты, он; один или много'],
+                ['4','У прошедшего вместо лица — род','он читал, она читала']];
+      return `${T('div',0,'kicker','13 · Алгоритм')}
+        ${T('h2',1,'','Четыре шага — и форма найдена')}
+        <div class="steps">${ST.map((x,i)=>
+          T('div',2+i,'st'+(n===i+1?' on':(n&&i+1!==n?' dim':'')),
+            `<span class="n">${x[0]}</span><span class="t">${x[1]}<small>${x[2]}</small></span>`)).join('')}</div>
+        ${BTN(6,'cta', n>=4?'Сначала':'Следующий шаг','r608Alg()')}
+        ${T('p',7,'cap', n?('Шаг '+n+' из 4.'):'Нажимай: шаги загорятся по одному.')}`;
+    }
+    if(f===14){
+      const k=s.when||0;
+      const W=[['вчера','читал'],['сейчас','читает'],['завтра','прочитает / будет читать']];
+      return `${T('div',0,'kicker','14 · Ещё одна проверка')}
+        ${T('h2',1,'','Вчера, сейчас, завтра')}
+        ${T('p',2,'lead','Подставь — и «когда» станет ясно.')}
+        <div class="tl">${W.map((x,i)=>BTN(3+i,k===i+1?'chip on':'chip',`<b>${x[0]}</b><i>${x[1]}</i>`,`r608When(${i+1})`)).join('')}</div>
+        ${T('p',6,'cap','Если подстановка ломает фразу — время выбрано неверно.')}`;
+    }
+    if(f===15){
+      const i=s.pkt||0;
+      const C=[['-л — прошедшее','читал, читала, читали'],
+               ['Буду + глагол — будущее сложное','буду читать, буду писать'],
+               ['У прошедшего лица нет, есть род','он читал, она читала']];
+      return `${T('div',0,'kicker','15 · В карман')}
+        ${T('h2',1,'','Три фразы, которые стоит унести')}
+        <div class="pkt">${C.map((x,k)=>BTN(2+k,i===k+1?'chip on':'chip',
+          `<b>${x[0]}</b>${i===k+1?`<i>${x[1]}</i>`:''}`,`r608Pkt(${k+1})`)).join('')}</div>
+        ${T('p',5,'cap', i?'Держи эти три. Дальше сам: какое это время?':'Нажми карточку — фраза перевернётся.')}`;
+    }
+    const G=(window.RUGAME&&window.RUGAME[608])||[];
+    const i=(s.gIdx||0)%(G.length||1), it=G[i]||['','',''], got=s.gRes, done=got!=null;
+    return `${T('div',0,'kicker','16 · Тренажёр')}
+      <div class="split">${T('span',1,'word wide',`<b>${it[0]}</b><i>какое это время?</i>`)}</div>
+      ${done ? (got ? window.RUFEED.note('ok','верно',it[2]) : window.RUFEED.note('no','исправить','Правильно: '+it[2]))
+             : `<p class="verdict">Подставь вчера, сейчас или завтра.</p>`}
+      <div class="casebtns">${[['прош','прошедшее','суффикс -л'],['наст','настоящее','идёт сейчас'],['буд','будущее','ещё будет']].map((b,k)=>
+        `<button type="button" data-anim style="--i:${2+k}" class="${done&&it[1]===b[0]?(got?'hit':''):''}" onclick="ru608Game('${b[0]}')"><span class="nm">${b[1]}</span><span class="qs">${b[2]}</span></button>`).join('')}</div>
+      <p class="score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${G.length}</p>
+      <p class="cap">${done?'Нажми любую кнопку — следующий глагол.':'Сначала вопрос, потом время.'}</p>`;
+  }
+  function render(el){
+    css();
+    const s=S();
+    const st=(typeof LV!=='undefined'&&LV.step)||0;
+    const f=Math.min(16, Math.max(1, st+1));
+    el.innerHTML=`<div class="s6 l608" data-frame="${f}">${pred(f, body(s,f))}</div>`;
+  }
+  window.r608Pred=(f,k)=>{ S()['q'+f]=k; chRender(0); };
+  window.r608Act=(i)=>{ S().act=i; chRender(0); };
+  window.r608Tm=(i)=>{ S().tm=i; chRender(0); };
+  window.r608Past=(i)=>{ S().past=i; chRender(0); };
+  window.r608Fut=()=>{ const s=S(); s.fut=s.fut?0:1; chRender(0); };
+  window.r608Face=(i)=>{ S().face=i; chRender(0); };
+  window.r608Num=()=>{ const s=S(); s.num=s.num?0:1; chRender(0); };
+  window.r608Inf=(i)=>{ S().inf=i; chRender(0); };
+  window.r608Mix=(i)=>{ S().mix=i; chRender(0); };
+  window.r608Par=()=>{ const s=S(); s.par=s.par>=4?0:(s.par||0)+1; chRender(0); };
+  window.r608Trap=()=>{ const s=S(); s.trap=s.trap?0:1; chRender(0); };
+  window.r608Alg=()=>{ const s=S(); s.alg=s.alg>=4?0:(s.alg||0)+1; chRender(0); };
+  window.r608When=(i)=>{ S().when=i; chRender(0); };
+  window.r608Pkt=(i)=>{ S().pkt=i; chRender(0); };
+  if(window.WAVE_B){ const prev=window.WAVE_B[608]; window.WAVE_B[608]=function(el){ try{ render(el); }catch(e){ try{ prev(el); }catch(e2){} } }; }
   return {render:render};
 })();

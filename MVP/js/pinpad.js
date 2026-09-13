@@ -33,8 +33,10 @@
     .pp-card::before { content:''; position:absolute; left:20px; right:20px; top:0; height:3px; border-radius:0 0 4px 4px;
       background:linear-gradient(90deg,rgba(255,215,106,0),#ffd76a,rgba(255,215,106,0)); }
     .pp-ava { width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-      font-size:30px; margin:2px auto 10px; border:2px solid rgba(217,164,65,.6); box-shadow:0 0 22px -8px rgba(255,196,90,.8); overflow:hidden; }
+      font-size:30px; margin:2px auto 10px; border:2px solid rgba(217,164,65,.6); box-shadow:0 0 22px -8px rgba(255,196,90,.8); overflow:hidden;
+      background:#0d1a13; }
     .pp-ava > * { width:100% !important; height:100% !important; border:none !important; box-shadow:none !important; }
+    .pp-ava img { width:100%; height:100%; object-fit:cover; object-position:center 18%; display:block; }
     .pp-ttl { text-align:center; font-size:19px; color:#d9a441; line-height:1.25; }
     .pp-sub { text-align:center; font-size:13px; color:#8fa08f; margin-top:4px; line-height:1.5; }
     .pp-slots { display:flex; gap:10px; justify-content:center; margin:16px 0 8px; }

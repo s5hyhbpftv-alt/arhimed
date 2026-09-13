@@ -14,7 +14,7 @@ function tourCount(){ return 8; }
 function fmt(sec){ const m = Math.floor(sec / 60), s = sec % 60; return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s; }
 
 const ROD_KEY = 'arh_rod_v2';
-let ROD = {code: '', pin: '', remember: 1, card: null, limits: {}, notes: [], updated: 0, child: {}, linked: 0};
+let ROD = {code: '', pin: '', remember: 1, card: null, limits: {}, notes: [], updated: 0, child: {}, linked: 0, role: ''};
 let ROD_DATA = null;
 
 function toast(t){
@@ -46,7 +46,7 @@ function rodNormCode(v){
 function rodStateSave(){
   try{
     /* PIN на устройстве не храним: при каждом входе спрашиваем только его */
-    if (ROD.remember) localStorage.setItem(ROD_KEY, JSON.stringify({code: ROD.code, card: ROD.card, remember: 1}));
+    if (ROD.remember) localStorage.setItem(ROD_KEY, JSON.stringify({code: ROD.code, card: ROD.card, remember: 1, role: ROD.role || ''}));
     else localStorage.removeItem(ROD_KEY);
   }catch(e){}
 }
@@ -56,7 +56,7 @@ function rodStateLoad(){
     /* переносим вход из первой версии приложения, чтобы не вводить всё заново */
     if (!s){
       const old = JSON.parse(localStorage.getItem('arh_rod_v1') || 'null');
-      if (old && old.code) s = {code: old.code, card: null, remember: old.remember == null ? 1 : old.remember};
+      if (old && old.code) s = {code: old.code, card: null, remember: old.remember == null ? 1 : old.remember, role: old.role || ''};
     }
     if (s && s.code) ROD = Object.assign(ROD, s);
     ROD.pin = '';
@@ -64,18 +64,52 @@ function rodStateLoad(){
 }
 function rodForgetAccount(){ try{ localStorage.removeItem(ROD_KEY); }catch(e){} }
 function rodErr(msg){ const el = document.getElementById('rodErr'); if (el) el.textContent = msg || ''; }
+function rodAvaFile(kind){ return '../img/ava/' + kind + '.png?v=591'; }
+function rodAvaImg(kind){
+  return `<img src="${rodAvaFile(kind)}" alt="" draggable="false">`;
+}
 function rodAva(c, size){
   c = c || {};
-  const g = c.gender === 'girl' ? '👧' : (c.gender === 'boy' ? '👦' : (c.name ? String(c.name).trim()[0].toUpperCase() : '🧒'));
   const s = size || 56, col = c.color || '#d9a441';
-  return `<span style="display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px;
+  const kind = c.gender === 'girl' ? 'girl' : (c.gender === 'boy' ? 'boy' : '');
+  const inner = kind
+    ? rodAvaImg(kind)
+    : (c.name ? String(c.name).trim()[0].toUpperCase() : '🧒');
+  return `<span class="rod-ava" style="display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px;
     border-radius:50%;font-size:${Math.round(s * 0.46)}px;background:${col}22;border:2px solid ${col};
-    box-shadow:0 0 22px -10px ${col}">${g}</span>`;
+    box-shadow:0 0 22px -10px ${col};overflow:hidden">${inner}</span>`;
 }
 function rodAvaFace(c){
   c = c || {};
-  return c.gender === 'girl' ? '👧' : (c.gender === 'boy' ? '👦' : (c.name ? String(c.name).trim()[0].toUpperCase() : '🧒'));
+  const kind = c.gender === 'girl' ? 'girl' : (c.gender === 'boy' ? 'boy' : '');
+  return kind ? rodAvaImg(kind) : (c.name ? String(c.name).trim()[0].toUpperCase() : '🧒');
 }
+function rodParentAva(){
+  return (ROD.role === 'mom' || ROD.role === 'dad') ? rodAvaImg(ROD.role) : '';
+}
+function rodWhoHtml(){
+  return `<div class="small" style="margin:10px 0 6px;text-align:center">Кто входит в кабинет</div>
+    <div class="rod-who" role="radiogroup" aria-label="Папа или мама">
+      <button type="button" class="rod-who-btn ${ROD.role==='dad'?'sel':''}" data-role="dad" aria-pressed="${ROD.role==='dad'?'true':'false'}" onclick="rodPickRole('dad')">
+        <img src="${rodAvaFile('dad')}" alt="">
+        <span>Папа</span>
+      </button>
+      <button type="button" class="rod-who-btn ${ROD.role==='mom'?'sel':''}" data-role="mom" aria-pressed="${ROD.role==='mom'?'true':'false'}" onclick="rodPickRole('mom')">
+        <img src="${rodAvaFile('mom')}" alt="">
+        <span>Мама</span>
+      </button>
+    </div>`;
+}
+window.rodPickRole = function(role){
+  ROD.role = (role === 'mom' ? 'mom' : 'dad');
+  rodStateSave();
+  document.querySelectorAll('.rod-who-btn, .rod-who-mini').forEach(b => {
+    const on = b.getAttribute('data-role') === ROD.role;
+    b.classList.toggle('sel', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  rodErr('');
+};
 function rodChildLine(){
   const c = ROD.card || ROD.child || {};
   return `${esc(c.name || 'Ученик')}${c.klass ? ' · ' + esc(c.klass) + ' класс' : ''}`;
@@ -94,6 +128,7 @@ function rodScreenLogin(){
       <h2 style="margin:6px 0">Кабинет родителя</h2>
       <div class="small" style="margin-bottom:12px">Код ребёнка написан в детском приложении —
         карточка «Твой код для родителя». Дальше попросим ваш PIN из 4 цифр.</div></div>
+    ${rodWhoHtml()}
     <label class="small" for="rodCode">Код ребёнка</label>
     <input class="gate-in code" id="rodCode" value="${esc(ROD.code || '')}" placeholder="ARH-XXXX-XX"
       autocomplete="off" spellcheck="false" autocapitalize="characters" inputmode="text" maxlength="12">
@@ -123,6 +158,7 @@ function rodReadCode(){
 function rodByCode(){
   const code = rodReadCode();
   rodErr('');
+  if (ROD.role !== 'dad' && ROD.role !== 'mom'){ rodErr('Отметьте, кто вы — папа или мама.'); return; }
   if (!/^ARH-[A-Z0-9]{4}-[A-Z0-9]{2}$/.test(code)){ rodErr('Код выглядит так: ARH-4K7Q-2M'); return; }
   const btn = document.getElementById('rodGo');
   if (btn){ btn.disabled = true; btn.textContent = 'Проверяем…'; }
@@ -144,6 +180,7 @@ function rodByCode(){
 /* первый раз: родитель придумывает свой PIN (дважды) */
 function rodCreatePin(){
   PinPad.set({
+    avatar: rodParentAva(),
     title: 'Придумайте свой PIN',
     subtitle: 'Четыре цифры — их будет спрашивать кабинет родителя',
     foot: 'PIN знаете только вы · нажмите «Ввод»',
@@ -162,10 +199,11 @@ function rodCreatePin(){
 
 /* обычный вход: только PIN */
 function rodEnterPin(){
+  if (ROD.role !== 'dad' && ROD.role !== 'mom'){ rodScreenLogin(); return; }
   const c = ROD.card || {};
   const known = !!(c.name || c.klass);
   PinPad.ask({
-    avatar: known ? rodAvaFace(c) : '🔐',
+    avatar: rodParentAva(),
     title: known ? rodChildLine() : 'PIN родителя',
     subtitle: known ? 'Ваш PIN — четыре цифры, затем «Ввод»'
                     : 'Код ' + esc(ROD.code) + ' · PIN, который задали при привязке',
@@ -258,6 +296,10 @@ function rodTop(){
           <div class="small" style="font-size:11px;letter-spacing:.18em;text-transform:uppercase">ученик</div>
           <div style="font-size:19px;color:var(--brass)">${rodChildLine()}</div>
           <div class="small">Обновлено: ${rodDate(ROD.updated)} · лимит: <b>${lim ? lim + ' мин/день' : 'не задан'}</b></div>
+          <div class="small" style="margin-top:6px">В кабинет вхожу как
+            <button type="button" class="rod-who-mini ${ROD.role==='dad'?'sel':''}" data-role="dad" onclick="rodPickRole('dad')">Папа</button>
+            <button type="button" class="rod-who-mini ${ROD.role==='mom'?'sel':''}" data-role="mom" onclick="rodPickRole('mom')">Мама</button>
+          </div>
           ${rodStale()}
         </div>
         <div class="small" style="min-width:150px">Код: <b style="color:var(--brass)">${esc(ROD.code)}</b><br>
@@ -351,7 +393,7 @@ window.rodDeleteAccount = function(){
       rodPost({act: 'delparent', code: ROD.code, pin: ROD.pin}).then(r => {
         if (r && r.ok){
           rodForgetAccount();
-          ROD = {code: '', pin: '', remember: 1, card: null, limits: {}, notes: [], updated: 0, child: {}, linked: 0};
+          ROD = {code: '', pin: '', remember: 1, card: null, limits: {}, notes: [], updated: 0, child: {}, linked: 0, role: ''};
           rodEmpty();
           document.getElementById('screen').innerHTML = '';
           rodScreenLogin();
@@ -383,9 +425,9 @@ window.resetAll = function(){ toast('Сброс прогресса делает 
 /* ---------- старт ---------- */
 window.addEventListener('DOMContentLoaded', function(){
   rodStateLoad();
-  if (ROD.code && ROD.card){
-    rodEnterPin();                  /* приветствие: аватар, имя, класс и только PIN */
-  } else if (ROD.code){
+  if (ROD.code && (ROD.role === 'dad' || ROD.role === 'mom') && ROD.card){
+    rodEnterPin();                  /* приветствие: аватар папы/мамы, имя ребёнка и только PIN */
+  } else if (ROD.code && (ROD.role === 'dad' || ROD.role === 'mom')){
     /* код помним, а имя ребёнка ещё не видели — подтянем после ввода PIN */
     rodPost({act: 'probe', code: ROD.code}).then(r => {
       if (r && r.ok) rodEnterPin();

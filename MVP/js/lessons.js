@@ -99,11 +99,11 @@ function lessonsWithDivider(items){
   return out;
 }
 function bookIcoHTML(subj, meta, big){
-  /* значок предмета; у «Пути Мишутки» вместо эмодзи — картинка медвежонка:
-     в шапке раздела — в полный рост, в тесных местах (таб, строка урока, секция) — только голова */
+  /* значок предмета; у «Пути Мишутки» вместо эмодзи — Мишутка в худи во весь рост
+     (и в шапке раздела, и в тесных местах: таб, строка, секция) */
   if(subj==='mish') return big
     ? `<img class="subj-img lg" src="img/mishutka-path.png" alt="">`
-    : `<img class="subj-img" src="img/mishutka-path-head.png" alt="">`;
+    : `<img class="subj-img" src="img/mishutka-path-head.png?v=591" alt="">`;
   return meta.ico;
 }
 function renderBookList(){
