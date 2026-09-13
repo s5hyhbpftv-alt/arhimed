@@ -4471,11 +4471,6 @@ window.RU615PAPER = (function(){
   #lvis .pp .mark .d{stroke-dasharray:34;stroke-dashoffset:34;animation:ppDraw 360ms cubic-bezier(.2,1,.32,1) 120ms both}
   #lvis .pp .mark p{margin:0;font-size:clamp(14.5px,4vw,16px);line-height:1.5}
   #lvis .pp .mark.ok p{color:${OKC}}#lvis .pp .mark.no p{color:${NOC}}
-  #lvis .pp .nav{display:flex;gap:10px;flex-wrap:wrap;position:static;left:auto;right:auto;top:auto;bottom:auto;
-    width:auto;max-width:100%;padding:0;margin:0;background:none;border:none;box-shadow:none;transform:none}
-  #lvis .pp .nav button{flex:1 1 45%;min-width:120px;padding:12px 12px;white-space:nowrap;border-radius:10px;border:1px solid ${RULE};background:${PAPER2};
-    font-family:${F};font-size:clamp(15px,4vw,16px);color:${INK};cursor:pointer}
-  #lvis .pp .nav button:active{transform:translateY(1px)}
   @keyframes ppIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   @keyframes ppDraw{to{stroke-dashoffset:0}}
   @media (prefers-reduced-motion: reduce){#lvis .pp *{animation:none!important;transition:none!important}}
@@ -4505,10 +4500,7 @@ window.RU615PAPER = (function(){
             :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
           <p>${ok?'Верно. ':'Правильно «'+it.ans+'». '}${it.why}</p></div>`
         : `<div class="q" style="color:${MUT}">Задача из демонстрационного варианта олимпиады школы № 1517.</div>`}
-      <div class="nav">
-        ${step>0?`<button type="button" onclick="mkStep(-1)">← Назад</button>`:''}
-        ${step<Q.length-1?`<button type="button" onclick="mkStep(1)">Дальше →</button>`:''}
-      </div></div>`;
+    </div>`;   /* свою строку «Назад / Дальше» лист не рисует: эти кнопки даёт приложение, иначе они дублируются */
   }
   if(window.WAVE_B) window.WAVE_B[615]=function(el){
     try{ render(el); }catch(e){ try{ window.RU615.render(el); }catch(e2){ el.innerHTML=''; } }
@@ -5476,4 +5468,122 @@ window.RULESSON=function(cfg){
       <div class="row">${['класс','суббота','аллея','хоккей'].map(w=>chip(w,GOLD)).join('')}</div>
       <p class="cap">Это словарные слова: их запоминают по словарю.</p>`
   ]});
+})();
+
+/* ================= БУМАЖНЫЙ ЛИСТ: общий движок для листов Мишутки =================
+   Урок 615 «Путь Мишутки» показал формат, который читается лучше тёмной панели:
+   страница задания — кремовая тетрадная бумага в клетку, розовое поле, рамка
+   вокруг рисунка, условие, варианты списком, анимированная пометка проверки.
+   Теперь таких листов четыре: 615 (демовариант школы № 1517) и три варианта по
+   спецификации МЦКО «Функциональная грамотность, 6 класс» (deploy/mcko/):
+   616 — математическая грамотность, 617 — читательская, 618 — естественнонаучная.
+   Движок один, содержание у каждого листа своё.
+
+   Важно: своей строки «Назад / Дальше» лист больше не рисует. У 615 она была, и
+   на экране оказывались две одинаковые пары кнопок — своя и от приложения.
+   Навигацию даёт приложение, лист за неё не отвечает. */
+window.RUPAPER = (function(){
+  const F="Georgia,'Times New Roman',serif";
+  const INK='#2a2118', MUT='#6b5b45', RULE='#d8c9a8', PAPER2='#fffdf7', OKC='#2f6b46', NOC='#9c2f22';
+  const CSS=`
+  #lvis .pp{box-sizing:border-box;width:100%;max-width:520px;margin:0 auto;font-family:${F};color:${INK};
+    background-color:#fdf6e0;
+    background-image:
+      linear-gradient(rgba(96,128,168,.22) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(96,128,168,.22) 1px, transparent 1px),
+      linear-gradient(180deg,#fffaea,#fbf1d6);
+    background-size:20px 20px, 20px 20px, 100% 100%;
+    border:1px solid ${RULE};border-radius:14px;
+    padding:clamp(14px,4vw,22px) clamp(14px,4vw,24px) clamp(16px,4.4vw,24px);
+    box-shadow:0 10px 26px rgba(26,20,12,.28),inset 0 1px 0 rgba(255,255,255,.7);
+    display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+  #lvis .pp::after{content:'';position:absolute;top:0;bottom:0;left:38px;width:1px;pointer-events:none;
+    background:linear-gradient(180deg,rgba(200,90,100,0),rgba(200,90,100,.5) 8%,rgba(200,90,100,.5) 92%,rgba(200,90,100,0))}
+  #lvis .pp .head{position:static;width:auto;display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    border-bottom:1px solid ${RULE};padding-bottom:8px}
+  #lvis .pp .num{font-size:clamp(12px,3.4vw,14px);letter-spacing:.1em;text-transform:uppercase;color:${MUT}}
+  #lvis .pp .of{font-size:clamp(12px,3.4vw,14px);color:${MUT};font-variant-numeric:tabular-nums}
+  #lvis .pp h2{font-size:clamp(19px,5.4vw,23px);line-height:1.18;font-weight:600;margin:0;color:${INK};letter-spacing:-.01em}
+  #lvis .pp .fig{border:1px solid ${RULE};border-radius:10px;background:rgba(255,253,247,.92);padding:10px 8px}
+  #lvis .pp .fig svg *{stroke-linecap:round}
+  #lvis .pp .q{font-size:clamp(15.5px,4.3vw,17px);line-height:1.55;color:${INK}}
+  #lvis .pp .opts{display:flex;flex-direction:column;gap:10px}
+  #lvis .pp .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+    padding:clamp(11px,3.2vw,14px) clamp(12px,3.4vw,16px);border-radius:10px;border:1px solid ${RULE};
+    background:${PAPER2};font-family:${F};font-size:clamp(15px,4.2vw,17px);color:${INK};box-sizing:border-box;
+    transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 140ms,background 140ms}
+  #lvis .pp .opt:hover{border-color:#b9a67f}
+  #lvis .pp .opt:active{transform:translateY(1px)}
+  #lvis .pp .opt:focus-visible{outline:3px solid ${INK};outline-offset:3px}
+  #lvis .pp .opt .k{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid ${RULE};
+    display:flex;align-items:center;justify-content:center;font-size:14px;color:${MUT}}
+  #lvis .pp .opt.good{border-color:${OKC};background:#eef6ef}
+  #lvis .pp .opt.good .k{border-color:${OKC};color:${OKC}}
+  #lvis .pp .opt.bad{border-color:${NOC};background:#fbeeec}
+  #lvis .pp .opt.bad .k{border-color:${NOC};color:${NOC}}
+  #lvis .pp .mark{display:flex;gap:10px;align-items:flex-start;border-top:1px solid ${RULE};padding-top:10px;
+    animation:ppIn 260ms cubic-bezier(.23,1,.32,1) both}
+  #lvis .pp .mark svg{flex:none;width:26px;height:26px}
+  #lvis .pp .mark .d{stroke-dasharray:34;stroke-dashoffset:34;animation:ppDraw 360ms cubic-bezier(.2,1,.32,1) 120ms both}
+  #lvis .pp .mark p{margin:0;font-size:clamp(14.5px,4vw,16px);line-height:1.5}
+  #lvis .pp .mark.ok p{color:${OKC}}#lvis .pp .mark.no p{color:${NOC}}
+  @keyframes ppIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @keyframes ppDraw{to{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion: reduce){#lvis .pp *{animation:none!important;transition:none!important}}
+  `;
+  function css(){ try{ let e=document.getElementById('pp-style'); if(!e){ e=document.createElement('style'); e.id='pp-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  function state(id){
+    const lk=(typeof lidKey==='function')?lidKey(id):String(id);
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    if(!CHS[lk].ans) CHS[lk].ans={};
+    return CHS[lk];
+  }
+  function render(el,cfg){
+    css();
+    try{ document.body.classList.add('paper-mode'); }catch(e){}
+    const st=state(cfg.id);
+    const Q=cfg.data;
+    const step=Math.max(0,Math.min(Q.length-1,((typeof LV!=='undefined'&&LV.step)||0)));
+    const it=Q[step], picked=st.ans[step], done=picked!=null, ok=picked===it.ans;
+    const artHtml=String(cfg.art[it.k]());
+    el.innerHTML=`<div class="pp">
+      <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div>
+        <div class="of" style="display:flex;align-items:center;gap:8px">
+          <img src="img/mishutka.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">${cfg.brand||'Путь Мишутки'}</div></div>
+      <h2>${it.t}</h2>
+      <div class="fig">${artHtml}</div>
+      <div class="q">${it.q}</div>
+      <div class="opts">${it.opts.map((o,i)=>`<button type="button" class="opt ${done?(o===it.ans?'good':(o===picked?'bad':'')):''}" onclick="ruPaperPick(${cfg.id},${step},'${String(o).replace(/'/g,"\\'")}')">
+        <span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div>
+      ${done ? `<div class="mark ${ok?'ok':'no'}">
+          <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
+            :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
+          <p>${ok?'Верно. ':'Правильно «'+it.ans+'». '}${it.why}</p></div>`
+        : `<div class="q" style="color:${MUT}">${cfg.source||''}</div>`}
+    </div>`;
+  }
+  window.ruPaperPick=function(id,step,opt){
+    const st=state(id);
+    if(st.ans[step]!=null) return;
+    st.ans[step]=opt;
+    if(typeof chRender==='function') chRender(0);
+  };
+  /* cfg: {id, title, ico, src, brand, source, data, art, check, tasks} */
+  function mount(cfg){
+    window.WAVE_B[cfg.id]=function(el){
+      try{ render(el,cfg); }catch(e){ el.innerHTML=''; }
+      /* персонаж приложения пересоздаётся после отрисовки — гасим его, пока открыт лист */
+      try{
+        const kill=()=>document.querySelectorAll('.avatar,.mascot,.assistant').forEach(a=>{ a.style.display='none'; });
+        kill();
+        if(!window.__ppWatch) window.__ppWatch=setInterval(()=>{ if(document.querySelector('#lvis .pp')) kill(); },200);
+      }catch(e){}
+    };
+    if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===cfg.id)){
+      window.ARH_LESSONS.push({id:cfg.id,title:cfg.title,ico:cfg.ico,src:cfg.src,subj:'rus',
+        explain:cfg.data.map((x,i)=>(i+1)+'. '+x.t),check:cfg.check,tasks:cfg.tasks,img:'img/mishutka.png'});
+    }
+  }
+  return {mount:mount,css:css};
 })();
