@@ -3856,14 +3856,20 @@ window._waveCss = function(id, css){
     src: 'Математика · 8 класс · Олимп-8: метод площадей', subj: 'math',
     explain: [
       'Загадка: у треугольника основание 10, площадь 30. Высоту линейкой не достать — как её найти? Секрет не в сторонах, а в площади. Сейчас научимся считать фигуру «двумя руками».',
-      'Возьми два одинаковых треугольника. Приложи их основаниями — получится параллелограмм, а если опустить высоту — прямоугольник. Треугольник занимает ровно половину. Поэтому в формуле появляется ½.',
-      'Формула простая: S = ½ · основание · высота. Основание — любая сторона, высота — перпендикуляр к ней из противоположной вершины. Подвигай ползунки: площадь растёт вместе с основанием и высотой.',
-      'В прямоугольном треугольнике катеты уже стоят друг к другу под прямым углом. Значит, один катет — основание, второй — высота. Не надо ничего опускать: S = ½ · 3 · 4 = 6.',
-      'Главный приём олимпиад: посчитай ОДНУ площадь двумя способами и приравняй. Получится уравнение — и неизвестная длина сама вылезет. Нажми кнопку: те же 30, но через другую сторону.',
-      'Из каждой вершины можно опустить свою высоту. Площадь одна, поэтому ½·a·hₐ = ½·b·h_b, то есть a·hₐ = b·h_b. Кликни A, B или C: высота дорисуется до основания, числа сойдутся.',
-      'Если у двух треугольников одинаковое основание, площади относятся как высоты. Почему? В формуле ½ и a одни и те же, остаётся только h. Подвигай вторую вершину вверх — отношение S₁:S₂ повторит h₁:h₂.',
-      'Ещё сильнее: если треугольники с общей вершиной стоят на одной прямой, площади относятся как основания. Двигай точку M по стороне: S слева / S справа = BM / MC. На середине — медианы режут площадь пополам.',
+      'Возьми два одинаковых треугольника. Приложи их основаниями — получится параллелограмм. Один занимает ровно половину. Поэтому в формуле появляется ½. Смотри, как жёлтый переворачивается.',
+      'Формула: S = ½ · основание · высота. Основание — любая сторона, высота — перпендикуляр к ней. Подвигай ползунки: площадь растёт вместе с основанием и высотой.',
+      'В прямоугольном треугольнике катеты уже стоят буквой Г. Один катет — основание, второй — высота. Ничего опускать не нужно: S = ½ · 3 · 4 = 6.',
+      'Главный приём: посчитай ОДНУ площадь двумя способами и приравняй. Получится уравнение — неизвестная длина сама вылезет. Нажми кнопку: те же 30, но через другую сторону.',
+      'Из каждой вершины можно опустить свою высоту. Площадь одна, поэтому a·hₐ = b·h_b = c·h_c. Кликни A, B или C: высота дорисуется до основания, числа сойдутся.',
+      'Если у двух треугольников одинаковое основание, площади относятся как высоты. В формуле ½ и a одни и те же, остаётся только h. Подними правую вершину — отношение повторит высоты.',
+      'Если треугольники с общей вершиной стоят на одной прямой, площади относятся как основания. Двигай точку M: S слева / S справа = BM / MC. На середине медианы режут площадь пополам.',
+      'Вернёмся к загадке. S = ½ · a · h, значит h = 2S / a. Подставь: 2·30 / 10 = 6. Высоту не мерили — её вычислили. Нажми «Показать»: жёлтый перпендикуляр вырастает до 6.',
+      'Ещё формула: S = ½ · a · b · sin C. Две стороны и угол между ними. Подвинь угол: при 90° sin = 1, формула превращается в «половину произведения катетов».',
+      'Параллелограмм — это два треугольника. Его площадь a · h, без половины. Разрежь по диагонали — каждый треугольник снова ½ · a · h. Одна и та же высота работает на обе фигуры.',
+      'Трапеция: две параллельные стороны a и b, высота h. Разрежь на два треугольника или дострой до параллелограмма: S = ½ · (a + b) · h. Ползунок меняет верхнее основание.',
+      'Полоска одной высоты. Если несколько треугольников стоят на одной прямой и имеют общую вершину, их площади относятся как основания — как куски одного пирога. Это частый олимпиадный ход.',
       'Рецепт в карман. 1) Найди площадь удобным способом. 2) Найди её же иначе. 3) Приравняй — получишь уравнение. 4) Реши. Площадь — мост между сторонами, высотами и отрезками.',
+      'Три фразы с собой: треугольник — половина прямоугольника. Одна фигура — два счёта. Одинаковое основание — площади как высоты. Дальше короткий вопрос.',
       'Проверь себя. Основание 10, высота 6. Вспомни половину. Если забыл — вернись к ползункам: там формула живая.'
     ],
     check: { q: 'Площадь треугольника с основанием 10 и высотой 6?', choices: ['30', '60', '15', '16'], ans: 0,
@@ -3877,6 +3883,7 @@ window._waveCss = function(id, css){
     ]
   };
 
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', PINK='#ff8ac0', MUTED='#8fa08f';
   const CSS = `<style>
     @keyframes l425ink{to{stroke-dashoffset:0}}
     @keyframes l425pulse{0%,100%{opacity:.45}50%{opacity:1}}
@@ -3885,6 +3892,8 @@ window._waveCss = function(id, css){
     @keyframes l425grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
     @keyframes l425glow{0%,100%{filter:drop-shadow(0 0 1px #ffd76a)}50%{filter:drop-shadow(0 0 7px #ffd76a)}}
     @keyframes l425fill{from{fill-opacity:0}to{fill-opacity:1}}
+    @keyframes l425slide{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+    @keyframes l425rise{from{transform:scaleY(0);opacity:.2}to{transform:scaleY(1);opacity:1}}
     .l425-ink{animation:l425ink 1.45s cubic-bezier(.2,.75,.15,1) forwards}
     .l425-pulse{animation:l425pulse 1.8s ease-in-out infinite}
     .l425-dotc{transform-box:fill-box;transform-origin:center;animation:l425pop .4s cubic-bezier(.2,1.4,.4,1) both}
@@ -3893,14 +3902,17 @@ window._waveCss = function(id, css){
     .l425-glow{animation:l425glow 1.8s ease-in-out infinite}
     .l425-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
     .l425-fill{animation:l425fill .7s .35s both}
+    .l425-slide{animation:l425slide .5s ease both}
+    .l425-rise{transform-origin:center bottom;animation:l425rise .85s cubic-bezier(.2,.8,.2,1) both}
   </style>`;
 
   function ink(len,dur,delay){
-    const L=Math.ceil((len||1)+16);
+    const L=Math.ceil((len||1)+18);
     return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l425-ink" style="animation-duration:${dur||1.35}s;animation-delay:${delay||0}s"`;
   }
   function lab(x,y,t,col,anchor){
-    return `<text class="l425-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="12" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+    const xx=Math.max(14, Math.min(226, +x)), yy=Math.max(14, Math.min(196, +y));
+    return `<text class="l425-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="12" fill="${col}" font-family="Georgia,serif">${t}</text>`;
   }
   function dist(A,B){ return Math.hypot(B[0]-A[0], B[1]-A[1]); }
   function foot(P,A,B){
@@ -3919,29 +3931,35 @@ window._waveCss = function(id, css){
   }
   function frame(inner, vb){
     const box=vb||'0 0 220 200';
+    try{ window._waveCss && _waveCss('css-l425', CSS); }catch(e){}
     return `${CSS}<svg viewBox="${box}" style="width:min(100%,270px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">
       <defs>
         <linearGradient id="l425g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7fd1ff33"/><stop offset="100%" stop-color="#ffd76a22"/></linearGradient>
-      </defs>
-      ${inner}
-    </svg>`;
+      </defs>${inner}</svg>`;
   }
   function note(title, text){
     return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
-      <div style="color:#ffd76a;font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
       <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div>
     </div>`;
   }
   function vtx(pt,name,col,on,delay,pop){
-    const ly = pt[1]<70 ? pt[1]-12 : pt[1]+18;
+    const ly = pt[1]<70 ? pt[1]-14 : pt[1]+18;
     return `<g style="cursor:pointer" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sel='${name}';chRender(0);}catch(e){}">
-      ${on?`<circle cx="${pt[0]}" cy="${pt[1]}" r="11" fill="${col}33"><animate attributeName="r" values="8;13;8" dur="1.5s" repeatCount="indefinite"/></circle>`:''}
+      ${on?`<circle class="l425-pulse" cx="${pt[0]}" cy="${pt[1]}" r="12" fill="${col}33"/>`:''}
       <circle ${pop?'class="l425-dotc"':''} style="animation-delay:${delay||0}s" cx="${pt[0]}" cy="${pt[1]}" r="${on?6.5:5}" fill="${on?col:'#1a2e24'}" stroke="${col}" stroke-width="2"/>
       ${lab(pt[0], ly, name, col)}
     </g>`;
   }
+  function slider(label, min, max, val, key, col){
+    return `<label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">${label}
+      <input type="range" min="${min}" max="${max}" value="${val}" style="flex:1"
+        oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].${key}=+this.value;chRender(0);}catch(e){}">
+      <b style="color:${col};min-width:22px">${val}</b>
+    </label>`;
+  }
 
-  const A0=[110,28], B0=[28,148], C0=[192,148];
+  const A0=[110,32], B0=[28,148], C0=[192,148];
 
   function visD425(el){
     try{ window._waveCss('css-l425', CSS); }catch(e){}
@@ -3957,6 +3975,8 @@ window._waveCss = function(id, css){
     const tM = Math.max(0.08, Math.min(0.92, st.t==null?0.35:+st.t));
     const sel = st.sel||'A';
     const S = 0.5*aN*hN;
+    const ang = Math.max(20, Math.min(160, +(st.ang==null?90:st.ang)));
+    const topB = Math.max(4, Math.min(14, +(st.top==null?8:st.top)));
     let h='';
 
     if(step===0){
@@ -3965,15 +3985,14 @@ window._waveCss = function(id, css){
       h=`<div class="wv-col">
         ${frame(
           (doDraw
-            ? `<polygon points="${tri}" fill="url(#l425g)" stroke="#7fd1ff" stroke-width="2.4" ${ink(polyLen([A0,B0,C0]),1.4,0)}/>`
-            : `<polygon points="${tri}" fill="url(#l425g)" stroke="#7fd1ff" stroke-width="2.4"/>`)+
-          `<line x1="${A0[0]}" y1="${A0[1]}" x2="${H[0]}" y2="${H[1]}" stroke="#ffd76a" stroke-width="2.2" class="l425-glow" ${doDraw?ink(dist(A0,H)+8,1,.35):''}/>`+
-          sqMark(H,A0,'#ffd76a')+
-          lab(110,178,'a = 10','#8fd1a8')+
-          lab(128,92,'h = ?','#ffd76a')+
-          `<g class="l425-dotc"><rect x="6" y="6" width="64" height="20" rx="8" fill="#13251c" stroke="#ffd76a"/>
-           ${lab(38,21,'S = 30','#ffd76a')}</g>`+
-          vtx(A0,'A','#ffd76a',false,0,doDraw)+vtx(B0,'B','#7fd1ff',false,.1,doDraw)+vtx(C0,'C','#8fd1a8',false,.2,doDraw)
+            ? `<polygon points="${tri}" fill="url(#l425g)" stroke="${BLUE}" stroke-width="2.4" ${ink(polyLen([A0,B0,C0]),1.4,0)}/>`
+            : `<polygon points="${tri}" fill="url(#l425g)" stroke="${BLUE}" stroke-width="2.4"/>`)+
+          `<line x1="${A0[0]}" y1="${A0[1]}" x2="${H[0]}" y2="${H[1]}" stroke="${GOLD}" stroke-width="2.2" stroke-dasharray="5 4" class="l425-pulse"/>`+
+          lab(110,176,'a = 10',GREEN)+
+          lab(132,96,'h = ?',GOLD)+
+          `<g class="l425-slide"><rect x="8" y="8" width="70" height="22" rx="8" fill="#13251c" stroke="${GOLD}"/>
+           ${lab(43,24,'S = 30',GOLD)}</g>`+
+          vtx(A0,'A',GOLD,false,0,doDraw)+vtx(B0,'B',BLUE,false,.1,doDraw)+vtx(C0,'C',GREEN,false,.2,doDraw)
         )}
         ${note('Загадка','Линейкой высоту не достать. Зато известны площадь и основание. Если площадь — половина «основание × высота», то высоту можно вычислить, а не мерить.')}
       </div>`;
@@ -3981,11 +4000,11 @@ window._waveCss = function(id, css){
       const top=`${A0[0]},${A0[1]} ${B0[0]},${B0[1]} ${C0[0]},${C0[1]}`;
       h=`<div class="wv-col">
         ${frame(
-          `<polygon points="${top}" fill="rgba(127,209,255,.22)" stroke="#7fd1ff" stroke-width="2.3" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
-          `<g class="l425-flip"><polygon points="${top}" fill="rgba(255,215,106,.22)" stroke="#ffd76a" stroke-width="2.3"/></g>`+
-          lab(110,168,'основание a','#8fd1a8')
+          `<polygon points="${top}" fill="rgba(127,209,255,.22)" stroke="${BLUE}" stroke-width="2.3" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
+          `<g class="l425-flip"><polygon points="${top}" fill="rgba(255,215,106,.22)" stroke="${GOLD}" stroke-width="2.3"/></g>`+
+          lab(110,176,'основание a',GREEN)
         , '0 0 220 280')}
-        ${note('Почему появляется ½?','Жёлтый треугольник переворачивается вокруг основания. Два одинаковых треугольника складываются в параллелограмм. Один занимает ровно половину — поэтому в формуле стоит ½.')}
+        ${note('Почему появляется ½?','Жёлтый треугольник переворачивается вокруг основания. Два одинаковых складываются в параллелограмм. Один занимает ровно половину — поэтому в формуле стоит ½.')}
       </div>`;
     } else if(step===2){
       const base=80+aN*6;
@@ -3996,47 +4015,37 @@ window._waveCss = function(id, css){
       h=`<div class="wv-col">
         ${frame(
           `<polygon points="${rect}" fill="rgba(143,209,168,.08)" stroke="#3d5c49" stroke-width="1.2" stroke-dasharray="4 3"/>`+
-          `<polygon class="l425-fill" points="${tri}" fill="rgba(127,209,255,.28)" stroke="#7fd1ff" stroke-width="2.4"/>`+
-          `<line class="l425-grow" x1="110" y1="${Ay}" x2="110" y2="${By}" stroke="#ffd76a" stroke-width="2.2"/>`+
-          sqMark([110,By],[110,Ay],'#ffd76a')+
-          lab(110,186,'a = '+aN,'#8fd1a8')+
-          lab(124,(Ay+By)/2,'h = '+hN,'#ffd76a','start')+
-          lab(110,Ay-12,'S = '+(S%1?S.toFixed(1):S),'#ffd76a')
-        , '0 0 220 200')}
+          `<polygon class="l425-fill" points="${tri}" fill="rgba(127,209,255,.28)" stroke="${BLUE}" stroke-width="2.4"/>`+
+          `<line class="l425-grow" x1="110" y1="${Ay}" x2="110" y2="${By}" stroke="${GOLD}" stroke-width="2.2"/>`+
+          sqMark([110,By],[110,Ay],GOLD)+
+          lab(110,188,'a = '+aN,GREEN)+
+          lab(124,(Ay+By)/2,'h = '+hN,GOLD,'start')+
+          lab(110,Ay-12,'S = '+(S%1?S.toFixed(1):S),GOLD)
+        , '0 0 220 204')}
         <div class="wv-ans" style="font-size:16px">S = ½ · ${aN} · ${hN} = ${S%1?S.toFixed(1):S}</div>
-        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,300px)">
-          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">основание a
-            <input type="range" min="6" max="16" value="${aN}" style="flex:1"
-              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].a=+this.value;chRender(0);}catch(e){}">
-            <b style="color:#8fd1a8;min-width:18px">${aN}</b>
-          </label>
-          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">высота h
-            <input type="range" min="4" max="12" value="${hN}" style="flex:1"
-              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].h=+this.value;chRender(0);}catch(e){}">
-            <b style="color:#ffd76a;min-width:18px">${hN}</b>
-          </label>
-        </div>
-        ${note('Простыми словами','Пунктирный прямоугольник — это основание × высота. Треугольник занимает его половину. Поэтому в формуле всегда стоит ½. Подвигай ползунки и смотри, как растёт S.')}
+        ${slider('основание a',6,16,aN,'a',GREEN)}
+        ${slider('высота h',4,12,hN,'h',GOLD)}
+        ${note('Простыми словами','Пунктирный прямоугольник — это основание × высота. Треугольник занимает его половину. Подвигай ползунки и смотри, как растёт S.')}
       </div>`;
     } else if(step===3){
       const B=[36,158], C=[176,158], A=[36,38];
-      const legs = st.leg==='ac';
+      const legs = st.leg!=='ac';
       const tri=`${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]}`;
       h=`<div class="wv-col">
         ${frame(
-          `<polygon points="${tri}" fill="rgba(143,209,168,.18)" stroke="#8fd1a8" stroke-width="2.5" ${doDraw?ink(polyLen([A,B,C]),1.3,0):''}/>`+
-          `<rect x="36" y="146" width="12" height="12" fill="none" stroke="#ffd76a" stroke-width="1.8"/>`+
+          `<polygon points="${tri}" fill="rgba(143,209,168,.18)" stroke="${GREEN}" stroke-width="2.5" ${doDraw?ink(polyLen([A,B,C]),1.3,0):''}/>`+
+          `<rect x="36" y="146" width="12" height="12" fill="none" stroke="${GOLD}" stroke-width="1.8"/>`+
           (legs
-            ? `<line x1="${A[0]}" y1="${A[1]}" x2="${C[0]}" y2="${C[1]}" stroke="#ffd76a" stroke-width="3" class="l425-glow"/>`+
-              lab(18,100,'катет 4','#7fd1ff')+lab(110,184,'гипотенуза','#ffd76a')
-            : `<line x1="${B[0]}" y1="${B[1]}" x2="${C[0]}" y2="${C[1]}" stroke="#ffd76a" stroke-width="3.2" class="l425-glow"/>`+
-              `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="#7fd1ff" stroke-width="3.2" class="l425-glow"/>`+
-              lab(18,100,'катет 4','#7fd1ff')+lab(110,184,'катет 3','#ffd76a'))+
-          vtx(A,'A','#ffd76a',false,0,doDraw)+vtx(B,'B','#7fd1ff',false,.1,doDraw)+vtx(C,'C','#8fd1a8',false,.2,doDraw)
+            ? `<line x1="${B[0]}" y1="${B[1]}" x2="${C[0]}" y2="${C[1]}" stroke="${GOLD}" stroke-width="3.2" class="l425-glow"/>`+
+              `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="${BLUE}" stroke-width="3.2" class="l425-glow"/>`+
+              lab(18,100,'катет 4',BLUE)+lab(110,184,'катет 3',GOLD)
+            : `<line x1="${A[0]}" y1="${A[1]}" x2="${C[0]}" y2="${C[1]}" stroke="${GOLD}" stroke-width="3" class="l425-glow"/>`+
+              lab(18,100,'катет 4',BLUE)+lab(110,184,'гипотенуза',GOLD))+
+          vtx(A,'A',GOLD,false,0,doDraw)+vtx(B,'B',BLUE,false,.1,doDraw)+vtx(C,'C',GREEN,false,.2,doDraw)
         )}
-        <button type="button" class="btn" style="margin-top:4px" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].leg=CHS[k].leg==='ac'?'ab':'ac';chRender(0);}catch(e){}">${legs?'Катеты как основание и высота':'Гипотенуза как основание'}</button>
+        <button type="button" class="btn" style="margin-top:4px" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].leg=CHS[k].leg==='ac'?'ab':'ac';chRender(0);}catch(e){}">${legs?'Гипотенуза как основание':'Катеты как основание и высота'}</button>
         <div class="wv-ans" style="font-size:16px">S = ½ · 3 · 4 = 6</div>
-        ${note('Прямой угол уже есть','Катеты сами стоят буквой Г. Один — основание, второй — высота, ничего опускать не нужно. ½·3·4 = 6. Кнопка показывает: можно взять и гипотенузу, но тогда высота другая — площадь та же.')}
+        ${note('Прямой угол уже есть','Катеты сами стоят буквой Г. Один — основание, второй — высота. ½·3·4 = 6. Кнопка показывает: можно взять гипотенузу, площадь та же, высота другая.')}
       </div>`;
     } else if(step===4){
       const way=!!st.way;
@@ -4045,27 +4054,27 @@ window._waveCss = function(id, css){
       const tri=`${A0[0]},${A0[1]} ${B0[0]},${B0[1]} ${C0[0]},${C0[1]}`;
       h=`<div class="wv-col">
         ${frame(
-          `<polygon points="${tri}" fill="rgba(127,209,255,.16)" stroke="#7fd1ff" stroke-width="2.3" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
+          `<polygon points="${tri}" fill="rgba(127,209,255,.16)" stroke="${BLUE}" stroke-width="2.3" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
           (way
-            ? `<line x1="${C0[0]}" y1="${C0[1]}" x2="${F[0].toFixed(1)}" y2="${F[1].toFixed(1)}" stroke="#ffd76a" stroke-width="2.2" ${ink(dist(C0,F)+8,1,.1)}/>`+
-              sqMark(F,C0,'#ffd76a')+
-              lab((A0[0]+B0[0])/2-6,(A0[1]+B0[1])/2-8,'b = 8','#8fd1a8')+
-              lab(F[0]+16,(F[1]+C0[1])/2,'h = 7.5','#ffd76a')
-            : `<line x1="${A0[0]}" y1="${A0[1]}" x2="${H[0]}" y2="${H[1]}" stroke="#ffd76a" stroke-width="2.2" ${doDraw?ink(dist(A0,H)+8,1,.15):''}/>`+
-              sqMark(H,A0,'#ffd76a')+
-              lab(110,178,'a = 10','#8fd1a8')+
-              lab(128,92,'h = 6','#ffd76a'))+
-          vtx(A0,'A','#ffd76a',!way,0,doDraw)+vtx(B0,'B','#7fd1ff',false,.1,doDraw)+vtx(C0,'C','#8fd1a8',way,.2,doDraw)
+            ? `<line x1="${C0[0]}" y1="${C0[1]}" x2="${F[0].toFixed(1)}" y2="${F[1].toFixed(1)}" stroke="${GOLD}" stroke-width="2.2" ${ink(dist(C0,F)+8,1,.1)}/>`+
+              sqMark(F,C0,GOLD)+
+              lab((A0[0]+B0[0])/2-6,(A0[1]+B0[1])/2-8,'b = 8',GREEN)+
+              lab(F[0]+16,(F[1]+C0[1])/2,'h = 7.5',GOLD)
+            : `<line x1="${A0[0]}" y1="${A0[1]}" x2="${H[0]}" y2="${H[1]}" stroke="${GOLD}" stroke-width="2.2" ${doDraw?ink(dist(A0,H)+8,1,.15):''}/>`+
+              sqMark(H,A0,GOLD)+
+              lab(110,176,'a = 10',GREEN)+
+              lab(132,96,'h = 6',GOLD))+
+          vtx(A0,'A',GOLD,!way,0,doDraw)+vtx(B0,'B',BLUE,false,.1,doDraw)+vtx(C0,'C',GREEN,way,.2,doDraw)
         )}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].way=!CHS[k].way;chRender(0);}catch(e){}">${way?'Способ 1: основание 10':'Способ 2: другая сторона'}</button>
         <div class="wv-ans" style="font-size:15px">${way?'½ · 8 · 7.5 = 30':'½ · 10 · 6 = 30'}</div>
-        ${note('Одна площадь — два счёта','Фигура не меняется, значит оба ответа равны: ½·10·6 = ½·8·7.5. Приравниваем — и можно найти неизвестную сторону или высоту. Это и есть метод площадей.')}
+        ${note('Одна площадь — два счёта','Фигура не меняется, значит оба ответа равны. Приравниваем — и можно найти неизвестную сторону или высоту. Это и есть метод площадей.')}
       </div>`;
     } else if(step===5){
       const map={
-        A:{P:A0, base:[B0,C0], col:'#ffd76a'},
-        B:{P:B0, base:[A0,C0], col:'#7fd1ff'},
-        C:{P:C0, base:[A0,B0], col:'#8fd1a8'}
+        A:{P:A0, base:[B0,C0], col:GOLD},
+        B:{P:B0, base:[A0,C0], col:BLUE},
+        C:{P:C0, base:[A0,B0], col:GREEN}
       };
       const m=map[sel]||map.A;
       const F=foot(m.P, m.base[0], m.base[1]);
@@ -4073,16 +4082,16 @@ window._waveCss = function(id, css){
       const drawH = doDraw || st.selDrawn!==sel;
       h=`<div class="wv-col">
         ${frame(
-          `<polygon points="${tri}" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.2"/>`+
+          `<polygon points="${tri}" fill="rgba(127,209,255,.12)" stroke="${BLUE}" stroke-width="2.2"/>`+
           `<line x1="${m.base[0][0]}" y1="${m.base[0][1]}" x2="${m.base[1][0]}" y2="${m.base[1][1]}" stroke="${m.col}" stroke-width="3"/>`+
           (drawH
             ? `<line x1="${m.P[0]}" y1="${m.P[1]}" x2="${F[0].toFixed(1)}" y2="${F[1].toFixed(1)}" stroke="${m.col}" stroke-width="2.2" ${ink(dist(m.P,F)+10,1.1,0)}/>`
             : `<line x1="${m.P[0]}" y1="${m.P[1]}" x2="${F[0].toFixed(1)}" y2="${F[1].toFixed(1)}" stroke="${m.col}" stroke-width="2.2"/>`)+
           sqMark(F,m.P,m.col)+
-          vtx(A0,'A','#ffd76a',sel==='A',0,doDraw)+vtx(B0,'B','#7fd1ff',sel==='B',.08,doDraw)+vtx(C0,'C','#8fd1a8',sel==='C',.16,doDraw)
+          vtx(A0,'A',GOLD,sel==='A',0,doDraw)+vtx(B0,'B',BLUE,sel==='B',.08,doDraw)+vtx(C0,'C',GREEN,sel==='C',.16,doDraw)
         )}
         <div class="wv-ans" style="font-size:15px">a · hₐ = b · h_b = c · h_c</div>
-        ${note('Кликни вершину','Площадь одна, поэтому произведение стороны и высоты к ней всегда одно и то же. Высота дорисуется до прямой стороны. Нажми A, потом B, потом C — увидишь три пары с одним произведением.')}
+        ${note('Кликни вершину','Площадь одна, поэтому произведение стороны и высоты к ней всегда одно и то же. Нажми A, потом B, потом C.')}
       </div>`;
       st.selDrawn=sel;
     } else if(step===6){
@@ -4093,23 +4102,19 @@ window._waveCss = function(id, css){
       const s1=0.5*8*h1, s2=0.5*8*h2;
       h=`<div class="wv-col">
         ${frame(
-          `<polygon points="${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]}" fill="rgba(127,209,255,.28)" stroke="#7fd1ff" stroke-width="2"/>`+
-          `<polygon points="${D[0]},${D[1]} ${E[0]},${E[1]} ${F[0]},${F[1]}" fill="rgba(255,215,106,.28)" stroke="#ffd76a" stroke-width="2"/>`+
-          `<line x1="66" y1="${A[1]}" x2="66" y2="168" stroke="#7fd1ff" stroke-width="1.6" stroke-dasharray="4 3"/>`+
-          `<line x1="174" y1="${D[1]}" x2="174" y2="168" stroke="#ffd76a" stroke-width="1.6" stroke-dasharray="4 3"/>`+
-          lab(66,188,'a','#8fd1a8')+lab(174,188,'a','#8fd1a8')+
-          lab(80,(A[1]+168)/2,'h₁='+h1,'#7fd1ff','start')+
-          lab(188,(D[1]+168)/2,'h₂='+h2,'#ffd76a','start')+
-          lab(66,A[1]-10,'S₁='+s1,'#7fd1ff')+
-          lab(174,D[1]-10,'S₂='+s2,'#ffd76a')
+          `<polygon points="${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]}" fill="rgba(127,209,255,.28)" stroke="${BLUE}" stroke-width="2"/>`+
+          `<polygon points="${D[0]},${D[1]} ${E[0]},${E[1]} ${F[0]},${F[1]}" fill="rgba(255,215,106,.28)" stroke="${GOLD}" stroke-width="2"/>`+
+          `<line x1="66" y1="${A[1]}" x2="66" y2="168" stroke="${BLUE}" stroke-width="1.6" stroke-dasharray="4 3"/>`+
+          `<line x1="174" y1="${D[1]}" x2="174" y2="168" stroke="${GOLD}" stroke-width="1.6" stroke-dasharray="4 3"/>`+
+          lab(66,188,'a',GREEN)+lab(174,188,'a',GREEN)+
+          lab(80,(A[1]+168)/2,'h₁='+h1,BLUE,'start')+
+          lab(188,(D[1]+168)/2,'h₂='+h2,GOLD,'start')+
+          lab(66,A[1]-10,'S₁='+s1,BLUE)+
+          lab(174,D[1]-10,'S₂='+s2,GOLD)
         , '0 0 240 204')}
         <div class="wv-ans" style="font-size:15px">S₁ : S₂ = ${h1} : ${h2}  →  ${s1} : ${s2}</div>
-        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">высота справа
-          <input type="range" min="3" max="12" value="${h2}" style="flex:1"
-            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].h2=+this.value;chRender(0);}catch(e){}">
-          <b style="color:#ffd76a">${h2}</b>
-        </label>
-        ${note('Одинаковые основания','У обоих основание одно и то же. В формуле ½·a сокращается — остаётся отношение высот. Подними жёлтую вершину: площадь растёт ровно так же, как высота.')}
+        ${slider('высота справа',3,12,h2,'h2',GOLD)}
+        ${note('Одинаковые основания','У обоих основание одно и то же. ½·a сокращается — остаётся отношение высот. Подними жёлтую вершину.')}
       </div>`;
     } else if(step===7){
       const B=[24,160], C=[196,160], A=[110,28];
@@ -4120,32 +4125,122 @@ window._waveCss = function(id, css){
       const mid=Math.abs(tM-0.5)<0.03;
       h=`<div class="wv-col">
         ${frame(
-          `<polygon points="${left}" fill="rgba(127,209,255,.32)" stroke="#7fd1ff" stroke-width="2"/>`+
-          `<polygon points="${right}" fill="rgba(255,215,106,.32)" stroke="#ffd76a" stroke-width="2"/>`+
-          `<line x1="${A[0]}" y1="${A[1]}" x2="${M[0]}" y2="${M[1]}" stroke="#8fd1a8" stroke-width="1.8" stroke-dasharray="5 3"/>`+
-          `<circle cx="${M[0]}" cy="${M[1]}" r="6.5" fill="#8fd1a8"/>`+
-          lab(M[0], M[1]+18, 'M', '#8fd1a8')+
-          lab(A[0], A[1]-10, 'A', '#ffd76a')+
-          lab(B[0]-2, B[1]+18, 'B', '#7fd1ff')+
-          lab(C[0]+2, C[1]+18, 'C', '#ffd76a')+
-          lab((B[0]+M[0])/2, 188, 'BM='+bm, '#7fd1ff')+
-          lab((M[0]+C[0])/2, 188, 'MC='+mc, '#ffd76a')
+          `<polygon points="${left}" fill="rgba(127,209,255,.32)" stroke="${BLUE}" stroke-width="2"/>`+
+          `<polygon points="${right}" fill="rgba(255,215,106,.32)" stroke="${GOLD}" stroke-width="2"/>`+
+          `<line x1="${A[0]}" y1="${A[1]}" x2="${M[0]}" y2="${M[1]}" stroke="${GREEN}" stroke-width="1.8" stroke-dasharray="5 3"/>`+
+          `<circle cx="${M[0]}" cy="${M[1]}" r="6.5" fill="${GREEN}"/>`+
+          lab(M[0], M[1]+18, 'M', GREEN)+
+          lab(A[0], A[1]-10, 'A', GOLD)+
+          lab(B[0]+6, B[1]+18, 'B', BLUE)+
+          lab(C[0]-6, C[1]+18, 'C', GOLD)+
+          lab((B[0]+M[0])/2, 188, 'BM='+bm, BLUE)+
+          lab((M[0]+C[0])/2, 188, 'MC='+mc, GOLD)
         , '0 0 220 204')}
         <div class="wv-ans" style="font-size:15px">S слева : S справа = BM : MC${mid?'  ·  пополам!':''}</div>
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">точка M
           <input type="range" min="8" max="92" value="${Math.round(tM*100)}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=this.value/100;chRender(0);}catch(e){}">
         </label>
-        ${note('Общая вершина','Голубой и жёлтый треугольники имеют одну высоту из A. Значит площади относятся как основания BM и MC. Поставь M на середину — медианы делят площадь пополам. Это частый олимпиадный ход.')}
+        ${note('Общая вершина','Голубой и жёлтый имеют одну высоту из A. Значит площади относятся как BM и MC. Поставь M на середину — медианы делят площадь пополам.')}
       </div>`;
     } else if(step===8){
+      const shown=!!st.showH;
+      const H=[110,148];
+      const tri=`${A0[0]},${A0[1]} ${B0[0]},${B0[1]} ${C0[0]},${C0[1]}`;
+      const ht = shown ? 116 : 40;
+      h=`<div class="wv-col">
+        ${frame(
+          `<polygon points="${tri}" fill="url(#l425g)" stroke="${BLUE}" stroke-width="2.4" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
+          (shown
+            ? `<line class="l425-rise" x1="110" y1="${H[1]}" x2="110" y2="${A0[1]}" stroke="${GOLD}" stroke-width="2.4"/>`+sqMark(H,A0,GOLD)+lab(132,96,'h = 6',GOLD)
+            : `<line x1="110" y1="${H[1]}" x2="110" y2="${H[1]-ht}" stroke="${GOLD}" stroke-width="2" stroke-dasharray="5 4" class="l425-pulse"/>`+lab(132,110,'h = 2S / a',GOLD))+
+          lab(110,176,'a = 10',GREEN)+
+          vtx(A0,'A',GOLD,false,0,doDraw)+vtx(B0,'B',BLUE,false,.1,doDraw)+vtx(C0,'C',GREEN,false,.2,doDraw)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].showH=!CHS[k].showH;chRender(0);}catch(e){}">${shown?'Скрыть высоту':'Показать: h = 6'}</button>
+        <div class="wv-ans" style="font-size:16px">h = 2S / a = 2·30 / 10 = 6</div>
+        ${note('Загадка раскрыта','Из S = ½·a·h получаем h = 2S/a. Высоту не мерили — её вычислили. Это и есть метод площадей: площадь стала мостом к длине.')}
+      </div>`;
+    } else if(step===9){
+      const rad=ang*Math.PI/180;
+      const B=[36,158], C=[36+90,158], A=[36+70*Math.cos(Math.PI-rad), 158-70*Math.sin(Math.PI-rad)];
+      const sVal=(0.5*6*7*Math.sin(rad));
+      const tri=`${A[0].toFixed(1)},${A[1].toFixed(1)} ${B[0]},${B[1]} ${C[0]},${C[1]}`;
+      h=`<div class="wv-col">
+        ${frame(
+          `<polygon points="${tri}" fill="rgba(127,209,255,.22)" stroke="${BLUE}" stroke-width="2.4" ${doDraw?ink(220,1.2,0):''}/>`+
+          lab(B[0]-8,B[1]+16,'B',BLUE)+lab(C[0]+8,C[1]+16,'C',GREEN)+lab(A[0],A[1]-12,'A',GOLD)+
+          lab((B[0]+C[0])/2, 184, 'a = 6', GREEN)+
+          lab(18,100,'b = 7', BLUE)+
+          lab(B[0]+28, B[1]-10, ang+'°', GOLD)
+        )}
+        <div class="wv-ans" style="font-size:15px">S = ½ · 6 · 7 · sin ${ang}° ≈ ${sVal.toFixed(1)}</div>
+        ${slider('угол C',20,160,ang,'ang',GOLD)}
+        ${note('Две стороны и угол между','Поставь 90°: sin 90° = 1, и формула снова ½·a·b. При остром и тупом sin меньше 1 — площадь меньше, хотя стороны те же.')}
+      </div>`;
+    } else if(step===10){
+      const cut=!!st.cut;
+      h=`<div class="wv-col">
+        ${frame(
+          `<polygon points="36,40 184,40 200,148 20,148" fill="rgba(143,209,168,.16)" stroke="${GREEN}" stroke-width="2.3" ${doDraw?ink(520,1.4,0):''}/>`+
+          (cut
+            ? `<line x1="36" y1="40" x2="200" y2="148" stroke="${GOLD}" stroke-width="2.4" ${ink(200,1,.15)}/>`+
+              `<polygon points="36,40 184,40 200,148" fill="rgba(255,215,106,.18)"/>`+
+              lab(110,28,'два треугольника',GOLD)
+            : `<line class="l425-grow" x1="36" y1="40" x2="36" y2="148" stroke="${GOLD}" stroke-width="2"/>`+
+              sqMark([36,148],[36,40],GOLD)+
+              lab(52,96,'h',GOLD)+lab(110,168,'a',GREEN))+
+          lab(110,188, cut?'S△ = ½ · a · h':'S = a · h  (без половины)', GOLD)
+        , '0 0 220 204')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].cut=!CHS[k].cut;chRender(0);}catch(e){}">${cut?'Собрать параллелограмм':'Разрезать по диагонали'}</button>
+        ${note('Параллелограмм','Целая фигура: основание × высота. Диагональ режет её на два равных треугольника — каждый снова с ½. Одна высота работает на обе формулы.')}
+      </div>`;
+    } else if(step===11){
+      const a=14, b=topB, hh=7;
+      const left=30, right=190, topY=56, botY=150;
+      const topW=40+b*6, botW=150;
+      const tL=110-topW/2, tR=110+topW/2;
+      const S=0.5*(a+b)*hh;
+      h=`<div class="wv-col">
+        ${frame(
+          `<polygon points="${tL},${topY} ${tR},${topY} ${right},${botY} ${left},${botY}" fill="rgba(127,209,255,.2)" stroke="${BLUE}" stroke-width="2.3" ${doDraw?ink(480,1.3,0):''}/>`+
+          `<line class="l425-grow" x1="${left+20}" y1="${topY}" x2="${left+20}" y2="${botY}" stroke="${GOLD}" stroke-width="2"/>`+
+          sqMark([left+20,botY],[left+20,topY],GOLD)+
+          lab(110,topY-12,'b = '+b,GOLD)+
+          lab(110,botY+18,'a = '+a,GREEN)+
+          lab(left+36,(topY+botY)/2,'h',GOLD,'start')
+        , '0 0 220 184')}
+        <div class="wv-ans" style="font-size:15px">S = ½ · (${a} + ${b}) · ${hh} = ${S%1?S.toFixed(1):S}</div>
+        ${slider('верхнее основание b',4,14,topB,'top',GOLD)}
+        ${note('Трапеция','Две параллельные стороны и высота. Это как средний прямоугольник: бери полусумму оснований и умножай на высоту. Подвинь верх — площадь меняется линейно.')}
+      </div>`;
+    } else if(step===12){
+      const k = Math.max(1, Math.min(5, +(st.k==null?3:st.k)));
+      const W=180, x0=20, yb=150, yt=40;
+      let polys='';
+      for(let i=0;i<k;i++){
+        const x1=x0+i*(W/5), x2=x0+(i+1)*(W/5);
+        const col=i%2?GOLD:BLUE;
+        polys+=`<polygon points="110,${yt} ${x1},${yb} ${x2},${yb}" fill="${col}44" stroke="${col}" stroke-width="1.6"/>`;
+      }
+      h=`<div class="wv-col">
+        ${frame(
+          polys+
+          `<circle cx="110" cy="${yt}" r="6" fill="${GOLD}"/>`+
+          lab(110, yt-12, 'A', GOLD)+
+          lab(110, 176, k+' куска на одной прямой', GREEN)
+        , '0 0 220 190')}
+        ${slider('сколько кусков',1,5,k,'k',GOLD)}
+        ${note('Одна высота — пирог','Все треугольники из одной вершины A стоят на одной прямой. Высота общая, поэтому площади относятся как основания-куски. На олимпиаде так «режут» сложную фигуру.')}
+      </div>`;
+    } else if(step===13){
       h=`<div class="wv-col">
         <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
           ${[
-            ['1','Найди площадь удобно','через ½·a·h или как половину прямоугольника','#7fd1ff'],
-            ['2','Найди её же иначе','другая сторона, другая высота, другой разрез','#8fd1a8'],
-            ['3','Приравняй оба выражения','площадь одна — значит это уравнение','#ffd76a'],
-            ['4','Реши и проверь','неизвестная сторона, высота или отношение','#ff8ac0']
+            ['1','Найди площадь удобно','через ½·a·h или как половину прямоугольника',BLUE],
+            ['2','Найди её же иначе','другая сторона, другая высота, другой разрез',GREEN],
+            ['3','Приравняй оба выражения','площадь одна — значит это уравнение',GOLD],
+            ['4','Реши и проверь','неизвестная сторона, высота или отношение',PINK]
           ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.12}s;display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[3]};border-radius:10px;padding:8px 12px;text-align:left">
             <b style="color:${x[3]};font-size:18px;min-width:18px">${x[0]}</b>
             <span><div style="color:#e8dcc8;font-size:14px">${x[1]}</div><div class="wv-sml" style="margin-top:2px">${x[2]}</div></span>
@@ -4153,19 +4248,28 @@ window._waveCss = function(id, css){
         </div>
         ${note('Площадь — мост','Не обязательно гоняться за длинами. Посчитай «сколько места занимает фигура» двумя путями — и отрезки сами найдутся.')}
       </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
+          ${[['треугольник','половина прямоугольника',GOLD],
+             ['одна фигура','два счёта — уравнение',GREEN],
+             ['равные основания','площади как высоты',BLUE]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('В карман','Три фразы — и можно решать. Дальше проверка: чему равна площадь при основании 10 и высоте 6?')}
+      </div>`;
     } else {
       const H=[110,148];
       const tri=`${A0[0]},${A0[1]} ${B0[0]},${B0[1]} ${C0[0]},${C0[1]}`;
       h=`<div class="wv-col">
         ${frame(
-          `<polygon points="${tri}" fill="rgba(127,209,255,.2)" stroke="#7fd1ff" stroke-width="2.4" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
-          `<line x1="${A0[0]}" y1="${A0[1]}" x2="${H[0]}" y2="${H[1]}" stroke="#ffd76a" stroke-width="2.2" ${doDraw?ink(dist(A0,H)+8,1,.2):''}/>`+
-          sqMark(H,A0,'#ffd76a')+
-          lab(110,178,'a = 10','#8fd1a8')+
-          lab(128,92,'h = 6','#ffd76a')+
-          vtx(A0,'A','#ffd76a',false,0,doDraw)+vtx(B0,'B','#7fd1ff',false,.1,doDraw)+vtx(C0,'C','#8fd1a8',false,.2,doDraw)
+          `<polygon points="${tri}" fill="rgba(127,209,255,.2)" stroke="${BLUE}" stroke-width="2.4" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
+          `<line x1="${A0[0]}" y1="${A0[1]}" x2="${H[0]}" y2="${H[1]}" stroke="${GOLD}" stroke-width="2.2" ${doDraw?ink(dist(A0,H)+8,1,.2):''}/>`+
+          sqMark(H,A0,GOLD)+
+          lab(110,176,'a = 10',GREEN)+
+          lab(132,96,'h = 6',GOLD)+
+          vtx(A0,'A',GOLD,false,0,doDraw)+vtx(B0,'B',BLUE,false,.1,doDraw)+vtx(C0,'C',GREEN,false,.2,doDraw)
         )}
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">½ · 10 · 6 = ?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="l425-pulse">½ · 10 · 6 = ?</div>
         ${note('В карман','Треугольник — половина прямоугольника. Основание 10, высота 6 → половина от 60. Дальше проверка и две задачи.')}
       </div>`;
     }
@@ -4185,16 +4289,22 @@ window._waveCss = function(id, css){
     id: 426, title: 'Вписанные углы и четырёхугольники', ico: '⭕',
     src: 'Математика · 8 класс · Олимп-8: вписанные углы', subj: 'math',
     explain: [
-      'Смотри: четыре точки A, B, C, D. Вопрос простой — можно ли через них провести одну окружность, как обруч? На глаз не угадаешь. Правило спрятано в углах. Сейчас его откроем шаг за шагом.',
+      'Смотри: четыре точки A, B, C, D. Вопрос простой — можно ли через них провести одну окружность, как обруч? На глаз не угадаешь. Правило спрятано в углах.',
       'Вписанный угол сидит на окружности: вершина на ободе, две стороны идут хордами к двум другим точкам. Как будто ты стоишь на краю круглого озера и смотришь на берег между двумя деревьями.',
-      'Главное правило: такой угол равен половине дуги, на которую смотрит. Дуга 80° — угол 40°. Дуга 180° (это диаметр) — угол 90°. Нажми на точку A, B, C или D: дуга загорится целиком, угол покажет «половину».',
-      'Если несколько углов смотрят на одну и ту же дугу — они равны. Как два зрителя одного спектакля: видят одно и то же. На рисунке ∠A и ∠P оба смотрят на дугу BD, поэтому ∠A = ∠P.',
-      'Когда все четыре вершины лежат на окружности, четырёхугольник называют вписанным. У него особое свойство: сложи противоположные углы — получится ровно 180°. То есть ∠A + ∠C = 180° и ∠B + ∠D = 180°.',
-      'Почему 180°? Угол A смотрит на одну дугу, угол C — на другую. Эти две дуги вместе — вся окружность, 360°. Каждый угол берёт половину своей дуги. Половина плюс половина = 180°. Вот и всё.',
+      'Главное правило: такой угол равен половине дуги, на которую смотрит. Дуга 80° — угол 40°. Дуга 180° (это диаметр) — угол 90°. Нажми A, B, C или D: дуга загорится целиком.',
+      'Если несколько углов смотрят на одну и ту же дугу — они равны. Как два зрителя одного спектакля. На рисунке ∠A и ∠P оба смотрят на дугу BD, поэтому ∠A = ∠P.',
+      'Когда все четыре вершины лежат на окружности, четырёхугольник называют вписанным. У него особое свойство: сложи противоположные углы — получится ровно 180°.',
+      'Почему 180°? Угол A смотрит на одну дугу, угол C — на другую. Эти две дуги вместе — вся окружность, 360°. Каждый угол берёт половину своей дуги. Половина плюс половина = 180°.',
       'И наоборот: если в четырёхугольнике противоположные углы в сумме дают 180°, через вершины точно можно провести окружность. Не надо чертить наугад — сложи углы через одну.',
-      'Некоторые фигуры вписаны всегда. Прямоугольник: все углы по 90°, а 90+90=180. Квадрат — тоже. Равнобедренная трапеция — тоже, потому что углы при основании равны.',
-      'Ещё одна картинка: нарисуй диаметр. Это дуга 180°. Любая точка P на окружности даёт прямой угол: ∠APB = 90°. Это теорема Фалеса. Нажми «Оживить» и смотри: P бежит до конца дуги, угол не меняется.',
-      'Запомни три фразы. Вписанный угол — половина дуги. Противоположные углы вписанного четырёхугольника — 180°. Угол на диаметре — 90°. Теперь проверь себя и реши две задачи.'
+      'Некоторые фигуры вписаны всегда. Прямоугольник: все углы по 90°, а 90+90=180. Квадрат — тоже. Нажми карточку и смотри, как окружность дорисовывается вокруг.',
+      'Равнобедренная трапеция тоже всегда вписана: углы при основании равны, сумма противоположных снова 180°. Боковые стороны равны — это видно по симметрии.',
+      'Нарисуй диаметр. Это дуга 180°. Любая точка P на окружности даёт прямой угол: ∠APB = 90°. Это теорема Фалеса. Нажми «Оживить»: P бежит по дуге, угол не ломается.',
+      'Рядом стоит центральный угол: его вершина в центре окружности. Он равен самой дуге, не половине. Поэтому центральный всегда в два раза больше вписанного, который смотрит на ту же дугу.',
+      'Подвинь ползунок дуги. Жёлтый — вписанный, голубой — центральный. Цифры всегда «один к двум». Это самый быстрый способ запомнить обе формулы сразу.',
+      'Где это на олимпиаде. Ищут прямой угол — ищут диаметр. Ищут равные углы — ищут общую дугу. Ищут окружность через четыре точки — складывают противоположные углы.',
+      'Пять фраз-связка: вписанный = ½ дуги. Одна дуга — равные углы. Противлежащие во вписанном 4-угольнике = 180°. Угол на диаметре = 90°. Центральный = 2 · вписанный.',
+      'Рецепт: нарисуй окружность → отметь дугу → реши, какой угол на неё смотрит → возьми половину или всю дугу. Для четырёхугольника сложи углы через один.',
+      'Запомни три главные. Вписанный угол — половина дуги. Противоположные углы вписанного четырёхугольника — 180°. Угол на диаметре — 90°. Теперь проверь себя.'
     ],
     check: { q: 'Сумма противоположных углов вписанного четырёхугольника?', choices: ['180°', '90°', '360°', '270°'], ans: 0,
       exp: 'Две дуги вместе — вся окружность 360°. Каждый угол берёт половину своей дуги, поэтому сумма 180°.' },
@@ -4207,8 +4317,9 @@ window._waveCss = function(id, css){
     ]
   };
 
-  const CX=110, CY=108, R=76;
-  const CIRC=2*Math.PI*R+12;
+  const CX=110, CY=108, R=72;
+  const CIRC=2*Math.PI*R+16;
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', PINK='#ff8ac0';
   const CSS = `<style>
     @keyframes l426spin{to{transform:rotate(360deg)}}
     @keyframes l426pulse{0%,100%{opacity:.45}50%{opacity:1}}
@@ -4230,8 +4341,7 @@ window._waveCss = function(id, css){
   }
   function outLabel(pt){
     const dx=pt[0]-CX, dy=pt[1]-CY, L=Math.hypot(dx,dy)||1;
-    const k=20/L;
-    return [pt[0]+dx*k, pt[1]+dy*k];
+    return [pt[0]+dx/L*18, pt[1]+dy/L*18];
   }
   function arcSweep(a1,a2){
     let d=a2-a1; while(d<=0) d+=360; while(d>360) d-=360; return d;
@@ -4243,17 +4353,17 @@ window._waveCss = function(id, css){
     const [x1,y1]=to(a1), [x2,y2]=to(a2);
     return `M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
   }
-  function arcLen(a1,a2,r){ return arcSweep(a1,a2)/360*2*Math.PI*r+10; }
+  function arcLen(a1,a2,r){ return arcSweep(a1,a2)/360*2*Math.PI*r+12; }
   function polyLen(arr){
     let s=0;
     for(let i=0;i<arr.length;i++){
       const a=arr[i], b=arr[(i+1)%arr.length];
       s+=Math.hypot(b[0]-a[0], b[1]-a[1]);
     }
-    return s+10;
+    return s+12;
   }
   function ink(len,dur,delay){
-    const L=Math.ceil((len||1)+16);
+    const L=Math.ceil((len||1)+18);
     return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l426-ink" style="animation-duration:${dur||1.45}s;animation-delay:${delay||0}s"`;
   }
   function pieWedge(r,a1,a2,fill){
@@ -4263,36 +4373,37 @@ window._waveCss = function(id, css){
     const [x1,y1]=to(a1), [x2,y2]=to(a2);
     return `<path d="M ${CX} ${CY} L ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)} Z" fill="${fill}"/>`;
   }
-  function angMark(A,B,C,col,lab){
+  function angMark(A,B,C,col,labTxt){
     const v=(X,Y)=>[X[0]-Y[0], X[1]-Y[1]];
     const n=(V)=>{const L=Math.hypot(V[0],V[1])||1; return [V[0]/L, V[1]/L];};
     const u=n(v(A,B)), w=n(v(C,B));
     const s=16;
     const p1=[B[0]+u[0]*s, B[1]+u[1]*s], p2=[B[0]+w[0]*s, B[1]+w[1]*s];
     const bx=u[0]+w[0], by=u[1]+w[1], bL=Math.hypot(bx,by)||1;
-    const labPt=[B[0]+(bx/bL)*32, B[1]+(by/bL)*32];
+    const labPt=[B[0]+(bx/bL)*30, B[1]+(by/bL)*30];
     const q1=[B[0]+u[0]*s*0.7, B[1]+u[1]*s*0.7], q2=[B[0]+w[0]*s*0.7, B[1]+w[1]*s*0.7];
-    const labTxt = lab
-      ? `<text class="l426-lab" x="${labPt[0].toFixed(1)}" y="${(labPt[1]+4).toFixed(1)}" text-anchor="middle" font-size="11" fill="${col}" font-family="Georgia,serif">${lab}</text>`
+    const t = labTxt
+      ? `<text class="l426-lab" x="${labPt[0].toFixed(1)}" y="${(labPt[1]+4).toFixed(1)}" text-anchor="middle" font-size="11" fill="${col}" font-family="Georgia,serif">${labTxt}</text>`
       : '';
     return `<path d="M ${q1[0].toFixed(1)} ${q1[1].toFixed(1)} Q ${labPt[0].toFixed(1)} ${labPt[1].toFixed(1)} ${q2[0].toFixed(1)} ${q2[1].toFixed(1)}" fill="${col}33" stroke="${col}" stroke-width="1.4"/>
       <path class="l426-glow" d="M ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} L ${B[0].toFixed(1)} ${B[1].toFixed(1)} L ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linecap="round"/>
-      ${labTxt}`;
+      ${t}`;
   }
   function dot(pt,name,col,on,delay,pop){
     const L=outLabel(pt);
     return `<g style="cursor:pointer" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sel='${name}';chRender(0);}catch(e){}">
-      ${on?`<circle cx="${pt[0]}" cy="${pt[1]}" r="11" fill="${col}30"><animate attributeName="r" values="9;14;9" dur="1.4s" repeatCount="indefinite"/></circle>`:''}
+      ${on?`<circle class="l426-arc" cx="${pt[0]}" cy="${pt[1]}" r="12" fill="${col}30"/>`:''}
       <circle ${pop?'class="l426-dotc"':''} style="animation-delay:${delay||0}s" cx="${pt[0]}" cy="${pt[1]}" r="${on?7:5.5}" fill="${on?col:'#1a2e24'}" stroke="${col}" stroke-width="2"/>
       <text class="l426-lab" x="${L[0].toFixed(1)}" y="${(L[1]+4).toFixed(1)}" text-anchor="middle" font-size="13" fill="${col}" font-family="Georgia,serif">${name}</text>
     </g>`;
   }
   function sparks(){
-    return `<g class="l426-orbit"><circle cx="${CX+R}" cy="${CY}" r="2.6" fill="#ffd76a"/></g>
-      <g class="l426-orbit2"><circle cx="${CX-R}" cy="${CY}" r="2" fill="#7fd1ff"/></g>`;
+    return `<g class="l426-orbit"><circle cx="${CX+R}" cy="${CY}" r="2.4" fill="${GOLD}"/></g>
+      <g class="l426-orbit2"><circle cx="${CX-R}" cy="${CY}" r="1.8" fill="${BLUE}"/></g>`;
   }
   function frame(inner){
-    return `${CSS}<svg viewBox="-12 -12 244 244" style="width:min(100%,270px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">
+    try{ window._waveCss && _waveCss('css-l426', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="-8 -8 236 236" style="width:min(100%,270px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">
       <defs>
         <radialGradient id="l426g" cx="50%" cy="50%"><stop offset="0%" stop-color="#7fd1ff22"/><stop offset="100%" stop-color="#101f1800"/></radialGradient>
         <filter id="l426b"><feGaussianBlur stdDeviation="2"/></filter>
@@ -4304,7 +4415,7 @@ window._waveCss = function(id, css){
   }
   function note(title, text){
     return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
-      <div style="color:#ffd76a;font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
       <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div>
     </div>`;
   }
@@ -4319,16 +4430,16 @@ window._waveCss = function(id, css){
     if(typeof CHS==='undefined') window.CHS={};
     if(!CHS[lk]) CHS[lk]={};
     const st=CHS[lk];
-    const playing=!!st.play && step===7;
+    const playing=!!st.play && step===9;
     const doDraw = (st.seen!==step) && !playing;
     if(st.seen!==step){ st.seen=step; st.selDrawn=null; }
     const Q=pts();
     const arr=[Q.A,Q.B,Q.C,Q.D];
     const ptsStr=`${Q.A[0]},${Q.A[1]} ${Q.B[0]},${Q.B[1]} ${Q.C[0]},${Q.C[1]} ${Q.D[0]},${Q.D[1]}`;
     const poly = doDraw
-      ? `<polygon points="${ptsStr}" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2" ${ink(polyLen(arr),1.35,.18)}/>`
-      : `<polygon points="${ptsStr}" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2"/>`;
-    const allDots=(sel)=>dot(Q.A,'A','#ffd76a',sel==='A',0,doDraw)+dot(Q.B,'B','#7fd1ff',sel==='B',.08,doDraw)+dot(Q.C,'C','#8fd1a8',sel==='C',.16,doDraw)+dot(Q.D,'D','#ff8ac0',sel==='D',.24,doDraw);
+      ? `<polygon points="${ptsStr}" fill="rgba(255,215,106,.08)" stroke="${GOLD}" stroke-width="2" ${ink(polyLen(arr),1.35,.18)}/>`
+      : `<polygon points="${ptsStr}" fill="rgba(255,215,106,.08)" stroke="${GOLD}" stroke-width="2"/>`;
+    const allDots=(sel)=>dot(Q.A,'A',GOLD,sel==='A',0,doDraw)+dot(Q.B,'B',BLUE,sel==='B',.08,doDraw)+dot(Q.C,'C',GREEN,sel==='C',.16,doDraw)+dot(Q.D,'D',PINK,sel==='D',.24,doDraw);
     const ring=(col,w,d,delay)=> doDraw
       ? `<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${col}" stroke-width="${w}" ${ink(CIRC,d,delay)}/>`
       : `<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${col}" stroke-width="${w}"/>`;
@@ -4344,16 +4455,28 @@ window._waveCss = function(id, css){
 
     if(step===0){
       h=`<div class="wv-col">
-        ${frame(ring('#ffd76a',2.6,1.5,0)+poly+allDots(st.sel))}
+        ${frame(ring(GOLD,2.6,1.5,0)+poly+allDots(st.sel))}
         ${note('Что это значит?','Представь обруч. Если он проходит через все четыре точки — четырёхугольник вписанный. Сейчас научимся проверять это по углам, без циркуля.')}
       </div>`;
     } else if(step===1){
+      const chord=`M ${Q.B[0]} ${Q.B[1]} L ${Q.A[0]} ${Q.A[1]} L ${Q.D[0]} ${Q.D[1]}`;
+      const cLen=Math.hypot(Q.A[0]-Q.B[0],Q.A[1]-Q.B[1])+Math.hypot(Q.D[0]-Q.A[0],Q.D[1]-Q.A[1])+8;
+      h=`<div class="wv-col">
+        ${frame(
+          ring('#3d6a7a',1.2,1,0)+
+          (doDraw?`<path d="${chord}" fill="none" stroke="${GOLD}" stroke-width="2.2" ${ink(cLen,1,.1)}/>`:`<path d="${chord}" fill="none" stroke="${GOLD}" stroke-width="2.2"/>`)+
+          angMark(Q.B,Q.A,Q.D,GOLD,'∠A')+
+          allDots('A')
+        )}
+        ${note('Вершина на ободе','Угол A стоит на окружности, стороны — хорды AB и AD. Это и есть вписанный угол. Он смотрит на дугу BD, как зритель с трибуны.')}
+      </div>`;
+    } else if(step===2){
       const sel=st.sel||'A';
       const map={
-        A:{from:AN.B, to:AN.D, lab:'∠A = ½ дуги BCD', col:'#ffd76a', a:Q.B, b:Q.A, c:Q.D},
-        B:{from:AN.C, to:AN.A, lab:'∠B = ½ дуги CDA', col:'#7fd1ff', a:Q.C, b:Q.B, c:Q.A},
-        C:{from:AN.D, to:AN.B, lab:'∠C = ½ дуги DAB', col:'#8fd1a8', a:Q.D, b:Q.C, c:Q.B},
-        D:{from:AN.A, to:AN.C, lab:'∠D = ½ дуги ABC', col:'#ff8ac0', a:Q.A, b:Q.D, c:Q.C}
+        A:{from:AN.B, to:AN.D, lab:'∠A = ½ дуги BD', col:GOLD, a:Q.B, b:Q.A, c:Q.D},
+        B:{from:AN.C, to:AN.A, lab:'∠B = ½ дуги CA', col:BLUE, a:Q.C, b:Q.B, c:Q.A},
+        C:{from:AN.D, to:AN.B, lab:'∠C = ½ дуги DB', col:GREEN, a:Q.D, b:Q.C, c:Q.B},
+        D:{from:AN.A, to:AN.C, lab:'∠D = ½ дуги AC', col:PINK, a:Q.A, b:Q.D, c:Q.C}
       };
       const m=map[sel];
       const chord=`M ${m.a[0]} ${m.a[1]} L ${m.b[0]} ${m.b[1]} L ${m.c[0]} ${m.c[1]}`;
@@ -4369,86 +4492,98 @@ window._waveCss = function(id, css){
         ${note('Простыми словами','Вписанный угол стоит на окружности и смотрит на дугу. Сколько градусов у дуги — у угла ровно половина. Нажми другую букву: дуга дорисуется до конца.')}
       </div>`;
       st.selDrawn=sel;
-    } else if(step===2){
+    } else if(step===3){
       const P2=P(105);
       const Lp=outLabel(P2);
       const pPath=`M ${Q.B[0]} ${Q.B[1]} L ${P2[0]} ${P2[1]} L ${Q.D[0]} ${Q.D[1]}`;
       const pLen=Math.hypot(P2[0]-Q.B[0],P2[1]-Q.B[1])+Math.hypot(Q.D[0]-P2[0],Q.D[1]-P2[1])+8;
       h=`<div class="wv-col">
         ${frame(
-          glowArc(AN.B, AN.D, R, '#ffd76a', 9)+
+          glowArc(AN.B, AN.D, R, GOLD, 9)+
           poly+
-          angMark(Q.B,Q.A,Q.D,'#ffd76a','α')+
-          (doDraw?`<path d="${pPath}" fill="none" stroke="#7fd1ff" stroke-width="1.8" ${ink(pLen,1,.15)}/>`:`<path d="${pPath}" fill="none" stroke="#7fd1ff" stroke-width="1.8"/>`)+
-          angMark(Q.B,P2,Q.D,'#7fd1ff','α')+
-          `<circle cx="${P2[0]}" cy="${P2[1]}" r="6" fill="#7fd1ff"/>
-           <text class="l426-lab" x="${Lp[0].toFixed(1)}" y="${(Lp[1]+4).toFixed(1)}" text-anchor="middle" fill="#7fd1ff" font-size="13">P</text>`
+          angMark(Q.B,Q.A,Q.D,GOLD,'α')+
+          (doDraw?`<path d="${pPath}" fill="none" stroke="${BLUE}" stroke-width="1.8" ${ink(pLen,1,.15)}/>`:`<path d="${pPath}" fill="none" stroke="${BLUE}" stroke-width="1.8"/>`)+
+          angMark(Q.B,P2,Q.D,BLUE,'α')+
+          `<circle cx="${P2[0]}" cy="${P2[1]}" r="6" fill="${BLUE}"/>
+           <text class="l426-lab" x="${Lp[0].toFixed(1)}" y="${(Lp[1]+4).toFixed(1)}" text-anchor="middle" fill="${BLUE}" font-size="13">P</text>`
         )}
         ${note('Одна дуга — один угол','A и P смотрят на одну жёлтую дугу BD. Поэтому их углы одинаковые: оба α. Где ни встань на окружности, если смотришь на ту же дугу — угол тот же.')}
       </div>`;
       st.selDrawn=st.sel;
-    } else if(step===3){
+    } else if(step===4){
       const showC=!!st.selC;
       h=`<div class="wv-col">
         ${frame(
-          pieWedge(36, AN.B, AN.D, '#ffd76a33')+
-          (showC?pieWedge(26, AN.D, AN.B, '#8fd1a833'):'')+
+          pieWedge(34, AN.B, AN.D, '#ffd76a33')+
+          (showC?pieWedge(24, AN.D, AN.B, '#8fd1a833'):'')+
           poly+
-          angMark(Q.B,Q.A,Q.D,'#ffd76a','')+
-          (showC?angMark(Q.D,Q.C,Q.B,'#8fd1a8',''):'')+
+          angMark(Q.B,Q.A,Q.D,GOLD,'')+
+          (showC?angMark(Q.D,Q.C,Q.B,GREEN,''):'')+
           allDots(showC?'C':'A')
         )}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].selC=!CHS[k].selC;chRender(0);}catch(e){}" style="margin-top:4px">${showC?'Скрыть угол C':'Показать угол C'}</button>
         <div class="wv-ans">∠A + ∠C = 180°</div>
-        ${note('Против друг друга','Возьми углы через один: A с C, B с D. У вписанного четырёхугольника эта сумма всегда 180° — как развёрнутая линейка. Нажми кнопку и сравни A и C.')}
-      </div>`;
-    } else if(step===4){
-      h=`<div class="wv-col">
-        ${frame(
-          glowArc(AN.B, AN.D, R-4, '#ffd76a', 10)+
-          (function(){
-            const d=arcPath(AN.D, AN.B, R-14), L=arcLen(AN.D, AN.B, R-14);
-            return `<path class="l426-arc" d="${d}" fill="none" stroke="#8fd1a8" stroke-width="10" opacity=".35"/>`
-              +(doDraw?`<path d="${d}" fill="none" stroke="#8fd1a8" stroke-width="5" ${ink(L,1.4,.2)}/>`:`<path d="${d}" fill="none" stroke="#8fd1a8" stroke-width="5"/>`);
-          })()+
-          poly+allDots('')
-        )}
-        ${note('Откуда берётся 180°','Жёлтая дуга и зелёная дуга вместе — целый круг, 360°. Угол A берёт половину жёлтой, угол C — половину зелёной. Половина круга = 180°. Поэтому сумма углов 180°.')}
+        ${note('Против друг друга','Возьми углы через один: A с C, B с D. У вписанного четырёхугольника эта сумма всегда 180° — как развёрнутая линейка.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        ${frame(poly+allDots('')+ring('#8fd1a8',2.6,1.5,.12))}
+        ${frame(
+          glowArc(AN.B, AN.D, R-4, GOLD, 10)+
+          (function(){
+            const d=arcPath(AN.D, AN.B, R-14), L=arcLen(AN.D, AN.B, R-14);
+            return `<path class="l426-arc" d="${d}" fill="none" stroke="${GREEN}" stroke-width="10" opacity=".35"/>`
+              +(doDraw?`<path d="${d}" fill="none" stroke="${GREEN}" stroke-width="5" ${ink(L,1.4,.2)}/>`:`<path d="${d}" fill="none" stroke="${GREEN}" stroke-width="5"/>`);
+          })()+
+          poly+allDots('')
+        )}
+        ${note('Откуда берётся 180°','Жёлтая дуга и зелёная вместе — целый круг, 360°. Угол A берёт половину жёлтой, угол C — половину зелёной. Половина круга = 180°.')}
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        ${frame(poly+allDots('')+ring(GREEN,2.6,1.5,.12))}
         <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
-          ${[['если ∠A+∠C = 180°','окружность надеть можно','#8fd1a8'],
+          ${[['если ∠A+∠C = 180°','окружность надеть можно',GREEN],
              ['если сумма не 180°','окружность не выйдет','#ff9a8a']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.12}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
         ${note('Проверка без циркуля','Не угадывай на глаз. Сложи противоположные углы. Вышло 180° — обруч надевается. Не вышло — точки не на одной окружности.')}
       </div>`;
-    } else if(step===6){
-      const ell=2*Math.PI*Math.sqrt((50*50+32*32)/2)+10;
-      const cir=2*Math.PI*32+10;
+    } else if(step===7){
+      const ell=2*Math.PI*Math.sqrt((50*50+32*32)/2)+12;
+      const cir=2*Math.PI*32+12;
       h=`<div class="wv-col">
         <div class="wv-row" style="gap:10px;flex-wrap:wrap;justify-content:center">
           <div style="text-align:center">
-            <svg viewBox="0 0 120 78" style="width:128px;background:#0c1a14;border-radius:10px;display:block">
+            <svg viewBox="0 0 120 86" style="width:128px;background:#0c1a14;border-radius:10px;display:block;overflow:visible">
               ${CSS}
-              <ellipse cx="60" cy="39" rx="50" ry="32" fill="none" stroke="#7fd1ff" stroke-width="1.8" ${doDraw?ink(ell,1.4,0):''}/>
-              <rect x="22" y="16" width="76" height="46" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2"/>
+              <ellipse cx="60" cy="43" rx="50" ry="32" fill="none" stroke="${BLUE}" stroke-width="1.8" ${doDraw?ink(ell,1.4,0):''}/>
+              <rect x="22" y="20" width="76" height="46" fill="rgba(143,209,168,.12)" stroke="${GREEN}" stroke-width="2"/>
             </svg>
             <div class="wv-sml" style="margin-top:4px">прямоугольник</div>
           </div>
           <div style="text-align:center">
-            <svg viewBox="0 0 120 78" style="width:128px;background:#0c1a14;border-radius:10px;display:block">
+            <svg viewBox="0 0 120 86" style="width:128px;background:#0c1a14;border-radius:10px;display:block;overflow:visible">
               ${CSS}
-              <circle cx="60" cy="39" r="32" fill="none" stroke="#7fd1ff" stroke-width="1.8" ${doDraw?ink(cir,1.4,.08):''}/>
-              <rect x="32" y="11" width="56" height="56" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="2"/>
+              <circle cx="60" cy="43" r="32" fill="none" stroke="${BLUE}" stroke-width="1.8" ${doDraw?ink(cir,1.4,.08):''}/>
+              <rect x="32" y="15" width="56" height="56" fill="rgba(255,215,106,.1)" stroke="${GOLD}" stroke-width="2"/>
             </svg>
             <div class="wv-sml" style="margin-top:4px">квадрат</div>
           </div>
         </div>
-        ${note('Кто всегда вписан?','Прямоугольник и квадрат: каждый угол 90°, а 90+90=180. Равнобедренная трапеция тоже: углы при основании равны, сумма противоположных снова 180°.')}
+        ${note('Кто всегда вписан?','Прямоугольник и квадрат: каждый угол 90°, а 90+90=180. Окружность дорисовывается вокруг — вершины сами садятся на обод.')}
       </div>`;
-    } else if(step===7){
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          ring(BLUE,1.8,1.4,0)+
+          `<polygon points="${P(-35)[0]},${P(-35)[1]} ${P(35)[0]},${P(35)[1]} ${P(145)[0]},${P(145)[1]} ${P(215)[0]},${P(215)[1]}" fill="rgba(143,209,168,.14)" stroke="${GREEN}" stroke-width="2.2" ${doDraw?ink(polyLen([P(-35),P(35),P(145),P(215)]),1.3,.15):''}/>`+
+          `<text class="l426-lab" x="${P(-35)[0]}" y="${P(-35)[1]-12}" text-anchor="middle" fill="${GOLD}" font-size="12">A</text>`+
+          `<text class="l426-lab" x="${P(35)[0]}" y="${P(35)[1]-12}" text-anchor="middle" fill="${GOLD}" font-size="12">B</text>`+
+          `<text class="l426-lab" x="${P(145)[0]-10}" y="${P(145)[1]+16}" fill="${BLUE}" font-size="12">C</text>`+
+          `<text class="l426-lab" x="${P(215)[0]+10}" y="${P(215)[1]+16}" text-anchor="end" fill="${BLUE}" font-size="12">D</text>`
+        )}
+        ${note('Равнобедренная трапеция','Боковые стороны равны, углы при основании равны. Сумма противоположных снова 180° — значит окружность надевается всегда, как на прямоугольник.')}
+      </div>`;
+    } else if(step===9){
       if(st.play && !window._l426iv){
         window._l426iv=setInterval(()=>{
           try{
@@ -4458,29 +4593,29 @@ window._waveCss = function(id, css){
             s.t = (s.t==null?0.15:s.t) + 0.01*s.dir;
             if(s.t>=1){ s.t=1; s.dir=-1; }
             if(s.t<=0){ s.t=0; s.dir=1; }
-            if(LV.id===426 && LV.step===7 && s.play) chRender(0);
+            if(LV.id===426 && LV.step===9 && s.play) chRender(0);
             else { clearInterval(window._l426iv); window._l426iv=null; }
           }catch(e){ clearInterval(window._l426iv); window._l426iv=null; }
         }, 40);
       }
       if(!st.play && window._l426iv){ clearInterval(window._l426iv); window._l426iv=null; }
       const t = (st.t==null)? 0.22 : +st.t;
-      const ang = 6 + t*168;
+      const ang = 8 + t*164;
       const Pd=P(180-ang);
       const Lp=outLabel(Pd);
       const Lft=P(180), Rgt=P(0);
       const tri=`${Lft[0]},${Lft[1]} ${Pd[0]},${Pd[1]} ${Rgt[0]},${Rgt[1]}`;
       h=`<div class="wv-col">
         ${frame(
-          `<line x1="${Lft[0]}" y1="${Lft[1]}" x2="${Rgt[0]}" y2="${Rgt[1]}" stroke="#7fd1ff" stroke-width="2.4" class="l426-glow"/>
-           <polygon points="${tri}" fill="rgba(255,215,106,.14)" stroke="#ffd76a" stroke-width="2"/>`+
-          angMark(Lft,Pd,Rgt,'#ffd76a','90°')+
-          `<circle cx="${Lft[0]}" cy="${Lft[1]}" r="5" fill="#7fd1ff"/><circle cx="${Rgt[0]}" cy="${Rgt[1]}" r="5" fill="#7fd1ff"/>
-           <text class="l426-lab" x="${Lft[0]-14}" y="${Lft[1]+4}" fill="#7fd1ff" font-size="12">A</text>
-           <text class="l426-lab" x="${Rgt[0]+14}" y="${Rgt[1]+4}" text-anchor="middle" fill="#7fd1ff" font-size="12">B</text>
+          `<line x1="${Lft[0]}" y1="${Lft[1]}" x2="${Rgt[0]}" y2="${Rgt[1]}" stroke="${BLUE}" stroke-width="2.4" class="l426-glow"/>
+           <polygon points="${tri}" fill="rgba(255,215,106,.14)" stroke="${GOLD}" stroke-width="2"/>`+
+          angMark(Lft,Pd,Rgt,GOLD,'90°')+
+          `<circle cx="${Lft[0]}" cy="${Lft[1]}" r="5" fill="${BLUE}"/><circle cx="${Rgt[0]}" cy="${Rgt[1]}" r="5" fill="${BLUE}"/>
+           <text class="l426-lab" x="${Lft[0]-14}" y="${Lft[1]+4}" fill="${BLUE}" font-size="12">A</text>
+           <text class="l426-lab" x="${Rgt[0]+14}" y="${Rgt[1]+4}" text-anchor="middle" fill="${BLUE}" font-size="12">B</text>
            <circle cx="${Pd[0]}" cy="${Pd[1]}" r="10" fill="#ffd76a33"/>
-           <circle cx="${Pd[0]}" cy="${Pd[1]}" r="6.5" fill="#ffd76a"/>
-           <text class="l426-lab" x="${Lp[0].toFixed(1)}" y="${(Lp[1]+4).toFixed(1)}" text-anchor="middle" fill="#ffd76a" font-size="13">P</text>`
+           <circle cx="${Pd[0]}" cy="${Pd[1]}" r="6.5" fill="${GOLD}"/>
+           <text class="l426-lab" x="${Lp[0].toFixed(1)}" y="${(Lp[1]+4).toFixed(1)}" text-anchor="middle" fill="${GOLD}" font-size="13">P</text>`
         )}
         <div style="display:flex;align-items:center;gap:8px;width:min(100%,300px);flex-wrap:wrap">
           <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].play=!CHS[k].play;chRender(0);}catch(e){}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
@@ -4488,14 +4623,89 @@ window._waveCss = function(id, css){
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=this.value/100;CHS[k].play=false;chRender(0);}catch(e){}"
             style="flex:1;min-width:140px">
         </div>
-        ${note('Теорема Фалеса','AB — диаметр, это половина окружности, 180°. Точка P бежит по ободу до конца и обратно. Угол при P всегда прямой: 180 ÷ 2 = 90.')}
+        ${note('Теорема Фалеса','AB — диаметр, дуга 180°. Точка P бежит по ободу до конца и обратно. Угол при P всегда прямой: 180 ÷ 2 = 90.')}
+      </div>`;
+    } else if(step===10){
+      const arc=P(-20), brc=P(80), vtxP=P(200);
+      h=`<div class="wv-col">
+        ${frame(
+          glowArc(-20,80,R,GOLD,8)+
+          `<line x1="${CX}" y1="${CY}" x2="${arc[0]}" y2="${arc[1]}" stroke="${BLUE}" stroke-width="2"/>`+
+          `<line x1="${CX}" y1="${CY}" x2="${brc[0]}" y2="${brc[1]}" stroke="${BLUE}" stroke-width="2"/>`+
+          `<line x1="${vtxP[0]}" y1="${vtxP[1]}" x2="${arc[0]}" y2="${arc[1]}" stroke="${GOLD}" stroke-width="1.8"/>`+
+          `<line x1="${vtxP[0]}" y1="${vtxP[1]}" x2="${brc[0]}" y2="${brc[1]}" stroke="${GOLD}" stroke-width="1.8"/>`+
+          angMark(arc,[CX,CY],brc,BLUE,'2α')+
+          angMark(arc,vtxP,brc,GOLD,'α')+
+          `<circle cx="${CX}" cy="${CY}" r="4" fill="${BLUE}"/>`+
+          `<text class="l426-lab" x="${CX+8}" y="${CY-8}" fill="${BLUE}" font-size="12">O</text>`+
+          `<text class="l426-lab" x="${vtxP[0]}" y="${vtxP[1]+18}" text-anchor="middle" fill="${GOLD}" font-size="12">P</text>`
+        )}
+        ${note('Центр против обода','Голубой угол в центре равен всей дуге. Жёлтый на ободе — половине. Поэтому центральный всегда вдвое больше вписанного на ту же дугу.')}
+      </div>`;
+    } else if(step===11){
+      const deg = Math.max(40, Math.min(160, +(st.arc==null?80:st.arc)));
+      const a1=-deg/2, a2=deg/2;
+      const Pa=P(a1), Pb=P(a2), Pp=P(180);
+      h=`<div class="wv-col">
+        ${frame(
+          glowArc(a1,a2,R,GOLD,8)+
+          `<line x1="${CX}" y1="${CY}" x2="${Pa[0]}" y2="${Pa[1]}" stroke="${BLUE}" stroke-width="2"/>`+
+          `<line x1="${CX}" y1="${CY}" x2="${Pb[0]}" y2="${Pb[1]}" stroke="${BLUE}" stroke-width="2"/>`+
+          `<line x1="${Pp[0]}" y1="${Pp[1]}" x2="${Pa[0]}" y2="${Pa[1]}" stroke="${GOLD}" stroke-width="1.8"/>`+
+          `<line x1="${Pp[0]}" y1="${Pp[1]}" x2="${Pb[0]}" y2="${Pb[1]}" stroke="${GOLD}" stroke-width="1.8"/>`+
+          angMark(Pa,[CX,CY],Pb,BLUE,deg+'°')+
+          angMark(Pa,Pp,Pb,GOLD,(deg/2)+'°')+
+          `<circle cx="${CX}" cy="${CY}" r="4" fill="${BLUE}"/>`
+        )}
+        <div class="wv-ans" style="font-size:15px">вписанный ${(deg/2)}°  ·  центральный ${deg}°</div>
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">дуга
+          <input type="range" min="40" max="160" step="4" value="${deg}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].arc=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:36px">${deg}°</b>
+        </label>
+        ${note('Один к двум','Крути дугу. Жёлтое число всегда половина голубого. Формулы сами держатся — их не надо зубрить отдельно.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
+          ${[['ищут прямой угол','ищи диаметр',GOLD],
+             ['ищут равные углы','ищи общую дугу',BLUE],
+             ['четыре точки — окружность?','сложи углы через один',GREEN]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Сигнал на задаче','Три подсказки, которые экономят чертёж. Увидел 90° на окружности — это диаметр. Увидел равные углы — они смотрят на одно. Увидел 180° напротив — обруч надевается.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
+          ${[['вписанный угол','½ дуги',GOLD],
+             ['одна дуга','равные углы',BLUE],
+             ['против. углы 4-угольника','всегда 180°',GREEN],
+             ['угол на диаметре','всегда 90°',PINK],
+             ['центральный','2 · вписанный','#c9a0ff']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Пять фраз','Этого хватает на школьный этап. Следующий кадр — короткий рецепт, как применять.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
+          ${[
+            ['1','Нарисуй окружность и дугу','на кого смотрит угол',GOLD],
+            ['2','Реши, какой это угол','вписанный, центральный или на диаметре',BLUE],
+            ['3','Возьми половину или всю дугу','вписанный ½, центральный = дуга',GREEN],
+            ['4','Для 4-угольника сложи через один','180° — обруч надевается',PINK]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.12}s;display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[3]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[3]};font-size:18px;min-width:18px">${x[0]}</b>
+            <span><div style="color:#e8dcc8;font-size:14px">${x[1]}</div><div class="wv-sml" style="margin-top:2px">${x[2]}</div></span>
+          </div>`).join('')}
+        </div>
+        ${note('Рецепт','Сначала дуга, потом тип угла, потом число. Не начинай с формулы — начинай с рисунка.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
         <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
-          ${[['вписанный угол','половина дуги','#ffd76a'],
-             ['против. углы вписанного 4-угольника','всегда 180°','#8fd1a8'],
-             ['угол на диаметре','всегда 90°','#7fd1ff']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+          ${[['вписанный угол','половина дуги',GOLD],
+             ['против. углы вписанного 4-угольника','всегда 180°',GREEN],
+             ['угол на диаметре','всегда 90°',BLUE]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
         ${frame(poly+allDots(''))}
         ${note('В карман','Три фразы — и можно решать задачи. Дальше проверка: чему равна сумма противоположных углов во вписанном четырёхугольнике?')}
@@ -4511,6 +4721,3 @@ window._waveCss = function(id, css){
     if(!f) arr.push(L426);
   })();
 })();
-
-
-
