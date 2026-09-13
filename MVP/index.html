@@ -337,28 +337,38 @@
     font-size:12px; padding:6px 11px; cursor:pointer; font-family:inherit; }
   .vbtn:hover { border-color:var(--brass); color:var(--ivory); }
   /* --- ассистент-аватар --- */
-  .asst { position:fixed; right:12px; bottom:78px; z-index:20; display:flex; flex-direction:column;
+  .asst { position:fixed; right:12px; bottom:78px; z-index:86; display:flex; flex-direction:column;
     align-items:flex-end; pointer-events:none; }
+  body:has(.pt-cta) .asst { bottom:158px; }
+  body:has(.pt-cta) .apanel { bottom:230px; }
   .asst > * { pointer-events:auto; }
-  .avatar { width:62px; height:62px; cursor:pointer; filter:drop-shadow(0 8px 16px rgba(0,0,0,.5)); transition:transform .15s; }
+  .avatar { width:62px; height:62px; cursor:pointer; border-radius:50%; overflow:hidden;
+    border:2.5px solid var(--brass); background:#1a241c;
+    box-shadow:0 8px 18px rgba(0,0,0,.5), 0 0 0 1px rgba(255,232,170,.35);
+    transition:transform .15s, box-shadow .2s; }
+  .avatar img { width:100%; height:100%; object-fit:cover; object-position:center 16%; display:block; }
   .avatar:hover { transform:scale(1.07); }
   .asst.idle .avatar { animation:aidle 4s ease-in-out infinite; }
   @keyframes aidle { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-3px);} }
-  .asst.talking .avatar { animation:atalk .34s ease-in-out infinite; }
+  .asst.talking .avatar { animation:atalk .34s ease-in-out infinite;
+    box-shadow:0 0 0 3px var(--brass), 0 0 18px rgba(217,164,65,.7); }
   @keyframes atalk { 0%,100%{ transform:translateY(0) rotate(-1.2deg);} 50%{ transform:translateY(-5px) rotate(1.2deg);} }
-  #amouth { transform-box:fill-box; transform-origin:center; transition:transform .1s; }
-  .asst.talking #amouth { animation:mouth .16s ease-in-out infinite alternate; }
-  @keyframes mouth { from{ transform:scaleY(.45);} to{ transform:scaleY(1.7);} }
+  @media (prefers-reduced-motion: reduce){
+    .asst.idle .avatar, .asst.talking .avatar { animation:none !important; }
+  }
   .abubble { background:#f6ecd2; color:#2c2318; border-radius:14px 14px 4px 14px; padding:9px 12px;
     max-width:240px; font-size:12.5px; line-height:1.45; box-shadow:0 6px 16px rgba(0,0,0,.4);
     margin-bottom:8px; display:none; }
   .abubble.show { display:block; animation:bup .18s ease; }
   @keyframes bup { from{ transform:translateY(6px); opacity:0;} to{ transform:none; opacity:1;} }
-  .apanel { position:fixed; right:12px; bottom:150px; width:258px; z-index:76; background:#12241b;
+  .apanel { position:fixed; right:12px; bottom:150px; width:258px; z-index:87; background:#12241b;
     border:1px solid var(--hairline); border-radius:16px; padding:12px; box-shadow:0 14px 40px rgba(0,0,0,.6);
     display:none; }
   .apanel.open { display:block; animation:bup .18s ease; }
-  .ap-head { display:flex; align-items:baseline; gap:8px; }
+  .ap-head { display:flex; align-items:center; gap:8px; }
+  .ap-ava { width:44px; height:44px; border-radius:50%; object-fit:cover; object-position:center 16%;
+    border:2px solid var(--brass); flex:none; }
+  .ap-head-txt { flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; }
   .ap-head b { color:var(--brass); font-size:15px; }
   .ap-sub { color:var(--muted); font-size:10.5px; flex:1; }
   .ap-x { background:none; border:none; color:var(--muted); font-size:14px; cursor:pointer; font-family:inherit; }
@@ -773,6 +783,8 @@
     .hint-box, .fb, .task-row .tt { font-size:14px; }
     .avatar { width:52px; height:52px; }
     .asst { right:8px; bottom:66px; }
+    body:has(.pt-cta) .asst { bottom:144px; }
+    body:has(.pt-cta) .apanel { bottom:212px; }
     .abubble { max-width:190px; font-size:12px; }
   }
 
@@ -804,43 +816,43 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=587"></script>
-<script src="data/tasks_ru.js?v=587"></script>
-<script src="data/tasks_mishutka.js?v=587"></script>
-<script src="data/tasks_fg6.js?v=587"></script>
-<script src="data/tasks_dict.js?v=587"></script>
-<script src="data/tasks_dict_1_6.js?v=587"></script>
-<script src="data/lessons.js?v=587"></script>
-<script src="data/lessons_draft.js?v=587"></script>
-<script src="data/comics_12.js?v=587"></script>
-<script src="data/sim_phys.js?v=587"></script>
-<script src="data/vis_bw.js?v=587"></script>
-<script src="data/vis_pw.js?v=587"></script>
-<script src="data/vis_ru.js?v=587"></script>
-<script src="data/lessons_fg6.js?v=587"></script>
-<script src="data/vis_cw.js?v=587"></script>
-<script src="data/vis_dw.js?v=587"></script>
-<script src="data/vis_ew.js?v=587"></script>
-<script src="data/vis_kl.js?v=587"></script>
-<script src="data/vis_wk.js?v=587"></script>
-<script src="data/inf_56.js?v=587"></script>
-<script src="js/comic.js?v=587"></script>
-<script src="js/core.js?v=587"></script>
-<script src="js/engine.js?v=587"></script>
-<script src="js/app.js?v=587"></script>
-<script src="js/dashboard.js?v=587"></script>
-<script src="js/pinpad.js?v=587"></script>
-<script src="js/kid.js?v=587"></script>
-<script src="js/notemodal.js?v=587"></script>
-<script src="js/lessons.js?v=587"></script>
-<script src="js/wave_guard.js?v=587"></script>
-<script src="js/legend.js?v=587"></script>
-<script src="js/simulator.js?v=587"></script>
-<script src="js/duel.js?v=587"></script>
-<script src="js/agent.js?v=587"></script>
-<script src="js/voice.js?v=587"></script>
-<script src="js/assistant.js?v=587"></script>
-<script src="js/agentlive.js?v=587"></script>
+<script src="data/tasks.js?v=588"></script>
+<script src="data/tasks_ru.js?v=588"></script>
+<script src="data/tasks_mishutka.js?v=588"></script>
+<script src="data/tasks_fg6.js?v=588"></script>
+<script src="data/tasks_dict.js?v=588"></script>
+<script src="data/tasks_dict_1_6.js?v=588"></script>
+<script src="data/lessons.js?v=588"></script>
+<script src="data/lessons_draft.js?v=588"></script>
+<script src="data/comics_12.js?v=588"></script>
+<script src="data/sim_phys.js?v=588"></script>
+<script src="data/vis_bw.js?v=588"></script>
+<script src="data/vis_pw.js?v=588"></script>
+<script src="data/vis_ru.js?v=588"></script>
+<script src="data/lessons_fg6.js?v=588"></script>
+<script src="data/vis_cw.js?v=588"></script>
+<script src="data/vis_dw.js?v=588"></script>
+<script src="data/vis_ew.js?v=588"></script>
+<script src="data/vis_kl.js?v=588"></script>
+<script src="data/vis_wk.js?v=588"></script>
+<script src="data/inf_56.js?v=588"></script>
+<script src="js/comic.js?v=588"></script>
+<script src="js/core.js?v=588"></script>
+<script src="js/engine.js?v=588"></script>
+<script src="js/app.js?v=588"></script>
+<script src="js/dashboard.js?v=588"></script>
+<script src="js/pinpad.js?v=588"></script>
+<script src="js/kid.js?v=588"></script>
+<script src="js/notemodal.js?v=588"></script>
+<script src="js/lessons.js?v=588"></script>
+<script src="js/wave_guard.js?v=588"></script>
+<script src="js/legend.js?v=588"></script>
+<script src="js/simulator.js?v=588"></script>
+<script src="js/duel.js?v=588"></script>
+<script src="js/agent.js?v=588"></script>
+<script src="js/voice.js?v=588"></script>
+<script src="js/assistant.js?v=588"></script>
+<script src="js/agentlive.js?v=588"></script>
 <script>
   /* сброс кэша при новой сборке: номер берём из адресов самих скриптов,
      поэтому после каждой выкладки старый кэш и старый service worker снимаются сами */
@@ -867,7 +879,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=587').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=588').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{

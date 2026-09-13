@@ -3,56 +3,9 @@
 (function(){
   let open=false, caption='', talking=false, lastAt=0;
 
-  /* ---------- нарисованный аватар (SVG) ---------- */
-  function leaves(cx,cy,r,a0,a1){
-    // оливковый венок по дуге над головой
-    let s='';
-    const n=11;
-    for(let i=0;i<=n;i++){
-      const a=a0+(a1-a0)*i/n;
-      const x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
-      const ang=a*180/Math.PI+90;
-      s+=`<g transform="translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${ang.toFixed(0)})">
-        <ellipse rx="6.2" ry="2.6" fill="${i%3===0?'#5F7A3A':'#7fa356'}" stroke="#46602e" stroke-width=".5"/>
-        ${i%2===0?`<circle cy="-3.4" r="1.15" fill="#d9a441"/>`:''}</g>`;
-    }
-    return s;
-  }
-  function avatarSVG(){
-    return `<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
-      <defs><radialGradient id="aglow" cx=".5" cy=".35" r=".75">
-        <stop offset="0" stop-color="#fff6e0" stop-opacity=".55"/><stop offset="1" stop-color="#fff6e0" stop-opacity="0"/></radialGradient></defs>
-      <circle cx="48" cy="52" r="46" fill="url(#aglow)"/>
-      <!-- хитон (плечи) -->
-      <path d="M6 96 C8 74 20 66 48 66 C76 66 88 74 90 96 Z" fill="#2c3e6b" stroke="#1d2a4d" stroke-width="1.5"/>
-      <path d="M26 96 C30 74 38 68 48 68 C58 68 66 74 70 96 Z" fill="#38527f"/>
-      <path d="M40 74 L56 74" stroke="#d9a441" stroke-width="1.4"/>
-      <!-- шея -->
-      <rect x="42" y="60" width="12" height="9" rx="3" fill="#e6b98c"/>
-      <!-- голова -->
-      <circle cx="48" cy="40" r="24" fill="#eec39b" stroke="#c08a5e" stroke-width="1.2"/>
-      <!-- уши -->
-      <circle cx="23.6" cy="43" r="4.4" fill="#eec39b" stroke="#c08a5e" stroke-width="1"/>
-      <circle cx="72.4" cy="43" r="4.4" fill="#eec39b" stroke="#c08a5e" stroke-width="1"/>
-      <!-- брови -->
-      <path d="M33 32 Q38 28.6 43.4 30" stroke="#6b4a33" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-      <path d="M52.6 30 Q58 28.6 63 32" stroke="#6b4a33" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-      <!-- глаза -->
-      <circle cx="38.2" cy="37.5" r="4.6" fill="#fffdf5"/><circle cx="57.8" cy="37.5" r="4.6" fill="#fffdf5"/>
-      <circle cx="39.2" cy="38" r="2.2" fill="#33291e"/><circle cx="58.8" cy="38" r="2.2" fill="#33291e"/>
-      <circle cx="40" cy="36.8" r=".7" fill="#fff"/><circle cx="59.6" cy="36.8" r=".7" fill="#fff"/>
-      <!-- нос -->
-      <path d="M48 39 Q46.6 43.5 48.4 45.6" stroke="#d09a6a" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-      <!-- борода -->
-      <path d="M28 47 C27 62 34 74 48 74.5 C62 74 69 62 68 47 C62 52 34 52 28 47 Z" fill="#f6f1e6" stroke="#ddd2bc" stroke-width="1"/>
-      <path d="M30.5 49 C36 56 60 56 65.5 49 C60 60.5 36 60.5 30.5 49 Z" fill="#f1ead9" opacity=".85"/>
-      <!-- усы -->
-      <path d="M37 49.5 Q48 45.5 59 49.5" stroke="#e4dcc8" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-      <!-- рот (анимируется при говорении) -->
-      <ellipse id="amouth" cx="48" cy="57.5" rx="4.6" ry="2.4" fill="#7c4a33"/>
-      <!-- венок -->
-      ${leaves(48,15,21,Math.PI*0.94,Math.PI*2.06)}
-    </svg>`;
+  /* ---------- портрет помощника ---------- */
+  function avatarHTML(){
+    return `<img src="img/archimedes.jpg" width="96" height="96" alt="Архимед" decoding="async">`;
   }
 
   /* ---------- DOM ---------- */
@@ -77,12 +30,14 @@
   function build(){
     const wrap=el(`<div class="asst" id="asst">
       <div class="abubble" id="asstBub"></div>
-      <div class="avatar" id="asstAvatar" title="Архимед — голосовой помощник">${avatarSVG()}</div>
+      <div class="avatar" id="asstAvatar" title="Архимед — голосовой помощник">${avatarHTML()}</div>
     </div>`);
     document.body.appendChild(wrap);
     // панель
     const panel=el(`<div class="apanel" id="asstPanel">
-      <div class="ap-head"><b>◈ Архимед</b><span class="ap-sub">очень умный — говори со мной</span>
+      <div class="ap-head">
+        <img class="ap-ava" src="img/archimedes.jpg" width="44" height="44" alt="" decoding="async">
+        <div class="ap-head-txt"><b>◈ Архимед</b><span class="ap-sub">очень умный — говори со мной</span></div>
         <button class="ap-x" onclick="ASSIST.close()">✕</button></div>
       <div class="ap-cap" id="apCap">Я Архимед, очень умный. Ты можешь со мной говорить: я отвечаю голосом и помню твоё имя.</div>
       <button class="btn ok2" id="alBtn" style="width:100%;margin:8px 0;font-size:15px" onclick="AGENTLIVE.toggle()">🗣 Я Архимед — говори со мной</button>

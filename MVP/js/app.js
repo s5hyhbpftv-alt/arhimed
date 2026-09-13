@@ -908,8 +908,11 @@ function ptCss(){
   .pt-arch{margin-top:12px;padding:12px 14px;border-radius:16px;
     background:linear-gradient(135deg,rgba(127,209,255,.07),rgba(217,164,65,.06));
     border:1px solid rgba(127,209,255,.3)}
+  .pt-arch-row{display:flex;gap:12px;align-items:flex-start}
+  .pt-arch-ava{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:center 16%;
+    border:2px solid var(--brass);flex:none;box-shadow:0 4px 10px rgba(0,0,0,.35)}
   .pt-arch-who{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
-  .pt-arch-say{font-size:16px;line-height:1.5;color:#e2e8f4;margin-top:6px}
+  .pt-arch-say{font-size:16px;line-height:1.5;color:#e2e8f4;margin-top:4px}
   .pt-arch-link{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;margin-top:10px;
     padding:8px 10px;border-radius:12px;border:1px solid var(--hairline);background:rgba(255,255,255,.04);
     color:var(--ivory);font-family:inherit;text-align:left;cursor:pointer;
@@ -1021,8 +1024,13 @@ function renderPath(){
          <span class="t1">🏆 Все задачи решены</span><span class="t2">выбрать что-то из банка задач</span></button></div>`;
 
   const legend=`<div class="pt-arch">
-      <div class="pt-arch-who">◈ Архимед</div>
-      <div class="pt-arch-say">${esc(pathSay(doneN,pool.length))}</div>
+      <div class="pt-arch-row">
+        <img class="pt-arch-ava" src="img/archimedes.jpg" width="52" height="52" alt="Архимед" decoding="async">
+        <div>
+          <div class="pt-arch-who">◈ Архимед</div>
+          <div class="pt-arch-say">${esc(pathSay(doneN,pool.length))}</div>
+        </div>
+      </div>
       <button type="button" class="pt-arch-link" onclick="go('legend')">
         <span class="pt-arch-ic">📜</span>
         <span class="pt-arch-t"><b>Легенда об Архимеде</b><span>кто он и откуда острова</span></span>
