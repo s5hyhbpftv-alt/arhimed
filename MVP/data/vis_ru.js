@@ -4432,7 +4432,7 @@ window.RU615 = (function(){
   window.mkPick=(i,o)=>{ const lk=lidKey(615); CHS[lk].ans=CHS[lk].ans||{}; if(CHS[lk].ans[i]!=null) return; CHS[lk].ans[i]=o; chRender(0); };
   window.mkStep=(d)=>{ try{ const n=((typeof LV!=='undefined'&&LV.step)||0)+d; if(n<0||n>=Q.length) return; LV.step=n; chRender(0); }catch(e){} };
   if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===615)){
-    window.ARH_LESSONS.push({id:615,title:'Путь Мишутки',ico:'🐻',src:'Русский язык · 5–6 класс · Путь Мишутки',subj:'rus',
+    window.ARH_LESSONS.push({id:615,title:'Демоверсия МЦКО: 13 заданий',ico:'🐻',src:'Функциональная грамотность · 6 класс · Демонстрационный вариант',subj:'rus',group:'mish',
       explain:Q.map((x,i)=>(i+1)+'. '+x.t),
       check:{q:'Зеленоградский округ не граничит ни с одним другим. Каким номером он обозначен на карте Москвы?',
         choices:['10','1','12'],ans:0,exp:'Зеленоградский — 10: он стоит отдельно на северо-западе, в стороне от остальных округов.'},
@@ -4445,7 +4445,7 @@ window.RU615 = (function(){
          kind:'unit',ans:315,tol:0,
          hints:['210 — это две трети, значит одна треть в два раза меньше.','Одна треть — 105, а мест в зале три трети.'],
          sol:'105 × 3 = 315 мест.'}
-      ],img:'img/mishutka.png'});
+      ],img:'img/mishutka-head.png'});
   }
   if(window.WAVE_B) window.WAVE_B[615]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
   return {render:render,data:Q,art:ART};
@@ -4527,7 +4527,7 @@ window.RU615PAPER = (function(){
     el.innerHTML=`<div class="pp">
       <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div>
         <div class="of" style="display:flex;align-items:center;gap:8px">
-          <img src="img/mishutka.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">Путь Мишутки</div></div>
+          <img src="img/mishutka-head.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">Путь Мишутки</div></div>
       <h2>${it.t}</h2>
       ${art}
       <div class="q">${it.q}</div>
@@ -5768,7 +5768,7 @@ window.RUPAPER = (function(){
     el.innerHTML=`<div class="pp">
       <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div>
         <div class="of" style="display:flex;align-items:center;gap:8px">
-          <img src="img/mishutka.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">${cfg.brand||'Путь Мишутки'}</div></div>
+          <img src="img/mishutka-head.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">${cfg.brand||'Путь Мишутки'}</div></div>
       <h2>${it.t}</h2>
       <div class="fig">${String(cfg.art[it.k]())}</div>
       <div class="q">${it.q}</div>
@@ -5848,8 +5848,8 @@ window.RUPAPER = (function(){
       /* персонажа гасит CSS, см. пояснение в листе 615 */
     };
     if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===cfg.id)){
-      window.ARH_LESSONS.push({id:cfg.id,title:cfg.title,ico:cfg.ico,src:cfg.src,subj:'rus',
-        explain:cfg.data.map((x,i)=>(i+1)+'. '+x.t),check:cfg.check,tasks:cfg.tasks,img:'img/mishutka.png'});
+      window.ARH_LESSONS.push({id:cfg.id,title:cfg.title,ico:cfg.ico,src:cfg.src,subj:'rus',group:cfg.group||'mish',
+        explain:cfg.data.map((x,i)=>(i+1)+'. '+x.t),check:cfg.check,tasks:cfg.tasks,img:'img/mishutka-head.png'});
     }
   }
   return {mount:mount,css:css};

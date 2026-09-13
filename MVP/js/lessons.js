@@ -9,6 +9,7 @@ function lrec(){ DB.lessons=DB.lessons||{}; if(!DB.lessons[LV.id]) DB.lessons[LV
 /* ---------- список ---------- */
 const SUBJ_META={
   jun:{ico:'🧸', name:'Начальная школа', dsc:'1–4 класс · просто и понятно'},
+  mish:{ico:'🐻', name:'Путь Мишутки', dsc:'МЦКО · карта, математика, чтение, наука'},
   math:{ico:'🏛', name:'Математика', dsc:'Сиракузы · логика, числа, комбинаторика'},
   phys:{ico:'🍎', name:'Физика', dsc:'Ньютон · движение, силы, энергия'},
   chem:{ico:'⚗️', name:'Химия', dsc:'Лавуазье · вещества, реакции, растворы'},
@@ -42,6 +43,7 @@ function lessonFits(L){ /* при открытом мире уроки не пр
 
 function subjOf(L){
   const src=(L&&L.src)||'';
+  if(L&&L.group) return L.group;   /* «Путь Мишутки» — отдельная полка, предмет у уроков остаётся свой */
   if(L&&L.subj) return L.subj;
   if(/Русский язык/.test(src)) return 'rus';   /* единственная добавленная ветка */
   return /Начальная школа/.test(src)?'jun':/Информатика/.test(src)?'inf':/физика/i.test(src)?'phys':'math';
@@ -96,8 +98,12 @@ function lessonsWithDivider(items){
   }
   return out;
 }
-function bookIcoHTML(subj, meta){
-  /* значок предмета; картинка показывается только у конкретного урока (см. ниже) */
+function bookIcoHTML(subj, meta, big){
+  /* значок предмета; у «Пути Мишутки» вместо эмодзи — картинка медвежонка:
+     в шапке раздела — в полный рост, в тесных местах (таб, строка урока, секция) — только голова */
+  if(subj==='mish') return big
+    ? `<img class="subj-img lg" src="img/mishutka.png" alt="">`
+    : `<img class="subj-img" src="img/mishutka-head.png" alt="">`;
   return meta.ico;
 }
 function renderBookList(){
@@ -106,7 +112,7 @@ function renderBookList(){
   const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
   const totalL=pool.length;
   const junior=typeof isJunior==='function'&&isJunior();
-  const order=junior? ['jun'] : ['all','math','rus','phys','chem','inf'];
+  const order=junior? ['jun'] : ['all','mish','math','rus','phys','chem','inf'];
   const grouped=order.filter(s=>s==='all'||pool.some(L=>subjOf(L)===s)).map(subj=>{
     if(subj==='all') return { subj:'all', meta:{ico:'📚',name:'Все предметы'}, items:pool };
     const meta=SUBJ_META[subj]; return { subj, meta, items:pool.filter(L=>subjOf(L)===subj) };
@@ -127,7 +133,7 @@ function renderBookList(){
     ? (()=>{ const g=grouped.find(x=>x.subj===sel); if(!g) return '';
         const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
         return `<div class="book-subj-head">
-            <span class="bsh-ico">${bookIcoHTML(g.subj,g.meta)}</span>
+            <span class="bsh-ico">${bookIcoHTML(g.subj,g.meta,true)}</span>
             <span><b>${g.meta.name}</b><br>
             <span class="small" style="color:var(--muted)">${esc(g.meta.dsc)} · ${gd}/${g.items.length} пройдено</span></span>
           </div>${lessonsWithDivider(g.items)}`; })()
@@ -136,7 +142,7 @@ function renderBookList(){
         const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
         return `<div class="book-sec">
           <div class="bs-head" onclick="bookToggle('${g.subj}')">
-            <span class="bs-ico">${g.meta.ico}</span>
+            <span class="bs-ico">${bookIcoHTML(g.subj,g.meta)}</span>
             <span style="flex:1;text-align:left"><b>${g.meta.name}</b>
               <span class="small" style="color:var(--muted);display:block">${esc(g.meta.dsc)}</span></span>
             <span class="pr2">${gd}/${g.items.length} <i class="caret ${isOpen?'down':''}">▸</i></span>
