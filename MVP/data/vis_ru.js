@@ -5,7 +5,42 @@ window.WAVE_B = window.WAVE_B || {};
 window.RUKIT = (function(){
   const K = window.PKIT;
   const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f', PALE='#e8dcc8';
-  const T = K.l, T2 = K.l2, SV = K.sv, NOTE = K.note, PRED = K.pred, CARDS = K.cards;
+  const T = K.l, T2 = K.l2, SV = K.sv, CARDS = K.cards;
+
+  /* --- Пояснение кадра и вопрос-проверка: свой кегль для русского направления ---
+     Раньше русские уроки брали компоненты у PKIT (физика и математика), а там
+     пояснение 13,5 px и вопрос 13 px — ниже стандарта (основной текст не меньше
+     16). Трогать PKIT нельзя: это общий движок других предметов. Поэтому здесь
+     свои компоненты по шкале: вопрос 18, пояснение 16, кнопка ответа 16,
+     цель касания не меньше 52 px. */
+  const RCSS=`
+  #lvis .ru-note{width:min(100%,340px);text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+    border:1px solid #3d5c49;border-radius:14px;padding:14px 16px}
+  #lvis .ru-note .t{color:${GOLD};font-size:20px;line-height:1.25;font-weight:600;margin-bottom:8px}
+  #lvis .ru-note .b{color:${PALE};font-size:16px;line-height:1.55}
+  #lvis .ru-pred{width:min(100%,340px);text-align:left}
+  #lvis .ru-pred .q{color:${GOLD};font-size:18px;line-height:1.4;margin-bottom:10px}
+  #lvis .ru-pred .r{display:flex;gap:10px;flex-wrap:wrap}
+  #lvis .ru-pred button{flex:1 1 44%;min-height:52px;padding:14px 16px;font-family:Georgia,'Times New Roman',serif;
+    font-size:16px;line-height:1.35;border-radius:14px;border:1.5px solid rgba(255,215,106,.28);
+    background:rgba(255,255,255,.05);color:${PALE};cursor:pointer;transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 160ms}
+  #lvis .ru-pred button:active{transform:translateY(2px)}
+  #lvis .ru-pred button:focus-visible{outline:3px solid ${GOLD};outline-offset:3px}
+  #lvis .ru-pred .fb{margin-top:10px;font-size:16px;line-height:1.5}
+  `;
+  function rcss(){ try{ let e=document.getElementById('ruk-style'); if(!e){ e=document.createElement('style'); e.id='ruk-style'; document.head.appendChild(e); } if(e.textContent!==RCSS) e.textContent=RCSS; }catch(e){} }
+  function NOTE(title,text){
+    rcss();
+    return `<div class="ru-note"><div class="t">${title}</div><div class="b">${text}</div></div>`;
+  }
+  function PRED(st,key,q,opts){
+    rcss();
+    const cur=st[key], pick=opts.find(o=>o.k===cur);
+    const fb=cur?`<div class="fb" style="color:${(pick&&pick.ok===false)?RED:GREEN}">${(pick&&pick.fb)||((pick&&pick.ok===false)?'пока нет — посмотри кадр ещё раз':'верно!')}</div>`:'';
+    return `<div class="ru-pred"><div class="q">${q}</div><div class="r">${opts.map(o=>
+      `<button type="button" style="border-color:${cur===o.k?((o.ok===false)?RED:GOLD):'rgba(255,215,106,.28)'}"
+        onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>${fb}</div>`;
+  }
 
   /* слово-плашка: главный элемент русских сцен */
   function word(x, y, text, col, o){
@@ -491,7 +526,7 @@ window.RUKIT = (function(){
         <rect x="52" y="42" width="232" height="72" rx="14" fill="rgba(255,255,255,.05)"
           stroke="${res==null?'#3d5c49':(res?'#8fd1a8':'#e86a5a')}" stroke-width="1.6"/>
         ${T(168,90,it[0],PALE,{fs:28})}
-        ${T2(168,146,res==null?'выбери часть слова кнопкой':(res?'верно: ':'не угадал: ')+it[0]+' — это '+it[2],res==null?MUTED:(res?GREEN:RED),{fs:12})}
+        ${T2(168,146,'выбери часть слова кнопкой',MUTED,{fs:12})}
         ${T2(84,178,'верно: '+ok,GREEN,{fs:12})}${T2(168,178,'ошибок: '+bad,RED,{fs:12})}${T2(252,178,'всего: '+items.length,GOLD,{fs:12})}
         ${T2(168,212,'приставка — перед корнем,',MUTED,{fs:10.5})}
         ${T2(168,228,'суффикс — после, окончание — в конце',MUTED,{fs:10.5})}
@@ -503,6 +538,7 @@ window.RUKIT = (function(){
   const GAME602=[['приехать','приставка','приставка при-'],['лесник','суффикс','суффикс -ник'],
     ['леса','окончание','окончание -а'],['переход','приставка','приставка пере-'],
     ['домик','суффикс','суффикс -ик'],['книгу','окончание','окончание -у']];
+  window.RUGAME=window.RUGAME||{}; window.RUGAME[602]=GAME602;
   window.ru602Game=function(k){
     try{
       const lk=lidKey(LV.id); CHS[lk]=CHS[lk]||{}; const st=CHS[lk];
@@ -1028,7 +1064,7 @@ window.RUKIT = (function(){
         <rect x="46" y="42" width="244" height="72" rx="14" fill="rgba(255,255,255,.05)"
           stroke="${res==null?'#3d5c49':(res?'#8fd1a8':'#e86a5a')}" stroke-width="1.6"/>
         ${T(168,90,it[0],PALE,{fs:22})}
-        ${T2(168,146,res==null?'как пишется?':(res?'верно: ':'не угадал: ')+it[2],res==null?MUTED:(res?GREEN:RED),{fs:12})}
+        ${T2(168,146,'как пишется?',MUTED,{fs:12})}
         ${T2(84,178,'верно: '+ok,GREEN,{fs:12})}${T2(168,178,'ошибок: '+bad,RED,{fs:12})}${T2(252,178,'всего: '+items.length,GOLD,{fs:12})}
         ${T2(168,212,'попробуй вставить слово между',MUTED,{fs:10.5})}
         ${T2(168,228,'получилось — это предлог',MUTED,{fs:10.5})}
@@ -1039,6 +1075,7 @@ window.RUKIT = (function(){
   const GAME605=[['(за)шёл','слитно','зашёл — приставка'],['(на)столе','раздельно','на столе — предлог'],
     ['(под)ъезд','слитно','подъезд — приставка'],['(в)лесу','раздельно','в лесу — предлог'],
     ['(от)нёс','слитно','отнёс — приставка'],['(за)домом','раздельно','за домом — предлог']];
+  window.RUGAME=window.RUGAME||{}; window.RUGAME[605]=GAME605;
   window.ru605Game=function(k){
     try{
       const lk=lidKey(LV.id); CHS[lk]=CHS[lk]||{}; const st=CHS[lk];
@@ -1204,7 +1241,7 @@ window.RUKIT = (function(){
         <rect x="52" y="42" width="232" height="72" rx="14" fill="rgba(255,255,255,.05)"
           stroke="${res==null?'#3d5c49':(res?'#8fd1a8':'#e86a5a')}" stroke-width="1.6"/>
         ${T(168,90,it[0],PALE,{fs:28})}
-        ${T2(168,146,res==null?'какого рода слово?':(res?'верно: ':'не угадал: ')+it[0]+' — '+it[2],res==null?MUTED:(res?GREEN:RED),{fs:12})}
+        ${T2(168,146,'какого рода слово?',MUTED,{fs:12})}
         ${T2(84,178,'верно: '+ok,GREEN,{fs:12})}${T2(168,178,'ошибок: '+bad,RED,{fs:12})}${T2(252,178,'всего: '+items.length,GOLD,{fs:12})}
         ${T2(168,212,'подставь он, она или оно',MUTED,{fs:10.5})}
         ${T2(168,228,'и посмотри на окончание',MUTED,{fs:10.5})}
@@ -1214,6 +1251,7 @@ window.RUKIT = (function(){
   }
   const GAME606=[['ночь','она','женский род'],['стол','он','мужской род'],['окно','оно','средний род'],
     ['мышь','она','женский род'],['ключ','он','мужской род'],['поле','оно','средний род']];
+  window.RUGAME=window.RUGAME||{}; window.RUGAME[606]=GAME606;
   window.ru606Game=function(k){
     try{
       const lk=lidKey(LV.id); CHS[lk]=CHS[lk]||{}; const st=CHS[lk];
@@ -1386,7 +1424,7 @@ window.RUKIT = (function(){
         <rect x="42" y="42" width="252" height="72" rx="14" fill="rgba(255,255,255,.05)"
           stroke="${res==null?'#3d5c49':(res?'#8fd1a8':'#e86a5a')}" stroke-width="1.6"/>
         ${T(168,90,it[0],PALE,{fs:22})}
-        ${T2(168,146,res==null?'какой падеж у выделенного слова?':(res?'верно: ':'не угадал: ')+it[2],res==null?MUTED:(res?GREEN:RED),{fs:11.5})}
+        ${T2(168,146,'какой падеж у выделенного слова?',MUTED,{fs:11.5})}
         ${T2(84,178,'верно: '+ok,GREEN,{fs:12})}${T2(168,178,'ошибок: '+bad,RED,{fs:12})}${T2(252,178,'всего: '+items.length,GOLD,{fs:12})}
         ${T2(168,212,'задай вопрос от соседнего слова',MUTED,{fs:10.5})}
         ${T2(168,228,'и следи за предлогом',MUTED,{fs:10.5})}
@@ -1397,6 +1435,7 @@ window.RUKIT = (function(){
   const GAME607=[['читаю книгу: падеж «книгу»','в','винительный'],['нет книги: падеж «книги»','р','родительный'],
     ['дать другу: падеж «другу»','д','дательный'],['рисую карандашом: «карандашом»','т','творительный'],
     ['думаю о книге: падеж «книге»','п','предложный'],['ученик читает: падеж «ученик»','и','именительный']];
+  window.RUGAME=window.RUGAME||{}; window.RUGAME[607]=GAME607;
   window.ru607Game=function(k){
     try{
       const lk=lidKey(LV.id); CHS[lk]=CHS[lk]||{}; const st=CHS[lk];
@@ -1565,7 +1604,7 @@ window.RUKIT = (function(){
         <rect x="42" y="42" width="252" height="72" rx="14" fill="rgba(255,255,255,.05)"
           stroke="${res==null?'#3d5c49':(res?'#8fd1a8':'#e86a5a')}" stroke-width="1.6"/>
         ${T(168,90,it[0],PALE,{fs:24})}
-        ${T2(168,146,res==null?'какое это время?':(res?'верно: ':'не угадал: ')+it[0]+' — '+it[2],res==null?MUTED:(res?GREEN:RED),{fs:12})}
+        ${T2(168,146,'какое это время?',MUTED,{fs:12})}
         ${T2(84,178,'верно: '+ok,GREEN,{fs:12})}${T2(168,178,'ошибок: '+bad,RED,{fs:12})}${T2(252,178,'всего: '+items.length,GOLD,{fs:12})}
         ${T2(168,212,'подставь «вчера», «сейчас»,',MUTED,{fs:10.5})}
         ${T2(168,228,'«завтра» — и время определится',MUTED,{fs:10.5})}
@@ -1576,6 +1615,7 @@ window.RUKIT = (function(){
   const GAME608=[['читает','наст','настоящее время'],['читал','прош','прошедшее время'],
     ['прочитает','буд','будущее время'],['будет читать','буд','будущее сложное'],
     ['читали','прош','прошедшее время'],['читаю','наст','настоящее время']];
+  window.RUGAME=window.RUGAME||{}; window.RUGAME[608]=GAME608;
   window.ru608Game=function(k){
     try{
       const lk=lidKey(LV.id); CHS[lk]=CHS[lk]||{}; const st=CHS[lk];
@@ -1741,7 +1781,7 @@ window.RUKIT = (function(){
         <rect x="42" y="42" width="252" height="72" rx="14" fill="rgba(255,255,255,.05)"
           stroke="${res==null?'#3d5c49':(res?'#8fd1a8':'#e86a5a')}" stroke-width="1.6"/>
         ${T(168,90,it[0],PALE,{fs:22})}
-        ${T2(168,146,res==null?'выбери написание':(res?'верно: ':'не угадал: ')+it[2],res==null?MUTED:(res?GREEN:RED),{fs:12})}
+        ${T2(168,146,'выбери написание',MUTED,{fs:12})}
         ${T2(84,178,'верно: '+ok,GREEN,{fs:12})}${T2(168,178,'ошибок: '+bad,RED,{fs:12})}${T2(252,178,'всего: '+items.length,GOLD,{fs:12})}
         ${T2(168,212,'задай вопрос к глаголу:',MUTED,{fs:10.5})}
         ${T2(168,228,'ь в вопросе — ь в слове',MUTED,{fs:10.5})}
@@ -1752,6 +1792,7 @@ window.RUKIT = (function(){
   const GAME609=[['Он учит?ся','тся','что делает? — без ь'],['Надо учит?ся','ться','что делать? — с ь'],
     ['Ему не хоч?тся спать','тся','что делает? — без ь'],['Она улыбает?ся','тся','что делает? — без ь'],
     ['Хочу учит?ся','ться','что делать? — с ь'],['Дети улыбают?ся','тся','что делают? — без ь']];
+  window.RUGAME=window.RUGAME||{}; window.RUGAME[609]=GAME609;
   window.ru609Game=function(k){
     try{
       const lk=lidKey(LV.id); CHS[lk]=CHS[lk]||{}; const st=CHS[lk];
@@ -1923,7 +1964,7 @@ window.RUKIT = (function(){
         <rect x="26" y="44" width="284" height="72" rx="14" fill="rgba(255,255,255,.05)"
           stroke="${res==null?'#3d5c49':(res?'#8fd1a8':'#e86a5a')}" stroke-width="1.6"/>
         ${T(168,90,it[0],PALE,{fs:16})}
-        ${T2(168,146,res==null?'выбери ответ':(res?'верно: ':'не угадал: ')+it[2],res==null?MUTED:(res?GREEN:RED),{fs:11})}
+        ${T2(168,146,'выбери ответ',MUTED,{fs:11})}
         ${T2(84,178,'верно: '+ok,GREEN,{fs:12})}${T2(168,178,'ошибок: '+bad,RED,{fs:12})}${T2(252,178,'всего: '+items.length,GOLD,{fs:12})}
         ${T2(168,212,'посчитай основы и найди',MUTED,{fs:10.5})}
         ${T2(168,228,'однородные члены',MUTED,{fs:10.5})}
@@ -1937,6 +1978,7 @@ window.RUKIT = (function(){
     ['Светит солнце и поют птицы','слож','две основы — запятая перед и'],
     ['не груши а сливы','перед а','союз а — запятая'],
     ['Спасибо Маша за помощь','две','обращение в середине — две запятые']];
+  window.RUGAME=window.RUGAME||{}; window.RUGAME[610]=GAME610;
   window.ru610Game=function(k){
     try{
       const lk=lidKey(LV.id); CHS[lk]=CHS[lk]||{}; const st=CHS[lk];
@@ -3345,6 +3387,10 @@ window.RU601V2 = (function(){
     background:linear-gradient(180deg,#24382d,#17261e);border:1.5px solid var(--line);box-shadow:0 12px 28px rgba(0,0,0,.42)}
   #lvis .s6 .word b{font-size:44px;font-weight:600;line-height:1;letter-spacing:-.02em}
   #lvis .s6 .word i{font-style:normal;font-size:16px;color:var(--mut)}
+  /* длинная фраза в плашке: на 320 px «кот · столе · спит» не влезала в строку —
+     разрешаем перенос и держим кегль по шкале (26 px вместо 28) */
+  #lvis .s6 .word.wide{white-space:normal;flex-wrap:wrap;justify-content:center;text-align:center;max-width:100%}
+  #lvis .s6 .word.wide b{font-size:26px;line-height:1.25;letter-spacing:0}
   #lvis .s6 .tag{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:12px;
     background:rgba(255,215,106,.12);border:1px solid var(--line);font-size:16px;color:var(--gold)}
   #lvis .s6 .cta{width:100%;padding:17px 18px;font-size:20px;font-weight:600;line-height:1.2;
@@ -3409,6 +3455,7 @@ window.RU601V2 = (function(){
   const SC=[['снег','кто? что?','н'],['пушистый','какой?','п'],['летит','что делает?','г'],['дорога','кто? что?','н'],
             ['весёлый','какой?','п'],['рисует','что делает?','г'],['радость','кто? что?','н'],['зимний','какой?','п'],['светит','что делает?','г']];
   const CR=[['н','🧱','сущ.','кто? что?'],['п','🎨','прил.','какой?'],['г','⚡','гл.','что делает?']];
+  window.RUGAME=window.RUGAME||{}; window.RUGAME[601]=SC;   /* тренажёр 601 виден гейту отклика */
   function v(s,i){ const q=s['q'+i]; return q==null?`<p class="verdict">Выбери ответ:</p>`:`<p class="verdict ${q===0?'ok':'no'}">${q===0?'✅ верно.':'❌ не так — подумай ещё раз.'}</p>`; }
   function pred(i,body){ return body + (P[i]?`<div class="row">
       ${BTN(90,'chip',P[i][1],`s6Pred(${i},0)`)}${BTN(91,'chip',P[i][2],`s6Pred(${i},1)`)}</div>${v(S(),i)}`:'') }
@@ -3463,7 +3510,7 @@ window.RU601V2 = (function(){
        <div class="row">${T('div',2,'card','<div class="ic">🔗</div><div class="nm">предлог</div><div class="ex">в, на, под</div>')}
        ${T('div',3,'card','<div class="ic">➕</div><div class="nm">союз</div><div class="ex">и, но, а</div>')}
        ${T('div',4,'card','<div class="ic">❕</div><div class="nm">частица</div><div class="ex">не, бы, же</div>')}</div>
-       <div class="split">${T('span',5,'word', s.sv==null?'<b style="font-size:28px">кот · столе · спит</b><i style="font-size:14px">без службы</i>':'<b style="font-size:34px;letter-spacing:0">кот <span style="color:#ffd76a">на</span> столе <span style="color:#ffd76a">и</span> спит</b><i>служебные на месте</i>')}</div>
+       <div class="split">${T('span',5,'word wide', s.sv==null?'<b>кот · столе · спит</b><i>без службы</i>':'<b>кот <span style="color:#ffd76a">на</span> столе <span style="color:#ffd76a">и</span> спит</b><i>служебные на месте</i>')}</div>
        ${BTN(6,'cta', s.sv==null?'Собрать фразу':'Разобрать снова',`s6Serv()`)}`,
     9:(()=>{ const i=(s.gIdx||0)%SC.length, it=SC[i], got=s.gRes, done=got!=null, ok=got===it[2];
       return `${T('div',0,'kicker','09 · Тренажёр')}
@@ -3617,7 +3664,10 @@ window.RUWORK = (function(){
       <div class="wordwrap"><div class="halo"></div><div class="word">${cells}</div></div>
       <p class="ask">${it.ask||'Выбери верное написание'}</p>
       <div class="opts">${opts}</div>
-      <p class="verdict ${done?(ok?'ok':'no'):''}" aria-live="polite">${done ? (ok ? '✅ верно: '+spell+(why?' — '+why:'') : '❌ правильно «'+it.ans+'» — '+spell) : 'Выбери букву — она встанет в слово.'}</p>
+      ${done
+        ? (ok ? window.RUFEED.note('ok','верно','<b>'+spell+'</b>'+(why?' · '+why:''))
+              : window.RUFEED.note('no','исправить','Правильно «<b>'+it.ans+'</b>» — '+spell+(why?' · '+why:'')))
+        : `<p class="verdict" aria-live="polite">Выбери букву — она встанет в слово.</p>`}
       <p class="score">верно: ${st.ok||0} · ошибок: ${st.bad||0} · всего: ${total}</p>
     </div>`;
   }
@@ -3689,7 +3739,11 @@ window.RUWORK611 = (function(){
       linear-gradient(180deg,#1b2c24,#131e19);
     border:1px solid var(--rule);box-shadow:0 26px 64px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05)}
   #lvis .ms .grain{position:absolute;inset:0;background-image:${GRAIN};pointer-events:none;mix-blend-mode:overlay}
-  #lvis .ms .vine{position:absolute;left:10px;right:10px;top:8px;height:18px;opacity:.75;pointer-events:none}
+  /* СВОЙСТВА SVG-ЗАМЕНЯЕМОГО ЭЛЕМЕНТА: у абсолютно positioned SVG без явной ширины
+     берётся собственная ширина 300 px из viewBox, а не расстояние между left и right.
+     На 320 px лоза и подчёркивание выходили за правый край на 18 и 44 px — отсюда
+     12 отметок гейта. Ширину задаём явно от контейнера. */
+  #lvis .ms .vine{position:absolute;left:10px;width:calc(100% - 20px);top:8px;height:18px;opacity:.75;pointer-events:none}
   #lvis .ms .vine.b{top:auto;bottom:8px;transform:scaleY(-1)}
   #lvis .ms .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
   #lvis .ms .work{font-size:clamp(11px,3.2vw,14px);letter-spacing:clamp(.06em,.14em,.14em);text-transform:uppercase;color:var(--mut)}
@@ -3715,7 +3769,7 @@ window.RUWORK611 = (function(){
     transform-origin:left;animation:pen 420ms cubic-bezier(.2,1,.32,1) 120ms both}
   @keyframes pen{0%{transform:scaleX(0);opacity:.2}100%{transform:scaleX(1);opacity:1}}
   #lvis .ms .ink span.bad{color:#ffdad4;text-shadow:0 0 18px rgba(232,115,95,.8)}
-  #lvis .ms .underline{position:absolute;left:8%;right:8%;bottom:10px;height:14px;opacity:.9}
+  #lvis .ms .underline{position:absolute;left:8%;width:84%;bottom:10px;height:14px;opacity:.9}
   #lvis .ms .gloss{margin-top:14px;padding:12px clamp(10px,3vw,14px) 12px clamp(12px,3.4vw,16px);border-left:3px solid var(--rule);
     background:linear-gradient(90deg,rgba(255,215,106,.08),transparent 70%);font-size:16px;line-height:1.55}
   #lvis .ms .gloss .lbl{display:block;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
@@ -3799,7 +3853,7 @@ window.RUWORK611 = (function(){
       }catch(e){}
     };
   }
-  if(false){   /* рукописный кадр 611 снова на паузе: на 390 чист, на 320 даёт 12 отметок, природу которых я не изолировал */
+  if(true){    /* рукописный кадр 611 включён: причина отметок на 320 px найдена замером (см. ниже) */
     const prevW=window.WAVE_B[611];
     window.WAVE_B[611]=function(el){
       try{
@@ -4719,4 +4773,45 @@ window.RU615PAPER = (function(){
     window.RU615.art.family=family; window.RU615.art.flower=flower;
     window.RU615.art.theatre=theatre; window.RU615.art.taxi=taxi;
   }
+})();
+
+/* ================= ОТКЛИК В ТРЕНАЖЁРАХ 602 И 605–610 =================
+   Что было не так: в этих семи уроках проверка отвечала голой строкой текста
+   внутри кадра, тогда как в 601, 603 и 604 ответ сопровождается анимированным
+   откликом RUFEED. Теперь отклик один и тот же во всём русском направлении.
+
+   Как сделано, не трогая вёрстку кадров: в каждом уроке массив его тренажёра
+   выложен наружу (window.RUGAME), а здесь отрисовка кадра оборачивается —
+   после кнопок вставляется тот же компонент отклика: при верном ответе печать
+   с расходящейся волной, при ошибке — чернильный оттиск и объяснение, почему
+   верно именно так. Место вставки — сразу под подсказкой к кнопкам, поэтому
+   раскладка кадра не меняется, а гейт раскладки это подтверждает. */
+(function(){
+  const IDS=[602,605,606,607,608,609,610];
+  IDS.forEach(function(id){
+    const prev=window.WAVE_B && window.WAVE_B[id];
+    if(typeof prev!=='function') return;
+    window.WAVE_B[id]=function(el){
+      prev(el);
+      try{
+        if(((typeof LV!=='undefined'&&LV.step)||0)!==8) return;
+        const lk=(typeof lidKey==='function')?lidKey(id):String(id);
+        const st=((window.CHS||{})[lk])||{};
+        if(st.gRes==null) return;                       /* ответа ещё не было */
+        const G=(window.RUGAME||{})[id];
+        if(!G||!G.length) return;
+        const it=G[(st.gIdx||0)%G.length];
+        const html=st.gRes
+          ? window.RUFEED.note('ok','верно',it[2])
+          : window.RUFEED.note('no','исправить','Правильно: '+it[2]);
+        const col=el.querySelector('.wv-col')||el;
+        const box=document.createElement('div');
+        box.innerHTML=html;
+        const fb=box.firstChild;
+        const hint=col.querySelector('.wv-sml');
+        if(hint&&hint.nextSibling) col.insertBefore(fb,hint.nextSibling);
+        else col.appendChild(fb);
+      }catch(e){}
+    };
+  });
 })();
