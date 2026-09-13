@@ -61,14 +61,19 @@ JS = r"""()=>{
     if(ov>0 && small>0 && ov/small>0.12) out.push({k:'наложение', t:texts[i].t+' / '+texts[j].t});
   }
   // центровка: центр содержимого против центра #lvis
-  let L=1e9,R=-1e9,leaves=0;
+  // anyContent отдельно от leaves: полноширинный блок в центр не идёт, но кадр
+  // с полем ввода и кнопкой «Проверить» — не пустой. Раньше такие кадры
+  // (развёрнутый ответ на листах 616–618) гейт называл пустой сценой.
+  let L=1e9,R=-1e9,leaves=0,anyContent=false;
   host.querySelectorAll('*').forEach(e=>{ const st=getComputedStyle(e);
     if(st.display==='none'||parseFloat(st.opacity||'1')<0.05) return;
     if(e.children.length) return;                 /* контейнеры и служебный CSS не меряем — только листья */
     if(e.tagName==='STYLE'||e.tagName==='DEFS'||e.tagName==='LINEARGRADIENT') return;
     if(e.closest(DECO)) return;                   /* декоративные слои центр не уводят */
     const b=e.getBoundingClientRect(); if(b.width<4||b.height<4) return;
-    if(b.width>hb.width-4) return;
+    const tag=e.tagName;
+    if(tag==='TEXTAREA'||tag==='INPUT'||tag==='BUTTON'||tag==='SELECT') anyContent=true;
+    if(b.width>hb.width-4){ if((e.innerText||'').trim().length>2) anyContent=true; return; }
     leaves++;
     L=Math.min(L,b.left); R=Math.max(R,b.right); });
   const dev=Math.round(((L+R)/2)-((hb.left+hb.right)/2));
@@ -76,7 +81,7 @@ JS = r"""()=>{
     const b=e.getBoundingClientRect();
     if(b.width<8||b.height<8) out.push({k:'сцена схлопнута', t:(e.className||'').slice(0,20), c:Math.round(b.width)+'x'+Math.round(b.height)});
   });
-  if(!leaves) out.push({k:'пустая сцена', t:(host.innerText||'').trim().slice(0,20)||'нет содержимого'});
+  if(!leaves && !anyContent) out.push({k:'пустая сцена', t:(host.innerText||'').trim().slice(0,20)||'нет содержимого'});
   return {issues:out, dev:leaves?dev:0, leaves:leaves, texts:texts.length};
 }"""
 def run(ids):

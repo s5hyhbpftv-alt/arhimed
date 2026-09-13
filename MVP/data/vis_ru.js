@@ -5529,6 +5529,17 @@ window.RUPAPER = (function(){
     font-family:${F};font-size:clamp(15px,4.2vw,17px);font-weight:600}
   #lvis .pp .check:disabled{background:${PAPER2};color:${MUT};cursor:default}
   #lvis .pp .check:active{transform:translateY(1px)}
+  #lvis .pp .open{display:flex;flex-direction:column;gap:10px}
+  #lvis .pp .open textarea{width:100%;box-sizing:border-box;min-height:96px;padding:12px 14px;border-radius:10px;
+    border:1px solid ${RULE};background:${PAPER2};font-family:${F};font-size:clamp(16px,4.4vw,18px);color:${INK};
+    line-height:1.5;resize:vertical}
+  #lvis .pp .open textarea:focus-visible{outline:3px solid ${INK};outline-offset:3px}
+  #lvis .pp .self{border-top:1px solid ${RULE};padding-top:10px;animation:ppIn 260ms cubic-bezier(.23,1,.32,1) both}
+  #lvis .pp .self .ttl{font-size:clamp(15px,4.2vw,17px);font-weight:600;color:${INK};margin-bottom:8px}
+  #lvis .pp .self .model{font-size:clamp(14.5px,4vw,16px);line-height:1.5;color:${OKC};
+    background:#eef6ef;border:1px solid ${OKC};border-radius:10px;padding:10px 12px}
+  #lvis .pp .self ul{margin:10px 0 0;padding-left:20px}
+  #lvis .pp .self li{font-size:clamp(14.5px,4vw,16px);line-height:1.5;color:${INK};margin-bottom:4px}
   #lvis .pp .short{display:flex;gap:10px;align-items:stretch}
   #lvis .pp .short input{flex:1 1 auto;min-width:0;min-height:52px;padding:12px 14px;border-radius:10px;border:1px solid ${RULE};
     background:${PAPER2};font-family:${F};font-size:clamp(16px,4.4vw,18px);color:${INK}}
@@ -5560,6 +5571,7 @@ window.RUPAPER = (function(){
      последовательности, выделение фрагмента текста и краткий ответ. */
   function right(it,val){
     const t=it.type||'single';
+    if(t==='open') return true;            /* развёрнутый ответ машина не судит: сверяем с образцом */
     if(t==='multi'){
       const a=(it.ans||[]).slice().sort().join('§'), b=((val&&val.length)?val:[]).slice().sort().join('§');
       return !!b && a===b;
@@ -5604,6 +5616,12 @@ window.RUPAPER = (function(){
         return `<button type="button" class="${cls}" onclick="ruPaperFrag(${it._id},${it._step},${i})">
           <span class="k">${i+1}</span><span>${s}</span></button>`;}).join('')}</div>`;
     }
+    if(t==='open'){
+      return `<div class="open">
+        <textarea rows="4" placeholder="${it.ph||'запиши ответ словами'}"
+          oninput="ruPaperType(${it._id},${it._step},this.value)" ${checked?'disabled':''}>${picked==null?'':String(picked).replace(/</g,'&lt;')}</textarea>
+        ${checked?'':`<button type="button" class="check" onclick="ruPaperCheck(${it._id},${it._step})">Сверить с образцом</button>`}</div>`;
+    }
     if(t==='short'){
       return `<div class="short">
         <input type="text" inputmode="text" autocomplete="off" value="${picked==null?'':String(picked).replace(/"/g,'&quot;')}"
@@ -5631,7 +5649,8 @@ window.RUPAPER = (function(){
     const taskHint={multi:'Выбери все верные ответы и нажми «Проверить».',
                     order:'Расставь по порядку и нажми «Проверить».',
                     fragment:'Нажми на предложение, о котором спрашивают.',
-                    short:'Запиши ответ и нажми «Проверить».'}[type];
+                    short:'Запиши ответ и нажми «Проверить».',
+                    open:'Запиши ответ словами, потом сверь его с образцом и критериями.'}[type];
     el.innerHTML=`<div class="pp">
       <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div>
         <div class="of" style="display:flex;align-items:center;gap:8px">
@@ -5641,10 +5660,17 @@ window.RUPAPER = (function(){
       <div class="q">${it.q}</div>
       ${taskHint?`<div class="hint">${taskHint}</div>`:''}
       ${body(it,picked,checked,ok)}
-      ${checked ? `<div class="mark ${ok?'ok':'no'}">
-          <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
-            :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
-          <p>${ok?'Верно. ':'Правильно: '+(Array.isArray(it.ans)?it.ans.join(' · '):it.ans)+'. '}${it.why}</p></div>`
+      ${checked ? (type==='open'
+          ? `<div class="self">
+               <div class="ttl">Сверь свой ответ с образцом</div>
+               <div class="model">${it.model}</div>
+               <ul>${(it.criteria||[]).map(c=>`<li>${c}</li>`).join('')}</ul>
+               <div class="hint" style="margin-top:8px">Развёрнутый ответ проверяют по критериям, а не машиной: сравни свой ответ с образцом и посмотри, все ли пункты у тебя есть.</div>
+             </div>`
+          : `<div class="mark ${ok?'ok':'no'}">
+               <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
+                 :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
+               <p>${ok?'Верно. ':'Правильно: '+(Array.isArray(it.ans)?it.ans.join(' · '):it.ans)+'. '}${it.why}</p></div>`)
         : `<div class="q" style="color:${MUT}">${cfg.source||''}</div>`}
     </div>`;
   }
@@ -5703,7 +5729,8 @@ window.RUPAPER = (function(){
   function mount(cfg){
     REG[cfg.id]=cfg;
     window.WAVE_B[cfg.id]=function(el){
-      try{ render(el,cfg); }catch(e){ el.innerHTML=''; }
+      try{ render(el,cfg); }
+      catch(e){ el.innerHTML=''; try{ console.error('лист '+cfg.id+':', e); }catch(_){} }
       /* персонаж приложения пересоздаётся после отрисовки — гасим его, пока открыт лист */
       try{
         const kill=()=>document.querySelectorAll('.avatar,.mascot,.assistant').forEach(a=>{ a.style.display='none'; });
