@@ -25,7 +25,13 @@ JS = r"""()=>{
     const st=getComputedStyle(e);
     if(e.children.length===0 && e.innerText && e.innerText.trim().length>1){
       const col=parse(st.color); const fs=Math.round(parseFloat(st.fontSize));
-      const grad=(getComputedStyle(e).backgroundImage||'').includes('gradient');
+      /* Фон кнопки часто задан градиентом: у самой кнопки backgroundColor
+         прозрачный, а текст лежит во вложенном элементе. Тогда проверка
+         контраста считала фоном тёмный фон страницы и ругалась на золотую
+         кнопку (тёмный текст на золоте — 8:1). Смотрим градиент и у предков. */
+      const gradUp=(x)=>{ let n=0; while(x&&x!==document.body&&n<4){
+        if((getComputedStyle(x).backgroundImage||'').includes('gradient')) return true; x=x.parentElement; n++; } return false; };
+      const grad=(getComputedStyle(e).backgroundImage||'').includes('gradient') || gradUp(e);
       if(col && !grad){ const r=ratio(col.c,bgOf(e)); if(r<4.5 && fs<24) out.contrast.push({t:e.innerText.trim().slice(0,16), r:Math.round(r*10)/10, fs, ru:RU(e)});
         else if(r<3 && fs>=24) out.contrast.push({t:e.innerText.trim().slice(0,16), r:Math.round(r*10)/10, fs, ru:RU(e)}); }
       if(![12,14,16,20,24,32,48,64,72].includes(fs) && fs>=13 && fs<=30) out.scale.push({t:e.innerText.trim().slice(0,16), fs, ru:RU(e)});

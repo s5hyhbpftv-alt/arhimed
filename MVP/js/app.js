@@ -681,9 +681,9 @@ function pdCss(){
   .plan-band{position:relative;border-radius:20px;padding:14px 15px 10px;overflow:hidden;background:linear-gradient(135deg,rgba(52,96,74,.92),rgba(19,39,29,.95));border:1px solid rgba(127,184,160,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 8px 18px rgba(0,0,0,.25)}
   .plan-band::before{content:'';position:absolute;left:-40px;top:-60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at center, rgba(127,209,160,.16), transparent 65%)}
   .plan-band::after{content:'';position:absolute;right:-30px;bottom:-50px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at center, rgba(217,164,65,.18), transparent 65%)}
-  .plan-kicker{font-size:10px;letter-spacing:3px;color:#8fd1a8;text-transform:uppercase;text-align:left;position:relative}
-  .plan-title{font-size:23px;font-weight:bold;color:#fff;font-family:Georgia,serif;text-align:left;margin:2px 0 1px;position:relative}
-  .plan-sub{font-size:12px;color:#cfe0cf;text-align:left;margin-bottom:9px;position:relative;line-height:1.4}
+  .plan-kicker{font-size:12px;letter-spacing:.18em;color:#8fd1a8;text-transform:uppercase;text-align:left;position:relative}
+  .plan-title{font-size:24px;letter-spacing:-.02em;font-weight:bold;color:#fff;font-family:Georgia,serif;text-align:left;margin:2px 0 1px;position:relative}
+  .plan-sub{font-size:14px;color:#cfe0cf;text-align:left;margin-bottom:12px;position:relative;line-height:1.5}
   @keyframes pdIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
   .plan-band{animation:pdIn .5s ease both}
   @keyframes stGrow{to{width:var(--w,0%)}}
@@ -692,14 +692,14 @@ function pdCss(){
   .pl-sec{margin:10px 0 2px}
   .pl-sec-h{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid rgba(127,184,160,.28);border-radius:12px;padding:7px 10px;position:relative}
   .pl-sec-h .pl-ico{font-size:16px;line-height:1}
-  .pl-sec-h .pl-th{flex:1;text-align:left;font-size:13.5px;font-weight:bold;color:#fff}
-  .pl-sec-h .pl-st{font-size:11.5px;color:#8fd1a8;font-weight:bold;background:rgba(143,209,168,.12);border-radius:99px;padding:2px 9px}
+  .pl-sec-h .pl-th{flex:1;text-align:left;font-size:16px;font-weight:bold;color:#fff}
+  .pl-sec-h .pl-st{font-size:14px;color:#8fd1a8;font-weight:bold;background:rgba(143,209,168,.12);border-radius:99px;padding:2px 9px}
   .pl-list{margin-top:4px}
-  .pl-task{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:6px 10px;margin:4px 0;cursor:pointer;text-align:left;animation:pdIn .35s ease both}
-  .pl-task .pl-ic{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.07);color:#cfe0cf;font-size:11.5px;font-weight:bold;display:flex;align-items:center;justify-content:center}
+  .pl-task{display:flex;align-items:center;gap:10px;min-height:48px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:8px 10px;margin:6px 0;cursor:pointer;text-align:left;animation:pdIn .35s ease both}
+  .pl-task .pl-ic{flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.07);color:#cfe0cf;font-size:14px;font-weight:bold;display:flex;align-items:center;justify-content:center}
   .pl-task .pl-ti{flex:1;min-width:0;text-align:left}
-  .pl-task .pl-ti b{font-size:13px;color:#fff;display:block;line-height:1.3}
-  .pl-task .pl-meta{font-size:10.5px;color:#8a94ad}
+  .pl-task .pl-ti b{font-size:16px;color:#fff;display:block;line-height:1.3}
+  .pl-task .pl-meta{font-size:14px;color:#a9b4c6}
   .pl-task.done{opacity:.55}
   .pl-task.done .pl-ic{background:rgba(95,154,106,.3);color:#9fd8ab}
   .pl-task.next{border-color:#d9a441;background:rgba(217,164,65,.12);box-shadow:0 0 0 1px rgba(217,164,65,.35)}
@@ -710,6 +710,7 @@ function pdCss(){
   `;
   document.head.appendChild(st);
 }
+window.planToggleAll=function(){ PLAN.all=!PLAN.all; renderPath(); };
 function planOpenIsland(name){ var i=PLAN.open.indexOf(name); if(i>=0){PLAN.open.splice(i,1);}else{PLAN.open.push(name);} renderPath(); }
 function planOpenAll(){ PLAN.open=ISLANDS.filter(function(I){return islandVisible(I)&&islandHasTasks(I.name);}).map(function(I){return encodeURIComponent(I.name);}); renderPath(); }
 function planCloseAll(){ PLAN.open=[]; renderPath(); }
@@ -740,9 +741,14 @@ function planDash(){
     if(io) return io;
     return (ordIdx[a.id]??0)-(ordIdx[b.id]??0);
   });
+  /* Длинный список из сотен задач открывался целиком — экран превращался в
+     стену. Показываем ближайшие, остальное — по кнопке (принцип постепенного
+     раскрытия: сначала то, что нужно сейчас). */
+  const LIMIT=8;
+  const shown = PLAN.all? ordered : ordered.slice(0, LIMIT);
   // секции по (остров, тема) — задачи в методическом порядке файла
   const secs=[]; const secMap={};
-  ordered.forEach(t=>{
+  shown.forEach(t=>{
     const th=planTheme(t);
     const key=t.island+'|'+th;
     if(!secMap[key]){ secMap[key]={island:t.island,th,ts:[]}; secs.push(secMap[key]); }
@@ -768,6 +774,10 @@ function planDash(){
       <div class="pl-list">${inner}</div>
     </div>`;
   }).join('');
+  const restN=ordered.length-shown.length;
+  const moreBtn = (restN>0 || PLAN.all)
+    ? `<button type="button" class="pt-more" onclick="planToggleAll()">${PLAN.all? 'свернуть план' : ('показать весь план · ещё '+restN+(restN%10===1&&restN%100!==11?' задача':' задач'))}</button>`
+    : '';
   const rangeLbl = (function(){
     const o=openClassRange();
     if(isJunior()) return 'класс '+esc(profK)+' · начальная школа';
@@ -782,6 +792,7 @@ function planDash(){
       <div class="plan-prog"><i style="--w:${pct}%"></i></div>
     </div>
     ${blocks}
+    ${moreBtn}
   </div>`;
 }
 function dashMini(I,i){
@@ -841,8 +852,77 @@ function dashExpanded(I){
     <div style="margin-top:6px"><button class="btn" style="width:100%" onclick="go('island-${encodeURIComponent(I.name)}')">Открыть полный список задач →</button></div>
   </div>`;
 }
+/* ---------- ЭКРАН «ПУТЬ»: стили, переделанные по мобильным принципам ----------
+   Что меняем и почему (см. .agents/skills/mobile-principles и ui-typography-usability):
+   · главное действие закреплено над нижними вкладками — оно в зоне большого
+     пальца, а не третьим блоком, который уезжает за экран;
+   · острова — вертикальный список: горизонтальная прокрутка прячет половину
+     карточки, и на телефоне это выглядит как обрезанная плитка;
+   · цели касания не меньше 44 px: прежние чипы были 26 px;
+   · шаг отступов — 8 px, кегли по шкале 12/14/16/20. */
+function ptCss(){
+  if(document.getElementById('ptCss')) return;
+  const st=document.createElement('style'); st.id='ptCss';
+  st.textContent=`
+  .pt-hero{display:flex;align-items:center;gap:14px;background:linear-gradient(170deg,var(--card),var(--card2));
+    border:1px solid var(--hairline);border-radius:16px;padding:12px 14px}
+  .pt-kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .pt-name{font-size:20px;font-weight:bold;color:var(--ivory);line-height:1.15;margin-top:2px;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .pt-meta{font-size:14px;color:var(--muted);margin-top:4px}
+  .pt-meta b{color:var(--brass);font-variant-numeric:tabular-nums}
+  .pt-fire{flex:none;text-align:center;color:var(--brass);line-height:1.1}
+  .pt-fire b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+  .pt-fire span{font-size:12px;color:var(--muted)}
+  .pt-h{font-size:16px;color:var(--brass);margin:20px 2px 8px;letter-spacing:.02em;font-weight:bold}
+  .pt-isl{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:10px 12px;margin-bottom:8px;
+    background:linear-gradient(170deg,var(--card),var(--card2));border:1px solid var(--hairline);border-radius:14px;
+    color:var(--ivory);font-family:inherit;text-align:left;cursor:pointer;
+    transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 160ms}
+  .pt-isl:active{transform:translateY(2px)}
+  .pt-isl:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+  .pt-isl-ic{flex:none;display:flex;align-items:center}
+  .pt-lock{font-size:22px;opacity:.6}
+  .pt-isl-b{flex:1;min-width:0}
+  .pt-isl-nm{display:block;font-size:16px;font-weight:600;line-height:1.2}
+  .pt-isl-meta{display:block;font-size:14px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+  .pt-chev{flex:none;color:var(--brass);font-size:16px}
+  .pt-bar{display:block;height:6px;border-radius:99px;background:#0d1a13;overflow:hidden;margin-top:6px}
+  /* Прогресс анимируем через transform: scaleX, а не через width: смена ширины
+     заставляет браузер пересчитывать раскладку в каждом кадре (детектор
+     impeccable отмечает это как layout-transition). */
+  .pt-bar i{display:block;height:100%;width:100%;transform:scaleX(var(--w,0));transform-origin:left;
+    background:linear-gradient(90deg,var(--brass-d),var(--brass));
+    transition:transform .5s cubic-bezier(.23,1,.32,1)}
+  .pt-more{width:100%;min-height:48px;margin-top:4px;border-radius:12px;border:1px dashed var(--hairline);
+    background:rgba(255,255,255,.03);color:var(--ivory);font-family:inherit;font-size:14px;cursor:pointer}
+  .pt-more:active{transform:translateY(1px)}
+  .pt-tools{display:flex;flex-wrap:wrap;gap:8px;margin:12px 2px 0}
+  .pt-tool{min-height:44px;padding:10px 14px;border-radius:12px;border:1px solid var(--hairline);
+    background:var(--panel);color:var(--ivory);font-family:inherit;font-size:14px;cursor:pointer}
+  .pt-tool:active{transform:translateY(1px)}
+  .pt-note{font-size:14px;line-height:1.5;color:var(--muted);margin:8px 2px 0}
+  .pt-link{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:10px 12px;margin-top:16px;
+    background:rgba(255,255,255,.03);border:1px solid var(--hairline);border-radius:14px;color:var(--ivory);
+    font-family:inherit;text-align:left;cursor:pointer}
+  .pt-link:active{transform:translateY(1px)}
+  .pt-cta{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:84;
+    padding:8px 8px 10px;pointer-events:none;
+    background:linear-gradient(180deg,rgba(11,23,18,0) 0%,rgba(11,23,18,.94) 42%)}
+  .pt-cta .btn{pointer-events:auto;width:100%;max-width:884px;margin:0 auto;min-height:56px;padding:8px 14px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+  .pt-cta .t1{font-size:16px;font-weight:bold;line-height:1.15}
+  .pt-cta .t2{font-size:14px;font-weight:normal;line-height:1.2;max-width:100%;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap;opacity:.9}
+  .pt-cta.go{animation:ptUp .38s cubic-bezier(.23,1,.32,1) both}
+  @keyframes ptUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .pt-spacer{height:72px}
+  @media (prefers-reduced-motion: reduce){ .pt-cta.go{animation:none} .pt-bar i{transition:none} }
+  `;
+  document.head.appendChild(st);
+}
 function renderPath(){
-  pdCss();
+  pdCss(); ptCss();
   const pool=taskPool();
   const doneN=pool.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   const pctAll=pool.length? Math.round(doneN/pool.length*100):0;
@@ -851,34 +931,73 @@ function renderPath(){
   const s=document.getElementById('screen');
   const rank=rankName();
   const heroName=esc(DB.profile?DB.profile.name:'');
-  const hero=`<div class="path-hero card" style="display:flex;align-items:center;gap:16px">
-      ${ringHTML(pctAll, 92, pctAll+'%')}
-      <div style="flex:1">
-        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Острова Познания</div>
-        <div style="font-size:22px;font-weight:bold;color:var(--ivory);margin:2px 0">${heroName||'Исследователь'} <span class="rank-badge">${esc(rank)}</span></div>
-        <div style="font-size:12.5px;color:var(--muted);line-height:1.5">Решено <b style="color:var(--brass)">${doneN}</b> из ${pool.length}${isJunior()?' в начальной школе':' на карте'} · серия ${DB.streak}🔥</div>
+
+  /* 1. Кто я и сколько сделано — одной строкой, без лишней высоты */
+  const hero=`<div class="pt-hero">
+      ${ringHTML(pctAll, 76, pctAll+'%')}
+      <div style="flex:1;min-width:0">
+        <div class="pt-kick">Острова Познания</div>
+        <div class="pt-name">${heroName||'Исследователь'} <span class="rank-badge">${esc(rank)}</span></div>
+        <div class="pt-meta">Решено <b>${doneN}</b> из ${pool.length}${isJunior()?' в начальной школе':' на карте'}</div>
       </div>
+      <div class="pt-fire"><b>${DB.streak||0}</b><span>серия</span></div>
     </div>`;
-  const nextBtn = next
-    ? `<button class="btn pulse" style="width:100%;margin:12px 0 4px" onclick="go('task-${next.id}')">🎯 Продолжить: ${esc(next.title)}</button>`
-    : `<div class="card" style="text-align:center;color:var(--ok);font-size:14px">🏆 Все задачи решены! Ты — настоящий ${esc(rank)}!</div>`;
-  const plan = planDash();
-  const legendCard=`<div class="path-legend" onclick="go('legend')" style="margin-top:14px">
-      <span style="font-size:26px">📜</span>
-      <span style="flex:1;text-align:left"><b style="color:var(--glow)">Легенда об Архимеде</b><br>
-      <span class="small" style="color:var(--muted)">Кто он и откуда острова — читай историю</span></span>
-      <span style="color:var(--brass)">→</span></div>`;
+
+  /* 2. Острова — вертикальным списком. Раньше это была лента с прокруткой вбок:
+     половина карточки уходила за край, и было не понять, что там ещё есть. */
   const islands=ISLANDS.filter(islandVisible);
-  const minis=islands.map(dashMini).join('');
-  const openedI = (PLAN.open||[]).map(function(enc){ try{ var nm=decodeURIComponent(enc); return islands.find(function(I){ return I.name===nm; }); }catch(err){ return null; } }).filter(Boolean);
-  const expanded = openedI.map(dashExpanded).join('');
-  s.innerHTML=hero+legendCard+nextBtn+
-    `<div class="pd-title" style="margin-bottom:2px"><div class="l"><div class="h">Карта путешествий по островам</div><div class="s">открытых карт: ${PLAN.open.length} — нажми на остров или разверни все</div></div><div class="btns"><button class="chip pd" onclick="worldToggle()">${worldOpen()?'🌍 весь мир открыт · вернуть по классам':'🔒 только мой класс · открыть весь мир'}</button> <button class="chip pd" onclick="planOpenAll()">развернуть все</button> <button class="chip pd" onclick="planCloseAll()">свернуть все</button></div></div>
-     <div class="small" style="color:var(--muted);margin:2px 0 8px">${worldOpen()?'Открыты все миры и все задачи — любого класса. Нажми «вернуть по классам», чтобы видеть только свой класс.':'Показаны только задачи твоего класса. Нажми «открыть весь мир», чтобы увидеть все острова.'}</div>
-     <div class="dash-mini-row">${minis}</div>
-     ${expanded}`+
-    plan;
-  requestAnimationFrame(()=>{ document.querySelectorAll('.ring-fg').forEach(el=>{ el.style.strokeDashoffset=getComputedStyle(el.parentNode).getPropertyValue('--off'); }); });
+  const islRows=islands.map(function(I){
+    const st=islStats(I.name), locked=st.total===0;
+    const pct=st.total? Math.round(st.done/st.total*100):0;
+    const on=PLAN.open.indexOf(encodeURIComponent(I.name))>=0;
+    const ic=locked? '<span class="pt-lock">🔒</span>' : ringHTML(pct,44,I.ico,I.img);
+    const meta=locked? 'задач для твоего класса пока нет' : (st.done+' из '+st.total+' · '+pct+'%');
+    return `<button type="button" class="pt-isl" aria-expanded="${on}" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">
+        <span class="pt-isl-ic">${ic}</span>
+        <span class="pt-isl-b">
+          <span class="pt-isl-nm">${esc(I.name)}</span>
+          <span class="pt-isl-meta">${meta}</span>
+          ${locked?'':'<span class="pt-bar"><i style="--w:'+(pct/100).toFixed(3)+'"></i></span>'}
+        </span>
+        <span class="pt-chev">${on?'▾':'▸'}</span>
+      </button>` + (on? dashExpanded(I) : '');
+  }).join('');
+
+  /* 3. Служебные переключатели — вниз, под содержимое. Вверху они сбивали
+     ребёнка: он открывал экран и первым делом видел «весь мир открыт». */
+  const tools=`<div class="pt-tools">
+      <button type="button" class="pt-tool" onclick="worldToggle()">${worldOpen()?'🌍 вернуть задачи своего класса':'🔒 открыть весь мир'}</button>
+      <button type="button" class="pt-tool" onclick="planOpenAll()">развернуть все острова</button>
+      ${PLAN.open.length? '<button type="button" class="pt-tool" onclick="planCloseAll()">свернуть</button>':''}
+    </div>
+    <div class="pt-note">${worldOpen()?'Сейчас открыты задачи всех классов. «Вернуть задачи своего класса» оставит только твои.':'Показаны задачи твоего класса.'}</div>`;
+
+  /* 4. Главное действие — закреплено над вкладками, в зоне большого пальца.
+     Бесконечная пульсация убрана: движение ради движения. */
+  const cta = next
+    ? `<div class="pt-cta go"><button class="btn" onclick="go('task-${next.id}')">
+         <span class="t1">🎯 Продолжить</span><span class="t2">${esc(next.title)}</span></button></div>`
+    : `<div class="pt-cta go"><button class="btn" onclick="go('library')">
+         <span class="t1">🏆 Все задачи решены</span><span class="t2">выбрать что-то из банка задач</span></button></div>`;
+
+  const legend=`<div class="pt-link" onclick="go('legend')">
+      <span style="font-size:24px">📜</span>
+      <span style="flex:1;text-align:left"><b style="color:var(--glow)">Легенда об Архимеде</b><br>
+      <span style="font-size:14px;color:var(--muted)">кто он и откуда острова</span></span>
+      <span style="color:var(--brass)">→</span></div>`;
+
+  s.innerHTML=hero
+    + `<div class="pt-h">Острова</div>` + islRows
+    + tools
+    + (planDash()? `<div class="pt-h">Личный маршрут</div>` + planDash() : '')
+    + legend
+    + `<div class="pt-spacer"></div>`
+    + cta;
+  requestAnimationFrame(function(){
+    document.querySelectorAll('.ring-fg').forEach(function(el){
+      el.style.strokeDashoffset=getComputedStyle(el.parentNode).getPropertyValue('--off');
+    });
+  });
   hud();
 }
 /* ---------- ОСТРОВ ---------- */

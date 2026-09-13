@@ -157,8 +157,12 @@
   .duel-btn { flex:1 1 150px; display:flex; align-items:center; gap:8px; background:#20382b; color:var(--ivory);
     border:1.5px solid #3d5c49; border-radius:10px; padding:10px 12px; font-family:inherit; font-size:13.5px; cursor:pointer; }
   .duel-btn:hover { border-color:var(--danger); color:#ffd9d3; }
-  .theme-row { display:flex; align-items:center; gap:8px; margin-top:8px; font-size:12px; }
-  .theme-row .tn { width:150px; flex-shrink:0; color:#cbb89a; }
+  /* Строка темы внутри раскрытого острова: кегль по шкале и цель касания —
+     это список, по которому ребёнок читает, что уже пройдено. На узком экране
+     подпись темы не влезала в фиксированные 150 px и обрезалась. */
+  .theme-row { display:flex; align-items:center; gap:8px; margin-top:10px; font-size:14px; min-height:32px; }
+  .theme-row .tn { flex:1 1 auto; min-width:0; color:#cbb89a; }
+  .theme-row .pc { flex:none; color:#8fd1a8; font-variant-numeric:tabular-nums; }
   .theme-row .bar { flex:1; height:6px; background:#0d1a13; border:1px solid var(--hairline); border-radius:99px; overflow:hidden; }
   .theme-row .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--brass-d),var(--brass)); }
   .theme-row .pc { width:44px; text-align:right; color:var(--glass); }
@@ -788,42 +792,42 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=572"></script>
-<script src="data/tasks_ru.js?v=572"></script>
-<script src="data/tasks_mishutka.js?v=572"></script>
-<script src="data/tasks_fg6.js?v=572"></script>
-<script src="data/tasks_dict.js?v=572"></script>
-<script src="data/lessons.js?v=572"></script>
-<script src="data/lessons_draft.js?v=572"></script>
-<script src="data/comics_12.js?v=572"></script>
-<script src="data/sim_phys.js?v=572"></script>
-<script src="data/vis_bw.js?v=572"></script>
-<script src="data/vis_pw.js?v=572"></script>
-<script src="data/vis_ru.js?v=572"></script>
-<script src="data/lessons_fg6.js?v=572"></script>
-<script src="data/vis_cw.js?v=572"></script>
-<script src="data/vis_dw.js?v=572"></script>
-<script src="data/vis_ew.js?v=572"></script>
-<script src="data/vis_kl.js?v=572"></script>
-<script src="data/vis_wk.js?v=572"></script>
-<script src="data/inf_56.js?v=572"></script>
-<script src="js/comic.js?v=572"></script>
-<script src="js/core.js?v=572"></script>
-<script src="js/engine.js?v=572"></script>
-<script src="js/app.js?v=572"></script>
-<script src="js/dashboard.js?v=572"></script>
-<script src="js/pinpad.js?v=572"></script>
-<script src="js/kid.js?v=572"></script>
-<script src="js/notemodal.js?v=572"></script>
-<script src="js/lessons.js?v=572"></script>
-<script src="js/wave_guard.js?v=572"></script>
-<script src="js/legend.js?v=572"></script>
-<script src="js/simulator.js?v=572"></script>
-<script src="js/duel.js?v=572"></script>
-<script src="js/agent.js?v=572"></script>
-<script src="js/voice.js?v=572"></script>
-<script src="js/assistant.js?v=572"></script>
-<script src="js/agentlive.js?v=572"></script>
+<script src="data/tasks.js?v=573"></script>
+<script src="data/tasks_ru.js?v=573"></script>
+<script src="data/tasks_mishutka.js?v=573"></script>
+<script src="data/tasks_fg6.js?v=573"></script>
+<script src="data/tasks_dict.js?v=573"></script>
+<script src="data/lessons.js?v=573"></script>
+<script src="data/lessons_draft.js?v=573"></script>
+<script src="data/comics_12.js?v=573"></script>
+<script src="data/sim_phys.js?v=573"></script>
+<script src="data/vis_bw.js?v=573"></script>
+<script src="data/vis_pw.js?v=573"></script>
+<script src="data/vis_ru.js?v=573"></script>
+<script src="data/lessons_fg6.js?v=573"></script>
+<script src="data/vis_cw.js?v=573"></script>
+<script src="data/vis_dw.js?v=573"></script>
+<script src="data/vis_ew.js?v=573"></script>
+<script src="data/vis_kl.js?v=573"></script>
+<script src="data/vis_wk.js?v=573"></script>
+<script src="data/inf_56.js?v=573"></script>
+<script src="js/comic.js?v=573"></script>
+<script src="js/core.js?v=573"></script>
+<script src="js/engine.js?v=573"></script>
+<script src="js/app.js?v=573"></script>
+<script src="js/dashboard.js?v=573"></script>
+<script src="js/pinpad.js?v=573"></script>
+<script src="js/kid.js?v=573"></script>
+<script src="js/notemodal.js?v=573"></script>
+<script src="js/lessons.js?v=573"></script>
+<script src="js/wave_guard.js?v=573"></script>
+<script src="js/legend.js?v=573"></script>
+<script src="js/simulator.js?v=573"></script>
+<script src="js/duel.js?v=573"></script>
+<script src="js/agent.js?v=573"></script>
+<script src="js/voice.js?v=573"></script>
+<script src="js/assistant.js?v=573"></script>
+<script src="js/agentlive.js?v=573"></script>
 <script>
   /* сброс кэша при новой сборке: номер берём из адресов самих скриптов,
      поэтому после каждой выкладки старый кэш и старый service worker снимаются сами */
@@ -850,7 +854,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=572').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=573').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{
