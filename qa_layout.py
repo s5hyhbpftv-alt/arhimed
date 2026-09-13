@@ -10,6 +10,13 @@ URL=os.environ.get("QA_URL","http://127.0.0.1:8123/")
 JS = r"""()=>{
   const host=document.getElementById('lvis'); if(!host) return {err:'нет #lvis'};
   const hb=host.getBoundingClientRect();
+  /* Декоративные слои: блики, зерно бумаги, лоза, световое пятно, пыль, искры.
+     Их не судим ни на обрезку, ни на сдвиг центра: они нарисованы шире кадра и
+     обрезаны рамкой по построению. Раньше в списке были только слои прежних
+     сцен, и русские кадры ловили ложные отметки: у 614 центр уводил блик
+     .rk-sheen, у рукописного 611 — лоза .vine и подчёркивание .underline. */
+  const DECO='.l96-scene,.l96-ecl,.l96-ground,.q-pot,.l96-orb,.l96-sun,.l96-ray,.l96-mirror,.l96-sh,.l96-trunk,.l96-crown,'+
+    '.rk-sheen,.rk-dust,.grain,.vine,.halo,.haloGlow,.spark,.amb,.rv-glow,.glow';
   const out=[]; const texts=[];
   const isText=(e)=>{ if(!e.childNodes) return false;
     for(const n of e.childNodes) if(n.nodeType===3 && n.textContent.trim().length>1) return true; return false; };
@@ -20,7 +27,7 @@ JS = r"""()=>{
     if(b.width<2||b.height<2) return;
     const rotated=(st.transform&&st.transform!=='none');
     const softer=(st.filter&&st.filter!=='none');
-    const deco=e.closest('.l96-scene,.l96-ecl,.l96-ground,.q-pot,.l96-orb,.l96-sun,.l96-ray,.l96-mirror,.l96-sh,.l96-trunk,.l96-crown');
+    const deco=e.closest(DECO);
     if(rotated||softer||deco) { if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e}); return; }
     // обрезка: элемент вылезает за #lvis или за контейнер с overflow hidden.
     // Полноэкранные кадры (.rk-scene) и их контейнеры намеренно шире #lvis — их не судим,
@@ -59,6 +66,7 @@ JS = r"""()=>{
     if(st.display==='none'||parseFloat(st.opacity||'1')<0.05) return;
     if(e.children.length) return;                 /* контейнеры и служебный CSS не меряем — только листья */
     if(e.tagName==='STYLE'||e.tagName==='DEFS'||e.tagName==='LINEARGRADIENT') return;
+    if(e.closest(DECO)) return;                   /* декоративные слои центр не уводят */
     const b=e.getBoundingClientRect(); if(b.width<4||b.height<4) return;
     if(b.width>hb.width-4) return;
     leaves++;

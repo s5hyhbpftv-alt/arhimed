@@ -4180,7 +4180,7 @@ window.RUWORKEDGES = (function(){
   #lvis .rkw .score{font-size:clamp(34px,11vw,48px);font-weight:600;line-height:1;color:#fff6dd;font-variant-numeric:tabular-nums}
   #lvis .rkw .bands{display:flex;flex-direction:column;gap:6px;margin-top:4px}
   #lvis .rkw .band{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:12px;
-    border:1px solid rgba(255,215,106,.18);font-size:clamp(14px,3.8vw,16px)}
+    border:1px solid rgba(255,215,106,.18);font-size:clamp(15px,4.2vw,16px)}
   #lvis .rkw .band.on{border-color:#ffd76a;background:rgba(255,215,106,.12);color:#ffeaa8}
   #lvis .rkw .band span:last-child{color:#d8c9a6;font-variant-numeric:tabular-nums}
   #lvis .rkw .cta{width:100%;padding:16px 18px;border-radius:16px;border:1.5px solid #ffd76a;cursor:pointer;
@@ -4193,7 +4193,7 @@ window.RUWORKEDGES = (function(){
     background:rgba(255,255,255,.05);color:#f6efe0;font-family:${F};font-size:clamp(15px,4vw,17px);cursor:pointer}
   #lvis .rkw .rev{display:flex;flex-direction:column;gap:6px}
   #lvis .rkw .rev div{display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.04);
-    font-size:clamp(13px,3.6vw,15px)}
+    font-size:clamp(15px,4.2vw,16px)}
   #lvis .rkw .rev .ok{color:#b8e8cc}#lvis .rkw .rev .no{color:#f3b3aa}
   @media (prefers-reduced-motion: reduce){#lvis .rkw *{animation:none!important;transition:none!important}}
   `;
