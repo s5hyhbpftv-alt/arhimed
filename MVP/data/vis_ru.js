@@ -4407,7 +4407,6 @@ window.RU615 = (function(){
   #lvis .mk .opt.good{border-color:${OK}}#lvis .mk .opt.bad{border-color:${NO}}
   #lvis .mk .prog{display:flex;gap:5px}#lvis .mk .prog i{width:9px;height:9px;transform:rotate(45deg);border:1px solid rgba(255,215,106,.35)}
   #lvis .mk .prog i.done{background:linear-gradient(180deg,#ffd76a,#e2b23f)}
-  body.paper-mode .avatar,body.paper-mode .mascot,body.paper-mode .assistant{display:none!important}
   `;
   function css(){ try{ let e=document.getElementById('mk-style'); if(!e){ e=document.createElement('style'); e.id='mk-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
   function render(el){
@@ -4505,12 +4504,19 @@ window.RU615PAPER = (function(){
   #lvis .pp .mark.ok p{color:${OKC}}#lvis .pp .mark.no p{color:${NOC}}
   @keyframes ppIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   @keyframes ppDraw{to{stroke-dashoffset:0}}
+  /* Прячем персонажа приложения, пока открыт лист. Правило живёт и здесь, а не
+     только в каркасе .s6: лист может быть первым, что открыл ученик, и тогда
+     тот стиль ещё не выложен. Раньше это делал JS — он ставил inline
+     display:none и не снимал его, поэтому помощник пропадал навсегда. */
+  body:has(#lvis .pp) .avatar,body:has(#lvis .pp) .mascot,body:has(#lvis .pp) .assistant,body:has(#lvis .pp) .guide{display:none!important}
   @media (prefers-reduced-motion: reduce){#lvis .pp *{animation:none!important;transition:none!important}}
   `;
   function css(){ try{ let e=document.getElementById('pp-style'); if(!e){ e=document.createElement('style'); e.id='pp-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
   function render(el){
     css();
-    try{ document.body.classList.add('paper-mode'); }catch(e){}
+    /* Класс paper-mode на body не ставим: он нигде не снимался, и после первого
+       же листа помощник пропадал до конца сеанса. Персонажа прячет CSS-правило
+       body:has(#lvis .pp) — оно само перестаёт действовать, когда лист закрыт. */
     const src=window.RU615; if(!src||!src.data) return;
     const Q=src.data, ART=src.art;
     const lk=(typeof lidKey==='function')?lidKey(615):'615';
@@ -4536,14 +4542,8 @@ window.RU615PAPER = (function(){
   }
   if(window.WAVE_B) window.WAVE_B[615]=function(el){
     try{ render(el); }catch(e){ try{ window.RU615.render(el); }catch(e2){ el.innerHTML=''; } }
-    /* персонаж приложения пересоздаётся после отрисовки — гасим его, пока открыт лист */
-    try{
-      const kill=()=>document.querySelectorAll('.avatar,.mascot,.assistant').forEach(a=>{ a.style.display='none'; });
-      kill();
-      if(!window.__ppWatch){
-        window.__ppWatch=setInterval(()=>{ if(document.querySelector('#lvis .pp')) kill(); },200);
-      }
-    }catch(e){}
+    /* Персонажа гасит CSS (body:has(#lvis .pp)), а не JS: прежнее гашение
+       ставило inline display:none и не снимало его — помощник исчезал навсегда. */
   };
   return {render:render};
 })();
@@ -5661,6 +5661,11 @@ window.RUPAPER = (function(){
   #lvis .pp .mark.ok p{color:${OKC}}#lvis .pp .mark.no p{color:${NOC}}
   @keyframes ppIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   @keyframes ppDraw{to{stroke-dashoffset:0}}
+  /* Прячем персонажа приложения, пока открыт лист. Правило живёт и здесь, а не
+     только в каркасе .s6: лист может быть первым, что открыл ученик, и тогда
+     тот стиль ещё не выложен. Раньше это делал JS — он ставил inline
+     display:none и не снимал его, поэтому помощник пропадал навсегда. */
+  body:has(#lvis .pp) .avatar,body:has(#lvis .pp) .mascot,body:has(#lvis .pp) .assistant,body:has(#lvis .pp) .guide{display:none!important}
   @media (prefers-reduced-motion: reduce){#lvis .pp *{animation:none!important;transition:none!important}}
   `;
   function css(){ try{ let e=document.getElementById('pp-style'); if(!e){ e=document.createElement('style'); e.id='pp-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
@@ -5746,7 +5751,7 @@ window.RUPAPER = (function(){
 
   function render(el,cfg){
     css();
-    try{ document.body.classList.add('paper-mode'); }catch(e){}
+    /* без класса paper-mode: см. пояснение в листе 615 */
     const st=state(cfg.id);
     const Q=cfg.data;
     const step=Math.max(0,Math.min(Q.length-1,((typeof LV!=='undefined'&&LV.step)||0)));
@@ -5840,12 +5845,7 @@ window.RUPAPER = (function(){
     window.WAVE_B[cfg.id]=function(el){
       try{ render(el,cfg); }
       catch(e){ el.innerHTML=''; try{ console.error('лист '+cfg.id+':', e); }catch(_){} }
-      /* персонаж приложения пересоздаётся после отрисовки — гасим его, пока открыт лист */
-      try{
-        const kill=()=>document.querySelectorAll('.avatar,.mascot,.assistant').forEach(a=>{ a.style.display='none'; });
-        kill();
-        if(!window.__ppWatch) window.__ppWatch=setInterval(()=>{ if(document.querySelector('#lvis .pp')) kill(); },200);
-      }catch(e){}
+      /* персонажа гасит CSS, см. пояснение в листе 615 */
     };
     if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===cfg.id)){
       window.ARH_LESSONS.push({id:cfg.id,title:cfg.title,ico:cfg.ico,src:cfg.src,subj:'rus',

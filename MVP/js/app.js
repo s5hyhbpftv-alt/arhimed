@@ -663,7 +663,10 @@ function pdCss(){
   .pd-title .h{font-size:16px;font-weight:bold;color:var(--ivory)}
   .pd-title .s{font-size:11.5px;color:var(--muted)}
   .pd-title .l{flex:1 1 200px;min-width:0;text-align:left}
-  .pd-title .btns{flex:0 0 auto;display:flex;gap:6px;flex-wrap:wrap}
+  /* flex:0 0 auto запрещал сжатие: три длинных чипа давали 506 px при экране
+     390 px, страница растягивалась и на телефоне всё уезжало — «Путь», ввод
+     кода, списки уроков. Разрешаем сжатие, чипы переносятся внутри блока. */
+  .pd-title .btns{flex:0 1 auto;min-width:0;display:flex;gap:6px;flex-wrap:wrap}
   .dash-mini-row{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin}
   .dash-mini{flex:0 0 148px;background:rgba(255,255,255,.045);border:1.5px solid rgba(127,184,160,.3);border-radius:15px;padding:8px 8px 6px;cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s}
   .dash-mini:hover{transform:translateY(-2px)}
