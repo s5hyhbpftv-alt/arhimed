@@ -26447,7 +26447,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===189){ window.ARH_LESSONS[i]=L189; break; } } })();
 })();
-/* ================= УРОК 190 · Модуль числа (v1 · «Магическая линейка Архимеда», 15 слайдов, флагман) ================= */
+/* ================= УРОК 190 · Модуль числа (16 кадров, живой язык) ================= */
 (function(){
   if(!window.__wk190v1css){
     window.__wk190v1css=1;
@@ -26467,25 +26467,25 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     id: 190, title: 'Модуль числа', ico: '📏',
     src: 'Математика · 6 класс · Модуль', subj: 'math',
     explain: [
-      'МОДУЛЬ числа — это расстояние от числа до нуля, поэтому он всегда неотрицательный.',
-      'Модуль отрицательного числа — число без минуса: |−7| = 7. Модуль положительного — само число: |5| = 5. |0| = 0.',
-      'Зачем? Модуль говорит «сколько» без учёта направления: долг −50 ₽ по модулю — 50 ₽.',
-      'Сравниваем модули: |−9| = 9, |−4| = 4, значит |−9| > |−4|.',
-      'Ловушка: |−7| ≠ −7! Модуль не бывает отрицательным.',
-      'Совет Архимеда: модуль — это «сними минус, если он есть».',
-      'Модуль — это ДЛИНА отрезка от числа до нуля. Длина всегда положительна.',
-      '|x| = x, если x ≥ 0; |x| = −x, если x < 0.',
-      'Число и его «отражение» (−5 и 5) — на одинаковом расстоянии от нуля.',
-      'Модуль «гасит» знак: |−7| = |7| = 7.',
-      'Тренажёр: найди модуль числа.',
-      'Тренажёр: сравни модули и посчитай.',
-      'Шпаргалка: |x| ≥ 0; расстояние до 0; снять минус; |−a| = a.',
-      'Проверь себя устно: |−7| = 7; |5| = 5; |0| = 0.',
-      'Проверь себя: модуль — расстояние до нуля.',
-      'Проверь себя: |−7|. Ответь в тесте и жми «Понял! Проверю себя»!'
-    ],
+      'Нарисуй прямую и поставь ноль посередине. Пятёрка живёт справа. Модуль — это не «какое число красивее», а сколько шагов от него до нуля. Влево или вправо — длина одна и та же. У длины минуса не бывает: шаги не ходят задом наперёд. Жми «показать» — от пятёрки до нуля нарисуется дорожка.',
+      'Если число само положительное, до нуля рукой подать вправо. |5| = 5. Палочки ничего не меняют: модуль совпадает с числом. То же для двенадцати, для 0,3, для ста. Запомни на глаз: справа от нуля палочки прозрачные.',
+      'Отрицательное — другое дело. −7 лежит в семи шагах влево. Длина пути — семь, не минус семь. |−7| = 7. Минус «сняли», потому что спрашивали не куда, а насколько далеко. Направление стёрлось, осталась длина.',
+      '|0| = 0. Ноль уже сидит в начале отсчёта. Расстояние до себя — ноль. Ноль не отрицательный и не положительный, правило не ломается. Палочки вокруг нуля ничего не добавляют и ничего не отнимают.',
+      'В учебнике это две строчки, и ими пугают зря. Если x ≥ 0, то |x| = x. Если x < 0, то |x| = −x. Второе «минус икс» как раз снимает минус: −(−7) = 7. Не пугайся формулы — это то же «убери минус», только казённым языком.',
+      'Быстрый приём на контрольной. Видишь минус внутри палочек — убери его. |−7| → 7. Минуса нет — оставь как есть. |5| → 5. Приём работает, потому что палочки спрашивают длину, а длина минуса не носит. После палочек минус в ответе почти всегда ошибка.',
+      'Зачем это в жизни. Долг записывают как −50. Спрашивают «на сколько залез?» — отвечают 50, не минус 50. Температура упала на 8 градусов: изменение −8, модуль 8 — «на восемь». Модуль вынимает «сколько», знак вынимает «куда».',
+      'Сравнивать модули — сравнивать длины. |−9| = 9, |−4| = 4. Девять больше четырёх, значит |−9| больше. Само −9 на прямой меньше, чем −4: оно левее. А по модулю наоборот: кто дальше от нуля, тот больше. Не путай «кто левее» и «кто дальше».',
+      'Считать тоже сначала модули, потом действие. |−9| − |−4| = 9 − 4 = 5. Не −9 − (−4): так ты вычитаешь сами числа, а палочки ещё не раскрыл. Палочки считаются раньше арифметики, как скобки. Сначала длины, потом плюс и минус.',
+      'Главная ловушка, на ней сыплются все. |−7| ≠ −7. Слева длина, справа отрицательное число. Длина — семёрка. Если в ответе торчит минус — модуль ты ещё не взял. Запомни фразу: модуль не бывает отрицательным. Никогда.',
+      'Потренируйся: |−7|, |5|, |0|, |−12|. Ответ — расстояние до нуля. Если на вопрос |−7| выбрал −7 — попался на ловушку прошлого кадра. Снимай минус. Если выбрал 0 — перепутал с «число стало ничем». Ноль только у |0|.',
+      'Теперь с действиями: |−9| − |−4|, |−3| + |−5|, |6| − |−2|. Сначала палочки, потом плюс и минус. |−3| + |−5| = 3 + 5 = 8, а не −8. Ловушка «два минуса дают минус» здесь не работает: минусы внутри палочек уже погасли.',
+      'В карман четыре вещи. Модуль — расстояние до нуля. Он всегда не меньше нуля. У отрицательного снимаем минус. |a| = |−a|: пятёрка и минус пятёрка одинаково далеки. Сравниваем и считаем только после того, как палочки раскрыли.',
+      'Проговори вслух, не подглядывая. |−7|? Семь. |5|? Пять. Что больше, |−9| или |−4|? Девять, значит |−9|. Если язык не ставит минус после палочек — правило село. Споткнулся — вернись к прямой и посчитай шаги.',
+      'Ещё раз на прямой: |−7|. Семь шагов влево, длина семь. Не минус семь и не ноль. Жми «сосчитать» — дорожка сама покажет. Если это уже на языке — можно жать дальше, к последнему вопросу.',
+      'Последний вопрос: чему равен |−7|? Семь. Не минус семь — это само число. Не ноль — ноль был бы, если б точка уже сидела в начале. Модуль — сколько шагов до нуля, а шаги без направления.'
+            ],
     check: { q: 'Чему равен |−7|?', choices: ['7', '−7', '0'], ans: 0,
-      exp: 'Модуль — расстояние до нуля: |−7| = 7.' },
+      exp: 'Модуль — сколько шагов до нуля. |−7| = 7, не −7 и не 0.' },
     tasks: [
       { q: 'Чему равно |−9| − |−4|?', kind: 'unit', ans: 5, tol: 0,
         hints: ['Сначала найди модули.', '9 − 4 = 5.'], sol: '|−9| = 9, |−4| = 4; 9 − 4 = 5.' },
@@ -26521,7 +26521,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     for(let v=a.min;v<=a.max;v++){
       const x=a.x+(v-a.min)/(a.max-a.min)*a.w;
       s+=`<line x1="${x}" y1="${a.y-5}" x2="${x}" y2="${a.y+5}" stroke="#5a6c9c" stroke-width="1.6"/>`;
-      s+=tx(x,a.y+26,12.5,v===0?ink:dim,''+v,{b:v===0});
+      if(v%2===0) s+=tx(x,a.y+26,11,v===0?ink:dim,''+v,{b:v===0});
     }
     return s;
   }
@@ -26552,8 +26552,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! модуль — расстояние до 0</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · модуль ≥ 0</div>';
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно — это длина, не знак</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Минус в ответе? Модуль ещё не взят.</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW190Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW190Act('${lk}','rst')`);
@@ -26573,18 +26573,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     if(step===0){
       const H=186, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'что такое модуль?',{b:1});
+      inner+=tx(159,26,20,ink,'сколько шагов до нуля?',{b:1});
       inner+=axis(-10,10,0,96);
       inner+=point(5,96,'5',grn,0.2);
       if(go){
         inner+=distToZero(5,124,grn,0.3);
         inner+=`<g class="qRPop"><text x="159" y="174" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">|5| — расстояние от 5 до 0</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Магическая линейка</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сколько шагов до нуля</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('модуль = расстояние до 0',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('показать',`visW190Act('${lk}','go')`))+
-        wkSml('всегда неотрицательный'));
+        wkSml('длина без направления'));
     } else if(step===1){
       const H=186, go=st.go||0;
       let inner='';
@@ -26595,7 +26595,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=distToZero(5,124,grn,0.25);
         inner+=`<g class="qRPop"><text x="159" y="174" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">|5| = 5</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Положительное</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Справа от нуля</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('модуль = само число',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('показать',`visW190Act('${lk}','go')`))+
@@ -26610,7 +26610,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=distToZero(-7,124,cyan,0.25);
         inner+=`<g class="qRPop"><text x="159" y="174" text-anchor="middle" font-size="20" fill="${cyan}" font-weight="bold" font-family="Georgia,serif">|−7| = 7</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Отрицательное</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Слева — та же длина</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('модуль = число без минуса',cyan,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('показать',`visW190Act('${lk}','go')`))+
@@ -26622,10 +26622,10 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=axis(-10,10,0,96);
       inner+=point(0,96,'0',purple,0.15);
       if(go){
-        inner+=`<g class="qRPop"><text x="159" y="130" text-anchor="middle" font-size="20" fill="${purple}" font-weight="bold" font-family="Georgia,serif">|0| = 0</text>
-        <text x="159" y="164" text-anchor="middle" font-size="15" fill="${dim}">расстояние до самого себя = 0</text></g>`;
+        inner+=`<g class="qRPop"><text x="159" y="154" text-anchor="middle" font-size="18" fill="${purple}" font-weight="bold" font-family="Georgia,serif">|0| = 0</text>
+        <text x="159" y="176" text-anchor="middle" font-size="13" fill="${dim}">до себя — ноль шагов</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ноль</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ноль уже на месте</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('|0| = 0',purple,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('показать',`visW190Act('${lk}','go')`))+
@@ -26640,11 +26640,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=`<g class="qRPop"><text x="159" y="108" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">|5| = 5 · |−7| = 7</text>
         <text x="159" y="140" text-anchor="middle" font-size="14" fill="${dim}">модуль всегда ≥ 0</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Определение</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Две строчки из учебника</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('|x| ≥ 0',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('показать',`visW190Act('${lk}','go')`))+
-        wkSml('двух случаев'));
+        wkSml('если минус — сними его'));
     } else if(step===5){
       const H=182;
       const go=st.go||0;
@@ -26656,11 +26656,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ${tx(159,116,16,cyan,'модуль «гасит» знак',{b:1})}
         ${tx(159,132,13,dim,'|−7| = |7| = 7',{})}</g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Приём</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Убери минус — если он есть</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('просто убери минус',cyan,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('показать',`visW190Act('${lk}','go')`))+
-        wkSml('если он есть'));
+        wkSml('потому что спрашивают длину'));
     } else if(step===6){
       const H=182;
       const go=st.go||0;
@@ -26671,7 +26671,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=`<g class="qRPop"><text x="159" y="116" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">|−50 ₽| = 50 ₽</text>
         <text x="159" y="148" text-anchor="middle" font-size="15" fill="${dim}">«сколько» без направления</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Зачем это нужно</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Долг и «на сколько»</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('долг 50 ₽ — это 50 ₽',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('показать',`visW190Act('${lk}','go')`))+
@@ -26688,11 +26688,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=distToZero(-4,120,blu,0.3);
         inner+=`<g class="qRPop"><text x="159" y="174" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">|−9|=9 > |−4|=4</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравниваем</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Кто дальше от нуля</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('9 > 4 → |−9| больше',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('сравнить',`visW190Act('${lk}','go')`))+
-        wkSml('дальше от нуля — больше'));
+        wkSml('на прямой −9 меньше, по модулю больше'));
     } else if(step===8){
       const H=186, go=st.go||0;
       let inner='';
@@ -26705,11 +26705,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=distToZero(-4,120,blu,0.3);
         inner+=`<g class="qRPop"><text x="159" y="174" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">9 − 4 = 5</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Считаем</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сначала палочки, потом минус</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('сначала модули, потом разность',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('посчитать',`visW190Act('${lk}','go')`))+
-        wkSml('|−9|=9 · |−4|=4'));
+        wkSml('|−9|=9 · |−4|=4, затем 9 − 4'));
     } else if(step===9){
       const H=182;
       const go=st.go||0;
@@ -26720,11 +26720,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=`<g class="qRPop"><text x="159" y="120" text-anchor="middle" font-size="17" fill="${red}" font-weight="bold">модуль НЕ бывает отрицательным!</text>
         <text x="159" y="152" text-anchor="middle" font-size="14" fill="${dim}">|−7| = 7 — расстояние, оно положительное</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Не путай длину и число</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('|−7| = 7, а не −7',red,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('проверить',`visW190Act('${lk}','go')`))+
-        wkSml('всегда ≥ 0'));
+        wkSml('если в ответе минус — модуль ещё не взят'));
     } else if(step===10){
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
@@ -26753,11 +26753,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW190Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW190P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW190P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: модуль</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сними минус сам</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
         fb+retry+
-        wkSml('расстояние до 0'));
+        wkSml('если выбрал −7 — ловушка'));
     } else if(step===11){
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
@@ -26786,7 +26786,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW190Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW190P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW190P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: сравнение</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сначала палочки — потом счёт</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
         fb+retry+
@@ -26795,7 +26795,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const H=190;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      inner+=tx(159,30,19,ink,'в карман',{b:1});
       const items=[['|x| ≥ 0 — всегда неотрицательный'],['модуль = расстояние до 0'],['снять минус, если он есть'],['|−a| = a · |a| = a']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
@@ -26804,7 +26804,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
         }
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Четыре вещи в карман</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=4?wkRow(chip('модуль — снять минус',gold,0.2)):'')+
         wkRow(
@@ -26813,7 +26813,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go===2?wkBtn('шаг 3',`visW190Act('${lk}','go')`) : '',
           go===3?wkBtn('шаг 4',`visW190Act('${lk}','go')`) : '',
           go>=4?wkBtn('сброс',`visW190Act('${lk}','rst')`):'')+
-        wkSml('|−a| = a'));
+        wkSml('сравнивать — только после палочек'));
     } else if(step===13){
       const H=182;
       if(st.mq==null) st.mq=0;
@@ -26824,18 +26824,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'не подглядывая',{b:1});
       if(st.msel!=null){
         inner+=`<g class="qRPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'модуль ≥ 0'}</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Скажи вслух</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         `<div class="wk-row" style="gap:8px">
           ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW190S('${lk}',${i})">${o}</button>`).join('')}
           ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW190Act('${lk}','nq')`):''}
           ${st.msel!=null?wkBtn('заново',`visW190Act('${lk}','rst')`):''}
         </div>`+
-        wkSml('расстояние до 0'));
+        wkSml('язык не ставит минус после палочек'));
     } else if(step===14){
       const H=192, go=st.go||0;
       let inner='';
@@ -26846,21 +26846,21 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=distToZero(-7,120,cyan,0.25);
         inner+=`<g class="qRPop"><text x="159" y="176" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 7</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Семь шагов влево</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('|−7| = 7',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW190Act('${lk}','rst')`):wkBtn('сосчитать',`visW190Act('${lk}','go')`))+
-        wkSml('расстояние до 0'));
+        wkSml('длина семь, не минус семь'));
     } else {
       const H=192;
       let inner='';
       inner+=tx(159,32,20,ink,'|−7|',{b:1,georgia:1});
       inner+=`<g class="qRPop"><text x="159" y="92" text-anchor="middle" font-size="34" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 7</text></g>`;
       inner+=tx(159,122,16,dim,'расстояние до нуля',{});
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Чему равен |−7|?</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
-        wkSml('модуль ≥ 0'));
+        wkSml('шаги без направления'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
@@ -31167,7 +31167,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===390){ window.ARH_LESSONS[i]=L390; break; } } })();
 })();
-/* ================= УРОК 181 · Умножение десятичных дробей на 10 и 100 (v1 · «Машина запятой Архимеда», 15 слайдов, флагман) ================= */
+/* ================= УРОК 181 · Умножение десятичных дробей на 10 и 100 (16 кадров, живой язык) ================= */
 (function(){
   if(!window.__wk181v1css){
     window.__wk181v1css=1;
@@ -31189,24 +31189,25 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     id: 181, title: 'Умножение десятичных дробей на 10 и 100', ico: '🔟',
     src: 'Математика · 5 класс · Десятичные дроби', subj: 'math',
     explain: [
-      'Умножить десятичную дробь на 10 — значит перенести запятую на 1 цифру вправо: 3,25 · 10 = 32,5.',
-      'На 100 — переносим запятую на 2 цифры вправо: 3,25 · 100 = 325.',
-      '0,4 · 100 = 40: запятая «перескочила» две цифры, и на конце добавился ноль.',
-      'Почему так? 3,25 · 10 — каждая цифра стала в 10 раз «тяжелее» и сдвинулась на разряд.',
-      'Если цифр не хватает — дописываем нули: 0,5 · 100 = 50.',
-      'Совет Архимеда: считай, на сколько цифр перенести запятую: на 10 — одна, на 100 — две.',
-      'Запятая отделяет целую часть от дробной: слева целые, справа десятые/сотые.',
-      'Умножаем на 10 → запятая вправо на 1. Умножаем на 100 → вправо на 2.',
-      'После последней цифры запятой «некуда» — её убираем (запись становится целым числом).',
-      'Тренажёр: умножь на 10.',
-      'Тренажёр: умножь на 100.',
-      'Шпаргалка: ·10 → вправо на 1; ·100 → вправо на 2; цифр не хватает — дописывай нули.',
-      'Проверь себя устно: 3,25·10=32,5; 0,4·100=40; 3,25·100=325.',
-      'Проверь себя: умножь на 10 — двигай запятую вправо.',
-      'Проверь себя: чему равно 3,25 · 10. Ответь в тесте и жми «Понял! Проверю себя»!'
-    ],
+      'Смотри на 3,25. Запятая стоит между тройкой и двойкой — это не украшение и не точка в конце. Слева целые: сколько полных рублей или метров. Справа — кусочки: десятые, сотые. Сейчас научимся умножать такие числа на 10 и на 100, не расписывая столбик. Жми «показать» — цифры встанут по разрядам.',
+      'Разберём 3,25 по клеткам. Три живёт в единицах. Двойка — в десятых, пятёрка — в сотых. Умножить на 10 значит сделать каждую цифру в десять раз «тяжелее»: она переедет на соседний разряд влево. Запятая при этом просто шагает вправо — она только помечает, где кончились целые.',
+      'Один ноль в десятке — один шаг. Жми «сдвинуть». Запятая в 3,25 перепрыгивает через двойку и встаёт перед пятёркой. Получается 32,5. Целых стало тридцать два, дробная часть — одна цифра. Не 3,250: там запятая даже не шевельнулась, это то же самое число.',
+      'В сотне два нуля — два шага. 3,25 · 100: запятая перескакивает и двойку, и пятёрку. Дальше писать нечего — запятую убираем. Остаётся 325. Это уже целое, и так и надо: три целых и двадцать пять сотых, взятые сто раз, как раз триста двадцать пять.',
+      'А если цифр справа мало? 0,4 · 100. Шагов нужно два, а цифра одна. Первый шаг даёт 4, на второй справа пусто — дописываем ноль. Выходит 40. Не 4 и не 0,40: именно сорок. 0,40 — это то же 0,4, запятая стояла на месте.',
+      'Ещё раз, чтобы рука запомнила. 0,5 · 100 = 50: снова не хватило цифры — поставили ноль. А вот 1,05 · 10 = 10,5: справа две цифры, шаг один — ноль дописывать не надо, запятая просто переехала. Чувствуешь разницу? Смотри, сколько шагов и сколько цифр справа.',
+      'Почему запятая едет, а не цифры. В 3,25 тройка стоит в единицах. После ·10 ей место в десятках — это уже 30. Двойка из десятых становится единицами, пятёрка из сотых — десятыми. Вместе 32,5. Запятая только говорит: «целые кончились вот тут». Цифры сами переехали на соседний стул.',
+      'Правило вслух, как считалочку. На 10 — запятая на одну цифру вправо. На 100 — на две. На 1000 — на три. Сколько нулей в множителе, столько шагов. Кончились цифры — ставь нули справа. Запятая в самом конце числа не пишется: «50,» — это просто 50.',
+      'Попробуй сам на десять. 3,25 · 10, 1,05 · 10, 0,7 · 10, 2,4 · 10. Каждый раз один шаг вправо. Частая ошибка — приписать ноль и получить 3,250. Это то же 3,25: запятая не двигалась. Если ответ уехал влево (0,325) — ты уже делил, а не умножал.',
+      'Теперь на сто. 0,4 · 100 = 40, 3,25 · 100 = 325, 0,05 · 100 = 5, 1,2 · 100 = 120. Два шага. У 0,05 цифр как раз две — хватит, останется 5. У 1,2 не хватит — допиши ноль, будет 120. Если получил 4 или 0,40 — запятая не дошла.',
+      'Четыре строчки в карман. ·10 — вправо на один. ·100 — вправо на два. Цифр нет — ноль справа. Запятая в конце пропадает. Приписать ноль к дроби — это не умножение. Запятая должна уехать, иначе число то же самое.',
+      'Проговори вслух, не подглядывая. 3,25 · 10? Тридцать два и пять. 0,4 · 100? Сорок. 3,25 · 100? Триста двадцать пять. Если язык уже не спотыкается — правило село. Ошибся — вернись и посмотри, куда уехала запятая, не куда хотелось.',
+      'Ещё раз медленно, пальцем по цифрам. Было 3,25. Один шаг вправо — 32,5. Проверка по смыслу: 3 целых стали 30, 2 десятых стали 2 целыми, 5 сотых — 5 десятыми. Вместе 32,5. Сошлось. Если на экране 3,250 — запятая спала на месте, умножения не было.',
+      'И 0,4 · 100. Четыре десятых, взятые сто раз, — сорок десятых. А сорок десятых — это 4 десятка, то есть 40. Если на экране 4 — сделал один шаг вместо двух. Если 0,40 — не сделал ни одного. Нужен именно ноль справа.',
+      'Житейский счёт. Мороженое по 2,40. Десять штук — шаг вправо, 24 рубля. Сто штук — два шага, 240. Копейки сами стали рублями, потому что разряды сдвинулись. Так считает касса, не столбик. Жми «сдвинуть» — увидишь, как 2,40 становится 24.',
+      'Последний вопрос: чему равно 3,25 · 10? 32,5 — запятая сделала один шаг. 3,250 — она стояла на месте, это то же число. 0,325 — ушла влево, а это уже деление на 10. Умножаем только вправо. Выбери и не торопись.'
+            ],
     check: { q: 'Чему равно 3,25 · 10?', choices: ['32,5', '3,250', '0,325'], ans: 0,
-      exp: 'Переносим запятую на одну цифру вправо: 3,25 · 10 = 32,5.' },
+      exp: 'Один ноль — один шаг вправо: 3,25 · 10 = 32,5. Не 3,250 и не 0,325.' },
     tasks: [
       { q: 'Чему равно 0,4 · 100?', kind: 'unit', ans: 40, tol: 0,
         hints: ['На сколько цифр перенести запятую при ·100?', 'На две: 0,4 → 40 (дописали ноль).'], sol: '0,4 · 100 = 40.' },
@@ -31275,8 +31276,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! запятая вправо</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · на 1 (или 2) вправо</div>';
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно — запятая шагнула вправо</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Она ещё на месте. Шагни вправо.</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW181Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW181Act('${lk}','rst')`);
@@ -31287,9 +31288,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
       if(step>=0&&step<=14){ st.go=0; st.pick=null; }
-      if(step===9||step===10) st.pick=null;
+      if(step===8||step===9) st.pick=null;
       if(step===11){ st.mq=0; st.msel=null; }
-      if(step===13){ st.sel=null; st.q=0; }
+      if(step===15){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
@@ -31300,11 +31301,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=decRow(159,80,'3.25',true,null,null,0.1);
         inner+=`<g class="qDxPop"><text x="159" y="190" text-anchor="middle" font-size="14" fill="${dim}">запятая отделяет целую часть от дробной</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Машина запятой</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Запятая — не украшение</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('умножим на 10 и 100',gold,0.2)):'')+
+        (go?wkRow(chip('3,25 по разрядам',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('показать',`visW181Act('${lk}','go')`))+
-        wkSml('запятая двигается вправо'));
+        wkSml('слева целые, справа кусочки'));
     } else if(step===1){
       const H=210, go=st.go||0;
       let inner='';
@@ -31312,11 +31313,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=decRow(159,70,'3.25',true,null,null,0.1);
         inner+=`<g class="qDxPop"><rect x="66" y="164" width="186" height="28" rx="9" fill="rgba(255,255,255,.07)" stroke="${cardB}" stroke-width="1.8"/><text x="159" y="184" text-anchor="middle" font-size="14" fill="${ink}" font-weight="bold">целая часть: 3 · дробная: 25</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число 3,25</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тройка, двойка, пятёрка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('3 целых · 25 сотых',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('показать',`visW181Act('${lk}','go')`))+
-        wkSml('по таблице разрядов'));
+        wkSml('три целых и двадцать пять сотых'));
     } else if(step===2){
       const H=226, go=st.go||0;
       let inner='';
@@ -31326,11 +31327,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=decRow(159,120,'32.5',true,[0,1],null,0.4);
         inner+=`<g class="qDxPop"><text x="159" y="204" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3,25 · 10 = 32,5</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Умножаем на 10</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Один ноль — один шаг</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('запятая вправо на 1',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('сдвинуть',`visW181Act('${lk}','go')`))+
-        wkSml('на 1 цифру вправо'));
+        wkSml('через одну цифру — и 32,5'));
     } else if(step===3){
       const H=226, go=st.go||0;
       let inner='';
@@ -31340,11 +31341,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=decRow(159,120,'325',false,[0,1,2],null,0.4);
         inner+=`<g class="qDxPop"><text x="159" y="204" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3,25 · 100 = 325</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Умножаем на 100</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Два нуля — два шага</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('запятая вправо на 2',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('сдвинуть',`visW181Act('${lk}','go')`))+
-        wkSml('на 2 цифры — запятая уходит'));
+        wkSml('запятая ушла, осталось целое'));
     } else if(step===4){
       const H=226, go=st.go||0;
       let inner='';
@@ -31354,11 +31355,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=decRow(159,120,'40',false,[0,1],[1],0.4);
         inner+=`<g class="qDxPop"><text x="159" y="204" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">0,4 · 100 = 40</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ноль на конце</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Цифр не хватило</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('цифр не хватило → дописали ноль',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('сдвинуть',`visW181Act('${lk}','go')`))+
-        wkSml('0,4 → 40'));
+        wkSml('один шаг даёт 4, второй просит ноль'));
     } else if(step===5){
       const H=226, go=st.go||0;
       let inner='';
@@ -31368,11 +31369,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=decRow(159,120,'50',false,[0,1],[1],0.4);
         inner+=`<g class="qDxPop"><text x="159" y="204" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">0,5 · 100 = 50</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ещё пример</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пол единицы, сто раз</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('дописываем ноли',grn,0.2)):'')+
+        (go?wkRow(chip('0,5 · 100 = 50',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('сдвинуть',`visW181Act('${lk}','go')`))+
-        wkSml('0,5 → 50'));
+        wkSml('снова дописали ноль справа'));
     } else if(step===6){
       const H=190, go=st.go||0;
       let inner='';
@@ -31382,11 +31383,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ${tx(66,114,15,ink,'становится в 10 раз «тяжелее»',{b:1,an:'start'})}
         ${tx(66,140,15,grn,'цифры сдвигаются на разряд',{b:1,an:'start'})}</g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Почему так</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Цифры тяжелеют</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('разрядный сдвиг',blu,0.2)):'')+
+        (go?wkRow(chip('единицы стали десятками',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('показать',`visW181Act('${lk}','go')`))+
-        wkSml('буквально сдвиг'));
+        wkSml('тройка переехала в десятки'));
     } else if(step===7){
       const H=182, go=st.go||0;
       let inner='';
@@ -31395,11 +31396,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         <text x="159" y="122" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">·100 → вправо на 2</text>
         <text x="159" y="152" text-anchor="middle" font-size="13" fill="${dim}">считай количество нулей!</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Считалка нулей</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('на 1 / на 2 вправо',grn,0.2)):'')+
+        (go?wkRow(chip('сколько нулей — столько шагов',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('показать',`visW181Act('${lk}','go')`))+
-        wkSml('считай нули'));
+        wkSml('на 10 — один, на 100 — два'));
     } else if(step===8){
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
@@ -31428,11 +31429,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW181Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW181P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW181P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр · на 10</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сдвинь запятую сам</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
         fb+retry+
-        wkSml('запятая вправо на 1'));
+        wkSml('один шаг, не ноль сзади'));
     } else if(step===9){
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
@@ -31461,16 +31462,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW181Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW181P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW181P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр · на 100</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Два шага — и ноль, если надо</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
         fb+retry+
-        wkSml('запятая вправо на 2'));
+        wkSml('если цифр мало — допиши ноль'));
     } else if(step===10){
       const H=184;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      inner+=tx(159,30,19,ink,'в карман',{b:1});
       const items=[['·10 → запятая вправо на 1'],['·100 → запятая вправо на 2'],['цифр не хватает — дописывай нули'],['запятая уходит → целое число']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
@@ -31479,7 +31480,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
         }
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Четыре строчки в карман</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=4?wkRow(chip('запятая вправо',gold,0.2)):'')+
         wkRow(
@@ -31488,7 +31489,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go===2?wkBtn('шаг 3',`visW181Act('${lk}','go')`) : '',
           go===3?wkBtn('шаг 4',`visW181Act('${lk}','go')`) : '',
           go>=4?wkBtn('сброс',`visW181Act('${lk}','rst')`):'')+
-        wkSml('на количество нулей'));
+        wkSml('запятая в конце числа не пишется'));
     } else if(step===11){
       const H=182;
       if(st.mq==null) st.mq=0;
@@ -31499,18 +31500,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'не подглядывая',{b:1});
       if(st.msel!=null){
         inner+=`<g class="qDxPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'запятая вправо'}</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Скажи вслух</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         `<div class="wk-row" style="gap:8px">
           ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW181S('${lk}',${i})">${o}</button>`).join('')}
           ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW181Act('${lk}','nq')`):''}
           ${st.msel!=null?wkBtn('заново',`visW181Act('${lk}','rst')`):''}
         </div>`+
-        wkSml('считай нули'));
+        wkSml('если язык не спотыкается — село'));
     } else if(step===12){
       const H=226, go=st.go||0;
       let inner='';
@@ -31519,11 +31520,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=decRow(159,120,'32.5',true,[0,1],null,0.4);
         inner+=`<g class="qDxPop"><text x="159" y="204" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3,25 · 10 = 32,5</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ещё раз: 3,25 · 10</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('запятая вправо на 1',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('сдвинуть',`visW181Act('${lk}','go')`))+
-        wkSml('на одну цифру'));
+        wkSml('три целых стали тридцатью'));
     } else if(step===13){
       const H=226, go=st.go||0;
       let inner='';
@@ -31532,20 +31533,34 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=decRow(159,120,'40',false,[0,1],[1],0.4);
         inner+=`<g class="qDxPop"><text x="159" y="204" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">0,4 · 100 = 40</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ещё раз: 0,4 · 100</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('на 2 вправо + ноль',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('сдвинуть',`visW181Act('${lk}','go')`))+
-        wkSml('дописали ноль'));
+        wkSml('четыре десятых сто раз — сорок'));
+    } else if(step===14){
+      const H=226, go=st.go||0;
+      let inner='';
+      if(go){
+        inner+=decRow(159,50,'2.40',true,null,null,0.1);
+        inner+=`<g class="qDxComma" style="animation-delay:.3s"><text x="159" y="108" text-anchor="middle" font-size="20" fill="${comma}" font-weight="bold">→</text></g>`;
+        inner+=decRow(159,120,'24',false,[0,1],null,0.4);
+        inner+=`<g class="qDxPop"><text x="159" y="204" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold" font-family="Georgia,serif">10 шт. → 24 ₽ · 100 шт. → 240 ₽</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Мороженое по 2,40</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('касса считает сдвигом',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW181Act('${lk}','rst')`):wkBtn('сдвинуть',`visW181Act('${lk}','go')`))+
+        wkSml('десять штук — 24, сто — 240'));
     } else {
       const H=210;
       let inner='';
       inner+=decRow(159,66,'3.25',true,null,null,0.1);
       inner+=`<g class="qDxPop"><text x="159" y="188" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 32,5</text></g>`;
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Куда уехала запятая?</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
-        wkSml('запятая вправо на 1'));
+        wkSml('умножаем только вправо'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
