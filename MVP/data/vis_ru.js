@@ -2292,6 +2292,102 @@ function ruWords604(){
     if(!f) arr.push(L610); })();
 })();
 
+/* ================= ЗОЛОТОЙ ЗНАК ВОПРОСА НА МЕСТЕ ПРОПУЩЕННОЙ БУКВЫ =================
+   Раньше на месте буквы стоял бледный «?» из CSS-псевдоэлемента: прозрачность
+   35 %, положение top:46 % — знак уезжал от строки и его было почти не видно.
+   Теперь это настоящий знак: литая золотая заливка с градиентом, фаска (тёмная
+   подложка со сдвигом), блик от точечного источника (feSpecularLighting —
+   «фотоэффект»), свечение, вращение вокруг вертикальной оси и мягкий блик,
+   который пробегает по золоту. Разметка одна и та же для HTML-страницы 611 и
+   для SVG-сцен работ 612–614: в SVG знак вставляется после замера прорези
+   через getSubStringLength, поэтому он стоит ровно на месте буквы. */
+window.RUQMARK = (function(){
+  const DEFS = `<svg id="rkgq-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;left:-9999px;overflow:hidden">
+    <defs>
+      <linearGradient id="rkgqGold" x1="0.1" y1="0" x2="0.75" y2="1">
+        <stop offset="0" stop-color="#fff6cf"/><stop offset=".22" stop-color="#ffd76a"/>
+        <stop offset=".5" stop-color="#e9b23c"/><stop offset=".76" stop-color="#c0871d"/>
+        <stop offset="1" stop-color="#8a5a14"/>
+      </linearGradient>
+      <linearGradient id="rkgqEdge" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff9e2"/><stop offset="1" stop-color="#a06c15"/>
+      </linearGradient>
+      <linearGradient id="rkgqSpec" x1="0" y1="0" x2="0.6" y2="1">
+        <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
+        <stop offset=".55" stop-color="#fff3c4" stop-opacity=".3"/>
+        <stop offset="1" stop-color="#fff3c4" stop-opacity="0"/>
+      </linearGradient>
+      <radialGradient id="rkgqBloom" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#ffd76a" stop-opacity=".5"/>
+        <stop offset=".6" stop-color="#ffb43c" stop-opacity=".16"/>
+        <stop offset="1" stop-color="#ffb43c" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="rkgqPhoto" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="1.05" result="soft"/>
+        <feSpecularLighting in="soft" surfaceScale="3.4" specularConstant="1.15" specularExponent="20" lighting-color="#fff7d6" result="spec">
+          <fePointLight x="-34" y="-46" z="58"/>
+        </feSpecularLighting>
+        <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn"/>
+        <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="specIn"/></feMerge>
+      </filter>
+    </defs></svg>`;
+  const CSS = `
+  /* у SVG-группы начало координат — центр знака, поэтому вращаем вокруг него */
+  /* Знак поворачивается вокруг вертикальной оси, но не «мигает»: первую половину
+     цикла он стоит лицом к читателю, затем делает полный оборот. */
+  .rkgq-spin{transform-box:fill-box;transform-origin:center;animation:rkgqSpin 3.6s cubic-bezier(.5,0,.3,1) infinite}
+  .rkgq-bloom{animation:rkgqGlow 1.9s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .rkgq-shine{animation:rkgqShine 2.6s ease-in-out infinite}
+  @keyframes rkgqSpin{
+    0%,46%{transform:perspective(170px) rotateY(0deg)}
+    100%{transform:perspective(170px) rotateY(360deg)}
+  }
+  @keyframes rkgqGlow{0%,100%{opacity:.6}50%{opacity:1}}
+  @keyframes rkgqShine{0%,100%{opacity:.35}50%{opacity:1}}
+  .rkgq-slot{display:inline-flex;align-items:center;justify-content:center;pointer-events:none}
+  .rkgq-svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 7px rgba(255,215,106,.6))}
+  @media (prefers-reduced-motion: reduce){
+    .rkgq-spin,.rkgq-bloom,.rkgq-shine{animation:none!important}
+  }`;
+  let ready = false;
+  function ensure(){
+    if(ready) return;
+    try{
+      if(!document.getElementById('rkgq-defs')) document.body.insertAdjacentHTML('beforeend', DEFS);
+      if(!document.getElementById('rkgq-style')){
+        const st=document.createElement('style'); st.id='rkgq-style'; st.textContent=CSS; document.head.appendChild(st);
+      }
+    }catch(e){}
+    ready = true;
+  }
+  /* тело знака: локальные координаты, центр (0,0), высота около 35 */
+  const HOOK = 'M-6.8 -3.6 C-6.8 -13 6.8 -13 6.8 -3.6 C6.8 3.6 0 4.6 0 10.8';
+  function body(){
+    return `<circle class="rkgq-bloom" cx="0" cy="4" r="19" fill="url(#rkgqBloom)"/>`
+      + `<g filter="url(#rkgqPhoto)">`
+      +   `<path d="${HOOK}" fill="none" stroke="#7a4d10" stroke-width="8.4" stroke-linecap="round" opacity=".85" transform="translate(.9,1.1)"/>`
+      +   `<circle cx="0" cy="17.6" r="4.4" fill="#7a4d10" opacity=".85" transform="translate(.9,1.1)"/>`
+      +   `<path d="${HOOK}" fill="none" stroke="url(#rkgqGold)" stroke-width="7.6" stroke-linecap="round"/>`
+      +   `<circle cx="0" cy="17.6" r="3.9" fill="url(#rkgqGold)" stroke="url(#rkgqEdge)" stroke-width=".7"/>`
+      +   `<path class="rkgq-shine" d="${HOOK}" fill="none" stroke="url(#rkgqSpec)" stroke-width="2.6" stroke-linecap="round" transform="translate(-1.5,-1.7)"/>`
+      +   `<circle cx="-1.6" cy="16.1" r="1.15" fill="#fffdf2" opacity=".95"/>`
+      + `</g>`;
+  }
+  /* в SVG-сцену: (x,y) — место на месте буквы, s — масштаб */
+  function group(x,y,s){
+    ensure();
+    return `<g class="rkgq" transform="translate(${(+x).toFixed(1)},${(+y).toFixed(1)}) scale(${(+s||0.46).toFixed(3)})">`
+      + `<g class="rkgq-spin">${body()}</g></g>`;
+  }
+  /* в HTML-страницу: размер задаётся кеглем родителя (em) */
+  function html(){
+    ensure();
+    return `<span class="rkgq-slot" aria-hidden="true"><svg class="rkgq-svg" viewBox="-24 -24 48 50" preserveAspectRatio="xMidYMid meet">`
+      + `<g class="rkgq-spin">${body()}</g></svg></span>`;
+  }
+  return {ensure:ensure, group:group, html:html, HOOK:HOOK};
+})();
+
 /* ================= ПРОВЕРОЧНЫЕ РАБОТЫ (кадровый формат) ================= */
 /* Общий набор: иконки к словам + конструктор проверочной работы.
    Опорные материалы: словарные слова 5 и 6 класса по учебнику Т.А. Ладыженской,
@@ -2315,6 +2411,7 @@ window.RUKEXAM = (function(){
     train:    `<rect x="14" y="14" width="36" height="30" rx="6" fill="none" stroke="${BLUE}" stroke-width="2.6"/><path d="M14 30 h36" stroke="${BLUE}" stroke-width="2"/><circle cx="24" cy="36" r="3" fill="${GOLD}"/><circle cx="40" cy="36" r="3" fill="${GOLD}"/><path d="M20 44 L16 54 M44 44 L48 54" stroke="${PALE}" stroke-width="2.6" stroke-linecap="round"/>`,
     monitor:  `<rect x="10" y="16" width="44" height="28" rx="4" fill="none" stroke="${BLUE}" stroke-width="2.6"/><path d="M24 52 h16 M32 44 v8" stroke="${PALE}" stroke-width="2.6" stroke-linecap="round"/><path d="M16 24 h20 M16 32 h12" stroke="${MUTED}" stroke-width="2.2"/>`,
     candy:    `<rect x="12" y="26" width="40" height="16" rx="8" fill="${GOLD}" opacity=".9"/><path d="M12 34 l-6 -8 v16 z M52 34 l6 -8 v16 z" fill="#e86a5a"/><path d="M22 26 v16 M32 26 v16 M42 26 v16" stroke="#8a5a14" stroke-width="1.6"/>`,
+    word:     `<path d="M10 18 q11 -6 22 0 q11 -6 22 0 v28 q-11 -6 -22 0 q-11 -6 -22 0z" fill="none" stroke="${GOLD}" stroke-width="2.6" stroke-linejoin="round"/><path d="M32 18 v28" stroke="${GOLD}" stroke-width="2.2"/><path d="M17 27 h8 M17 34 h8 M39 27 h8 M39 34 h8" stroke="${PALE}" stroke-width="1.8" stroke-linecap="round"/>`,
     pool:     `<rect x="8" y="30" width="48" height="22" rx="6" fill="#1d5e7a" opacity=".55" stroke="${BLUE}" stroke-width="2.4"/><path d="M14 26 q6 -5 12 0 t12 0 t12 0" fill="none" stroke="${BLUE}" stroke-width="2.4"/><path d="M14 38 q6 -5 12 0 t12 0" fill="none" stroke="${PALE}" stroke-width="1.8" opacity=".8"/>`,
     shield:   `<path d="M32 12 l18 6 v16 q0 16 -18 22 q-18 -6 -18 -22 v-16z" fill="none" stroke="${GOLD}" stroke-width="2.6" stroke-linejoin="round"/><path d="M24 34 l6 7 l12 -14" stroke="${PALE}" stroke-width="3" fill="none" stroke-linecap="round"/>`,
     doors:    `<rect x="16" y="12" width="32" height="44" rx="4" fill="none" stroke="${BLUE}" stroke-width="2.6"/><path d="M32 12 v44" stroke="${BLUE}" stroke-width="2"/><circle cx="27" cy="34" r="2.4" fill="${GOLD}"/><circle cx="37" cy="34" r="2.4" fill="${GOLD}"/>`,
@@ -2352,6 +2449,31 @@ window.RUKEXAM = (function(){
       if(cur) out.push(cur);
     });
     return out;
+  }
+
+  /* слово с прорезью: подчёркивание делаем невидимым, а на его место встаёт
+     золотой знак вопроса. Место считаем после вставки в документ: только тогда
+     SVG умеет измерить подстроку (getSubStringLength) и знак не «уезжает». */
+  function gapWord(it){
+    const w = String(it.word||''), g = w.indexOf('_');
+    if(g < 0) return T(196, 74, w, PALE, {fs:26});
+    return `<text class="pk-t" id="rkwWord" x="196" y="74" text-anchor="middle" font-size="26" fill="${PALE}">`
+      + `<tspan>${w.slice(0,g)}</tspan><tspan fill="none">_</tspan><tspan>${w.slice(g+1)}</tspan></text>`;
+  }
+  function placeGapMark(root, it){
+    try{
+      if(!root || !window.RUQMARK) return;
+      const t = root.querySelector('#rkwWord'); if(!t) return;
+      const w = String(it.word||''), g = w.indexOf('_'); if(g < 0) return;
+      const total = t.getSubStringLength(0, w.length);
+      const before = t.getSubStringLength(0, g);
+      const gapW = t.getSubStringLength(g, 1) || 14;
+      const x = 196 - total/2 + before + gapW/2;      /* центр прорези */
+      const ns = 'http://www.w3.org/2000/svg';
+      const tmp = document.createElementNS(ns, 'svg');
+      tmp.innerHTML = window.RUQMARK.group(x, 64.6, Math.max(0.34, Math.min(0.62, gapW/24)));
+      if(tmp.firstElementChild) t.parentNode.appendChild(tmp.firstElementChild);
+    }catch(e){}
   }
 
   /* конструктор проверочной работы: одна функция — три работы */
@@ -2405,7 +2527,7 @@ window.RUKEXAM = (function(){
           <rect x="22" y="28" width="292" height="118" rx="14" fill="rgba(255,255,255,.05)"
             stroke="${shown ? (ok?GREEN:RED) : '#3d5c49'}" stroke-width="1.7"/>
           ${icon(it.icon, 34, 44, 0.62)}
-          ${T(196,74,it.word,PALE,{fs:26})}
+          ${gapWord(it)}
           ${T2(196,100, it.ask, MUTED, {fs:11})}
           ${shown? T2(196,124, ok ? 'верно: '+it.spell : 'правильно: '+it.spell, ok?GREEN:RED, {fs:12}) : T2(196,124,'выбери вариант', MUTED, {fs:11})}
           ${R.rule(156, shown ? (ok?'Молодец':'Запомни') : 'Памятка',
@@ -2464,6 +2586,7 @@ window.RUKEXAM = (function(){
             <div class="wv-sml" style="color:${MUTED}">${picked!=null ? 'нажми другой вариант, если хочешь исправить ответ' : 'выбери верное написание'}</div>`;
         }
         el.innerHTML = `<div class="wv"><div class="wv-col">${scene(step, st)}${extra}</div></div>`;
+        if(qi >= 0 && qi < items.length) placeGapMark(el, items[qi]);
       }catch(e){ el.innerHTML = ''; }
     }
 
@@ -2495,6 +2618,37 @@ window.RUKEXAM = (function(){
       if(!f) arr.push(lesson);
     })();
     return lesson;
+  }
+
+  /* ---------- слова для работы из банка словарных слов ----------
+     Работы 611 и 612 должны проверять не двенадцать слов, а весь список класса.
+     Слова берём из банка (tasks_dict.js + tasks_dict_1_6.js): там у каждого слова
+     уже есть верная буква, правдоподобная ошибка и подсказка-ассоциация, а класс
+     стоит в поле cls. Слова, которые уже описаны вручную выше, пропускаем —
+     дублей в работе быть не должно. */
+  function dictItems(cls, exclude, need){
+    const used = {};
+    (exclude||[]).forEach(function(it){
+      const k = String(it.spell || String(it.word||'').replace('_','')).toLowerCase();
+      if(k) used[k] = 1;
+    });
+    const pool = (window.ARH_TASKS||[]).filter(function(t){ return t.dict && t.cls === cls; });
+    const out = [];
+    for(let i=0;i<pool.length && out.length<need;i++){
+      /* у словарной задачи слово лежит в word, а буква-пропуск — в gap:
+         подчёркивание стоит именно в gap, по нему и проверяем */
+      const t = pool[i], w = String(t.word||''), gap = String(t.gap||'');
+      if(!w || gap.indexOf('_')<0) continue;
+      if(used[w.toLowerCase()]) continue;
+      used[w.toLowerCase()] = 1;
+      const wrong = (t.choices||[]).find(function(c){ return c !== t.ans; }) || '';
+      const why = (t.hints && t.hints[2]) ? t.hints[2] : 'Словарное слово: вспомни, как оно выглядит в списке.';
+      const opts = (out.length % 2) ? [wrong, t.ans] : [t.ans, wrong];
+      out.push({word:gap, ans:t.ans, opts:opts, icon:'word', spell:w,
+        ask:/^(лл|нн|сс|кк|рр|мм|бб|пп)$/.test(t.ans) ? 'проверяем удвоенную согласную' : 'проверяем букву, которую нельзя проверить правилом',
+        rule:'Словарное слово: пишем «'+w+'».', note:why, hint:why});
+    }
+    return out;
   }
 
   /* ---------- работы в формате МЦКО: баллы по заданиям и шкала выполнения ---------- */
@@ -2707,26 +2861,21 @@ window.RUKEXAM = (function(){
     window.ruMckoPick = window.ruMckoPick || function(id, k){ const h=window.RU_MCKO[id]; if(h) h.pick(k); };
     window.ruMckoToggle = window.ruMckoToggle || function(id, k){ const h=window.RU_MCKO[id]; if(h) h.toggle(k); };
     window.ruMckoCheck = window.ruMckoCheck || function(id){ const h=window.RU_MCKO[id]; if(h) h.check(); };
-  return {build: build, buildMcko: buildMcko, icon: icon, ICONS: ICONS, mckoMark: mckoMark};
+  return {build: build, buildMcko: buildMcko, icon: icon, ICONS: ICONS, mckoMark: mckoMark, dictItems: dictItems};
 })();
 
 /* ================= РАБОТА 611 · Словарные слова, 5 класс ================= */
 window.RUKEXAM.build({
   id: 611, klass: '5 класс', title: 'Проверочная работа: словарные слова (5 класс)', ico: '📝',
+  /* Три первых кадра были почти одинаковыми — теперь это один кадр. */
   intro: [
-    'Это проверочная работа по словарным словам 5 класса. Слова взяты из школьного списка по учебнику Т.А. Ладыженской — это те слова, которые нельзя проверить правилом и приходится запоминать.',
-    'В работе 12 слов. Настоящий словарный диктант в 5 классе длиннее — 15–20 слов, но проверяет он то же самое: помнишь ли ты написание словарных слов.',
-    'Запоминать словарные слова помогают четыре приёма, которые советует школьная методика. Смотри следующий кадр.'
+    'Проверочная работа по словарным словам 5 класса: 30 слов из школьного списка по учебнику Т.А. Ладыженской. Это слова, которые нельзя проверить правилом, — их узнают по памяти. Каждый кадр: одна буква-пропуск, два варианта и подсказка-ассоциация. Нормы школьного словарного диктанта: 0 ошибок — «5», 1–2 ошибки — «4», 3–4 — «3», больше — слова надо повторить.'
   ],
   introCards: [
-    ['Что проверяем', ['словарные слова 5 класса', '12 слов из школьного списка', 'работа идёт по кадрам, слово за словом'], ['Как отвечать', 'Выбирай букву кнопкой ниже.', '#7fd1ff']],
-    ['Как запоминать словарные слова', ['1. Группами по орфограмме: все слова с о в первом слоге вместе.',
-        '2. Через происхождение: апельсин — «китайское яблоко», велосипед — «быстрые ноги».',
-        '3. Проговаривай по слогам и записывай по памяти три раза.',
-        '4. Карточки: слово на одной стороне, проверка на другой.'], ['Проверка', 'Словарное слово узнают глазами и рукой, а не на слух.', '#ffd76a']],
-    ['Как считается отметка', ['Нормы школьного словарного диктанта:',
-        '0 ошибок — «5»  ·  1–2 ошибки — «4»',
-        '3–4 ошибки — «3»  ·  больше — надо повторить'], ['Важно', 'Отметка покажет, какие слова ещё учить.', '#8fd1a8']]
+    ['Что проверяем', ['словарные слова 5 класса — 30 слов',
+        'в каждом кадре одна буква и два варианта ответа',
+        'сначала вспомни слово, потом выбирай букву'], ['Как запоминать слова',
+        'Группами по орфограмме, через происхождение слова, по слогам и карточками.', '#ffd76a']]
   ],
   items: [
     {word:'ап_льсин', hint:"Слово пришло из голландского. Гласная во втором слоге — не и.", ans:'е', opts:['е','и'], icon:'orange', spell:'апельсин', ask:'проверяем гласную во втором слоге', rule:'Словарное слово: пишем «апельсин» (а-п-е-л-ь-с-и-н).', note:'Апельсин — от голландского appelsien, «китайское яблоко»: ап-ЕЛЬ-син.'},
@@ -2741,7 +2890,10 @@ window.RUKEXAM.build({
     {word:'в_кзал', hint:"Слово пришло из английского названия парка. Вспомни первый слог.", ans:'о', opts:['о','а'], icon:'train', spell:'вокзал', ask:'проверяем гласную в первом слоге', rule:'Словарное слово: пишем «вокзал».', note:'Вокзал — от английского Vauxhall, название парка в Лондоне.'},
     {word:'к_мпьютер', hint:"Английское «вычислитель». Вспомни первый слог.", ans:'о', opts:['о','а'], icon:'monitor', spell:'компьютер', ask:'проверяем гласную в первом слоге', rule:'Словарное слово: пишем «компьютер».', note:'Компьютер — от английского computer, «вычислитель».'},
     {word:'к_нфета', hint:"Латинское «изготовленное». Вспомни первый слог.", ans:'о', opts:['о','а'], icon:'candy', spell:'конфета', ask:'проверяем гласную в первом слоге', rule:'Словарное слово: пишем «конфета».', note:'Конфета — от латинского confectum, «изготовленное».'}
-  ],
+  ].concat(window.RUKEXAM.dictItems(5, [
+    {spell:'апельсин'},{spell:'велосипед'},{spell:'гардероб'},{spell:'календарь'},{spell:'корзина'},{spell:'парашют'},
+    {spell:'пианино'},{spell:'помидор'},{spell:'расписание'},{spell:'вокзал'},{spell:'компьютер'},{spell:'конфета'}
+  ], 18)),
   tail: [
     'Посмотри результат: сколько слов верно и какая отметка по школьным нормам. Слова с ошибками нужно повторить — именно они попадутся в диктанте.',
     'Теперь закрепи: запиши слова с ошибками по памяти три раза, проговаривая по слогам. Затем пройди работу по словарным словам 6 класса.'
@@ -2767,18 +2919,15 @@ window.RUKEXAM.build({
 /* ================= РАБОТА 612 · Словарные слова, 6 класс ================= */
 window.RUKEXAM.build({
   id: 612, klass: '6 класс', title: 'Проверочная работа: словарные слова (6 класс)', ico: '📝',
+  /* Три первых кадра были почти одинаковыми — теперь это один кадр. */
   intro: [
-    'Вторая проверочная работа — по словарным словам 6 класса. Список тот же, что в школьной программе по учебнику Т.А. Ладыженской: аккуратный, бассейн, богатырь, искусство, коллекция, миллион и другие.',
-    'Здесь 12 слов, и почти в каждом проверяется трудное место: гласная, которую нельзя проверить, или удвоенная согласная.',
-    'Напоминание: словарное слово нельзя проверить правилом — его узнают по памяти. Сначала вспомни, потом выбирай.'
+    'Проверочная работа по словарным словам 6 класса: 25 слов из школьного списка по учебнику Т.А. Ладыженской. Почти в каждом слове трудное место: гласная, которую нельзя проверить, или удвоенная согласная. Словарное слово узнают по памяти — сначала вспомни, потом выбирай. Нормы школьного словарного диктанта: 0 ошибок — «5», 1–2 — «4», 3–4 — «3», больше — слова надо повторить.'
   ],
   introCards: [
-    ['Что проверяем', ['словарные слова 6 класса', '12 слов из школьного списка', 'гласные и удвоенные согласные'], ['Как отвечать', 'Выбери вариант кнопкой ниже.', '#7fd1ff']],
-    ['Трудные места', ['Гласная без проверки: богатырь, командир, орнамент.',
-        'Удвоенная согласная: бассейн, искусство, коллекция, миллион.',
-        'Иностранные слова: вестибюль, гектар, пиджак.'], ['Совет', 'Учи слова группами: так они держатся в памяти.', '#ffd76a']],
-    ['Как считается отметка', ['0 ошибок — «5»  ·  1–2 ошибки — «4»',
-        '3–4 ошибки — «3»  ·  больше — повтори слова'], ['Важно', 'Слова с ошибками выпиши и запиши по памяти.', '#8fd1a8']]
+    ['Что проверяем', ['словарные слова 6 класса — 25 слов',
+        'гласные без проверки: богатырь, командир, орнамент',
+        'удвоенные согласные: бассейн, искусство, коллекция, миллион'], ['Совет',
+        'Учи слова группами по трудному месту — так они держатся в памяти.', '#ffd76a']]
   ],
   items: [
     {word:'ба_ейн', hint:'Слово пришло из французского bassin.', ans:'сс', opts:['сс','с'], icon:'pool', spell:'бассейн', ask:'проверяем удвоенную согласную', rule:'В слове «бассейн» пишутся две с.', note:'Бассейн — из французского bassin, «водоём». Две с запоминаем.'},
@@ -2793,7 +2942,10 @@ window.RUKEXAM.build({
     {word:'п_рила', hint:'Словарное слово: вспомни, как оно выглядит в списке.', ans:'е', opts:['е','и'], icon:'railing', spell:'перила', ask:'проверяем гласную в первом слоге', rule:'Словарное слово: пишем «перила».', note:'Перила — от слова «переть» (опираться), первая гласная е.'},
     {word:'п_джак', hint:'Слово пришло из английского, речь об одежде.', ans:'и', opts:['и','е'], icon:'jacket', spell:'пиджак', ask:'проверяем гласную в первом слоге', rule:'Словарное слово: пишем «пиджак».', note:'Пиджак — от английского pea jacket. Первая гласная и.'},
     {word:'пр_мер', hint:'Словарное слово с корнем пример-.', ans:'и', opts:['и','е'], icon:'tree', spell:'пример', ask:'проверяем гласную в корне', rule:'Словарное слово: пишем «пример».', note:'Пример — корень пример- (примерный, примерять). Запомни: пример, привет, природа.'}
-  ],
+  ].concat(window.RUKEXAM.dictItems(6, [
+    {spell:'бассейн'},{spell:'богатырь'},{spell:'вестибюль'},{spell:'гектар'},{spell:'искусство'},{spell:'коллекция'},
+    {spell:'командир'},{spell:'миллион'},{spell:'орнамент'},{spell:'перила'},{spell:'пиджак'},{spell:'пример'}
+  ], 13)),
   tail: [
     'Смотри результат и отметку. Слова с ошибками обязательно выпиши — именно их проверяют в словарном диктанте.',
     'Повтори трудные места: удвоенные согласные (бассейн, искусство, коллекция, миллион) и гласные в иностранных словах (вестибюль, гектар, пиджак).'
@@ -3851,12 +4003,13 @@ window.RUWORK = (function(){
   #lvis .rk .halo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:230px;height:120px;pointer-events:none;
     background:radial-gradient(closest-side,rgba(255,215,106,.22),transparent 72%);filter:blur(6px);animation:haloPulse 2.6s ease-in-out infinite}
   #lvis .rk .word{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
-  #lvis .rk .cell{min-width:52px;height:70px;padding:0 12px;display:flex;align-items:center;justify-content:center;
+  #lvis .rk .cell{position:relative;min-width:52px;height:70px;padding:0 12px;display:flex;align-items:center;justify-content:center;
     font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em;color:#f8f2e4;
     background:linear-gradient(180deg,#26402f,#17271f);border:1.5px solid var(--line);border-radius:16px;
     box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);
     animation:cellIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*30ms)}
   #lvis .rk .cell.gap{border-style:dashed;border-color:rgba(255,215,106,.85);color:transparent;animation:cellIn 240ms ${OUT} both,gapPulse 1.9s ease-in-out infinite}
+  #lvis .rk .cell.gap .rkgq-slot{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:.6em;height:.92em}
   #lvis .rk .cell.ok{border-color:var(--ok);background:linear-gradient(180deg,#254634,#17281f);
     box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 0 26px rgba(143,209,168,.3);animation:land 320ms ${OUT} both;position:relative}
   #lvis .rk .cell.ok::after{content:'';position:absolute;left:6px;right:6px;bottom:6px;height:3px;border-radius:3px;
@@ -3897,6 +4050,7 @@ window.RUWORK = (function(){
   function css(){ try{ let e=document.getElementById('rk-style'); if(!e){ e=document.createElement('style'); e.id='rk-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
   function render(el, id, qi, it, total, st){
     css();
+    if(window.RUQMARK) window.RUQMARK.ensure();
     const picked = st.ans ? st.ans[qi] : null;
     const done = picked != null;
     const ok = picked === it.ans;
@@ -3904,7 +4058,8 @@ window.RUWORK = (function(){
     const cells = parts.map((ch,k)=>{
       const isGap = (ch==='_'||ch==='?');
       const cls = isGap ? (done ? (ok?'cell ok':'cell no') : 'cell gap') : 'cell';
-      const txt = isGap ? (done ? picked : '') : ch;
+      /* пока ответа нет, в прорези стоит золотой вращающийся знак вопроса */
+      const txt = isGap ? (done ? picked : window.RUQMARK.html()) : ch;
       return `<div class="${cls}" style="--i:${k}" ${isGap?'id="rkGap"':''}>${txt}</div>`;
     }).join('');
     const opts = (it.opts || [it.ans]).map(o=>{
@@ -4013,10 +4168,15 @@ window.RUWORK611 = (function(){
   #lvis .ms .ink span{animation:inkIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*24ms)}
   #lvis .ms .ink span.seat{position:relative;min-width:42px;color:transparent;
     border-bottom:3px solid rgba(255,215,106,.85);box-shadow:0 12px 22px -10px rgba(255,215,106,.55)}
-  #lvis .ms .ink span.seat::before{content:'?';position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
-    font-size:22px;color:rgba(255,215,106,.35);font-weight:600}
+  /* Знак вопроса на месте буквы: раньше это был бледный псевдоэлемент (35 %
+     прозрачности, top:46 %) — он уезжал от строки. Теперь это золотой знак из
+     RUQMARK: сидит в прорези по центру, вращается и блестит. */
+  /* Пустая ячейка прорези схлопывается по высоте (внутри только рамка), поэтому
+     знак нельзя ставить от top:%-высоты — он уезжал под буквы. Ставим от низа
+     строки: все буквы выровнены по базовой линии, и знак садится на неё. */
+  #lvis .ms .ink span.seat .rkgq-slot{position:absolute;left:50%;bottom:.06em;transform:translateX(-50%);
+    width:.62em;height:.92em}
   #lvis .ms .ink span.seat.lit,#lvis .ms .ink span.seat.bad{border-bottom-color:transparent;box-shadow:none}
-  #lvis .ms .ink span.seat.lit::before,#lvis .ms .ink span.seat.bad::before{content:''}
   #lvis .ms .ink span.seat::after{content:'';position:absolute;left:50%;bottom:-6px;width:26px;height:2px;transform:translateX(-50%);
     background:var(--gold);opacity:.85;animation:candle 1.8s ease-in-out infinite}
   #lvis .ms .ink span.lit{color:#fff6dd;text-shadow:0 0 22px rgba(255,215,106,.9),0 0 46px rgba(255,190,90,.5);animation:bloom 360ms ${OUT} both}
@@ -4056,12 +4216,16 @@ window.RUWORK611 = (function(){
   function css(){ try{ let e=document.getElementById('ms-style'); if(!e){ e=document.createElement('style'); e.id='ms-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
   function render(el, id, qi, it, total, st){
     css();
+    if(window.RUQMARK) window.RUQMARK.ensure();
     const picked = st.ans ? st.ans[qi] : null, done = picked!=null, ok = picked===it.ans;
     const chars=[...String(it.word||'')];
     const ink = chars.map((ch,k)=>{
       const isGap = (ch==='_'||ch==='?');
       const cls = isGap ? ('seat'+(done?(ok?' lit':' bad'):'')) : '';
-      return `<span class="${cls}" style="--i:${k}" ${isGap?'id="msSeat"':''}>${isGap?(done?picked:''):ch}</span>`;
+      /* пока ответа нет, в прорези стоит золотой вращающийся знак вопроса;
+         когда буква выбрана — знак уступает место самой букве */
+      const inner = isGap ? (done ? picked : window.RUQMARK.html()) : ch;
+      return `<span class="${cls}" style="--i:${k}" ${isGap?'id="msSeat"':''}>${inner}</span>`;
     }).join('');
     const gems = Array.from({length:total},(_,i)=>`<i class="gem ${st.ans&&st.ans[i]!=null?'done':''}"></i>`).join('');
     const seals = (it.opts||[it.ans]).map(o=>{
@@ -4341,7 +4505,7 @@ window.RUWORKEDGES = (function(){
       <h2>${L.title||'Проверочная работа'}</h2>
       <p>${txt}</p>
       <ul class="what">
-        <li>Проверяем ${id===611?'безударные гласные в корне':id===612?'парные согласные и непроизносимые согласные':id===613?'приставки, предлоги и разделительный знак':'функциональную грамотность'}</li>
+        <li>Проверяем ${id===611?'словарные слова 5 класса':id===612?'словарные слова 6 класса':id===613?'приставки, предлоги и разделительный знак':'функциональную грамотность'}</li>
         <li>Каждый вопрос с выбором ответа: буква встаёт в слово, правильность объясняется.</li>
         <li>В конце работы — балл, процент и отметка по школьной шкале.</li>
       </ul>
@@ -4395,7 +4559,10 @@ window.RUWORKEDGES = (function(){
           if(items&&qi>=0&&items[qi]&&items[qi].word) return prev(el);
           const last=[L.explain.length-2, L.explain.length-1];
           if(last.indexOf(step)>=0){ itog(el,id,L); return; }        /* последние два кадра — итог */
-          if(step<=2){ prolog(el,id,L,step); return; }                /* первые три — пролог */
+          /* кадров вступления бывает и один (611, 612 — три прежних слиты в один),
+             и три (613, 614): считаем по данным, а не по числу в коде */
+          const introN=Math.max(1, L.explain.findIndex(function(t){ return /^Вопрос \d+ из \d+\./.test(t); }));
+          if(step<introN){ prolog(el,id,L,step); return; }             /* вступление */
           return prev(el);                                            /* середина — прежний кадр */
         }
       }catch(e){}

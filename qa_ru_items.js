@@ -11,12 +11,16 @@ global.location = { href:'/' };
 
 require('./MVP/data/lessons.js');
 require('./MVP/data/vis_pw.js');
+/* словарные слова: работы 611 и 612 добирают задания из банка — без этих
+   файлов проверка видела только двенадцать слов, описанных вручную */
+require('./MVP/data/tasks_dict.js');
+require('./MVP/data/tasks_dict_1_6.js');
 require('./MVP/data/vis_ru.js');
 
 const works = Object.assign({}, window.RU_EXAM_ITEMS || {});
 Object.keys(window.RU_MCKO || {}).forEach(id => { if(window.RU_MCKO[id].items) works[id] = window.RU_MCKO[id].items; });
 
-const NEED = { 611:12, 612:12, 613:12, 614:17 };
+const NEED = { 611:30, 612:25, 613:12, 614:17 };   /* 611 и 612 — весь список класса */
 const problems = [];
 let checked = 0;
 const names = { 1:'первом', 2:'втором', 3:'третьем' };
@@ -67,7 +71,7 @@ Object.keys(works).forEach(id => {
 /* Тренажёры уроков проверяются прогоном интерфейса: qa_ru_trainers.py
    (разбор кнопок по тексту файла давал ложные срабатывания — убрано). */
 
-const EXPECTED_ITEMS = 53;   /* 12 + 12 + 12 + 17 */
+const EXPECTED_ITEMS = 84;   /* 30 + 25 + 12 + 17 */
 if(checked !== EXPECTED_ITEMS) problems.push(`проверено ${checked} заданий вместо ${EXPECTED_ITEMS} — данные загрузились не полностью`);
 
 console.log('проверено заданий:', checked);
