@@ -52,8 +52,14 @@ JS = r"""()=>{
     if(clipped) out.push({k:'обрезано', t:(e.textContent||'').trim().slice(0,18), c:String(anc).slice(0,24)});
     if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e});
   });
+  /* Многострочный inline-элемент (например <b> внутри абзаца, перенесённый на
+     две строки) получает рамку на обе строки целиком — по ней наложение считать
+     нельзя, это ложная отметка. Такую рамку из проверки убираем. */
+  const oneLine=(x)=>{ const st=getComputedStyle(x.el); const fs=parseFloat(st.fontSize)||16;
+    return x.b.height <= fs*1.8; };
   for(let i=0;i<texts.length;i++) for(let j=i+1;j<texts.length;j++){
     if(texts[i].el.contains(texts[j].el)||texts[j].el.contains(texts[i].el)) continue; /* вложенный текст */
+    if(!oneLine(texts[i])||!oneLine(texts[j])) continue;   /* многострочные inline не судим */
     const A=texts[i].b, B=texts[j].b;
     const w=Math.max(0,Math.min(A.right,B.right)-Math.max(A.left,B.left));
     const h=Math.max(0,Math.min(A.bottom,B.bottom)-Math.max(A.top,B.top));
