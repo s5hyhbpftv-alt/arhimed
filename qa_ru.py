@@ -123,12 +123,13 @@ check('есть все три типа заданий МЦКО',
 
 print('\n=== 4. Раскладка кадров ===')
 try:
-    p = subprocess.run([sys.executable, os.path.join(ROOT, 'qa_layout.py')] + [str(i) for i in range(601, 615)],
+    # диапазон идёт до 618 включительно: листов теперь восемнадцать (601–618)
+    p = subprocess.run([sys.executable, os.path.join(ROOT, 'qa_layout.py')] + [str(i) for i in range(601, 619)],
                        capture_output=True, text=True, cwd=ROOT,
                        env=dict(os.environ, PYTHONPATH=os.path.join(ROOT, '.py-libs')))
     out = p.stdout
     probs = [l for l in out.splitlines() if 'проблемных шагов' in l]
-    check('гейт раскладки прогнан по всем 14 урокам', len(probs) == 28, len(probs))
+    check('гейт раскладки прогнан по всем 18 урокам', len(probs) == 36, len(probs))
     bads = [l for l in probs if not re.search(r'проблемных шагов 0', l)]
     check('во всех кадрах нет наложений, обрезания и пустых сцен', not bads, bads[:2])
 except Exception as e:
