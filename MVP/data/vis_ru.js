@@ -29,6 +29,126 @@ window.RUKIT = (function(){
   #lvis .ru-pred .fb{margin-top:10px;font-size:16px;line-height:1.5}
   `;
   function rcss(){ try{ let e=document.getElementById('ruk-style'); if(!e){ e=document.createElement('style'); e.id='ruk-style'; document.head.appendChild(e); } if(e.textContent!==RCSS) e.textContent=RCSS; }catch(e){} }
+
+  /* --- Общий каркас кадра по стандарту кеглей (шаг 2 редизайна) ---
+     Кадры уроков 601–610 должны читаться без увеличения: заголовок 24, лид 20,
+     служебная подпись 16, буква-задание 44. Урок 601 живёт в этой вёрстке с
+     самого редизайна (его класс .s6), остальные семь уроков рисовались в SVG-
+     холсте 336×252, где единица равна пикселю и кегль выходил 10,5–14.
+     Здесь тот же каркас выкладывается наружу, чтобы им могли пользоваться все
+     уроки, а не только 601. Текст сцены набирается HTML-блоками: у них нет
+     жёстких координат, поэтому крупный кегль не ломает кадр, а переносит строку. */
+  const FRAME_F="Georgia,'Times New Roman',serif";
+  const FRAME_EASE="cubic-bezier(.2,0,0,1)", FRAME_OUT="cubic-bezier(.23,1,.32,1)";
+  const FRAME_CSS=`
+  #lvis .s6{--gold:#ffd76a;--ink:#f6efe0;--mut:#d8c9a6;--line:rgba(255,215,106,.28);--ok:#8fd1a8;--no:#e86a5a;
+    box-sizing:border-box;max-width:100%;font-family:${FRAME_F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:16px;padding-bottom:56px}
+  #lvis .s6 .kicker{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-variant-numeric:tabular-nums}
+  #lvis .s6 h2{font-size:24px;line-height:1.12;font-weight:600;color:var(--gold);letter-spacing:-.02em;margin:0;text-wrap:balance}
+  #lvis .s6 p{margin:0}
+  #lvis .s6 .lead{font-size:20px;line-height:1.5;text-wrap:pretty}
+  #lvis .s6 .cap{font-size:16px;line-height:1.5;color:var(--mut)}
+  #lvis .s6 .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  #lvis .s6 .card{box-sizing:border-box;flex:1 1 30%;min-width:104px;padding:16px 14px;border-radius:18px;text-align:center;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);box-shadow:0 10px 24px rgba(0,0,0,.38)}
+  #lvis .s6 .card .ic{font-size:30px;line-height:1}
+  #lvis .s6 .card .nm{font-size:16px;font-weight:600;color:var(--gold);margin-top:8px}
+  #lvis .s6 .card .ex{font-size:16px;line-height:1.25;color:var(--mut);margin-top:4px}
+  #lvis .s6 button{font-family:${FRAME_F};cursor:pointer;border-radius:16px;border:1.5px solid var(--line);
+    background:rgba(255,255,255,.05);color:var(--ink);transition:transform 120ms ${FRAME_EASE},background 160ms ease-out,border-color 160ms ease-out}
+  #lvis .s6 button:active{transform:translateY(2px)}
+  #lvis .s6 button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+  #lvis .s6 .chip{padding:14px 20px;font-size:24px;font-weight:600;line-height:1.2}
+  #lvis .s6 .chip.on{border-color:var(--gold);background:rgba(255,215,106,.14)}
+  #lvis .s6 .chip.ok{border-color:var(--ok);background:rgba(143,209,168,.16)}
+  #lvis .s6 .chip.no{border-color:var(--no);background:rgba(232,106,90,.14)}
+  #lvis .s6 .word{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:nowrap;white-space:nowrap;padding:14px 18px;border-radius:18px;
+    background:linear-gradient(180deg,#24382d,#17261e);border:1.5px solid var(--line);box-shadow:0 12px 28px rgba(0,0,0,.42)}
+  #lvis .s6 .word b{font-size:44px;font-weight:600;line-height:1;letter-spacing:-.02em}
+  #lvis .s6 .word i{font-style:normal;font-size:16px;color:var(--mut)}
+  /* длинная фраза в плашке: на 320 px «кот · столе · спит» не влезала в строку —
+     разрешаем перенос и держим кегль по шкале (26 px вместо 28) */
+  #lvis .s6 .word.wide{white-space:normal;flex-wrap:wrap;justify-content:center;text-align:center;max-width:100%}
+  #lvis .s6 .word.wide b{font-size:26px;line-height:1.25;letter-spacing:0}
+  #lvis .s6 .tag{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:12px;
+    background:rgba(255,215,106,.12);border:1px solid var(--line);font-size:16px;color:var(--gold)}
+  #lvis .s6 .cta{width:100%;padding:17px 18px;font-size:20px;font-weight:600;line-height:1.2;
+    border-color:var(--gold);background:linear-gradient(180deg,#ffd76a,#e2b23f);color:#20180a}
+  #lvis .s6 .verdict{font-size:16px;line-height:1.55}
+  #lvis .s6 .verdict.ok{color:#b8e8cc}#lvis .s6 .verdict.no{color:#f3b3aa}
+  #lvis .s6 .score{font-size:16px;color:var(--mut);font-variant-numeric:tabular-nums}
+  #lvis .s6 .col{display:flex;flex-direction:column;gap:12px}
+  #lvis .s6 .split{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
+  #lvis .s6 .rail{display:flex;gap:14px;justify-content:center;padding:10px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line)}
+  #lvis .s6 .crates{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:86%;margin:0 auto}
+  /* персонаж-помощник не должен закрывать содержимое русского тренажёра */
+  body:has(#lvis .s6) .avatar,body:has(#lvis .s6) .mascot,body:has(#lvis .s6) .assistant,body:has(#lvis .s6) .guide,
+  body:has(#lvis .ms) .avatar,body:has(#lvis .ms) .mascot,body:has(#lvis .ms) .assistant,body:has(#lvis .ms) .guide,
+  body:has(#lvis .rl-wrap) .avatar,body:has(#lvis .rl-wrap) .mascot{display:none!important}
+  body:has(#lvis .pp) .avatar,body:has(#lvis .pp) .mascot,body:has(#lvis .pp) .assistant{display:none!important}
+  #lvis .s6 .crate{flex:1 1 30%;min-width:104px;padding:16px 12px;text-align:center}
+  #lvis .s6 .crate .ic{font-size:30px}
+  #lvis .s6 .crate .nm{font-size:17px;font-weight:600;color:var(--gold);margin-top:8px;white-space:nowrap}
+  #lvis .s6 .crate .ex{font-size:14px;line-height:1.3;color:var(--mut);margin-top:4px}
+  #lvis .s6 .crate.hit{border-color:var(--ok);box-shadow:0 0 0 4px rgba(143,209,168,.18);animation:bump 320ms ${FRAME_OUT}}
+  #lvis .s6 .crate.miss{border-color:var(--no);animation:nudge 150ms ease-out}
+  /* --- хореография: у каждого кадра своя --- */
+  #lvis .s6 [data-anim]{animation-duration:260ms;animation-timing-function:${FRAME_OUT};animation-fill-mode:both;animation-delay:calc(var(--i,0)*40ms)}
+  #lvis .s6[data-frame="1"] [data-anim]{animation-name:rise}
+  #lvis .s6[data-frame="2"] [data-anim]{animation-name:pop}
+  #lvis .s6[data-frame="3"] [data-anim]{animation-name:rise}
+  #lvis .s6[data-frame="4"] [data-anim]{animation-name:slideX}
+  #lvis .s6[data-frame="5"] [data-anim]{animation-name:swap}
+  #lvis .s6[data-frame="6"] [data-anim]{animation-name:pop}
+  #lvis .s6[data-frame="7"] [data-anim]{animation-name:slideX}
+  #lvis .s6[data-frame="8"] [data-anim]{animation-name:drop}
+  #lvis .s6[data-frame="9"] [data-anim]{animation-name:rise}
+  #lvis .s6 .draw{stroke-dasharray:220;stroke-dashoffset:220;animation:draw 420ms ${FRAME_OUT} 160ms both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes pop{0%{opacity:0;transform:scale(.9)}70%{transform:scale(1.02)}100%{opacity:1;transform:none}}
+  @keyframes slideX{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+  @keyframes drop{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+  @keyframes swap{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:none}}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes bump{0%{transform:none}40%{transform:translateY(-8px)}100%{transform:none}}
+  @keyframes nudge{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  #lvis .s6 .fly{position:fixed;z-index:340;pointer-events:none;font-family:${FRAME_F};font-weight:600;color:#ffe9a8;
+    text-shadow:0 0 14px rgba(255,215,106,.7);transition:transform 260ms ${FRAME_EASE},opacity 260ms ease-out}
+  @media (prefers-reduced-motion: reduce){
+    #lvis .s6 *, #lvis .s6 *::before, #lvis .s6 *::after{
+      animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    #lvis .s6 .fly{display:none!important}
+  }
+
+  #lvis .s6 .morph{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;align-items:flex-end}
+  #lvis .s6 .morph .m{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 14px;border-radius:14px;
+    border:1.6px solid var(--c,#ffd76a);background:rgba(255,255,255,.045);min-width:56px}
+  #lvis .s6 .morph .m b{font-size:34px;line-height:1.05;font-weight:600;color:var(--c,#ffd76a)}
+  #lvis .s6 .morph .m i{font-style:normal;font-size:14px;line-height:1.2;color:var(--mut)}
+  #lvis .s6 .pair{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  #lvis .s6 .pair .card{flex:1 1 42%;min-width:150px}
+  #lvis .s6 .steps{display:flex;flex-direction:column;gap:10px;width:100%}
+  #lvis .s6 .steps .st{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;
+    border:1.5px solid var(--line);background:linear-gradient(180deg,#22362c,#17261e)}
+  #lvis .s6 .steps .st .n{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:#20180a;background:linear-gradient(180deg,#ffd76a,#e2b23f)}
+  #lvis .s6 .steps .st .t{font-size:17px;line-height:1.3}
+  #lvis .s6 .steps .st .t small{display:block;font-size:14px;color:var(--mut);margin-top:2px}
+    `;
+  function frameCss(){
+    rcss();
+    try{
+      let e=document.getElementById('s6-style');
+      if(!e){ e=document.createElement('style'); e.id='s6-style'; document.head.appendChild(e); }
+      if(e.textContent!==FRAME_CSS) e.textContent=FRAME_CSS;
+    }catch(e){}
+  }
+  /* морфемы кадра: [[часть, цвет, подпись], …] — имя frameMorph, чтобы не
+     перекрыть прежний SVG-помощник morph(parts,y,o) */
+  function frameMorph(items){
+    return `<div class="morph">${items.map(([p,c,cap])=>
+      `<span class="m" style="--c:${c}"><b>${p}</b>${cap?`<i>${cap}</i>`:''}</span>`).join('')}</div>`;
+  }
   function NOTE(title,text){
     rcss();
     return `<div class="ru-note"><div class="t">${title}</div><div class="b">${text}</div></div>`;
@@ -130,7 +250,8 @@ window.RUKIT = (function(){
       <path d="M${x - r * 0.42} ${y - r * 0.42} L${x + r * 0.42} ${y + r * 0.42} M${x + r * 0.42} ${y - r * 0.42} L${x - r * 0.42} ${y + r * 0.42}"
         stroke="${col}" stroke-width="2.2" stroke-linecap="round"/>`;
   }
-  return {GOLD, BLUE, GREEN, RED, MUTED, PALE, T, T2, SV, NOTE, PRED, CARDS, word, row, tag, morph, rule, box, plus, check, cross};
+  return {GOLD, BLUE, GREEN, RED, MUTED, PALE, T, T2, SV, NOTE, PRED, CARDS, word, row, tag, morph, rule, box, plus, check, cross,
+          frameCss, frameMorph};
 })();
 
 
@@ -3440,7 +3561,8 @@ window.RU601V2 = (function(){
       animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
     #lvis .s6 .fly{display:none!important}
   }`;
-  function css(){ try{ let e=document.getElementById('s6-style'); if(!e){ e=document.createElement('style'); e.id='s6-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  /* каркас кадра один на всё русское направление — он лежит в RUKIT.frameCss() */
+  function css(){ try{ if(window.RUKIT&&RUKIT.frameCss) RUKIT.frameCss(); }catch(e){} }
   const S=()=>{ const lk=lidKey(601); if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; };
   const T=(tag,i,cls,html,extra)=>`<${tag} data-anim style="--i:${i}" class="${cls||''}" ${extra||''}>${html}</${tag}>`;
   const BTN=(i,cls,html,on,extra)=>`<button type="button" data-anim style="--i:${i}" class="${cls}" onclick="${on}" ${extra||''}>${html}</button>`;
@@ -4280,7 +4402,19 @@ window.RU615 = (function(){
   window.mkStep=(d)=>{ try{ const n=((typeof LV!=='undefined'&&LV.step)||0)+d; if(n<0||n>=Q.length) return; LV.step=n; chRender(0); }catch(e){} };
   if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===615)){
     window.ARH_LESSONS.push({id:615,title:'Путь Мишутки',ico:'🐻',src:'Русский язык · 5–6 класс · Путь Мишутки',subj:'rus',
-      explain:Q.map((x,i)=>(i+1)+'. '+x.t),check:1,tasks:[],img:'img/mishutka.png'});
+      explain:Q.map((x,i)=>(i+1)+'. '+x.t),
+      check:{q:'Зеленоградский округ не граничит ни с одним другим. Каким номером он обозначен на карте Москвы?',
+        choices:['10','1','12'],ans:0,exp:'Зеленоградский — 10: он стоит отдельно на северо-западе, в стороне от остальных округов.'},
+      tasks:[
+        {q:'Поездка на такси в тарифе «Эконом» стоит 680 рублей. Сколько стоит поездка в «Комфорте», если она дороже на 5 %?',
+         kind:'unit',ans:714,tol:0,
+         hints:['Сначала найди 1 % от 680 рублей.','1 % — это 6,8 рубля, значит 5 % — 34 рубля.'],
+         sol:'680 + 34 = 714 рублей.'},
+        {q:'На спектакль продано 210 билетов, это две трети всех мест. Сколько всего мест в зале?',
+         kind:'unit',ans:315,tol:0,
+         hints:['210 — это две трети, значит одна треть в два раза меньше.','Одна треть — 105, а мест в зале три трети.'],
+         sol:'105 × 3 = 315 мест.'}
+      ],img:'img/mishutka.png'});
   }
   if(window.WAVE_B) window.WAVE_B[615]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
   return {render:render,data:Q,art:ART};
@@ -4814,4 +4948,532 @@ window.RU615PAPER = (function(){
       }catch(e){}
     };
   });
+})();
+
+/* ================= ШАГ 2 РЕДИЗАЙНА · УРОК 602 «Состав слова» =================
+   Что было не так: девять кадров рисовались в SVG-холсте 336×252, где единица
+   равна пикселю, поэтому подписи выходили 10,5–14 px — ниже стандарта (основной
+   текст не меньше 16, заголовок кадра 24). Общий множитель шрифта кадры ломает
+   (проверено), поэтому кадр переложен целиком, как в 601: заголовок 24, лид 20,
+   пояснение 16, элемент-слово 34–44, перенос строк вместо жёстких координат.
+   Содержание, порядок и хореография каждого кадра сохранены. */
+(function(){
+  const R=window.RUKIT; if(!R) return;
+  const GOLD=R.GOLD, GREEN=R.GREEN, BLUE=R.BLUE, MUTED=R.MUTED, PALE=R.PALE,
+        PINK='#e8a0d8', CYAN='#7fd1ff';
+  const M=R.frameMorph;
+  const GAME602=[['приехать','приставка','приставка при-'],['лесник','суффикс','суффикс -ник'],
+    ['леса','окончание','окончание -а'],['переход','приставка','приставка пере-'],
+    ['домик','суффикс','суффикс -ик'],['книгу','окончание','окончание -у']];
+  const chip=(t,c)=>`<span class="tag" style="font-size:18px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
+
+  function frame(step, st){
+    if(step===0) return `
+      <div class="kicker">01 · Состав слова</div>
+      <h2>Слово — как постройка</h2>
+      <p class="lead">У слова есть части, и каждая работает по-своему. Наука называет эти части <b style="color:${GOLD}">морфемами</b>.</p>
+      ${M([['при',CYAN,'приставка'],['школь',GREEN,'корень'],['н',GOLD,'суффикс'],['ый',PINK,'окончание']])}
+      <p class="cap">Убери любую часть — слово рассыплется или изменит смысл.</p>`;
+    if(step===1) return `
+      <div class="kicker">02 · Корень</div>
+      <h2>Корень — общая часть родственников</h2>
+      <p class="lead">В корне смысл слова. Подбери родственников — и корень определится сам.</p>
+      <div class="row">${chip('лес',GREEN)+chip('лесной')+chip('лесник')+chip('перелесок')+chip('лесничество')}</div>
+      <p class="cap">Корень выделяют дугой: лес.</p>`;
+    if(step===2) return `
+      <div class="kicker">03 · Приставка</div>
+      <h2>Приставка — перед корнем</h2>
+      <p class="lead">Стоит перед корнем и добавляет оттенок смысла. Пишется слитно: это часть слова, а не предлог.</p>
+      ${M([['при',CYAN,'приставка'],['ехать',GREEN,'корень']])}
+      <div class="row">${chip('уехать')+chip('переехать')}</div>
+      <p class="cap">Приставка меняет направление и завершённость действия.</p>`;
+    if(step===3) return `
+      <div class="kicker">04 · Суффикс</div>
+      <h2>Суффикс — после корня</h2>
+      <p class="lead">Стоит после корня и тоже добавляет смысл: лес — лесник, дом — домик.</p>
+      ${M([['лес',GREEN,'корень'],['ник',GOLD,'суффикс']])}
+      <div class="row">${chip('домик')+chip('маленький')}</div>
+      <p class="cap">Суффиксы: -ник, -ик, -ок, -еньк-. Они указывают на человека или размер.</p>`;
+    if(step===4) return `
+      <div class="kicker">05 · Окончание</div>
+      <h2>Окончание — изменяемая часть</h2>
+      <p class="lead">Оно связывает слова между собой и показывает род, число и падеж.</p>
+      ${M([['лес',GREEN,'корень'],['а',PINK,'окончание']])}
+      <div class="row">${chip('лес')+chip('леса')+chip('лесу')}</div>
+      <p class="cap">Читаю книгу — читаешь книгу: меняется окончание, меняется связь слов.</p>`;
+    if(step===5) return `
+      <div class="kicker">06 · Основа</div>
+      <h2>Основа — слово без окончания</h2>
+      <p class="lead">Если убрать окончание, останется основа.</p>
+      ${M([['пришколь',GREEN,'основа'],['ый',PINK,'окончание']])}
+      <p class="cap">У слова «лес» окончание нулевое, поэтому основа равна всему слову.</p>`;
+    if(step===6) return `
+      <div class="kicker">07 · Порядок разбора</div>
+      <h2>Разбирай слово по шагам</h2>
+      <div class="steps">
+        <div class="st"><span class="n">1</span><span class="t">Окончание<small>измени слово — увидишь изменяемую часть</small></span></div>
+        <div class="st"><span class="n">2</span><span class="t">Основа<small>слово без окончания</small></span></div>
+        <div class="st"><span class="n">3</span><span class="t">Корень<small>подбери родственников: лес, лесной, лесник</small></span></div>
+        <div class="st"><span class="n">4</span><span class="t">Приставка и суффикс<small>то, что осталось между корнем и окончанием</small></span></div>
+      </div>
+      <p class="cap">Проверка: сложи части обратно — должно получиться то же слово.</p>`;
+    if(step===7) return `
+      <div class="kicker">08 · Родственники и формы</div>
+      <h2>Однокоренные слова или формы одного слова?</h2>
+      <div class="pair">
+        <div class="card"><div class="nm">однокоренные</div><div class="ex">лес — лесник<br>разные слова<br>разные основы</div></div>
+        <div class="card"><div class="nm">формы слова</div><div class="ex">лес — леса — лесу<br>одно слово<br>меняется окончание</div></div>
+      </div>
+      <p class="cap">Меняешь окончание — форма. Меняешь смысл — новое слово.</p>`;
+    const it=GAME602[(st.gIdx||0)%GAME602.length], done=st.gRes!=null;
+    return `
+      <div class="kicker">09 · Тренажёр</div>
+      <div class="split"><span class="word wide"><b>${it[0]}</b><i>что за часть?</i></span></div>
+      <div class="row">${['приставка','суффикс','окончание'].map(k=>
+        `<button type="button" class="chip" style="flex:1 1 28%" onclick="ru602Game('${k}')">${k}</button>`).join('')}</div>
+      <div class="wv-sml" style="font-size:16px;color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'что за часть слова спрятана?'}</div>
+      <p class="score">верно: ${st.gOk||0} · ошибок: ${st.gBad||0} · всего: ${GAME602.length}</p>`;
+  }
+
+  const prev=window.WAVE_B[602];
+  window.WAVE_B[602]=function(el){
+    try{
+      const step=(typeof LV!=='undefined'&&LV.step)||0;
+      const lk=(typeof lidKey==='function')?lidKey(602):'602';
+      if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={};
+      const st=CHS[lk];
+      R.frameCss();
+      el.innerHTML=`<div class="s6">${frame(step, st)}</div>`;
+      if(step===8 && st.gRes!=null){                 /* отклик на ответ — тот же RUFEED */
+        const it=GAME602[(st.gIdx||0)%GAME602.length];
+        const box=document.createElement('div');
+        box.innerHTML = st.gRes ? window.RUFEED.note('ok','верно',it[2])
+                                : window.RUFEED.note('no','исправить','Правильно: '+it[2]);
+        const hint=el.querySelector('.wv-sml');
+        if(hint && hint.parentElement) hint.parentElement.insertBefore(box.firstChild, hint.nextSibling);
+        else el.appendChild(box.firstChild);
+      }
+      return;
+    }catch(e){}
+    return prev(el);
+  };
+  window.RU602FRAME=frame;
+})();
+
+/* ================= ШАГ 2 РЕДИЗАЙНА · УРОКИ 605–610 =================
+   Тот же переход, что в 602: кадры из SVG-холста 336×252 (кегль 10,5–14 px)
+   в общий каркас .s6 с кеглем по шкале. Общий помощник один, чтобы у семи
+   уроков не расползалась вёрстка, но кадры у каждого свои — содержание,
+   порядок и хореография сохранены, шаблона из одинаковых карточек нет. */
+window.RULESSON=function(cfg){
+  const R=window.RUKIT; if(!R) return;
+  const prev=window.WAVE_B[cfg.id];
+  window.WAVE_B[cfg.id]=function(el){
+    try{
+      const step=(typeof LV!=='undefined'&&LV.step)||0;
+      const lk=(typeof lidKey==='function')?lidKey(cfg.id):String(cfg.id);
+      if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={};
+      const st=CHS[lk];
+      if(!cfg.frames[step]) return prev(el);      /* кадр остаётся у прежнего движка (603, 604 — тренажёр) */
+      R.frameCss();
+      el.innerHTML=`<div class="s6">${cfg.frames[step](st)}</div>`;
+      if(step===8 && st.gRes!=null){
+        const it=cfg.game[(st.gIdx||0)%cfg.game.length];
+        const box=document.createElement('div');
+        box.innerHTML = st.gRes ? window.RUFEED.note('ok','верно',it[2])
+                                : window.RUFEED.note('no','исправить','Правильно: '+it[2]);
+        const hint=el.querySelector('.wv-sml');
+        if(hint && hint.parentElement) hint.parentElement.insertBefore(box.firstChild, hint.nextSibling);
+        else el.appendChild(box.firstChild);
+      }
+      return;
+    }catch(e){}
+    return prev(el);
+  };
+};
+
+(function(){
+  const R=window.RUKIT; if(!R) return;
+  const GOLD=R.GOLD, GREEN=R.GREEN, BLUE=R.BLUE, MUTED=R.MUTED, CYAN='#7fd1ff', PINK='#e8a0d8';
+  const M=R.frameMorph;
+  const chip=(t,c)=>`<span class="tag" style="font-size:18px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
+  const cards=(items)=>`<div class="row">${items.map(([nm,ex,ic])=>
+    `<div class="card">${ic?`<div class="ic">${ic}</div>`:''}<div class="nm">${nm}</div><div class="ex">${ex}</div></div>`).join('')}</div>`;
+  const pair=(a,b)=>`<div class="pair">${a}${b}</div>`;
+  const card=(nm,ex)=>`<div class="card"><div class="nm">${nm}</div><div class="ex">${ex}</div></div>`;
+  const trainer=(st,word,ask,note,buttons,game,tip)=>`
+    <div class="kicker">09 · Тренажёр</div>
+    <div class="split"><span class="word wide"><b>${word}</b><i>${ask}</i></span></div>
+    <div class="row">${buttons}</div>
+    <div class="wv-sml" style="font-size:16px;color:${MUTED}">${st.gRes==null?tip:'нажми любую кнопку — следующее'}</div>
+    <p class="score">верно: ${st.gOk||0} · ошибок: ${st.gBad||0} · всего: ${game.length}</p>`;
+
+  /* ---------- 605 · Приставки, предлоги, твёрдый знак ---------- */
+  const G605=[['(за)шёл','слитно','зашёл — приставка'],['(на)столе','раздельно','на столе — предлог'],
+    ['(под)ъезд','слитно','подъезд — приставка'],['(в)лесу','раздельно','в лесу — предлог'],
+    ['(от)нёс','слитно','отнёс — приставка'],['(за)домом','раздельно','за домом — предлог']];
+  window.RULESSON({id:605, game:G605, frames:[
+    ()=>`<div class="kicker">01 · Приставка и предлог</div>
+      <h2>Звучат одинаково, устроены по-разному</h2>
+      <p class="lead">Приставка — <b style="color:${GOLD}">часть слова</b>, она приросла к корню. Предлог — <b style="color:${GOLD}">отдельное</b> маленькое слово.</p>
+      ${pair(card('приставка','зашёл · отнёс · приехал'),card('предлог','за домом · в лесу · на столе'))}
+      <p class="cap">Смысл разный — и написание разное.</p>`,
+    ()=>`<div class="kicker">02 · Как различить</div>
+      <h2>Вставь слово между предлогом и словом</h2>
+      <p class="lead">«В доме» → <b style="color:${GOLD}">в (каком?) доме</b>. Получилось — перед нами предлог.</p>
+      ${cards([['получилось','в (каком?) доме','🔎'],['не получилось','во(каком?)шёл','🚫']])}
+      <p class="cap">С приставкой вставить слово не удаётся: она внутри слова.</p>`,
+    ()=>`<div class="kicker">03 · Написание</div>
+      <h2>Слитно и раздельно</h2>
+      ${pair(card('слитно — приставки','приехал · ушёл · зашёл · отнёс'),card('раздельно — предлоги','в лесу · на столе · за домом'))}
+      <p class="lead">Проверка одна: можно вставить слово — пишем раздельно.</p>`,
+    ()=>`<div class="kicker">04 · Сравни</div>
+      <h2>«зашёл за другом»</h2>
+      <div class="row">${chip('зашёл',GREEN)+chip('за другом',GOLD)}</div>
+      <p class="lead">В первом слове <b>за-</b> — приставка, слитно. Во втором <b>за</b> — предлог, раздельно.</p>
+      <p class="cap">Одно и то же сочетание звуков в одном предложении пишется по-разному.</p>`,
+    ()=>`<div class="kicker">05 · Твёрдый знак</div>
+      <h2>ъ после приставки на согласную</h2>
+      <p class="lead">Пишется, если приставка оканчивается на согласную, а корень начинается с <b>е, ё, ю, я</b>.</p>
+      ${M([['с','#8fd1a8','приставка'],['ъ',GOLD,'твёрдый знак'],['ел','#e8dcc8','корень']])}
+      <div class="row">${chip('съел')+chip('объявил')+chip('подъезд')}</div>`,
+    ()=>`<div class="kicker">06 · Без знака</div>
+      <h2>Когда твёрдый знак не нужен</h2>
+      ${pair(card('приставка на гласную','заехал · поехал · приехал'),card('знак внутри корня','яма · семья — здесь мягкий знак'))}
+      <p class="cap">Твёрдый знак живёт только на стыке приставки и корня.</p>`,
+    ()=>`<div class="kicker">07 · Единообразие</div>
+      <h2>Приставки пишутся одинаково</h2>
+      <div class="row">${['под-','от-','над-','об-','про-'].map(p=>chip(p)).join('')}</div>
+      <p class="lead">«Отдал» и «отплыл» — везде <b>от-</b>: как бы приставка ни звучала, пишем её одинаково.</p>`,
+    ()=>`<div class="kicker">08 · Разбор</div>
+      <h2>Приставка или корень?</h2>
+      ${M([['при',CYAN,'приставка'],['ех',GREEN,'корень'],['а',PINK,'суффикс'],['л','#e8dcc8','']])}
+      <p class="cap">Разбор по составу показывает границы частей, а предлог в состав слова не входит.</p>`,
+    (st)=>{ const it=G605[(st.gIdx||0)%G605.length];
+      return trainer(st,it[0],'как писать?','',
+        [['слитно','слитно'],['раздельно','раздельно']].map(([k,l])=>
+          `<button type="button" class="chip" style="flex:1 1 40%" onclick="ru605Game('${k}')">${l}</button>`).join(''),
+        G605,'как пишется?'); }
+  ]});
+
+  /* ---------- 606 · Имя существительное: род и число ---------- */
+  const G606=[['ночь','она','женский род'],['стол','он','мужской род'],['окно','оно','средний род'],
+    ['мышь','она','женский род'],['ключ','он','мужской род'],['поле','оно','средний род']];
+  window.RULESSON({id:606, game:G606, frames:[
+    ()=>`<div class="kicker">01 · Род</div>
+      <h2>Род — постоянный признак</h2>
+      <p class="lead">Дом всегда мужского рода, а книга — женского, сколько бы раз мы их ни называли.</p>
+      <div class="row">${chip('дом',GREEN)+chip('книга',PINK)}</div>
+      <p class="cap">Род не меняется: это признак самого слова.</p>`,
+    ()=>`<div class="kicker">02 · Помощники</div>
+      <h2>он · она · оно</h2>
+      ${cards([['он','стол, конь','🧱'],['она','парта, земля','📖'],['оно','окно, поле','🪟']])}
+      <p class="cap">Подставь местоимение — и род определится сам.</p>`,
+    ()=>`<div class="kicker">03 · Окончания</div>
+      <h2>Род виден по окончанию</h2>
+      ${cards([['мужской','без окончания: стол, конь'],['женский','-а, -я: парта, земля'],['средний','-о, -е: окно, поле']])}
+      <p class="cap">Это окончание начальной формы слова.</p>`,
+    ()=>`<div class="kicker">04 · Мягкий знак на конце</div>
+      <h2>он день — она ночь</h2>
+      <p class="lead">Тут помощник особенно нужен: мягкий знак на конце бывает у обоих родов.</p>
+      <div class="row">${chip('он день',GREEN)+chip('она ночь',PINK)}</div>
+      <p class="cap">Сомневаешься — посмотри в словарь.</p>`,
+    ()=>`<div class="kicker">05 · Число</div>
+      <h2>Число меняется</h2>
+      <p class="lead">Один предмет — единственное число, много — множественное.</p>
+      <div class="row">${chip('стол',GREEN)+chip('→')+chip('столы',GOLD)}</div>
+      <p class="cap">Число — не постоянный признак: слово его меняет.</p>`,
+    ()=>`<div class="kicker">06 · Только одно число</div>
+      <h2>Слова, которые живут в одном числе</h2>
+      ${pair(card('только единственное','молоко · сахар · храбрость'),card('только множественное','ножницы · каникулы · брюки'))}
+      <p class="cap">У них второй формы просто нет.</p>`,
+    ()=>`<div class="kicker">07 · Род и множественное число</div>
+      <h2>У слова «столы» рода нет</h2>
+      <p class="lead">Во множественном числе род не определяют: «столы» — не «они», а форма слова «стол» мужского рода.</p>
+      <div class="row">${chip('стол',GREEN)+chip('он',GREEN)+chip('—',MUTED)+chip('столы',GOLD)}</div>
+      <p class="cap">Род смотрим у начальной формы, а не у любой.</p>`,
+    ()=>`<div class="kicker">08 · Мягкий знак после шипящих</div>
+      <h2>рожь, ночь, мышь, помощь — с ь</h2>
+      ${pair(card('женский род — с ь','рожь · ночь · мышь · помощь'),card('мужской род — без ь','нож · мяч · ключ · товарищ'))}
+      <p class="cap">Род решает, писать ли мягкий знак.</p>`,
+    (st)=>{ const it=G606[(st.gIdx||0)%G606.length];
+      return trainer(st,it[0],'какой род?','',
+        [['он','он'],['она','она'],['оно','оно']].map(([k,l])=>
+          `<button type="button" class="chip" style="flex:1 1 28%" onclick="ru606Game('${k}')">${l}</button>`).join(''),
+        G606,'подставь местоимение'); }
+  ]});
+})();
+
+/* ================= ШАГ 2 РЕДИЗАЙНА · УРОКИ 607–610 ================= */
+(function(){
+  const R=window.RUKIT; if(!R) return;
+  const GOLD=R.GOLD, GREEN=R.GREEN, BLUE=R.BLUE, MUTED=R.MUTED, CYAN='#7fd1ff', PINK='#e8a0d8';
+  const chip=(t,c)=>`<span class="tag" style="font-size:18px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
+  const card=(nm,ex)=>`<div class="card"><div class="nm">${nm}</div><div class="ex">${ex}</div></div>`;
+  const cards=(items)=>`<div class="row">${items.map(([nm,ex])=>card(nm,ex)).join('')}</div>`;
+  const pair=(a,b)=>`<div class="pair">${a}${b}</div>`;
+  const trainer=(st,word,ask,buttons,game,tip)=>`
+    <div class="kicker">09 · Тренажёр</div>
+    <div class="split"><span class="word wide"><b>${word}</b><i>${ask}</i></span></div>
+    <div class="row">${buttons}</div>
+    <div class="wv-sml" style="font-size:16px;color:${MUTED}">${st.gRes==null?tip:'нажми любую кнопку — следующее'}</div>
+    <p class="score">верно: ${st.gOk||0} · ошибок: ${st.gBad||0} · всего: ${game.length}</p>`;
+  const CASES=[
+    ['03 · Именительный','Кто? Что?','действующее лицо, подлежащее','Ученик читает. Книга лежит.',['—']],
+    ['04 · Родительный','Кого? Чего?','отсутствие или принадлежность','нет книги · край леса · дом брата',['от','до','из','без','у','около']],
+    ['05 · Дательный','Кому? Чему?','адресат, тот, кому адресовано','дать другу · письмо брату · радоваться солнцу',['к','по']],
+    ['06 · Винительный','Кого? Что?','то, на что направлено действие','вижу книгу · читаю письмо · встретил друга',['в','на','за','про','через']],
+    ['07 · Творительный','Кем? Чем?','инструмент и совместность','рисую карандашом · горжусь братом · иду с другом',['с','над','под','за','перед']],
+    ['08 · Предложный','О ком? О чём?','место или тема, всегда с предлогом','думаю о книге · гуляю в парке · читаю о космосе',['в','на','о','об','при']]
+  ];
+  const G607=[['читаю книгу: «книгу»','в','винительный'],['нет книги: «книги»','р','родительный'],
+    ['дать другу: «другу»','д','дательный'],['рисую карандашом: «карандашом»','т','творительный'],
+    ['думаю о книге: «книге»','п','предложный'],['ученик читает: «ученик»','и','именительный']];
+  window.RULESSON({id:607, game:G607, frames:[
+    ()=>`<div class="kicker">01 · Падеж</div>
+      <h2>Форма слова и его роль в предложении</h2>
+      <p class="lead">«Книга лежит» и «нет книги» — одно слово, но разные падежи: меняется форма и работа в предложении.</p>
+      <div class="row">${chip('книга',GOLD)+chip('книги',GREEN)}</div>`,
+    ()=>`<div class="kicker">02 · Сколько их</div>
+      <h2>Шесть падежей — у каждого свой вопрос</h2>
+      <div class="steps">
+        ${['и. кто? что?','р. кого? чего?','д. кому? чему?','в. кого? что?','т. кем? чем?','п. о ком? о чём?']
+          .map((t,k)=>`<div class="st"><span class="n">${k+1}</span><span class="t">${t}</span></div>`).join('')}
+      </div>
+      <p class="cap">Падеж определяют по вопросу — это самый быстрый способ.</p>`,
+    ...CASES.map(([k,t,q,ex,prep])=>()=>`<div class="kicker">${k}</div>
+      <h2>${t}</h2>
+      <p class="lead">${q[0].toUpperCase()+q.slice(1)}: ${String(ex).replace(/\.$/,'')}.</p>
+      <div class="row">${chip(t,GOLD)+chip(prep[0]==='—'?'без предлога':'предлоги: '+prep.join(', '),GREEN)}</div>
+      <p class="cap">Задай вопрос к слову — и падеж определится.</p>`),
+    (st)=>{ const it=G607[(st.gIdx||0)%G607.length];
+      return trainer(st,it[0],'какой падеж?',
+        [['и','им.'],['р','род.'],['д','дат.'],['в','вин.'],['т','твор.'],['п','пр.']].map(([k,l])=>
+          `<button type="button" class="chip" style="flex:1 1 28%" onclick="ru607Game('${k}')">${l}</button>`).join(''),
+        G607,'выбери падеж'); }
+  ]});
+
+  /* ---------- 608 · Глагол ---------- */
+  const G608=[['читает','наст','настоящее время'],['читал','прош','прошедшее время'],
+    ['прочитает','буд','будущее время'],['будет читать','буд','будущее сложное'],
+    ['читали','прош','прошедшее время'],['читаю','наст','настоящее время']];
+  window.RULESSON({id:608, game:G608, frames:[
+    ()=>`<div class="kicker">01 · Глагол</div>
+      <h2>Действие или состояние</h2>
+      <p class="lead">Отвечает на вопросы <b style="color:${GOLD}">что делает? что делал? что будет делать?</b> Это самая живая часть речи.</p>
+      <div class="row">${chip('бежит',GREEN)+chip('спит',CYAN)+chip('будет читать',GOLD)}</div>`,
+    ()=>`<div class="kicker">02 · Времена</div>
+      <h2>Глагол изменяется по временам</h2>
+      ${cards([['настоящее','действие идёт сейчас: читает, бежит'],['прошедшее','действие уже было: читал, бежал'],['будущее','действие ещё будет: прочитает, будет читать']])}
+      <p class="cap">Время — изменяемый признак, как число и лицо.</p>`,
+    ()=>`<div class="kicker">03 · Прошедшее время</div>
+      <h2>Узнаётся по суффиксу -л</h2>
+      <p class="lead">В единственном числе меняется по родам: он читал, она читала, оно читало.</p>
+      <div class="row">${chip('читал',GREEN)+chip('читала',PINK)+chip('читало',CYAN)}</div>
+      <p class="cap">Во множественном числе рода нет: читали.</p>`,
+    ()=>`<div class="kicker">04 · Будущее время</div>
+      <h2>Простое и сложное</h2>
+      ${pair(card('простое — одно слово','прочитаю · напишу'),card('сложное — два слова','буду читать · буду писать'))}
+      <p class="cap">Смысл один: действие ещё не произошло.</p>`,
+    ()=>`<div class="kicker">05 · Лицо</div>
+      <h2>Лицо показывает, кто действует</h2>
+      ${cards([['первое — я, мы','читаю, читаем'],['второе — ты, вы','читаешь, читаете'],['третье — он, она, они','читает, читают']])}
+      <p class="cap">Лицо видно по окончанию глагола.</p>`,
+    ()=>`<div class="kicker">06 · Число</div>
+      <h2>Единственное и множественное</h2>
+      <p class="lead">Число глагола показывает, сколько действующих лиц: читает — читают.</p>
+      <div class="row">${chip('читает',GREEN)+chip('→')+chip('читают',GOLD)}</div>
+      <p class="cap">Число и лицо вместе — это форма глагола.</p>`,
+    ()=>`<div class="kicker">07 · Начальная форма</div>
+      <h2>Что делать? Что сделать?</h2>
+      <p class="lead">Неопределённая форма не показывает ни времени, ни лица. Она оканчивается на <b>-ть, -ти, -чь</b>.</p>
+      <div class="row">${chip('читать',GREEN)+chip('идти',GREEN)+chip('беречь',GREEN)}</div>`,
+    ()=>`<div class="kicker">08 · Не путай</div>
+      <h2>Время и лицо — разные признаки</h2>
+      ${pair(card('читал','прошедшее время, лица нет — есть род'),card('читает','настоящее время, третье лицо'))}
+      <p class="cap">Смотри, на какой вопрос отвечает слово в предложении.</p>`,
+    (st)=>{ const it=G608[(st.gIdx||0)%G608.length];
+      return trainer(st,it[0],'какое время?',
+        [['прош','прош.'],['наст','наст.'],['буд','буд.']].map(([k,l])=>
+          `<button type="button" class="chip" style="flex:1 1 28%" onclick="ru608Game('${k}')">${l}</button>`).join(''),
+        G608,'выбери время'); }
+  ]});
+
+  /* ---------- 609 · -тся и -ться, не с глаголами ---------- */
+  const G609=[['Он учит?ся','тся','что делает? — без ь'],['Надо учит?ся','ться','что делать? — с ь'],
+    ['Ему не хоч?тся спать','тся','что делает? — без ь'],['Она улыбает?ся','тся','что делает? — без ь'],
+    ['Хочу учит?ся','ться','что делать? — с ь'],['Дети улыбают?ся','тся','что делают? — без ь']];
+  window.RULESSON({id:609, game:G609, frames:[
+    ()=>`<div class="kicker">01 · На слух не различить</div>
+      <h2>«учится» и «учиться» звучат одинаково</h2>
+      <p class="lead">Мы слышим одно и то же — [учица]. Значит, слушать бесполезно: нужен вопрос.</p>
+      <div class="row">${chip('учится',GREEN)+chip('учиться',GOLD)}</div>`,
+    ()=>`<div class="kicker">02 · Правило</div>
+      <h2>Задай вопрос к глаголу</h2>
+      ${pair(card('в вопросе есть ь','что делать? что сделать? → -ться'),card('в вопросе нет ь','что делает? что делают? → -тся'))}
+      <p class="cap">Мягкий знак в вопросе переходит в слово.</p>`,
+    ()=>`<div class="kicker">03 · Пример</div>
+      <h2>Он учится — надо учиться</h2>
+      <p class="lead">«Он учится» — что делает? В вопросе нет ь, значит пишем <b>-тся</b>. «Надо учиться» — что делать? В вопросе есть ь, значит <b>-ться</b>.</p>
+      <div class="row">${chip('что делает? → -тся',GREEN)+chip('что делать? → -ться',GOLD)}</div>`,
+    ()=>`<div class="kicker">04 · Второй способ</div>
+      <h2>Подставь «он» или «надо»</h2>
+      ${pair(card('подставь «он»','он учится — звучит верно, без ь'),card('подставь «надо»','надо учиться — с ь'))}
+      <p class="cap">Если подстановка ломает фразу — написание выбрано неверно.</p>`,
+    ()=>`<div class="kicker">05 · «Не» с глаголами</div>
+      <h2>Всегда раздельно</h2>
+      <p class="lead">Не хочу, не знаю, не читал, не буду: глагол и «не» — два разных слова.</p>
+      <div class="row">${chip('не хочу',GREEN)+chip('не знаю',GREEN)+chip('не читал',GREEN)}</div>`,
+    ()=>`<div class="kicker">06 · Исключение</div>
+      <h2>Слова, которые без «не» не живут</h2>
+      <p class="lead">Ненавидеть, недомогать, недоумевать: убери «не» — и слова не станет.</p>
+      <div class="row">${chip('ненавидеть',GOLD)+chip('недомогать',GOLD)+chip('недоумевать',GOLD)}</div>`,
+    ()=>`<div class="kicker">07 · Приставка недо-</div>
+      <h2>«Меньше, чем нужно»</h2>
+      <p class="lead">Недоспал, недоел: здесь <b>недо-</b> — часть слова и пишется слитно.</p>
+      <div class="row">${chip('недоспал',GREEN)+chip('недоел',GREEN)+chip('недооценил',GREEN)}</div>`,
+    ()=>`<div class="kicker">08 · Сравни</div>
+      <h2>«не хочу» и «ненавижу»</h2>
+      ${pair(card('не хочу','раздельно: «не» — частица'),card('ненавижу','слитно: без «не» не бывает'))}
+      <p class="cap">Разница видна по смыслу, а не по звуку.</p>`,
+    (st)=>{ const it=G609[(st.gIdx||0)%G609.length];
+      return trainer(st,it[0],'как писать?',
+        [['тся','-тся'],['ться','-ться']].map(([k,l])=>
+          `<button type="button" class="chip" style="flex:1 1 40%" onclick="ru609Game('${k}')">${l}</button>`).join(''),
+        G609,'выбери написание'); }
+  ]});
+
+  /* ---------- 610 · Однородные члены и обращение ---------- */
+  const G610=[['яблони груши сливы','зап','нужны запятые между однородными'],
+    ['яблони и груши','нет','одиночный союз и — без запятой'],
+    ['Маша помоги мне','одна','обращение в начале — одна запятая'],
+    ['Светит солнце и поют птицы','слож','две основы — запятая перед и'],
+    ['не груши а сливы','перед а','союз а — запятая'],
+    ['Спасибо Маша за помощь','две','обращение в середине — две запятые']];
+  window.RULESSON({id:610, game:G610, frames:[
+    ()=>`<div class="kicker">01 · Однородные члены</div>
+      <h2>Один вопрос — одно слово в предложении</h2>
+      <p class="lead">«В саду росли яблони, груши и сливы»: все три отвечают на вопрос <b>что росло?</b></p>
+      <div class="row">${chip('яблони',GREEN)+chip('груши',GREEN)+chip('сливы',GREEN)}</div>`,
+    ()=>`<div class="kicker">02 · Перечисление</div>
+      <h2>Без союзов — запятая между членами</h2>
+      <p class="lead">Яблони, груши, сливы. Перечисление всегда разделяют запятыми.</p>
+      <div class="row">${chip('яблони, груши, сливы',GOLD)}</div>`,
+    ()=>`<div class="kicker">03 · Одиночный союз</div>
+      <h2>«и», «или», «да» — запятая не нужна</h2>
+      <p class="lead">Яблони и груши: союз сам выполняет работу разделителя.</p>
+      <div class="row">${chip('яблони и груши',GREEN)}</div>`,
+    ()=>`<div class="kicker">04 · Повторяющийся союз</div>
+      <h2>Союз повторяется — запятая возвращается</h2>
+      <p class="lead">И яблони, и груши, и сливы.</p>
+      <div class="row">${chip('и яблони, и груши',GOLD)}</div>`,
+    ()=>`<div class="kicker">05 · Противопоставление</div>
+      <h2>Перед «а» и «но» запятая всегда</h2>
+      <p class="lead">Не груши, а сливы. Эти союзы противопоставляют.</p>
+      <div class="row">${chip('не груши, а сливы',GOLD)}</div>`,
+    ()=>`<div class="kicker">06 · Обращение</div>
+      <h2>Слово, которым называют того, к кому обращаются</h2>
+      <p class="lead">Маша, помоги мне. В начале — одна запятая, в середине — две.</p>
+      <div class="row">${chip('Маша, помоги мне',GREEN)}</div>`,
+    ()=>`<div class="kicker">07 · Обращение — не член предложения</div>
+      <h2>Его нельзя подчеркнуть</h2>
+      <p class="lead">Обращение не подлежащее и не дополнение: оно стоит вне основы.</p>
+      <div class="row">${chip('Спасибо, Маша, за помощь',GOLD)}</div>`,
+    ()=>`<div class="kicker">08 · Сложное предложение</div>
+      <h2>Две основы — запятая между частями</h2>
+      <p class="lead">Основ две, поэтому перед «и» ставится запятая.</p>
+      <div class="row">${chip('солнце светит',GREEN)+chip('птицы поют',GREEN)}</div>
+      <p class="cap">Светит солнце, и поют птицы.</p>`,
+    (st)=>{ const it=G610[(st.gIdx||0)%G610.length];
+      return trainer(st,it[0],'нужны запятые?',
+        [['нет','запятые не нужны'],['одна','одна запятая'],['две','две запятые'],['зап','перечисление'],['перед а','перед «а»'],['слож','две основы']].map(([k,l])=>
+          `<button type="button" class="chip" style="flex:1 1 30%;font-size:16px" onclick="ru610Game('${k}')">${l}</button>`).join(''),
+        G610,'выбери ответ'); }
+  ]});
+})();
+
+/* ================= ШАГ 2 РЕДИЗАЙНА · УРОКИ 603 и 604 =================
+   У этих двух уроков тренажёр (кадр 9) давно переделан — вставка буквы живёт
+   в RULETTER с кеглем 48 px. А восемь пояснительных кадров оставались в старом
+   SVG-холсте; здесь они переложены в общий каркас, кадр 9 не трогаем. */
+(function(){
+  const R=window.RUKIT; if(!R) return;
+  const GOLD=R.GOLD, GREEN=R.GREEN, MUTED=R.MUTED, CYAN='#7fd1ff', PINK='#e8a0d8';
+  const M=R.frameMorph;
+  const chip=(t,c)=>`<span class="tag" style="font-size:18px;${c?('border-color:'+c+';color:'+c):''}">${t}</span>`;
+  const card=(nm,ex)=>`<div class="card"><div class="nm">${nm}</div><div class="ex">${ex}</div></div>`;
+  const pair=(a,b)=>`<div class="pair">${a}${b}</div>`;
+  const cards=(items)=>`<div class="row">${items.map(([nm,ex])=>card(nm,ex)).join('')}</div>`;
+
+  window.RULESSON({id:603, frames:[
+    ()=>`<div class="kicker">01 · Самая частая ошибка</div>
+      <h2>Гласная, на которую не падает ударение</h2>
+      <p class="lead">Мы слышим «лиса», но так же слышится и «леса». Без проверки выбрать букву невозможно.</p>
+      <div class="row">${chip('лиса',PINK)+chip('леса',CYAN)}</div>`,
+    ()=>`<div class="kicker">02 · Ударение — помощник</div>
+      <h2>Под ударением гласная слышна ясно</h2>
+      ${pair(card('лес','гласная под ударением — слышно отчётливо'),card('лесной','без ударения — и уже сомнительно'))}
+      <p class="cap">Ударение делает гласную ясной.</p>`,
+    ()=>`<div class="kicker">03 · Правило</div>
+      <h2>Проверяй ударением</h2>
+      <p class="lead">Подбери слово, где та же гласная стоит под ударением.</p>
+      <div class="row">${chip('лиса → лИс',GREEN)+chip('гора → гОры',GREEN)+chip('письмо → пИсьма',GREEN)}</div>`,
+    ()=>`<div class="kicker">04 · Два способа</div>
+      <h2>Как ищут проверочное слово</h2>
+      ${cards([['изменить форму','гора — горы, окно — окна'],['подобрать родственника','гора — горный, окно — оконный']])}
+      <p class="cap">В обоих случаях корень один и тот же.</p>`,
+    ()=>`<div class="kicker">05 · Ловушка</div>
+      <h2>Похожие, но не родственные</h2>
+      <p class="lead">«Вода» и «водитель» звучат похоже, но смысл разный: проверять одно другим нельзя.</p>
+      <div class="row">${chip('вода',CYAN)+chip('водитель',PINK)}</div>
+      <p class="cap">Проверочное слово обязано быть родственником по смыслу.</p>`,
+    ()=>`<div class="kicker">06 · Словарные слова</div>
+      <h2>Есть слова, которые проверить нельзя</h2>
+      <div class="row">${['собака','корова','ворона','молоко','работа'].map(w=>chip(w,GOLD)).join('')}</div>
+      <p class="cap">Их написание запоминают или смотрят в словаре.</p>`,
+    ()=>`<div class="kicker">07 · Разбор примеров</div>
+      <h2>Ищем слово, где гласная станет ударной</h2>
+      ${M([['голов','#8fd1a8','гОловы → о'],['земл','#ffd76a','зЕмли → е'],['пят','#7fd1ff','пЯть → я']])}
+      <p class="cap">Каждый раз подбираем проверку и слышим нужную букву.</p>`,
+    ()=>`<div class="kicker">08 · Ещё одна ошибка</div>
+      <h2>Подмена буквы похожей</h2>
+      <p class="lead">«а» вместо «о», «и» вместо «е» — спасает одно: произнеси проверочное слово вслух.</p>
+      <div class="row">${chip('о / а',GOLD)+chip('е / и',GOLD)}</div>
+      <p class="cap">Под ударением слышно, какая буква настоящая.</p>`
+  ]});
+
+  window.RULESSON({id:604, frames:[
+    ()=>`<div class="kicker">01 · Слабый звук</div>
+      <h2>На конце слова звук слабеет</h2>
+      <p class="lead">«Зуб» мы произносим как [зуп]: слышится один звук, а буква может быть другой.</p>
+      <div class="row">${chip('зуб',GREEN)+chip('[зуп]',PINK)}</div>`,
+    ()=>`<div class="kicker">02 · Шесть пар</div>
+      <h2>Парные согласные</h2>
+      <div class="row">${['б—п','в—ф','г—к','д—т','ж—ш','з—с'].map(p=>chip(p,GOLD)).join('')}</div>
+      <p class="cap">В паре один звук звонкий, другой глухой — в слабой позиции они путаются.</p>`,
+    ()=>`<div class="kicker">03 · Проверка</div>
+      <h2>Поставь после согласной гласный</h2>
+      <p class="lead">Гласный «вытягивает» настоящий звук.</p>
+      <div class="row">${chip('зуб → зубы',GREEN)+chip('снег → снега',GREEN)+chip('глаз → глаза',GREEN)}</div>`,
+    ()=>`<div class="kicker">04 · И согласные л, м, н, р</div>
+      <h2>После них согласная тоже звучит ясно</h2>
+      ${pair(card('зуб — зубной','после согласной стоит н'),card('снег — снежный','после согласной стоит н'))}
+      <p class="cap">Проверочное слово ищут так же, как для гласной.</p>`,
+    ()=>`<div class="kicker">05 · Непроизносимые согласные</div>
+      <h2>Буква есть, а звука нет</h2>
+      <p class="lead">Пишем «солнце», слышим [сонцэ]. Такие согласные прячутся в сочетаниях стн, здн, лнц, вств.</p>
+      <div class="row">${chip('стн',CYAN)+chip('здн',CYAN)+chip('лнц',CYAN)+chip('вств',CYAN)}</div>`,
+    ()=>`<div class="kicker">06 · Проверка</div>
+      <h2>Подбери слово, где согласная зазвучит</h2>
+      <div class="row">${chip('солнце → солнышко',GREEN)+chip('сердце → сердечко',GREEN)+chip('местный → место',GREEN)}</div>
+      <p class="cap">Здравствуй — здравый: так проверяют и это слово.</p>`,
+    ()=>`<div class="kicker">07 · Ловушка</div>
+      <h2>Иногда согласная только кажется</h2>
+      ${pair(card('вкусный','проверяем «вкусен»: буквы т нет'),card('опасный','проверяем «опасен»: буквы т нет'))}
+      <p class="cap">Чудесный — чудеса: лишнюю букву писать не надо.</p>`,
+    ()=>`<div class="kicker">08 · Удвоенные согласные</div>
+      <h2>Их нельзя проверить</h2>
+      <div class="row">${['класс','суббота','аллея','хоккей'].map(w=>chip(w,GOLD)).join('')}</div>
+      <p class="cap">Это словарные слова: их запоминают по словарю.</p>`
+  ]});
 })();
