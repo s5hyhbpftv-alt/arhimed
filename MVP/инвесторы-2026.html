@@ -9,37 +9,46 @@
 /* Всё по MASTER.md. Мир: гравёрный атлас. Движение: перо чертит. */
 :root{
   --paper:#e8dcc2; --plate:#e0d3b4;
-  --ink:#2b2419; --ink-2:#5e5640; --ink-3:#605a44;
+  --ink:#241d11; --ink-2:#5e5640; --ink-3:#605a44;
   --rule:#b9ae91; --gold:#76540f; --gold-line:#b38a2a; --seal:#9c3722;
   --pen:cubic-bezier(.4,.05,.25,1);
   --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:46px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scrollbar-color:var(--rule) var(--paper)}
-/* Пергамент: тон, волокно, пятна времени и потемнение к краям.
-   Всё рисуется кодом — ни одной картинки, ничего не подгружается. */
+/* Папирус устроен из двух слоёв полос: вертикальные, поверх горизонтальные —
+   отсюда его характерная решётка волокон. Плюс пятна времени и потемнение
+   к краям. Всё рисуется кодом, ни одной картинки. */
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:
+    /* верхний слой: горизонтальные полосы */
+    repeating-linear-gradient(0deg,
+      rgba(120,92,44,.042) 0, rgba(120,92,44,.042) 1px,
+      transparent 1px, transparent 6px),
+    /* нижний слой: вертикальные полосы, шаг иной — решётка не повторяется */
+    repeating-linear-gradient(90deg,
+      rgba(120,92,44,.022) 0, rgba(120,92,44,.022) 1px,
+      transparent 1px, transparent 11px),
     /* редкие пятна времени */
     radial-gradient(38% 26% at 14% 12%, rgba(139,104,48,.10), transparent 70%),
     radial-gradient(30% 22% at 86% 78%, rgba(139,104,48,.09), transparent 72%),
     radial-gradient(22% 34% at 64% 22%, rgba(122,92,44,.06), transparent 68%),
     radial-gradient(26% 20% at 32% 88%, rgba(122,92,44,.07), transparent 70%),
     /* потемнение к краям, как у листа, лежавшего в свете */
-    radial-gradient(120% 96% at 50% 46%, transparent 52%, rgba(92,70,34,.16) 100%);
+    radial-gradient(124% 98% at 50% 46%, transparent 54%, rgba(92,70,34,.17) 100%);
 }
+/* зерно оставлено тихим: на нём лежит текст, и густой шум его съедает */
 body::after{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
-  /* волокно бумаги: фрактальный шум, свёрнутый в сам документ */
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.28;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
   mix-blend-mode:multiply;
 }
 .slide,.nav{position:relative;z-index:1}
 body{
   background:var(--paper); color:var(--ink);
-  font-family:'EB Garamond',Georgia,'Times New Roman',serif; font-weight:300;
-  font-size:17px; line-height:1.62; font-variant-numeric:oldstyle-nums;
+  font-family:'EB Garamond',Georgia,'Times New Roman',serif; font-weight:500;
+  font-size:19px; line-height:1.58; font-variant-numeric:oldstyle-nums;
   -webkit-font-smoothing:antialiased; overflow:hidden;
 }
 ::selection{background:rgba(179,138,42,.3)}
@@ -69,7 +78,7 @@ body{
   color:var(--ink);text-wrap:balance;max-width:24em}
 .claim em{font-style:italic;color:var(--gold)}
 .claim .q{font-style:italic;color:var(--seal)}
-.stand{font-size:clamp(16px,1.2vw,19px);line-height:1.5;color:var(--ink-2);
+.stand{font-size:clamp(17px,1.3vw,21px);line-height:1.5;color:var(--ink-2);
   margin-top:14px;max-width:56em}
 .stand b{color:var(--ink);font-weight:400}
 
@@ -79,18 +88,20 @@ body{
 .run > div:last-child{border-right:0;margin-right:0}
 .run .v{font-family:'Forum',Georgia,serif;font-size:clamp(21px,1.85vw,28px);
   line-height:1.1;color:var(--ink);font-variant-numeric:oldstyle-nums}
-.run .k{font-size:14px;color:var(--ink-2);margin-top:5px;max-width:14em;line-height:1.35}
-.run .n{font-size:13px;color:var(--ink-3);margin-top:2px;max-width:14em;line-height:1.35}
+.run .k{font-size:15.5px;color:var(--ink-2);margin-top:5px;max-width:14em;line-height:1.35}
+.run .n{font-size:14.5px;color:var(--ink-2);margin-top:2px;max-width:14em;line-height:1.35}
 
 /* ── раскрытие ──────────────────────────────────────────────────── */
 details.more{margin-top:18px;border-top:1px solid var(--rule);padding-top:2px}
 details.more > summary,.sub > summary{list-style:none;cursor:pointer;display:flex;
-  align-items:center;gap:10px;min-height:44px;font-family:'Forum',Georgia,serif;
-  font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3);user-select:none;
-  transition:color 120ms var(--pen)}
+  align-items:center;gap:10px;min-height:44px;font-family:'EB Garamond',Georgia,serif;
+  font-weight:600;font-size:14.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);user-select:none;transition:color 120ms var(--pen)}
 details.more > summary::-webkit-details-marker,.sub > summary::-webkit-details-marker{display:none}
 details.more[open] > summary,.sub[open] > summary{color:var(--gold)}
-details.more > summary:hover,.sub > summary:hover{color:var(--ink)}
+@media (hover:hover) and (pointer:fine){
+  details.more > summary:hover,.sub > summary:hover{color:var(--ink)}
+}
 .chev{flex:0 0 auto;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.4;
   stroke-linecap:round;stroke-linejoin:round;transition:transform 260ms var(--pen)}
 details[open] > summary .chev{transform:rotate(90deg)}
@@ -104,25 +115,25 @@ details[open] > summary .chev{transform:rotate(90deg)}
 .frame{border:1px solid var(--rule);padding:18px 20px;min-width:0;overflow-x:auto;
   background-color:var(--plate);
   background-image:radial-gradient(80% 120% at 30% 0%, rgba(255,250,235,.32), transparent 62%);}
-h3{font-family:'Forum',Georgia,serif;font-weight:400;font-size:12px;
-  letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
-p,li{font-size:16.5px;line-height:1.6}
-.note{font-size:15px;color:var(--ink-2);line-height:1.55}
-.tiny{font-size:13px;color:var(--ink-3);line-height:1.45}
+h3{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:14px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:12px}
+p,li{font-size:18px;line-height:1.58}
+.note{font-size:16px;color:var(--ink-2);line-height:1.55}
+.tiny{font-size:14.5px;color:var(--ink-2);line-height:1.45}
 b,strong{color:var(--ink);font-weight:400}
 .num{font-variant-numeric:tabular-nums}
 
-table{width:100%;border-collapse:collapse;font-size:15.5px}
+table{width:100%;border-collapse:collapse;font-size:16.5px}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-th{font-family:'Forum',Georgia,serif;font-weight:400;color:var(--ink-3);
-  font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+th{font-family:'EB Garamond',Georgia,serif;font-weight:600;color:var(--ink-2);
+  font-size:14px;letter-spacing:.1em;text-transform:uppercase}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 tr.hi td{background:rgba(118,84,15,.10)}
 
 ul{list-style:none}
 ul li{position:relative;padding-left:20px;margin-bottom:9px}
 ul li::before{content:'';position:absolute;left:3px;top:11px;width:9px;height:1px;background:var(--gold-line)}
-ul.tight li{margin-bottom:5px;font-size:15px;line-height:1.45}
+ul.tight li{margin-bottom:6px;font-size:16.5px;line-height:1.45}
 
 .tag{display:inline-block;padding:3px 10px;border:1px solid var(--rule);
   color:var(--ink-2);font-size:14px}
@@ -131,11 +142,14 @@ ul.tight li{margin-bottom:5px;font-size:15px;line-height:1.45}
 
 .chart{width:100%;height:auto;max-height:clamp(200px,34vh,380px);display:block;overflow:visible}
 svg text{font-family:'EB Garamond',Georgia,serif;font-variant-numeric:oldstyle-nums}
-.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:14px;color:var(--ink-2)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:15.5px;color:var(--ink-2);font-weight:500}
 .legend i{display:inline-block;width:16px;height:2px;margin-right:7px;vertical-align:middle}
 
+.src{margin-top:9px;font-size:13.5px;font-style:italic;color:var(--ink-3);line-height:1.4}
+.appx{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:12.5px;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
 .caveat{margin-top:12px;padding-top:11px;border-top:1px solid var(--rule);
-  font-size:15px;color:var(--ink-2);line-height:1.55;max-width:46em}
+  font-size:16px;color:var(--ink-2);line-height:1.55;max-width:46em}
 .caveat b{color:var(--seal);font-weight:400}
 
 /* ── перо чертит ────────────────────────────────────────────────── */
@@ -146,24 +160,26 @@ svg text{font-family:'EB Garamond',Georgia,serif;font-variant-numeric:oldstyle-n
 @keyframes штрих{to{opacity:1}}
 .ink{opacity:0;animation:чернила 420ms var(--pen) forwards}
 @keyframes чернила{from{opacity:0;filter:blur(1.4px)}to{opacity:1;filter:none}}
-.grow{transform:scaleY(0);transform-origin:var(--ox,50%) var(--oy,100%);
+.grow{transform:scaleY(.06);opacity:0;transform-origin:var(--ox,50%) var(--oy,100%);
   animation:растёт 560ms var(--pen) forwards}
-@keyframes растёт{to{transform:scaleY(1)}}
+@keyframes растёт{to{transform:scaleY(1);opacity:1}}
 .wipe{clip-path:inset(0 100% 0 0);animation:протяг 900ms var(--pen) forwards}
 @keyframes протяг{to{clip-path:inset(0 0 0 0)}}
 
 /* ── органы управления ──────────────────────────────────────────── */
 .segs{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
 button.seg{min-height:44px;padding:9px 16px;border:1px solid var(--rule);background:transparent;
-  color:var(--ink);font:inherit;font-size:15px;cursor:pointer;
-  transition:border-color 120ms var(--pen),color 120ms var(--pen)}
-button.seg:hover{border-color:var(--gold-line)}
-button.seg:active{color:var(--gold)}
+  color:var(--ink);font:inherit;font-size:16px;cursor:pointer;
+  transition:border-color 120ms var(--pen),color 120ms var(--pen),transform 140ms var(--pen)}
+@media (hover:hover) and (pointer:fine){
+  button.seg:hover{border-color:var(--gold-line)}
+}
+button.seg:active{color:var(--gold);transform:scale(.97)}
 button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px 0 -1px var(--gold)}
 .segs .note{margin-left:2px;font-size:14px;color:var(--ink-3)}
 
 .slider{display:flex;align-items:center;gap:14px;margin-bottom:2px}
-.slider label{flex:0 0 220px;font-size:15px;color:var(--ink-2)}
+.slider label{flex:0 0 220px;font-size:16px;color:var(--ink-2)}
 .slider input[type=range]{flex:1;min-width:0;accent-color:var(--gold);height:40px}
 .slider .val{min-width:104px;text-align:right;color:var(--gold);font-variant-numeric:tabular-nums}
 
@@ -174,13 +190,17 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
 .nav .dots{display:flex;gap:5px;flex:1;flex-wrap:wrap}
 .nav .dots button{width:9px;height:9px;padding:0;border:1px solid var(--rule);
   background:transparent;cursor:pointer;transition:background 120ms var(--pen)}
-.nav .dots button:hover{border-color:var(--gold-line)}
+@media (hover:hover) and (pointer:fine){
+  .nav .dots button:hover{border-color:var(--gold-line)}
+}
 .nav .dots button.on{background:var(--gold);border-color:var(--gold)}
 .nav button.arrow{min-width:48px;min-height:44px;border:1px solid var(--rule);background:transparent;
   color:var(--ink);font:inherit;cursor:pointer;transition:border-color 120ms var(--pen)}
-.nav button.arrow:hover:not(:disabled){border-color:var(--gold-line)}
+@media (hover:hover) and (pointer:fine){
+  .nav button.arrow:hover:not(:disabled){border-color:var(--gold-line)}
+}
 .nav button.arrow:disabled{opacity:.3;cursor:default}
-.counter{font-family:'Forum',Georgia,serif;font-size:13px;letter-spacing:.2em;
+.counter{font-weight:600;font-size:14px;letter-spacing:.12em;
   color:var(--ink-3);min-width:88px;text-align:center}
 
 @media (max-width:900px){ .pair{grid-template-columns:1fr} .slider label{flex:0 0 150px}
@@ -210,9 +230,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     по двадцать минут в день. <b>Оно уже работает в проде</b>, а не нарисовано к этой встрече.</p>
   <div class="run" id="kpi-title"></div>
   <p class="caveat" id="ask-line"></p>
-</div></section>
-
-<section class="slide" data-t="Зачем олимпиады"><div class="wrap">
+</div></section><section class="slide" data-t="Зачем олимпиады"><div class="wrap">
   <h1 class="claim">Победа в олимпиаде — это <em>поступление без ЕГЭ</em> и бесплатное место
     там, куда иначе не пройти.</h1>
   <p class="stand">Мы продаём не кружок «для развития», а доступ к социальному лифту,
@@ -222,14 +240,12 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Насколько узкая эта дверь</summary>
     <div class="unfold">
-      <div class="frame"><h3>Путь от участника до призёра</h3><div id="chart-lift"></div></div>
+      <div class="frame"><h3>Путь от участника до призёра</h3><div id="chart-lift"></div><p class="src">Источник: Минпросвещения, итоги ВсОШ 2024/25; перечень олимпиад Минобрнауки.</p></div>
       <p class="caveat"><b>Честно:</b> льготу даёт не всякая олимпиада и не всякий результат,
         перечень и условия вуз устанавливает сам. Поступление мы не обещаем — мы даём подготовку.</p>
     </div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Проблема"><div class="wrap">
+</div></section><section class="slide" data-t="Проблема"><div class="wrap">
   <h1 class="claim">Семьи уже платят за подготовку. Вопрос в том,
     <span class="q">сколько и за что</span>.</h1>
   <p class="stand">Расходы семьи на допобразование выросли почти вдвое за год.
@@ -238,11 +254,9 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
   <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Цена месяца подготовки сегодня</summary>
-    <div class="unfold"><div class="frame"><div id="chart-price"></div></div></div>
+    <div class="unfold"><div class="frame"><div id="chart-price"></div><p class="src">Источник: открытые прайсы Skysmart, Умскул, Фоксфорд, олимпиадных школ; приведено к месяцу.</p></div></div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Рынок"><div class="wrap">
+</div></section><section class="slide" data-t="Рынок"><div class="wrap">
   <h1 class="claim">18 миллионов школьников, около 7 миллионов участников олимпиад,
     и <em>незанятая ниша</em>.</h1>
   <p class="stand">Подписочного продукта «олимпиадная подготовка 5–9 класс» в открытых
@@ -252,7 +266,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Воронка рынка и расчёт TAM / SAM / SOM</summary>
     <div class="unfold">
-      <div class="frame"><h3>От всех школьников до нашей цели</h3><div id="chart-funnel"></div></div>
+      <div class="frame"><h3>От всех школьников до нашей цели</h3><div id="chart-funnel"></div><p class="src">Источники: Smart Ranking, 2025 (рынок); Минпросвещения (олимпиады). Уровни SAM и SOM — наша оценка.</p></div>
       <details class="sub"><summary>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
         Как посчитаны уровни</summary>
@@ -260,10 +274,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       </details>
     </div>
   </details>
-</div></section>
-
-<!-- ═══ II. ЧТО ════════════════════════════════════════════════════════════ -->
-<section class="slide" data-t="Продукт"><div class="wrap">
+</div></section><section class="slide" data-t="Продукт"><div class="wrap">
   <h1 class="claim">Это не презентация, а <em>работающее приложение</em>,
     которое можно открыть прямо сейчас.</h1>
   <p class="stand">Прод на <b>123.teramont.pro/MVP/</b>: PWA, офлайн-режим, установка на телефон,
@@ -274,21 +285,17 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Что собрано</summary>
     <div class="unfold"><div class="stack"><ul id="product-list"></ul></div></div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Методика"><div class="wrap">
-  <h1 class="claim">Сначала объясняем приём. Потом проверяем, понял ли.
-    И <em>только затем</em> даём решать.</h1>
+</div></section><section class="slide" data-t="Методика"><div class="wrap">
+  <h1 class="claim">Ответ не выдаётся сразу: подсказки идут лестницей, и ребёнок
+    <em>доходит сам</em>.</h1>
   <p class="stand">Одна методика на все предметы. Ответ не выдаётся сразу: подсказки идут
     лестницей — намёк, ход мысли, и лишь в конце полное решение.</p>
   <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Цикл одного приёма</summary>
-    <div class="unfold"><div class="frame"><div id="chart-cycle"></div></div></div>
+    <div class="unfold"><div class="frame"><div id="chart-cycle"></div><p class="src">Схема методики, принятой в проекте.</p></div></div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Защита"><div class="wrap">
+</div></section><section class="slide" data-t="Защита"><div class="wrap">
   <h1 class="claim">Скопировать приложение — неделя. Скопировать
     <em>конвейер контента</em> — годы.</h1>
   <p class="stand">Сложность не в коде: у каждого кадра урока своя сцена, а каждое задание
@@ -299,14 +306,12 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Как устроен конвейер</summary>
     <div class="unfold">
       <div class="pair">
-        <div class="frame"><h3>Производство задач, штук в месяц</h3><div id="chart-content"></div></div>
+        <div class="frame"><h3>Производство задач, штук в месяц</h3><div id="chart-content"></div><p class="src">Плановая мощность конвейера; текущий факт — 700 задач в банке.</p></div>
         <div class="stack"><ul class="tight" id="moat-list"></ul></div>
       </div>
     </div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Конкуренты"><div class="wrap">
+</div></section><section class="slide" data-t="Конкуренты"><div class="wrap">
   <h1 class="claim">Между бесплатным Сириусом и офлайн-школой за 65 000 ₽
     <em>нет ничего</em>.</h1>
   <p class="stand">Крупные игроки зарабатывают на ОГЭ и ЕГЭ. Олимпиадная подготовка у них
@@ -315,7 +320,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Карта рынка</summary>
     <div class="unfold">
-      <div class="frame"><h3>Цена против уровня подготовки</h3><div id="chart-map"></div></div>
+      <div class="frame"><h3>Цена против уровня подготовки</h3><div id="chart-map"></div><p class="src">Источник: раскрытая выручка компаний и открытые прайсы, 2025.</p></div>
       <details class="sub"><summary>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
         Кто что делает и сколько зарабатывает</summary>
@@ -323,37 +328,20 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       </details>
     </div>
   </details>
-</div></section>
-<!-- ═══ III. КАК ЗАРАБАТЫВАЕМ ══════════════════════════════════════════════ -->
-<section class="slide" data-t="Бизнес-модель"><div class="wrap">
-  <h1 class="claim">Родитель платит подпиской, школа — за класс.</h1>
+</div></section><section class="slide" data-t="Бизнес-модель"><div class="wrap">
+  <h1 class="claim">Два канала на одном продукте: родитель платит 790 ₽ в месяц,
+    школа — <em>150 ₽ за ученика</em>.</h1>
   <p class="stand">B2C даёт объём и быструю обратную связь, B2B — низкий CAC и контракты
     на учебный год. Один продукт, две цены.</p>
   <div class="run" id="kpi-money"></div>
   <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Структура выручки</summary>
-    <div class="unfold"><div class="frame"><div id="chart-money"></div></div></div>
+    <div class="unfold"><div class="frame"><div id="chart-money"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div></div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Выручка по каналам"><div class="wrap">
-  <h1 class="claim">Выручка по источникам, месяц за месяцем.</h1>
-  <p class="stand">Подписки родителей, лицензии школ и возвраты показаны раздельно:
-    видно, чем именно растёт выручка и сколько уходит обратно.</p>
-  <div class="run" id="kpi-rev"></div>
-  <details class="more" open><summary>
-    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
-    Помесячно и по сценариям</summary>
-    <div class="unfold">
-      <div class="segs" id="scen-rev"></div>
-      <div class="frame"><div id="chart-rev"></div></div>
-    </div>
-  </details>
-</div></section>
-
-<section class="slide" data-t="Юнит-экономика"><div class="wrap">
-  <h1 class="claim">Проверьте экономику сами: <em>подвигайте параметры</em>.</h1>
+</div></section><section class="slide" data-t="Юнит-экономика"><div class="wrap">
+  <h1 class="claim">Экономика сходится при любых разумных допущениях — <em>проверьте
+    своими</em>.</h1>
   <p class="stand">Мы не просим верить нашим допущениям. Поставьте свои и посмотрите,
     где модель ломается.</p>
   <div class="frame" style="margin-top:22px">
@@ -371,10 +359,89 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
         на SEO и сарафане. У платного трафика CAC 3 000–4 000 ₽, и мы держим его
         как канал проверки, а не как основной.</p></div>
   </details>
+</div></section><section class="slide" data-t="Безубыточность"><div class="wrap">
+  <h1 class="claim" id="be-head"></h1>
+  <p class="stand">В базовом сценарии это происходит внутри горизонта раунда,
+    а не «на следующем раунде».</p>
+  <div class="run" id="kpi-pnl"></div>
+  <details class="more" open><summary>
+    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+    Выручка против затрат, по месяцам</summary>
+    <div class="unfold">
+      <div class="segs" id="scen-2"></div>
+      <div class="frame"><div id="chart-pnl"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
+    </div>
+  </details>
+</div></section><section class="slide" data-t="Денежный поток"><div class="wrap">
+  <h1 class="claim" id="cash-head"></h1>
+  <p class="stand">Самая низкая точка накопленного потока и есть размер, который нужно закрыть.
+    К нему добавлены 20 % на задержки.</p>
+  <div class="run" id="kpi-cash"></div>
+  <details class="more" open><summary>
+    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+    Накопленный поток по трём сценариям</summary>
+    <div class="unfold">
+      <div class="segs" id="scen-3"></div>
+      <div class="frame"><div id="chart-cash"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
+      <details class="sub"><summary>
+        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+        Месячный поток и параметры раунда</summary>
+        <div class="pair" style="margin-top:14px">
+          <div class="frame"><h3>Денежный поток за месяц</h3><div id="chart-flow"></div></div>
+          <div class="frame"><table id="round-table"></table></div>
+        </div>
+      </details>
+    </div>
+  </details>
+</div></section><section class="slide" data-t="Раунд"><div class="wrap">
+  <h1 class="claim" id="ask-head"></h1>
+  <p class="stand">Размер взят не с потолка: это пик потребности по модели плюс 20 %
+    на задержки, округлённые до пяти миллионов.</p>
+  <details class="more" open><summary>
+    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+    На что пойдут деньги</summary>
+    <div class="unfold">
+      <div class="frame"><div id="chart-use"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
+      <details class="sub"><summary>
+        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+        Варианты раунда и оценка</summary>
+        <div class="frame" style="margin-top:14px"><table id="ask-table"></table></div>
+      </details>
+    </div>
+  </details>
+</div></section><section class="slide" data-t="План"><div class="wrap">
+  <h1 class="claim">За восемнадцать месяцев закрываем программу 5–6 классов, включаем
+    подписку и <em>выходим в плюс по операциям</em>.</h1>
+  <p class="stand">Восемнадцать месяцев: закрыть программу 5–6 классов, включить платный
+    доступ, запустить B2B-пилоты и выйти на безубыточность.</p>
+  <details class="more" open><summary>
+    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+    Дорожная карта по месяцам</summary>
+    <div class="unfold"><div class="frame"><div id="chart-gantt"></div><p class="src">План работ на горизонте раунда.</p></div></div>
+  </details>
+</div></section><section class="slide" data-t="Приложение"><div class="wrap">
+  <h1 class="claim">Дальше — <em>приложение</em>.</h1>
+  <p class="stand">Всё, что проверяют, когда основное прочитано: помесячные отчёты,
+    допущения, чувствительность, риски и источники. Четырнадцать листов.</p>
+  <p class="caveat">Основная часть — четырнадцать листов до этой страницы. Приложение
+    можно не листать на встрече: оно существует, чтобы на любой вопрос был ответ числом.</p>
 </div></section>
-
-<section class="slide" data-t="Юнит-экономика в динамике"><div class="wrap">
-  <h1 class="claim">Как юнит-экономика меняется с ростом.</h1>
+<section class="slide" data-t="Выручка по каналам"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim">Подписки родителей дают почти всю выручку; лицензии школ растут
+    медленнее, но <em>без расходов на рекламу</em>.</h1>
+  <p class="stand">Подписки родителей, лицензии школ и возвраты показаны раздельно:
+    видно, чем именно растёт выручка и сколько уходит обратно.</p>
+  <div class="run" id="kpi-rev"></div>
+  <details class="more" open><summary>
+    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+    Помесячно и по сценариям</summary>
+    <div class="unfold">
+      <div class="segs" id="scen-rev"></div>
+      <div class="frame"><div id="chart-rev"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
+    </div>
+  </details>
+</div></section><section class="slide" data-t="Юнит-экономика в динамике"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim">LTV к CAC держится выше отраслевого порога ×3 <em>весь горизонт</em>.</h1>
   <p class="stand">LTV к CAC и валовая маржа по месяцам. Порог «×3» — отраслевая граница,
     ниже которой масштабировать привлечение рано.</p>
   <div class="run" id="kpi-unit-dyn"></div>
@@ -383,15 +450,14 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     По месяцам</summary>
     <div class="unfold">
       <div class="pair">
-        <div class="frame"><h3>LTV / CAC против порога 3</h3><div id="chart-unit"></div></div>
-        <div class="frame"><h3>Валовая маржа, %</h3><div id="chart-margin"></div></div>
+        <div class="frame"><h3>LTV / CAC против порога 3</h3><div id="chart-unit"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
+        <div class="frame"><h3>Валовая маржа, %</h3><div id="chart-margin"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
       </div>
     </div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Аудитория"><div class="wrap">
-  <h1 class="claim">Рост аудитории и доли платящих.</h1>
+</div></section><section class="slide" data-t="Аудитория"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim">Платящих считаем потоком с оттоком — <em>строже прежнего плана</em>
+    проекта.</h1>
   <p class="stand">Платящих считаем потоком с оттоком, а не «шесть процентов платят сразу
     и навсегда». Это делает модель строже прежнего плана проекта.</p>
   <div class="run" id="kpi-mau"></div>
@@ -400,12 +466,10 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     MAU и платящие по месяцам</summary>
     <div class="unfold">
       <div class="segs" id="scen-4"></div>
-      <div class="frame"><div id="chart-mau"></div></div>
+      <div class="frame"><div id="chart-mau"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
     </div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Канал B2B"><div class="wrap">
+</div></section><section class="slide" data-t="Канал B2B"><div class="wrap"><p class="appx">приложение</p>
   <h1 class="claim">Школы и кружки: <em>низкий CAC</em> и контракт на учебный год.</h1>
   <p class="stand">Один договор приносит сразу класс. Канал растёт медленнее розницы,
     зато предсказуемо и без расходов на рекламу.</p>
@@ -413,12 +477,11 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
   <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Партнёры и ученики по месяцам</summary>
-    <div class="unfold"><div class="frame"><div id="chart-b2b"></div></div></div>
+    <div class="unfold"><div class="frame"><div id="chart-b2b"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div></div>
   </details>
-</div></section>
-<!-- ═══ IV. ЦИФРЫ ══════════════════════════════════════════════════════════ -->
-<section class="slide" data-t="Допущения"><div class="wrap">
-  <h1 class="claim">Все параметры расчёта — <em>на одном экране</em>.</h1>
+</div></section><section class="slide" data-t="Допущения"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim">Сценарии расходятся не настроением, а <em>пятью числами</em>:
+    конверсией, оттоком, CAC, командой и маркетингом.</h1>
   <p class="stand">Три сценария отличаются не настроением, а числами: конверсией, оттоком,
     CAC, размером команды и бюджетом маркетинга.</p>
   <details class="more" open><summary>
@@ -426,10 +489,8 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Таблица допущений</summary>
     <div class="unfold"><div class="frame"><table id="assum-table"></table></div></div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Отчёт о прибылях"><div class="wrap">
-  <h1 class="claim">Отчёт о прибылях и убытках, три года.</h1>
+</div></section><section class="slide" data-t="Отчёт о прибылях"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim" id="pnl-head"></h1>
   <p class="stand">Выручка за вычетом возвратов, операционные расходы по статьям и EBITDA.
     Считается из той же модели, что и графики.</p>
   <div class="run" id="kpi-pnl-y"></div>
@@ -441,9 +502,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       <div class="frame"><table id="pnl-table"></table></div>
     </div>
   </details>
-</div></section>
-
-<section class="slide" data-t="CAPEX"><div class="wrap">
+</div></section><section class="slide" data-t="CAPEX"><div class="wrap"><p class="appx">приложение</p>
   <h1 class="claim" id="capex-head"></h1>
   <p class="stand">Семь статей единоразовых вложений. Разработка до релиза — самая крупная,
     маркетинг запуска вынесен отдельно, чтобы его было видно.</p>
@@ -451,7 +510,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Разбивка по статьям</summary>
     <div class="unfold">
-      <div class="frame"><div id="chart-capex"></div></div>
+      <div class="frame"><div id="chart-capex"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
       <details class="sub"><summary>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
         Что входит в каждую статью</summary>
@@ -459,10 +518,8 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       </details>
     </div>
   </details>
-</div></section>
-
-<section class="slide" data-t="OPEX"><div class="wrap">
-  <h1 class="claim">Из чего состоят месячные затраты.</h1>
+</div></section><section class="slide" data-t="OPEX"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim" id="opex-head"></h1>
   <p class="stand">Главная статья — люди. Маркетинг привязан к доле выручки, налоги
     и страховые взносы посчитаны, а не забыты.</p>
   <div class="run" id="kpi-opex"></div>
@@ -471,7 +528,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Динамика по статьям</summary>
     <div class="unfold">
       <div class="segs" id="scen-1"></div>
-      <div class="frame"><div id="chart-opex"></div><div class="legend" id="legend-opex"></div></div>
+      <div class="frame"><div id="chart-opex"></div><div class="legend" id="legend-opex"><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div></div>
       <details class="sub"><summary>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
         Структура 24-го месяца</summary>
@@ -482,10 +539,9 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       </details>
     </div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Команда и ФОТ"><div class="wrap">
-  <h1 class="claim">Команда растёт за выручкой, а не впереди неё.</h1>
+</div></section><section class="slide" data-t="Команда и ФОТ"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim">Команда растёт <em>за выручкой</em>, а не впереди неё: найм привязан
+    к плану, а не к раунду.</h1>
   <p class="stand">Найм привязан к плану: сначала выручка покрывает расходы, потом
     расширяется команда. ФОТ показан со страховыми взносами.</p>
   <div class="run" id="kpi-team"></div>
@@ -494,104 +550,32 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Численность и фонд оплаты по месяцам</summary>
     <div class="unfold">
       <div class="pair">
-        <div class="frame"><h3>Человек в команде</h3><div id="chart-team"></div></div>
-        <div class="frame"><h3>ФОТ со взносами, ₽ в месяц</h3><div id="chart-fot"></div></div>
+        <div class="frame"><h3>Человек в команде</h3><div id="chart-team"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
+        <div class="frame"><h3>ФОТ со взносами, ₽ в месяц</h3><div id="chart-fot"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
       </div>
       <p class="caveat" id="team-note"></p>
     </div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Безубыточность"><div class="wrap">
-  <h1 class="claim">Когда выручка догоняет затраты.</h1>
-  <p class="stand">В базовом сценарии это происходит внутри горизонта раунда,
-    а не «на следующем раунде».</p>
-  <div class="run" id="kpi-pnl"></div>
-  <details class="more" open><summary>
-    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
-    Выручка против затрат, по месяцам</summary>
-    <div class="unfold">
-      <div class="segs" id="scen-2"></div>
-      <div class="frame"><div id="chart-pnl"></div></div>
-    </div>
-  </details>
-</div></section>
-
-<section class="slide" data-t="Денежный поток"><div class="wrap">
-  <h1 class="claim">Пик потребности в деньгах и запас раунда.</h1>
-  <p class="stand">Самая низкая точка накопленного потока и есть размер, который нужно закрыть.
-    К нему добавлены 20 % на задержки.</p>
-  <div class="run" id="kpi-cash"></div>
-  <details class="more" open><summary>
-    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
-    Накопленный поток по трём сценариям</summary>
-    <div class="unfold">
-      <div class="segs" id="scen-3"></div>
-      <div class="frame"><div id="chart-cash"></div></div>
-      <details class="sub"><summary>
-        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
-        Месячный поток и параметры раунда</summary>
-        <div class="pair" style="margin-top:14px">
-          <div class="frame"><h3>Денежный поток за месяц</h3><div id="chart-flow"></div></div>
-          <div class="frame"><table id="round-table"></table></div>
-        </div>
-      </details>
-    </div>
-  </details>
-</div></section>
-
-<section class="slide" data-t="Чувствительность"><div class="wrap">
-  <h1 class="claim">Что будет, если конверсия и отток окажутся <span class="q">хуже</span>.</h1>
+</div></section><section class="slide" data-t="Чувствительность"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim">Даже при худшей паре допущений потребность растёт до 60 млн ₽,
+    но <span class="q">бизнес не ломается</span>.</h1>
   <p class="stand">Пятнадцать сочетаний. В каждой клетке — сколько денег понадобится,
     если всё пойдёт именно так.</p>
   <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Тепловая карта потребности</summary>
-    <div class="unfold"><div class="frame"><h3>Сколько денег понадобится, млн ₽</h3><div id="chart-heat"></div></div></div>
+    <div class="unfold"><div class="frame"><h3>Сколько денег понадобится, млн ₽</h3><div id="chart-heat"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div></div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Порог"><div class="wrap">
-  <h1 class="claim">Ниже какой аудитории бизнес <span class="q">не живёт</span>.</h1>
+</div></section><section class="slide" data-t="Порог"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim" id="thr-head"></h1>
   <p class="stand">Порог жизнеспособности — размер аудитории, при котором выручка
     ровно покрывает операционные расходы.</p>
   <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Порог по сценариям</summary>
-    <div class="unfold"><div class="frame"><div id="chart-threshold"></div></div></div>
+    <div class="unfold"><div class="frame"><div id="chart-threshold"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div></div>
   </details>
-</div></section>
-<!-- ═══ V. СДЕЛКА ══════════════════════════════════════════════════════════ -->
-<section class="slide" data-t="Раунд"><div class="wrap">
-  <h1 class="claim" id="ask-head"></h1>
-  <p class="stand">Размер взят не с потолка: это пик потребности по модели плюс 20 %
-    на задержки, округлённые до пяти миллионов.</p>
-  <details class="more" open><summary>
-    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
-    На что пойдут деньги</summary>
-    <div class="unfold">
-      <div class="frame"><div id="chart-use"></div></div>
-      <details class="sub"><summary>
-        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
-        Варианты раунда и оценка</summary>
-        <div class="frame" style="margin-top:14px"><table id="ask-table"></table></div>
-      </details>
-    </div>
-  </details>
-</div></section>
-
-<section class="slide" data-t="План"><div class="wrap">
-  <h1 class="claim">Что делаем на деньги раунда.</h1>
-  <p class="stand">Восемнадцать месяцев: закрыть программу 5–6 классов, включить платный
-    доступ, запустить B2B-пилоты и выйти на безубыточность.</p>
-  <details class="more" open><summary>
-    <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
-    Дорожная карта по месяцам</summary>
-    <div class="unfold"><div class="frame"><div id="chart-gantt"></div></div></div>
-  </details>
-</div></section>
-
-<section class="slide" data-t="Международный горизонт"><div class="wrap">
+</div></section><section class="slide" data-t="Международный горизонт"><div class="wrap"><p class="appx">приложение</p>
   <h1 class="claim">Продукт написан по-русски, и этим <em>переносится в четыре страны
     почти без затрат</em>.</h1>
   <p class="stand">Казахстан, Беларусь, Киргизия, Армения: общая школьная традиция и миллионы
@@ -602,7 +586,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Страны и порядок выхода</summary>
     <div class="unfold">
-      <div class="frame"><h3>Школьники и доля обучения на русском</h3><div id="chart-abroad"></div></div>
+      <div class="frame"><h3>Школьники и доля обучения на русском</h3><div id="chart-abroad"></div><p class="src">Источники: национальная статистика Казахстана, Беларуси и Киргизии; открытые публикации. По Армении числа нет.</p></div>
       <details class="sub"><summary>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
         Числа, источники и оговорки</summary>
@@ -623,10 +607,9 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       </details>
     </div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Риски"><div class="wrap">
-  <h1 class="claim">Что может пойти не так, и что мы с этим делаем.</h1>
+</div></section><section class="slide" data-t="Риски"><div class="wrap"><p class="appx">приложение</p>
+  <h1 class="claim">Одиннадцать рисков названы, и у каждого есть <em>ответ действием</em>,
+    а не обещанием.</h1>
   <p class="stand">Порог жизнеспособности базового сценария —
     <b><span id="risk-threshold"></span> MAU</b>. Ниже него выручка не покрывает расходы.</p>
   <details class="more" open><summary>
@@ -634,9 +617,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Одиннадцать рисков и ответы на них</summary>
     <div class="unfold"><div class="frame"><table id="risk-table"></table></div></div>
   </details>
-</div></section>
-
-<section class="slide" data-t="Источники"><div class="wrap">
+</div></section><section class="slide" data-t="Источники"><div class="wrap"><p class="appx">приложение</p>
   <h1 class="claim">Источники, допущения и <em>чего в модели нет</em>.</h1>
   <p class="stand">Всё, что можно проверить, лучше проверить. Модель считается скриптом,
     числа презентации сверяются с ней машинно.</p>
@@ -732,33 +713,43 @@ function шагОси(размах,делений){
   return (о<=1?1:о<=2?2:о<=2.5?2.5:о<=5?5:10)*п;
 }
 /* сетка: волосяные линейки, подписи старостильными цифрами */
-function оси(x0,y0,w,h,{ymax=100,ymin=0,подписиX=[],фмтY=кратко}={}){
-  const шаг=шагОси(ymax-ymin,4); let s='', v=Math.ceil(ymin/шаг)*шаг;
+function оси(x0,y0,w,h,{ymax=100,ymin=0,подписиX=[],фмтY=кратко,делений=5}={}){
+  const шаг=шагОси(ymax-ymin,делений); let s='', v=Math.ceil(ymin/шаг)*шаг;
   for(; v<=ymax+1e-9; v+=шаг){
     const y=y0+h-(v-ymin)/(ymax-ymin)*h;
     s+=`<line x1="${x0}" y1="${y.toFixed(1)}" x2="${x0+w}" y2="${y.toFixed(1)}"
          stroke="${ЧЕР.линейка}" stroke-width="${Math.abs(v)<1e-9?1:0.5}"/>`;
-    s+=`<text x="${x0-11}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="12.5"
-         fill="${ЧЕР.тихо}">${фмтY(v)}</text>`;
+    s+=`<text x="${x0-11}" y="${(y+5).toFixed(1)}" text-anchor="end" font-size="14"
+         font-weight="500" fill="${ЧЕР.втор}">${фмтY(v)}</text>`;
+    /* деление на самой оси — видно, где именно проходит уровень */
+    s+=`<line x1="${x0-6}" y1="${y.toFixed(1)}" x2="${x0}" y2="${y.toFixed(1)}"
+         stroke="${ЧЕР.линейка}" stroke-width="1"/>`;
   }
   подписиX.forEach(([x,т])=>{
-    s+=`<text x="${x.toFixed(1)}" y="${y0+h+21}" text-anchor="middle" font-size="12.5"
-         fill="${ЧЕР.тихо}">${т}</text>`;
+    s+=`<line x1="${x.toFixed(1)}" y1="${y0+h}" x2="${x.toFixed(1)}" y2="${y0+h+5}"
+         stroke="${ЧЕР.линейка}" stroke-width="1"/>`;
+    s+=`<text x="${x.toFixed(1)}" y="${y0+h+22}" text-anchor="middle" font-size="14"
+         font-weight="500" fill="${ЧЕР.втор}">${т}</text>`;
   });
   return s;
 }
 
 /* ── линии: площадь штрихуется полосами, линия вычерчивается пером ───────── */
-function линии(серии,{h=300,фмтY=кратко,ymax=null,нулевая=false,подписиX=null,событие=null,ширина=900}={}){
-  const W=ширина, x0=74, y0=18, w=W-x0-118, hh=h-y0-42;
+function линии(серии,{h=300,фмтY=кратко,ymax=null,нулевая=false,подписиX=null,событие=null,ширина=900,единица='',поX='месяц'}={}){
+  const W=ширина, x0=74, y0=36, w=W-x0-118, hh=h-y0-42;
   const все=серии.flatMap(s=>s.значения);
   const maxV=ymax!=null?ymax:Math.max(...все,1)*1.08;
   const minV=нулевая?Math.min(0,...все)*1.08:0;
   const n=серии[0].значения.length;
   const X=i=>x0+w*i/(n-1), Y=v=>y0+hh-(v-minV)/(maxV-minV)*hh;
-  const мX=подписиX||[0,5,11,17,23,29,35].filter(i=>i<n).map(i=>[X(i),'м'+(i+1)]);
+  const мX=подписиX||[0,3,5,8,11,14,17,20,23,26,29,32,35].filter(i=>i<n).map(i=>[X(i),'м'+(i+1)]);
   const путь=a=>a.map((v,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
-  let деф='', s=оси(x0,y0,w,hh,{ymax:maxV,ymin:minV,подписиX:мX,фмтY});
+  let деф='', s=оси(x0,y0,w,hh,{ymax:maxV,ymin:minV,подписиX:мX,фмтY,делений:6});
+  /* что именно отложено по осям — иначе график читается гаданием */
+  if(единица) s+=`<text x="${x0-11}" y="${(y0-19).toFixed(1)}" text-anchor="end" font-size="13"
+       font-style="italic" fill="${ЧЕР.тихо}">${единица}</text>`;
+  s+=`<text x="${(x0+w/2).toFixed(1)}" y="${(y0+hh+44).toFixed(1)}" text-anchor="middle"
+       font-size="13" font-style="italic" fill="${ЧЕР.тихо}">${поX}</text>`;
   if(нулевая||minV<0){ const yz=Y(0);
     s+=`<line x1="${x0}" y1="${yz.toFixed(1)}" x2="${x0+w}" y2="${yz.toFixed(1)}"
          stroke="${ЧЕР.втор}" stroke-width="1"/>`; }
@@ -779,14 +770,24 @@ function линии(серии,{h=300,фмтY=кратко,ymax=null,нулев�
     const ц=сер.цвет||РЯД[i%6];
     s+=`<path class="draw${i?' slow':''}" style="animation-delay:${i*160}ms" d="${путь(сер.значения)}"
          fill="none" stroke="${ц}" stroke-width="${i?1.4:2}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    /* узлы главного ряда: видно, что точек столько же, сколько месяцев */
+    if(i===0) сер.значения.forEach((v,j)=>{ if(j%3===0)
+      s+=`<circle class="ink" style="animation-delay:${900+j*18}ms" cx="${X(j).toFixed(1)}"
+           cy="${Y(v).toFixed(1)}" r="2.2" fill="${ц}"/>`; });
     const кx=X(n-1), кy=Y(сер.значения[n-1]);
+    /* последнее значение — числом; на трёх рядах концы сходятся, и числа
+       налезают друг на друга, поэтому там их не ставим */
+    if(серии.length<=2)
+    s+=`<text class="ink" style="animation-delay:${1500+i*70}ms" x="${(кx+10).toFixed(1)}"
+         y="${(кy+(серии.length<=2?-13:5)).toFixed(1)}" font-size="15" font-weight="600"
+         fill="${i?ЧЕР.втор:ЧЕР.осн}">${фмтY(сер.значения[n-1])}</text>`;
     s+=`<circle class="ink" style="animation-delay:${1350+i*70}ms" cx="${кx.toFixed(1)}" cy="${кy.toFixed(1)}"
          r="3.4" fill="${ц}"/>`;
     /* Подпись у конца линии ставится, только пока ряды расходятся. На трёх и более
        они сходятся у правого края и подписи слипаются — тогда опознание даёт легенда. */
     if(серии.length<=2)
       s+=`<text class="ink" style="animation-delay:${1400+i*70}ms" x="${(кx+10).toFixed(1)}"
-           y="${(кy+5).toFixed(1)}" font-size="14" fill="${i?ЧЕР.втор:ЧЕР.осн}">${сер.имя}</text>`;
+           y="${(кy+9).toFixed(1)}" font-size="14" fill="${i?ЧЕР.втор:ЧЕР.осн}">${сер.имя}</text>`;
   });
 
   if(событие){
@@ -1259,10 +1260,10 @@ function пересчёт(){
   эл('chart-unit').innerHTML=линии([
     {имя:'LTV / CAC', цвет:РЯД[0], значения:м.map(р=>р.LTV_CAC)},
     {имя:'порог 3', цвет:РЯД[1], значения:м.map(()=>3)},
-  ],{h:260,ширина:560,фмтY:(v)=>пс(v.toFixed(1))});
+  ],{h:260,ширина:560,единица:'отношение',фмтY:(v)=>пс(v.toFixed(1))});
   эл('chart-margin').innerHTML=линии([
     {имя:'валовая маржа', цвет:РЯД[3], значения:м.map(р=>р['маржа_валовая_%'])},
-  ],{h:260,ширина:560,фмтY:(v)=>чс(v)+' %'});
+  ],{h:260,ширина:560,единица:'процент',фмтY:(v)=>чс(v)+' %'});
   плитки('kpi-unit-dyn',[
     {значение:'×'+пс(м[23].LTV_CAC.toFixed(2)), подпись:'LTV / CAC на 24-м месяце'},
     {значение:пс(м[23].payback_мес.toFixed(1))+' мес', подпись:'окупаемость привлечения'},
@@ -1277,7 +1278,7 @@ function рисоватьMAU(){
   эл('chart-mau').innerHTML=линии([
     {имя:'аудитория (MAU)', цвет:РЯД[3], значения:м.map(р=>р.mau)},
     {имя:'платящие', цвет:РЯД[0], значения:м.map(р=>р.платящие)},
-  ],{h:300});
+  ],{h:300,единица:'человек'});
   плитки('kpi-mau',[
     {значение:чс(и['mau_м24']), подпись:'аудитория к 24-му месяцу'},
     {значение:чс(и['платящих_м24']), подпись:'платящих к 24-му месяцу'},
@@ -1292,7 +1293,7 @@ function рисоватьMAU(){
   const м=строки('базовый');
   эл('chart-b2b').innerHTML=линии([
     {имя:'учеников по лицензиям школ', цвет:РЯД[1], значения:м.map(р=>р.учеников_B2B)},
-  ],{h:280});
+  ],{h:280,единица:'учеников'});
   плитки('kpi-b2b',[
     {значение:чс(м[23].партнёры_B2B), подпись:'школ и кружков к 24-му месяцу'},
     {значение:чс(м[23].учеников_B2B), подпись:'учеников по лицензиям'},
@@ -1341,7 +1342,8 @@ function рисоватьPNLгод(){
 переключатель('scen-pnl',рисоватьPNLгод);
 
 /* ── 17. CAPEX ───────────────────────────────────────────────────────────── */
-эл('capex-head').textContent='CAPEX — '+млн(Д.capex_всего)+' млн ₽ единоразово';
+эл('capex-head').innerHTML='Единоразовые вложения — <em>'+млн(Д.capex_всего)+
+  ' млн ₽</em>, больше половины из них в разработку продукта.';
 эл('chart-capex').innerHTML=водопад(Д.capex.map((с,i)=>({статья:с.статья, сумма:с.сумма, цвет:РЯД[i%6]})),{h:320});
 эл('capex-table').innerHTML='<tr><th>Статья</th><th class="n">Сумма</th></tr>'+
   Д.capex.map(с=>`<tr><td>${с.статья}<div class="tiny">${с.комментарий}</div></td><td class="n">${млн(с.сумма)} млн ₽</td></tr>`).join('')+
@@ -1378,7 +1380,7 @@ function рисоватьOPEX(){
   ],{h:250,ширина:560,фмтY:(v)=>чс(v)});
   эл('chart-fot').innerHTML=линии([
     {имя:'ФОТ со взносами', цвет:РЯД[0], значения:м.map(р=>р.фот)},
-  ],{h:250,ширина:560});
+  ],{h:250,ширина:560,единица:'₽ в месяц'});
   плитки('kpi-team',[
     {значение:чс(м[0].команда_чел), подпись:'человек в команде на старте'},
     {значение:чс(м[23].команда_чел), подпись:'человек в команде к 24-му месяцу'},
@@ -1396,7 +1398,7 @@ function рисоватьPNL(){
   эл('chart-pnl').innerHTML=линии(
     [{имя:'выручка',цвет:РЯД[0],значения:м.map(р=>р.выручка)},
      {имя:'затраты (OPEX)',цвет:РЯД[3],значения:м.map(р=>р.opex)}],
-    {h:300,событие:и['безубыточность_месяц']
+    {h:300,единица:'₽ в месяц',событие:и['безубыточность_месяц']
       ?{i:и['безубыточность_месяц']-1, v:м[и['безубыточность_месяц']-1].выручка,
         текст:'безубыточность · м'+и['безубыточность_месяц']}:null});
   плитки('kpi-pnl',[
@@ -1410,13 +1412,18 @@ function рисоватьPNL(){
 
 /* ── 21. денежный поток ──────────────────────────────────────────────────── */
 function рисоватьCash(){
+  /* Оптимистичный сценарий уходит в миллиарды и расплющивает остальные,
+     поэтому яму — то, ради чего лист и существует — отмечаем прямо на линии. */
+  const рядCash=ряд(сценарий,'cash');
+  const iЯмы=рядCash.indexOf(Math.min(...рядCash));
   эл('chart-cash').innerHTML=линии(
     С.map((с,i)=>({имя:с, цвет:[РЯД[3],РЯД[0],РЯД[1]][i], значения:ряд(с,'cash')})),
-    {h:320,нулевая:true});
+    {h:320,единица:'накоплено, ₽',нулевая:true,
+     событие:{i:iЯмы, v:рядCash[iЯмы], текст:'дно · м'+(iЯмы+1)+' · '+млн(рядCash[iЯмы])+' млн ₽'}});
   const м=строки(сценарий), и=Д.модель[сценарий].итоги;
   эл('chart-flow').innerHTML=линии([
     {имя:'поток за месяц', цвет:РЯД[0], значения:м.map(р=>р.денежный_поток)},
-  ],{h:250,ширина:560,нулевая:true});
+  ],{h:250,ширина:560,единица:'₽ за месяц',нулевая:true});
   эл('round-table').innerHTML=`
     <tr><th>Показатель</th><th class="n">Значение</th></tr>
     <tr><td>Пик потребности в деньгах</td><td class="n">${млн(и['потребность_раунда'])} млн ₽</td></tr>
@@ -1458,7 +1465,7 @@ function рисоватьCash(){
 })();
 
 /* ── 24. раунд ───────────────────────────────────────────────────────────── */
-эл('ask-head').textContent='Запрос: '+млн(раунд)+' млн ₽ на 18 месяцев';
+эл('ask-head').innerHTML='Просим <em>'+млн(раунд)+' млн ₽ на 18 месяцев</em> — это дно потока\n  плюс 20 % на задержки, и его хватает до выхода в плюс.';
 const статьиРаунда=[
   {статья:'продукт и команда', сумма:раунд*0.45, цвет:РЯД[0]},
   {статья:'привлечение платящих', сумма:раунд*0.28, цвет:РЯД[2]},
@@ -1588,6 +1595,22 @@ const наРусскомВсего=СТРАНЫ.reduce((с,к)=>с+(к.на_ру
   : 'Арифметика проверена автоматически при сборке: выручка = B2C + B2B − возвраты, OPEX = сумма статей, деньги = накопленный поток, платящих не больше аудитории. Расхождений нет.';
 
 /* ── 2. зачем олимпиады ─────────────────────────────────────────────────── */
+/* Заголовки-утверждения, называющие число: берём число из модели, чтобы
+   заголовок не разошёлся с графиком под ним. */
+(function(){
+  const и=база.итоги, м=строки('базовый');
+  эл('pnl-head').innerHTML='К третьему году выручка <em>'+млн(и['выручка_год3'])+
+    ' млн ₽</em> при EBITDA '+млн(годы('базовый','ebitda')[2])+' млн ₽.';
+  эл('opex-head').innerHTML='Главная статья расходов — <em>люди</em>: '+
+    Math.round(м[23].фот/м[23].opex*100)+' % операционных затрат на 24-м месяце.';
+  эл('be-head').innerHTML='Выручка догоняет затраты на <em>'+и['безубыточность_месяц']+
+    '-м месяце</em> — внутри горизонта раунда, а не на следующем.';
+  эл('cash-head').innerHTML='Дно денежного потока — <em>'+млн(и['потребность_раунда'])+
+    ' млн ₽</em> на '+и['мин_cash_месяц']+'-м месяце; это и есть размер, который нужно закрыть.';
+  эл('thr-head').innerHTML='Ниже <em>'+чс(Д.порог_аудитории['базовый'].mau)+
+    ' MAU</em> выручка не покрывает операционные расходы.';
+})();
+
 /* старт */
 показать(parseInt((location.hash||'#s1').slice(2),10)-1 || 0);
 
