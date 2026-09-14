@@ -8,192 +8,278 @@
 <link rel="icon" type="image/svg+xml" href="MVP/img/icons/favicon-student.svg">
 <link rel="apple-touch-icon" href="MVP/img/icons/student-apple.png">
 <style>
-  :root{
-    --deep:#16241d; --panel:#1b2e24; --line:rgba(217,164,65,.22);
-    --gold:#ffd76a; --ivory:#f6efe0; --muted:#cbb89a; --green:#8fd1a8;
-    --ease:cubic-bezier(.22,.9,.24,1);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-text-size-adjust:100%}
-  body{
-    font-family:Georgia,'Times New Roman',serif;
-    background:radial-gradient(ellipse at 50% -12%,#20342a 0%,transparent 58%),var(--deep);
-    color:var(--ivory); line-height:1.58;
-    -webkit-font-smoothing:antialiased; text-rendering:geometricPrecision;
-    padding:32px 16px 64px;
-  }
-  .wrap{max-width:760px;margin:0 auto}
+:root{
+  --deep:#16241d; --raise:#1d3227; --line:rgba(255,215,106,.20);
+  --gold:#ffd76a; --gold-d:#e3b04c; --ivory:#f6efe0; --muted:#cbb89a;
+  --ok:#8fd1a8; --no:#e8917c;
+  --ease:cubic-bezier(.22,.9,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scrollbar-color:var(--gold-d) var(--deep)}
+body{
+  font-family:Georgia,'Times New Roman',serif;
+  background:var(--deep); color:var(--ivory); line-height:1.6;
+  -webkit-font-smoothing:antialiased; text-rendering:geometricPrecision;
+  padding:40px 20px 72px;
+}
+::selection{background:rgba(255,215,106,.26);color:#fff8e4}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--deep)}
+::-webkit-scrollbar-thumb{background:#33503f;border-radius:6px;border:3px solid var(--deep)}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-d)}
 
-  /* — шапка — */
-  .mark{font-size:32px;line-height:1.2;color:var(--gold);letter-spacing:.04em}
-  .mark span{display:block;font-size:14px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted);margin-top:8px}
-  .lede{font-size:20px;line-height:1.55;margin-top:24px;max-width:34em}
-  .lede b{color:var(--gold);font-weight:normal}
-  .lede em{font-style:normal;color:var(--green)}
+.page{max-width:680px;margin:0 auto}
 
-  /* — главное действие — */
-  .go{display:block;margin-top:32px;padding:20px 24px;min-height:44px;
-    background:linear-gradient(168deg,#2a4636,#1d3227);
-    border:1px solid var(--gold);border-radius:14px;
-    text-decoration:none;color:var(--ivory);
-    transition:transform .18s var(--ease),background .18s var(--ease)}
-  .go:hover{background:linear-gradient(168deg,#31513e,#22392c)}
-  .go:active{transform:translateY(2px)}
-  .go b{display:block;font-size:24px;color:var(--gold);line-height:1.2}
-  .go i{display:block;font-style:normal;font-size:16px;color:var(--muted);margin-top:8px}
-  .also{margin-top:16px;font-size:16px;color:var(--muted)}
-  .also a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(143,209,168,.4);
-    display:inline-block;padding:10px 0;min-height:44px;line-height:24px}
-  .also a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+/* ─── вход: имя и одно утверждение ─── */
+.name{font-size:15px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+.claim{font-size:clamp(28px,6.2vw,44px);line-height:1.16;letter-spacing:-.02em;
+  margin-top:20px;text-wrap:balance;color:var(--ivory)}
+.claim em{font-style:normal;color:var(--gold)}
+.sub{font-size:18px;color:var(--muted);margin-top:16px;max-width:30em}
 
-  /* — надзаголовок раздела — */
-  h2{font-size:14px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted);font-weight:normal;margin:48px 0 8px}
-  h2+p{font-size:16px;color:var(--ivory);margin-bottom:24px;max-width:36em}
+/* ─── урок: настоящая задача ─── */
+.lesson{margin-top:44px;border-top:1px solid var(--line);padding-top:32px}
+.from{font-size:15px;color:var(--muted)}
+.from b{color:var(--ivory);font-weight:normal}
+.story{font-size:19px;line-height:1.55;margin-top:16px;max-width:34em}
+.ask{font-size:22px;line-height:1.3;color:var(--gold);margin-top:20px;text-wrap:balance}
 
-  /* — ступени пути: от школьной темы к олимпиаде — */
-  .steps{border-left:2px solid var(--line);padding-left:20px;margin-top:8px}
-  .step{padding:12px 0}
-  .step+.step{border-top:1px solid var(--line)}
-  .step b{display:block;font-size:20px;color:var(--gold);font-weight:normal;line-height:1.25}
-  .step i{font-style:normal;font-size:16px;color:var(--ivory);display:block;margin-top:4px}
+.opts{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.opt{display:block;width:100%;text-align:left;min-height:56px;padding:15px 18px;
+  font:inherit;font-size:17px;line-height:1.4;color:var(--ivory);cursor:pointer;
+  background:var(--raise);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,.28);
+  transition:border-color .18s var(--ease),transform .14s var(--ease),background .18s var(--ease)}
+.opt:hover:not(:disabled){border-color:var(--gold-d);background:#22392c}
+.opt:active:not(:disabled){transform:translateY(2px)}
+.opt:disabled{cursor:default}
+.opt .tick{float:right;margin-left:14px;opacity:0;transition:opacity .2s var(--ease)}
+.opt .tick svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.opt.no{border-color:rgba(232,145,124,.6);color:var(--no)}
+.opt.no .tick{opacity:1}
+.opt.yes{border-color:var(--ok);background:rgba(143,209,168,.12);color:#d8f2e3}
+.opt.yes .tick{opacity:1;color:var(--ok)}
+.opt.dim{opacity:.42}
 
-  /* — весовая лента задач — */
-  .bars{border-top:1px solid var(--line)}
-  .row{display:grid;grid-template-columns:1fr auto;align-items:baseline;
-    gap:12px;padding:14px 0 12px;border-bottom:1px solid var(--line)}
-  .row .nm{font-size:16px}
-  .row .n{font-size:20px;color:var(--gold);font-variant-numeric:tabular-nums}
-  .row .bar{grid-column:1 / -1;height:6px;border-radius:3px;
-    background:linear-gradient(90deg,var(--gold),rgba(255,215,106,.35));
-    transform-origin:left center;animation:grow .6s var(--ease) both}
-  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* один авторский момент: раскрытие ступени */
+.step{margin-top:16px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;
+  background:rgba(255,215,106,.05);font-size:17px;line-height:1.55}
+.step .lab{display:block;font-size:14px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px}
+.step.win{border-color:rgba(143,209,168,.45);background:rgba(143,209,168,.09)}
+.step.win .lab{color:var(--ok)}
+.step .trap{display:block;margin-top:12px;padding-top:12px;
+  border-top:1px solid rgba(255,215,106,.18);color:var(--muted);font-size:16px}
+.reveal{animation:rise .42s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(8px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
 
-  /* — уроки: ряд, а не полосы — */
-  .subs{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:16px;
-    padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .subs span{color:var(--muted)}
-  .subs b{color:var(--ivory);font-weight:normal;font-variant-numeric:tabular-nums}
+.told{font-size:17px;line-height:1.55;margin-top:24px;max-width:34em;color:var(--muted)}
+.told b{color:var(--ivory);font-weight:normal}
 
-  /* — текстовые блоки — */
-  .note{font-size:16px;max-width:36em}
-  .note p+p{margin-top:16px}
-  .note code{font-family:Menlo,Consolas,monospace;font-size:14px;
-    background:rgba(255,215,106,.1);padding:2px 6px;border-radius:4px;color:var(--gold)}
-  pre{font-family:Menlo,Consolas,monospace;font-size:14px;line-height:1.7;
-    background:var(--panel);border:1px solid var(--line);border-radius:10px;
-    padding:16px;margin-top:16px;overflow-x:auto;color:var(--green)}
-  .docs{margin-top:24px;font-size:16px}
-  .docs a{display:inline-block;color:var(--green);text-decoration:none;
-    border-bottom:1px solid rgba(143,209,168,.4);padding:10px 0;min-height:44px;line-height:24px}
-  .docs a:hover{color:var(--gold);border-bottom-color:var(--gold)}
-  .docs li{list-style:none;margin-top:4px}
-  .docs li i{font-style:normal;color:var(--muted);font-size:14px;display:block;margin-top:-6px}
+/* ─── масштаб как следствие ─── */
+.scale{margin-top:48px;border-top:1px solid var(--line);padding-top:32px}
+.scale h2{font-size:clamp(22px,4.4vw,30px);line-height:1.22;font-weight:normal;
+  color:var(--ivory);letter-spacing:-.01em;text-wrap:balance}
+.scale h2 b{color:var(--gold);font-weight:normal;font-variant-numeric:tabular-nums}
+.band{display:flex;width:100%;height:56px;margin-top:24px;border-radius:10px;overflow:hidden;
+  border:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.3)}
+.band span{display:block;height:100%;position:relative;
+  transition:filter .18s var(--ease)}
+.band span:hover{filter:brightness(1.25)}
+.band span+span{border-left:1px solid rgba(22,36,29,.6)}
+.keys{margin-top:16px;font-size:16px;line-height:2}
+.keys i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:8px;
+  vertical-align:baseline}
+.keys u{text-decoration:none;color:var(--muted)}
+.keys var{font-style:normal;color:var(--ivory);font-variant-numeric:tabular-nums}
+.keys span{white-space:nowrap;margin-right:20px}
 
-  footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);
-    font-size:14px;color:var(--muted)}
-  footer a{color:var(--muted);display:inline-block;padding:12px 0;min-height:44px;line-height:20px}
+/* ─── действие ─── */
+.act{display:block;margin-top:44px;padding:22px 26px;min-height:44px;
+  background:linear-gradient(168deg,#2c4a38,#1d3227);
+  border:1px solid var(--gold);border-radius:14px;text-decoration:none;color:var(--ivory);
+  box-shadow:0 4px 18px rgba(0,0,0,.34);
+  transition:transform .16s var(--ease),background .18s var(--ease)}
+.act:hover{background:linear-gradient(168deg,#345742,#22392c)}
+.act:active{transform:translateY(2px)}
+.act b{display:block;font-size:24px;font-weight:normal;color:var(--gold);line-height:1.2}
+.act i{display:block;font-style:normal;font-size:16px;color:var(--muted);margin-top:8px}
+.aside{margin-top:18px;font-size:16px;color:var(--muted)}
 
-  @media (min-width:768px){ body{padding:56px 32px 80px} .mark{font-size:48px} .lede{font-size:24px} }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important}
-    .row .bar{transform:none}
-  }
+a.ln{color:var(--ok);text-decoration:none;
+  border-bottom:1px solid rgba(143,209,168,.42);
+  padding:11px 0;display:inline-block;line-height:22px;min-height:44px}
+a.ln:hover{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ─── разработчику ─── */
+.dev{margin-top:56px;border-top:1px solid var(--line);padding-top:28px;font-size:16px;color:var(--muted)}
+.dev p{max-width:34em}
+.dev pre{font-family:Menlo,Consolas,monospace;font-size:14px;line-height:1.8;color:var(--ok);
+  background:#12201a;border:1px solid var(--line);border-radius:10px;
+  padding:16px;margin:16px 0;overflow-x:auto}
+.dev nav{margin-top:8px;display:flex;flex-wrap:wrap;gap:0 24px}
+
+@media (min-width:760px){ body{padding:64px 32px 88px} }
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none;filter:none}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+<main class="page">
 
-  <div class="mark">АРХИМЕД<span>Острова Познания</span></div>
+  <p class="name">Архимед · Острова Познания</p>
+  <h1 class="claim">Углублённое изучение предметов и <em>подготовка к олимпиадам</em></h1>
+  <p class="sub">Математика, русский язык, физика, химия, информатика. 1–9 класс.</p>
 
-  <p class="lede"><b>Углублённое изучение предметов и подготовка к олимпиадам.</b>
-    Математика, русский язык, физика, химия, информатика — 1–9 класс.
-    Школьная программа берётся глубже учебника, а приёмы разбираются
-    <em>на задачах Всероссийской олимпиады</em>.</p>
+  <section class="lesson">
+    <p class="from">Задача из банка приложения. <b>Глава 1 · Логика.</b> Попробуй сам, это две минуты.</p>
 
-  <a class="go" href="MVP/">
-    <b>Открыть приложение&nbsp;→</b>
-    <i>Работает в браузере и ставится на телефон как приложение. Прогресс хранится на устройстве.</i>
+    <p class="story">Перед тобой две двери: за одной оружейная, за другой ловушка. У каждой стоит
+      стражник. Один всегда говорит правду, другой всегда лжёт, а кто есть кто, неизвестно.
+      Спросить можно один раз и только одного.</p>
+
+    <p class="ask">Какой вопрос задать, чтобы наверняка найти оружейную?</p>
+
+    <div class="opts" id="opts">
+      <button class="opt" data-i="0">«Какая дверь ведёт в оружейную?»<span class="tick"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></span></button>
+      <button class="opt" data-i="1">«Какую дверь указал бы твой товарищ?» — и пойти в противоположную<span class="tick"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.5 3.5L13 4.5"/></svg></span></button>
+      <button class="opt" data-i="2">«Ты — стражник?»<span class="tick"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></span></button>
+    </div>
+
+    <div id="out"></div>
+
+    <p class="told" id="told" hidden>Ответ не выдаётся сразу: сначала намёк, потом ход мысли,
+      и только если не вышло — полное решение. <b>Так устроена каждая задача в приложении</b>,
+      и так же устроен каждый урок: сначала объясняем приём, потом проверяем, понял ли ученик,
+      и лишь затем даём решать.</p>
+  </section>
+
+  <section class="scale">
+    <h2>Задач с подсказками и разбором — <b>700</b>. Уроков, где приём сначала объясняют, — <b>449</b>.</h2>
+
+    <div class="band" id="band" role="img"
+         aria-label="700 задач: русский язык 324, начальная школа 188, разбор с Мишуткой 57, математика 41, физика 41, информатика 27, химия 22"></div>
+
+    <p class="keys" id="keys"></p>
+  </section>
+
+  <a class="act" href="MVP/">
+    <b>Открыть приложение&nbsp;→</b>
+    <i>Работает в браузере, ставится на телефон. Прогресс хранится на устройстве.</i>
   </a>
-  <p class="also">Для родителя — <a href="MVP/parent/">отдельный кабинет</a>: отчёт по коду ребёнка.</p>
+  <p class="aside">Родителю — <a class="ln" href="MVP/parent/">кабинет с отчётом по коду ребёнка</a>.</p>
 
-  <h2>Как учим</h2>
-  <p>Не «ещё один сборник задач»: путь от школьной темы до олимпиадного приёма проходится по шагам.</p>
-  <div class="steps">
-    <div class="step"><b>Сначала объясняем</b>
-      <i>Приём разбирается по кадрам, у каждого — своя сцена и своя анимация, а не общий шаблон.</i></div>
-    <div class="step"><b>Потом проверяем понимание</b>
-      <i>Короткий вопрос после объяснения: не заучил ли ученик ответ вместо приёма.</i></div>
-    <div class="step"><b>И только затем даём решать</b>
-      <i>Задачи с подсказками-лестницей: сначала намёк, потом ход, и лишь в конце полное решение.</i></div>
-    <div class="step"><b>Дальше — олимпиадный уровень</b>
-      <i>Разборы задач ВсОШ и Сириуса, ловушки и типовые ошибки, проверочные работы формата МЦКО.</i></div>
-  </div>
+  <section class="dev">
+    <p>Приложение написано на чистом JavaScript без сборщика: скрипты подключаются с меткой
+      версии, она же в имени кэша сервис-воркера. Графики и сцены рисуются своим кодом,
+      внешних библиотек в проекте нет.</p>
 
-  <h2>Что внутри</h2>
-  <p>700 задач с подсказками и разбором. Распределение — по разделам «Пути»:</p>
+<pre>git clone https://github.com/s5hyhbpftv-alt/arhimed.git
+cd arhimed/MVP &amp;&amp; python3 -m http.server 8123</pre>
 
-  <div class="bars">
-    <div class="row"><span class="nm">Русский язык · 5–6 класс</span><span class="n">324</span>
-      <span class="bar" style="width:100%"></span></div>
-    <div class="row"><span class="nm">Начальная школа · 1–4 класс</span><span class="n">188</span>
-      <span class="bar" style="width:58%;animation-delay:.06s"></span></div>
-    <div class="row"><span class="nm">Разбор с Мишуткой</span><span class="n">57</span>
-      <span class="bar" style="width:17.6%;animation-delay:.12s"></span></div>
-    <div class="row"><span class="nm">Сиракузы · математика</span><span class="n">41</span>
-      <span class="bar" style="width:12.7%;animation-delay:.18s"></span></div>
-    <div class="row"><span class="nm">Ньютон · физика</span><span class="n">41</span>
-      <span class="bar" style="width:12.7%;animation-delay:.24s"></span></div>
-    <div class="row"><span class="nm">Информатика</span><span class="n">27</span>
-      <span class="bar" style="width:8.3%;animation-delay:.3s"></span></div>
-    <div class="row"><span class="nm">Лавуазье · химия</span><span class="n">22</span>
-      <span class="bar" style="width:6.8%;animation-delay:.36s"></span></div>
-  </div>
+    <p>Так поднимается всё, кроме кабинета родителя и голоса: им нужен шлюз.</p>
 
-  <h2>449 уроков в «Книге знаний»</h2>
-  <p>Каждый урок — объяснение по кадрам, проверка понимания и тренажёр. Ученик видит уроки своего класса.</p>
-  <div class="subs">
-    <span>информатика <b>150</b></span>
-    <span>математика <b>138</b></span>
-    <span>начальная школа <b>92</b></span>
-    <span>физика <b>23</b></span>
-    <span>химия <b>22</b></span>
-    <span>русский язык <b>18</b></span>
-  </div>
-  <p class="note" style="margin-top:16px">Русское направление — 20 листов: уроки 601–610, проверочные
-    работы 611–613, работа МЦКО 614, демоверсия 615, три листа функциональной грамотности 616–618
-    и два урока словарных слов для младших классов. Словарь — 362 слова на классы 1–6.</p>
+    <nav>
+      <a class="ln" href="https://github.com/s5hyhbpftv-alt/arhimed/blob/main/deploy/%D0%98%D0%9D%D0%A1%D0%A2%D0%A0%D0%A3%D0%9A%D0%A6%D0%98%D0%AF_%D0%94%D0%9B%D0%AF_%D0%98%D0%98.md">Как устроен проект</a>
+      <a class="ln" href="https://github.com/s5hyhbpftv-alt/arhimed/blob/main/deploy/%D0%A1%D0%9E%D0%A1%D0%A2%D0%9E%D0%AF%D0%9D%D0%98%D0%95.md">Состояние и очередь</a>
+      <a class="ln" href="https://github.com/s5hyhbpftv-alt/arhimed">Исходный код</a>
+    </nav>
+  </section>
 
-  <h2>Как устроено</h2>
-  <div class="note">
-    <p>Чистый JavaScript без сборщика: скрипты подключаются тегами с меткой версии <code>?v=NNN</code>,
-      она же в имени кэша сервис-воркера — так браузер не отдаёт старый код. Python нужен только
-      для выкладки, шлюза (связка «родитель — ученик», голос) и проверок.</p>
-    <p>У проекта своя система машинных проверок: геометрия кадра, раскладка на 320 и 390 px,
-      контраст и цели касания, отклик тренажёров, инварианты заданий. Правило простое —
-      выкладывать только на зелёных проверках, но смотреть на результат и глазами:
-      геометрия ловит «налезло», а не «не то, о чём просили».</p>
-  </div>
+</main>
 
-  <h2>Запустить у себя</h2>
-  <pre>git clone https://github.com/s5hyhbpftv-alt/arhimed.git
-cd arhimed/MVP &amp;&amp; python3 -m http.server 8123
-# → http://127.0.0.1:8123/</pre>
-  <p class="note" style="margin-top:16px">Так работает всё, кроме кабинета родителя и голоса:
-    им нужен шлюз <code>шлюз_сервер.py</code>, а голосу — ещё и ключ Яндекса.</p>
+<script>
+/* Задача, подсказки, разбор и ловушка — из банка приложения (MVP/data/tasks.js, math1).
+   Ничего не придумано: тексты те же, что видит ученик. */
+var ЗАДАЧА = {
+  ответ: 1,
+  подсказки: [
+    'Представь, что ты спросил лжеца о том, что скажет правдивый.',
+    'Оба стражника укажут на ОДНУ и ту же дверь. Какую?',
+    'Спроси о другом. И сделай наоборот.'
+  ],
+  разбор: 'Правдивый честно скажет, куда укажет лжец, — в ложную дверь. Лжец соврёт о честном — ' +
+          'и тоже укажет в ложную. Оба в ловушку → оружейная в другой.',
+  ловушка: 'Частая ошибка: спросить «какая дверь правильная?». Лжец соврёт — и выходит 50 на 50.'
+};
 
-  <ul class="docs">
-    <li><a href="https://github.com/s5hyhbpftv-alt/arhimed/blob/main/deploy/%D0%98%D0%9D%D0%A1%D0%A2%D0%A0%D0%A3%D0%9A%D0%A6%D0%98%D0%AF_%D0%94%D0%9B%D0%AF_%D0%98%D0%98.md">Инструкция для агента</a>
-      <i>вход в проект: карта файлов, устройство уроков, рабочий цикл, грабли</i></li>
-    <li><a href="https://github.com/s5hyhbpftv-alt/arhimed/blob/main/deploy/%D0%A1%D0%9E%D0%A1%D0%A2%D0%9E%D0%AF%D0%9D%D0%98%D0%95.md">Состояние и очередь</a>
-      <i>журнал: что сделано по датам, что дальше</i></li>
-    <li><a href="https://github.com/s5hyhbpftv-alt/arhimed">Репозиторий на GitHub</a>
-      <i>исходный код приложения и инструменты проверки</i></li>
-  </ul>
+var ступень = 0;                       /* сколько подсказок уже показано */
+var opts = document.getElementById('opts');
+var out  = document.getElementById('out');
+var told = document.getElementById('told');
 
-  <footer>Приложение на постоянном адресе — <a href="https://123.teramont.pro/MVP/">123.teramont.pro/MVP/</a></footer>
+function блок(класс, метка, текст, ловушка){
+  var d = document.createElement('div');
+  d.className = 'step reveal' + (класс ? ' ' + класс : '');
+  var l = document.createElement('span');
+  l.className = 'lab'; l.textContent = метка;
+  d.appendChild(l);
+  d.appendChild(document.createTextNode(текст));
+  if (ловушка){
+    var t = document.createElement('span');
+    t.className = 'trap'; t.textContent = ловушка;
+    d.appendChild(t);
+  }
+  return d;
+}
 
-</div>
+function закрыть(){
+  [].forEach.call(opts.children, function(b){
+    b.disabled = true;
+    if (+b.dataset.i !== ЗАДАЧА.ответ) b.classList.add('dim');
+  });
+  told.hidden = false;
+}
+
+opts.addEventListener('click', function(e){
+  var b = e.target.closest('.opt');
+  if (!b || b.disabled) return;
+
+  if (+b.dataset.i === ЗАДАЧА.ответ){
+    b.classList.add('yes');
+    закрыть();
+    out.innerHTML = '';
+    out.appendChild(блок('win', 'Верно · разбор', ЗАДАЧА.разбор, ЗАДАЧА.ловушка));
+    return;
+  }
+
+  /* неверно — не ответ, а следующая ступень лестницы */
+  b.classList.add('no');
+  b.disabled = true;
+  out.innerHTML = '';
+  if (ступень < ЗАДАЧА.подсказки.length){
+    out.appendChild(блок('', 'Подсказка ' + (ступень + 1) + ' из 3', ЗАДАЧА.подсказки[ступень]));
+    ступень++;
+  } else {
+    закрыть();
+    out.appendChild(блок('win', 'Решение Архимеда', ЗАДАЧА.разбор, ЗАДАЧА.ловушка));
+  }
+});
+
+/* Состав банка задач — числа сняты из приложения, а не записаны от руки. */
+var СОСТАВ = [
+  ['Русский язык',      324, '#ffd76a'],
+  ['Начальная школа',   188, '#e3b04c'],
+  ['Разбор с Мишуткой',  57, '#c98f45'],
+  ['Математика',         41, '#8fd1a8'],
+  ['Физика',             41, '#6fb894'],
+  ['Информатика',        27, '#5aa0a8'],
+  ['Химия',              22, '#4f8896']
+];
+var ВСЕГО = СОСТАВ.reduce(function(s, c){ return s + c[1]; }, 0);
+
+document.getElementById('band').innerHTML = СОСТАВ.map(function(c){
+  return '<span style="width:' + (c[1] / ВСЕГО * 100).toFixed(2) + '%;background:' + c[2] +
+         '" title="' + c[0] + ' — ' + c[1] + '"></span>';
+}).join('');
+
+document.getElementById('keys').innerHTML = СОСТАВ.map(function(c){
+  return '<span><i style="background:' + c[2] + '"></i><u>' + c[0] + '</u> <var>' + c[1] + '</var></span>';
+}).join('');
+</script>
 </body>
 </html>

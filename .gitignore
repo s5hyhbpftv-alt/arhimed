@@ -30,6 +30,8 @@ deepseek-harness/
 !/sw.js
 !/manifest.webmanifest
 !/README.md
+# продуктовая правда: нужна следующей сессии, иначе потеряется как qa_frame.py
+!/PRODUCT.md
 !/.gitignore
 !шлюз_сервер.py
 
