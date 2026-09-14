@@ -7,6 +7,7 @@
 <meta name="description" content="АРХИМЕД — углублённое изучение математики, русского языка, физики, химии и информатики и подготовка к олимпиадам. 449 уроков, 700 задач, 1–9 класс.">
 <link rel="icon" type="image/svg+xml" href="MVP/img/icons/favicon-student.svg">
 <link rel="apple-touch-icon" href="MVP/img/icons/student-apple.png">
+<link rel="stylesheet" href="fonts/caveat.css">
 <style>
 :root{
   --deep:#16241d; --raise:#1d3227; --line:rgba(255,215,106,.20);
@@ -126,6 +127,43 @@ a.ln:hover{color:var(--gold);border-bottom-color:var(--gold)}
   *{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none;filter:none}
 }
+
+/* ─── реплика Архимеда: рукописный ввод ─── */
+.say{margin-top:56px;padding-top:30px;border-top:1px solid var(--line)}
+.say blockquote{font-family:'Caveat',Georgia,cursive;font-weight:600;
+  font-size:clamp(28px,5.6vw,46px);line-height:1.34;color:var(--gold);
+  letter-spacing:.005em;max-width:16em}
+.say .ln{display:block;overflow:hidden}
+/* строка проявляется слева направо: перо ведёт, а не текст печатается */
+/* Единицы на обоих концах одинаковые: пару «проценты ↔ em» браузер
+   не интерполирует, и анимация молча держала начальное значение.
+   Запас справа даёт росчеркам рукописного шрифта не обрезаться. */
+.say .tx{display:inline-block;padding-right:.3em;clip-path:inset(0 100% -12% 0);
+  animation:письмо 1500ms cubic-bezier(.32,.12,.24,1) forwards}
+.say .ln:nth-child(2) .tx{animation-delay:1250ms;animation-duration:1250ms}
+@keyframes письмо{to{clip-path:inset(0 0% -12% 0)}}
+/* кончик пера идёт по строке вместе с раскрытием */
+.say .ln{position:relative}
+.say .ln::after{content:'';position:absolute;top:.16em;bottom:.22em;width:2px;
+  background:var(--gold-line);opacity:0;
+  animation:перо 1500ms cubic-bezier(.32,.12,.24,1) forwards}
+.say .ln:nth-child(2)::after{animation-delay:1250ms;animation-duration:1250ms}
+@keyframes перо{
+  0%{left:0;opacity:0}
+  6%{opacity:.85}
+  94%{opacity:.85}
+  100%{left:100%;opacity:0}
+}
+.say figcaption{display:flex;align-items:center;gap:14px;margin-top:22px;
+  font-size:16px;color:var(--muted);opacity:0;animation:подпись 700ms var(--ease) 2650ms forwards}
+.say figcaption .rule{display:block;width:44px;height:1px;background:var(--rule,#b9ae91);
+  background:rgba(255,215,106,.45)}
+@keyframes подпись{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .say .tx{animation:none;clip-path:none}
+  .say .ln::after{display:none}
+  .say figcaption{animation:none;opacity:1}
+}
 </style>
 </head>
 <body>
@@ -173,22 +211,15 @@ a.ln:hover{color:var(--gold);border-bottom-color:var(--gold)}
   </a>
   <p class="aside">Родителю — <a class="ln" href="MVP/parent/">кабинет с отчётом по коду ребёнка</a>.</p>
 
-  <section class="dev">
-    <p>Приложение написано на чистом JavaScript без сборщика: скрипты подключаются с меткой
-      версии, она же в имени кэша сервис-воркера. Графики и сцены рисуются своим кодом,
-      внешних библиотек в проекте нет.</p>
-
-<pre>git clone https://github.com/s5hyhbpftv-alt/arhimed.git
-cd arhimed/MVP &amp;&amp; python3 -m http.server 8123</pre>
-
-    <p>Так поднимается всё, кроме кабинета родителя и голоса: им нужен шлюз.</p>
-
-    <nav>
-      <a class="ln" href="https://github.com/s5hyhbpftv-alt/arhimed/blob/main/deploy/%D0%98%D0%9D%D0%A1%D0%A2%D0%A0%D0%A3%D0%9A%D0%A6%D0%98%D0%AF_%D0%94%D0%9B%D0%AF_%D0%98%D0%98.md">Как устроен проект</a>
-      <a class="ln" href="https://github.com/s5hyhbpftv-alt/arhimed/blob/main/deploy/%D0%A1%D0%9E%D0%A1%D0%A2%D0%9E%D0%AF%D0%9D%D0%98%D0%95.md">Состояние и очередь</a>
-      <a class="ln" href="https://github.com/s5hyhbpftv-alt/arhimed">Исходный код</a>
-    </nav>
-  </section>
+  <!-- Реплика Архимеда: не выдумана, это его собственные слова из приложения.
+       Пишется на глазах — как будто выводят пером, а не печатают. -->
+  <figure class="say" id="say">
+    <blockquote>
+      <span class="ln"><span class="tx">Здесь я учу думать как я:</span></span>
+      <span class="ln"><span class="tx">не быстрее, а честнее</span></span>
+    </blockquote>
+    <figcaption><span class="rule"></span>Архимед</figcaption>
+  </figure>
 
 </main>
 
