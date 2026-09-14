@@ -42,6 +42,12 @@ deepseek-harness/
 !/qa_feedback.py
 !/qa_ru.py
 !/qa_ru_items.js
+# qa_frame.py и qa_ru_trainers.py были написаны позже и в белый список не попали:
+# инструкция называет их основными, а в git их не было — восстановлено.
+!/qa_frame.py
+!/qa_ru_trainers.py
 !/deploy/
 !/deploy/**
 deploy/deploy.local.env
+# «!/deploy/**» перебивает общий запрет __pycache__ выше — закрываем отдельно
+deploy/__pycache__/

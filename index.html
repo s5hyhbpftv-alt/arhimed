@@ -4,85 +4,196 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>АРХИМЕД · Острова Познания</title>
+<meta name="description" content="АРХИМЕД — углублённое изучение математики, русского языка, физики, химии и информатики и подготовка к олимпиадам. 449 уроков, 700 задач, 1–9 класс.">
 <link rel="icon" type="image/svg+xml" href="MVP/img/icons/favicon-student.svg">
 <link rel="apple-touch-icon" href="MVP/img/icons/student-apple.png">
 <style>
-  :root { --deep:#0b1712; --panel:#13251c; --card:#182f24; --brass:#d9a441; --glass:#7fb8a0;
-    --ivory:#e8e0cc; --muted:#8fa08f; --glow:#7fd1ff; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:Georgia,'Times New Roman',serif; color:var(--ivory); min-height:100vh;
-    background: radial-gradient(ellipse at 50% -10%, #1a3226 0%, transparent 55%),
-      radial-gradient(ellipse at 90% 110%, #132a20 0%, transparent 45%), var(--deep); }
-  .wrap { max-width:860px; margin:0 auto; padding:28px 16px 60px; }
-  .logo { font-size:30px; color:var(--brass); letter-spacing:.05em; }
-  .logo small { display:block; font-size:13px; color:var(--muted); margin-top:6px; line-height:1.5; }
-  .hero { background:linear-gradient(135deg,rgba(127,209,255,.09),rgba(217,164,65,.06));
-    border:1px solid rgba(127,209,255,.3); border-radius:16px; padding:20px 22px; margin:18px 0; line-height:1.6; }
-  h2 { font-size:15px; color:var(--brass); margin:22px 2px 10px; letter-spacing:.03em; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  @media (max-width:640px){ .grid{grid-template-columns:1fr;} }
-  a.card { display:block; background:linear-gradient(170deg,var(--card),#101f18); border:1px solid rgba(217,164,65,.25);
-    border-radius:14px; padding:14px 16px; text-decoration:none; color:var(--ivory); transition:.15s; }
-  a.card:hover { border-color:var(--brass); transform:translateY(-1px); }
-  a.card .big { font-size:19px; font-weight:bold; }
-  a.card .sub { font-size:12.5px; color:var(--muted); margin-top:4px; line-height:1.5; }
-  .badge { display:inline-block; background:#20382b; color:var(--glass); border:1px solid rgba(127,184,160,.4);
-    border-radius:999px; font-size:11px; padding:3px 10px; margin-top:8px; }
+  :root{
+    --deep:#16241d; --panel:#1b2e24; --line:rgba(217,164,65,.22);
+    --gold:#ffd76a; --ivory:#f6efe0; --muted:#cbb89a; --green:#8fd1a8;
+    --ease:cubic-bezier(.22,.9,.24,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:Georgia,'Times New Roman',serif;
+    background:radial-gradient(ellipse at 50% -12%,#20342a 0%,transparent 58%),var(--deep);
+    color:var(--ivory); line-height:1.58;
+    -webkit-font-smoothing:antialiased; text-rendering:geometricPrecision;
+    padding:32px 16px 64px;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+
+  /* — шапка — */
+  .mark{font-size:32px;line-height:1.2;color:var(--gold);letter-spacing:.04em}
+  .mark span{display:block;font-size:14px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-top:8px}
+  .lede{font-size:20px;line-height:1.55;margin-top:24px;max-width:34em}
+  .lede b{color:var(--gold);font-weight:normal}
+  .lede em{font-style:normal;color:var(--green)}
+
+  /* — главное действие — */
+  .go{display:block;margin-top:32px;padding:20px 24px;min-height:44px;
+    background:linear-gradient(168deg,#2a4636,#1d3227);
+    border:1px solid var(--gold);border-radius:14px;
+    text-decoration:none;color:var(--ivory);
+    transition:transform .18s var(--ease),background .18s var(--ease)}
+  .go:hover{background:linear-gradient(168deg,#31513e,#22392c)}
+  .go:active{transform:translateY(2px)}
+  .go b{display:block;font-size:24px;color:var(--gold);line-height:1.2}
+  .go i{display:block;font-style:normal;font-size:16px;color:var(--muted);margin-top:8px}
+  .also{margin-top:16px;font-size:16px;color:var(--muted)}
+  .also a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(143,209,168,.4);
+    display:inline-block;padding:10px 0;min-height:44px;line-height:24px}
+  .also a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+
+  /* — надзаголовок раздела — */
+  h2{font-size:14px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);font-weight:normal;margin:48px 0 8px}
+  h2+p{font-size:16px;color:var(--ivory);margin-bottom:24px;max-width:36em}
+
+  /* — ступени пути: от школьной темы к олимпиаде — */
+  .steps{border-left:2px solid var(--line);padding-left:20px;margin-top:8px}
+  .step{padding:12px 0}
+  .step+.step{border-top:1px solid var(--line)}
+  .step b{display:block;font-size:20px;color:var(--gold);font-weight:normal;line-height:1.25}
+  .step i{font-style:normal;font-size:16px;color:var(--ivory);display:block;margin-top:4px}
+
+  /* — весовая лента задач — */
+  .bars{border-top:1px solid var(--line)}
+  .row{display:grid;grid-template-columns:1fr auto;align-items:baseline;
+    gap:12px;padding:14px 0 12px;border-bottom:1px solid var(--line)}
+  .row .nm{font-size:16px}
+  .row .n{font-size:20px;color:var(--gold);font-variant-numeric:tabular-nums}
+  .row .bar{grid-column:1 / -1;height:6px;border-radius:3px;
+    background:linear-gradient(90deg,var(--gold),rgba(255,215,106,.35));
+    transform-origin:left center;animation:grow .6s var(--ease) both}
+  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+  /* — уроки: ряд, а не полосы — */
+  .subs{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:16px;
+    padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .subs span{color:var(--muted)}
+  .subs b{color:var(--ivory);font-weight:normal;font-variant-numeric:tabular-nums}
+
+  /* — текстовые блоки — */
+  .note{font-size:16px;max-width:36em}
+  .note p+p{margin-top:16px}
+  .note code{font-family:Menlo,Consolas,monospace;font-size:14px;
+    background:rgba(255,215,106,.1);padding:2px 6px;border-radius:4px;color:var(--gold)}
+  pre{font-family:Menlo,Consolas,monospace;font-size:14px;line-height:1.7;
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:16px;margin-top:16px;overflow-x:auto;color:var(--green)}
+  .docs{margin-top:24px;font-size:16px}
+  .docs a{display:inline-block;color:var(--green);text-decoration:none;
+    border-bottom:1px solid rgba(143,209,168,.4);padding:10px 0;min-height:44px;line-height:24px}
+  .docs a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+  .docs li{list-style:none;margin-top:4px}
+  .docs li i{font-style:normal;color:var(--muted);font-size:14px;display:block;margin-top:-6px}
+
+  footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);
+    font-size:14px;color:var(--muted)}
+  footer a{color:var(--muted);display:inline-block;padding:12px 0;min-height:44px;line-height:20px}
+
+  @media (min-width:768px){ body{padding:56px 32px 80px} .mark{font-size:48px} .lede{font-size:24px} }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .row .bar{transform:none}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="logo">🏛 АРХИМЕД<small>Интерактивная платформа олимпиадной подготовки для школьников 10–17 лет<br>математика · физика · химия · информатика — «Острова Познания»</small></div>
 
-  <div class="hero">
-    <b style="color:var(--glow)">📜 Легенда</b> — Хранитель Внутреннего моря учит приёмам олимпиад:<br>
-    сначала объясняет, потом даёт решить. Нажми «Путь» — и Архимед проведёт тебя по островам.
+  <div class="mark">АРХИМЕД<span>Острова Познания</span></div>
+
+  <p class="lede"><b>Углублённое изучение предметов и подготовка к олимпиадам.</b>
+    Математика, русский язык, физика, химия, информатика — 1–9 класс.
+    Школьная программа берётся глубже учебника, а приёмы разбираются
+    <em>на задачах Всероссийской олимпиады</em>.</p>
+
+  <a class="go" href="MVP/">
+    <b>Открыть приложение&nbsp;→</b>
+    <i>Работает в браузере и ставится на телефон как приложение. Прогресс хранится на устройстве.</i>
+  </a>
+  <p class="also">Для родителя — <a href="MVP/parent/">отдельный кабинет</a>: отчёт по коду ребёнка.</p>
+
+  <h2>Как учим</h2>
+  <p>Не «ещё один сборник задач»: путь от школьной темы до олимпиадного приёма проходится по шагам.</p>
+  <div class="steps">
+    <div class="step"><b>Сначала объясняем</b>
+      <i>Приём разбирается по кадрам, у каждого — своя сцена и своя анимация, а не общий шаблон.</i></div>
+    <div class="step"><b>Потом проверяем понимание</b>
+      <i>Короткий вопрос после объяснения: не заучил ли ученик ответ вместо приёма.</i></div>
+    <div class="step"><b>И только затем даём решать</b>
+      <i>Задачи с подсказками-лестницей: сначала намёк, потом ход, и лишь в конце полное решение.</i></div>
+    <div class="step"><b>Дальше — олимпиадный уровень</b>
+      <i>Разборы задач ВсОШ и Сириуса, ловушки и типовые ошибки, проверочные работы формата МЦКО.</i></div>
   </div>
 
-  <h2>🚀 Запустить приложение</h2>
-  <div class="grid">
-    <a class="card" href="MVP/">
-      <div class="big">🧭 MVP-приложение</div>
-      <div class="sub">Путь по 4 островам · 71 задача · Книга знаний (28 уроков «объясни → реши») · Легенда · Тур и Дуэль · родительский кабинет</div>
-      <span class="badge">рекомендуем начать здесь</span>
-    </a>
-    <a class="card" href="ХАБ_ПРОТОТИП.html">
-      <div class="big">🗺 Хаб всех прототипов</div>
-      <div class="sub">Карта вселенной: все HTML-прототипы островов, тренажёры и 3D-сцены</div>
-    </a>
-    <a class="card" href="ПРОТОТИП_ГЛАВА1_СИРАКУЗЫ.html">
-      <div class="big">🏛 Сиракузы (3D)</div>
-      <div class="sub">Математический остров — логика, комбинаторика, инварианты</div>
-    </a>
-    <a class="card" href="ПРОТОТИП_ОСТРОВ_БАШНЯ_НЬЮТОНА.md">
-      <div class="big">🍎 Башня Ньютона</div>
-      <div class="sub">Физика: механика, энергия, электричество — спецификация острова</div>
-    </a>
-    <a class="card" href="ПРОТОТИП_ОСТРОВ_ЛАБОРАТОРИЯ_ЛАВУАЗЬЕ.md">
-      <div class="big">⚗️ Лаборатория Лавуазье</div>
-      <div class="sub">Химия: молекулы, растворы, газы — спецификация острова</div>
-    </a>
-    <a class="card" href="chemistry-demo/">
-      <div class="big">🧪 3D-химия (React-демо)</div>
-      <div class="sub">Фотореалистичные пробирки и переливания — сборка: cd chemistry-demo && npm i && npm run dev</div>
-    </a>
+  <h2>Что внутри</h2>
+  <p>700 задач с подсказками и разбором. Распределение — по разделам «Пути»:</p>
+
+  <div class="bars">
+    <div class="row"><span class="nm">Русский язык · 5–6 класс</span><span class="n">324</span>
+      <span class="bar" style="width:100%"></span></div>
+    <div class="row"><span class="nm">Начальная школа · 1–4 класс</span><span class="n">188</span>
+      <span class="bar" style="width:58%;animation-delay:.06s"></span></div>
+    <div class="row"><span class="nm">Разбор с Мишуткой</span><span class="n">57</span>
+      <span class="bar" style="width:17.6%;animation-delay:.12s"></span></div>
+    <div class="row"><span class="nm">Сиракузы · математика</span><span class="n">41</span>
+      <span class="bar" style="width:12.7%;animation-delay:.18s"></span></div>
+    <div class="row"><span class="nm">Ньютон · физика</span><span class="n">41</span>
+      <span class="bar" style="width:12.7%;animation-delay:.24s"></span></div>
+    <div class="row"><span class="nm">Информатика</span><span class="n">27</span>
+      <span class="bar" style="width:8.3%;animation-delay:.3s"></span></div>
+    <div class="row"><span class="nm">Лавуазье · химия</span><span class="n">22</span>
+      <span class="bar" style="width:6.8%;animation-delay:.36s"></span></div>
   </div>
 
-  <h2>📚 Документы проекта</h2>
-  <div class="grid">
-    <a class="card" href="README.md"><div class="big">📄 README</div><div class="sub">Обзор всех файлов проекта</div></a>
-    <a class="card" href="ПРОЕКТ_АРХИМЕД.md"><div class="big">📐 Проект АРХИМЕД</div><div class="sub">Концепция и видение продукта</div></a>
-    <a class="card" href="ТЗ_MVP.md"><div class="big">📋 ТЗ на MVP</div><div class="sub">Требования, роли, user stories</div></a>
-    <a class="card" href="ПИТЧ_ПРЕЗЕНТАЦИЯ.md"><div class="big">🎤 Питч-презентация</div><div class="sub">12 слайдов для инвесторов (текст)</div></a>
-    <a class="card" href="ЛЕГЕНДА_АРХИМЕДА.md"><div class="big">📜 Легенда об Архимеде</div><div class="sub">Полная вводная история мира</div></a>
-    <a class="card" href="МЕТОДИКА_ОБУЧЕНИЯ_ВСОШ_МАТЕМАТИКА_6_7.md"><div class="big">🎓 Методика ВсОШ</div><div class="sub">Как учить решать задачи олимпиад (6–7 класс)</div></a>
+  <h2>449 уроков в «Книге знаний»</h2>
+  <p>Каждый урок — объяснение по кадрам, проверка понимания и тренажёр. Ученик видит уроки своего класса.</p>
+  <div class="subs">
+    <span>информатика <b>150</b></span>
+    <span>математика <b>138</b></span>
+    <span>начальная школа <b>92</b></span>
+    <span>физика <b>23</b></span>
+    <span>химия <b>22</b></span>
+    <span>русский язык <b>18</b></span>
+  </div>
+  <p class="note" style="margin-top:16px">Русское направление — 20 листов: уроки 601–610, проверочные
+    работы 611–613, работа МЦКО 614, демоверсия 615, три листа функциональной грамотности 616–618
+    и два урока словарных слов для младших классов. Словарь — 362 слова на классы 1–6.</p>
+
+  <h2>Как устроено</h2>
+  <div class="note">
+    <p>Чистый JavaScript без сборщика: скрипты подключаются тегами с меткой версии <code>?v=NNN</code>,
+      она же в имени кэша сервис-воркера — так браузер не отдаёт старый код. Python нужен только
+      для выкладки, шлюза (связка «родитель — ученик», голос) и проверок.</p>
+    <p>У проекта своя система машинных проверок: геометрия кадра, раскладка на 320 и 390 px,
+      контраст и цели касания, отклик тренажёров, инварианты заданий. Правило простое —
+      выкладывать только на зелёных проверках, но смотреть на результат и глазами:
+      геометрия ловит «налезло», а не «не то, о чём просили».</p>
   </div>
 
-  <div class="hero" style="margin-top:22px">
-    <b style="color:var(--brass)">⚙ Запуск локально</b><br>
-    Сервер: <span style="font-family:Menlo,monospace;font-size:13px">python3 -m http.server 8123</span> → <span style="font-family:Menlo,monospace;font-size:13px">http://localhost:8123/MVP/</span><br>
-    Голос озвучки: <span style="font-family:Menlo,monospace;font-size:13px">python3 tts_server.py</span> (8124) · Живой агент: <span style="font-family:Menlo,monospace;font-size:13px">python3 агент_сервер.py</span> (8125, нужен ключ Яндекса)
-  </div>
+  <h2>Запустить у себя</h2>
+  <pre>git clone https://github.com/s5hyhbpftv-alt/arhimed.git
+cd arhimed/MVP &amp;&amp; python3 -m http.server 8123
+# → http://127.0.0.1:8123/</pre>
+  <p class="note" style="margin-top:16px">Так работает всё, кроме кабинета родителя и голоса:
+    им нужен шлюз <code>шлюз_сервер.py</code>, а голосу — ещё и ключ Яндекса.</p>
+
+  <ul class="docs">
+    <li><a href="https://github.com/s5hyhbpftv-alt/arhimed/blob/main/deploy/%D0%98%D0%9D%D0%A1%D0%A2%D0%A0%D0%A3%D0%9A%D0%A6%D0%98%D0%AF_%D0%94%D0%9B%D0%AF_%D0%98%D0%98.md">Инструкция для агента</a>
+      <i>вход в проект: карта файлов, устройство уроков, рабочий цикл, грабли</i></li>
+    <li><a href="https://github.com/s5hyhbpftv-alt/arhimed/blob/main/deploy/%D0%A1%D0%9E%D0%A1%D0%A2%D0%9E%D0%AF%D0%9D%D0%98%D0%95.md">Состояние и очередь</a>
+      <i>журнал: что сделано по датам, что дальше</i></li>
+    <li><a href="https://github.com/s5hyhbpftv-alt/arhimed">Репозиторий на GitHub</a>
+      <i>исходный код приложения и инструменты проверки</i></li>
+  </ul>
+
+  <footer>Приложение на постоянном адресе — <a href="https://123.teramont.pro/MVP/">123.teramont.pro/MVP/</a></footer>
+
 </div>
 </body>
 </html>
