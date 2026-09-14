@@ -4,36 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>АРХИМЕД · презентация для инвесторов</title>
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
+/* Всё по MASTER.md. Мир: гравёрный атлас. Движение: перо чертит. */
 :root{
-  --bg:#16241d; --raise:#1d3227; --deep:#12201a;
-  --line:rgba(255,215,106,.20); --line-s:rgba(255,215,106,.34);
-  --gold:#ffd76a; --gold-d:#e3b04c; --ivory:#f6efe0; --muted:#cbb89a;
-  --ok:#8fd1a8; --warn:#e6b84a; --bad:#e8917c; --blue:#7fb2c4; --violet:#a596d8;
-  --data:ui-monospace,SFMono-Regular,Menlo,monospace;
-  --ease:cubic-bezier(.22,.9,.24,1);
+  --paper:#e9e2d0; --plate:#e3dbc6;
+  --ink:#2b2419; --ink-2:#5e5640; --ink-3:#665f48;
+  --rule:#b9ae91; --gold:#7d5a12; --gold-line:#b38a2a; --seal:#a33b26;
+  --pen:cubic-bezier(.4,.05,.25,1);
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:46px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scrollbar-color:var(--gold-d) var(--bg)}
+html{-webkit-text-size-adjust:100%;scrollbar-color:var(--rule) var(--paper)}
 body{
-  font-family:Georgia,'Times New Roman',serif; color:var(--ivory); background:var(--bg);
-  -webkit-font-smoothing:antialiased; text-rendering:geometricPrecision;
-  line-height:1.6; overflow:hidden;
+  background:var(--paper); color:var(--ink);
+  font-family:Spectral,Georgia,'Times New Roman',serif; font-weight:300;
+  font-size:17px; line-height:1.62; font-variant-numeric:oldstyle-nums;
+  -webkit-font-smoothing:antialiased; overflow:hidden;
 }
-::selection{background:rgba(255,215,106,.26);color:#fff8e4}
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:5px}
-::-webkit-scrollbar{width:11px;height:11px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:#33503f;border-radius:6px;border:3px solid var(--bg)}
-::-webkit-scrollbar-thumb:hover{background:var(--gold-d)}
+::selection{background:rgba(179,138,42,.26)}
+:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--rule)}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-line)}
 
-/* ── экран ── */
+/* ── лист ───────────────────────────────────────────────────────── */
 .slide{display:none;height:100dvh;overflow:auto;
   padding:clamp(20px,3.4vh,44px) clamp(20px,3.4vw,60px) 76px}
-.slide.on{display:block}
+.slide.on{display:block;animation:лист 280ms var(--pen) both}
+@keyframes лист{from{opacity:0}to{opacity:1}}
 .wrap{max-width:1420px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;
   justify-content:center}
-/* заголовочный блок держит свою высоту, визуал забирает остальное */
 .wrap > details.more{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
 .wrap > details.more > .unfold{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;gap:14px}
 .unfold > .frame,.unfold > .pair{flex:1 1 auto;min-height:0}
@@ -41,132 +43,142 @@ body{
 .frame{display:flex;flex-direction:column}
 .frame > div:last-child{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center}
 
-/* ── тезис ── */
-.claim{font-size:clamp(26px,3.2vw,46px);line-height:1.11;letter-spacing:-.024em;
-  font-weight:normal;color:var(--ivory);text-wrap:balance;max-width:26em}
-.claim em{font-style:normal;color:var(--gold)}
-.claim .q{color:var(--bad);font-style:normal}
-.stand{font-size:clamp(16px,1.2vw,19px);line-height:1.45;color:var(--muted);
+/* ── тезис ──────────────────────────────────────────────────────── */
+.claim{font-family:'Old Standard TT',Georgia,serif;font-weight:400;
+  font-size:clamp(26px,3.2vw,46px);line-height:1.1;letter-spacing:-.004em;
+  color:var(--ink);text-wrap:balance;max-width:24em}
+.claim em{font-style:italic;color:var(--gold)}
+.claim .q{font-style:italic;color:var(--seal)}
+.stand{font-size:clamp(16px,1.2vw,19px);line-height:1.5;color:var(--ink-2);
   margin-top:14px;max-width:56em}
-.stand b{color:var(--ivory);font-weight:normal}
+.stand b{color:var(--ink);font-weight:400}
 
-/* ── величины: типографская строка, не приборная панель ── */
-.run{display:flex;flex-wrap:wrap;margin-top:20px;
-  border-top:1px solid var(--line);padding-top:15px}
-.run > div{padding:0 22px 6px 0;margin-right:22px;border-right:1px solid var(--line)}
+/* ── величины: строка атласа, не приборная панель ───────────────── */
+.run{display:flex;flex-wrap:wrap;margin-top:20px;border-top:1px solid var(--rule);padding-top:15px}
+.run > div{padding:0 22px 6px 0;margin-right:22px;border-right:1px solid var(--rule)}
 .run > div:last-child{border-right:0;margin-right:0}
-.run .v{font-size:clamp(21px,1.85vw,27px);line-height:1.1;color:var(--gold);
-  font-variant-numeric:tabular-nums;letter-spacing:-.015em}
-.run .k{font-size:14px;color:var(--ivory);margin-top:5px;max-width:14em;line-height:1.35}
-.run .n{font-size:12.5px;color:var(--muted);margin-top:2px;max-width:14em;line-height:1.35}
+.run .v{font-family:'Old Standard TT',Georgia,serif;font-size:clamp(21px,1.85vw,28px);
+  line-height:1.1;color:var(--ink);font-variant-numeric:oldstyle-nums}
+.run .k{font-size:14px;color:var(--ink-2);margin-top:5px;max-width:14em;line-height:1.35}
+.run .n{font-size:13px;color:var(--ink-3);margin-top:2px;max-width:14em;line-height:1.35}
 
-/* ── раскрытие ── */
-details.more{margin-top:18px;border-top:1px solid var(--line);padding-top:2px}
-details.more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;
-  min-height:44px;font-size:15px;color:var(--muted);user-select:none}
-details.more[open] > summary{color:var(--gold)}
-details.more > summary::-webkit-details-marker{display:none}
-details.more > summary:hover{color:#fff0bb}
-.chev{flex:0 0 auto;width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;
-  stroke-linecap:round;stroke-linejoin:round;transition:transform .26s var(--ease)}
-details.more[open] > summary .chev{transform:rotate(90deg)}
-.sub{margin-top:12px;border-top:1px solid var(--line);padding-top:2px}
-.sub > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;
-  min-height:44px;font-size:15px;color:var(--muted);user-select:none}
-.sub > summary::-webkit-details-marker{display:none}
-.sub[open] > summary{color:var(--gold)}
-.sub[open] > summary .chev{transform:rotate(90deg)}
-.unfold{padding:12px 0 6px;animation:unfold .4s var(--ease) both}
-@keyframes unfold{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+/* ── раскрытие ──────────────────────────────────────────────────── */
+details.more{margin-top:18px;border-top:1px solid var(--rule);padding-top:2px}
+details.more > summary,.sub > summary{list-style:none;cursor:pointer;display:flex;
+  align-items:center;gap:10px;min-height:44px;font-family:'Old Standard TT',Georgia,serif;
+  font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3);user-select:none;
+  transition:color 120ms var(--pen)}
+details.more > summary::-webkit-details-marker,.sub > summary::-webkit-details-marker{display:none}
+details.more[open] > summary,.sub[open] > summary{color:var(--gold)}
+details.more > summary:hover,.sub > summary:hover{color:var(--ink)}
+.chev{flex:0 0 auto;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.4;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform 260ms var(--pen)}
+details[open] > summary .chev{transform:rotate(90deg)}
+.unfold{padding:12px 0 6px}
+.sub{margin-top:12px;border-top:1px solid var(--rule);padding-top:2px}
 
-/* ── содержимое раскрытия ── */
-.pair{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:26px;align-items:stretch}
-.stack{display:grid;gap:22px;min-width:0}
+/* ── поле таблицы ───────────────────────────────────────────────── */
+.pair{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:24px;align-items:stretch}
+.stack{display:grid;gap:20px;min-width:0}
 .stack > *,.pair > *{min-width:0}
-h3{font-size:16px;font-weight:normal;color:var(--gold);margin-bottom:10px}
-p,li{font-size:16px;line-height:1.6}
-.note{font-size:15px;color:var(--muted);line-height:1.55}
-.frame{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--deep);
-  box-shadow:0 3px 14px rgba(0,0,0,.26);min-width:0;overflow-x:auto}
-b,strong{color:#fff6dd;font-weight:normal}
-.num{font-family:var(--data);font-variant-numeric:tabular-nums}
+.frame{border:1px solid var(--rule);background:var(--plate);padding:18px 20px;min-width:0;overflow-x:auto}
+h3{font-family:'Old Standard TT',Georgia,serif;font-weight:400;font-size:12px;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
+p,li{font-size:16.5px;line-height:1.6}
+.note{font-size:15px;color:var(--ink-2);line-height:1.55}
+.tiny{font-size:13px;color:var(--ink-3);line-height:1.45}
+b,strong{color:var(--ink);font-weight:400}
+.num{font-variant-numeric:tabular-nums}
 
-table{width:100%;border-collapse:collapse;font-size:15px}
-th,td{text-align:left;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
-th{color:var(--gold);font-weight:normal;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:'Old Standard TT',Georgia,serif;font-weight:400;color:var(--ink-3);
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
-tr.hi td{background:rgba(255,215,106,.08)}
-.tiny{font-size:13px;color:var(--muted);line-height:1.45}
+tr.hi td{background:rgba(138,100,20,.09)}
 
 ul{list-style:none}
 ul li{position:relative;padding-left:20px;margin-bottom:9px}
+ul li::before{content:'';position:absolute;left:3px;top:11px;width:9px;height:1px;background:var(--gold-line)}
 ul.tight li{margin-bottom:5px;font-size:15px;line-height:1.45}
-ul li::before{content:'';position:absolute;left:2px;top:10px;width:6px;height:6px;
-  transform:rotate(45deg);background:var(--gold-d)}
 
-.tag{display:inline-block;padding:4px 10px;border-radius:8px;border:1px solid var(--line);
-  background:rgba(255,215,106,.10);color:var(--gold);font-size:14px}
-.tag.ok{border-color:rgba(143,209,168,.45);background:rgba(143,209,168,.12);color:#b6e6cf}
-.tag.bad{border-color:rgba(232,145,124,.45);background:rgba(232,145,124,.12);color:#f0b0a2}
+.tag{display:inline-block;padding:3px 10px;border:1px solid var(--rule);
+  color:var(--ink-2);font-size:14px}
+.tag.ok{border-color:rgba(138,100,20,.5);color:var(--gold)}
+.tag.bad{border-color:rgba(163,59,38,.45);color:var(--seal)}
 
 .chart{width:100%;height:auto;max-height:clamp(200px,34vh,380px);display:block;overflow:visible}
-svg text{font-family:var(--data)}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:7px;font-size:13.5px;color:var(--muted)}
-.legend i{display:inline-block;width:14px;height:3px;margin-right:7px;vertical-align:middle;border-radius:2px}
+svg text{font-family:Spectral,Georgia,serif;font-variant-numeric:oldstyle-nums}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:14px;color:var(--ink-2)}
+.legend i{display:inline-block;width:16px;height:2px;margin-right:7px;vertical-align:middle}
 
-/* честная оговорка — не декоративная плашка, а отбивка */
-.caveat{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);
-  font-size:15px;color:var(--muted);line-height:1.55;max-width:44em}
-.caveat b{color:var(--gold)}
+.caveat{margin-top:12px;padding-top:11px;border-top:1px solid var(--rule);
+  font-size:15px;color:var(--ink-2);line-height:1.55;max-width:46em}
+.caveat b{color:var(--seal);font-weight:400}
 
-/* ── органы управления ── */
-.segs{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-button.seg{min-height:44px;padding:10px 16px;border-radius:11px;border:1px solid var(--line);
-  background:var(--raise);color:var(--ivory);font:inherit;font-size:15px;cursor:pointer;
-  transition:border-color .16s var(--ease),transform .12s var(--ease)}
-button.seg:hover{border-color:var(--gold-d)}
-button.seg:active{transform:translateY(2px)}
-button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:var(--gold)}
-.segs .note{margin-left:4px}
+/* ── перо чертит ────────────────────────────────────────────────── */
+.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:перо 1100ms linear forwards}
+.draw.slow{animation-duration:1500ms}
+@keyframes перо{to{stroke-dashoffset:0}}
+.band{opacity:0;animation:штрих 380ms var(--pen) forwards}
+@keyframes штрих{to{opacity:1}}
+.ink{opacity:0;animation:чернила 420ms var(--pen) forwards}
+@keyframes чернила{from{opacity:0;filter:blur(1.4px)}to{opacity:1;filter:none}}
+.grow{transform:scaleY(0);transform-origin:var(--ox,50%) var(--oy,100%);
+  animation:растёт 560ms var(--pen) forwards}
+@keyframes растёт{to{transform:scaleY(1)}}
+.wipe{clip-path:inset(0 100% 0 0);animation:протяг 900ms var(--pen) forwards}
+@keyframes протяг{to{clip-path:inset(0 0 0 0)}}
+
+/* ── органы управления ──────────────────────────────────────────── */
+.segs{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+button.seg{min-height:44px;padding:9px 16px;border:1px solid var(--rule);background:transparent;
+  color:var(--ink);font:inherit;font-size:15px;cursor:pointer;
+  transition:border-color 120ms var(--pen),color 120ms var(--pen)}
+button.seg:hover{border-color:var(--gold-line)}
+button.seg:active{color:var(--gold)}
+button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px 0 -1px var(--gold)}
+.segs .note{margin-left:2px;font-size:14px;color:var(--ink-3)}
 
 .slider{display:flex;align-items:center;gap:14px;margin-bottom:2px}
-.slider label{flex:0 0 220px;font-size:15px;color:var(--muted)}
-.slider input[type=range]{flex:1;min-width:0;accent-color:var(--gold-d);height:40px}
+.slider label{flex:0 0 220px;font-size:15px;color:var(--ink-2)}
+.slider input[type=range]{flex:1;min-width:0;accent-color:var(--gold);height:40px}
 .slider .val{min-width:104px;text-align:right;color:var(--gold);font-variant-numeric:tabular-nums}
 
-/* ── навигация ── */
-.nav{position:fixed;left:0;right:0;bottom:0;height:64px;display:flex;align-items:center;gap:12px;
-  padding:0 clamp(14px,4vw,48px);z-index:50;
-  background:linear-gradient(180deg,rgba(22,36,29,0),rgba(22,36,29,.97) 42%)}
-.nav .dots{display:flex;gap:6px;flex:1;flex-wrap:wrap}
-.nav .dots button{width:10px;height:10px;padding:0;border-radius:50%;
-  border:1px solid var(--line);background:transparent;cursor:pointer}
+/* ── навигация: колонтитул атласа ───────────────────────────────── */
+.nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:12px;
+  padding:0 clamp(14px,3.4vw,48px);z-index:50;
+  background:linear-gradient(180deg,rgba(233,226,208,0),var(--paper) 40%)}
+.nav .dots{display:flex;gap:5px;flex:1;flex-wrap:wrap}
+.nav .dots button{width:9px;height:9px;padding:0;border:1px solid var(--rule);
+  background:transparent;cursor:pointer;transition:background 120ms var(--pen)}
+.nav .dots button:hover{border-color:var(--gold-line)}
 .nav .dots button.on{background:var(--gold);border-color:var(--gold)}
-.nav button.arrow{min-width:50px;min-height:44px;border-radius:11px;border:1px solid var(--line);
-  background:var(--raise);color:var(--ivory);font:inherit;cursor:pointer}
-.nav button.arrow:hover:not(:disabled){border-color:var(--gold-d)}
-.nav button.arrow:disabled{opacity:.34;cursor:default}
-.counter{font-size:14px;color:var(--muted);min-width:76px;text-align:center;
-  font-variant-numeric:tabular-nums}
+.nav button.arrow{min-width:48px;min-height:44px;border:1px solid var(--rule);background:transparent;
+  color:var(--ink);font:inherit;cursor:pointer;transition:border-color 120ms var(--pen)}
+.nav button.arrow:hover:not(:disabled){border-color:var(--gold-line)}
+.nav button.arrow:disabled{opacity:.3;cursor:default}
+.counter{font-family:'Old Standard TT',Georgia,serif;font-size:13px;letter-spacing:.2em;
+  color:var(--ink-3);min-width:88px;text-align:center}
 
 @media (max-width:900px){ .pair{grid-template-columns:1fr} .slider label{flex:0 0 150px}
   .run > div{padding-right:18px;margin-right:18px} }
 @media (max-width:620px){ .run > div{border-right:0;margin-right:0;padding-right:0;flex:1 1 100%} }
-@media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .draw{stroke-dashoffset:0}.band,.ink{opacity:1;filter:none}
+  .grow{transform:none}.wipe{clip-path:none}
+}
 @media print{
-  body{overflow:visible;background:#fff;color:#111}
+  body{overflow:visible;background:#fff}
   .slide{display:block!important;height:auto;page-break-after:always;padding:16px}
-  .nav{display:none}
-  details.more > summary{display:none}
-  .unfold{animation:none}
-  .frame{background:#fff;border-color:#ccc}
-  .claim,.claim em,h3,.run .v,th,.tag{color:#7a5410}
-  .stand,.note,.tiny,.caveat,.run .n{color:#444}
-  p,li,td,.run .k{color:#111}
+  .nav{display:none} details > summary{display:none}
+  .draw{stroke-dashoffset:0}.band,.ink{opacity:1}.grow{transform:none}.wipe{clip-path:none}
 }
 </style>
 </head>
 <body>
+
 
 <!-- ═══ I. ЗАЧЕМ ═══════════════════════════════════════════════════════════ -->
 <section class="slide on" data-t="Титул"><div class="wrap">
@@ -639,29 +651,53 @@ const пс = (v) => String(v).replace('.', ',');
 const эл = (id) => document.getElementById(id);
 const ряд = (с, ключ) => Д.модель[с].строки.map(р => р[ключ]);
 function набор(с, ключи){ return ключи.map(([к, имя, цвет]) => ({имя, цвет, значения: ряд(с, к)})); }
-/* ── Палитра графиков ──────────────────────────────────────────────────────
-   Категориальный набор проверен scripts/validate_palette.js на тёмной
-   подложке #12201a: полоса светлоты, порог насыщенности, различимость при
-   дальтонизме и контраст — все проверки пройдены. Золото бренда взято
-   ступенью, попадающей в тёмную полосу (яркое #ffd76a остаётся текстовым
-   акцентом: цвет данных на текст не переносится).
-   Предупреждение по паре золото↔бирюза (ΔE 7,7) закрыто вторым признаком:
-   зазор в 2 px между заливками, легенда и прямые подписи.                  */
-const СЛОТ = ['#b8862b','#199e70','#d95926','#3987e5','#d55181','#9085e9','#5f9e3a'];
-/* порядковая шкала (воронка) и последовательная (тепловая карта) — проверены отдельно */
-const ПОРЯДОК = ['#c2e2cf','#a0cdb0','#7db891','#5aa172','#3d8756'];
-const ЖАР     = ['#f4dfae','#e6c882','#d4ad57','#b8862b','#95691d','#6f4d14'];
+/* ── Гравёрный движок ─────────────────────────────────────────────────────
+   В гравюре нет заливок — есть штрих. Ряды данных различаются УГЛОМ штриховки,
+   а не только цветом: так лист читается в чёрно-белой печати и при дальтонизме,
+   а цвет остаётся вторым признаком, а не единственным.                      */
+const ЧЕР = {осн:'#2b2419', втор:'#5e5640', тихо:'#665f48',
+             линейка:'#b9ae91', золото:'#7d5a12', волос:'#b38a2a', киноварь:'#a33b26'};
+/* порядок рядов фиксирован: тушь → разбел → золото → киноварь → волос → линейка */
+const РЯД = [ЧЕР.осн, ЧЕР.втор, ЧЕР.золото, ЧЕР.киноварь, ЧЕР.волос, ЧЕР.линейка];
+const УГОЛ = [38, 128, 0, 90, 68, 158];          /* угол штриха на каждый ряд */
+let _п = 0;                                       /* счётчик определений */
 
-const ЦВ = {
-  brassL:СЛОТ[0], ok:СЛОТ[1], bad:СЛОТ[2], blue:СЛОТ[3],
-  warn:СЛОТ[4], violet:СЛОТ[5], brass:СЛОТ[6],
-  muted:'#5f9e3a', ivory:'#f6efe0',
-};
-const ПОЛЕ   = '#12201a';                 /* подложка: зазоры и кольца ею же */
-const ЧЕРНИЛА= {осн:'#f6efe0', втор:'#cbb89a', тихо:'#8a9d8f', сетка:'rgba(246,239,214,.10)'};
+function штриховка(цвет, угол, шаг){
+  const id = 'ш'+(++_п);
+  return {id, def:`<pattern id="${id}" width="${шаг||7}" height="${шаг||7}"
+      patternUnits="userSpaceOnUse" patternTransform="rotate(${угол})">
+      <line x1="0" y1="0" x2="0" y2="${шаг||7}" stroke="${цвет}" stroke-width="1" opacity=".55"/>
+    </pattern>`};
+}
+/* Имена, на которые опираются врезки на листах: держим их привязанными
+   к палитре MASTER.md, а не заводим второй набор цветов. */
+const ЧЕРНИЛА = {осн:ЧЕР.осн, втор:ЧЕР.втор, тихо:ЧЕР.тихо, сетка:ЧЕР.линейка};
+const ПОЛЕ = '#e9e2d0';
+/* порядковая шкала: бумага → золото, ступенями (для воронок и ступеней цикла) */
+const ПОРЯДОК = ['#e0d7bd','#d5c7a2','#c9b587','#bca36c','#ae9053'];
+const ЖАР = ПОРЯДОК;
 
-/* ── числа по-человечески ─────────────────────────────────────────────────
-   Ось перестала показывать «29 277 448»: подписи округляются до читаемых.  */
+function svg(w,h,inner,cls){
+  return `<svg class="chart ${cls||''}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" role="img">${inner}</svg>`;
+}
+/* Перо должно знать длину линии, иначе штрих-пунктир не сработает.
+   Наблюдатель промеряет любой появившийся путь — и при первой отрисовке,
+   и при переключении сценария, когда график перерисовывается заново. */
+function промерить(корень){
+  (корень.querySelectorAll ? корень.querySelectorAll('.draw') : []).forEach(p=>{
+    if(p.style.getPropertyValue('--len')) return;
+    try{ p.style.setProperty('--len', p.getTotalLength().toFixed(1)); }catch(e){}
+  });
+}
+new MutationObserver(записи=>{
+  записи.forEach(з=>з.addedNodes.forEach(у=>{ if(у.nodeType===1) промерить(у); }));
+}).observe(document.body,{childList:true,subtree:true});
+function легенда(ряды){
+  return `<div class="legend">${ряды.map((р,i)=>
+    `<span><i style="background:${р.цвет||РЯД[i%6]}"></i>${р.имя}</span>`).join('')}</div>`;
+}
+
+/* ── числа по-человечески ────────────────────────────────────────────────── */
 function кратко(v){
   const a=Math.abs(v);
   if(a>=1e9) return пс((v/1e9).toFixed(a>=1e10?0:1))+' млрд';
@@ -669,288 +705,273 @@ function кратко(v){
   if(a>=1e3) return пс((v/1e3).toFixed(a>=1e4?0:1))+' тыс.';
   return чс(v);
 }
-/* «круглый» шаг оси: 1 · 2 · 2,5 · 5 × 10^n */
 function шагОси(размах,делений){
-  const сырой=размах/делений, порядок=Math.pow(10,Math.floor(Math.log10(сырой)));
-  const о=сырой/порядок;
-  return (о<=1?1:о<=2?2:о<=2.5?2.5:о<=5?5:10)*порядок;
+  const сыр=размах/делений, п=Math.pow(10,Math.floor(Math.log10(сыр))), о=сыр/п;
+  return (о<=1?1:о<=2?2:о<=2.5?2.5:о<=5?5:10)*п;
 }
-
-function svg(w,h,inner,cls){
-  return `<svg class="chart ${cls||''}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" role="img">${inner}</svg>`;
-}
-/* легенда: обязательна от двух рядов, опознание никогда не по одному цвету */
-function легенда(ряды){
-  return `<div class="legend">${ряды.map(р=>
-    `<span><i style="background:${р.цвет}"></i>${р.имя}</span>`).join('')}</div>`;
-}
-
-/* ── сетка и оси: сплошной волосок, ничего лишнего ───────────────────────── */
+/* сетка: волосяные линейки, подписи старостильными цифрами */
 function оси(x0,y0,w,h,{ymax=100,ymin=0,подписиX=[],фмтY=кратко}={}){
-  const шаг=шагОси(ymax-ymin,4);
-  let s='', v=Math.ceil(ymin/шаг)*шаг;
+  const шаг=шагОси(ymax-ymin,4); let s='', v=Math.ceil(ymin/шаг)*шаг;
   for(; v<=ymax+1e-9; v+=шаг){
     const y=y0+h-(v-ymin)/(ymax-ymin)*h;
     s+=`<line x1="${x0}" y1="${y.toFixed(1)}" x2="${x0+w}" y2="${y.toFixed(1)}"
-         stroke="${ЧЕРНИЛА.сетка}" stroke-width="1"/>`;
-    s+=`<text x="${x0-10}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="11.5"
-         fill="${ЧЕРНИЛА.тихо}">${фмтY(v)}</text>`;
+         stroke="${ЧЕР.линейка}" stroke-width="${Math.abs(v)<1e-9?1:0.5}"/>`;
+    s+=`<text x="${x0-11}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="12.5"
+         fill="${ЧЕР.тихо}">${фмтY(v)}</text>`;
   }
   подписиX.forEach(([x,т])=>{
-    s+=`<text x="${x.toFixed(1)}" y="${y0+h+20}" text-anchor="middle" font-size="11.5"
-         fill="${ЧЕРНИЛА.тихо}">${т}</text>`;
+    s+=`<text x="${x.toFixed(1)}" y="${y0+h+21}" text-anchor="middle" font-size="12.5"
+         fill="${ЧЕР.тихо}">${т}</text>`;
   });
   return s;
 }
 
-/* ── линии: заливка-подмалёвок, прямые подписи на концах, точка события ──── */
+/* ── линии: площадь штрихуется полосами, линия вычерчивается пером ───────── */
 function линии(серии,{h=300,фмтY=кратко,ymax=null,нулевая=false,подписиX=null,событие=null}={}){
-  const W=900, x0=70, y0=16, w=W-x0-108, hh=h-y0-40;
+  const W=900, x0=74, y0=18, w=W-x0-118, hh=h-y0-42;
   const все=серии.flatMap(s=>s.значения);
   const maxV=ymax!=null?ymax:Math.max(...все,1)*1.08;
   const minV=нулевая?Math.min(0,...все)*1.08:0;
   const n=серии[0].значения.length;
-  const X=(i)=>x0+w*i/(n-1), Y=(v)=>y0+hh-(v-minV)/(maxV-minV)*hh;
-  const меткиX=подписиX||[0,5,11,17,23,29,35].filter(i=>i<n).map(i=>[X(i),'м'+(i+1)]);
-  let s=оси(x0,y0,w,hh,{ymax:maxV,ymin:minV,подписиX:меткиX,фмтY});
+  const X=i=>x0+w*i/(n-1), Y=v=>y0+hh-(v-minV)/(maxV-minV)*hh;
+  const мX=подписиX||[0,5,11,17,23,29,35].filter(i=>i<n).map(i=>[X(i),'м'+(i+1)]);
+  const путь=a=>a.map((v,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
+  let деф='', s=оси(x0,y0,w,hh,{ymax:maxV,ymin:minV,подписиX:мX,фмтY});
   if(нулевая||minV<0){ const yz=Y(0);
     s+=`<line x1="${x0}" y1="${yz.toFixed(1)}" x2="${x0+w}" y2="${yz.toFixed(1)}"
-         stroke="${ЧЕРНИЛА.втор}" stroke-width="1" opacity=".5"/>`; }
+         stroke="${ЧЕР.втор}" stroke-width="1"/>`; }
 
-  серии.forEach(сер=>{
-    const т=сер.значения.map((v,i)=>[X(i),Y(v)]);
-    /* подмалёвок ~10 % — только у первого ряда, иначе каша */
-    if(сер===серии[0]){
-      const низ=Y(Math.max(minV,0));
-      s+=`<path d="M${т[0][0].toFixed(1)} ${низ.toFixed(1)} `+
-         т.map(([x,y])=>`L${x.toFixed(1)} ${y.toFixed(1)}`).join(' ')+
-         ` L${т[т.length-1][0].toFixed(1)} ${низ.toFixed(1)} Z" fill="${сер.цвет}" opacity=".10"/>`;
-    }
-    s+=`<path d="${т.map(([x,y],i)=>`${i?'L':'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ')}"
-         fill="none" stroke="${сер.цвет}" stroke-width="2"
-         stroke-linejoin="round" stroke-linecap="round"/>`;
-    /* конец ряда: точка в кольце подложки и прямая подпись */
-    const [кx,кy]=т[т.length-1];
-    s+=`<circle cx="${кx.toFixed(1)}" cy="${кy.toFixed(1)}" r="4.5"
-         fill="${сер.цвет}" stroke="${ПОЛЕ}" stroke-width="2"/>`;
-    s+=`<text x="${(кx+10).toFixed(1)}" y="${(кy+4).toFixed(1)}" font-size="12"
-         fill="${ЧЕРНИЛА.втор}">${сер.имя}</text>`;
+  /* штриховка ложится под первым рядом — полосами слева направо */
+  const гл=серии[0], ш=штриховка(гл.цвет||РЯД[0], УГОЛ[0]);
+  деф+=ш.def;
+  const кид='к'+(++_п);
+  деф+=`<clipPath id="${кид}"><path d="${путь(гл.значения)} L${X(n-1).toFixed(1)} ${Y(Math.max(minV,0)).toFixed(1)} L${x0} ${Y(Math.max(minV,0)).toFixed(1)} Z"/></clipPath>`;
+  s+=`<g clip-path="url(#${кид})">`;
+  const полос=26, шп=w/полос;
+  for(let k=0;k<полос;k++)
+    s+=`<rect class="band" style="animation-delay:${240+k*45}ms" x="${(x0+k*шп).toFixed(1)}"
+         y="${y0}" width="${(шп+0.6).toFixed(1)}" height="${hh}" fill="url(#${ш.id})"/>`;
+  s+='</g>';
+
+  серии.forEach((сер,i)=>{
+    const ц=сер.цвет||РЯД[i%6];
+    s+=`<path class="draw${i?' slow':''}" style="animation-delay:${i*160}ms" d="${путь(сер.значения)}"
+         fill="none" stroke="${ц}" stroke-width="${i?1.4:2}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    const кx=X(n-1), кy=Y(сер.значения[n-1]);
+    s+=`<circle class="ink" style="animation-delay:${1350+i*70}ms" cx="${кx.toFixed(1)}" cy="${кy.toFixed(1)}"
+         r="3.4" fill="${ц}"/>`;
+    s+=`<text class="ink" style="animation-delay:${1400+i*70}ms" x="${(кx+10).toFixed(1)}"
+         y="${(кy+5).toFixed(1)}" font-size="14" fill="${i?ЧЕР.втор:ЧЕР.осн}">${сер.имя}</text>`;
   });
 
-  /* одно событие, ради которого график и смотрят */
   if(событие){
     const x=X(событие.i), y=Y(событие.v);
-    s+=`<line x1="${x.toFixed(1)}" y1="${y0}" x2="${x.toFixed(1)}" y2="${(y0+hh).toFixed(1)}"
-         stroke="${ЧЕРНИЛА.втор}" stroke-width="1" opacity=".45"/>`;
-    s+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5.5" fill="${ЧЕРНИЛА.осн}"
-         stroke="${ПОЛЕ}" stroke-width="2"/>`;
-    s+=`<text x="${(x+9).toFixed(1)}" y="${(y0+13).toFixed(1)}" font-size="12"
-         fill="${ЧЕРНИЛА.осн}">${событие.текст}</text>`;
+    s+=`<line class="draw" style="animation-delay:1250ms;animation-duration:420ms"
+         x1="${x.toFixed(1)}" y1="${(y0+hh).toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"
+         stroke="${ЧЕР.волос}" stroke-width="1"/>`;
+    s+=`<circle class="ink" style="animation-delay:1560ms" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.6" fill="${ЧЕР.золото}"/>`;
+    s+=`<text class="ink" style="animation-delay:1620ms" x="${(x+11).toFixed(1)}" y="${(y-10).toFixed(1)}"
+         font-size="14" fill="${ЧЕР.золото}">${событие.текст}</text>`;
   }
-  return svg(W,h,s,'line-chart')+(серии.length>1?легенда(серии):'');
+  return svg(W,h,`<defs>${деф}</defs>`+s,'line')+(серии.length>1?легенда(серии):'');
 }
 
-/* ── столбики: тонкие, с зазором подложки между долями ───────────────────── */
+/* ── столбики: штрих своего угла на ряд, растут от основания ─────────────── */
 function столбики(серии,{h=300,фмтY=кратко,накопление=false,подписиX=null}={}){
-  const W=900, x0=70, y0=16, w=W-x0-24, hh=h-y0-40;
-  const n=серии[0].значения.length, шаг=w/n;
-  const ширина=Math.min(24, шаг*0.62);
+  const W=900, x0=74, y0=18, w=W-x0-24, hh=h-y0-42;
+  const n=серии[0].значения.length, шаг=w/n, шир=Math.min(22,шаг*0.6);
   const суммы=накопление
     ? серии[0].значения.map((_,i)=>серии.reduce((с,р)=>с+(р.значения[i]||0),0))
     : серии.flatMap(р=>р.значения);
   const maxV=Math.max(...суммы,1)*1.1;
-  const X=(i)=>x0+шаг*(i+0.5), Y=(v)=>y0+hh-v/maxV*hh;
-  const меткиX=подписиX||[0,5,11,17,23,29,35].filter(i=>i<n).map(i=>[X(i),'м'+(i+1)]);
-  let s=оси(x0,y0,w,hh,{ymax:maxV,ymin:0,подписиX:меткиX,фмтY});
-
+  const X=i=>x0+шаг*(i+0.5), Y=v=>y0+hh-v/maxV*hh;
+  const мX=подписиX||[0,5,11,17,23,29,35].filter(i=>i<n).map(i=>[X(i),'м'+(i+1)]);
+  let деф='', s=оси(x0,y0,w,hh,{ymax:maxV,ymin:0,подписиX:мX,фмтY});
+  const ш=серии.map((р,i)=>{const p=штриховка(р.цвет||РЯД[i%6],УГОЛ[i%6]); деф+=p.def; return p.id;});
   for(let i=0;i<n;i++){
     let низ=y0+hh;
     серии.forEach((р,k)=>{
       const v=р.значения[i]||0; if(v<=0) return;
-      const высота=v/maxV*hh, верх=низ-высота;
-      const последний=k===серии.length-1;
-      /* 2 px зазора подложки отделяют доли — не обводкой, а воздухом */
-      const пз=накопление&&!последний?2:0;
-      s+=`<rect x="${(X(i)-ширина/2).toFixed(1)}" y="${верх.toFixed(1)}"
-           width="${ширина.toFixed(1)}" height="${Math.max(0.5,высота-пз).toFixed(1)}"
-           rx="${накопление&&!последний?0:Math.min(4,ширина/3)}" fill="${р.цвет}"/>`;
+      const выс=v/maxV*hh, верх=низ-выс, пз=(накопление&&k<серии.length-1)?2:0;
+      s+=`<g class="grow" style="--oy:${(y0+hh).toFixed(1)}px;animation-delay:${Math.min(520,i*14)}ms">
+           <rect x="${(X(i)-шир/2).toFixed(1)}" y="${верх.toFixed(1)}" width="${шир.toFixed(1)}"
+            height="${Math.max(.6,выс-пз).toFixed(1)}" fill="url(#${ш[k]})"/>
+           <rect x="${(X(i)-шир/2).toFixed(1)}" y="${верх.toFixed(1)}" width="${шир.toFixed(1)}"
+            height="${Math.max(.6,выс-пз).toFixed(1)}" fill="none"
+            stroke="${р.цвет||РЯД[k%6]}" stroke-width=".8"/></g>`;
       низ=верх;
     });
   }
-  return svg(W,h,s,'bar-chart')+(серии.length>1?легенда(серии):'');
+  return svg(W,h,`<defs>${деф}</defs>`+s,'bars')+(серии.length>1?легенда(серии):'');
 }
 
-/* ── водопад: вклад каждой статьи, связки между шагами ───────────────────── */
+/* ── состав целого: строки по убыванию, полоса протягивается ─────────────── */
 function водопад(пункты,{h=320,ед='млн ₽',делитель=1e6}={}){
-  /* Состав целого показываем столбиками по убыванию: водопад создан для
-     изменений (было → +/− → стало), а здесь семь долей одной суммы, и на нём
-     мелкие статьи схлопывались в неразличимые квадратики. */
   const ряды=[...пункты].sort((a,b)=>b.сумма-a.сумма);
   const итог=пункты.reduce((с,п)=>с+п.сумма,0);
-  const W=900, x0=250, w=W-x0-92, кв=Math.min(38,(h-40)/ряды.length);
+  const W=900, x0=250, w=W-x0-92, кв=Math.min(36,(h-40)/ряды.length);
   const макс=Math.max(...ряды.map(п=>п.сумма))*1.02;
-  let s='';
+  let деф='', s='';
   ряды.forEach((п,i)=>{
-    const y=18+кв*i, вы=Math.min(24,кв-10), ш=Math.max(3,w*п.сумма/макс);
-    s+=`<text x="${x0-14}" y="${(y+вы-5).toFixed(1)}" text-anchor="end" font-size="13"
-         fill="${ЧЕРНИЛА.осн}">${п.статья}</text>`;
-    s+=`<rect x="${x0}" y="${y.toFixed(1)}" width="${ш.toFixed(1)}" height="${вы}"
-         rx="4" fill="${п.цвет||СЛОТ[i%7]}"/>`;
-    s+=`<text x="${(x0+ш+10).toFixed(1)}" y="${(y+вы-5).toFixed(1)}" font-size="13"
-         fill="${ЧЕРНИЛА.втор}">${пс((п.сумма/делитель).toFixed(2))}</text>`;
+    const ц=п.цвет||РЯД[i%6], p=штриховка(ц,УГОЛ[i%6]); деф+=p.def;
+    const y=18+кв*i, вы=Math.min(22,кв-10), ш=Math.max(3,w*п.сумма/макс);
+    s+=`<text x="${x0-14}" y="${(y+вы-5).toFixed(1)}" text-anchor="end" font-size="14"
+         fill="${ЧЕР.осн}">${п.статья}</text>`;
+    s+=`<g class="wipe" style="animation-delay:${i*70}ms">
+         <rect x="${x0}" y="${y.toFixed(1)}" width="${ш.toFixed(1)}" height="${вы}" fill="url(#${p.id})"/>
+         <rect x="${x0}" y="${y.toFixed(1)}" width="${ш.toFixed(1)}" height="${вы}" fill="none" stroke="${ц}" stroke-width=".8"/></g>`;
+    s+=`<text class="ink" style="animation-delay:${520+i*70}ms" x="${(x0+ш+10).toFixed(1)}"
+         y="${(y+вы-5).toFixed(1)}" font-size="14" fill="${ЧЕР.втор}">${пс((п.сумма/делитель).toFixed(2))}</text>`;
   });
-  s+=`<text x="${x0}" y="${(18+кв*ряды.length+18).toFixed(1)}" font-size="12"
-       fill="${ЧЕРНИЛА.тихо}">всего ${пс((итог/делитель).toFixed(2))} ${ед}</text>`;
-  return svg(W,h,s,'composition');
-}
-/* ── кольцо: доли целого, не больше шести, зазор подложкой ──────────────── */
-function пончик(пункты,{h=300,центр=''}={}){
-  const W=420, cx=150, cy=h/2, R=Math.min(h/2-14,104), r=R*0.6;
-  const всего=пункты.reduce((с,п)=>с+п.сумма,0)||1;
-  let угол=-Math.PI/2, s='';
-  пункты.forEach((п,i)=>{
-    const доля=п.сумма/всего, раствор=доля*Math.PI*2;
-    const зазор=0.014;                       /* 2 px подложки между долями */
-    const a1=угол+зазор/2, a2=угол+раствор-зазор/2;
-    const бол=раствор>Math.PI?1:0;
-    if(a2>a1){
-      s+=`<path d="M${(cx+R*Math.cos(a1)).toFixed(1)} ${(cy+R*Math.sin(a1)).toFixed(1)}
-           A${R} ${R} 0 ${бол} 1 ${(cx+R*Math.cos(a2)).toFixed(1)} ${(cy+R*Math.sin(a2)).toFixed(1)}
-           L${(cx+r*Math.cos(a2)).toFixed(1)} ${(cy+r*Math.sin(a2)).toFixed(1)}
-           A${r} ${r} 0 ${бол} 0 ${(cx+r*Math.cos(a1)).toFixed(1)} ${(cy+r*Math.sin(a1)).toFixed(1)} Z"
-           fill="${п.цвет||СЛОТ[i%7]}"/>`;
-    }
-    угол+=раствор;
-  });
-  if(центр){
-    s+=`<text x="${cx}" y="${cy+2}" text-anchor="middle" font-size="19" fill="${ЧЕРНИЛА.осн}">${центр}</text>`;
-  }
-  /* подписи столбиком справа: доли читаются числом, а не на глаз по сектору */
-  пункты.forEach((п,i)=>{
-    const y=cy-(пункты.length-1)*13+i*26;
-    s+=`<rect x="288" y="${(y-8).toFixed(0)}" width="11" height="11" rx="3" fill="${п.цвет||СЛОТ[i%7]}"/>`;
-    s+=`<text x="306" y="${(y+1).toFixed(0)}" font-size="12.5" fill="${ЧЕРНИЛА.осн}">${п.статья}</text>`;
-    s+=`<text x="306" y="${(y+15).toFixed(0)}" font-size="11.5" fill="${ЧЕРНИЛА.тихо}">${Math.round(п.сумма/всего*100)} %</text>`;
-  });
-  return svg(W,h,s,'donut');
+  s+=`<text x="${x0}" y="${(18+кв*ряды.length+18).toFixed(1)}" font-size="12.5"
+       fill="${ЧЕР.тихо}">всего ${пс((итог/делитель).toFixed(2))} ${ед}</text>`;
+  return svg(W,h,`<defs>${деф}</defs>`+s,'composition');
 }
 
-/* ── тепловая карта: один тон, светлее → темнее, со шкалой ───────────────── */
-function теплота(сетка,{h=320,подписиСтрок=[],подписиСтолбцов=[],фмт=(v)=>пс(v),поле=null,подписьШкалы='',хужеТемнее=true}={}){
-  const строк=сетка.length, столбцов=сетка[0].length;
-  const W=900, x0=112, y0=34, w=W-x0-24, hh=h-y0-56;
-  const кш=w/столбцов, кв=hh/строк;
-  const знач=(к)=>поле?к[поле]:к;
-  const все=сетка.flat().map(знач);
-  const мин=Math.min(...все), макс=Math.max(...все);
-  let s='';
+/* ── кольцо: сектора штрихуются, доли подписаны числом ───────────────────── */
+function пончик(пункты,{h=300,центр=''}={}){
+  const W=460, cx=160, cy=h/2, R=Math.min(h/2-16,108), r=R*0.58;
+  const всего=пункты.reduce((с,п)=>с+п.сумма,0)||1;
+  let деф='', s='', угол=-Math.PI/2;
+  пункты.forEach((п,i)=>{
+    const ц=п.цвет||РЯД[i%6], p=штриховка(ц,УГОЛ[i%6],6); деф+=p.def;
+    const раств=п.сумма/всего*Math.PI*2, з=0.016;
+    const a1=угол+з/2, a2=угол+раств-з/2, бол=раств>Math.PI?1:0;
+    if(a2>a1){
+      const д=`M${(cx+R*Math.cos(a1)).toFixed(1)} ${(cy+R*Math.sin(a1)).toFixed(1)}
+        A${R} ${R} 0 ${бол} 1 ${(cx+R*Math.cos(a2)).toFixed(1)} ${(cy+R*Math.sin(a2)).toFixed(1)}
+        L${(cx+r*Math.cos(a2)).toFixed(1)} ${(cy+r*Math.sin(a2)).toFixed(1)}
+        A${r} ${r} 0 ${бол} 0 ${(cx+r*Math.cos(a1)).toFixed(1)} ${(cy+r*Math.sin(a1)).toFixed(1)} Z`;
+      s+=`<g class="ink" style="animation-delay:${i*110}ms">
+           <path d="${д}" fill="url(#${p.id})"/><path d="${д}" fill="none" stroke="${ц}" stroke-width=".9"/></g>`;
+    }
+    угол+=раств;
+  });
+  if(центр) s+=`<text class="ink" style="animation-delay:600ms" x="${cx}" y="${cy+3}" text-anchor="middle"
+    font-family="'Old Standard TT',Georgia,serif" font-size="20" fill="${ЧЕР.осн}">${центр}</text>`;
+  пункты.forEach((п,i)=>{
+    const ц=п.цвет||РЯД[i%6], y=cy-(пункты.length-1)*14+i*28;
+    s+=`<rect x="${W-160}" y="${(y-9).toFixed(0)}" width="12" height="12" fill="${ц}"/>`;
+    s+=`<text x="${W-142}" y="${(y+1).toFixed(0)}" font-size="13" fill="${ЧЕР.осн}">${п.статья}</text>`;
+    s+=`<text x="${W-142}" y="${(y+16).toFixed(0)}" font-size="12.5" fill="${ЧЕР.тихо}">${Math.round(п.сумма/всего*100)} %</text>`;
+  });
+  return svg(W,h,`<defs>${деф}</defs>`+s,'donut');
+}
+
+/* ── тепловая карта: плотность штриха = величина, как в гравюре ──────────── */
+function теплота(сетка,{h=320,подписиСтрок=[],подписиСтолбцов=[],фмт=(v)=>пс(v),поле=null,подписьШкалы=''}={}){
+  const знач=к=>поле?к[поле]:к;
+  const все=сетка.flat().map(знач), мин=Math.min(...все), макс=Math.max(...все);
+  const W=900, x0=150, y0=36, w=W-x0-24, hh=h-y0-58;
+  const кш=w/сетка[0].length, кв=hh/сетка.length;
+  const ШАГИ=[10,7.5,5.5,4,3];                    /* реже штрих → гуще штрих */
+  let деф='', s='';
+  const пат=ШАГИ.map(шаг=>{const p=штриховка(ЧЕР.золото,38,шаг); деф+=p.def; return p.id;});
   подписиСтолбцов.forEach((т,j)=>{
-    s+=`<text x="${(x0+кш*(j+0.5)).toFixed(1)}" y="${y0-12}" text-anchor="middle"
-         font-size="11.5" fill="${ЧЕРНИЛА.тихо}">${т}</text>`;
+    s+=`<text x="${(x0+кш*(j+0.5)).toFixed(1)}" y="${y0-13}" text-anchor="middle" font-size="12.5" fill="${ЧЕР.тихо}">${т}</text>`;
   });
   сетка.forEach((строка,i)=>{
-    s+=`<text x="${x0-12}" y="${(y0+кв*(i+0.5)+4).toFixed(1)}" text-anchor="end"
-         font-size="11.5" fill="${ЧЕРНИЛА.тихо}">${подписиСтрок[i]||''}</text>`;
+    s+=`<text x="${x0-12}" y="${(y0+кв*(i+0.5)+4).toFixed(1)}" text-anchor="end" font-size="12.5" fill="${ЧЕР.тихо}">${подписиСтрок[i]||''}</text>`;
     строка.forEach((к,j)=>{
-      const v=знач(к);
-      const доля=(v-мин)/((макс-мин)||1);
-      const цвет=ЖАР[Math.min(ЖАР.length-1,Math.floor(доля*ЖАР.length))];
-      s+=`<rect x="${(x0+кш*j+1).toFixed(1)}" y="${(y0+кв*i+1).toFixed(1)}"
-           width="${(кш-2).toFixed(1)}" height="${(кв-2).toFixed(1)}" rx="3" fill="${цвет}"/>`;
-      /* подпись внутри плитки берёт цвет по светлоте заливки, а не из ряда */
-      s+=`<text x="${(x0+кш*(j+0.5)).toFixed(1)}" y="${(y0+кв*(i+0.5)+4).toFixed(1)}"
-           text-anchor="middle" font-size="12" fill="${доля>0.55?'#1b1405':'#2a2313'}">${фмт(v)}</text>`;
+      const v=знач(к), доля=(v-мин)/((макс-мин)||1);
+      const id=пат[Math.min(пат.length-1,Math.floor(доля*пат.length))];
+      s+=`<g class="ink" style="animation-delay:${(i*строка.length+j)*45}ms">
+           <rect x="${(x0+кш*j+1).toFixed(1)}" y="${(y0+кв*i+1).toFixed(1)}" width="${(кш-2).toFixed(1)}"
+            height="${(кв-2).toFixed(1)}" fill="url(#${id})"/>
+           <rect x="${(x0+кш*j+1).toFixed(1)}" y="${(y0+кв*i+1).toFixed(1)}" width="${(кш-2).toFixed(1)}"
+            height="${(кв-2).toFixed(1)}" fill="none" stroke="${ЧЕР.линейка}" stroke-width=".8"/>
+           <text x="${(x0+кш*(j+0.5)).toFixed(1)}" y="${(y0+кв*(i+0.5)+5).toFixed(1)}" text-anchor="middle"
+            font-size="14" fill="${ЧЕР.осн}">${фмт(v)}</text></g>`;
     });
   });
-  /* шкала */
-  ЖАР.forEach((ц,k)=>{
-    s+=`<rect x="${x0+k*22}" y="${h-26}" width="20" height="9" rx="2" fill="${ц}"/>`;
+  пат.forEach((id,k)=>{
+    s+=`<rect x="${x0+k*26}" y="${h-30}" width="24" height="11" fill="url(#${id})"/>
+        <rect x="${x0+k*26}" y="${h-30}" width="24" height="11" fill="none" stroke="${ЧЕР.линейка}" stroke-width=".8"/>`;
   });
-  s+=`<text x="${x0-12}" y="${h-18}" text-anchor="end" font-size="11" fill="${ЧЕРНИЛА.тихо}">${подписьШкалы}</text>`;
-  s+=`<text x="${x0+ЖАР.length*22+8}" y="${h-18}" font-size="11" fill="${ЧЕРНИЛА.тихо}">${хужеТемнее?'меньше → больше':'ниже → выше'}</text>`;
-  return svg(W,h,s,'heat');
+  s+=`<text x="${x0-12}" y="${h-21}" text-anchor="end" font-size="12" fill="${ЧЕР.тихо}">${подписьШкалы}</text>`;
+  s+=`<text x="${x0+пат.length*26+10}" y="${h-21}" font-size="12" fill="${ЧЕР.тихо}">реже → гуще</text>`;
+  return svg(W,h,`<defs>${деф}</defs>`+s,'heat');
 }
 
-/* ── гант: полосы по месяцам ─────────────────────────────────────────────── */
+/* ── гант ───────────────────────────────────────────────────────────────── */
 function гант(задачи,{h=300}={}){
-  const W=900, x0=176, y0=26, w=W-x0-24, мес=18;
-  const кв=Math.min(26,(h-y0-34)/задачи.length);
-  const X=(м)=>x0+w*м/мес;
-  let s='';
+  const W=900, x0=186, w=W-x0-24, мес=18, y0=26;
+  const кв=Math.min(28,(h-y0-34)/задачи.length), X=м=>x0+w*м/мес;
+  let деф='', s='';
   for(let м=0;м<=мес;м+=3){
-    s+=`<line x1="${X(м).toFixed(1)}" y1="${y0-8}" x2="${X(м).toFixed(1)}"
-         y2="${(y0+кв*задачи.length).toFixed(1)}" stroke="${ЧЕРНИЛА.сетка}" stroke-width="1"/>`;
-    s+=`<text x="${X(м).toFixed(1)}" y="${y0-14}" text-anchor="middle" font-size="11.5"
-         fill="${ЧЕРНИЛА.тихо}">м${м+1}</text>`;
+    s+=`<line x1="${X(м).toFixed(1)}" y1="${y0-8}" x2="${X(м).toFixed(1)}" y2="${(y0+кв*задачи.length).toFixed(1)}"
+         stroke="${ЧЕР.линейка}" stroke-width=".5"/>`;
+    s+=`<text x="${X(м).toFixed(1)}" y="${y0-14}" text-anchor="middle" font-size="12.5" fill="${ЧЕР.тихо}">м${м+1}</text>`;
   }
   задачи.forEach((з,i)=>{
-    const y=y0+кв*i+kвОтступ(кв), вы=Math.min(16,кв-8);
-    s+=`<text x="${x0-14}" y="${(y+вы-3).toFixed(1)}" text-anchor="end" font-size="12"
-         fill="${ЧЕРНИЛА.осн}">${з.имя}</text>`;
-    s+=`<rect x="${X(з.от).toFixed(1)}" y="${y.toFixed(1)}"
-         width="${Math.max(6,X(з.до)-X(з.от)).toFixed(1)}" height="${вы}" rx="4"
-         fill="${з.цвет||СЛОТ[i%7]}"/>`;
-    s+=`<text x="${(X(з.до)+9).toFixed(1)}" y="${(y+вы-3).toFixed(1)}" font-size="11"
-         fill="${ЧЕРНИЛА.тихо}">${з.подпись||''}</text>`;
+    const ц=з.цвет||РЯД[i%6], p=штриховка(ц,УГОЛ[i%6]); деф+=p.def;
+    const y=y0+кв*i+Math.max(3,(кв-16)/2), вы=Math.min(16,кв-8);
+    s+=`<text x="${x0-14}" y="${(y+вы-3).toFixed(1)}" text-anchor="end" font-size="13.5" fill="${ЧЕР.осн}">${з.имя}</text>`;
+    s+=`<g class="wipe" style="animation-delay:${i*80}ms">
+         <rect x="${X(з.от).toFixed(1)}" y="${y.toFixed(1)}" width="${Math.max(6,X(з.до)-X(з.от)).toFixed(1)}"
+          height="${вы}" fill="url(#${p.id})"/>
+         <rect x="${X(з.от).toFixed(1)}" y="${y.toFixed(1)}" width="${Math.max(6,X(з.до)-X(з.от)).toFixed(1)}"
+          height="${вы}" fill="none" stroke="${ц}" stroke-width=".8"/></g>`;
+    s+=`<text class="ink" style="animation-delay:${600+i*80}ms" x="${(X(з.до)+9).toFixed(1)}"
+         y="${(y+вы-3).toFixed(1)}" font-size="12.5" fill="${ЧЕР.тихо}">${з.подпись||''}</text>`;
   });
-  return svg(W,h,s,'gantt');
+  return svg(W,h,`<defs>${деф}</defs>`+s,'gantt');
 }
-function kвОтступ(кв){ return Math.max(3,(кв-16)/2); }
 
-/* ── рассеяние: маркеры в кольце подложки, подписи без столкновений ──────── */
+/* ── рассеяние ──────────────────────────────────────────────────────────── */
 function карта(точки,{h=340}={}){
   const W=900, x0=84, y0=22, w=W-x0-40, hh=h-y0-56;
-  const X=(v)=>x0+w*(Math.log10(v)-Math.log10(300))/(Math.log10(70000)-Math.log10(300));
-  const Y=(v)=>y0+hh-(v-1)/(10-1)*hh;
-  let s=оси(x0,y0,w,hh,{ymin:1,ymax:10,фмтY:(v)=>пс(v.toFixed(0)),подписиX:[]});
+  const X=v=>x0+w*(Math.log10(v)-Math.log10(300))/(Math.log10(70000)-Math.log10(300));
+  const Y=v=>y0+hh-(v-1)/(10-1)*hh;
+  let s=оси(x0,y0,w,hh,{ymin:1,ymax:10,фмтY:v=>пс(v.toFixed(0)),подписиX:[]});
   [[1000,'1 тыс ₽'],[5000,'5 тыс'],[20000,'20 тыс'],[50000,'50 тыс']].forEach(([v,т])=>{
-    s+=`<text x="${X(v).toFixed(1)}" y="${(y0+hh+20).toFixed(1)}" text-anchor="middle"
-         font-size="11.5" fill="${ЧЕРНИЛА.тихо}">${т}</text>`;
+    s+=`<text x="${X(v).toFixed(1)}" y="${(y0+hh+21).toFixed(1)}" text-anchor="middle" font-size="12.5" fill="${ЧЕР.тихо}">${т}</text>`;
   });
-  s+=`<text x="${(x0+w/2).toFixed(1)}" y="${h-10}" text-anchor="middle" font-size="11.5"
-       fill="${ЧЕРНИЛА.тихо}">цена за месяц, ₽ · логарифмическая шкала</text>`;
-  s+=`<text x="18" y="${(y0+hh/2).toFixed(1)}" font-size="11.5" fill="${ЧЕРНИЛА.тихо}"
+  s+=`<text x="${(x0+w/2).toFixed(1)}" y="${h-10}" text-anchor="middle" font-size="12.5" fill="${ЧЕР.тихо}">цена за месяц, ₽ · логарифмическая шкала</text>`;
+  s+=`<text x="18" y="${(y0+hh/2).toFixed(1)}" font-size="12.5" fill="${ЧЕР.тихо}"
        transform="rotate(-90 18 ${(y0+hh/2).toFixed(1)})" text-anchor="middle">персонализация и практика</text>`;
-
-  const ШИР=(т)=>т.length*6.1+8, ВЫС=14, занято=[];
-  const свободно=(b)=>b.x>=2&&b.x+b.w<=W-4&&b.y-ВЫС>=y0-6&&b.y<=y0+hh+18&&
+  const ШИР=т=>т.length*6.1+8, ВЫС=14, занято=[];
+  const свободно=b=>b.x>=2&&b.x+b.w<=W-4&&b.y-ВЫС>=y0-6&&b.y<=y0+hh+18&&
     !занято.some(z=>!(b.x+b.w<z.x-4||z.x+z.w<b.x-4||b.y<z.y-ВЫС-3||z.y<b.y-ВЫС-3));
-  точки.forEach(т=>{
-    const r=Math.max(5,(т.размер||7)*0.8), cx=X(т.цена), cy=Y(т.уровень), ш=ШИР(т.имя);
-    s+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}"
-         fill="${т.цвет}" stroke="${ПОЛЕ}" stroke-width="2"/>`;
-    const В=[
-      {x:cx+r+8,y:cy+4,a:'start'},{x:cx-r-8-ш,y:cy+4,a:'end',xt:cx-r-8},
+  точки.forEach((т,i)=>{
+    const свой=(т.размер||7)>=12, r=Math.max(5,(т.размер||7)*0.8);
+    const cx=X(т.цена), cy=Y(т.уровень), ш=ШИР(т.имя), ц=т.цвет||ЧЕР.втор;
+    s+=`<circle class="ink" style="animation-delay:${i*90}ms" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}"
+         r="${r.toFixed(1)}" fill="${свой?ЧЕР.золото:'none'}" stroke="${ц}" stroke-width="${свой?1:1.4}"/>`;
+    const В=[{x:cx+r+8,y:cy+4,a:'start'},{x:cx-r-8-ш,y:cy+4,a:'end',xt:cx-r-8},
       {x:cx-ш/2,y:cy+r+17,a:'middle',xt:cx},{x:cx-ш/2,y:cy-r-9,a:'middle',xt:cx},
       {x:cx+r+8,y:cy-r-10,a:'start'},{x:cx+r+8,y:cy+r+19,a:'start'},
-      {x:cx-r-8-ш,y:cy-r-10,a:'end',xt:cx-r-8},{x:cx-r-8-ш,y:cy+r+19,a:'end',xt:cx-r-8},
-    ];
+      {x:cx-r-8-ш,y:cy-r-10,a:'end',xt:cx-r-8},{x:cx-r-8-ш,y:cy+r+19,a:'end',xt:cx-r-8}];
     const в=В.find(v=>свободно({x:v.x,y:v.y,w:ш}))||В[0];
     занято.push({x:в.x,y:в.y,w:ш});
-    const свой=(т.размер||7)>=12;
-    s+=`<text x="${(в.xt!=null?в.xt:в.x).toFixed(1)}" y="${в.y.toFixed(1)}" text-anchor="${в.a}"
-         font-size="${свой?13:12}" fill="${свой?ЧЕРНИЛА.осн:ЧЕРНИЛА.втор}">${т.имя}</text>`;
+    s+=`<text class="ink" style="animation-delay:${140+i*90}ms" x="${(в.xt!=null?в.xt:в.x).toFixed(1)}"
+         y="${в.y.toFixed(1)}" text-anchor="${в.a}" font-size="${свой?13.5:12.5}"
+         fill="${свой?ЧЕР.золото:ЧЕР.втор}">${т.имя}</text>`;
   });
   return svg(W,h,s,'scatter');
 }
 
-/* ── воронка: ступени порядковой шкалой, светлее → темнее ────────────────── */
+/* ── воронка: ступени гуще книзу, подписи снаружи ───────────────────────── */
 function воронка(шаги,{h=320}={}){
-  /* Подпись больше не втискивается внутрь полосы: узкие ступени обрезали
-     текст. Теперь полосы прижаты влево, подписи стоят колонкой справа. */
-  const W=900, x0=20, w=(W-40)*0.56, кв=(h-24)/шаги.length;
-  let s='';
+  const W=900, x0=20, w=(W-40)*0.55, кв=(h-24)/шаги.length;
+  const ШАГИ=[10,8,6.5,5,4];
+  let деф='', s='';
   шаги.forEach((ш,i)=>{
-    const ширина=Math.max(10,w*ш.доля), y=12+кв*i, вы=кв-10;
-    s+=`<rect x="${x0}" y="${y.toFixed(1)}" width="${ширина.toFixed(1)}"
-         height="${вы.toFixed(1)}" rx="5" fill="${ПОРЯДОК[Math.min(i,ПОРЯДОК.length-1)]}"/>`;
-    s+=`<text x="${(x0+w+22).toFixed(1)}" y="${(y+вы/2-1).toFixed(1)}" font-size="14"
-         fill="${ЧЕРНИЛА.осн}">${ш.число}</text>`;
-    s+=`<text x="${(x0+w+22).toFixed(1)}" y="${(y+вы/2+15).toFixed(1)}" font-size="12"
-         fill="${ЧЕРНИЛА.тихо}">${ш.имя}</text>`;
+    const p=штриховка(ЧЕР.золото,38,ШАГИ[Math.min(i,ШАГИ.length-1)]); деф+=p.def;
+    const шир=Math.max(10,w*ш.доля), y=12+кв*i, вы=кв-10;
+    s+=`<g class="wipe" style="animation-delay:${i*90}ms">
+         <rect x="${x0}" y="${y.toFixed(1)}" width="${шир.toFixed(1)}" height="${вы.toFixed(1)}" fill="url(#${p.id})"/>
+         <rect x="${x0}" y="${y.toFixed(1)}" width="${шир.toFixed(1)}" height="${вы.toFixed(1)}"
+          fill="none" stroke="${ЧЕР.золото}" stroke-width=".9"/></g>`;
+    s+=`<text class="ink" style="animation-delay:${520+i*90}ms" x="${(x0+w+24).toFixed(1)}"
+         y="${(y+вы/2-1).toFixed(1)}" font-family="'Old Standard TT',Georgia,serif" font-size="16"
+         fill="${ЧЕР.осн}">${ш.число}</text>`;
+    s+=`<text class="ink" style="animation-delay:${560+i*90}ms" x="${(x0+w+24).toFixed(1)}"
+         y="${(y+вы/2+16).toFixed(1)}" font-size="12.5" fill="${ЧЕР.тихо}">${ш.имя}</text>`;
   });
-  return svg(W,h,s,'funnel');
+  return svg(W,h,`<defs>${деф}</defs>`+s,'funnel');
 }
+
 function плитки(контейнер,пункты){
   эл(контейнер).innerHTML=пункты.map(п=>`<div><div class="v">${п.значение}</div>
     <div class="k">${п.подпись}</div>${п.сноска?`<div class="n">${п.сноска}</div>`:''}</div>`).join('');
@@ -1033,9 +1054,9 @@ function переключатель(контейнер,приОткрытии){
   {значение:'790 ₽', подпись:'наша подписка в месяц', сноска:'дешевле одного урока у репетитора'},
 ]);
 эл('chart-price').innerHTML=(()=>{
-  const цены=[['Подписка АРХИМЕД',790,СЛОТ[0]],['Онлайн-школа (Умскул)',5290,СЛОТ[3]],
-    ['Олимпиадный курс',12444,СЛОТ[3]],['Урок олимпиадной математики ×8',2121*8,СЛОТ[3]],
-    ['Олимпиадная школа, сезон',34900,СЛОТ[2]],['Флагман офлайн, сезон',65000,СЛОТ[2]]];
+  const цены=[['Подписка АРХИМЕД',790,РЯД[0]],['Онлайн-школа (Умскул)',5290,РЯД[3]],
+    ['Олимпиадный курс',12444,РЯД[3]],['Урок олимпиадной математики ×8',2121*8,РЯД[3]],
+    ['Олимпиадная школа, сезон',34900,РЯД[2]],['Флагман офлайн, сезон',65000,РЯД[2]]];
   const W=900,x0=290,w=W-x0-110,h=26+цены.length*38,макс=70000;
   let s='';
   цены.forEach(([имя,цена,цвет],i)=>{
@@ -1099,8 +1120,8 @@ const млрд=(v)=>v>=1e9?пс((v/1e9).toFixed(2))+' млрд ₽':млн(v)+' 
     const x=20+i*ш;
     s+=`<rect x="${x+6}" y="46" width="${ш-30}" height="96" rx="10"
          fill="${ПОРЯДОК[Math.min(i,ПОРЯДОК.length-1)]}" opacity=".9"/>`;
-    s+=`<text x="${x+(ш-24)/2}" y="88" text-anchor="middle" font-size="15" fill="#12201a">${имя}</text>`;
-    s+=`<text x="${x+(ш-24)/2}" y="112" text-anchor="middle" font-size="12" fill="#1b3327">${под}</text>`;
+    s+=`<text x="${x+(ш-24)/2}" y="88" text-anchor="middle" font-size="15" fill="${ЧЕР.осн}">${имя}</text>`;
+    s+=`<text x="${x+(ш-24)/2}" y="112" text-anchor="middle" font-size="12" fill="${ЧЕР.втор}">${под}</text>`;
     if(i<шаги.length-1)
       s+=`<path d="M${x+ш-20} 94 l12 0 m-5 -5 l5 5 l-5 5" stroke="${ЧЕРНИЛА.втор}" stroke-width="1.6" fill="none"/>`;
   });
@@ -1123,17 +1144,17 @@ const млрд=(v)=>v>=1e9?пс((v/1e9).toFixed(2))+' млрд ₽':млн(v)+' 
   <li><b>Зелёная проверка — не «сделано хорошо».</b> Геометрия ловит «налезло и уехало»,
       но не «не то, о чём просили», поэтому каждый кадр ещё и смотрят глазами.</li>`;
 эл('chart-content').innerHTML=столбики([
-  {имя:'задач в месяц', цвет:СЛОТ[1], значения:[120,180,240,320,380,420,470,500]},
+  {имя:'задач в месяц', цвет:РЯД[1], значения:[120,180,240,320,380,420,470,500]},
 ],{h:240,подписиX:[0,2,4,6,7].map(i=>[70+(900-70-24)*(i+0.5)/8,'м'+(i*3+1)]),фмтY:(v)=>чс(v)});
 
 /* ── 8. конкуренты ───────────────────────────────────────────────────────── */
 эл('chart-map').innerHTML=карта([
-  {имя:'Сириус.Курсы · бесплатно', цена:350, уровень:8.4, цвет:СЛОТ[1], размер:10},
-  {имя:'АРХИМЕД · 790 ₽', цена:790, уровень:8.2, цвет:СЛОТ[0], размер:14},
-  {имя:'Skysmart · олимпиады', цена:2121*8, уровень:7.6, цвет:СЛОТ[3]},
-  {имя:'Умскул · ОГЭ и ЕГЭ', цена:5290, уровень:5.2, цвет:СЛОТ[4]},
-  {имя:'Фоксфорд · курсы', цена:9990, уровень:6.6, цвет:СЛОТ[5]},
-  {имя:'Офлайн-школа · сезон', цена:34900, уровень:8.8, цвет:СЛОТ[2]},
+  {имя:'Сириус.Курсы · бесплатно', цена:350, уровень:8.4, цвет:РЯД[1], размер:10},
+  {имя:'АРХИМЕД · 790 ₽', цена:790, уровень:8.2, цвет:РЯД[0], размер:14},
+  {имя:'Skysmart · олимпиады', цена:2121*8, уровень:7.6, цвет:РЯД[3]},
+  {имя:'Умскул · ОГЭ и ЕГЭ', цена:5290, уровень:5.2, цвет:РЯД[4]},
+  {имя:'Фоксфорд · курсы', цена:9990, уровень:6.6, цвет:РЯД[5]},
+  {имя:'Офлайн-школа · сезон', цена:34900, уровень:8.8, цвет:РЯД[2]},
 ],{h:340});
 эл('comp-table').innerHTML=`
   <tr><th>Игрок</th><th class="n">Выручка</th><th>Олимпиады</th><th class="n">Цена</th></tr>
@@ -1155,8 +1176,8 @@ const млрд=(v)=>v>=1e9?пс((v/1e9).toFixed(2))+' млрд ₽':млн(v)+' 
 эл('chart-money').innerHTML=(()=>{
   const м=строки('базовый')[23];
   return пончик([
-    {статья:'подписки родителей', сумма:м.выручка_B2C, цвет:СЛОТ[0]},
-    {статья:'лицензии школ и кружков', сумма:м.выручка_B2B, цвет:СЛОТ[1]},
+    {статья:'подписки родителей', сумма:м.выручка_B2C, цвет:РЯД[0]},
+    {статья:'лицензии школ и кружков', сумма:м.выручка_B2B, цвет:РЯД[1]},
   ],{h:280,центр:млн(м.выручка)+' млн'});
 })();
 
@@ -1164,8 +1185,8 @@ const млрд=(v)=>v>=1e9?пс((v/1e9).toFixed(2))+' млрд ₽':млн(v)+' 
 function рисоватьВыручку(){
   const м=строки(сценарий);
   эл('chart-rev').innerHTML=столбики([
-    {имя:'подписки родителей', цвет:СЛОТ[0], значения:м.map(р=>р.выручка_B2C)},
-    {имя:'лицензии школ', цвет:СЛОТ[1], значения:м.map(р=>р.выручка_B2B)},
+    {имя:'подписки родителей', цвет:РЯД[0], значения:м.map(р=>р.выручка_B2C)},
+    {имя:'лицензии школ', цвет:РЯД[1], значения:м.map(р=>р.выручка_B2B)},
   ],{h:300,накопление:true});
   const и=Д.модель[сценарий].итоги, п=м[23];
   плитки('kpi-rev',[
@@ -1210,11 +1231,11 @@ function пересчёт(){
 (function(){
   const м=строки('базовый');
   эл('chart-unit').innerHTML=линии([
-    {имя:'LTV / CAC', цвет:СЛОТ[0], значения:м.map(р=>р.LTV_CAC)},
-    {имя:'порог 3', цвет:СЛОТ[1], значения:м.map(()=>3)},
+    {имя:'LTV / CAC', цвет:РЯД[0], значения:м.map(р=>р.LTV_CAC)},
+    {имя:'порог 3', цвет:РЯД[1], значения:м.map(()=>3)},
   ],{h:260,фмтY:(v)=>пс(v.toFixed(1))});
   эл('chart-margin').innerHTML=линии([
-    {имя:'валовая маржа', цвет:СЛОТ[3], значения:м.map(р=>р['маржа_валовая_%'])},
+    {имя:'валовая маржа', цвет:РЯД[3], значения:м.map(р=>р['маржа_валовая_%'])},
   ],{h:260,фмтY:(v)=>чс(v)+' %'});
   плитки('kpi-unit-dyn',[
     {значение:'×'+пс(м[23].LTV_CAC.toFixed(2)), подпись:'LTV / CAC на 24-м месяце'},
@@ -1228,8 +1249,8 @@ function пересчёт(){
 function рисоватьMAU(){
   const м=строки(сценарий), и=Д.модель[сценарий].итоги;
   эл('chart-mau').innerHTML=линии([
-    {имя:'аудитория (MAU)', цвет:СЛОТ[3], значения:м.map(р=>р.mau)},
-    {имя:'платящие', цвет:СЛОТ[0], значения:м.map(р=>р.платящие)},
+    {имя:'аудитория (MAU)', цвет:РЯД[3], значения:м.map(р=>р.mau)},
+    {имя:'платящие', цвет:РЯД[0], значения:м.map(р=>р.платящие)},
   ],{h:300});
   плитки('kpi-mau',[
     {значение:чс(и['mau_м24']), подпись:'аудитория к 24-му месяцу'},
@@ -1244,7 +1265,7 @@ function рисоватьMAU(){
 (function(){
   const м=строки('базовый');
   эл('chart-b2b').innerHTML=линии([
-    {имя:'учеников по лицензиям школ', цвет:СЛОТ[1], значения:м.map(р=>р.учеников_B2B)},
+    {имя:'учеников по лицензиям школ', цвет:РЯД[1], значения:м.map(р=>р.учеников_B2B)},
   ],{h:280});
   плитки('kpi-b2b',[
     {значение:чс(м[23].партнёры_B2B), подпись:'школ и кружков к 24-му месяцу'},
@@ -1295,15 +1316,15 @@ function рисоватьPNLгод(){
 
 /* ── 17. CAPEX ───────────────────────────────────────────────────────────── */
 эл('capex-head').textContent='CAPEX — '+млн(Д.capex_всего)+' млн ₽ единоразово';
-эл('chart-capex').innerHTML=водопад(Д.capex.map((с,i)=>({статья:с.статья, сумма:с.сумма, цвет:СЛОТ[i%7]})),{h:320});
+эл('chart-capex').innerHTML=водопад(Д.capex.map((с,i)=>({статья:с.статья, сумма:с.сумма, цвет:РЯД[i%6]})),{h:320});
 эл('capex-table').innerHTML='<tr><th>Статья</th><th class="n">Сумма</th></tr>'+
   Д.capex.map(с=>`<tr><td>${с.статья}<div class="tiny">${с.комментарий}</div></td><td class="n">${млн(с.сумма)} млн ₽</td></tr>`).join('')+
   `<tr class="hi"><td><b>Итого CAPEX</b></td><td class="n"><b>${млн(Д.capex_всего)} млн ₽</b></td></tr>`;
 
 /* ── 18. OPEX ────────────────────────────────────────────────────────────── */
-const СТАТЬИ=[['фот','ФОТ со взносами',СЛОТ[0]],['маркетинг','маркетинг',СЛОТ[2]],
-  ['контент','контент',СЛОТ[4]],['инфраструктура','инфраструктура',СЛОТ[3]],
-  ['ии','ИИ',СЛОТ[5]],['поддержка','поддержка',СЛОТ[1]],['налог','налоги',СЛОТ[6]]];
+const СТАТЬИ=[['фот','ФОТ со взносами',РЯД[0]],['маркетинг','маркетинг',РЯД[2]],
+  ['контент','контент',РЯД[4]],['инфраструктура','инфраструктура',РЯД[3]],
+  ['ии','ИИ',РЯД[5]],['поддержка','поддержка',РЯД[1]],['налог','налоги',РЯД[0]]];
 function рисоватьOPEX(){
   const м=строки(сценарий), м24=м[23];
   эл('chart-opex').innerHTML=столбики(набор(сценарий,СТАТЬИ),{h:300,накопление:true});
@@ -1327,10 +1348,10 @@ function рисоватьOPEX(){
 (function(){
   const м=строки('базовый');
   эл('chart-team').innerHTML=столбики([
-    {имя:'человек', цвет:СЛОТ[1], значения:м.map(р=>р.команда_чел)},
+    {имя:'человек', цвет:РЯД[1], значения:м.map(р=>р.команда_чел)},
   ],{h:250,фмтY:(v)=>чс(v)});
   эл('chart-fot').innerHTML=линии([
-    {имя:'ФОТ со взносами', цвет:СЛОТ[0], значения:м.map(р=>р.фот)},
+    {имя:'ФОТ со взносами', цвет:РЯД[0], значения:м.map(р=>р.фот)},
   ],{h:250});
   плитки('kpi-team',[
     {значение:чс(м[0].команда_чел), подпись:'человек в команде на старте'},
@@ -1347,8 +1368,8 @@ function рисоватьOPEX(){
 function рисоватьPNL(){
   const и=Д.модель[сценарий].итоги, м=строки(сценарий);
   эл('chart-pnl').innerHTML=линии(
-    [{имя:'выручка',цвет:СЛОТ[0],значения:м.map(р=>р.выручка)},
-     {имя:'затраты (OPEX)',цвет:СЛОТ[3],значения:м.map(р=>р.opex)}],
+    [{имя:'выручка',цвет:РЯД[0],значения:м.map(р=>р.выручка)},
+     {имя:'затраты (OPEX)',цвет:РЯД[3],значения:м.map(р=>р.opex)}],
     {h:300,событие:и['безубыточность_месяц']
       ?{i:и['безубыточность_месяц']-1, v:м[и['безубыточность_месяц']-1].выручка,
         текст:'безубыточность · м'+и['безубыточность_месяц']}:null});
@@ -1364,11 +1385,11 @@ function рисоватьPNL(){
 /* ── 21. денежный поток ──────────────────────────────────────────────────── */
 function рисоватьCash(){
   эл('chart-cash').innerHTML=линии(
-    С.map((с,i)=>({имя:с, цвет:[СЛОТ[3],СЛОТ[0],СЛОТ[1]][i], значения:ряд(с,'cash')})),
+    С.map((с,i)=>({имя:с, цвет:[РЯД[3],РЯД[0],РЯД[1]][i], значения:ряд(с,'cash')})),
     {h:320,нулевая:true});
   const м=строки(сценарий), и=Д.модель[сценарий].итоги;
   эл('chart-flow').innerHTML=линии([
-    {имя:'поток за месяц', цвет:СЛОТ[0], значения:м.map(р=>р.денежный_поток)},
+    {имя:'поток за месяц', цвет:РЯД[0], значения:м.map(р=>р.денежный_поток)},
   ],{h:250,нулевая:true});
   эл('round-table').innerHTML=`
     <tr><th>Показатель</th><th class="n">Значение</th></tr>
@@ -1397,7 +1418,7 @@ function рисоватьCash(){
   подписьШкалы:'потребность, млн ₽',
 });
 эл('chart-threshold').innerHTML=(()=>{
-  const д=С.map((с,i)=>({имя:с, значение:Д.порог_аудитории[с]?Д.порог_аудитории[с].mau:0, цвет:[СЛОТ[3],СЛОТ[0],СЛОТ[1]][i]}));
+  const д=С.map((с,i)=>({имя:с, значение:Д.порог_аудитории[с]?Д.порог_аудитории[с].mau:0, цвет:[РЯД[3],РЯД[0],РЯД[1]][i]}));
   const макс=Math.max(...д.map(x=>x.значение))*1.15, W=900, x0=200, w=W-x0-150;
   let s='';
   д.forEach((x,i)=>{
@@ -1413,11 +1434,11 @@ function рисоватьCash(){
 /* ── 24. раунд ───────────────────────────────────────────────────────────── */
 эл('ask-head').textContent='Запрос: '+млн(раунд)+' млн ₽ на 18 месяцев';
 const статьиРаунда=[
-  {статья:'продукт и команда', сумма:раунд*0.45, цвет:СЛОТ[0]},
-  {статья:'привлечение платящих', сумма:раунд*0.28, цвет:СЛОТ[2]},
-  {статья:'контент и методика', сумма:раунд*0.17, цвет:СЛОТ[4]},
-  {статья:'B2B-пилоты и регионы', сумма:раунд*0.06, цвет:СЛОТ[1]},
-  {статья:'подушка', сумма:раунд*0.04, цвет:СЛОТ[6]},
+  {статья:'продукт и команда', сумма:раунд*0.45, цвет:РЯД[0]},
+  {статья:'привлечение платящих', сумма:раунд*0.28, цвет:РЯД[2]},
+  {статья:'контент и методика', сумма:раунд*0.17, цвет:РЯД[4]},
+  {статья:'B2B-пилоты и регионы', сумма:раунд*0.06, цвет:РЯД[1]},
+  {статья:'подушка', сумма:раунд*0.04, цвет:РЯД[0]},
 ].map(п=>({...п,сумма:Math.round(п.сумма)}));
 эл('chart-use').innerHTML=пончик(статьиРаунда,{h:300,центр:млн(раунд)+' млн'});
 эл('ask-table').innerHTML=`
@@ -1430,24 +1451,24 @@ const статьиРаунда=[
 
 /* ── 25. дорожная карта ──────────────────────────────────────────────────── */
 эл('chart-gantt').innerHTML=гант([
-  {имя:'Продукт 5–6 классов', от:0, до:4, подпись:'закрыть программу', цвет:СЛОТ[0]},
-  {имя:'Контент-конвейер', от:1, до:18, подпись:'500 задач в месяц', цвет:СЛОТ[1]},
-  {имя:'Платный доступ', от:3, до:6, подпись:'включаем подписку', цвет:СЛОТ[6]},
-  {имя:'ИИ-помощник', от:4, до:9, подпись:'разбор ошибок', цвет:СЛОТ[5]},
-  {имя:'B2B: кружки и школы', от:5, до:18, подпись:'пилоты в трёх регионах', цвет:СЛОТ[3]},
-  {имя:'7–9 классы', от:8, до:16, подпись:'расширение программы', цвет:СЛОТ[4]},
-  {имя:'Раунд А', от:14, до:18, подпись:'подготовка', цвет:СЛОТ[2]},
+  {имя:'Продукт 5–6 классов', от:0, до:4, подпись:'закрыть программу', цвет:РЯД[0]},
+  {имя:'Контент-конвейер', от:1, до:18, подпись:'500 задач в месяц', цвет:РЯД[1]},
+  {имя:'Платный доступ', от:3, до:6, подпись:'включаем подписку', цвет:РЯД[0]},
+  {имя:'ИИ-помощник', от:4, до:9, подпись:'разбор ошибок', цвет:РЯД[5]},
+  {имя:'B2B: кружки и школы', от:5, до:18, подпись:'пилоты в трёх регионах', цвет:РЯД[3]},
+  {имя:'7–9 классы', от:8, до:16, подпись:'расширение программы', цвет:РЯД[4]},
+  {имя:'Раунд А', от:14, до:18, подпись:'подготовка', цвет:РЯД[2]},
 ],{h:300});
 
 /* ── 26. международный горизонт ──────────────────────────────────────────── */
 const СТРАНЫ=[
-  {страна:'Казахстан', школьников:4_100_000, доля:31.5, на_русском:1_292_000, цвет:СЛОТ[0], год:'2026/27',
+  {страна:'Казахстан', школьников:4_100_000, доля:31.5, на_русском:1_292_000, цвет:РЯД[0], год:'2026/27',
    факт:'3 606 школ с русским языком обучения; 970 из них — только на русском (310,5 тыс. учеников)'},
-  {страна:'Беларусь', школьников:1_058_900, доля:91.8, на_русском:972_000, цвет:СЛОТ[1], год:'2025/26',
+  {страна:'Беларусь', школьников:1_058_900, доля:91.8, на_русском:972_000, цвет:РЯД[1], год:'2025/26',
    факт:'почти вся школа учится на русском, программа ближе всего к российской'},
-  {страна:'Киргизия', школьников:1_500_000, доля:17.9, на_русском:269_000, цвет:СЛОТ[3], год:'2024',
+  {страна:'Киргизия', школьников:1_500_000, доля:17.9, на_русском:269_000, цвет:РЯД[3], год:'2024',
    факт:'русских школ около 250 из ~2 300; в русскоязычных классах 50–60 учеников против 15–20 в киргизоязычных'},
-  {страна:'Армения', школьников:null, доля:null, на_русском:null, цвет:СЛОТ[6], год:'2024/25',
+  {страна:'Армения', школьников:null, доля:null, на_русском:null, цвет:РЯД[0], год:'2024/25',
    факт:'русский остаётся первым обязательным иностранным, но с 2024/25 как отдельный предмет — только в 4, 9, 11 и 12 классах'},
 ];
 const школьниковВсего=СТРАНЫ.reduce((с,к)=>с+(к.школьников||0),0);
