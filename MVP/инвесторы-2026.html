@@ -6,217 +6,201 @@
 <title>АРХИМЕД · презентация для инвесторов</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
-/* Всё по MASTER.md. Мир: гравёрный атлас. Движение: перо чертит. */
+/* Мир: аналитическая записка на бумаге, в гамме проекта.
+   Тёмно-зелёный фон приложения (#16241d) стал цветом туши — дека и продукт
+   оказываются одним миром, вывернутым. Всё по MASTER.md. */
 :root{
-  --paper:#e8dcc2; --plate:#e0d3b4;
-  --ink:#241d11; --ink-2:#5e5640; --ink-3:#605a44;
-  --rule:#b9ae91; --gold:#76540f; --gold-line:#b38a2a; --seal:#9c3722;
-  --pen:cubic-bezier(.4,.05,.25,1);
-  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:46px;
+  --paper:#faf8f2; --panel:#f2eee2; --rule:#d8d2c2; --rule-2:#eae5d7;
+  --ink:#16241d; --ink-2:#3f5147; --ink-3:#5f6d64;
+  --gold:#775b0d; --gold-mark:#a8831c; --gold-line:#c2a75f;
+  --green:#276742; --red:#a33b26;
+  --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.22,.9,.24,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scrollbar-color:var(--rule) var(--paper)}
-/* ПЕРГАМЕНТ — это кожа, а не растительное волокно: у него нет решётки полос.
-   У него есть крапина от волосяных луковиц, неровный тон (сторона волоса желтее
-   и грубее, сторона мездры светлее и глаже) и потемнение по краям листа.
-   Всё рисуется кодом: ни одной картинки не подгружается. */
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:
-    /* неровность выделки: крупные мягкие пятна, как на коже */
-    radial-gradient(46% 32% at 18% 16%, rgba(146,110,52,.085), transparent 70%),
-    radial-gradient(38% 28% at 82% 74%, rgba(146,110,52,.075), transparent 72%),
-    radial-gradient(30% 40% at 62% 26%, rgba(126,96,46,.055), transparent 68%),
-    radial-gradient(34% 26% at 28% 84%, rgba(126,96,46,.06), transparent 70%),
-    radial-gradient(52% 30% at 50% 50%, rgba(255,250,236,.10), transparent 74%),
-    /* край листа темнее: так лежит кожа, натянутая на раму */
-    radial-gradient(126% 100% at 50% 46%, transparent 56%, rgba(88,66,32,.185) 100%);
-}
-/* Крапина луковиц: редкие тёмные точки, а не равномерный шум. Порог по альфе
-   превращает шум в отдельные крапины — как на стороне волоса. */
-body::after{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55;
-  mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.62' numOctaves='1' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 0 0 0 0 0 0 0 0 .55'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='3' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.18'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E");
-  background-size:300px 300px;
-}
-.slide,.nav{position:relative;z-index:1}
-body{
-  background:var(--paper); color:var(--ink);
-  font-family:'EB Garamond',Georgia,'Times New Roman',serif; font-weight:500;
-  font-size:19px; line-height:1.58; font-variant-numeric:oldstyle-nums;
-  -webkit-font-smoothing:antialiased; overflow:hidden;
-}
-::selection{background:rgba(179,138,42,.3)}
-:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
-::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:var(--paper)}
-::-webkit-scrollbar-thumb{background:var(--rule)}
-::-webkit-scrollbar-thumb:hover{background:var(--gold-line)}
+html{-webkit-text-size-adjust:100%}
+body{background:#e8e4d8;color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden}
+::selection{background:rgba(168,131,28,.22)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
-/* ── лист ───────────────────────────────────────────────────────── */
-.slide{display:none;height:100dvh;overflow:auto;
-  padding:clamp(20px,3.4vh,44px) clamp(20px,3.4vw,60px) 76px}
-.slide.on{display:block;animation:лист 280ms var(--pen) both}
+/* ── кадр 16:9: дека, а не веб-страница ─────────────────────────────── */
+.deck{position:fixed;inset:0;display:grid;place-items:center;padding:0}
+.stage{position:relative;background:var(--paper);overflow:hidden;
+  width:min(100vw, calc(100vh * 16 / 9));
+  height:min(100vh, calc(100vw * 9 / 16));
+  box-shadow:0 0 0 1px rgba(22,36,29,.10), 0 18px 60px -30px rgba(22,36,29,.45)}
+@media (max-width:760px){ .stage{width:100vw;height:100vh} }
+
+.slide{position:absolute;inset:0;display:none;overflow:hidden;
+  padding:3.4cqw 4.4cqw 4.6cqw}
+.stage{container-type:size}
+.slide.on{display:flex;flex-direction:column;animation:лист 260ms var(--ease) both}
+.wrap{display:contents}
 @keyframes лист{from{opacity:0}to{opacity:1}}
-.wrap{max-width:1420px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;
-  justify-content:center}
-.wrap > details.more{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
-.wrap > details.more > .unfold{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;gap:14px}
-.unfold > .frame,.unfold > .pair{flex:1 1 auto;min-height:0}
-.pair > .frame,.pair > .stack{min-height:0}
-.frame{display:flex;flex-direction:column}
-.frame > div:last-child{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center}
 
-/* ── тезис ──────────────────────────────────────────────────────── */
-.claim{font-family:'Forum',Georgia,serif;font-weight:400;
-  font-size:clamp(26px,3.2vw,46px);line-height:1.1;letter-spacing:-.004em;
-  color:var(--ink);text-wrap:balance;max-width:24em}
-.claim em{font-style:italic;color:var(--gold)}
-.claim .q{font-style:italic;color:var(--seal)}
-.stand{font-size:clamp(17px,1.3vw,21px);line-height:1.5;color:var(--ink-2);
-  margin-top:14px;max-width:56em}
-.stand b{color:var(--ink);font-weight:400}
+/* ── колонтитул записки: слева тема, справа номер ───────────────────── */
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:2cqw;
+  padding-bottom:.8cqw;border-bottom:1px solid var(--rule);margin-bottom:1.6cqw;flex:0 0 auto}
+.head .t{font-family:var(--mono);font-size:1.32cqw;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3)}
+.head .n{font-family:var(--mono);font-size:1.32cqw;color:var(--ink-3);
+  font-variant-numeric:tabular-nums}
 
-/* ── величины: строка атласа, не приборная панель ───────────────── */
-.run{display:flex;flex-wrap:wrap;margin-top:20px;border-top:1px solid var(--rule);padding-top:15px}
-.run > div{padding:0 22px 6px 0;margin-right:22px;border-right:1px solid var(--rule)}
-.run > div:last-child{border-right:0;margin-right:0}
-.run .v{font-family:'Forum',Georgia,serif;font-size:clamp(21px,1.85vw,28px);
-  line-height:1.1;color:var(--ink);font-variant-numeric:oldstyle-nums}
-.run .k{font-size:15.5px;color:var(--ink-2);margin-top:5px;max-width:14em;line-height:1.35}
-.run .n{font-size:14.5px;color:var(--ink-2);margin-top:2px;max-width:14em;line-height:1.35}
+/* ── заголовок-утверждение ──────────────────────────────────────────── */
+.claim{font-size:2.6cqw;line-height:1.16;letter-spacing:-.012em;font-weight:600;
+  color:var(--ink);text-wrap:balance;max-width:30em}
+.claim em{font-style:normal;color:var(--gold)}
+.claim .q{font-style:normal;color:var(--red)}
+.stand{font-size:1.42cqw;line-height:1.42;color:var(--ink-2);margin-top:.75cqw;max-width:64em}
+.stand b{font-weight:600;color:var(--ink)}
 
-/* ── раскрытие ──────────────────────────────────────────────────── */
-details.more{margin-top:18px;border-top:1px solid var(--rule);padding-top:2px}
-details.more > summary,.sub > summary{list-style:none;cursor:pointer;display:flex;
-  align-items:center;gap:10px;min-height:44px;font-family:'EB Garamond',Georgia,serif;
-  font-weight:600;font-size:14.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--ink-2);user-select:none;transition:color 120ms var(--pen)}
-details.more > summary::-webkit-details-marker,.sub > summary::-webkit-details-marker{display:none}
-details.more[open] > summary,.sub[open] > summary{color:var(--gold)}
-@media (hover:hover) and (pointer:fine){
-  details.more > summary:hover,.sub > summary:hover{color:var(--ink)}
-}
-.chev{flex:0 0 auto;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.4;
-  stroke-linecap:round;stroke-linejoin:round;transition:transform 260ms var(--pen)}
-details[open] > summary .chev{transform:rotate(90deg)}
-.unfold{padding:12px 0 6px}
-.sub{margin-top:12px;border-top:1px solid var(--rule);padding-top:2px}
+/* ── строка величин ─────────────────────────────────────────────────── */
+.run{display:flex;flex-wrap:wrap;margin-top:1cqw;
+  border-top:1px solid var(--rule);padding-top:.8cqw;flex:0 0 auto}
+.run > div{padding-right:2.4cqw;margin-right:2.4cqw;border-right:1px solid var(--rule)}
+.run > div:last-child{border-right:0;margin-right:0;padding-right:0}
+.run .v{font-family:var(--mono);font-size:1.68cqw;line-height:1.1;font-weight:500;
+  color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.run .k{font-size:1.24cqw;color:var(--ink-2);margin-top:.35cqw;max-width:15em;line-height:1.35}
+.run .n{font-family:var(--mono);font-size:1.06cqw;color:var(--ink-3);margin-top:.2cqw;max-width:17em;line-height:1.35}
 
-/* ── поле таблицы ───────────────────────────────────────────────── */
-.pair{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:24px;align-items:stretch}
-.stack{display:grid;gap:20px;min-width:0}
-.stack > *,.pair > *{min-width:0}
-.frame{border:1px solid var(--rule);padding:18px 20px;min-width:0;overflow-x:auto;
-  background-color:var(--plate);
-  background-image:radial-gradient(80% 120% at 30% 0%, rgba(255,250,235,.32), transparent 62%);}
-h3{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:14px;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:12px}
-p,li{font-size:18px;line-height:1.58}
-.note{font-size:16px;color:var(--ink-2);line-height:1.55}
-.tiny{font-size:14.5px;color:var(--ink-2);line-height:1.45}
-b,strong{color:var(--ink);font-weight:400}
-.num{font-variant-numeric:tabular-nums}
+/* ── тело листа ─────────────────────────────────────────────────────── */
+.body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;margin-top:1.6cqw}
+.pair{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:2cqw;align-items:stretch;flex:1 1 auto;min-height:0}
+.stack{display:grid;gap:1.4cqw;min-width:0;align-content:start}
+.pair > *,.stack > *{min-width:0}
+.frame{border:1px solid var(--rule);background:var(--panel);padding:1cqw 1.2cqw;
+  min-width:0;display:flex;flex-direction:column;overflow:auto;
+  scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+/* Контейнер графика берёт остаток кадра. Целимся по идентификатору: последним
+   ребёнком рамки стала подпись источника, и селектор по last-child промахивался. */
+.frame > [id^="chart-"]{flex:0 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.frame > .src{flex:0 0 auto}
+.frame > table{flex:0 0 auto}
+h3{font-family:var(--mono);font-weight:500;font-size:1.22cqw;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:.9cqw}
+p,li{font-size:1.38cqw;line-height:1.48}
+.note{font-size:1.32cqw;color:var(--ink-2)}
+.tiny{font-family:var(--mono);font-size:1.06cqw;color:var(--ink-3);line-height:1.4}
+b,strong{font-weight:600}
 
-table{width:100%;border-collapse:collapse;font-size:16.5px}
-th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-th{font-family:'EB Garamond',Georgia,serif;font-weight:600;color:var(--ink-2);
-  font-size:14px;letter-spacing:.1em;text-transform:uppercase}
-td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
-tr.hi td{background:rgba(118,84,15,.10)}
+table{width:100%;border-collapse:collapse;font-size:1.22cqw}
+th,td{text-align:left;padding:.44cqw .6cqw;border-bottom:1px solid var(--rule-2);vertical-align:top}
+th{font-family:var(--mono);font-weight:500;color:var(--ink-3);font-size:1.1cqw;
+  letter-spacing:.08em;text-transform:uppercase;border-bottom-color:var(--rule)}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr.hi td{background:rgba(168,131,28,.10);font-weight:600}
 
 ul{list-style:none}
-ul li{position:relative;padding-left:20px;margin-bottom:9px}
-ul li::before{content:'';position:absolute;left:3px;top:11px;width:9px;height:1px;background:var(--gold-line)}
-ul.tight li{margin-bottom:6px;font-size:16.5px;line-height:1.45}
+ul li{position:relative;padding-left:1.5cqw;margin-bottom:.45cqw}
+ul li::before{content:'';position:absolute;left:.2cqw;top:.72cqw;width:.7cqw;height:1px;background:var(--gold-mark)}
+ul.tight li{margin-bottom:.42cqw;font-size:1.34cqw}
 
-.tag{display:inline-block;padding:3px 10px;border:1px solid var(--rule);
-  color:var(--ink-2);font-size:14px}
-.tag.ok{border-color:rgba(138,100,20,.5);color:var(--gold)}
-.tag.bad{border-color:rgba(163,59,38,.45);color:var(--seal)}
+.tag{display:inline-block;padding:.15cqw .55cqw;border:1px solid var(--rule);
+  font-family:var(--mono);font-size:1.06cqw;color:var(--ink-2)}
+.tag.ok{border-color:rgba(39,103,66,.5);color:var(--green)}
+.tag.bad{border-color:rgba(163,59,38,.45);color:var(--red)}
 
-.chart{width:100%;height:auto;max-height:clamp(200px,34vh,380px);display:block;overflow:visible}
-svg text{font-family:'EB Garamond',Georgia,serif;font-variant-numeric:oldstyle-nums}
-.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:15.5px;color:var(--ink-2);font-weight:500}
-.legend i{display:inline-block;width:16px;height:2px;margin-right:7px;vertical-align:middle}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.frame{max-height:100%}
+svg text{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:.5cqw 1.5cqw;margin-top:.7cqw;
+  font-size:1.2cqw;color:var(--ink-2)}
+.legend i{display:inline-block;width:1.1cqw;height:2px;margin-right:.5cqw;vertical-align:middle}
 
-.src{margin-top:9px;font-size:13.5px;font-style:italic;color:var(--ink-3);line-height:1.4}
-.appx{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:12.5px;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
-.caveat{margin-top:12px;padding-top:11px;border-top:1px solid var(--rule);
-  font-size:16px;color:var(--ink-2);line-height:1.55;max-width:46em}
-.caveat b{color:var(--seal);font-weight:400}
+.src{margin-top:.7cqw;font-family:var(--mono);font-size:1cqw;color:var(--ink-3);line-height:1.35}
+.caveat{margin-top:1cqw;padding-top:.8cqw;border-top:1px solid var(--rule);
+  font-size:1.26cqw;color:var(--ink-2);line-height:1.45;max-width:64em}
+.caveat b{color:var(--red);font-weight:600}
+.appx{font-family:var(--mono);font-size:1.06cqw;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.6cqw}
 
-/* ── перо чертит ────────────────────────────────────────────────── */
-.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:перо 1100ms linear forwards}
-.draw.slow{animation-duration:1500ms}
-@keyframes перо{to{stroke-dashoffset:0}}
-.band{opacity:0;animation:штрих 380ms var(--pen) forwards}
-@keyframes штрих{to{opacity:1}}
-.ink{opacity:0;animation:чернила 420ms var(--pen) forwards}
-@keyframes чернила{from{opacity:0;filter:blur(1.4px)}to{opacity:1;filter:none}}
-.grow{transform:scaleY(.06);opacity:0;transform-origin:var(--ox,50%) var(--oy,100%);
-  animation:растёт 560ms var(--pen) forwards}
-@keyframes растёт{to{transform:scaleY(1);opacity:1}}
-.wipe{clip-path:inset(0 100% 0 0);animation:протяг 900ms var(--pen) forwards}
-@keyframes протяг{to{clip-path:inset(0 0 0 0)}}
+/* ── раскрытие ──────────────────────────────────────────────────────── */
+details.more{margin-top:1.2cqw;display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+details.more > summary,.sub > summary{list-style:none;cursor:pointer;display:flex;align-items:center;
+  gap:.6cqw;min-height:2.6cqw;font-family:var(--mono);font-size:1.16cqw;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);user-select:none;transition:color 120ms var(--ease)}
+details > summary::-webkit-details-marker{display:none}
+details[open] > summary{color:var(--gold)}
+.chev{flex:0 0 auto;width:1cqw;height:1cqw;fill:none;stroke:currentColor;stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform 240ms var(--ease)}
+details[open] > summary .chev{transform:rotate(90deg)}
+details.more > .unfold{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;gap:.9cqw;padding-top:.6cqw}
+.unfold > .frame,.unfold > .pair{flex:1 1 auto;min-height:0}
+.sub{margin-top:.8cqw}
 
-/* ── органы управления ──────────────────────────────────────────── */
-.segs{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-button.seg{min-height:44px;padding:9px 16px;border:1px solid var(--rule);background:transparent;
-  color:var(--ink);font:inherit;font-size:16px;cursor:pointer;
-  transition:border-color 120ms var(--pen),color 120ms var(--pen),transform 140ms var(--pen)}
-@media (hover:hover) and (pointer:fine){
-  button.seg:hover{border-color:var(--gold-line)}
-}
-button.seg:active{color:var(--gold);transform:scale(.97)}
-button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px 0 -1px var(--gold)}
-.segs .note{margin-left:2px;font-size:14px;color:var(--ink-3)}
+/* ── органы управления ──────────────────────────────────────────────── */
+.segs{display:flex;gap:.7cqw;flex-wrap:wrap;align-items:center;margin-bottom:.9cqw}
+button.seg{min-height:2.6cqw;padding:.5cqw 1cqw;border:1px solid var(--rule);background:transparent;
+  color:var(--ink-2);font-family:var(--mono);font-size:1.16cqw;cursor:pointer;
+  transition:border-color 120ms var(--ease),color 120ms var(--ease),transform 140ms var(--ease)}
+button.seg:active{transform:scale(.97)}
+button.seg.on{border-color:var(--gold);color:var(--gold);background:rgba(168,131,28,.09)}
+.segs .note{font-family:var(--mono);font-size:1.06cqw;color:var(--ink-3)}
+.slider{display:flex;align-items:center;gap:1cqw;margin-bottom:.3cqw}
+.slider label{flex:0 0 16cqw;font-size:1.3cqw;color:var(--ink-2)}
+.slider input[type=range]{flex:1;min-width:0;accent-color:var(--gold-mark);height:2.4cqw}
+.slider .val{font-family:var(--mono);min-width:7cqw;text-align:right;color:var(--gold);
+  font-size:1.3cqw;font-variant-numeric:tabular-nums}
 
-.slider{display:flex;align-items:center;gap:14px;margin-bottom:2px}
-.slider label{flex:0 0 220px;font-size:16px;color:var(--ink-2)}
-.slider input[type=range]{flex:1;min-width:0;accent-color:var(--gold);height:40px}
-.slider .val{min-width:104px;text-align:right;color:var(--gold);font-variant-numeric:tabular-nums}
-
-/* ── навигация: колонтитул атласа ───────────────────────────────── */
-.nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:12px;
-  padding:0 clamp(14px,3.4vw,48px);z-index:50;
-  background:linear-gradient(180deg,rgba(232,220,194,0),var(--paper) 40%)}
-.nav .dots{display:flex;gap:5px;flex:1;flex-wrap:wrap}
-.nav .dots button{width:9px;height:9px;padding:0;border:1px solid var(--rule);
-  background:transparent;cursor:pointer;transition:background 120ms var(--pen)}
-@media (hover:hover) and (pointer:fine){
-  .nav .dots button:hover{border-color:var(--gold-line)}
-}
-.nav .dots button.on{background:var(--gold);border-color:var(--gold)}
-.nav button.arrow{min-width:48px;min-height:44px;border:1px solid var(--rule);background:transparent;
-  color:var(--ink);font:inherit;cursor:pointer;transition:border-color 120ms var(--pen)}
-@media (hover:hover) and (pointer:fine){
-  .nav button.arrow:hover:not(:disabled){border-color:var(--gold-line)}
-}
+/* ── навигация ──────────────────────────────────────────────────────── */
+.nav{position:absolute;left:0;right:0;bottom:0;height:3.4cqw;display:flex;align-items:center;
+  gap:1cqw;padding:0 5cqw;z-index:5;
+  background:linear-gradient(180deg,rgba(250,248,242,0),var(--paper) 45%)}
+.nav .dots{display:flex;gap:.34cqw;flex:1;flex-wrap:wrap}
+.nav .dots button{width:.62cqw;height:.62cqw;padding:0;border:1px solid var(--rule);
+  background:transparent;cursor:pointer}
+.nav .dots button.on{background:var(--gold-mark);border-color:var(--gold-mark)}
+.nav button.arrow{min-width:3cqw;min-height:2.3cqw;border:1px solid var(--rule);background:transparent;
+  color:var(--ink-2);font-family:var(--mono);cursor:pointer;
+  transition:border-color 120ms var(--ease),transform 140ms var(--ease)}
+.nav button.arrow:active:not(:disabled){transform:scale(.97)}
 .nav button.arrow:disabled{opacity:.3;cursor:default}
-.counter{font-weight:600;font-size:14px;letter-spacing:.12em;
-  color:var(--ink-3);min-width:88px;text-align:center}
+.counter{font-family:var(--mono);font-size:1.16cqw;color:var(--ink-3);
+  min-width:5cqw;text-align:right;font-variant-numeric:tabular-nums}
 
-@media (max-width:900px){ .pair{grid-template-columns:1fr} .slider label{flex:0 0 150px}
-  .run > div{padding-right:18px;margin-right:18px} }
-@media (max-width:620px){ .run > div{border-right:0;margin-right:0;padding-right:0;flex:1 1 100%} }
+@media (hover:hover) and (pointer:fine){
+  button.seg:hover{border-color:var(--gold-mark);color:var(--ink)}
+  .nav button.arrow:hover:not(:disabled){border-color:var(--gold-mark)}
+  .nav .dots button:hover{border-color:var(--gold-mark)}
+  details > summary:hover{color:var(--ink)}
+}
+@media (max-width:760px){
+  .slide{padding:5cqw 5cqw 8cqw}
+  .pair{grid-template-columns:1fr}
+  .slider label{flex:0 0 40%}
+}
+
+/* ── движение: значение проступает, полоса протягивается ────────────── */
+.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:перо 900ms linear forwards}
+@keyframes перо{to{stroke-dashoffset:0}}
+.ink{opacity:0;animation:появ 380ms var(--ease) forwards}
+@keyframes появ{to{opacity:1}}
+.grow{transform:scaleY(.06);opacity:0;transform-origin:var(--ox,50%) var(--oy,100%);
+  animation:растёт 480ms var(--ease) forwards}
+@keyframes растёт{to{transform:scaleY(1);opacity:1}}
+.wipe{clip-path:inset(0 100% 0 0);animation:протяг 760ms var(--ease) forwards}
+@keyframes протяг{to{clip-path:inset(0 0 0 0)}}
+.band{opacity:0;animation:появ 320ms var(--ease) forwards}
+
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
-  .draw{stroke-dashoffset:0}.band,.ink{opacity:1;filter:none}
-  .grow{transform:none}.wipe{clip-path:none}
+  .draw{stroke-dashoffset:0}.ink,.band{opacity:1}.grow{transform:none}.wipe{clip-path:none}
 }
 @media print{
   body{overflow:visible;background:#fff}
-  .slide{display:block!important;height:auto;page-break-after:always;padding:16px}
+  .deck{position:static;display:block}
+  .stage{width:auto;height:auto;box-shadow:none;container-type:normal}
+  .slide{position:static;display:block!important;page-break-after:always;padding:14mm}
   .nav{display:none} details > summary{display:none}
-  .draw{stroke-dashoffset:0}.band,.ink{opacity:1}.grow{transform:none}.wipe{clip-path:none}
+  .draw{stroke-dashoffset:0}.ink,.band{opacity:1}.grow{transform:none}.wipe{clip-path:none}
 }
 </style>
 </head>
 <body>
-
+<div class="deck"><div class="stage">
 
 <!-- ═══ I. ЗАЧЕМ ═══════════════════════════════════════════════════════════ -->
 <section class="slide on" data-t="Титул"><div class="wrap">
@@ -422,7 +406,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
   <p class="caveat">Основная часть — четырнадцать листов до этой страницы. Приложение
     можно не листать на встрече: оно существует, чтобы на любой вопрос был ответ числом.</p>
 </div></section>
-<section class="slide" data-t="Выручка по каналам"><div class="wrap"><p class="appx">приложение</p>
+<section class="slide" data-t="Выручка по каналам"><div class="wrap">
   <h1 class="claim">Подписки родителей дают почти всю выручку; лицензии школ растут
     медленнее, но <em>без расходов на рекламу</em>.</h1>
   <p class="stand">Подписки родителей, лицензии школ и возвраты показаны раздельно:
@@ -436,7 +420,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       <div class="frame"><div id="chart-rev"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
     </div>
   </details>
-</div></section><section class="slide" data-t="Юнит-экономика в динамике"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Юнит-экономика в динамике"><div class="wrap">
   <h1 class="claim">LTV к CAC держится выше отраслевого порога ×3 <em>весь горизонт</em>.</h1>
   <p class="stand">LTV к CAC и валовая маржа по месяцам. Порог «×3» — отраслевая граница,
     ниже которой масштабировать привлечение рано.</p>
@@ -451,7 +435,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       </div>
     </div>
   </details>
-</div></section><section class="slide" data-t="Аудитория"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Аудитория"><div class="wrap">
   <h1 class="claim">Платящих считаем потоком с оттоком — <em>строже прежнего плана</em>
     проекта.</h1>
   <p class="stand">Платящих считаем потоком с оттоком, а не «шесть процентов платят сразу
@@ -465,7 +449,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       <div class="frame"><div id="chart-mau"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div>
     </div>
   </details>
-</div></section><section class="slide" data-t="Канал B2B"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Канал B2B"><div class="wrap">
   <h1 class="claim">Школы и кружки: <em>низкий CAC</em> и контракт на учебный год.</h1>
   <p class="stand">Один договор приносит сразу класс. Канал растёт медленнее розницы,
     зато предсказуемо и без расходов на рекламу.</p>
@@ -475,7 +459,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Партнёры и ученики по месяцам</summary>
     <div class="unfold"><div class="frame"><div id="chart-b2b"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div></div>
   </details>
-</div></section><section class="slide" data-t="Допущения"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Допущения"><div class="wrap">
   <h1 class="claim">Сценарии расходятся не настроением, а <em>пятью числами</em>:
     конверсией, оттоком, CAC, командой и маркетингом.</h1>
   <p class="stand">Три сценария отличаются не настроением, а числами: конверсией, оттоком,
@@ -485,7 +469,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Таблица допущений</summary>
     <div class="unfold"><div class="frame"><table id="assum-table"></table></div></div>
   </details>
-</div></section><section class="slide" data-t="Отчёт о прибылях"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Отчёт о прибылях"><div class="wrap">
   <h1 class="claim" id="pnl-head"></h1>
   <p class="stand">Выручка за вычетом возвратов, операционные расходы по статьям и EBITDA.
     Считается из той же модели, что и графики.</p>
@@ -498,7 +482,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       <div class="frame"><table id="pnl-table"></table></div>
     </div>
   </details>
-</div></section><section class="slide" data-t="CAPEX"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="CAPEX"><div class="wrap">
   <h1 class="claim" id="capex-head"></h1>
   <p class="stand">Семь статей единоразовых вложений. Разработка до релиза — самая крупная,
     маркетинг запуска вынесен отдельно, чтобы его было видно.</p>
@@ -514,7 +498,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       </details>
     </div>
   </details>
-</div></section><section class="slide" data-t="OPEX"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="OPEX"><div class="wrap">
   <h1 class="claim" id="opex-head"></h1>
   <p class="stand">Главная статья — люди. Маркетинг привязан к доле выручки, налоги
     и страховые взносы посчитаны, а не забыты.</p>
@@ -535,7 +519,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       </details>
     </div>
   </details>
-</div></section><section class="slide" data-t="Команда и ФОТ"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Команда и ФОТ"><div class="wrap">
   <h1 class="claim">Команда растёт <em>за выручкой</em>, а не впереди неё: найм привязан
     к плану, а не к раунду.</h1>
   <p class="stand">Найм привязан к плану: сначала выручка покрывает расходы, потом
@@ -552,7 +536,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       <p class="caveat" id="team-note"></p>
     </div>
   </details>
-</div></section><section class="slide" data-t="Чувствительность"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Чувствительность"><div class="wrap">
   <h1 class="claim">Даже при худшей паре допущений потребность растёт до 60 млн ₽,
     но <span class="q">бизнес не ломается</span>.</h1>
   <p class="stand">Пятнадцать сочетаний. В каждой клетке — сколько денег понадобится,
@@ -562,7 +546,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Тепловая карта потребности</summary>
     <div class="unfold"><div class="frame"><h3>Сколько денег понадобится, млн ₽</h3><div id="chart-heat"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div></div>
   </details>
-</div></section><section class="slide" data-t="Порог"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Порог"><div class="wrap">
   <h1 class="claim" id="thr-head"></h1>
   <p class="stand">Порог жизнеспособности — размер аудитории, при котором выручка
     ровно покрывает операционные расходы.</p>
@@ -571,7 +555,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Порог по сценариям</summary>
     <div class="unfold"><div class="frame"><div id="chart-threshold"></div><p class="src">Источник: финансовая модель проекта (инвесторы/модель.py); числа сверяются с ней машинно.</p></div></div>
   </details>
-</div></section><section class="slide" data-t="Международный горизонт"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Международный горизонт"><div class="wrap">
   <h1 class="claim">Продукт написан по-русски, и этим <em>переносится в четыре страны
     почти без затрат</em>.</h1>
   <p class="stand">Казахстан, Беларусь, Киргизия, Армения: общая школьная традиция и миллионы
@@ -603,7 +587,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
       </details>
     </div>
   </details>
-</div></section><section class="slide" data-t="Риски"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Риски"><div class="wrap">
   <h1 class="claim">Одиннадцать рисков названы, и у каждого есть <em>ответ действием</em>,
     а не обещанием.</h1>
   <p class="stand">Порог жизнеспособности базового сценария —
@@ -613,7 +597,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
     Одиннадцать рисков и ответы на них</summary>
     <div class="unfold"><div class="frame"><table id="risk-table"></table></div></div>
   </details>
-</div></section><section class="slide" data-t="Источники"><div class="wrap"><p class="appx">приложение</p>
+</div></section><section class="slide" data-t="Источники"><div class="wrap">
   <h1 class="claim">Источники, допущения и <em>чего в модели нет</em>.</h1>
   <p class="stand">Всё, что можно проверить, лучше проверить. Модель считается скриптом,
     числа презентации сверяются с ней машинно.</p>
@@ -636,7 +620,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
   <span class="counter" id="counter"></span>
   <button class="arrow" id="next" aria-label="Следующий слайд">→</button>
 </nav>
-
+</div></div>
 <script>
 /* ── данные модели (подставляются скриптом сборки) ───────────────────────── */
 const Д = {"сценарии":["пессимистичный","базовый","оптимистичный"],"экономный":{"сценарий":"базовый","строки":[{"месяц":1,"mau":2000,"платящие":20,"конверсия_факт_%":1.0,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":15800,"выручка_B2B":0,"возвраты":474,"выручка":15326,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":80000,"ии":4800,"поддержка":60000,"налог":920,"opex":1771720,"capex":6630000,"ebitda":-1756394,"денежный_поток":-8386394,"cash":-8386394,"команда_чел":4,"ARPU":8,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-453.3},{"месяц":2,"mau":3000,"платящие":47,"конверсия_факт_%":1.57,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":37130,"выручка_B2B":0,"возвраты":1114,"выручка":36016,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":100000,"ии":7200,"поддержка":82222,"налог":2161,"opex":1817583,"capex":3315000,"ebitda":-1781567,"денежный_поток":-5096567,"cash":-13482961,"команда_чел":4,"ARPU":12,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-197.6},{"месяц":3,"mau":4500,"платящие":85,"конверсия_факт_%":1.89,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":67110,"выручка_B2B":0,"возвраты":2013,"выручка":65097,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":120000,"ии":10800,"поддержка":104444,"налог":3906,"opex":1865150,"capex":1105000,"ebitda":-1800053,"денежный_поток":-2905053,"cash":-16388014,"команда_чел":4,"ARPU":14,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-100.9},{"месяц":4,"mau":6750,"платящие":140,"конверсия_факт_%":2.07,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":110369,"выручка_B2B":0,"возвраты":3311,"выручка":107058,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":140000,"ии":16200,"поддержка":126667,"налог":6423,"opex":1915290,"capex":0,"ebitda":-1808232,"денежный_поток":-1808232,"cash":-18196246,"команда_чел":4,"ARPU":16,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-45.9},{"месяц":5,"mau":10125,"платящие":220,"конверсия_факт_%":2.17,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":173801,"выручка_B2B":0,"возвраты":5214,"выручка":168587,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":160000,"ии":24300,"поддержка":148889,"налог":10115,"opex":1969304,"capex":0,"ebitda":-1800717,"денежный_поток":-1800717,"cash":-19996963,"команда_чел":4,"ARPU":17,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-9.3},{"месяц":6,"mau":15188,"платящие":339,"конверсия_факт_%":2.23,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":267712,"выручка_B2B":0,"возвраты":8031,"выручка":259681,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":180000,"ии":36450,"поддержка":171111,"налог":15581,"opex":2029142,"capex":0,"ebitda":-1769461,"денежный_поток":-1769461,"cash":-21766424,"команда_чел":4,"ARPU":17,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":16.6},{"месяц":7,"mau":20503,"платящие":493,"конверсия_факт_%":2.4,"устойчивая_доля_%":6.7,"партнёры_B2B":3,"учеников_B2B":300,"выручка_B2C":389530,"выручка_B2B":45000,"возвраты":13036,"выручка":421494,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":200000,"ии":49208,"поддержка":193333,"налог":25290,"opex":2093830,"capex":0,"ebitda":-1672336,"денежный_поток":-1672336,"cash":-23438761,"команда_чел":4,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":40.9},{"месяц":8,"mau":27679,"платящие":696,"конверсия_факт_%":2.51,"устойчивая_доля_%":6.7,"партнёры_B2B":3,"учеников_B2B":300,"выручка_B2C":549766,"выручка_B2B":45000,"возвраты":17843,"выручка":576923,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":220000,"ии":66430,"поддержка":215556,"налог":34615,"opex":2162601,"capex":0,"ebitda":-1585678,"денежный_поток":-1585678,"cash":-25024438,"команда_чел":4,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":50.4},{"месяц":9,"mau":37367,"платящие":965,"конверсия_факт_%":2.58,"устойчивая_доля_%":6.7,"партнёры_B2B":3,"учеников_B2B":300,"выручка_B2C":762500,"выручка_B2B":45000,"возвраты":24225,"выручка":783275,"фот":1196000,"маркетинг":195819,"контент":250000,"инфраструктура":240000,"ии":89681,"поддержка":237778,"налог":46997,"opex":2256274,"capex":0,"ebitda":-1472999,"денежный_поток":-1472999,"cash":-26497437,"команда_чел":4,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":57.9},{"месяц":10,"mau":50445,"платящие":1325,"конверсия_факт_%":2.63,"устойчивая_доля_%":6.7,"партнёры_B2B":5,"учеников_B2B":500,"выручка_B2C":1046644,"выручка_B2B":75000,"возвраты":33649,"выручка":1087994,"фот":1592500,"маркетинг":271999,"контент":250000,"инфраструктура":260000,"ии":121069,"поддержка":260000,"налог":65280,"opex":2820847,"capex":0,"ebitda":-1732853,"денежный_поток":-1732853,"cash":-28230290,"команда_чел":5,"ARPU":22,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":65.0},{"месяц":11,"mau":68101,"платящие":1807,"конверсия_факт_%":2.65,"устойчивая_доля_%":6.7,"партнёры_B2B":5,"учеников_B2B":500,"выручка_B2C":1427647,"выручка_B2B":75000,"возвраты":45079,"выручка":1457568,"фот":1592500,"маркетинг":364392,"контент":250000,"инфраструктура":280000,"ии":163443,"поддержка":260000,"налог":87454,"opex":2997789,"capex":0,"ebitda":-1540221,"денежный_поток":-1540221,"cash":-29770511,"команда_чел":5,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":69.6},{"месяц":12,"mau":91937,"платящие":2455,"конверсия_факт_%":2.67,"устойчивая_доля_%":6.7,"партнёры_B2B":5,"учеников_B2B":500,"выручка_B2C":1939800,"выручка_B2B":75000,"возвраты":60444,"выручка":1954356,"фот":1592500,"маркетинг":488589,"контент":250000,"инфраструктура":300000,"ии":220648,"поддержка":260000,"налог":117261,"opex":3228998,"capex":0,"ebitda":-1274642,"денежный_поток":-1274642,"cash":-31045153,"команда_чел":5,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":73.4},{"месяц":13,"mau":105727,"платящие":3144,"конверсия_факт_%":2.97,"устойчивая_доля_%":6.7,"партнёры_B2B":7,"учеников_B2B":700,"выручка_B2C":2484075,"выручка_B2B":105000,"возвраты":77672,"выручка":2511403,"фот":1592500,"маркетинг":627851,"контент":312500,"инфраструктура":300000,"ии":253745,"поддержка":260000,"налог":150684,"opex":3497280,"capex":0,"ebitda":-985877,"денежный_поток":-985877,"cash":-32031031,"команда_чел":5,"ARPU":24,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":78.0},{"месяц":14,"mau":121586,"платящие":3889,"конверсия_факт_%":3.2,"устойчивая_доля_%":6.7,"партнёры_B2B":7,"учеников_B2B":700,"выручка_B2C":3071995,"выручка_B2B":105000,"возвраты":95310,"выручка":3081685,"фот":1592500,"маркетинг":770421,"контент":312500,"инфраструктура":300000,"ии":291807,"поддержка":260000,"налог":184901,"opex":3712130,"capex":0,"ebitda":-630444,"денежный_поток":-630444,"cash":-32661475,"команда_чел":5,"ARPU":25,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":80.8},{"месяц":15,"mau":139824,"платящие":4704,"конверсия_факт_%":3.36,"устойчивая_доля_%":6.7,"партнёры_B2B":7,"учеников_B2B":700,"выручка_B2C":3715807,"выручка_B2B":105000,"возвраты":114624,"выручка":3706183,"фот":1592500,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":335578,"поддержка":260000,"налог":222371,"opex":3922949,"capex":0,"ebitda":-216766,"денежный_поток":-216766,"cash":-32878241,"команда_чел":5,"ARPU":27,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":82.9},{"месяц":16,"mau":160798,"платящие":5606,"конверсия_факт_%":3.49,"устойчивая_доля_%":6.7,"партнёры_B2B":9,"учеников_B2B":900,"выручка_B2C":4428739,"выручка_B2B":135000,"возвраты":136912,"выручка":4426827,"фот":1592500,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":385915,"поддержка":260000,"налог":265610,"opex":4016524,"capex":0,"ebitda":410303,"денежный_поток":410303,"cash":-32467938,"команда_чел":5,"ARPU":28,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":84.5},{"месяц":17,"mau":184918,"платящие":6614,"конверсия_факт_%":3.58,"устойчивая_доля_%":6.7,"партнёры_B2B":9,"учеников_B2B":900,"выручка_B2C":5225277,"выручка_B2B":135000,"возвраты":160808,"выручка":5199469,"фот":1592500,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":443802,"поддержка":260000,"налог":311968,"opex":4120770,"capex":0,"ebitda":1078698,"денежный_поток":1078698,"cash":-31389240,"команда_чел":5,"ARPU":28,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":85.7},{"месяц":18,"mau":212655,"платящие":7749,"конверсия_факт_%":3.64,"устойчивая_доля_%":6.7,"партнёры_B2B":9,"учеников_B2B":900,"выручка_B2C":6121461,"выручка_B2B":135000,"возвраты":187694,"выручка":6068767,"фот":1592500,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":510372,"поддержка":260000,"налог":364126,"opex":4239498,"capex":0,"ebitda":1829269,"денежный_поток":1829269,"cash":-29559971,"команда_чел":5,"ARPU":29,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":86.6},{"месяц":19,"mau":233921,"платящие":8926,"конверсия_факт_%":3.82,"устойчивая_доля_%":6.7,"партнёры_B2B":11,"учеников_B2B":1100,"выручка_B2C":7051216,"выручка_B2B":165000,"возвраты":216486,"выручка":6999729,"фот":1592500,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":561410,"поддержка":260000,"налог":419984,"opex":4346393,"capex":0,"ebitda":2653336,"денежный_поток":2653336,"cash":-26906635,"команда_чел":5,"ARPU":30,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":87.7},{"месяц":20,"mau":257313,"платящие":10160,"конверсия_факт_%":3.95,"устойчивая_доля_%":6.7,"партнёры_B2B":11,"учеников_B2B":1100,"выручка_B2C":8026304,"выручка_B2B":165000,"возвраты":245739,"выручка":7945565,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":617551,"поддержка":260000,"налог":476734,"opex":4855785,"capex":0,"ebitda":3089780,"денежный_поток":3089780,"cash":-23816855,"команда_чел":6,"ARPU":31,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":88.5},{"месяц":21,"mau":283044,"платящие":11466,"конверсия_факт_%":4.05,"устойчивая_доля_%":6.7,"партнёры_B2B":11,"учеников_B2B":1100,"выручка_B2C":9058406,"выручка_B2B":165000,"возвраты":276702,"выручка":8946704,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":679306,"поддержка":260000,"налог":536802,"opex":4977608,"capex":0,"ebitda":3969096,"денежный_поток":3969096,"cash":-19847759,"команда_чел":6,"ARPU":32,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":89.1},{"месяц":22,"mau":311348,"платящие":12860,"конверсия_факт_%":4.13,"устойчивая_доля_%":6.7,"партнёры_B2B":13,"учеников_B2B":1300,"выручка_B2C":10159298,"выручка_B2B":195000,"возвраты":310629,"выручка":10043669,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":747236,"поддержка":260000,"налог":602620,"opex":5111356,"capex":0,"ebitda":4932313,"денежный_поток":4932313,"cash":-14915446,"команда_чел":6,"ARPU":32,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":89.6},{"месяц":23,"mau":342483,"платящие":14356,"конверсия_факт_%":4.19,"устойчивая_доля_%":6.7,"партнёры_B2B":13,"учеников_B2B":1300,"выручка_B2C":11341021,"выручка_B2B":195000,"возвраты":346081,"выручка":11189940,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":821960,"поддержка":260000,"налог":671396,"opex":5254856,"capex":0,"ebitda":5935084,"денежный_поток":5935084,"cash":-8980362,"команда_чел":6,"ARPU":33,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":90.0},{"месяц":24,"mau":376732,"платящие":15970,"конверсия_факт_%":4.24,"устойчивая_доля_%":6.7,"партнёры_B2B":13,"учеников_B2B":1300,"выручка_B2C":12616048,"выручка_B2B":195000,"возвраты":384331,"выручка":12426716,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":904156,"поддержка":260000,"налог":745603,"opex":5411259,"capex":0,"ebitda":7015457,"денежный_поток":7015457,"cash":-1964905,"команда_чел":6,"ARPU":33,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":90.3},{"месяц":25,"mau":395568,"платящие":17530,"конверсия_факт_%":4.43,"устойчивая_доля_%":6.7,"партнёры_B2B":15,"учеников_B2B":1500,"выручка_B2C":13848629,"выручка_B2B":225000,"возвраты":422209,"выручка":13651420,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":949364,"поддержка":260000,"налог":819085,"opex":5529949,"capex":0,"ebitda":8121471,"денежный_поток":8121471,"cash":6156567,"команда_чел":6,"ARPU":35,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":90.8},{"месяц":26,"mau":415347,"платящие":19054,"конверсия_факт_%":4.59,"устойчивая_доля_%":6.7,"партнёры_B2B":15,"учеников_B2B":1500,"выручка_B2C":15052573,"выручка_B2B":225000,"возвраты":458327,"выручка":14819246,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":996832,"поддержка":260000,"налог":889155,"opex":5647487,"capex":0,"ebitda":9171759,"денежный_поток":9171759,"cash":15328326,"команда_чел":6,"ARPU":36,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":91.2},{"месяц":27,"mau":436114,"платящие":20557,"конверсия_факт_%":4.71,"устойчивая_доля_%":6.7,"партнёры_B2B":15,"учеников_B2B":1500,"выручка_B2C":16239987,"выручка_B2B":225000,"возвраты":493950,"выручка":15971037,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1046673,"поддержка":260000,"налог":958262,"opex":5766436,"capex":0,"ebitda":10204602,"денежный_поток":10204602,"cash":25532927,"команда_чел":6,"ARPU":37,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":91.6},{"месяц":28,"mau":457920,"платящие":22053,"конверсия_факт_%":4.82,"устойчивая_доля_%":6.7,"партнёры_B2B":17,"учеников_B2B":1700,"выручка_B2C":17421554,"выручка_B2B":255000,"возвраты":530297,"выручка":17146257,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1099007,"поддержка":260000,"налог":1028775,"opex":5889283,"capex":0,"ebitda":11256975,"денежный_поток":11256975,"cash":36789902,"команда_чел":6,"ARPU":37,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":91.8},{"месяц":29,"mau":480816,"платящие":23553,"конверсия_факт_%":4.9,"устойчивая_доля_%":6.7,"партнёры_B2B":17,"учеников_B2B":1700,"выручка_B2C":18606764,"выручка_B2B":255000,"возвраты":565853,"выручка":18295911,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1153957,"поддержка":260000,"налог":1097755,"opex":6013212,"capex":0,"ebitda":12282699,"денежный_поток":12282699,"cash":49072601,"команда_чел":6,"ARPU":38,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.1},{"месяц":30,"mau":504856,"платящие":25068,"конверсия_факт_%":4.97,"устойчивая_доля_%":6.7,"партнёры_B2B":17,"учеников_B2B":1700,"выручка_B2C":19804115,"выручка_B2B":255000,"возвраты":601773,"выручка":19457341,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1211655,"поддержка":260000,"налог":1167440,"opex":6140596,"capex":0,"ebitda":13316746,"денежный_поток":13316746,"cash":62389347,"команда_чел":6,"ARPU":39,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.2},{"месяц":31,"mau":530099,"платящие":26609,"конверсия_факт_%":5.02,"устойчивая_доля_%":6.7,"партнёры_B2B":19,"учеников_B2B":1900,"выручка_B2C":21021281,"выручка_B2B":285000,"возвраты":639188,"выручка":20667093,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1272238,"поддержка":260000,"налог":1240026,"opex":6273764,"capex":0,"ebitda":14393329,"денежный_поток":14393329,"cash":76782676,"команда_чел":6,"ARPU":39,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.4},{"месяц":32,"mau":556604,"платящие":28184,"конверсия_факт_%":5.06,"устойчивая_доля_%":6.7,"партнёры_B2B":19,"учеников_B2B":1900,"выручка_B2C":22265262,"выручка_B2B":285000,"возвраты":676508,"выручка":21873754,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1335850,"поддержка":260000,"налог":1312425,"opex":6409775,"capex":0,"ebitda":15463979,"денежный_поток":15463979,"cash":92246655,"команда_чел":6,"ARPU":39,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.5},{"месяц":33,"mau":584434,"платящие":29801,"конверсия_факт_%":5.1,"устойчивая_доля_%":6.7,"партнёры_B2B":19,"учеников_B2B":1900,"выручка_B2C":23542504,"выручка_B2B":285000,"возвраты":714825,"выручка":23112679,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1402642,"поддержка":260000,"налог":1386761,"opex":6550903,"capex":0,"ebitda":16561776,"денежный_поток":16561776,"cash":108808431,"команда_чел":6,"ARPU":40,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.6},{"месяц":34,"mau":613656,"платящие":31467,"конверсия_факт_%":5.13,"устойчивая_доля_%":6.7,"партнёры_B2B":21,"учеников_B2B":2100,"выручка_B2C":24859012,"выручка_B2B":315000,"возвраты":755220,"выручка":24418791,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1472775,"поддержка":260000,"налог":1465127,"opex":6699402,"capex":0,"ebitda":17719389,"денежный_поток":17719389,"cash":126527820,"команда_чел":6,"ARPU":40,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.7},{"месяц":35,"mau":644339,"платящие":33190,"конверсия_факт_%":5.15,"устойчивая_доля_%":6.7,"партнёры_B2B":21,"учеников_B2B":2100,"выручка_B2C":26220437,"выручка_B2B":315000,"возвраты":796063,"выручка":25739374,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1546413,"поддержка":260000,"налог":1544362,"opex":6852276,"capex":0,"ebitda":18887098,"денежный_поток":18887098,"cash":145414918,"команда_чел":6,"ARPU":40,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.8},{"месяц":36,"mau":676556,"платящие":34977,"конверсия_факт_%":5.17,"устойчивая_доля_%":6.7,"партнёры_B2B":21,"учеников_B2B":2100,"выручка_B2C":27632163,"выручка_B2B":315000,"возвраты":838415,"выручка":27108748,"фот":1989000,"маркетинг":900000,"контент":312500,"инфраструктура":300000,"ии":1623734,"поддержка":260000,"налог":1626525,"opex":7011759,"capex":0,"ebitda":20096989,"денежный_поток":20096989,"cash":165511907,"команда_чел":6,"ARPU":40,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.9}],"итоги":{"выручка_год1":6933375,"выручка_год2":82546657,"выручка_год3":242261651,"выручка_всего":331741683,"opex_всего":155179778,"capex_всего":11050000,"ebitda_всего":176561908,"выручка_м12":1954356,"выручка_м24":12426716,"выручка_м36":27108748,"mau_м12":91937,"mau_м24":376732,"mau_м36":676556,"mrr_м24":12426716,"arr_м24":149120592,"безубыточность_месяц":16,"мин_cash":-32878241,"мин_cash_месяц":15,"потребность_раунда":32878241,"платящих_м24":15970,"маржа_валовая_м24_%":90.3,"партнёры_м24":13},"параметры":{"LTV_валовый_₽":5267,"LTV_маржинальный_₽":4477,"LTV_CAC_маржинальный":3.44,"цена_подписки_₽":790,"конверсия_%":6.0,"churn_%":15.0,"CAC_₽":1300,"LTV_₽":5267,"LTV/CAC":4.05,"payback_мес":1.6,"цена_B2B_₽":150}},"порог_аудитории":{"пессимистичный":{"mau":135861,"платящих":5283,"выручка_₽":3645596},"базовый":{"mau":122741,"платящих":8183,"выручка_₽":6464348},"оптимистичный":{"mau":76058,"платящих":8989,"выручка_₽":7999943}},"чувствительность":[[{"конверсия_мес_%":0.6,"churn_%":12,"устойчивая_доля_%":5.0,"безубыточность_месяц":22,"потребность_₽":54834962,"выручка_м24_₽":8383188,"mau_м24":376732},{"конверсия_мес_%":0.6,"churn_%":15,"устойчивая_доля_%":4.0,"безубыточность_месяц":24,"потребность_₽":57416308,"выручка_м24_₽":7531690,"mau_м24":376732},{"конверсия_мес_%":0.6,"churn_%":18,"устойчивая_доля_%":3.3,"безубыточность_месяц":25,"потребность_₽":60173086,"выручка_м24_₽":6824662,"mau_м24":376732}],[{"конверсия_мес_%":0.8,"churn_%":12,"устойчивая_доля_%":6.7,"безубыточность_месяц":20,"потребность_₽":47368122,"выручка_м24_₽":11114534,"mau_м24":376732},{"конверсия_мес_%":0.8,"churn_%":15,"устойчивая_доля_%":5.3,"безубыточность_месяц":21,"потребность_₽":49262413,"выручка_м24_₽":9979203,"mau_м24":376732},{"конверсия_мес_%":0.8,"churn_%":18,"устойчивая_доля_%":4.4,"безубыточность_месяц":22,"потребность_₽":51277006,"выручка_м24_₽":9036500,"mau_м24":376732}],[{"конверсия_мес_%":1.0,"churn_%":12,"устойчивая_доля_%":8.3,"безубыточность_месяц":18,"потребность_₽":42280392,"выручка_м24_₽":13845880,"mau_м24":376732},{"конверсия_мес_%":1.0,"churn_%":15,"устойчивая_доля_%":6.7,"безубыточность_месяц":19,"потребность_₽":43916591,"выручка_м24_₽":12426716,"mau_м24":376732},{"конверсия_мес_%":1.0,"churn_%":18,"устойчивая_доля_%":5.6,"безубыточность_месяц":20,"потребность_₽":45455315,"выручка_м24_₽":11248337,"mau_м24":376732}],[{"конверсия_мес_%":1.2,"churn_%":12,"устойчивая_доля_%":10.0,"безубыточность_месяц":17,"потребность_₽":38626056,"выручка_м24_₽":16577226,"mau_м24":376732},{"конверсия_мес_%":1.2,"churn_%":15,"устойчивая_доля_%":8.0,"безубыточность_месяц":18,"потребность_₽":39947386,"выручка_м24_₽":14874229,"mau_м24":376732},{"конверсия_мес_%":1.2,"churn_%":18,"устойчивая_доля_%":6.7,"безубыточность_месяц":18,"потребность_₽":41325998,"выручка_м24_₽":13460175,"mau_м24":376732}],[{"конверсия_мес_%":1.4,"churn_%":12,"устойчивая_доля_%":11.7,"безубыточность_месяц":16,"потребность_₽":35745016,"выручка_м24_₽":19308572,"mau_м24":376732},{"конверсия_мес_%":1.4,"churn_%":15,"устойчивая_доля_%":9.3,"безубыточность_месяц":17,"потребность_₽":36914505,"выручка_м24_₽":17321743,"mau_м24":376732},{"конверсия_мес_%":1.4,"churn_%":18,"устойчивая_доля_%":7.8,"безубыточность_месяц":17,"потребность_₽":38120863,"выручка_м24_₽":15672012,"mau_м24":376732}]],"рекомендация_раунда":{"нужно_по_модели":43916591,"с_подушкой_20%":52699909,"доля_инвестора_15%_pre":351332728,"доля_инвестора_20%_pre":263499546},"продукт":{"уроков":413,"листов_русского":18,"кадров_русского":228,"задач":700,"словарных_слов":362,"проверок_в_наборе":6,"версия":"v582"},"capex":[{"статья":"Разработка продукта до релиза","сумма":6000000,"комментарий":"команда 4 человека × 6 месяцев, MVP → бета → релиз"},{"статья":"Дизайн-система и иллюстрации","сумма":800000,"комментарий":"каркас кадров, иллюстрации к задачам, иконки, вырезки персонажей"},{"статья":"Стартовый контент","сумма":1500000,"комментарий":"20 листов русского направления, 700 задач с разборами, 362 словарных слова"},{"статья":"Оборудование и рабочие места","сумма":900000,"комментарий":"6 ноутбуков, мониторы, периферия, лицензии на инструменты"},{"статья":"Юрлицо, товарный знак, договоры","сумма":350000,"комментарий":"регистрация, бухгалтерия за год, товарный знак, шаблоны договоров с школами"},{"статья":"Первичная инфраструктура","сумма":300000,"комментарий":"сервер, домен, SSL, мониторинг, CI, резервные копии, защита персональных данных"},{"статья":"Маркетинг запуска","сумма":1200000,"комментарий":"лендинг, бренд-кампания, работа с олимпиадными сообществами, PR"}],"capex_всего":11050000,"модель":{"пессимистичный":{"сценарий":"пессимистичный","строки":[{"месяц":1,"mau":1200,"платящие":8,"конверсия_факт_%":0.7,"устойчивая_доля_%":3.9,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":5796,"выручка_B2B":0,"возвраты":290,"выручка":5506,"фот":1196000,"маркетинг":90000,"контент":140000,"инфраструктура":60000,"ии":3600,"поддержка":40000,"налог":330,"opex":1529930,"capex":6630000,"ebitda":-1524424,"денежный_поток":-8154424,"cash":-8154424,"команда_чел":4,"ARPU":5,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":-1055.1},{"месяц":2,"mau":1620,"платящие":18,"конверсия_факт_%":1.13,"устойчивая_доля_%":3.9,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":12577,"выручка_B2B":0,"возвраты":629,"выручка":11948,"фот":1196000,"маркетинг":90000,"контент":140000,"инфраструктура":69231,"ии":4860,"поддержка":50000,"налог":717,"opex":1550808,"capex":3315000,"ebitda":-1538859,"денежный_поток":-4853859,"cash":-13008283,"команда_чел":4,"ARPU":7,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":-520.1},{"месяц":3,"mau":2187,"платящие":30,"конверсия_факт_%":1.38,"устойчивая_доля_%":3.9,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":20877,"выручка_B2B":0,"возвраты":1044,"выручка":19833,"фот":1196000,"маркетинг":90000,"контент":140000,"инфраструктура":78462,"ии":6561,"поддержка":60000,"налог":1190,"opex":1572213,"capex":1105000,"ebitda":-1552380,"денежный_поток":-2657380,"cash":-15665663,"команда_чел":4,"ARPU":9,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":-328.7},{"месяц":4,"mau":2952,"платящие":45,"конверсия_факт_%":1.54,"устойчивая_доля_%":3.9,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":31379,"выручка_B2B":0,"возвраты":1569,"выручка":29810,"фот":1196000,"маркетинг":90000,"контент":140000,"инфраструктура":87692,"ии":8857,"поддержка":70000,"налог":1789,"opex":1594338,"capex":0,"ebitda":-1564528,"денежный_поток":-1564528,"cash":-17230191,"команда_чел":4,"ARPU":10,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":-223.9},{"месяц":5,"mau":3986,"платящие":65,"конверсия_факт_%":1.64,"устойчивая_доля_%":3.9,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":44982,"выручка_B2B":0,"возвраты":2249,"выручка":42733,"фот":1196000,"маркетинг":90000,"контент":140000,"инфраструктура":96923,"ии":11957,"поддержка":80000,"налог":2564,"opex":1617444,"capex":0,"ebitda":-1574711,"денежный_поток":-1574711,"cash":-18804902,"команда_чел":4,"ARPU":11,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":-154.8},{"месяц":6,"mau":5381,"платящие":91,"конверсия_факт_%":1.69,"устойчивая_доля_%":3.9,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":62875,"выручка_B2B":0,"возвраты":3144,"выручка":59731,"фот":1196000,"маркетинг":90000,"контент":140000,"инфраструктура":106154,"ии":16143,"поддержка":90000,"налог":3584,"opex":1641880,"capex":0,"ebitda":-1582149,"денежный_поток":-1582149,"cash":-20387051,"команда_чел":4,"ARPU":11,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":-104.7},{"месяц":7,"mau":6726,"платящие":122,"конверсия_факт_%":1.81,"устойчивая_доля_%":3.9,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":84044,"выручка_B2B":0,"возвраты":4202,"выручка":79842,"фот":1196000,"маркетинг":90000,"контент":140000,"инфраструктура":115385,"ии":20178,"поддержка":100000,"налог":4791,"opex":1666353,"capex":0,"ebitda":-1586511,"денежный_поток":-1586511,"cash":-21973563,"команда_чел":4,"ARPU":12,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":-69.8},{"месяц":8,"mau":8408,"платящие":159,"конверсия_факт_%":1.89,"устойчивая_доля_%":3.9,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":109525,"выручка_B2B":0,"возвраты":5476,"выручка":104049,"фот":1196000,"маркетинг":90000,"контент":140000,"инфраструктура":124615,"ии":25223,"поддержка":110000,"налог":6243,"opex":1692081,"capex":0,"ebitda":-1588032,"денежный_поток":-1588032,"cash":-23561595,"команда_чел":4,"ARPU":12,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":-44.0},{"месяц":9,"mau":10509,"платящие":204,"конверсия_факт_%":1.94,"устойчивая_доля_%":3.9,"партнёры_B2B":2,"учеников_B2B":120,"выручка_B2C":140571,"выручка_B2B":14400,"возвраты":7749,"выручка":147222,"фот":1592500,"маркетинг":90000,"контент":140000,"инфраструктура":133846,"ии":31528,"поддержка":120000,"налог":8833,"opex":2116708,"capex":0,"ebitda":-1969485,"денежный_поток":-1969485,"cash":-25531080,"команда_чел":5,"ARPU":14,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":-12.3},{"месяц":10,"mau":13137,"платящие":259,"конверсия_факт_%":1.97,"устойчивая_доля_%":3.9,"партнёры_B2B":2,"учеников_B2B":120,"выручка_B2C":178719,"выручка_B2B":14400,"возвраты":9656,"выручка":183463,"фот":1592500,"маркетинг":90000,"контент":140000,"инфраструктура":143077,"ии":39410,"поддержка":130000,"налог":11008,"opex":2145995,"capex":0,"ebitda":-1962532,"денежный_поток":-1962532,"cash":-27493612,"команда_чел":5,"ARPU":14,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":0.5},{"месяц":11,"mau":16421,"платящие":327,"конверсия_факт_%":1.99,"устойчивая_доля_%":3.9,"партнёры_B2B":2,"учеников_B2B":120,"выручка_B2C":225863,"выручка_B2B":14400,"возвраты":12013,"выручка":228250,"фот":1592500,"маркетинг":90000,"контент":140000,"инфраструктура":152308,"ии":49263,"поддержка":140000,"налог":13695,"opex":2177766,"capex":0,"ebitda":-1949516,"денежный_поток":-1949516,"cash":-29443128,"команда_чел":5,"ARPU":14,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":11.7},{"месяц":12,"mau":20526,"платящие":412,"конверсия_факт_%":2.01,"устойчивая_доля_%":3.9,"партнёры_B2B":3,"учеников_B2B":180,"выручка_B2C":284350,"выручка_B2B":21600,"возвраты":15297,"выручка":290652,"фот":1592500,"маркетинг":90000,"контент":140000,"инфраструктура":161538,"ии":61579,"поддержка":150000,"налог":17439,"opex":2213056,"capex":0,"ebitda":-1922404,"денежный_поток":-1922404,"cash":-31365532,"команда_чел":5,"ARPU":14,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":23.2},{"месяц":13,"mau":22989,"платящие":499,"конверсия_факт_%":2.17,"устойчивая_доля_%":3.9,"партнёры_B2B":3,"учеников_B2B":180,"выручка_B2C":344206,"выручка_B2B":21600,"возвраты":18290,"выручка":347515,"фот":1592500,"маркетинг":90000,"контент":175000,"инфраструктура":170769,"ии":68968,"поддержка":150000,"налог":20851,"opex":2268088,"capex":0,"ebitda":-1920573,"денежный_поток":-1920573,"cash":-33286105,"команда_чел":5,"ARPU":15,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":31.0},{"месяц":14,"mau":25748,"платящие":589,"конверсия_факт_%":2.29,"устойчивая_доля_%":3.9,"партнёры_B2B":3,"учеников_B2B":180,"выручка_B2C":406612,"выручка_B2B":21600,"возвраты":21411,"выручка":406802,"фот":1592500,"маркетинг":90000,"контент":175000,"инфраструктура":180000,"ии":77244,"поддержка":150000,"налог":24408,"opex":2289153,"capex":0,"ebitda":-1882351,"денежный_поток":-1882351,"cash":-35168456,"команда_чел":5,"ARPU":16,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":36.8},{"месяц":15,"mau":28838,"платящие":685,"конверсия_факт_%":2.38,"устойчивая_доля_%":3.9,"партнёры_B2B":4,"учеников_B2B":240,"выручка_B2C":472709,"выручка_B2B":28800,"возвраты":25075,"выручка":476434,"фот":1592500,"маркетинг":90000,"контент":175000,"инфраструктура":180000,"ии":86514,"поддержка":150000,"налог":28586,"opex":2302600,"capex":0,"ebitda":-1826166,"денежный_поток":-1826166,"cash":-36994622,"команда_чел":5,"ARPU":17,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":44.1},{"месяц":16,"mau":32298,"платящие":788,"конверсия_факт_%":2.44,"устойчивая_доля_%":3.9,"партнёры_B2B":4,"учеников_B2B":240,"выручка_B2C":543623,"выручка_B2B":28800,"возвраты":28621,"выручка":543802,"фот":1592500,"маркетинг":90000,"контент":175000,"инфраструктура":180000,"ии":96895,"поддержка":150000,"налог":32628,"opex":2317024,"capex":0,"ebitda":-1773221,"денежный_поток":-1773221,"cash":-38767844,"команда_чел":5,"ARPU":17,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":49.1},{"месяц":17,"mau":36174,"платящие":899,"конверсия_факт_%":2.49,"устойчивая_доля_%":3.9,"партнёры_B2B":4,"учеников_B2B":240,"выручка_B2C":620493,"выручка_B2B":28800,"возвраты":32465,"выручка":616828,"фот":1592500,"маркетинг":92524,"контент":175000,"инфраструктура":180000,"ии":108523,"поддержка":150000,"налог":37010,"opex":2335557,"capex":0,"ebitda":-1718728,"денежный_поток":-1718728,"cash":-40486572,"команда_чел":5,"ARPU":17,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":53.2},{"месяц":18,"mau":40515,"платящие":1021,"конверсия_факт_%":2.52,"устойчивая_доля_%":3.9,"партнёры_B2B":5,"учеников_B2B":300,"выручка_B2C":704493,"выручка_B2B":36000,"возвраты":37025,"выручка":703468,"фот":1989000,"маркетинг":105520,"контент":175000,"инфраструктура":180000,"ии":121546,"поддержка":150000,"налог":42208,"opex":2763274,"capex":0,"ebitda":-2059806,"денежный_поток":-2059806,"cash":-42546378,"команда_чел":6,"ARPU":17,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":57.1},{"месяц":19,"mau":43756,"платящие":1144,"конверсия_факт_%":2.61,"устойчивая_доля_%":3.9,"партнёры_B2B":5,"учеников_B2B":300,"выручка_B2C":789028,"выручка_B2B":36000,"возвраты":41251,"выручка":783776,"фот":1989000,"маркетинг":117566,"контент":175000,"инфраструктура":180000,"ии":131269,"поддержка":150000,"налог":47027,"opex":2789862,"capex":0,"ebitda":-2006086,"денежный_поток":-2006086,"cash":-44552464,"команда_чел":6,"ARPU":18,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":60.3},{"месяц":20,"mau":47257,"платящие":1268,"конверсия_факт_%":2.68,"устойчивая_доля_%":3.9,"партнёры_B2B":5,"учеников_B2B":300,"выручка_B2C":875254,"выручка_B2B":36000,"возвраты":45563,"выручка":865691,"фот":1989000,"маркетинг":129854,"контент":175000,"инфраструктура":180000,"ии":141771,"поддержка":150000,"налог":51941,"opex":2817566,"capex":0,"ebitda":-1951875,"денежный_поток":-1951875,"cash":-46504339,"команда_чел":6,"ARPU":18,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":62.8},{"месяц":21,"mau":51038,"платящие":1397,"конверсия_факт_%":2.74,"устойчивая_доля_%":3.9,"партнёры_B2B":6,"учеников_B2B":360,"выручка_B2C":964219,"выручка_B2B":43200,"возвраты":50371,"выручка":957048,"фот":1989000,"маркетинг":143557,"контент":175000,"инфраструктура":180000,"ии":153113,"поддержка":150000,"налог":57423,"opex":2848093,"capex":0,"ebitda":-1891044,"денежный_поток":-1891044,"cash":-48395383,"команда_чел":6,"ARPU":19,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":65.2},{"месяц":22,"mau":55121,"платящие":1532,"конверсия_факт_%":2.78,"устойчивая_доля_%":3.9,"партнёры_B2B":6,"учеников_B2B":360,"выручка_B2C":1056892,"выручка_B2B":43200,"возвраты":55005,"выручка":1045087,"фот":1989000,"маркетинг":156763,"контент":175000,"инфраструктура":180000,"ии":165362,"поддержка":150000,"налог":62705,"opex":2878830,"capex":0,"ebitda":-1833742,"денежный_поток":-1833742,"cash":-50229125,"команда_чел":6,"ARPU":19,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":67.0},{"месяц":23,"mau":59530,"платящие":1673,"конверсия_факт_%":2.81,"устойчивая_доля_%":3.9,"партнёры_B2B":6,"учеников_B2B":360,"выручка_B2C":1154182,"выручка_B2B":43200,"возвраты":59869,"выручка":1137513,"фот":1989000,"маркетинг":170627,"контент":175000,"инфраструктура":180000,"ии":178590,"поддержка":150000,"налог":68251,"opex":2911468,"capex":0,"ebitda":-1773955,"денежный_поток":-1773955,"cash":-52003080,"команда_чел":6,"ARPU":19,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":68.5},{"месяц":24,"mau":64293,"платящие":1822,"конверсия_факт_%":2.83,"устойчивая_доля_%":3.9,"партнёры_B2B":7,"учеников_B2B":420,"выручка_B2C":1256963,"выручка_B2B":50400,"возвраты":65368,"выручка":1241994,"фот":1989000,"маркетинг":186299,"контент":175000,"инфраструктура":180000,"ии":192878,"поддержка":150000,"налог":74520,"opex":2947697,"capex":0,"ebitda":-1705702,"денежный_поток":-1705702,"cash":-53708783,"команда_чел":6,"ARPU":19,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":70.0},{"месяц":25,"mau":66864,"платящие":1962,"конверсия_факт_%":2.93,"устойчивая_доля_%":3.9,"партнёры_B2B":7,"учеников_B2B":420,"выручка_B2C":1353664,"выручка_B2B":50400,"возвраты":70203,"выручка":1333861,"фот":1989000,"маркетинг":200079,"контент":175000,"инфраструктура":180000,"ии":200593,"поддержка":150000,"налог":80032,"opex":2974704,"capex":0,"ebitda":-1640843,"денежный_поток":-1640843,"cash":-55349626,"команда_чел":6,"ARPU":20,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":71.5},{"месяц":26,"mau":69539,"платящие":2095,"конверсия_факт_%":3.01,"устойчивая_доля_%":3.9,"партнёры_B2B":7,"учеников_B2B":420,"выручка_B2C":1445877,"выручка_B2B":50400,"возвраты":74814,"выручка":1421463,"фот":1989000,"маркетинг":213219,"контент":175000,"инфраструктура":180000,"ии":208617,"поддержка":150000,"налог":85288,"opex":3001124,"capex":0,"ebitda":-1579661,"денежный_поток":-1579661,"cash":-56929286,"команда_чел":6,"ARPU":20,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":72.7},{"месяц":27,"mau":72320,"платящие":2225,"конверсия_факт_%":3.08,"устойчивая_доля_%":3.9,"партнёры_B2B":8,"учеников_B2B":480,"выручка_B2C":1534927,"выручка_B2B":57600,"возвраты":79626,"выручка":1512900,"фот":1989000,"маркетинг":226935,"контент":175000,"инфраструктура":180000,"ии":216961,"поддержка":150000,"налог":90774,"opex":3028670,"capex":0,"ebitda":-1515770,"денежный_поток":-1515770,"cash":-58445056,"команда_чел":6,"ARPU":21,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":73.8},{"месяц":28,"mau":75213,"платящие":2351,"конверсия_факт_%":3.13,"устойчивая_доля_%":3.9,"партнёры_B2B":8,"учеников_B2B":480,"выручка_B2C":1621920,"выручка_B2B":57600,"возвраты":83976,"выручка":1595544,"фот":1989000,"маркетинг":239332,"контент":175000,"инфраструктура":180000,"ии":225640,"поддержка":150000,"налог":95733,"opex":3054704,"capex":0,"ebitda":-1459160,"денежный_поток":-1459160,"cash":-59904216,"команда_чел":6,"ARPU":21,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":74.6},{"месяц":29,"mau":78222,"платящие":2475,"конверсия_факт_%":3.16,"устойчивая_доля_%":3.9,"партнёры_B2B":8,"учеников_B2B":480,"выручка_B2C":1707785,"выручка_B2B":57600,"возвраты":88269,"выручка":1677116,"фот":1989000,"маркетинг":251567,"контент":175000,"инфраструктура":180000,"ии":234665,"поддержка":150000,"налог":100627,"opex":3080860,"capex":0,"ebitda":-1403744,"денежный_поток":-1403744,"cash":-61307960,"команда_чел":6,"ARPU":21,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":75.3},{"месяц":30,"mau":81351,"платящие":2599,"конверсия_факт_%":3.19,"устойчивая_доля_%":3.9,"партнёры_B2B":9,"учеников_B2B":540,"выручка_B2C":1793307,"выручка_B2B":64800,"возвраты":92905,"выручка":1765202,"фот":1989000,"маркетинг":264780,"контент":175000,"инфраструктура":180000,"ии":244052,"поддержка":150000,"налог":105912,"opex":3108744,"capex":0,"ebitda":-1343542,"денежный_поток":-1343542,"cash":-62651502,"команда_чел":6,"ARPU":22,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":76.0},{"месяц":31,"mau":84605,"платящие":2723,"конверсия_факт_%":3.22,"устойчивая_доля_%":3.9,"партнёры_B2B":9,"учеников_B2B":540,"выручка_B2C":1879152,"выручка_B2B":64800,"возвраты":97198,"выручка":1846755,"фот":1989000,"маркетинг":277013,"контент":175000,"инфраструктура":180000,"ии":253814,"поддержка":150000,"налог":110805,"opex":3135632,"capex":0,"ebitda":-1288878,"денежный_поток":-1288878,"cash":-63940380,"команда_чел":6,"ARPU":22,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":76.5},{"месяц":32,"mau":87989,"платящие":2849,"конверсия_факт_%":3.24,"устойчивая_доля_%":3.9,"партнёры_B2B":9,"учеников_B2B":540,"выручка_B2C":1965891,"выручка_B2B":64800,"возвраты":101535,"выручка":1929157,"фот":1989000,"маркетинг":289373,"контент":175000,"инфраструктура":180000,"ии":263966,"поддержка":150000,"налог":115749,"opex":3163089,"capex":0,"ebitda":-1233933,"денежный_поток":-1233933,"cash":-65174313,"команда_чел":6,"ARPU":22,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":77.0},{"месяц":33,"mau":91508,"платящие":2977,"конверсия_факт_%":3.25,"устойчивая_доля_%":3.9,"партнёры_B2B":10,"учеников_B2B":600,"выручка_B2C":2054016,"выручка_B2B":72000,"возвраты":106301,"выручка":2019715,"фот":1989000,"маркетинг":302957,"контент":175000,"инфраструктура":180000,"ии":274525,"поддержка":150000,"налог":121183,"opex":3192665,"capex":0,"ebitda":-1172950,"денежный_поток":-1172950,"cash":-66347263,"команда_чел":6,"ARPU":22,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":77.5},{"месяц":34,"mau":95169,"платящие":3107,"конверсия_факт_%":3.26,"устойчивая_доля_%":3.9,"партнёры_B2B":10,"учеников_B2B":600,"выручка_B2C":2143958,"выручка_B2B":72000,"возвраты":110798,"выручка":2105160,"фот":1989000,"маркетинг":315774,"контент":175000,"инфраструктура":180000,"ии":285506,"поддержка":150000,"налог":126310,"opex":3221590,"capex":0,"ebitda":-1116430,"денежный_поток":-1116430,"cash":-67463692,"команда_чел":6,"ARPU":22,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":77.9},{"месяц":35,"mau":98975,"платящие":3241,"конверсия_факт_%":3.27,"устойчивая_доля_%":3.9,"партнёры_B2B":10,"учеников_B2B":600,"выручка_B2C":2236097,"выручка_B2B":72000,"возвраты":115405,"выручка":2192692,"фот":1989000,"маркетинг":328904,"контент":175000,"инфраструктура":180000,"ии":296926,"поддержка":150000,"налог":131562,"opex":3251392,"capex":0,"ebitda":-1058699,"денежный_поток":-1058699,"cash":-68522392,"команда_чел":6,"ARPU":22,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":78.2},{"месяц":36,"mau":102934,"платящие":3378,"конверсия_факт_%":3.28,"устойчивая_доля_%":3.9,"партнёры_B2B":11,"учеников_B2B":660,"выручка_B2C":2330773,"выручка_B2B":79200,"возвраты":120499,"выручка":2289475,"фот":1989000,"маркетинг":343421,"контент":175000,"инфраструктура":180000,"ии":308803,"поддержка":150000,"налог":137368,"opex":3283593,"capex":0,"ebitda":-994118,"денежный_поток":-994118,"cash":-69516510,"команда_чел":6,"ARPU":22,"LTV":3833,"LTV_CAC":2.13,"payback_мес":2.6,"маржа_валовая_%":78.6}],"итоги":{"выручка_год1":1203039,"выручка_год2":9125958,"выручка_год3":21689040,"выручка_всего":32018037,"opex_всего":90484551,"capex_всего":11050000,"ebitda_всего":-58466508,"выручка_м12":290652,"выручка_м24":1241994,"выручка_м36":2289475,"mau_м12":20526,"mau_м24":64293,"mau_м36":102934,"mrr_м24":1241994,"arr_м24":14903928,"безубыточность_месяц":null,"мин_cash":-69516510,"мин_cash_месяц":36,"потребность_раунда":69516510,"платящих_м24":1822,"маржа_валовая_м24_%":70.0,"партнёры_м24":7},"параметры":{"LTV_валовый_₽":3833,"LTV_маржинальный_₽":3258,"LTV_CAC_маржинальный":1.81,"цена_подписки_₽":690,"конверсия_%":4.0,"churn_%":18.0,"CAC_₽":1800,"LTV_₽":3833,"LTV/CAC":2.13,"payback_мес":2.6,"цена_B2B_₽":120}},"базовый":{"сценарий":"базовый","строки":[{"месяц":1,"mau":2000,"платящие":20,"конверсия_факт_%":1.0,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":15800,"выручка_B2B":0,"возвраты":474,"выручка":15326,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":80000,"ии":4800,"поддержка":60000,"налог":920,"opex":1771720,"capex":6630000,"ebitda":-1756394,"денежный_поток":-8386394,"cash":-8386394,"команда_чел":4,"ARPU":8,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-453.3},{"месяц":2,"mau":3000,"платящие":47,"конверсия_факт_%":1.57,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":37130,"выручка_B2B":0,"возвраты":1114,"выручка":36016,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":100000,"ии":7200,"поддержка":82222,"налог":2161,"opex":1817583,"capex":3315000,"ebitda":-1781567,"денежный_поток":-5096567,"cash":-13482961,"команда_чел":4,"ARPU":12,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-197.6},{"месяц":3,"mau":4500,"платящие":85,"конверсия_факт_%":1.89,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":67110,"выручка_B2B":0,"возвраты":2013,"выручка":65097,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":120000,"ии":10800,"поддержка":104444,"налог":3906,"opex":1865150,"capex":1105000,"ebitda":-1800053,"денежный_поток":-2905053,"cash":-16388014,"команда_чел":4,"ARPU":14,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-100.9},{"месяц":4,"mau":6750,"платящие":140,"конверсия_факт_%":2.07,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":110369,"выручка_B2B":0,"возвраты":3311,"выручка":107058,"фот":1196000,"маркетинг":180000,"контент":250000,"инфраструктура":140000,"ии":16200,"поддержка":126667,"налог":6423,"opex":1915290,"capex":0,"ebitda":-1808232,"денежный_поток":-1808232,"cash":-18196246,"команда_чел":4,"ARPU":16,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-45.9},{"месяц":5,"mau":10125,"платящие":220,"конверсия_факт_%":2.17,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":173801,"выручка_B2B":0,"возвраты":5214,"выручка":168587,"фот":1592500,"маркетинг":180000,"контент":250000,"инфраструктура":160000,"ии":24300,"поддержка":148889,"налог":10115,"opex":2365804,"capex":0,"ebitda":-2197217,"денежный_поток":-2197217,"cash":-20393463,"команда_чел":5,"ARPU":17,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":-9.3},{"месяц":6,"mau":15188,"платящие":339,"конверсия_факт_%":2.23,"устойчивая_доля_%":6.7,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":267712,"выручка_B2B":0,"возвраты":8031,"выручка":259681,"фот":1592500,"маркетинг":180000,"контент":250000,"инфраструктура":180000,"ии":36450,"поддержка":171111,"налог":15581,"opex":2425642,"capex":0,"ebitda":-2165961,"денежный_поток":-2165961,"cash":-22559424,"команда_чел":5,"ARPU":17,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":16.6},{"месяц":7,"mau":20503,"платящие":493,"конверсия_факт_%":2.4,"устойчивая_доля_%":6.7,"партнёры_B2B":3,"учеников_B2B":300,"выручка_B2C":389530,"выручка_B2B":45000,"возвраты":13036,"выручка":421494,"фот":1592500,"маркетинг":180000,"контент":250000,"инфраструктура":200000,"ии":49208,"поддержка":193333,"налог":25290,"opex":2490330,"capex":0,"ebitda":-2068836,"денежный_поток":-2068836,"cash":-24628261,"команда_чел":5,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":40.9},{"месяц":8,"mau":27679,"платящие":696,"конверсия_факт_%":2.51,"устойчивая_доля_%":6.7,"партнёры_B2B":3,"учеников_B2B":300,"выручка_B2C":549766,"выручка_B2B":45000,"возвраты":17843,"выручка":576923,"фот":1592500,"маркетинг":180000,"контент":250000,"инфраструктура":220000,"ии":66430,"поддержка":215556,"налог":34615,"opex":2559101,"capex":0,"ebitda":-1982178,"денежный_поток":-1982178,"cash":-26610438,"команда_чел":5,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":50.4},{"месяц":9,"mau":37367,"платящие":965,"конверсия_факт_%":2.58,"устойчивая_доля_%":6.7,"партнёры_B2B":3,"учеников_B2B":300,"выручка_B2C":762500,"выручка_B2B":45000,"возвраты":24225,"выручка":783275,"фот":2366000,"маркетинг":195819,"контент":250000,"инфраструктура":240000,"ии":89681,"поддержка":237778,"налог":46997,"opex":3426274,"capex":0,"ebitda":-2642999,"денежный_поток":-2642999,"cash":-29253437,"команда_чел":7,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":57.9},{"месяц":10,"mau":50445,"платящие":1325,"конверсия_факт_%":2.63,"устойчивая_доля_%":6.7,"партнёры_B2B":5,"учеников_B2B":500,"выручка_B2C":1046644,"выручка_B2B":75000,"возвраты":33649,"выручка":1087994,"фот":2366000,"маркетинг":271999,"контент":250000,"инфраструктура":260000,"ии":121069,"поддержка":260000,"налог":65280,"opex":3594347,"capex":0,"ebitda":-2506353,"денежный_поток":-2506353,"cash":-31759790,"команда_чел":7,"ARPU":22,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":65.0},{"месяц":11,"mau":68101,"платящие":1807,"конверсия_факт_%":2.65,"устойчивая_доля_%":6.7,"партнёры_B2B":5,"учеников_B2B":500,"выручка_B2C":1427647,"выручка_B2B":75000,"возвраты":45079,"выручка":1457568,"фот":2366000,"маркетинг":364392,"контент":250000,"инфраструктура":280000,"ии":163443,"поддержка":260000,"налог":87454,"opex":3771289,"capex":0,"ebitda":-2313721,"денежный_поток":-2313721,"cash":-34073511,"команда_чел":7,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":69.6},{"месяц":12,"mau":91937,"платящие":2455,"конверсия_факт_%":2.67,"устойчивая_доля_%":6.7,"партнёры_B2B":5,"учеников_B2B":500,"выручка_B2C":1939800,"выручка_B2B":75000,"возвраты":60444,"выручка":1954356,"фот":2366000,"маркетинг":488589,"контент":250000,"инфраструктура":300000,"ии":220648,"поддержка":260000,"налог":117261,"opex":4002498,"capex":0,"ebitda":-2048142,"денежный_поток":-2048142,"cash":-36121653,"команда_чел":7,"ARPU":21,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":73.4},{"месяц":13,"mau":105727,"платящие":3144,"конверсия_факт_%":2.97,"устойчивая_доля_%":6.7,"партнёры_B2B":7,"учеников_B2B":700,"выручка_B2C":2484075,"выручка_B2B":105000,"возвраты":77672,"выручка":2511403,"фот":2366000,"маркетинг":627851,"контент":312500,"инфраструктура":300000,"ии":253745,"поддержка":260000,"налог":150684,"opex":4270780,"capex":0,"ebitda":-1759377,"денежный_поток":-1759377,"cash":-37881031,"команда_чел":7,"ARPU":24,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":78.0},{"месяц":14,"mau":121586,"платящие":3889,"конверсия_факт_%":3.2,"устойчивая_доля_%":6.7,"партнёры_B2B":7,"учеников_B2B":700,"выручка_B2C":3071995,"выручка_B2B":105000,"возвраты":95310,"выручка":3081685,"фот":2366000,"маркетинг":770421,"контент":312500,"инфраструктура":300000,"ии":291807,"поддержка":260000,"налог":184901,"opex":4485630,"capex":0,"ebitda":-1403944,"денежный_поток":-1403944,"cash":-39284975,"команда_чел":7,"ARPU":25,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":80.8},{"месяц":15,"mau":139824,"платящие":4704,"конверсия_факт_%":3.36,"устойчивая_доля_%":6.7,"партнёры_B2B":7,"учеников_B2B":700,"выручка_B2C":3715807,"выручка_B2B":105000,"возвраты":114624,"выручка":3706183,"фот":3217500,"маркетинг":926546,"контент":312500,"инфраструктура":300000,"ии":335578,"поддержка":260000,"налог":222371,"opex":5574495,"capex":0,"ebitda":-1868312,"денежный_поток":-1868312,"cash":-41153287,"команда_чел":9,"ARPU":27,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":82.9},{"месяц":16,"mau":160798,"платящие":5606,"конверсия_факт_%":3.49,"устойчивая_доля_%":6.7,"партнёры_B2B":9,"учеников_B2B":900,"выручка_B2C":4428739,"выручка_B2B":135000,"возвраты":136912,"выручка":4426827,"фот":3217500,"маркетинг":1106707,"контент":312500,"инфраструктура":300000,"ии":385915,"поддержка":260000,"налог":265610,"opex":5848231,"capex":0,"ebitda":-1421404,"денежный_поток":-1421404,"cash":-42574691,"команда_чел":9,"ARPU":28,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":84.5},{"месяц":17,"mau":184918,"платящие":6614,"конверсия_факт_%":3.58,"устойчивая_доля_%":6.7,"партнёры_B2B":9,"учеников_B2B":900,"выручка_B2C":5225277,"выручка_B2B":135000,"возвраты":160808,"выручка":5199469,"фот":3217500,"маркетинг":1299867,"контент":312500,"инфраструктура":300000,"ии":443802,"поддержка":260000,"налог":311968,"opex":6145637,"capex":0,"ebitda":-946169,"денежный_поток":-946169,"cash":-43520860,"команда_чел":9,"ARPU":28,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":85.7},{"месяц":18,"mau":212655,"платящие":7749,"конверсия_факт_%":3.64,"устойчивая_доля_%":6.7,"партнёры_B2B":9,"учеников_B2B":900,"выручка_B2C":6121461,"выручка_B2B":135000,"возвраты":187694,"выручка":6068767,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":510372,"поддержка":260000,"налог":364126,"opex":6464498,"capex":0,"ebitda":-395731,"денежный_поток":-395731,"cash":-43916591,"команда_чел":9,"ARPU":29,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":86.6},{"месяц":19,"mau":233921,"платящие":8926,"конверсия_факт_%":3.82,"устойчивая_доля_%":6.7,"партнёры_B2B":11,"учеников_B2B":1100,"выручка_B2C":7051216,"выручка_B2B":165000,"возвраты":216486,"выручка":6999729,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":561410,"поддержка":260000,"налог":419984,"opex":6571393,"capex":0,"ebitda":428336,"денежный_поток":428336,"cash":-43488255,"команда_чел":9,"ARPU":30,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":87.7},{"месяц":20,"mau":257313,"платящие":10160,"конверсия_факт_%":3.95,"устойчивая_доля_%":6.7,"партнёры_B2B":11,"учеников_B2B":1100,"выручка_B2C":8026304,"выручка_B2B":165000,"возвраты":245739,"выручка":7945565,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":617551,"поддержка":260000,"налог":476734,"opex":6684285,"capex":0,"ebitda":1261280,"денежный_поток":1261280,"cash":-42226975,"команда_чел":9,"ARPU":31,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":88.5},{"месяц":21,"mau":283044,"платящие":11466,"конверсия_факт_%":4.05,"устойчивая_доля_%":6.7,"партнёры_B2B":11,"учеников_B2B":1100,"выручка_B2C":9058406,"выручка_B2B":165000,"возвраты":276702,"выручка":8946704,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":679306,"поддержка":260000,"налог":536802,"opex":6806108,"capex":0,"ebitda":2140596,"денежный_поток":2140596,"cash":-40086379,"команда_чел":9,"ARPU":32,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":89.1},{"месяц":22,"mau":311348,"платящие":12860,"конверсия_факт_%":4.13,"устойчивая_доля_%":6.7,"партнёры_B2B":13,"учеников_B2B":1300,"выручка_B2C":10159298,"выручка_B2B":195000,"возвраты":310629,"выручка":10043669,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":747236,"поддержка":260000,"налог":602620,"opex":6939856,"capex":0,"ebitda":3103813,"денежный_поток":3103813,"cash":-36982566,"команда_чел":9,"ARPU":32,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":89.6},{"месяц":23,"mau":342483,"платящие":14356,"конверсия_факт_%":4.19,"устойчивая_доля_%":6.7,"партнёры_B2B":13,"учеников_B2B":1300,"выручка_B2C":11341021,"выручка_B2B":195000,"возвраты":346081,"выручка":11189940,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":821960,"поддержка":260000,"налог":671396,"opex":7083356,"capex":0,"ebitda":4106584,"денежный_поток":4106584,"cash":-32875982,"команда_чел":9,"ARPU":33,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":90.0},{"месяц":24,"mau":376732,"платящие":15970,"конверсия_факт_%":4.24,"устойчивая_доля_%":6.7,"партнёры_B2B":13,"учеников_B2B":1300,"выручка_B2C":12616048,"выручка_B2B":195000,"возвраты":384331,"выручка":12426716,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":904156,"поддержка":260000,"налог":745603,"opex":7239759,"capex":0,"ebitda":5186957,"денежный_поток":5186957,"cash":-27689024,"команда_чел":9,"ARPU":33,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":90.3},{"месяц":25,"mau":395568,"платящие":17530,"конверсия_факт_%":4.43,"устойчивая_доля_%":6.7,"партнёры_B2B":15,"учеников_B2B":1500,"выручка_B2C":13848629,"выручка_B2B":225000,"возвраты":422209,"выручка":13651420,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":949364,"поддержка":260000,"налог":819085,"opex":7358449,"capex":0,"ebitda":6292971,"денежный_поток":6292971,"cash":-21396053,"команда_чел":9,"ARPU":35,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":90.8},{"месяц":26,"mau":415347,"платящие":19054,"конверсия_факт_%":4.59,"устойчивая_доля_%":6.7,"партнёры_B2B":15,"учеников_B2B":1500,"выручка_B2C":15052573,"выручка_B2B":225000,"возвраты":458327,"выручка":14819246,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":996832,"поддержка":260000,"налог":889155,"opex":7475987,"capex":0,"ebitda":7343259,"денежный_поток":7343259,"cash":-14052794,"команда_чел":9,"ARPU":36,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":91.2},{"месяц":27,"mau":436114,"платящие":20557,"конверсия_факт_%":4.71,"устойчивая_доля_%":6.7,"партнёры_B2B":15,"учеников_B2B":1500,"выручка_B2C":16239987,"выручка_B2B":225000,"возвраты":493950,"выручка":15971037,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1046673,"поддержка":260000,"налог":958262,"opex":7594936,"capex":0,"ebitda":8376102,"денежный_поток":8376102,"cash":-5676692,"команда_чел":9,"ARPU":37,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":91.6},{"месяц":28,"mau":457920,"платящие":22053,"конверсия_факт_%":4.82,"устойчивая_доля_%":6.7,"партнёры_B2B":17,"учеников_B2B":1700,"выручка_B2C":17421554,"выручка_B2B":255000,"возвраты":530297,"выручка":17146257,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1099007,"поддержка":260000,"налог":1028775,"opex":7717783,"capex":0,"ebitda":9428475,"денежный_поток":9428475,"cash":3751782,"команда_чел":9,"ARPU":37,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":91.8},{"месяц":29,"mau":480816,"платящие":23553,"конверсия_факт_%":4.9,"устойчивая_доля_%":6.7,"партнёры_B2B":17,"учеников_B2B":1700,"выручка_B2C":18606764,"выручка_B2B":255000,"возвраты":565853,"выручка":18295911,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1153957,"поддержка":260000,"налог":1097755,"opex":7841712,"capex":0,"ebitda":10454199,"денежный_поток":10454199,"cash":14205981,"команда_чел":9,"ARPU":38,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.1},{"месяц":30,"mau":504856,"платящие":25068,"конверсия_факт_%":4.97,"устойчивая_доля_%":6.7,"партнёры_B2B":17,"учеников_B2B":1700,"выручка_B2C":19804115,"выручка_B2B":255000,"возвраты":601773,"выручка":19457341,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1211655,"поддержка":260000,"налог":1167440,"opex":7969096,"capex":0,"ebitda":11488246,"денежный_поток":11488246,"cash":25694227,"команда_чел":9,"ARPU":39,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.2},{"месяц":31,"mau":530099,"платящие":26609,"конверсия_факт_%":5.02,"устойчивая_доля_%":6.7,"партнёры_B2B":19,"учеников_B2B":1900,"выручка_B2C":21021281,"выручка_B2B":285000,"возвраты":639188,"выручка":20667093,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1272238,"поддержка":260000,"налог":1240026,"opex":8102264,"capex":0,"ebitda":12564829,"денежный_поток":12564829,"cash":38259056,"команда_чел":9,"ARPU":39,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.4},{"месяц":32,"mau":556604,"платящие":28184,"конверсия_факт_%":5.06,"устойчивая_доля_%":6.7,"партнёры_B2B":19,"учеников_B2B":1900,"выручка_B2C":22265262,"выручка_B2B":285000,"возвраты":676508,"выручка":21873754,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1335850,"поддержка":260000,"налог":1312425,"opex":8238275,"capex":0,"ebitda":13635479,"денежный_поток":13635479,"cash":51894535,"команда_чел":9,"ARPU":39,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.5},{"месяц":33,"mau":584434,"платящие":29801,"конверсия_факт_%":5.1,"устойчивая_доля_%":6.7,"партнёры_B2B":19,"учеников_B2B":1900,"выручка_B2C":23542504,"выручка_B2B":285000,"возвраты":714825,"выручка":23112679,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1402642,"поддержка":260000,"налог":1386761,"opex":8379403,"capex":0,"ebitda":14733276,"денежный_поток":14733276,"cash":66627811,"команда_чел":9,"ARPU":40,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.6},{"месяц":34,"mau":613656,"платящие":31467,"конверсия_факт_%":5.13,"устойчивая_доля_%":6.7,"партнёры_B2B":21,"учеников_B2B":2100,"выручка_B2C":24859012,"выручка_B2B":315000,"возвраты":755220,"выручка":24418791,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1472775,"поддержка":260000,"налог":1465127,"opex":8527902,"capex":0,"ebitda":15890889,"денежный_поток":15890889,"cash":82518700,"команда_чел":9,"ARPU":40,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.7},{"месяц":35,"mau":644339,"платящие":33190,"конверсия_факт_%":5.15,"устойчивая_доля_%":6.7,"партнёры_B2B":21,"учеников_B2B":2100,"выручка_B2C":26220437,"выручка_B2B":315000,"возвраты":796063,"выручка":25739374,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1546413,"поддержка":260000,"налог":1544362,"opex":8680776,"capex":0,"ebitda":17058598,"денежный_поток":17058598,"cash":99577298,"команда_чел":9,"ARPU":40,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.8},{"месяц":36,"mau":676556,"платящие":34977,"конверсия_факт_%":5.17,"устойчивая_доля_%":6.7,"партнёры_B2B":21,"учеников_B2B":2100,"выручка_B2C":27632163,"выручка_B2B":315000,"возвраты":838415,"выручка":27108748,"фот":3217500,"маркетинг":1500000,"контент":312500,"инфраструктура":300000,"ии":1623734,"поддержка":260000,"налог":1626525,"opex":8840259,"capex":0,"ebitda":18268489,"денежный_поток":18268489,"cash":117845787,"команда_чел":9,"ARPU":40,"LTV":5267,"LTV_CAC":4.05,"payback_мес":1.6,"маржа_валовая_%":92.9}],"итоги":{"выручка_год1":6933375,"выручка_год2":82546657,"выручка_год3":242261651,"выручка_всего":331741683,"opex_всего":202845898,"capex_всего":11050000,"ebitda_всего":128895788,"выручка_м12":1954356,"выручка_м24":12426716,"выручка_м36":27108748,"mau_м12":91937,"mau_м24":376732,"mau_м36":676556,"mrr_м24":12426716,"arr_м24":149120592,"безубыточность_месяц":19,"мин_cash":-43916591,"мин_cash_месяц":18,"потребность_раунда":43916591,"платящих_м24":15970,"маржа_валовая_м24_%":90.3,"партнёры_м24":13},"параметры":{"LTV_валовый_₽":5267,"LTV_маржинальный_₽":4477,"LTV_CAC_маржинальный":3.44,"цена_подписки_₽":790,"конверсия_%":6.0,"churn_%":15.0,"CAC_₽":1300,"LTV_₽":5267,"LTV/CAC":4.05,"payback_мес":1.6,"цена_B2B_₽":150}},"оптимистичный":{"сценарий":"оптимистичный","строки":[{"месяц":1,"mau":3000,"платящие":39,"конверсия_факт_%":1.3,"устойчивая_доля_%":11.8,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":34710,"выручка_B2B":0,"возвраты":694,"выручка":34016,"фот":1560000,"маркетинг":220000,"контент":320000,"инфраструктура":100000,"ии":5250,"поддержка":80000,"налог":2041,"opex":2287291,"capex":6630000,"ebitda":-2253275,"денежный_поток":-8883275,"cash":-8883275,"команда_чел":5,"ARPU":11,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":-209.4},{"месяц":2,"mau":4800,"платящие":97,"конверсия_факт_%":2.02,"устойчивая_доля_%":11.8,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":86428,"выручка_B2B":0,"возвраты":1729,"выручка":84699,"фот":1560000,"маркетинг":220000,"контент":320000,"инфраструктура":127778,"ии":8400,"поддержка":111429,"налог":5082,"opex":2352688,"capex":3315000,"ebitda":-2267989,"денежный_поток":-5582989,"cash":-14466264,"команда_чел":5,"ARPU":18,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":-60.8},{"месяц":3,"mau":7680,"платящие":186,"конверсия_факт_%":2.43,"устойчивая_доля_%":11.8,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":165778,"выручка_B2B":0,"возвраты":3316,"выручка":162463,"фот":1560000,"маркетинг":220000,"контент":320000,"инфраструктура":155556,"ии":13440,"поддержка":142857,"налог":9748,"opex":2421600,"capex":1105000,"ebitda":-2259138,"денежный_поток":-3364138,"cash":-17830402,"команда_чел":5,"ARPU":21,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":-4.0},{"месяц":4,"mau":12288,"платящие":326,"конверсия_факт_%":2.65,"устойчивая_доля_%":11.8,"партнёры_B2B":0,"учеников_B2B":0,"выручка_B2C":289715,"выручка_B2B":0,"возвраты":5794,"выручка":283921,"фот":1989000,"маркетинг":220000,"контент":320000,"инфраструктура":183333,"ии":21504,"поддержка":174286,"налог":17035,"opex":2925158,"capex":0,"ebitda":-2641238,"денежный_поток":-2641238,"cash":-20471639,"команда_чел":6,"ARPU":23,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":27.9},{"месяц":5,"mau":19661,"платящие":545,"конверсия_факт_%":2.77,"устойчивая_доля_%":11.8,"партнёры_B2B":4,"учеников_B2B":560,"выручка_B2C":485322,"выручка_B2B":106400,"возвраты":11834,"выручка":579887,"фот":1989000,"маркетинг":220000,"контент":320000,"инфраструктура":211111,"ии":34406,"поддержка":205714,"налог":34793,"opex":3015025,"capex":0,"ebitda":-2435138,"денежный_поток":-2435138,"cash":-22906777,"команда_чел":6,"ARPU":29,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":57.7},{"месяц":6,"mau":31457,"платящие":894,"конверсия_факт_%":2.84,"устойчивая_доля_%":11.8,"партнёры_B2B":4,"учеников_B2B":560,"выручка_B2C":795897,"выручка_B2B":106400,"возвраты":18046,"выручка":884251,"фот":1989000,"маркетинг":220000,"контент":320000,"инфраструктура":238889,"ии":55050,"поддержка":237143,"налог":53055,"opex":3113137,"capex":0,"ebitda":-2228886,"денежный_поток":-2228886,"cash":-25135663,"команда_чел":6,"ARPU":28,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":66.8},{"месяц":7,"mau":45613,"платящие":1389,"конверсия_факт_%":3.04,"устойчивая_доля_%":11.8,"партнёры_B2B":4,"учеников_B2B":560,"выручка_B2C":1236091,"выручка_B2B":106400,"возвраты":26850,"выручка":1315642,"фот":1989000,"маркетинг":289441,"контент":320000,"инфраструктура":266667,"ии":79823,"поддержка":268571,"налог":78938,"opex":3292441,"capex":0,"ebitda":-1976799,"денежный_поток":-1976799,"cash":-27112462,"команда_чел":6,"ARPU":29,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":73.7},{"месяц":8,"mau":66139,"платящие":2096,"конверсия_факт_%":3.17,"устойчивая_доля_%":11.8,"партнёры_B2B":7,"учеников_B2B":980,"выручка_B2C":1865349,"выручка_B2B":186200,"возвраты":41031,"выручка":2010518,"фот":3159000,"маркетинг":442314,"контент":320000,"инфраструктура":294444,"ии":115743,"поддержка":300000,"налог":120631,"opex":4752133,"capex":0,"ebitda":-2741615,"денежный_поток":-2741615,"cash":-29854077,"команда_чел":9,"ARPU":30,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":79.6},{"месяц":9,"mau":95901,"платящие":3112,"конверсия_факт_%":3.25,"устойчивая_доля_%":11.8,"партнёры_B2B":7,"учеников_B2B":980,"выручка_B2C":2769740,"выручка_B2B":186200,"возвраты":59119,"выручка":2896821,"фот":3159000,"маркетинг":637301,"контент":320000,"инфраструктура":322222,"ии":167828,"поддержка":300000,"налог":173809,"opex":5080160,"capex":0,"ebitda":-2183338,"денежный_поток":-2183338,"cash":-32037415,"команда_чел":9,"ARPU":30,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":83.1},{"месяц":10,"mau":139057,"платящие":4577,"конверсия_факт_%":3.29,"устойчивая_доля_%":11.8,"партнёры_B2B":7,"учеников_B2B":980,"выручка_B2C":4073960,"выручка_B2B":186200,"возвраты":85203,"выручка":4174956,"фот":3159000,"маркетинг":918490,"контент":320000,"инфраструктура":350000,"ии":243350,"поддержка":300000,"налог":250497,"opex":5541338,"capex":0,"ebitda":-1366381,"денежный_поток":-1366381,"cash":-33403796,"команда_чел":9,"ARPU":30,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":85.8},{"месяц":11,"mau":201633,"платящие":6695,"конверсия_факт_%":3.32,"устойчивая_доля_%":11.8,"партнёры_B2B":10,"учеников_B2B":1400,"выручка_B2C":5958715,"выручка_B2B":266000,"возвраты":124494,"выручка":6100221,"фот":3159000,"маркетинг":1342049,"контент":320000,"инфраструктура":350000,"ии":352857,"поддержка":300000,"налог":366013,"opex":6189919,"capex":0,"ebitda":-89698,"денежный_поток":-89698,"cash":-33493494,"команда_чел":9,"ARPU":30,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":88.5},{"месяц":12,"mau":292368,"платящие":9759,"конверсия_факт_%":3.34,"устойчивая_доля_%":11.8,"партнёры_B2B":10,"учеников_B2B":1400,"выручка_B2C":8685949,"выручка_B2B":266000,"возвраты":179039,"выручка":8772910,"фот":3159000,"маркетинг":1930040,"контент":320000,"инфраструктура":350000,"ии":511643,"поддержка":300000,"налог":526375,"opex":7097058,"capex":0,"ebitda":1675852,"денежный_поток":1675852,"cash":-31817642,"команда_чел":9,"ARPU":30,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":90.2},{"месяц":13,"mau":356688,"платящие":13323,"конверсия_факт_%":3.74,"устойчивая_доля_%":11.8,"партнёры_B2B":10,"учеников_B2B":1400,"выручка_B2C":11857380,"выручка_B2B":266000,"возвраты":242468,"выручка":11880912,"фот":3159000,"маркетинг":2613801,"контент":400000,"инфраструктура":350000,"ии":624205,"поддержка":300000,"налог":712855,"opex":8159860,"capex":0,"ebitda":3721052,"денежный_поток":3721052,"cash":-28096590,"команда_чел":9,"ARPU":33,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":91.8},{"месяц":14,"mau":435160,"платящие":17514,"конверсия_факт_%":4.02,"устойчивая_доля_%":11.8,"партнёры_B2B":13,"учеников_B2B":1820,"выручка_B2C":15587868,"выручка_B2B":345800,"возвраты":318673,"выручка":15614995,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":761530,"поддержка":300000,"налог":936900,"opex":10194429,"capex":0,"ebitda":5420565,"денежный_поток":5420565,"cash":-22676025,"команда_чел":12,"ARPU":36,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":92.9},{"месяц":15,"mau":530895,"платящие":22490,"конверсия_факт_%":4.24,"устойчивая_доля_%":11.8,"партнёры_B2B":13,"учеников_B2B":1820,"выручка_B2C":20015658,"выручка_B2B":345800,"возвраты":407229,"выручка":19954229,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":929066,"поддержка":300000,"налог":1197254,"opex":10622320,"capex":0,"ebitda":9331909,"денежный_поток":9331909,"cash":-13344116,"команда_чел":12,"ARPU":38,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":93.6},{"месяц":16,"mau":647692,"платящие":28436,"конверсия_факт_%":4.39,"устойчивая_доля_%":11.8,"партнёры_B2B":13,"учеников_B2B":1820,"выручка_B2C":25307732,"выручка_B2B":345800,"возвраты":513071,"выручка":25140461,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":1133461,"поддержка":300000,"налог":1508428,"opex":11137889,"capex":0,"ebitda":14002572,"денежный_поток":14002572,"cash":658457,"команда_чел":12,"ARPU":39,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":94.1},{"месяц":17,"mau":790184,"платящие":35580,"конверсия_факт_%":4.5,"устойчивая_доля_%":11.8,"партнёры_B2B":16,"учеников_B2B":2240,"выручка_B2C":31666312,"выручка_B2B":425600,"возвраты":641838,"выручка":31450074,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":1382822,"поддержка":300000,"налог":1887004,"opex":11765827,"capex":0,"ebitda":19684247,"денежный_поток":19684247,"cash":20342704,"команда_чел":12,"ARPU":40,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":94.5},{"месяц":18,"mau":964025,"платящие":44199,"конверсия_факт_%":4.58,"устойчивая_доля_%":11.8,"партнёры_B2B":16,"учеников_B2B":2240,"выручка_B2C":39336784,"выручка_B2B":425600,"возвраты":795248,"выручка":38967136,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":1687043,"поддержка":300000,"налог":2338028,"opex":12521071,"capex":0,"ebitda":26446065,"денежный_поток":26446065,"cash":46788769,"команда_чел":12,"ARPU":40,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":94.8},{"месяц":19,"mau":1098988,"платящие":53624,"конверсия_факт_%":4.88,"устойчивая_доля_%":11.8,"партнёры_B2B":16,"учеников_B2B":2240,"выручка_B2C":47725031,"выручка_B2B":425600,"возвраты":963013,"выручка":47187618,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":1923229,"поддержка":300000,"налог":2831257,"opex":13250486,"capex":0,"ebitda":33937132,"денежный_поток":33937132,"cash":80725900,"команда_чел":12,"ARPU":43,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":95.2},{"месяц":20,"mau":1252847,"платящие":64012,"конверсия_факт_%":5.11,"устойчивая_доля_%":11.8,"партнёры_B2B":19,"учеников_B2B":2660,"выручка_B2C":56970711,"выручка_B2B":505400,"возвраты":1149522,"выручка":56326589,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":2192481,"поддержка":300000,"налог":3379595,"opex":14068077,"capex":0,"ebitda":42258512,"денежный_поток":42258512,"cash":122984413,"команда_чел":12,"ARPU":45,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":95.5},{"месяц":21,"mau":1428245,"платящие":75538,"конверсия_факт_%":5.29,"устойчивая_доля_%":11.8,"партнёры_B2B":19,"учеников_B2B":2660,"выручка_B2C":67228728,"выручка_B2B":505400,"возвраты":1354683,"выручка":66379446,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":2499429,"поддержка":300000,"налог":3982767,"opex":14978196,"capex":0,"ebitda":51401250,"денежный_поток":51401250,"cash":174385663,"команда_чел":12,"ARPU":46,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":95.7},{"месяц":22,"mau":1628199,"платящие":88395,"конверсия_факт_%":5.43,"устойчивая_доля_%":11.8,"партнёры_B2B":19,"учеников_B2B":2660,"выручка_B2C":78671834,"выручка_B2B":505400,"возвраты":1583545,"выручка":77593690,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":2849349,"поддержка":300000,"налог":4655621,"opex":16000970,"capex":0,"ebitda":61592719,"денежный_поток":61592719,"cash":235978382,"команда_чел":12,"ARPU":48,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":95.9},{"месяц":23,"mau":1856147,"платящие":102802,"конверсия_факт_%":5.54,"устойчивая_доля_%":11.8,"партнёры_B2B":22,"учеников_B2B":3080,"выручка_B2C":91493556,"выручка_B2B":585200,"возвраты":1841575,"выручка":90237181,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":3248258,"поддержка":300000,"налог":5414231,"opex":17158489,"capex":0,"ebitda":73078692,"денежный_поток":73078692,"cash":309057074,"команда_чел":12,"ARPU":49,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":96.0},{"месяц":24,"mau":2116008,"платящие":119002,"конверсия_факт_%":5.62,"устойчивая_доля_%":11.8,"партнёры_B2B":22,"учеников_B2B":3080,"выручка_B2C":105911476,"выручка_B2B":585200,"возвраты":2129934,"выручка":104366742,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":3703014,"поддержка":300000,"налог":6262005,"opex":18461018,"capex":0,"ebitda":85905724,"денежный_поток":85905724,"cash":394962798,"команда_чел":12,"ARPU":49,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":96.1},{"месяц":25,"mau":2264128,"платящие":135345,"конверсия_факт_%":5.98,"устойчивая_доля_%":11.8,"партнёры_B2B":22,"учеников_B2B":3080,"выручка_B2C":120457179,"выручка_B2B":585200,"возвраты":2420848,"выручка":118621531,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":3962225,"поддержка":300000,"налог":7117292,"opex":19575517,"capex":0,"ebitda":99046015,"денежный_поток":99046015,"cash":494008813,"команда_чел":12,"ARPU":52,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":96.4},{"месяц":26,"mau":2422617,"платящие":151951,"конверсия_факт_%":6.27,"устойчивая_доля_%":11.8,"партнёры_B2B":25,"учеников_B2B":3500,"выручка_B2C":135236572,"выручка_B2B":665000,"возвраты":2718031,"выручка":133183541,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":4239580,"поддержка":300000,"налог":7991012,"opex":20726593,"capex":0,"ebitda":112456948,"денежный_поток":112456948,"cash":606465761,"команда_чел":12,"ARPU":55,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":96.6},{"месяц":27,"mau":2592201,"платящие":168935,"конверсия_факт_%":6.52,"устойчивая_доля_%":11.8,"партнёры_B2B":25,"учеников_B2B":3500,"выручка_B2C":150352310,"выручка_B2B":665000,"возвраты":3020346,"выручка":147996964,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":4536351,"поддержка":300000,"налог":8879818,"opex":21912169,"capex":0,"ebitda":126084795,"денежный_поток":126084795,"cash":732550556,"команда_чел":12,"ARPU":57,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":96.7},{"месяц":28,"mau":2773655,"платящие":186410,"конверсия_факт_%":6.72,"устойчивая_доля_%":11.8,"партнёры_B2B":25,"учеников_B2B":3500,"выручка_B2C":165904740,"выручка_B2B":665000,"возвраты":3331395,"выручка":163238345,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":4853896,"поддержка":300000,"налог":9794301,"opex":23144196,"capex":0,"ebitda":140094149,"денежный_поток":140094149,"cash":872644705,"команда_чел":12,"ARPU":59,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":96.8},{"месяц":29,"mau":2967810,"платящие":204486,"конверсия_факт_%":6.89,"устойчивая_доля_%":11.8,"партнёры_B2B":28,"учеников_B2B":3920,"выручка_B2C":181992786,"выручка_B2B":744800,"возвраты":3654752,"выручка":179082834,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":5193668,"поддержка":300000,"налог":10744970,"opex":24434638,"capex":0,"ebitda":154648196,"денежный_поток":154648196,"cash":1027292901,"команда_чел":12,"ARPU":60,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":96.9},{"месяц":30,"mau":3175557,"платящие":223275,"конверсия_факт_%":7.03,"устойчивая_доля_%":11.8,"партнёры_B2B":28,"учеников_B2B":3920,"выручка_B2C":198714776,"выручка_B2B":744800,"возвраты":3989192,"выручка":195470385,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":5557225,"поддержка":300000,"налог":11728223,"opex":25781448,"capex":0,"ebitda":169688937,"денежный_поток":169688937,"cash":1196981837,"команда_чел":12,"ARPU":62,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":97.0},{"месяц":31,"mau":3397846,"платящие":242887,"конверсия_факт_%":7.15,"устойчивая_доля_%":11.8,"партнёры_B2B":28,"учеников_B2B":3920,"выручка_B2C":216169231,"выручка_B2B":744800,"возвраты":4338281,"выручка":212575751,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":5946231,"поддержка":300000,"налог":12754545,"opex":27196776,"capex":0,"ebitda":185378975,"денежный_поток":185378975,"cash":1382360812,"команда_чел":12,"ARPU":63,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":97.0},{"месяц":32,"mau":3635695,"платящие":263433,"конверсия_факт_%":7.25,"устойчивая_доля_%":11.8,"партнёры_B2B":31,"учеников_B2B":4340,"выручка_B2C":234455612,"выручка_B2B":824600,"возвраты":4705604,"выручка":230574608,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":6362467,"поддержка":300000,"налог":13834476,"opex":28692943,"capex":0,"ebitda":201881664,"денежный_поток":201881664,"cash":1584242477,"команда_чел":12,"ARPU":63,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":97.1},{"месяц":33,"mau":3890194,"платящие":285028,"конверсия_факт_%":7.33,"устойчивая_доля_%":11.8,"партнёры_B2B":31,"учеников_B2B":4340,"выручка_B2C":253675041,"выручка_B2B":824600,"возвраты":5089993,"выручка":249409648,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":6807840,"поддержка":300000,"налог":14964579,"opex":30268419,"capex":0,"ebitda":219141229,"денежный_поток":219141229,"cash":1803383706,"команда_чел":12,"ARPU":64,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":97.1},{"месяц":34,"mau":4162508,"платящие":307788,"конверсия_факт_%":7.39,"устойчивая_доля_%":11.8,"партнёры_B2B":31,"учеников_B2B":4340,"выручка_B2C":273931000,"выручка_B2B":824600,"возвраты":5495112,"выручка":269260488,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":7284388,"поддержка":300000,"налог":16155629,"opex":31936018,"capex":0,"ebitda":237324471,"денежный_поток":237324471,"cash":2040708177,"команда_чел":12,"ARPU":65,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":97.2},{"месяц":35,"mau":4453883,"платящие":331831,"конверсия_факт_%":7.45,"устойчивая_доля_%":11.8,"партнёры_B2B":34,"учеников_B2B":4760,"выручка_B2C":295330019,"выручка_B2B":904400,"возвраты":5924688,"выручка":290309731,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":7794296,"поддержка":300000,"налог":17418584,"opex":33708880,"capex":0,"ebitda":256600852,"денежный_поток":256600852,"cash":2297309028,"команда_чел":12,"ARPU":65,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":97.2},{"месяц":36,"mau":4765655,"платящие":357284,"конверсия_факт_%":7.5,"устойчивая_доля_%":11.8,"партнёры_B2B":34,"учеников_B2B":4760,"выручка_B2C":317982346,"выручка_B2B":904400,"возвраты":6377735,"выручка":312509012,"фот":4446000,"маркетинг":3000000,"контент":400000,"инфраструктура":350000,"ии":8339896,"поддержка":300000,"налог":18750541,"opex":35586437,"capex":0,"ebitda":276922574,"денежный_поток":276922574,"cash":2574231603,"команда_чел":12,"ARPU":66,"LTV":8091,"LTV_CAC":8.99,"payback_мес":1.0,"маржа_валовая_%":97.2}],"итоги":{"выручка_год1":27300305,"выручка_год2":585099073,"выручка_год3":2502232838,"выручка_всего":3114632216,"opex_всего":529350614,"capex_всего":11050000,"ebitda_всего":2585281601,"выручка_м12":8772910,"выручка_м24":104366742,"выручка_м36":312509012,"mau_м12":292368,"mau_м24":2116008,"mau_м36":4765655,"mrr_м24":104366742,"arr_м24":1252400904,"безубыточность_месяц":12,"мин_cash":-33493494,"мин_cash_месяц":11,"потребность_раунда":33493494,"платящих_м24":119002,"маржа_валовая_м24_%":96.1,"партнёры_м24":22},"параметры":{"LTV_валовый_₽":8091,"LTV_маржинальный_₽":6877,"LTV_CAC_маржинальный":7.64,"цена_подписки_₽":890,"конверсия_%":8.0,"churn_%":11.0,"CAC_₽":900,"LTV_₽":8091,"LTV/CAC":8.99,"payback_мес":1.0,"цена_B2B_₽":190}}},"проблемы_проверки":[]};
@@ -654,10 +638,17 @@ function набор(с, ключи){ return ключи.map(([к, имя, цве�
    В гравюре нет заливок — есть штрих. Ряды данных различаются УГЛОМ штриховки,
    а не только цветом: так лист читается в чёрно-белой печати и при дальтонизме,
    а цвет остаётся вторым признаком, а не единственным.                      */
-const ЧЕР = {осн:'#2b2419', втор:'#5e5640', тихо:'#605a44',
-             линейка:'#b9ae91', золото:'#76540f', волос:'#b38a2a', киноварь:'#9c3722'};
+const ЧЕР = {осн:'#16241d', втор:'#3f5147', тихо:'#5f6d64',
+             линейка:'#d8d2c2', золото:'#775b0d', волос:'#a8831c', киноварь:'#a33b26'};
 /* порядок рядов фиксирован: тушь → разбел → золото → киноварь → волос → линейка */
-const РЯД = [ЧЕР.осн, ЧЕР.втор, ЧЕР.золото, ЧЕР.киноварь, ЧЕР.волос, ЧЕР.линейка];
+/* Ряды данных. Тушь и золото различаются СВЕТЛОТОЙ (0,015 против 0,246,
+   контраст между ними 4,55:1) — это самый устойчивый канал, он работает при
+   любой форме дальтонизма. Там, где рядов больше двух, опознание даёт ещё и
+   угол штриховки: цвет перестаёт быть единственным признаком. */
+const РЯД = ['#16241d','#a8831c','#276742','#a33b26','#3f5147','#5f6d64'];
+/* порядковая шкала золота — проверена: монотонная светлота, шаги ≥0,06,
+   светлый конец 2,01:1 к полю */
+const ЗОЛОТО4 = ['#c2a75f','#a8831c','#8a6a12','#5f4a0c'];
 const УГОЛ = [38, 128, 0, 90, 68, 158];          /* угол штриха на каждый ряд */
 let _п = 0;                                       /* счётчик определений */
 
@@ -671,10 +662,10 @@ function штриховка(цвет, угол, шаг){
 /* Имена, на которые опираются врезки на листах: держим их привязанными
    к палитре MASTER.md, а не заводим второй набор цветов. */
 const ЧЕРНИЛА = {осн:ЧЕР.осн, втор:ЧЕР.втор, тихо:ЧЕР.тихо, сетка:ЧЕР.линейка};
-const ПОЛЕ = '#e8dcc2';
+const ПОЛЕ = '#f2eee2';
 /* порядковая шкала: бумага → золото, ступенями (для воронок и ступеней цикла) */
-const ПОРЯДОК = ['#e0d7bd','#d5c7a2','#c9b587','#bca36c','#ae9053'];
-const ЖАР = ПОРЯДОК;
+const ПОРЯДОК = ['#e6dcc0','#c2a75f','#a8831c','#8a6a12','#5f4a0c'];
+const ЖАР = ['#ece3cc','#d9c48a','#c2a75f','#a8831c','#8a6a12','#5f4a0c'];
 
 function svg(w,h,inner,cls){
   return `<svg class="chart ${cls||''}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" role="img">${inner}</svg>`;
@@ -873,7 +864,7 @@ function пончик(пункты,{h=300,центр=''}={}){
     угол+=раств;
   });
   if(центр) s+=`<text class="ink" style="animation-delay:600ms" x="${cx}" y="${cy+3}" text-anchor="middle"
-    font-family="'Forum',Georgia,serif" font-size="20" fill="${ЧЕР.осн}">${центр}</text>`;
+    font-family="'IBM Plex Mono',monospace" font-size="20" fill="${ЧЕР.осн}">${центр}</text>`;
   пункты.forEach((п,i)=>{
     const ц=п.цвет||РЯД[i%6], y=cy-(пункты.length-1)*13+i*26;
     s+=`<rect x="${W-190}" y="${(y-9).toFixed(0)}" width="11" height="11" fill="${ц}"/>`;
@@ -1054,7 +1045,7 @@ function воронка(шаги,{h=320}={}){
     /* число и название — одной строкой: двумя они налезали друг на друга */
     s+=`<text class="ink" style="animation-delay:${520+i*90}ms" x="${(x0+w+24).toFixed(1)}"
          y="${(y+вы/2+6).toFixed(1)}" font-size="15" fill="${ЧЕР.тихо}"><tspan
-         font-family="'Forum',Georgia,serif" font-size="18" fill="${ЧЕР.осн}">${ш.число}</tspan>
+         font-family="'IBM Plex Mono',monospace" font-size="18" fill="${ЧЕР.осн}">${ш.число}</tspan>
          <tspan dx="8">${ш.имя}</tspan></text>`;
   });
   return svg(W,h,`<defs>${деф}</defs>`+s,'funnel');
@@ -1092,6 +1083,16 @@ document.addEventListener('keydown',e=>{
 эл('next').onclick=()=>показать(текущий+1);
 эл('dots').innerHTML=слайды.map((с,i)=>`<button title="${с.dataset.t||''}" aria-label="Слайд ${i+1}"></button>`).join('');
 [...эл('dots').children].forEach((d,i)=>d.onclick=()=>показать(i));
+
+/* Колонтитул аналитической записки: слева тема листа, справа номер.
+   Ставится кодом — так он не может разойтись с порядком листов. */
+слайды.forEach(function(с,i){
+  var ш=document.createElement('div'); ш.className='head';
+  var я=i<14, п=i===14;
+  ш.innerHTML='<span class="t">'+(п?'':(я?'':'приложение · '))+(с.dataset.t||'')+'</span>'+
+              '<span class="n">'+(i+1)+' / '+слайды.length+'</span>';
+  var w=с.querySelector('.wrap'); if(w) w.insertBefore(ш, w.firstChild);
+});
 
 /* ── общие величины ──────────────────────────────────────────────────────── */
 let сценарий='базовый';
@@ -1137,7 +1138,7 @@ function переключатель(контейнер,приОткрытии){
   {имя:'участия в школьном этапе', число:'24,8 млн', доля:0.72},
   {имя:'доходят до финала', число:'8 811 участий', доля:0.3},
   {имя:'победители и призёры', число:'4 017', доля:0.16},
-],{h:300});
+],{h:190});
 
 /* ── 3. проблема ─────────────────────────────────────────────────────────── */
 плитки('kpi-problem',[
@@ -1179,7 +1180,7 @@ const млрд=(v)=>v>=1e9?пс((v/1e9).toFixed(2))+' млрд ₽':млн(v)+' 
   {имя:'готовятся системно (оценка)', число:'~2,5 млн', доля:0.55},
   {имя:'платят за подготовку (оценка)', число:'~0,6 млн семей', доля:0.36},
   {имя:'цель АРХИМЕДА к 3-му году', число:'250 тыс. MAU', доля:0.2},
-],{h:320});
+],{h:200});
 эл('tam-table').innerHTML=`
   <tr><th>Уровень</th><th class="n">Аудитория</th><th class="n">Выручка сегмента</th></tr>
   <tr><td>TAM — детское онлайн-образование</td><td class="n">18+ млн школьников</td><td class="n">55 млрд ₽</td></tr>
@@ -1238,7 +1239,7 @@ const млрд=(v)=>v>=1e9?пс((v/1e9).toFixed(2))+' млрд ₽':млн(v)+' 
       но не «не то, о чём просили», поэтому каждый кадр ещё и смотрят глазами.</li>`;
 эл('chart-content').innerHTML=столбики([
   {имя:'задач в месяц', цвет:РЯД[1], значения:[120,180,240,320,380,420,470,500]},
-],{h:240,подписиX:[0,2,4,6,7].map(i=>[70+(900-70-24)*(i+0.5)/8,'м'+(i*3+1)]),фмтY:(v)=>чс(v)});
+],{h:190,подписиX:[0,2,4,6,7].map(i=>[70+(900-70-24)*(i+0.5)/8,'м'+(i*3+1)]),фмтY:(v)=>чс(v)});
 
 /* ── 8. конкуренты ───────────────────────────────────────────────────────── */
 эл('chart-map').innerHTML=карта([
@@ -1271,7 +1272,7 @@ const млрд=(v)=>v>=1e9?пс((v/1e9).toFixed(2))+' млрд ₽':млн(v)+' 
   return пончик([
     {статья:'подписки родителей', сумма:м.выручка_B2C, цвет:РЯД[0]},
     {статья:'лицензии школ и кружков', сумма:м.выручка_B2B, цвет:РЯД[1]},
-  ],{h:280,центр:млн(м.выручка)+' млн'});
+  ],{h:220,центр:млн(м.выручка)+' млн'});
 })();
 
 /* ── 10. выручка по каналам ──────────────────────────────────────────────── */
@@ -1280,7 +1281,7 @@ function рисоватьВыручку(){
   эл('chart-rev').innerHTML=столбики([
     {имя:'подписки родителей', цвет:РЯД[0], значения:м.map(р=>р.выручка_B2C)},
     {имя:'лицензии школ', цвет:РЯД[1], значения:м.map(р=>р.выручка_B2B)},
-  ],{h:300,накопление:true});
+  ],{h:190,накопление:true});
   const и=Д.модель[сценарий].итоги, п=м[23];
   плитки('kpi-rev',[
     {значение:млн(п.выручка)+' млн ₽', подпись:'выручка 24-го месяца'},
@@ -1344,7 +1345,7 @@ function рисоватьMAU(){
   эл('chart-mau').innerHTML=линии([
     {имя:'аудитория (MAU)', цвет:РЯД[3], значения:м.map(р=>р.mau)},
     {имя:'платящие', цвет:РЯД[0], значения:м.map(р=>р.платящие)},
-  ],{h:300,единица:'человек'});
+  ],{h:190,единица:'человек'});
   плитки('kpi-mau',[
     {значение:чс(и['mau_м24']), подпись:'аудитория к 24-му месяцу'},
     {значение:чс(и['платящих_м24']), подпись:'платящих к 24-му месяцу'},
@@ -1359,7 +1360,7 @@ function рисоватьMAU(){
   const м=строки('базовый');
   эл('chart-b2b').innerHTML=линии([
     {имя:'учеников по лицензиям школ', цвет:РЯД[1], значения:м.map(р=>р.учеников_B2B)},
-  ],{h:280,единица:'учеников'});
+  ],{h:190,единица:'учеников'});
   плитки('kpi-b2b',[
     {значение:чс(м[23].партнёры_B2B), подпись:'школ и кружков к 24-му месяцу'},
     {значение:чс(м[23].учеников_B2B), подпись:'учеников по лицензиям'},
@@ -1410,7 +1411,7 @@ function рисоватьPNLгод(){
 /* ── 17. CAPEX ───────────────────────────────────────────────────────────── */
 эл('capex-head').innerHTML='Единоразовые вложения — <em>'+млн(Д.capex_всего)+
   ' млн ₽</em>, больше половины из них в разработку продукта.';
-эл('chart-capex').innerHTML=водопад(Д.capex.map((с,i)=>({статья:с.статья, сумма:с.сумма, цвет:РЯД[i%6]})),{h:320});
+эл('chart-capex').innerHTML=водопад(Д.capex.map((с,i)=>({статья:с.статья, сумма:с.сумма, цвет:РЯД[i%6]})),{h:200});
 эл('capex-table').innerHTML='<tr><th>Статья</th><th class="n">Сумма</th></tr>'+
   Д.capex.map(с=>`<tr><td>${с.статья}<div class="tiny">${с.комментарий}</div></td><td class="n">${млн(с.сумма)} млн ₽</td></tr>`).join('')+
   `<tr class="hi"><td><b>Итого CAPEX</b></td><td class="n"><b>${млн(Д.capex_всего)} млн ₽</b></td></tr>`;
@@ -1421,11 +1422,11 @@ const СТАТЬИ=[['фот','ФОТ со взносами',РЯД[0]],['мар
   ['ии','ИИ',РЯД[5]],['поддержка','поддержка',РЯД[1]],['налог','налоги',РЯД[0]]];
 function рисоватьOPEX(){
   const м=строки(сценарий), м24=м[23];
-  эл('chart-opex').innerHTML=столбики(набор(сценарий,СТАТЬИ),{h:300,накопление:true});
+  эл('chart-opex').innerHTML=столбики(набор(сценарий,СТАТЬИ),{h:190,накопление:true});
   эл('legend-opex').innerHTML='';
   эл('chart-opex-donut').innerHTML=пончик(
     СТАТЬИ.map(([к,имя,ц])=>({статья:имя,сумма:м24[к]||0,цвет:ц})).filter(п=>п.сумма>0),
-    {h:280,центр:млн(м24['opex'])+' млн'});
+    {h:220,центр:млн(м24['opex'])+' млн'});
   эл('opex-table').innerHTML='<tr><th>Статья</th><th class="n">24-й месяц</th><th class="n">доля</th></tr>'+
     СТАТЬИ.map(([к,имя])=>`<tr><td>${имя}</td><td class="n">${млн(м24[к])} млн ₽</td><td class="n">${Math.round(м24[к]/м24['opex']*100)} %</td></tr>`).join('')+
     `<tr class="hi"><td><b>OPEX</b></td><td class="n"><b>${млн(м24['opex'])} млн ₽</b></td><td class="n">100 %</td></tr>`;
@@ -1443,10 +1444,10 @@ function рисоватьOPEX(){
   const м=строки('базовый');
   эл('chart-team').innerHTML=столбики([
     {имя:'человек', цвет:РЯД[1], значения:м.map(р=>р.команда_чел)},
-  ],{h:250,ширина:560,фмтY:(v)=>чс(v)});
+  ],{h:260,ширина:560,фмтY:(v)=>чс(v)});
   эл('chart-fot').innerHTML=линии([
     {имя:'ФОТ со взносами', цвет:РЯД[0], значения:м.map(р=>р.фот)},
-  ],{h:250,ширина:560,единица:'₽ в месяц'});
+  ],{h:260,ширина:560,единица:'₽ в месяц'});
   плитки('kpi-team',[
     {значение:чс(м[0].команда_чел), подпись:'человек в команде на старте'},
     {значение:чс(м[23].команда_чел), подпись:'человек в команде к 24-му месяцу'},
@@ -1464,7 +1465,7 @@ function рисоватьPNL(){
   эл('chart-pnl').innerHTML=линии(
     [{имя:'выручка',цвет:РЯД[0],значения:м.map(р=>р.выручка)},
      {имя:'затраты (OPEX)',цвет:РЯД[3],значения:м.map(р=>р.opex)}],
-    {h:300,единица:'₽ в месяц',событие:и['безубыточность_месяц']
+    {h:190,единица:'₽ в месяц',событие:и['безубыточность_месяц']
       ?{i:и['безубыточность_месяц']-1, v:м[и['безубыточность_месяц']-1].выручка,
         текст:'безубыточность · м'+и['безубыточность_месяц']}:null});
   плитки('kpi-pnl',[
@@ -1484,12 +1485,12 @@ function рисоватьCash(){
   const iЯмы=рядCash.indexOf(Math.min(...рядCash));
   эл('chart-cash').innerHTML=линии(
     С.map((с,i)=>({имя:с, цвет:[РЯД[3],РЯД[0],РЯД[1]][i], значения:ряд(с,'cash')})),
-    {h:320,единица:'накоплено, ₽',нулевая:true,
+    {h:190,единица:'накоплено, ₽',нулевая:true,
      событие:{i:iЯмы, v:рядCash[iЯмы], текст:'дно · м'+(iЯмы+1)+' · '+млн(рядCash[iЯмы])+' млн ₽'}});
   const м=строки(сценарий), и=Д.модель[сценарий].итоги;
   эл('chart-flow').innerHTML=линии([
     {имя:'поток за месяц', цвет:РЯД[0], значения:м.map(р=>р.денежный_поток)},
-  ],{h:250,ширина:560,единица:'₽ за месяц',нулевая:true});
+  ],{h:260,ширина:560,единица:'₽ за месяц',нулевая:true});
   эл('round-table').innerHTML=`
     <tr><th>Показатель</th><th class="n">Значение</th></tr>
     <tr><td>Пик потребности в деньгах</td><td class="n">${млн(и['потребность_раунда'])} млн ₽</td></tr>
@@ -1510,7 +1511,7 @@ function рисоватьCash(){
 
 /* ── 22–23. чувствительность и порог ─────────────────────────────────────── */
 эл('chart-heat').innerHTML=теплота(Д.чувствительность,{
-  поле:'потребность_₽', h:300,
+  поле:'потребность_₽', h:210,
   подписиСтрок:Д.чувствительность.map(с=>'конверсия '+пс(с[0]['конверсия_мес_%'].toFixed(1))+' %'),
   подписиСтолбцов:Д.чувствительность[0].map(к=>'отток '+к['churn_%']+' %'),
   фмт:(v)=>пс((v/1e6).toFixed(0)),
@@ -1539,7 +1540,7 @@ const статьиРаунда=[
   {статья:'B2B-пилоты и регионы', сумма:раунд*0.06, цвет:РЯД[1]},
   {статья:'подушка', сумма:раунд*0.04, цвет:РЯД[0]},
 ].map(п=>({...п,сумма:Math.round(п.сумма)}));
-эл('chart-use').innerHTML=пончик(статьиРаунда,{h:300,центр:млн(раунд)+' млн'});
+эл('chart-use').innerHTML=пончик(статьиРаунда,{h:220,центр:млн(раунд)+' млн'});
 эл('ask-table').innerHTML=`
   <tr><th>Вариант</th><th class="n">Раунд</th><th class="n">Безубыточность</th></tr>
   <tr><td>Экономный: команда до 6 человек, маркетинг ограничен</td><td class="n">${млн(раундЭконом)} млн ₽</td><td class="n">м${Д.экономный.итоги['безубыточность_месяц']}</td></tr>
@@ -1557,7 +1558,7 @@ const статьиРаунда=[
   {имя:'B2B: кружки и школы', от:5, до:18, подпись:'пилоты в трёх регионах', цвет:РЯД[3]},
   {имя:'7–9 классы', от:8, до:16, подпись:'расширение программы', цвет:РЯД[4]},
   {имя:'Раунд А', от:14, до:18, подпись:'подготовка', цвет:РЯД[2]},
-],{h:300});
+],{h:190});
 
 /* ── 26. международный горизонт ──────────────────────────────────────────── */
 const СТРАНЫ=[
