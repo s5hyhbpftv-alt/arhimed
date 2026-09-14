@@ -8,21 +8,41 @@
 <style>
 /* Всё по MASTER.md. Мир: гравёрный атлас. Движение: перо чертит. */
 :root{
-  --paper:#e9e2d0; --plate:#e3dbc6;
-  --ink:#2b2419; --ink-2:#5e5640; --ink-3:#665f48;
-  --rule:#b9ae91; --gold:#7d5a12; --gold-line:#b38a2a; --seal:#a33b26;
+  --paper:#e8dcc2; --plate:#e0d3b4;
+  --ink:#2b2419; --ink-2:#5e5640; --ink-3:#605a44;
+  --rule:#b9ae91; --gold:#76540f; --gold-line:#b38a2a; --seal:#9c3722;
   --pen:cubic-bezier(.4,.05,.25,1);
   --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:46px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scrollbar-color:var(--rule) var(--paper)}
+/* Пергамент: тон, волокно, пятна времени и потемнение к краям.
+   Всё рисуется кодом — ни одной картинки, ничего не подгружается. */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    /* редкие пятна времени */
+    radial-gradient(38% 26% at 14% 12%, rgba(139,104,48,.10), transparent 70%),
+    radial-gradient(30% 22% at 86% 78%, rgba(139,104,48,.09), transparent 72%),
+    radial-gradient(22% 34% at 64% 22%, rgba(122,92,44,.06), transparent 68%),
+    radial-gradient(26% 20% at 32% 88%, rgba(122,92,44,.07), transparent 70%),
+    /* потемнение к краям, как у листа, лежавшего в свете */
+    radial-gradient(120% 96% at 50% 46%, transparent 52%, rgba(92,70,34,.16) 100%);
+}
+body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  /* волокно бумаги: фрактальный шум, свёрнутый в сам документ */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+.slide,.nav{position:relative;z-index:1}
 body{
   background:var(--paper); color:var(--ink);
-  font-family:Spectral,Georgia,'Times New Roman',serif; font-weight:300;
+  font-family:'EB Garamond',Georgia,'Times New Roman',serif; font-weight:300;
   font-size:17px; line-height:1.62; font-variant-numeric:oldstyle-nums;
   -webkit-font-smoothing:antialiased; overflow:hidden;
 }
-::selection{background:rgba(179,138,42,.26)}
+::selection{background:rgba(179,138,42,.3)}
 :focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:var(--paper)}
@@ -44,7 +64,7 @@ body{
 .frame > div:last-child{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center}
 
 /* ── тезис ──────────────────────────────────────────────────────── */
-.claim{font-family:'Old Standard TT',Georgia,serif;font-weight:400;
+.claim{font-family:'Forum',Georgia,serif;font-weight:400;
   font-size:clamp(26px,3.2vw,46px);line-height:1.1;letter-spacing:-.004em;
   color:var(--ink);text-wrap:balance;max-width:24em}
 .claim em{font-style:italic;color:var(--gold)}
@@ -57,7 +77,7 @@ body{
 .run{display:flex;flex-wrap:wrap;margin-top:20px;border-top:1px solid var(--rule);padding-top:15px}
 .run > div{padding:0 22px 6px 0;margin-right:22px;border-right:1px solid var(--rule)}
 .run > div:last-child{border-right:0;margin-right:0}
-.run .v{font-family:'Old Standard TT',Georgia,serif;font-size:clamp(21px,1.85vw,28px);
+.run .v{font-family:'Forum',Georgia,serif;font-size:clamp(21px,1.85vw,28px);
   line-height:1.1;color:var(--ink);font-variant-numeric:oldstyle-nums}
 .run .k{font-size:14px;color:var(--ink-2);margin-top:5px;max-width:14em;line-height:1.35}
 .run .n{font-size:13px;color:var(--ink-3);margin-top:2px;max-width:14em;line-height:1.35}
@@ -65,7 +85,7 @@ body{
 /* ── раскрытие ──────────────────────────────────────────────────── */
 details.more{margin-top:18px;border-top:1px solid var(--rule);padding-top:2px}
 details.more > summary,.sub > summary{list-style:none;cursor:pointer;display:flex;
-  align-items:center;gap:10px;min-height:44px;font-family:'Old Standard TT',Georgia,serif;
+  align-items:center;gap:10px;min-height:44px;font-family:'Forum',Georgia,serif;
   font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3);user-select:none;
   transition:color 120ms var(--pen)}
 details.more > summary::-webkit-details-marker,.sub > summary::-webkit-details-marker{display:none}
@@ -81,8 +101,10 @@ details[open] > summary .chev{transform:rotate(90deg)}
 .pair{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:24px;align-items:stretch}
 .stack{display:grid;gap:20px;min-width:0}
 .stack > *,.pair > *{min-width:0}
-.frame{border:1px solid var(--rule);background:var(--plate);padding:18px 20px;min-width:0;overflow-x:auto}
-h3{font-family:'Old Standard TT',Georgia,serif;font-weight:400;font-size:12px;
+.frame{border:1px solid var(--rule);padding:18px 20px;min-width:0;overflow-x:auto;
+  background-color:var(--plate);
+  background-image:radial-gradient(80% 120% at 30% 0%, rgba(255,250,235,.32), transparent 62%);}
+h3{font-family:'Forum',Georgia,serif;font-weight:400;font-size:12px;
   letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
 p,li{font-size:16.5px;line-height:1.6}
 .note{font-size:15px;color:var(--ink-2);line-height:1.55}
@@ -92,10 +114,10 @@ b,strong{color:var(--ink);font-weight:400}
 
 table{width:100%;border-collapse:collapse;font-size:15.5px}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-th{font-family:'Old Standard TT',Georgia,serif;font-weight:400;color:var(--ink-3);
+th{font-family:'Forum',Georgia,serif;font-weight:400;color:var(--ink-3);
   font-size:12px;letter-spacing:.2em;text-transform:uppercase}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
-tr.hi td{background:rgba(138,100,20,.09)}
+tr.hi td{background:rgba(118,84,15,.10)}
 
 ul{list-style:none}
 ul li{position:relative;padding-left:20px;margin-bottom:9px}
@@ -108,7 +130,7 @@ ul.tight li{margin-bottom:5px;font-size:15px;line-height:1.45}
 .tag.bad{border-color:rgba(163,59,38,.45);color:var(--seal)}
 
 .chart{width:100%;height:auto;max-height:clamp(200px,34vh,380px);display:block;overflow:visible}
-svg text{font-family:Spectral,Georgia,serif;font-variant-numeric:oldstyle-nums}
+svg text{font-family:'EB Garamond',Georgia,serif;font-variant-numeric:oldstyle-nums}
 .legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:14px;color:var(--ink-2)}
 .legend i{display:inline-block;width:16px;height:2px;margin-right:7px;vertical-align:middle}
 
@@ -148,7 +170,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
 /* ── навигация: колонтитул атласа ───────────────────────────────── */
 .nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:12px;
   padding:0 clamp(14px,3.4vw,48px);z-index:50;
-  background:linear-gradient(180deg,rgba(233,226,208,0),var(--paper) 40%)}
+  background:linear-gradient(180deg,rgba(232,220,194,0),var(--paper) 40%)}
 .nav .dots{display:flex;gap:5px;flex:1;flex-wrap:wrap}
 .nav .dots button{width:9px;height:9px;padding:0;border:1px solid var(--rule);
   background:transparent;cursor:pointer;transition:background 120ms var(--pen)}
@@ -158,7 +180,7 @@ button.seg.on{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 -2px
   color:var(--ink);font:inherit;cursor:pointer;transition:border-color 120ms var(--pen)}
 .nav button.arrow:hover:not(:disabled){border-color:var(--gold-line)}
 .nav button.arrow:disabled{opacity:.3;cursor:default}
-.counter{font-family:'Old Standard TT',Georgia,serif;font-size:13px;letter-spacing:.2em;
+.counter{font-family:'Forum',Georgia,serif;font-size:13px;letter-spacing:.2em;
   color:var(--ink-3);min-width:88px;text-align:center}
 
 @media (max-width:900px){ .pair{grid-template-columns:1fr} .slider label{flex:0 0 150px}
@@ -655,8 +677,8 @@ function набор(с, ключи){ return ключи.map(([к, имя, цве�
    В гравюре нет заливок — есть штрих. Ряды данных различаются УГЛОМ штриховки,
    а не только цветом: так лист читается в чёрно-белой печати и при дальтонизме,
    а цвет остаётся вторым признаком, а не единственным.                      */
-const ЧЕР = {осн:'#2b2419', втор:'#5e5640', тихо:'#665f48',
-             линейка:'#b9ae91', золото:'#7d5a12', волос:'#b38a2a', киноварь:'#a33b26'};
+const ЧЕР = {осн:'#2b2419', втор:'#5e5640', тихо:'#605a44',
+             линейка:'#b9ae91', золото:'#76540f', волос:'#b38a2a', киноварь:'#9c3722'};
 /* порядок рядов фиксирован: тушь → разбел → золото → киноварь → волос → линейка */
 const РЯД = [ЧЕР.осн, ЧЕР.втор, ЧЕР.золото, ЧЕР.киноварь, ЧЕР.волос, ЧЕР.линейка];
 const УГОЛ = [38, 128, 0, 90, 68, 158];          /* угол штриха на каждый ряд */
@@ -672,7 +694,7 @@ function штриховка(цвет, угол, шаг){
 /* Имена, на которые опираются врезки на листах: держим их привязанными
    к палитре MASTER.md, а не заводим второй набор цветов. */
 const ЧЕРНИЛА = {осн:ЧЕР.осн, втор:ЧЕР.втор, тихо:ЧЕР.тихо, сетка:ЧЕР.линейка};
-const ПОЛЕ = '#e9e2d0';
+const ПОЛЕ = '#e8dcc2';
 /* порядковая шкала: бумага → золото, ступенями (для воронок и ступеней цикла) */
 const ПОРЯДОК = ['#e0d7bd','#d5c7a2','#c9b587','#bca36c','#ae9053'];
 const ЖАР = ПОРЯДОК;
@@ -727,8 +749,8 @@ function оси(x0,y0,w,h,{ymax=100,ymin=0,подписиX=[],фмтY=кратк
 }
 
 /* ── линии: площадь штрихуется полосами, линия вычерчивается пером ───────── */
-function линии(серии,{h=300,фмтY=кратко,ymax=null,нулевая=false,подписиX=null,событие=null}={}){
-  const W=900, x0=74, y0=18, w=W-x0-118, hh=h-y0-42;
+function линии(серии,{h=300,фмтY=кратко,ymax=null,нулевая=false,подписиX=null,событие=null,ширина=900}={}){
+  const W=ширина, x0=74, y0=18, w=W-x0-118, hh=h-y0-42;
   const все=серии.flatMap(s=>s.значения);
   const maxV=ymax!=null?ymax:Math.max(...все,1)*1.08;
   const minV=нулевая?Math.min(0,...все)*1.08:0;
@@ -760,8 +782,11 @@ function линии(серии,{h=300,фмтY=кратко,ymax=null,нулев�
     const кx=X(n-1), кy=Y(сер.значения[n-1]);
     s+=`<circle class="ink" style="animation-delay:${1350+i*70}ms" cx="${кx.toFixed(1)}" cy="${кy.toFixed(1)}"
          r="3.4" fill="${ц}"/>`;
-    s+=`<text class="ink" style="animation-delay:${1400+i*70}ms" x="${(кx+10).toFixed(1)}"
-         y="${(кy+5).toFixed(1)}" font-size="14" fill="${i?ЧЕР.втор:ЧЕР.осн}">${сер.имя}</text>`;
+    /* Подпись у конца линии ставится, только пока ряды расходятся. На трёх и более
+       они сходятся у правого края и подписи слипаются — тогда опознание даёт легенда. */
+    if(серии.length<=2)
+      s+=`<text class="ink" style="animation-delay:${1400+i*70}ms" x="${(кx+10).toFixed(1)}"
+           y="${(кy+5).toFixed(1)}" font-size="14" fill="${i?ЧЕР.втор:ЧЕР.осн}">${сер.имя}</text>`;
   });
 
   if(событие){
@@ -777,8 +802,8 @@ function линии(серии,{h=300,фмтY=кратко,ymax=null,нулев�
 }
 
 /* ── столбики: штрих своего угла на ряд, растут от основания ─────────────── */
-function столбики(серии,{h=300,фмтY=кратко,накопление=false,подписиX=null}={}){
-  const W=900, x0=74, y0=18, w=W-x0-24, hh=h-y0-42;
+function столбики(серии,{h=300,фмтY=кратко,накопление=false,подписиX=null,ширина=900}={}){
+  const W=ширина, x0=74, y0=18, w=W-x0-24, hh=h-y0-42;
   const n=серии[0].значения.length, шаг=w/n, шир=Math.min(22,шаг*0.6);
   const суммы=накопление
     ? серии[0].значения.map((_,i)=>серии.reduce((с,р)=>с+(р.значения[i]||0),0))
@@ -830,7 +855,7 @@ function водопад(пункты,{h=320,ед='млн ₽',делитель=1
 
 /* ── кольцо: сектора штрихуются, доли подписаны числом ───────────────────── */
 function пончик(пункты,{h=300,центр=''}={}){
-  const W=460, cx=160, cy=h/2, R=Math.min(h/2-16,108), r=R*0.58;
+  const W=520, cx=150, cy=h/2, R=Math.min(h/2-16,108), r=R*0.58;
   const всего=пункты.reduce((с,п)=>с+п.сумма,0)||1;
   let деф='', s='', угол=-Math.PI/2;
   пункты.forEach((п,i)=>{
@@ -848,12 +873,13 @@ function пончик(пункты,{h=300,центр=''}={}){
     угол+=раств;
   });
   if(центр) s+=`<text class="ink" style="animation-delay:600ms" x="${cx}" y="${cy+3}" text-anchor="middle"
-    font-family="'Old Standard TT',Georgia,serif" font-size="20" fill="${ЧЕР.осн}">${центр}</text>`;
+    font-family="'Forum',Georgia,serif" font-size="20" fill="${ЧЕР.осн}">${центр}</text>`;
   пункты.forEach((п,i)=>{
-    const ц=п.цвет||РЯД[i%6], y=cy-(пункты.length-1)*14+i*28;
-    s+=`<rect x="${W-160}" y="${(y-9).toFixed(0)}" width="12" height="12" fill="${ц}"/>`;
-    s+=`<text x="${W-142}" y="${(y+1).toFixed(0)}" font-size="13" fill="${ЧЕР.осн}">${п.статья}</text>`;
-    s+=`<text x="${W-142}" y="${(y+16).toFixed(0)}" font-size="12.5" fill="${ЧЕР.тихо}">${Math.round(п.сумма/всего*100)} %</text>`;
+    const ц=п.цвет||РЯД[i%6], y=cy-(пункты.length-1)*13+i*26;
+    s+=`<rect x="${W-190}" y="${(y-9).toFixed(0)}" width="11" height="11" fill="${ц}"/>`;
+    /* доля идёт в ту же строку: отдельной строкой она налезала на соседа */
+    s+=`<text x="${W-172}" y="${(y+1).toFixed(0)}" font-size="13.5" fill="${ЧЕР.осн}">${п.статья}<tspan
+         dx="8" font-size="13" fill="${ЧЕР.тихо}">${Math.round(п.сумма/всего*100)} %</tspan></text>`;
   });
   return svg(W,h,`<defs>${деф}</defs>`+s,'donut');
 }
@@ -963,11 +989,11 @@ function воронка(шаги,{h=320}={}){
          <rect x="${x0}" y="${y.toFixed(1)}" width="${шир.toFixed(1)}" height="${вы.toFixed(1)}" fill="url(#${p.id})"/>
          <rect x="${x0}" y="${y.toFixed(1)}" width="${шир.toFixed(1)}" height="${вы.toFixed(1)}"
           fill="none" stroke="${ЧЕР.золото}" stroke-width=".9"/></g>`;
+    /* число и название — одной строкой: двумя они налезали друг на друга */
     s+=`<text class="ink" style="animation-delay:${520+i*90}ms" x="${(x0+w+24).toFixed(1)}"
-         y="${(y+вы/2-1).toFixed(1)}" font-family="'Old Standard TT',Georgia,serif" font-size="16"
-         fill="${ЧЕР.осн}">${ш.число}</text>`;
-    s+=`<text class="ink" style="animation-delay:${560+i*90}ms" x="${(x0+w+24).toFixed(1)}"
-         y="${(y+вы/2+16).toFixed(1)}" font-size="12.5" fill="${ЧЕР.тихо}">${ш.имя}</text>`;
+         y="${(y+вы/2+6).toFixed(1)}" font-size="15" fill="${ЧЕР.тихо}"><tspan
+         font-family="'Forum',Georgia,serif" font-size="18" fill="${ЧЕР.осн}">${ш.число}</tspan>
+         <tspan dx="8">${ш.имя}</tspan></text>`;
   });
   return svg(W,h,`<defs>${деф}</defs>`+s,'funnel');
 }
@@ -1233,10 +1259,10 @@ function пересчёт(){
   эл('chart-unit').innerHTML=линии([
     {имя:'LTV / CAC', цвет:РЯД[0], значения:м.map(р=>р.LTV_CAC)},
     {имя:'порог 3', цвет:РЯД[1], значения:м.map(()=>3)},
-  ],{h:260,фмтY:(v)=>пс(v.toFixed(1))});
+  ],{h:260,ширина:560,фмтY:(v)=>пс(v.toFixed(1))});
   эл('chart-margin').innerHTML=линии([
     {имя:'валовая маржа', цвет:РЯД[3], значения:м.map(р=>р['маржа_валовая_%'])},
-  ],{h:260,фмтY:(v)=>чс(v)+' %'});
+  ],{h:260,ширина:560,фмтY:(v)=>чс(v)+' %'});
   плитки('kpi-unit-dyn',[
     {значение:'×'+пс(м[23].LTV_CAC.toFixed(2)), подпись:'LTV / CAC на 24-м месяце'},
     {значение:пс(м[23].payback_мес.toFixed(1))+' мес', подпись:'окупаемость привлечения'},
@@ -1349,10 +1375,10 @@ function рисоватьOPEX(){
   const м=строки('базовый');
   эл('chart-team').innerHTML=столбики([
     {имя:'человек', цвет:РЯД[1], значения:м.map(р=>р.команда_чел)},
-  ],{h:250,фмтY:(v)=>чс(v)});
+  ],{h:250,ширина:560,фмтY:(v)=>чс(v)});
   эл('chart-fot').innerHTML=линии([
     {имя:'ФОТ со взносами', цвет:РЯД[0], значения:м.map(р=>р.фот)},
-  ],{h:250});
+  ],{h:250,ширина:560});
   плитки('kpi-team',[
     {значение:чс(м[0].команда_чел), подпись:'человек в команде на старте'},
     {значение:чс(м[23].команда_чел), подпись:'человек в команде к 24-му месяцу'},
@@ -1390,7 +1416,7 @@ function рисоватьCash(){
   const м=строки(сценарий), и=Д.модель[сценарий].итоги;
   эл('chart-flow').innerHTML=линии([
     {имя:'поток за месяц', цвет:РЯД[0], значения:м.map(р=>р.денежный_поток)},
-  ],{h:250,нулевая:true});
+  ],{h:250,ширина:560,нулевая:true});
   эл('round-table').innerHTML=`
     <tr><th>Показатель</th><th class="n">Значение</th></tr>
     <tr><td>Пик потребности в деньгах</td><td class="n">${млн(и['потребность_раунда'])} млн ₽</td></tr>
