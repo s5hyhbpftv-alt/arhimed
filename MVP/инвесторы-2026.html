@@ -29,49 +29,64 @@ body{
 
 /* ── экран ── */
 .slide{display:none;height:100dvh;overflow:auto;
-  padding:clamp(28px,4vh,64px) clamp(18px,4vw,64px) 96px}
+  padding:clamp(20px,3.4vh,44px) clamp(20px,3.4vw,60px) 76px}
 .slide.on{display:block}
-.wrap{max-width:900px;margin:0 auto}
+.wrap{max-width:1420px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;
+  justify-content:center}
+/* заголовочный блок держит свою высоту, визуал забирает остальное */
+.wrap > details.more{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+.wrap > details.more > .unfold{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;gap:14px}
+.unfold > .frame,.unfold > .pair{flex:1 1 auto;min-height:0}
+.pair > .frame,.pair > .stack{min-height:0}
+.frame{display:flex;flex-direction:column}
+.frame > div:last-child{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center}
 
 /* ── тезис ── */
-.claim{font-size:clamp(26px,4.4vw,50px);line-height:1.13;letter-spacing:-.022em;
-  font-weight:normal;color:var(--ivory);text-wrap:balance;max-width:19em}
+.claim{font-size:clamp(26px,3.2vw,46px);line-height:1.11;letter-spacing:-.024em;
+  font-weight:normal;color:var(--ivory);text-wrap:balance;max-width:26em}
 .claim em{font-style:normal;color:var(--gold)}
 .claim .q{color:var(--bad);font-style:normal}
-.stand{font-size:clamp(17px,1.7vw,20px);line-height:1.5;color:var(--muted);
-  margin-top:20px;max-width:40em}
+.stand{font-size:clamp(16px,1.2vw,19px);line-height:1.45;color:var(--muted);
+  margin-top:14px;max-width:56em}
 .stand b{color:var(--ivory);font-weight:normal}
 
 /* ── величины: типографская строка, не приборная панель ── */
-.run{display:flex;flex-wrap:wrap;margin-top:28px;
-  border-top:1px solid var(--line);padding-top:20px}
-.run > div{padding:0 26px 10px 0;margin-right:26px;border-right:1px solid var(--line)}
+.run{display:flex;flex-wrap:wrap;margin-top:20px;
+  border-top:1px solid var(--line);padding-top:15px}
+.run > div{padding:0 22px 6px 0;margin-right:22px;border-right:1px solid var(--line)}
 .run > div:last-child{border-right:0;margin-right:0}
-.run .v{font-size:clamp(23px,2.5vw,32px);line-height:1.1;color:var(--gold);
+.run .v{font-size:clamp(21px,1.85vw,27px);line-height:1.1;color:var(--gold);
   font-variant-numeric:tabular-nums;letter-spacing:-.015em}
-.run .k{font-size:15px;color:var(--ivory);margin-top:7px;max-width:15em;line-height:1.4}
-.run .n{font-size:13px;color:var(--muted);margin-top:3px;max-width:15em;line-height:1.4}
+.run .k{font-size:14px;color:var(--ivory);margin-top:5px;max-width:14em;line-height:1.35}
+.run .n{font-size:12.5px;color:var(--muted);margin-top:2px;max-width:14em;line-height:1.35}
 
 /* ── раскрытие ── */
-details.more{margin-top:32px;border-top:1px solid var(--line);padding-top:6px}
-details.more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:11px;
-  min-height:48px;font-size:16px;color:var(--gold);user-select:none}
+details.more{margin-top:18px;border-top:1px solid var(--line);padding-top:2px}
+details.more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;
+  min-height:44px;font-size:15px;color:var(--muted);user-select:none}
+details.more[open] > summary{color:var(--gold)}
 details.more > summary::-webkit-details-marker{display:none}
 details.more > summary:hover{color:#fff0bb}
 .chev{flex:0 0 auto;width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;
   stroke-linecap:round;stroke-linejoin:round;transition:transform .26s var(--ease)}
 details.more[open] > summary .chev{transform:rotate(90deg)}
-.unfold{padding:18px 0 8px;animation:unfold .4s var(--ease) both}
+.sub{margin-top:12px;border-top:1px solid var(--line);padding-top:2px}
+.sub > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;
+  min-height:44px;font-size:15px;color:var(--muted);user-select:none}
+.sub > summary::-webkit-details-marker{display:none}
+.sub[open] > summary{color:var(--gold)}
+.sub[open] > summary .chev{transform:rotate(90deg)}
+.unfold{padding:12px 0 6px;animation:unfold .4s var(--ease) both}
 @keyframes unfold{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 
 /* ── содержимое раскрытия ── */
-.pair{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
+.pair{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:26px;align-items:stretch}
 .stack{display:grid;gap:22px;min-width:0}
 .stack > *,.pair > *{min-width:0}
 h3{font-size:16px;font-weight:normal;color:var(--gold);margin-bottom:10px}
 p,li{font-size:16px;line-height:1.6}
 .note{font-size:15px;color:var(--muted);line-height:1.55}
-.frame{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--deep);
+.frame{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--deep);
   box-shadow:0 3px 14px rgba(0,0,0,.26);min-width:0;overflow-x:auto}
 b,strong{color:#fff6dd;font-weight:normal}
 .num{font-family:var(--data);font-variant-numeric:tabular-nums}
@@ -85,6 +100,7 @@ tr.hi td{background:rgba(255,215,106,.08)}
 
 ul{list-style:none}
 ul li{position:relative;padding-left:20px;margin-bottom:9px}
+ul.tight li{margin-bottom:5px;font-size:15px;line-height:1.45}
 ul li::before{content:'';position:absolute;left:2px;top:10px;width:6px;height:6px;
   transform:rotate(45deg);background:var(--gold-d)}
 
@@ -93,18 +109,18 @@ ul li::before{content:'';position:absolute;left:2px;top:10px;width:6px;height:6p
 .tag.ok{border-color:rgba(143,209,168,.45);background:rgba(143,209,168,.12);color:#b6e6cf}
 .tag.bad{border-color:rgba(232,145,124,.45);background:rgba(232,145,124,.12);color:#f0b0a2}
 
-.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart{width:100%;height:auto;max-height:clamp(200px,34vh,380px);display:block;overflow:visible}
 svg text{font-family:var(--data)}
-.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:14px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:7px;font-size:13.5px;color:var(--muted)}
 .legend i{display:inline-block;width:14px;height:3px;margin-right:7px;vertical-align:middle;border-radius:2px}
 
 /* честная оговорка — не декоративная плашка, а отбивка */
-.caveat{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);
+.caveat{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);
   font-size:15px;color:var(--muted);line-height:1.55;max-width:44em}
 .caveat b{color:var(--gold)}
 
 /* ── органы управления ── */
-.segs{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.segs{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
 button.seg{min-height:44px;padding:10px 16px;border-radius:11px;border:1px solid var(--line);
   background:var(--raise);color:var(--ivory);font:inherit;font-size:15px;cursor:pointer;
   transition:border-color .16s var(--ease),transform .12s var(--ease)}
@@ -113,9 +129,9 @@ button.seg:active{transform:translateY(2px)}
 button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:var(--gold)}
 .segs .note{margin-left:4px}
 
-.slider{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.slider{display:flex;align-items:center;gap:14px;margin-bottom:2px}
 .slider label{flex:0 0 220px;font-size:15px;color:var(--muted)}
-.slider input[type=range]{flex:1;min-width:0;accent-color:var(--gold-d);height:44px}
+.slider input[type=range]{flex:1;min-width:0;accent-color:var(--gold-d);height:40px}
 .slider .val{min-width:104px;text-align:right;color:var(--gold);font-variant-numeric:tabular-nums}
 
 /* ── навигация ── */
@@ -169,14 +185,14 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
     у которого есть измеримая цена и понятный срок.</p>
   <div class="run" id="kpi-why"></div>
 
-  <details class="more"><summary>
+  <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Почему родитель платит за это, а не за «ещё один курс»</summary>
     <div class="unfold">
       <div class="pair">
         <div class="frame"><h3>Что даёт олимпиада</h3><div id="chart-lift"></div></div>
         <div class="stack">
-          <ul>
+          <ul class="tight">
             <li><b>Поступление без экзаменов.</b> Победа и призёрство во всероссийской олимпиаде
                 даёт право поступить в профильный вуз без вступительных испытаний.</li>
             <li><b>Срок — годы, а не месяцы.</b> Приёмы олимпиадной математики ставятся
@@ -212,7 +228,7 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
     Олимпиадная подготовка — самый дорогой её угол.</p>
   <div class="run" id="kpi-problem"></div>
 
-  <details class="more"><summary>
+  <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Сколько это стоит сегодня</summary>
     <div class="unfold">
@@ -231,7 +247,7 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
     мы не нашли. Это и возможность, и риск: размер ниши придётся проверять самим.</p>
   <div class="run" id="kpi-market"></div>
 
-  <details class="more"><summary>
+  <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Воронка рынка и расчёт TAM / SAM / SOM</summary>
     <div class="unfold">
@@ -254,8 +270,10 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Карта рынка и сравнение игроков</summary>
     <div class="unfold">
-      <div class="frame"><h3>Цена против уровня подготовки</h3><div id="chart-map"></div></div>
-      <div class="frame" style="margin-top:22px"><table id="comp-table"></table></div>
+      <div class="pair">
+        <div class="frame"><h3>Цена против уровня подготовки</h3><div id="chart-map"></div></div>
+        <div class="frame"><h3>Кто что делает</h3><table id="comp-table"></table></div>
+      </div>
     </div>
   </details>
 </div></section>
@@ -268,7 +286,7 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
     кабинет родителя. Деньги нужны на масштаб, а не на то, чтобы начать.</p>
   <div class="run" id="kpi-product"></div>
 
-  <details class="more"><summary>
+  <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Что именно собрано и как устроен урок</summary>
     <div class="unfold">
@@ -288,7 +306,7 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
     а каждое задание проходит машинные проверки перед выкладкой.</p>
   <div class="run" id="kpi-moat"></div>
 
-  <details class="more"><summary>
+  <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Как устроен конвейер</summary>
     <div class="unfold">
@@ -320,7 +338,7 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
     на учебный год. Один и тот же продукт, две цены.</p>
   <div class="run" id="kpi-money"></div>
 
-  <details class="more"><summary>
+  <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Структура выручки</summary>
     <div class="unfold">
@@ -342,14 +360,18 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
   </div>
   <div class="run" id="calc-out"></div>
 
-  <details class="more"><summary>
+  <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Сравнение с отраслевыми нормами</summary>
     <div class="unfold">
-      <div class="pair">
-        <div class="frame"><h3>LTV / CAC против порога 3</h3><div id="chart-unit"></div></div>
-        <div class="frame"><table id="unit-norms"></table></div>
-      </div>
+      <details class="sub"><summary>
+        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+        Сравнение с отраслевыми нормами</summary>
+        <div class="pair" style="margin-top:14px">
+          <div class="frame"><div id="chart-unit"></div></div>
+          <div class="frame" style="overflow:auto"><table id="unit-norms"></table></div>
+        </div>
+      </details>
       <p class="caveat"><b>Честно:</b> окупаемость CAC за полтора месяца достижима только
         на SEO и сарафане. У платного трафика CAC 3 000–4 000 ₽, и мы держим его
         как канал проверки, а не как основной.</p>
@@ -397,10 +419,14 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
     <div class="unfold">
       <div class="segs" id="scen-1"></div>
       <div class="frame"><div id="chart-opex"></div><div class="legend" id="legend-opex"></div></div>
-      <div class="pair" style="margin-top:22px">
-        <div class="frame"><h3>24-й месяц</h3><div id="chart-opex-donut"></div></div>
-        <div class="frame"><table id="opex-table"></table></div>
-      </div>
+      <details class="sub"><summary>
+        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+        Структура 24-го месяца по статьям</summary>
+        <div class="pair" style="margin-top:14px">
+          <div class="frame"><div id="chart-opex-donut"></div></div>
+          <div class="frame"><table id="opex-table"></table></div>
+        </div>
+      </details>
     </div>
   </details>
 </div></section>
@@ -481,13 +507,25 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
     <b>Это горизонт за пределами 36-месячной модели</b> — в её числах международной выручки нет.</p>
   <div class="run" id="kpi-abroad"></div>
 
-  <details class="more"><summary>
+  <details class="more" open><summary>
     <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
     Страны, числа и порядок выхода</summary>
     <div class="unfold">
       <div class="frame"><h3>Школьники и доля обучения на русском</h3><div id="chart-abroad"></div></div>
-      <div class="frame" style="margin-top:22px"><table id="abroad-table"></table></div>
-      <div class="pair" style="margin-top:22px">
+      <details class="sub"><summary>
+        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+        Страны, числа и источники</summary>
+        <div class="frame" style="margin-top:14px"><table id="abroad-table"></table></div>
+        <p class="caveat"><b>Честно, три оговорки.</b> Доля обучения на русском в Казахстане
+          снижалась много лет, и часть школ закрывается. В Армении с 2024/25 учебного года русский
+          как отдельный предмет оставлен только в 4, 9, 11 и 12 классах — это встречный ветер,
+          а не попутный. Число школьников Армении по открытым источникам мы установить не смогли
+          и не ставим его в таблицу вместо настоящего.</p>
+      </details>
+      <details class="sub"><summary>
+        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+        Почему перенос дешёвый и в каком порядке выходим</summary>
+      <div class="pair" style="margin-top:14px">
         <div class="stack">
           <h3>Почему перенос дешёвый</h3>
           <ul>
@@ -512,11 +550,7 @@ button.seg.on{border-color:var(--gold);background:rgba(255,215,106,.14);color:va
           </ul>
         </div>
       </div>
-      <p class="caveat"><b>Честно, три оговорки.</b> Доля обучения на русском в Казахстане
-        снижалась много лет, и часть школ закрывается. В Армении с 2024/25 учебного года русский
-        как отдельный предмет оставлен только в 4, 9, 11 и 12 классах — это встречный ветер,
-        а не попутный. Число школьников Армении по открытым источникам мы установить не смогли
-        и не ставим его в таблицу вместо настоящего.</p>
+      </details>
     </div>
   </details>
 </div></section>
@@ -742,10 +776,33 @@ function карта(точки,{h=320}={}){
   });
   s+=`<text x="${x0+w/2}" y="${h-6}" text-anchor="middle" font-size="11" fill="#6f8571">цена за месяц, ₽ (лог. шкала)</text>`;
   s+=`<text x="14" y="${y0+hh/2}" font-size="11" fill="#6f8571" transform="rotate(-90 14 ${y0+hh/2})" text-anchor="middle">персонализация и практика</text>`;
+
+  /* Подписи расставляются с проверкой на столкновение: раньше все висели справа
+     и на близких точках («Сириус» и «АРХИМЕД») налезали друг на друга. */
+  const ШИР=(т)=>т.length*5.4+6, ВЫС=13;
+  const занято=[];
+  const свободно=(b)=>b.x>=2 && b.x+b.w<=W-4 && b.y-ВЫС>=y0-6 && b.y<=y0+hh+6 &&
+    !занято.some(z=>!(b.x+b.w<z.x-3||z.x+z.w<b.x-3||b.y<z.y-ВЫС-2||z.y<b.y-ВЫС-2));
+
   точки.forEach(т=>{
-    const r=т.размер||7;
-    s+=`<circle cx="${X(т.цена).toFixed(1)}" cy="${Y(т.уровень).toFixed(1)}" r="${r}" fill="${т.цвет}" opacity=".9"/>`;
-    s+=`<text x="${(X(т.цена)+r+5).toFixed(1)}" y="${(Y(т.уровень)+4).toFixed(1)}" font-size="11" fill="#f2ead6">${т.имя}</text>`;
+    const r=т.размер||7, cx=X(т.цена), cy=Y(т.уровень), ш=ШИР(т.имя);
+    s+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r}" fill="${т.цвет}" opacity=".92"/>`;
+    /* по очереди: справа, слева, снизу, сверху, затем со сдвигом */
+    const варианты=[
+      {x:cx+r+6,      y:cy+4,      a:'start'},
+      {x:cx-r-6-ш,    y:cy+4,      a:'end',   xt:cx-r-6},
+      {x:cx-ш/2,      y:cy+r+15,   a:'middle',xt:cx},
+      {x:cx-ш/2,      y:cy-r-7,    a:'middle',xt:cx},
+      {x:cx+r+6,      y:cy-r-9,    a:'start'},
+      {x:cx+r+6,      y:cy+r+17,   a:'start'},
+      {x:cx-r-6-ш,    y:cy-r-9,    a:'end',   xt:cx-r-6},
+      {x:cx-r-6-ш,    y:cy+r+17,   a:'end',   xt:cx-r-6},
+    ];
+    let в=варианты.find(v=>свободно({x:v.x,y:v.y,w:ш}))||варианты[0];
+    занято.push({x:в.x,y:в.y,w:ш});
+    const крупно=(т.размер||7)>=12;
+    s+=`<text x="${(в.xt!=null?в.xt:в.x).toFixed(1)}" y="${в.y.toFixed(1)}" text-anchor="${в.a}"
+         font-size="${крупно?12.5:11}" fill="${крупно?'#ffd76a':'#f6efe0'}">${т.имя}</text>`;
   });
   return svg(W,h,s,'map-chart');
 }
@@ -1207,10 +1264,10 @@ const наРусскомВсего=СТРАНЫ.reduce((с,к)=>с+(к.на_ру
   {значение:'4', подпись:'страны в первом круге', сноска:'за пределами 36-месячной модели'},
 ]);
 эл('chart-abroad').innerHTML=(()=>{
-  const W=520, строк=СТРАНЫ.length, h=34+строк*56, макс=4_300_000, x0=118, шир=W-x0-64;
+  const W=560, строк=СТРАНЫ.length, h=26+строк*44, макс=4_300_000, x0=112, шир=W-x0-70;
   let s='';
   СТРАНЫ.forEach((к,i)=>{
-    const y=18+i*56;
+    const y=14+i*44;
     s+=`<text x="0" y="${y+15}" font-size="12.5" fill="#f6efe0">${к.страна}</text>`;
     if(к.школьников===null){
       s+=`<rect x="${x0}" y="${y}" width="${шир}" height="22" rx="6" fill="none"
@@ -1222,7 +1279,7 @@ const наРусскомВсего=СТРАНЫ.reduce((с,к)=>с+(к.на_ру
       s+=`<rect x="${x0}" y="${y}" width="${ш.toFixed(0)}" height="22" rx="6" fill="${к.цвет}" opacity=".26"/>`;
       s+=`<rect x="${x0}" y="${y}" width="${шр.toFixed(0)}" height="22" rx="6" fill="${к.цвет}" opacity=".95"/>`;
       s+=`<text x="${(x0+ш+9).toFixed(0)}" y="${y+15}" font-size="11.5" fill="#ffd76a">${пс((к.школьников/1e6).toFixed(2))} млн</text>`;
-      s+=`<text x="${x0+6}" y="${y+38}" font-size="11" fill="#cbb89a">на русском ${пс(к.доля.toFixed(1))} % — ${тыс(к.на_русском)} тыс.</text>`;
+      s+=`<text x="${x0+6}" y="${y+34}" font-size="10.5" fill="#cbb89a">на русском ${пс(к.доля.toFixed(1))} % — ${тыс(к.на_русском)} тыс.</text>`;
     }
   });
   s+=`<text x="0" y="${h-4}" font-size="10.5" fill="#cbb89a">Светлая полоса — все школьники страны, плотная — те, кто учится на русском.</text>`;
