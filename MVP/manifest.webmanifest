@@ -1,7 +1,7 @@
 {
   "name": "АРХИМЕД — Острова Познания",
   "short_name": "АРХИМЕД",
-  "description": "Приложение ученика: олимпиадные задачи, уроки «объясни → реши», путь по островам.",
+  "description": "Углублённое изучение математики, русского языка, физики, химии и информатики и подготовка к олимпиадам: уроки «объясни → реши», тренажёры и задачи с разбором.",
   "lang": "ru",
   "id": "/MVP/",
   "start_url": "index.html",
@@ -10,10 +10,28 @@
   "orientation": "portrait",
   "background_color": "#0b1712",
   "theme_color": "#0b1712",
-  "categories": ["education", "games"],
+  "categories": [
+    "education",
+    "games"
+  ],
   "icons": [
-    { "src": "img/icons/student-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "img/icons/student-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "img/icons/student-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "img/icons/student-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/student-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/student-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
