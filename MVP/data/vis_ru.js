@@ -6543,10 +6543,10 @@ window.RUPAPER = (function(){
       <div class="q">${it.q}</div>
       ${taskHint?`<div class="hint">${taskHint}</div>`:''}
       ${body(it,picked,checked,ok)}
-      ${(type==='paint') ? `<div class="mark ${checked?(ok?'ok':'no'):''}" ${checked?'':'hidden'}>
+      ${type==='paint' ? `<div class="mark ${checked?(ok?'ok':'no'):''}" ${checked?'':'hidden'}>
           <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
             :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
-          <p>${ok?'Верно. ':'Правильно: '+(Array.isArray(it.ans)?it.ans.join(' · '):it.ans)+'. '}${it.why||''}</p></div>` : ''}
+          <p>${ok?'Верно. ':'Посмотри на рисунок: зелёным обведены все клетки, которые нужно было отметить, красным — лишние. '}${it.why||''}</p></div>` : ''}
       ${checked ? (type==='open'
           ? `<div class="self">
                <div class="ttl">Сверь свой ответ с образцом</div>
