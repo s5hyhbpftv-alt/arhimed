@@ -52,6 +52,22 @@ JS = r"""()=>{
       return;
     }
     let p=e.parentElement, clipped=false, anc=null;
+    /* Внутри SVG родитель с overflow hidden — это сам svg, и его «обрезка» по
+       умолчанию приходит из таблицы браузера, а не из нашей вёрстки: <rect
+       высотой 180 лежит ровно внутри viewBox 360x420, но выходит за рамку самого
+       svg, и проверка срабатывала на нём на КАЖДОМ шаге комикса 254. Пропускаем
+       ровно этот случай: ровно один родитель-svg с overflow по умолчанию.
+       Настоящую обрезку рамкой урока (ниже, по hb) судим по-прежнему всем. */
+    if(e.parentElement && e.parentElement.tagName.toLowerCase()==='svg'
+       && !e.parentElement.getAttribute('style') && !e.parentElement.getAttribute('class')){
+      clipped = (b.left<hb.left-1||b.right>hb.right+1||b.bottom>hb.bottom+1);
+      /* Пишем в отчёт причину, а не заглушку: String(anc) при anc=null давала
+         «[object SVGAnimatedString]» — по такому тексту нельзя понять, что нашли. */
+      if(clipped) out.push({k:'обрезано', t:(e.textContent||'').trim().slice(0,18),
+                            c:'рамка урока '+Math.round(b.bottom-hb.bottom)});
+      if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e});
+      return;
+    }
     while(p && p!==document.body){
       const ps=getComputedStyle(p);
       if(ps.overflow!=='visible'||ps.overflowX!=='visible'||ps.overflowY!=='visible'){
