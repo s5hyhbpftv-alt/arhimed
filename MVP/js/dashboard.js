@@ -1,8 +1,25 @@
 /* АРХИМЕД MVP · dashboard.js — кабинет родителя: редакционный отчёт о занятиях */
 'use strict';
+/* Откуда берётся каталог.
+   В приложении ребёнка банки задач и уроков загружены целиком — отчёт
+   считается по ним. В кабинете родителя банков нет намеренно: родителю
+   семиклассника незачем качать задачи первого класса. Вместо этого ребёнок
+   присылает список того, что открыто ИМЕННО ему, и отчёт считается по нему.
+   Если каталога нет (старая версия приложения ребёнка) — работаем по банкам,
+   как раньше. */
+function пулЗадач(){
+  const к = (typeof DB !== 'undefined' && DB.каталог) || null;
+  return (к && к.tasks && к.tasks.length) ? к.tasks : (window.ARH_TASKS || []);
+}
+function пулУроков(){
+  const к = (typeof DB !== 'undefined' && DB.каталог) || null;
+  if (к && к.lessons && к.lessons.length) return к.lessons;
+  return (window.ARH_LESSONS || []).filter(x =>
+    typeof isVisibleLesson === 'function' ? isVisibleLesson(x) : !x.hidden);
+}
 function themeStats(){
   const map={};
-  window.ARH_TASKS.forEach(t=>{
+  пулЗадач().forEach(t=>{
     const key=t.island+' :: '+themeOf(t);
     map[key]=map[key]||{island:t.island, theme:themeOf(t), n:0, done:0, tries:0, wrong:0};
     const st=DB.tasks[t.id];
@@ -12,7 +29,7 @@ function themeStats(){
   return Object.values(map);
 }
 function forecast(){
-  const m=window.ARH_TASKS.filter(t=>t.island==='Сиракузы'&&t.diff>=2);
+  const m=пулЗадач().filter(t=>t.island==='Сиракузы'&&t.diff>=2);
   if(!m.length) return {lvl:0,txt:''};
   const d=m.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done);
   const pct=d.length/m.length;
@@ -81,13 +98,13 @@ function pvMetrics(period){
     periodMin:sum('min'), periodTasks:sum('tasks'), periodWrong:sum('wrong'), periodSteps:sum('steps'), periodLessons:sum('lessons')};
 }
 function pvLessons(){
-  const L=window.ARH_LESSONS.filter(x=>typeof isVisibleLesson==='function'?isVisibleLesson(x):!x.hidden);
+  const L=пулУроков();
   const done=L.filter(x=>DB.lessons&&DB.lessons[x.id]&&DB.lessons[x.id].done);
   const last=new Map(); (DB.events||[]).forEach(e=>{ if(e.type==='lesson') last.set(e.id,e); });
   return {total:L.length, done:done.length, list:done.map(x=>({L:x, rec:DB.lessons[x.id], ev:last.get(x.id)}))};
 }
 function pvTasks(){
-  const all=window.ARH_TASKS||[];
+  const all=пулЗадач();
   const done=all.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done);
   const first=done.filter(t=>(DB.tasks[t.id].tries||1)<=1).length;
   const wrong=all.filter(t=>DB.tasks[t.id]&&(DB.tasks[t.id].wrong||0)>0)
@@ -96,12 +113,12 @@ function pvTasks(){
   return {total:all.length, done:done.length, first, wrong, lastTs};
 }
 function pvSubjects(){
-  const L=window.ARH_LESSONS.filter(x=>typeof isVisibleLesson!=='function'||isVisibleLesson(x));
+  const L=пулУроков();
   const isInf=x=>/Информатика/i.test(x.src||'');
   const inf=L.filter(isInf), mat=L.filter(x=>!isInf(x));
   const dn=a=>a.filter(x=>DB.lessons&&DB.lessons[x.id]&&DB.lessons[x.id].done).length;
   const st=a=>a.reduce((s,x)=>s+(DB.events||[]).filter(e=>e.type==='step'&&e.id===x.id).length,0);
-  const all=window.ARH_TASKS||[];
+  const all=пулЗадач();
   return {inf:inf.length, mat:mat.length, dInf:dn(inf), dMat:dn(mat), sInf:st(inf), sMat:st(mat),
     tDone:all.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length, tAll:all.length};
 }

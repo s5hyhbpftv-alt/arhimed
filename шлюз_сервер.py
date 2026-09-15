@@ -97,6 +97,8 @@ def norm_rec(rec):
     rec.setdefault('fails_d', 0); rec.setdefault('fails_p', 0)
     rec.setdefault('blocked_d_until', 0); rec.setdefault('blocked_p_until', 0)
     rec.setdefault('limits', {'minutes': 0}); rec.setdefault('notes', [])
+    # записи, заведённые до появления каталога класса и выданных заданий
+    rec.setdefault('catalog', None); rec.setdefault('assigned', [])
     return rec
 
 
@@ -106,6 +108,8 @@ def public_rec(rec):
             'code': rec['code'],
             'child': (rec.get('data') or {}).get('profile') or {},
             'data': rec.get('data'),
+            'catalog': rec.get('catalog') or None,
+            'assigned': rec.get('assigned') or None,
             'limits': rec.get('limits') or {},
             'notes': rec.get('notes') or [],
             'updated': rec.get('updated') or 0,
@@ -164,7 +168,8 @@ async def kid_api(request):
                    'linked': 0, 'unlinked': 0,
                    'fails_d': 0, 'fails_p': 0, 'blocked_d_until': 0, 'blocked_p_until': 0,
                    'created': int(time.time() * 1000), 'updated': 0,
-                   'data': None, 'limits': {'minutes': 0}, 'notes': []}
+                   'data': None, 'catalog': None, 'limits': {'minutes': 0},
+                   'notes': [], 'assigned': []}
             if not save_kid(rec):
                 return bad('storage')
         return web.json_response({'ok': True, 'code': rec['code'], 'token': rec['token']}, headers=no_store)
@@ -278,11 +283,23 @@ async def kid_api(request):
             except Exception:
                 return bad('data')
             rec['data'] = data
+            # Каталог класса ребёнка присылается не каждый раз (он тяжелее
+            # прогресса), поэтому пишем его только когда он пришёл, и храним
+            # отдельно от data — иначе короткая синхронизация его сотрёт.
+            кат = body.get('catalog')
+            if isinstance(кат, dict) and кат.get('tasks'):
+                try:
+                    if len(json.dumps(кат, ensure_ascii=False)) <= MAX_BODY:
+                        rec['catalog'] = кат
+                except Exception:
+                    pass
             rec['updated'] = int(time.time() * 1000)
             if not save_kid(rec):
                 return bad('storage')
             return web.json_response({'ok': True, 'limits': rec.get('limits') or {},
-                                      'notes': rec.get('notes') or [], 'updated': rec['updated']},
+                                      'notes': rec.get('notes') or [],
+                                      'assigned': rec.get('assigned') or None,
+                                      'updated': rec['updated']},
                                      headers=no_store)
 
         # --- ребёнок забирает лимит и заметки ---
@@ -293,6 +310,7 @@ async def kid_api(request):
                 return bad('token')
             return web.json_response({'ok': True, 'limits': rec.get('limits') or {},
                                       'notes': rec.get('notes') or [],
+                                      'assigned': rec.get('assigned') or None,
                                       'updated': rec.get('updated') or 0}, headers=no_store)
 
         # --- родитель: первый вход задаёт свой PIN, дальше только проверка ---
@@ -337,6 +355,7 @@ async def kid_api(request):
                 rec['ppin'] = None
                 rec['psalt'] = secrets.token_hex(8)
                 rec['notes'] = []
+                rec['assigned'] = []
                 rec['limits'] = {'minutes': 0}
                 rec['data'] = None
                 rec['updated'] = 0
@@ -348,6 +367,16 @@ async def kid_api(request):
                 return web.json_response({'ok': True, 'deleted': 1}, headers=no_store)
 
             if act == 'set':
+                # Выданные задания: родитель присылает список целиком, он же
+                # и есть текущее задание. Пустой список снимает выдачу.
+                зад = body.get('assign')
+                if isinstance(зад, list):
+                    чист = []
+                    for э in зад[:20]:
+                        if isinstance(э, dict) and str(э.get('id') or '').strip():
+                            чист.append({'id': str(э['id'])[:40],
+                                         'title': str(э.get('title') or '')[:120]})
+                    rec['assigned'] = {'list': чист, 'ts': int(time.time() * 1000)}
                 lim = body.get('limits')
                 if isinstance(lim, dict):
                     try:

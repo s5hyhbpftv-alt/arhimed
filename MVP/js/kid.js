@@ -10,9 +10,11 @@ function kidSaveState(){
     const k = kidSt();
     localStorage.setItem(KID_KEY, JSON.stringify({code: k.code || '', token: k.token || '',
       dpin: k.dpin || 0, linked: (k.linked == null ? 1 : k.linked),
+      catAt: k.catAt || 0, catClass: k.catClass || '',
       created: k.created || 0, introShown: k.introShown || 0, noteSeen: k.noteSeen || 0,
       noteToast: k.noteToast || 0, limitDay: k.limitDay || null,
-      limits: k.limits || {}, notes: k.notes || [], srvUpdated: k.srvUpdated || 0}));
+      limits: k.limits || {}, notes: k.notes || [], assigned: k.assigned || null,
+      assignSeen: k.assignSeen || 0, srvUpdated: k.srvUpdated || 0}));
   }catch(e){}
 }
 function kidLoadState(){
@@ -86,6 +88,55 @@ function kidSnapshot(short){
     sentAt: Date.now(), build: (window.ARH_BUILD || '')};
 }
 
+/* --- 2б. каталог класса для кабинета родителя ---
+   Родителю незачем грузить весь банк: семикласснику не нужны задачи первого
+   класса. Поэтому список того, что открыто ИМЕННО этому ребёнку, считает
+   само приложение — его же пулами — и отправляет отдельным полем. Кабинет
+   по нему и отчёт строит, и задания выдаёт.
+   Поле тяжелее прогресса, поэтому уезжает не при каждой синхронизации. */
+function kidCatalog(){
+  try{
+    /* Отбираем по классу явно, а не через taskPool(): у ребёнка мир открыт
+       весь (worldOpen), и это правильно — пусть лезет куда хочет. Но родителю
+       семиклассника задачи первого класса ни в отчёте, ни в выдаче заданий
+       не нужны, поэтому здесь берём только то, что подходит его классу. */
+    const о = (typeof openClassRange === 'function') ? openClassRange() : [1, 9];
+    const поКлассу = t => {
+      if (typeof taskClassRange !== 'function') return true;
+      const r = taskClassRange(t);
+      return !(r[1] < о[0] || r[0] > о[1]);
+    };
+    /* Темы и острова повторяются сотни раз («…словарные слова» у 134 задач),
+       поэтому едут словарём, а в задаче остаётся номер. Каталог шестиклассника
+       так ужимается со 126 КБ до полутора десятков. */
+    const темы = [], тК = new Map(), острова = [], оК = new Map();
+    const ном = (массив, карта, знач) => {
+      if (!карта.has(знач)){ карта.set(знач, массив.length); массив.push(знач); }
+      return карта.get(знач);
+    };
+    const задачи = (window.ARH_TASKS || []).filter(поКлассу)
+      .map(t => ({id: t.id, t: t.title,
+                  i: ном(острова, оК, t.island || ''),
+                  th: ном(темы, тК, (typeof themeOf === 'function' ? themeOf(t) : (t.theme || ''))),
+                  d: t.diff || 1}));
+    const уроки = (typeof lessonPool === 'function' ? lessonPool()
+        : (window.ARH_LESSONS || []).filter(L => !L.hidden))
+      .map(L => ({id: L.id, t: L.title, ic: L.ico || '', s: L.src || '',
+                  st: (L.explain || []).length}));
+    if (!задачи.length) return null;
+    return {class: String((DB.profile || {}).klass || ''),
+            themes: темы, islands: острова,
+            tasks: задачи, lessons: уроки, at: Date.now()};
+  }catch(e){ return null; }
+}
+/* Каталог меняется только при смене класса или обновлении банков — шлём его
+   при первой отправке и раз в сутки, а не каждые пятнадцать секунд. */
+function kidCatalogDue(){
+  const k = kidSt();
+  return !k.catAt || (Date.now() - k.catAt > 86400000)
+      || k.catClass !== String((DB.profile || {}).klass || '');
+}
+
 /* --- 3. отправка на сервер: не чаще раза в 15 секунд --- */
 let _kidPushAt = 0, _kidPushBusy = false;
 function kidPush(force){
@@ -97,9 +148,15 @@ function kidPush(force){
   if (_kidPushBusy) return;
   _kidPushAt = now; _kidPushBusy = true;
   const k = kidSt();
-  kidPost({act: 'sync', code: k.code, token: k.token, data: kidSnapshot()}).then(r => {
+  const тело = {act: 'sync', code: k.code, token: k.token, data: kidSnapshot()};
+  const кат = kidCatalogDue() ? kidCatalog() : null;
+  if (кат) тело.catalog = кат;
+  kidPost(тело).then(r => {
     _kidPushBusy = false;
-    if (r && r.ok){ kidTake(r); return; }
+    if (r && r.ok){
+      if (кат){ k.catAt = Date.now(); k.catClass = кат.class; kidSaveState(); }
+      kidTake(r); return;
+    }
     if (r && r.err === 'unlinked'){ kidSt().linked = 0; kidSaveState(); kidUnlinkedScreen(); }
   }).catch(() => { _kidPushBusy = false; });
 }
@@ -110,6 +167,7 @@ function kidTake(r){
   if (!r) return;
   if (r.limits) k.limits = r.limits;
   if (r.notes) k.notes = r.notes;
+  if (r.assigned !== undefined) k.assigned = r.assigned || null;
   if (typeof r.updated === 'number') k.srvUpdated = r.updated;
   try{ save(); }catch(e){}
   kidSaveState();
@@ -197,6 +255,24 @@ function kidCodeCard(){
     ${lim ? `<div class="small" style="margin-top:8px">Лимит занятий на день: <b>${lim} мин</b> · сегодня ${mins} мин${mins >= lim ? ' — лимит выполнен' : ''}</div>` : ''}
   </div>`;
 }
+/* Что сейчас выдано родителем, с отметкой решённых. */
+function kidAssigned(){
+  try{
+    const a = (kidSt().assigned || {}).list;
+    if (!Array.isArray(a) || !a.length) return [];
+    return a.map(з => ({id: з.id, title: з.title,
+      решена: !!(DB.tasks && DB.tasks[з.id] && DB.tasks[з.id].done)}));
+  }catch(e){ return []; }
+}
+function kidOpenAssigned(id){
+  try{ if (typeof openTask === 'function') openTask(id, 'path'); }catch(e){}
+}
+function kidAssignSeen(){
+  const k = kidSt();
+  k.assignSeen = (k.assigned || {}).ts || Date.now();
+  kidSaveState(); kidRender();
+}
+
 function kidRender(){
   const host = document.querySelector('.wrap');
   if (!host) return;
@@ -226,6 +302,25 @@ function kidRender(){
       <div class="small" style="color:var(--brass);font-size:11.5px">📩 От родителя · ${pvDate(notes[0].ts)}</div>
       <div style="font-size:14.5px;line-height:1.5;margin-top:4px">${esc(notes[0].text)}</div>
       <button class="btn ghost" style="margin-top:8px;min-height:36px;padding:6px 12px" onclick="kidNoteSeen()">Понятно</button>
+    </div>`);
+  }
+  /* Родитель может попросить решить конкретные задачи. Показываем их списком
+     с отметкой о решённых: ребёнку видно, что осталось, а не просто «есть
+     задание». Карточка уходит, когда всё решено или ребёнок её закрыл. */
+  const зад = kidAssigned();
+  if (зад.length && k.assignSeen !== (k.assigned || {}).ts){
+    const осталось = зад.filter(з => !з.решена).length;
+    parts.push(`<div class="card" style="border-color:rgba(217,164,65,.55);margin-bottom:10px">
+      <div class="small" style="color:var(--brass);font-size:11.5px">🎯 Родитель просит решить · ${pvDate((k.assigned||{}).ts)}</div>
+      <div style="margin-top:6px;display:flex;flex-direction:column;gap:6px">
+        ${зад.map(з => `<div style="display:flex;align-items:center;gap:8px">
+          <span style="color:${з.решена ? 'var(--ok,#7fc4a6)' : 'var(--brass)'};width:16px">${з.решена ? '✓' : '•'}</span>
+          <button class="btn ghost" style="flex:1;text-align:left;justify-content:flex-start;min-height:36px;padding:6px 10px;
+            ${з.решена ? 'opacity:.6' : ''}" onclick="kidOpenAssigned('${esc(з.id)}')">${esc(з.title || з.id)}</button>
+        </div>`).join('')}
+      </div>
+      <div class="small" style="margin-top:8px">${осталось ? ('Осталось: ' + осталось) : 'Всё решено — молодец!'}</div>
+      <button class="btn ghost" style="margin-top:8px;min-height:36px;padding:6px 12px" onclick="kidAssignSeen()">${осталось ? 'Скрыть' : 'Понятно'}</button>
     </div>`);
   }
   if (kidLimitOver()){

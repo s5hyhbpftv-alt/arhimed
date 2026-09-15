@@ -18,7 +18,7 @@
 <title>АРХИМЕД · приложение родителя</title>
 <meta name="description" content="Кабинет родителя АРХИМЕД: прогресс ребёнка в углублённом изучении предметов и подготовке к олимпиадам.">
 <link rel="canonical" href="/MVP/parent/">
-<link rel="stylesheet" href="parent.css?v=597">
+<link rel="stylesheet" href="parent.css?v=598">
 </head>
 <body>
 <div class="wrap">
@@ -40,15 +40,19 @@
   <button class="active" type="button"><span class="ic"><img src="../img/icons/parent-32.png" width="22" height="22" alt="" style="border-radius:6px"></span>Родитель</button>
 </nav>
 
-<script src="../data/tasks.js?v=597"></script>
-<script src="../data/lessons.js?v=597"></script>
-<script src="../js/core.js?v=597"></script>
-<script src="../js/dashboard.js?v=597"></script>
-<script src="../js/pinpad.js?v=597"></script>
-<script src="parent.js?v=597"></script>
+<!-- Банки задач и уроков кабинет НЕ грузит намеренно: родителю семиклассника
+     незачем качать мегабайт с задачами первого класса. Всё, что открыто именно
+     этому ребёнку, приходит в его снимке отдельным каталогом (kid.js → kidCatalog).
+     Пустые массивы нужны на случай старой версии приложения ребёнка: тогда отчёт
+     просто окажется без названий, но ничего не упадёт. -->
+<script>window.ARH_TASKS = window.ARH_TASKS || []; window.ARH_LESSONS = window.ARH_LESSONS || [];</script>
+<script src="../js/core.js?v=598"></script>
+<script src="../js/dashboard.js?v=598"></script>
+<script src="../js/pinpad.js?v=598"></script>
+<script src="parent.js?v=598"></script>
 <script>
 window.addEventListener('load', function(){
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js?v=597').catch(function(){});
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js?v=598').catch(function(){});
 });
 </script>
 </body>
