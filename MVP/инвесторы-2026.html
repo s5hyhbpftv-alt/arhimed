@@ -1117,17 +1117,30 @@ const статьиРаунда=[
 показать(parseInt((location.hash||'#s1').slice(2),10)-1 || 0);
 </script>
 
-<!-- ═══ ТЕЛЕФОН: листаем пальцем ══════════════════════════════════════════
-     Добавлено отдельным блоком: оформление первоначальной деки не тронуто,
-     меняется только управление. Листы здесь прокручиваются внутри себя,
-     поэтому вертикальный жест не перехватываем.
-
-     Полного экрана здесь намеренно нет. Он был: в горизонтали появлялась
-     кнопка, а после поворота первое касание разворачивало деку на весь
-     экран. Владелец попросил убрать — зритель сам решает, разворачивать
-     ему окно или нет. Если понадобится снова, смотреть в истории до
-     коммита, который его убрал. -->
+<!-- ═══ ТЕЛЕФОН: свайп и полный экран ═════════════════════════════════════
+     Добавлено 15.09.2026 отдельным блоком: оформление первоначальной деки
+     не тронуто, меняется только управление. Листы здесь прокручиваются
+     внутри себя, поэтому вертикальный жест не перехватываем. -->
 <style>
+#воВесь{
+  position:fixed; right:14px; top:14px; z-index:40; display:none;
+  font-family:var(--mono); font-size:12px; color:var(--ivory);
+  background:var(--panel); border:1px solid var(--line); border-radius:4px;
+  padding:7px 11px; cursor:pointer;
+}
+#воВесь:active{transform:scale(.97)}
+#воВесь.видна{display:block}
+/* Строчка для iPhone: Fullscreen API для элементов там отсутствует,
+   и вместо мёртвой кнопки честнее сказать, где полный экран берётся. */
+#экранСовет{
+  position:fixed; right:14px; top:14px; z-index:40; display:none;
+  font-family:var(--mono); font-size:11px; color:var(--muted);
+  background:var(--panel); border:1px solid var(--line); border-radius:4px;
+  padding:7px 11px; max-width:52vw; line-height:1.4; pointer-events:none;
+}
+#экранСовет.видна{display:block}
+/* Пока кнопка на экране, верхняя строка листа уступает ей место. */
+body.с-кнопкой .slide{padding-right:clamp(90px,16vw,150px)}
 #свайпСовет{
   position:fixed; left:50%; bottom:92px; transform:translateX(-50%); z-index:40;
   font-family:var(--mono); font-size:13px; color:var(--muted);
@@ -1137,6 +1150,8 @@ const статьиРаунда=[
 #свайпСовет.видна{animation:совет 3600ms ease forwards}
 @keyframes совет{0%{opacity:0}12%{opacity:1}72%{opacity:1}100%{opacity:0}}
 </style>
+<button id="воВесь" type="button" hidden>во весь экран</button>
+<div id="экранСовет">во весь экран: «Поделиться» → «На экран „Домой“»</div>
 <div id="свайпСовет">листайте пальцем ←→</div>
 <script>
 'use strict';
@@ -1163,6 +1178,94 @@ const статьиРаунда=[
   }
 
 })();
+
+/* --- во весь экран ----------------------------------------------------
+   Задача: повернул телефон горизонтально — панели браузера ушли, дека
+   заняла весь экран.
+
+   Почему это не делается «в лоб». Fullscreen API браузеры дают только по
+   жесту пользователя, а поворот экрана жестом не считается: вызов прямо
+   из orientationchange отклоняется молча. Поэтому после поворота мы
+   вооружаемся и ждём первое же касание — им оказывается тот самый свайп,
+   которым листают деку, так что для зрителя это и есть «повернул —
+   панели спрятались».
+
+   Прошлая версия ждала только pointerup. Если браузер этого события не
+   присылал (а на части сборок он присылает touchend без pointer-событий),
+   полный экран не включался вовсе и выглядело это как «ничего не
+   работает». Теперь слушаем сразу несколько событий, первое победившее
+   снимает остальные, и вооружаемся заново каждый раз, когда из полного
+   экрана вышли, а телефон всё ещё горизонтально.
+
+   На iPhone Fullscreen API для элементов нет вообще — он там есть только
+   у видео. Мёртвая кнопка была бы обманом, поэтому вместо неё в
+   горизонтали показывается строчка о том, где полный экран всё-таки
+   берётся: дека, добавленная на экран «Домой», открывается вовсе без
+   браузерной обвязки. */
+(function(){
+  const к = document.documentElement;
+  const войтиМожно = к.requestFullscreen || к.webkitRequestFullscreen;
+  const горизонт = matchMedia('(orientation: landscape) and (max-height: 620px)');
+  const б = document.getElementById('воВесь');
+
+  /* Нет API (iPhone) — показываем подсказку вместо кнопки и уходим. */
+  if (!войтиМожно){
+    const п = document.getElementById('экранСовет');
+    if (!п) return;
+    const показП = () => п.classList.toggle('видна', горизонт.matches);
+    горизонт.addEventListener('change', показП);
+    показП();
+    return;
+  }
+  if (!б) return;
+
+  const вПолном = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+  const показ = () => {
+    const надо = горизонт.matches || вПолном();
+    б.hidden = !надо;
+    б.classList.toggle('видна', надо);
+    const сц = document.getElementById('сцена');
+    if (сц) сц.classList.toggle('с-кнопкой', надо);
+    б.textContent = вПолном() ? 'выйти из полного экрана' : 'во весь экран';
+  };
+  const войти = () => { войтиМожно.call(к).catch(() => {}); };
+  const выйти = () => {
+    const f = document.exitFullscreen || document.webkitExitFullscreen;
+    if (f) f.call(document);
+  };
+  б.onclick = () => { вПолном() ? выйти() : войти(); };
+
+  /* Ждём первый жест после поворота. Слушаем несколько событий сразу:
+     какое придёт первым, то и сработает, остальные тут же снимаются. */
+  const СОБЫТИЯ = ['pointerup', 'touchend', 'mouseup', 'click', 'keydown'];
+  let снять = null;
+  const ждатьЖест = () => {
+    if (снять || вПолном() || !горизонт.matches) return;
+    const один = () => { убрать(); войти(); };
+    const убрать = () => {
+      СОБЫТИЯ.forEach(и => removeEventListener(и, один, true));
+      снять = null;
+    };
+    снять = убрать;
+    СОБЫТИЯ.forEach(и => addEventListener(и, один, true));
+  };
+
+  горизонт.addEventListener('change', () => {
+    if (горизонт.matches) ждатьЖест();
+    else {
+      if (снять) снять();
+      /* Вернулись в вертикаль — возвращаем и панели: держать телефон
+         стоймя в полном экране незачем. */
+      if (вПолном()) выйти();
+    }
+    показ();
+  });
+  document.addEventListener('fullscreenchange', () => { показ(); ждатьЖест(); });
+  document.addEventListener('webkitfullscreenchange', () => { показ(); ждатьЖест(); });
+  ждатьЖест();
+  показ();
+})();
+
 </script>
 </body>
 </html>
