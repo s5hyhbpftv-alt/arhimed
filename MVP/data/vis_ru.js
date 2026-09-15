@@ -6452,6 +6452,12 @@ window.RUPAPER = (function(){
     return val===it.ans;
   }
 
+  /* Пока задание не отвечено, под ним ничего не печатаем. Раньше здесь была
+     сноска cfg.source — откуда взят лист. Это сведение для кода, а не для
+     ребёнка: на экране она занимала половину кадра. Само поле cfg.source
+     осталось в данных листа.
+     Внимание: комментарий обязан жить ВНЕ шаблонной строки — внутри неё он
+     печатается как обычный текст, на этом уже обожглись. */
   function body(it,picked,checked,ok){
     const t=it.type||'single';
     if(t==='multi'){
@@ -6535,7 +6541,7 @@ window.RUPAPER = (function(){
                <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
                  :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
                <p>${ok?'Верно. ':'Правильно: '+(Array.isArray(it.ans)?it.ans.join(' · '):it.ans)+'. '}${it.why}</p></div>`)
-        : `<div class="q" style="color:${MUT}">${cfg.source||''}</div>`}
+        : ''}
     </div>`;
   }
 
