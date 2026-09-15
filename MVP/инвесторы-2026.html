@@ -1117,21 +1117,17 @@ const статьиРаунда=[
 показать(parseInt((location.hash||'#s1').slice(2),10)-1 || 0);
 </script>
 
-<!-- ═══ ТЕЛЕФОН: свайп и полный экран ═════════════════════════════════════
-     Добавлено 15.09.2026 отдельным блоком: оформление первоначальной деки
-     не тронуто, меняется только управление. Листы здесь прокручиваются
-     внутри себя, поэтому вертикальный жест не перехватываем. -->
+<!-- ═══ ТЕЛЕФОН: листаем пальцем ══════════════════════════════════════════
+     Добавлено отдельным блоком: оформление первоначальной деки не тронуто,
+     меняется только управление. Листы здесь прокручиваются внутри себя,
+     поэтому вертикальный жест не перехватываем.
+
+     Полного экрана здесь намеренно нет. Он был: в горизонтали появлялась
+     кнопка, а после поворота первое касание разворачивало деку на весь
+     экран. Владелец попросил убрать — зритель сам решает, разворачивать
+     ему окно или нет. Если понадобится снова, смотреть в истории до
+     коммита, который его убрал. -->
 <style>
-#воВесь{
-  position:fixed; right:14px; top:14px; z-index:40; display:none;
-  font-family:var(--mono); font-size:12px; color:var(--ivory);
-  background:var(--panel); border:1px solid var(--line); border-radius:4px;
-  padding:7px 11px; cursor:pointer;
-}
-#воВесь:active{transform:scale(.97)}
-#воВесь.видна{display:block}
-/* Пока кнопка на экране, верхняя строка листа уступает ей место. */
-body.с-кнопкой .slide{padding-right:clamp(90px,16vw,150px)}
 #свайпСовет{
   position:fixed; left:50%; bottom:92px; transform:translateX(-50%); z-index:40;
   font-family:var(--mono); font-size:13px; color:var(--muted);
@@ -1141,7 +1137,6 @@ body.с-кнопкой .slide{padding-right:clamp(90px,16vw,150px)}
 #свайпСовет.видна{animation:совет 3600ms ease forwards}
 @keyframes совет{0%{opacity:0}12%{opacity:1}72%{opacity:1}100%{opacity:0}}
 </style>
-<button id="воВесь" type="button" hidden>во весь экран</button>
 <div id="свайпСовет">листайте пальцем ←→</div>
 <script>
 'use strict';
@@ -1167,43 +1162,6 @@ body.с-кнопкой .slide{padding-right:clamp(90px,16vw,150px)}
     if(с) requestAnimationFrame(()=>с.classList.add('видна'));
   }
 
-  /* Кнопку полного экрана показываем только там, где браузер это умеет:
-     на iPhone Fullscreen API для элементов нет, мёртвая кнопка обманывала бы. */
-  const б=document.getElementById('воВесь');
-  const к=document.documentElement;
-  if(!б || !(к.requestFullscreen||к.webkitRequestFullscreen)) return;
-  const горизонт=matchMedia('(orientation: landscape) and (max-height: 560px)');
-  const показ=()=>{
-    const надо=горизонт.matches || !!document.fullscreenElement;
-    б.hidden=!надо; б.classList.toggle('видна',надо);
-    document.body.classList.toggle('с-кнопкой',надо);
-    б.textContent=document.fullscreenElement? 'выйти из полного экрана' : 'во весь экран';
-  };
-  const войти=()=>{ (к.requestFullscreen||к.webkitRequestFullscreen).call(к).catch(()=>{}); };
-  б.onclick=()=>{
-    if(document.fullscreenElement) (document.exitFullscreen||document.webkitExitFullscreen).call(document);
-    else войти();
-  };
-  /* Полный экран «сам» при повороте. Браузеры включают его только по жесту
-     пользователя — поворот жестом не считается. Поэтому ждём первое касание
-     после поворота: им оказывается тот же свайп, которым листают. Насовсем
-     панели убирает установка на экран «Домой». */
-  let снятьОжидание=null;
-  const ждатьЖест=()=>{
-    if(снятьОжидание||document.fullscreenElement||!горизонт.matches) return;
-    const один=()=>{убрать();войти()};
-    const убрать=()=>{removeEventListener('pointerup',один,true);снятьОжидание=null};
-    снятьОжидание=убрать; addEventListener('pointerup',один,true);
-  };
-  горизонт.addEventListener('change',()=>{
-    if(горизонт.matches) ждатьЖест();
-    else { if(снятьОжидание) снятьОжидание();
-      if(document.fullscreenElement) (document.exitFullscreen||document.webkitExitFullscreen).call(document); }
-  });
-  ждатьЖест();
-  горизонт.addEventListener('change',показ);
-  document.addEventListener('fullscreenchange',показ);
-  показ();
 })();
 </script>
 </body>
