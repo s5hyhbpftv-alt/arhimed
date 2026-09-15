@@ -156,7 +156,33 @@ const COMIC = (function(){
     </svg>`;
   }
 
+  /* Портрет Архимеда живёт отдельным файлом (MVP/data/arch_head.js) — так его
+     правят в одном месте и он не конфликтует с правками самого движка. Здесь
+     только вписываем его в кадр героя 120x140. Если файл почему-то не
+     загрузился, работает прежний рисунок ниже — это запасной вариант. */
+  function archPortrait(){
+    /* Портрет вкладываем вторым svg: у него своя рамка (188x224), и width/height
+       с preserveAspectRatio="slice" вписывают её в кадр героя ровно так, как
+       нужно. Первая попытка делала то же через transform — и голова уезжала
+       вниз-вправо, в карточке был виден только фрагмент щеки. */
+    const свг = (typeof window!=='undefined' && window.ARCH_HEAD) ? String(window.ARCH_HEAD) : '';
+    if(!свг) return '';
+    try{
+      return свг.replace('<svg ', '<svg x="4" y="0" width="112" height="140" preserveAspectRatio="xMidYMid meet" ');
+    }catch(e){ return ''; }
+  }
   function archSVG(emo){
+    /* Портрет вписывается так: translate/scale из его собственной рамки
+       188x224 в кадр 120x140, лишнее срезает preserveAspectRatio="slice". */
+    const портрет=archPortrait();
+    if(портрет){
+      try{
+        const вн=портрет.replace('<g transform="translate(1.2,6.3) scale(0.626)"></g>',
+          '<g transform="translate('+(120-188*0.626)/2+','+(140-224*0.626)/2+') scale(0.626)">');
+        /* закрываем группу перед концом svg */
+        return вн.replace(/<\/svg>\s*$/, '</g></svg>');
+      }catch(e){}
+    }
     const skin='#f4c9a3', skinD='#d9a87e';
     const robe='#f6ecd2', robeD='#e0d0a4', hem='#d9a441';
     const hair='#eef1f7', hairD='#c6cfe0', beard='#f4f6fb', beardD='#d3d9e6';
@@ -341,7 +367,224 @@ const COMIC = (function(){
         '<ellipse cx="0" cy="-8" rx="16" ry="5" fill="none" stroke="#e0c9a0" stroke-width="2" transform="rotate(-18)"/>',
       'снежок': '<circle cx="0" cy="-7" r="7" fill="#fff" stroke="#bfd8e8" stroke-width="1.2"/>',
       'яйцо': '<ellipse cx="0" cy="-7" rx="6" ry="8" fill="#fdf6e0" stroke="#c9b48a" stroke-width="1.2"/>',
-      'камень': '<path d="M-9 0 C-11 -8 -4 -13 2 -12 C9 -11 12 -5 10 0 Z" fill="#9aa0a8" stroke="#6b7078" stroke-width="1.3"/>'
+      'камень': '<path d="M-9 0 C-11 -8 -4 -13 2 -12 C9 -11 12 -5 10 0 Z" fill="#9aa0a8" stroke="#6b7078" stroke-width="1.3"/>',
+      /* ── быт, мебель, еда ─────────────────────────────────────────── */
+      'стул': '<rect x="-11" y="-20" width="22" height="5" rx="2" fill="#b5793c" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-10" y="-15" width="4" height="15" rx="1.6" fill="#9c6330" stroke="#33291e" stroke-width="1.2"/>'+
+        '<rect x="6" y="-15" width="4" height="15" rx="1.6" fill="#9c6330" stroke="#33291e" stroke-width="1.2"/>'+
+        '<rect x="-11" y="-40" width="5" height="22" rx="2" fill="#a86a34" stroke="#33291e" stroke-width="1.3"/>'+
+        '<rect x="-11" y="-40" width="20" height="5" rx="2" fill="#b5793c" stroke="#33291e" stroke-width="1.3"/>'+
+        '<rect x="-11" y="-32" width="15" height="4" rx="2" fill="#a86a34" stroke="#33291e" stroke-width="1.1"/>',
+      'стол': '<rect x="-20" y="-22" width="40" height="6" rx="2" fill="#b5793c" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-16" y="-16" width="4.5" height="16" rx="1.6" fill="#9c6330" stroke="#33291e" stroke-width="1.2"/>'+
+        '<rect x="11.5" y="-16" width="4.5" height="16" rx="1.6" fill="#9c6330" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M-9 -16 L9 -16" stroke="#8a5c33" stroke-width="2" opacity=".7"/>',
+      'пирог': '<ellipse cx="0" cy="-3" rx="17" ry="4" fill="#f6efe0" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-14 -4 L-11 -14 L11 -14 L14 -4 Z" fill="#e0a75c" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-14" rx="11" ry="4" fill="#f0c481" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M-6 -16 q2 -6 5 -3 q3 3 6 -4" stroke="#c07a30" stroke-width="1.5" fill="none" stroke-linecap="round"/>',
+      'чайник': '<path d="M-12 0 C-15 -6 -13 -18 0 -18 C13 -18 15 -6 12 0 Z" fill="#d76a5a" stroke="#33291e" stroke-width="1.5"/>'+
+        '<rect x="-5" y="-22" width="10" height="4" rx="2" fill="#b8503f" stroke="#33291e" stroke-width="1.2"/>'+
+        '<circle cx="0" cy="-24" r="2.2" fill="#b8503f" stroke="#33291e" stroke-width="1"/>'+
+        '<path d="M-8 -18 C-8 -28 8 -28 8 -18" stroke="#33291e" stroke-width="2" fill="none"/>'+
+        '<path d="M-12 -12 L-20 -17" stroke="#33291e" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+      'банка': '<rect x="-9" y="-20" width="18" height="20" rx="4" fill="#eaf2f6" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-7.5" y="-9" width="15" height="8" rx="3" fill="#e0a75c"/>'+
+        '<rect x="-11" y="-24" width="22" height="5" rx="2" fill="#8a9aa8" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M-4 -16 L4 -16" stroke="#b9c6cf" stroke-width="1.6"/>',
+      'мёд': '<path d="M-11 0 C-13 -8 -11 -16 0 -16 C11 -16 13 -8 11 0 Z" fill="#e8a92e" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-16" rx="9" ry="3.2" fill="#f2c14e" stroke="#33291e" stroke-width="1.2"/>'+
+        '<rect x="-7" y="-21" width="14" height="4" rx="2" fill="#c98a2a" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M0 -25 q1 -7 7 -9" stroke="#c98a2a" stroke-width="2" fill="none" stroke-linecap="round"/>'+
+        '<circle cx="-6" cy="-8" r="1.6" fill="#f2c14e"/>',
+      'корзина': '<path d="M-13 0 L-10 -16 L10 -16 L13 0 Z" fill="#d0a05a" stroke="#33291e" stroke-width="1.5"/>'+
+        '<path d="M-11.5 -4 L11.5 -4 M-12.4 -9 L12.4 -9 M-11 -13 L11 -13" stroke="#a8721f" stroke-width="1.2"/>'+
+        '<rect x="-14" y="-18" width="28" height="4" rx="2" fill="#c08f4c" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-8 -18 C-8 -30 8 -30 8 -18" stroke="#8a5c33" stroke-width="2" fill="none"/>',
+
+      /* ── игра, движение, техника ──────────────────────────────────── */
+      'мяч': '<circle cx="0" cy="-9" r="9" fill="'+(цвет||'#f6efe0')+'" stroke="#33291e" stroke-width="1.4"/>'+
+        '<path d="M0 -13.6 L3.6 -11.2 L2.2 -7.2 L-2.2 -7.2 L-3.6 -11.2 Z" fill="#33291e"/>'+
+        '<path d="M-8.8 -9.6 L-4.2 -7.6 M8.8 -9.6 L4.2 -7.6 M-4.2 -1.4 Q0 0.4 4.2 -1.4" stroke="#33291e" stroke-width="1.2" fill="none"/>',
+      'мишка': '<circle cx="-7" cy="-31" r="4.5" fill="#c08f5a" stroke="#33291e" stroke-width="1.2"/>'+
+        '<circle cx="7" cy="-31" r="4.5" fill="#c08f5a" stroke="#33291e" stroke-width="1.2"/>'+
+        '<ellipse cx="-9" cy="-12" rx="4" ry="6" fill="#c08f5a" stroke="#33291e" stroke-width="1.2"/>'+
+        '<ellipse cx="9" cy="-12" rx="4" ry="6" fill="#c08f5a" stroke="#33291e" stroke-width="1.2"/>'+
+        '<ellipse cx="0" cy="-9" rx="9" ry="9" fill="#d0a06a" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="-5" cy="-2.6" rx="4" ry="3" fill="#c08f5a" stroke="#33291e" stroke-width="1.1"/>'+
+        '<ellipse cx="5" cy="-2.6" rx="4" ry="3" fill="#c08f5a" stroke="#33291e" stroke-width="1.1"/>'+
+        '<circle cx="0" cy="-24" r="9" fill="#d0a06a" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-21" rx="4.6" ry="3.4" fill="#f0d8b8"/>'+
+        '<circle cx="-3.2" cy="-26" r="1.4" fill="#33291e"/><circle cx="3.2" cy="-26" r="1.4" fill="#33291e"/>'+
+        '<ellipse cx="0" cy="-21.6" rx="1.8" ry="1.3" fill="#33291e"/>',
+      'машинка': '<path d="M-16 -8 L-16 -14 L-7 -14 L-3 -20 L7 -20 L7 -14 L16 -14 L16 -8 Z" fill="'+(цвет||'#d9503f')+'" stroke="#33291e" stroke-width="1.4"/>'+
+        '<path d="M-6 -14 L-2.8 -19 L5 -19 L5 -14 Z" fill="#bfe3f7" stroke="#33291e" stroke-width="1"/>'+
+        '<circle cx="-9" cy="-4.6" r="4.6" fill="#4a4a52" stroke="#33291e" stroke-width="1.3"/>'+
+        '<circle cx="9" cy="-4.6" r="4.6" fill="#4a4a52" stroke="#33291e" stroke-width="1.3"/>'+
+        '<circle cx="-9" cy="-4.6" r="1.7" fill="#c9ccd2"/><circle cx="9" cy="-4.6" r="1.7" fill="#c9ccd2"/>',
+      'воздушный_змей': '<path d="M0 -40 L15 -24 L0 -8 L-15 -24 Z" fill="'+(цвет||'#4a93d0')+'" stroke="#33291e" stroke-width="1.5"/>'+
+        '<path d="M0 -40 L0 -8 M-15 -24 L15 -24" stroke="#33291e" stroke-width="1.1"/>'+
+        '<path d="M0 -8 C5 -4 4 -1 -2 0" stroke="#8a6d4a" stroke-width="1.4" fill="none"/>'+
+        '<path d="M1 -5 L5 -7 L2 -3 Z" fill="#f2c14e" stroke="#33291e" stroke-width=".9"/>',
+      'поезд': '<rect x="-20" y="-8" width="40" height="5" rx="2" fill="#6b7078" stroke="#33291e" stroke-width="1.3"/>'+
+        '<rect x="-18" y="-30" width="22" height="22" rx="3" fill="#3f6f9c" stroke="#33291e" stroke-width="1.5"/>'+
+        '<rect x="-16" y="-42" width="12" height="12" rx="2" fill="#4f80ad" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-14" y="-40" width="8" height="7" rx="1" fill="#bfe3f7" stroke="#33291e" stroke-width=".9"/>'+
+        '<rect x="6" y="-30" width="16" height="22" rx="3" fill="#5a8cb8" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="9" y="-26" width="10" height="9" rx="1" fill="#bfe3f7" stroke="#33291e" stroke-width=".9"/>'+
+        '<circle cx="-12" cy="-4.4" r="4.4" fill="#4a4a52" stroke="#33291e" stroke-width="1.2"/>'+
+        '<circle cx="0" cy="-4.4" r="4.4" fill="#4a4a52" stroke="#33291e" stroke-width="1.2"/>'+
+        '<circle cx="12" cy="-4.4" r="4.4" fill="#4a4a52" stroke="#33291e" stroke-width="1.2"/>',
+      'кирпич': '<rect x="-14" y="-13" width="28" height="13" rx="2" fill="'+(цвет||'#b5533c')+'" stroke="#33291e" stroke-width="1.5"/>'+
+        '<path d="M-14 -6.5 L14 -6.5" stroke="rgba(0,0,0,.28)" stroke-width="1.2"/>'+
+        '<path d="M-4.6 -13 L-4.6 -6.5 M4.6 -6.5 L4.6 0" stroke="rgba(0,0,0,.28)" stroke-width="1.2"/>',
+      'пазл': '<path d="M-13 0 L-13 -24 L-3 -24 C-4 -31 2 -34 4 -28 C5 -26 5 -25 5 -24 L13 -24 L13 -13 C19 -14 22 -8 17 -5 C15 -4 13.6 -4.6 13 -6 L13 0 Z" fill="'+(цвет||'#5aa9d6')+'" stroke="#33291e" stroke-width="1.5"/>',
+      'велосипед': '<circle cx="-12" cy="-6" r="6" fill="none" stroke="#33291e" stroke-width="1.8"/>'+
+        '<circle cx="12" cy="-6" r="6" fill="none" stroke="#33291e" stroke-width="1.8"/>'+
+        '<path d="M-12 -6 L-4 -17 L8 -17 L12 -6 M-4 -17 L-4 -6 M8 -17 L8 -6" stroke="#d9503f" stroke-width="2" fill="none"/>'+
+        '<path d="M-4 -17 L-7 -22 L-2 -22" stroke="#33291e" stroke-width="1.8" fill="none"/>'+
+        '<path d="M8 -17 L11 -22 L16 -22" stroke="#33291e" stroke-width="1.8" fill="none"/>',
+      'замок_песка': '<rect x="-17" y="-22" width="34" height="22" rx="2" fill="#e0c48a" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-21" y="-32" width="12" height="32" rx="2" fill="#ecd39c" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="9" y="-32" width="12" height="32" rx="2" fill="#ecd39c" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-21" y="-38" width="4" height="6" fill="#ecd39c" stroke="#33291e" stroke-width="1.1"/>'+
+        '<rect x="-15" y="-38" width="4" height="6" fill="#ecd39c" stroke="#33291e" stroke-width="1.1"/>'+
+        '<rect x="9" y="-38" width="4" height="6" fill="#ecd39c" stroke="#33291e" stroke-width="1.1"/>'+
+        '<rect x="15" y="-38" width="4" height="6" fill="#ecd39c" stroke="#33291e" stroke-width="1.1"/>'+
+        '<path d="M-4 0 L-4 -9 C-4 -14 4 -14 4 -9 L4 0 Z" fill="#c9a86a" stroke="#33291e" stroke-width="1.2"/>',
+
+      /* ── инструменты и вещи ───────────────────────────────────────── */
+      'ключ': '<circle cx="0" cy="-28" r="7" fill="none" stroke="#8a6d1e" stroke-width="3"/>'+
+        '<rect x="-2.4" y="-22" width="4.8" height="22" rx="2" fill="#d9b24c" stroke="#8a6d1e" stroke-width="1"/>'+
+        '<rect x="2.4" y="-12" width="7" height="4" rx="1.4" fill="#d9b24c" stroke="#8a6d1e" stroke-width="1"/>'+
+        '<rect x="2.4" y="-4" width="5" height="4" rx="1.4" fill="#d9b24c" stroke="#8a6d1e" stroke-width="1"/>',
+      'гайка': '<path d="M0 -16 L7 -12 L7 -4 L0 0 L-7 -4 L-7 -12 Z" fill="#a8adb5" stroke="#33291e" stroke-width="1.4"/>'+
+        '<circle cx="0" cy="-8" r="3.2" fill="#6b7078" stroke="#33291e" stroke-width="1.2"/>',
+      'молоток': '<rect x="-2.6" y="-32" width="5.2" height="32" rx="2.4" fill="#b5793c" stroke="#33291e" stroke-width="1.3"/>'+
+        '<rect x="-13" y="-40" width="24" height="9" rx="3" fill="#8a9099" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="10" y="-38" width="6" height="5" rx="2" fill="#6b7078" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M-9 -40 L-9 -31" stroke="#6b7078" stroke-width="1.1"/>',
+      'отвёртка': '<path d="M-2 -26 L-2 -4 L0 0 L2 -4 L2 -26 Z" fill="#c9cfd7" stroke="#33291e" stroke-width="1.2"/>'+
+        '<rect x="-2.4" y="-28" width="4.8" height="6" rx="1.4" fill="#a8adb5" stroke="#33291e" stroke-width="1.1"/>'+
+        '<rect x="-6" y="-42" width="12" height="16" rx="4" fill="#d9503f" stroke="#33291e" stroke-width="1.4"/>'+
+        '<path d="M-6 -37 L6 -37 M-6 -32 L6 -32" stroke="rgba(0,0,0,.25)" stroke-width="1.3"/>',
+      'лопата': '<rect x="-2.2" y="-40" width="4.4" height="24" rx="2" fill="#b5793c" stroke="#33291e" stroke-width="1.2"/>'+
+        '<rect x="-4" y="-43" width="8" height="4" rx="2" fill="#a8721f" stroke="#33291e" stroke-width="1.1"/>'+
+        '<path d="M-9 -16 L9 -16 L7 0 L-7 0 Z" fill="#a8adb5" stroke="#33291e" stroke-width="1.4"/>'+
+        '<path d="M-2.2 -16 L-2.2 -2" stroke="#6b7078" stroke-width="1.1"/>',
+      'верёвка': '<path d="M0 -14 C10 -14 14 -8 12 -4 C10 -1 4 0 -2 0 C-10 0 -16 -2 -16 -6" stroke="#c9a86a" stroke-width="4.4" fill="none" stroke-linecap="round"/>'+
+        '<path d="M0 -14 C10 -14 14 -8 12 -4 C10 -1 4 0 -2 0 C-10 0 -16 -2 -16 -6" stroke="#8a6d4a" stroke-width="4.4" fill="none" stroke-dasharray="3 5" stroke-linecap="round"/>',
+      'клубок': '<circle cx="0" cy="-10" r="10" fill="'+(цвет||'#c96a8a')+'" stroke="#33291e" stroke-width="1.4"/>'+
+        '<path d="M-9 -14 C-2 -6 6 -6 9 -13 M-9 -6 C-2 -14 6 -14 9 -7 M-6 -19 C-2 -12 4 -5 7 -1" stroke="rgba(0,0,0,.22)" stroke-width="1.2" fill="none"/>'+
+        '<path d="M8 -16 C16 -20 22 -13 20 -7" stroke="#33291e" stroke-width="1.6" fill="none"/>',
+      'ткань': '<path d="M-17 0 C-17 -7 -13 -11 -5 -11 L14 -11 C18 -11 21 -8 21 -4 L21 0 Z" fill="'+(цвет||'#7fb45c')+'" stroke="#33291e" stroke-width="1.4"/>'+
+        '<path d="M-9 -11 C-6 -6 -2 -4 4 -4 L21 -4" stroke="rgba(0,0,0,.2)" stroke-width="1.1" fill="none"/>'+
+        '<path d="M3 -11 C5 -6 9 -4 15 -4" stroke="rgba(0,0,0,.2)" stroke-width="1.1" fill="none"/>',
+      'письмо': '<rect x="-16" y="-22" width="32" height="22" rx="2" fill="#fdf6e0" stroke="#33291e" stroke-width="1.4"/>'+
+        '<path d="M-16 -22 L0 -10 L16 -22" fill="none" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-16 0 L-2 -11 M16 0 L2 -11" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="1.2"/>',
+      'картина': '<rect x="-16" y="-28" width="32" height="28" rx="2" fill="#c9a227" stroke="#33291e" stroke-width="1.5"/>'+
+        '<rect x="-12" y="-24" width="24" height="20" fill="#bfe3f7"/>'+
+        '<path d="M-12 -11 L-5 -18 L0 -13 L5 -20 L12 -12 L12 -4 L-12 -4 Z" fill="#6aa34e"/>'+
+        '<circle cx="6" cy="-20" r="2.4" fill="#ffe08a"/>'+
+        '<rect x="-12" y="-24" width="24" height="20" fill="none" stroke="#33291e" stroke-width="1.2"/>',
+      'свеча': '<ellipse cx="0" cy="-1" rx="8" ry="2.6" fill="#d9cdb4" stroke="#33291e" stroke-width="1.2"/>'+
+        '<rect x="-5" y="-20" width="10" height="19" rx="2" fill="#f6efe0" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M0 -23 L0 -20" stroke="#8a6d4a" stroke-width="1.4"/>'+
+        '<path d="M0 -33 C4 -28 4 -23 0 -23 C-4 -23 -4 -28 0 -33 Z" fill="#ffb347" stroke="#e07f2a" stroke-width="1.1"/>'+
+        '<path d="M0 -29 C2 -27 2 -24 0 -24 C-2 -24 -2 -27 0 -29 Z" fill="#ffe9a8"/>',
+      'огонь': '<rect x="-14" y="-6" width="28" height="5" rx="2.5" fill="#8a5c33" stroke="#33291e" stroke-width="1.2" transform="rotate(-7)"/>'+
+        '<rect x="-14" y="-6" width="28" height="5" rx="2.5" fill="#a8721f" stroke="#33291e" stroke-width="1.2" transform="rotate(7)"/>'+
+        '<path d="M0 -34 C9 -25 11 -16 6 -9 C3 -5 -3 -5 -6 -9 C-11 -16 -9 -25 0 -34 Z" fill="#f0832e" stroke="#c05a1c" stroke-width="1.3"/>'+
+        '<path d="M0 -25 C5 -19 6 -13 2 -9 C0 -7 -2 -8 -3 -10 C-5 -14 -3 -20 0 -25 Z" fill="#ffd76a"/>',
+      'флажок': '<rect x="-1.6" y="-42" width="3.2" height="42" rx="1.6" fill="#8a6d4a" stroke="#33291e" stroke-width="1.1"/>'+
+        '<path d="M1.6 -42 L23 -34 L1.6 -26 Z" fill="'+(цвет||'#d9503f')+'" stroke="#33291e" stroke-width="1.4"/>',
+
+      /* ── природа, еда, музыка ─────────────────────────────────────── */
+      'виноград': '<path d="M0 -38 C6 -44 14 -42 15 -36 C9 -33 4 -34 0 -38 Z" fill="#4e7f2f" stroke="#31531c" stroke-width="1.2"/>'+
+        '<path d="M0 -38 L0 -30" stroke="#6b4520" stroke-width="2" fill="none"/>'+
+        '<g fill="#8a4fa8" stroke="#5c2f78" stroke-width="1.2">'+
+        '<circle cx="-5" cy="-28" r="5"/><circle cx="5" cy="-28" r="5"/><circle cx="0" cy="-26" r="5"/>'+
+        '<circle cx="-8" cy="-19" r="5"/><circle cx="0" cy="-18" r="5.4"/><circle cx="8" cy="-19" r="5"/>'+
+        '<circle cx="-4" cy="-10" r="5"/><circle cx="4" cy="-10" r="5"/>'+
+        '<circle cx="0" cy="-4.6" r="4.6"/></g>',
+      'рыба': '<path d="M-13 -9 C-7 -18 6 -18 12 -9 C6 0 -7 0 -13 -9 Z" fill="#4a93d0" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-13 -9 L-21 -15 L-21 -3 Z" fill="#3f7fb0" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M-1 -13 Q2 -16 5 -13" stroke="#5aa3d8" stroke-width="1.6" fill="none"/>'+
+        '<path d="M-5 -8 Q0 -5 6 -8" stroke="#2f6f9c" stroke-width="1.1" fill="none"/>'+
+        '<circle cx="6" cy="-11" r="1.5" fill="#33291e"/>',
+      'птица': '<ellipse cx="0" cy="-10" rx="10" ry="8" fill="#6fb0d8" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-9 -9 L-18 -14 L-15 -5 Z" fill="#5a9cc4" stroke="#33291e" stroke-width="1.1"/>'+
+        '<ellipse cx="-1" cy="-10" rx="5" ry="4" fill="#5a9cc4" transform="rotate(-18 -1 -10)"/>'+
+        '<circle cx="8" cy="-17" r="6" fill="#7fc0e0" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M13 -17 L20 -15 L13 -13 Z" fill="#f2a93b" stroke="#33291e" stroke-width="1"/>'+
+        '<circle cx="9.6" cy="-18.4" r="1.4" fill="#33291e"/>'+
+        '<path d="M-2 0 L-2 -3 M3 0 L3 -3" stroke="#e0a72e" stroke-width="1.6"/>',
+      'пингвин': '<ellipse cx="-11" cy="-16" rx="3.4" ry="8" fill="#2f343d" stroke="#33291e" stroke-width="1.1" transform="rotate(12 -11 -16)"/>'+
+        '<ellipse cx="11" cy="-16" rx="3.4" ry="8" fill="#2f343d" stroke="#33291e" stroke-width="1.1" transform="rotate(-12 11 -16)"/>'+
+        '<ellipse cx="0" cy="-17" rx="11" ry="17" fill="#3a3f4a" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-14" rx="7.6" ry="12.5" fill="#f6efe0"/>'+
+        '<circle cx="0" cy="-33" r="8" fill="#3a3f4a" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-31" rx="4.4" ry="4" fill="#f6efe0"/>'+
+        '<circle cx="-2.6" cy="-34" r="1.3" fill="#33291e"/><circle cx="2.6" cy="-34" r="1.3" fill="#33291e"/>'+
+        '<path d="M-3 -30 L3 -30 L0 -26 Z" fill="#f2a93b" stroke="#33291e" stroke-width="1"/>'+
+        '<ellipse cx="-4.4" cy="-1.2" rx="4.4" ry="2" fill="#f2a93b" stroke="#33291e" stroke-width="1"/>'+
+        '<ellipse cx="4.4" cy="-1.2" rx="4.4" ry="2" fill="#f2a93b" stroke="#33291e" stroke-width="1"/>',
+      'ракушка': '<path d="M0 0 C-12 -2 -17 -10 -14 -18 C-7 -18 -2 -12 0 -4 C2 -12 7 -18 14 -18 C17 -10 12 -2 0 0 Z" fill="#f6d8c8" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M0 -4 L0 -18 M-3.4 -5 L-8.6 -17 M3.4 -5 L8.6 -17" stroke="#e0a894" stroke-width="1.1"/>',
+      'капля': '<path d="M0 -22 C6 -14 9 -9 9 -6 C9 -2 5 0 0 0 C-5 0 -9 -2 -9 -6 C-9 -9 -6 -14 0 -22 Z" fill="#7fc0e0" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-3 -9 C-4 -6 -3 -3 0 -1" stroke="#fff" stroke-width="1.6" fill="none" opacity=".7"/>',
+      'чашка': '<path d="M-9 0 L-8 -18 L8 -18 L9 0 Z" fill="#fffef4" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-18" rx="8" ry="2.6" fill="#c98a5a" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M9 -14 C15 -13 15 -5 9 -4" stroke="#33291e" stroke-width="2" fill="none"/>',
+      'тарелка': '<ellipse cx="0" cy="-3" rx="18" ry="3" fill="#e6e0d0" stroke="#33291e" stroke-width="1.3"/>'+
+        '<ellipse cx="0" cy="-6" rx="15" ry="4.4" fill="#fffef4" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-6.5" rx="9" ry="2.6" fill="#f0ebdc" stroke="#33291e" stroke-width="1"/>',
+      'свиток': '<rect x="-11" y="-25" width="22" height="19" rx="2" fill="#f6e6c0" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-15" y="-31" width="30" height="6" rx="3" fill="#e0c48a" stroke="#33291e" stroke-width="1.3"/>'+
+        '<rect x="-15" y="-6" width="30" height="6" rx="3" fill="#e0c48a" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-6 -21 L6 -21 M-6 -16 L6 -16 M-6 -11 L2 -11" stroke="#b09468" stroke-width="1.2"/>',
+      'весы': '<rect x="-10" y="-4" width="20" height="4" rx="2" fill="#a8721f" stroke="#33291e" stroke-width="1.3"/>'+
+        '<rect x="-1.6" y="-34" width="3.2" height="30" rx="1.6" fill="#b5793c" stroke="#33291e" stroke-width="1.2"/>'+
+        '<rect x="-18" y="-37" width="36" height="3.6" rx="1.8" fill="#c9a227" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M-14 -34 L-14 -26 M14 -34 L14 -26" stroke="#8a6d1e" stroke-width="1.1"/>'+
+        '<path d="M-20 -26 L-8 -26 L-11 -20 L-17 -20 Z" fill="#c9a227" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M8 -26 L20 -26 L17 -20 L11 -20 Z" fill="#c9a227" stroke="#33291e" stroke-width="1.2"/>'+
+        '<circle cx="0" cy="-37" r="3" fill="#d9b24c" stroke="#33291e" stroke-width="1.2"/>',
+      'песочные_часы': '<rect x="-12" y="-36" width="24" height="4" rx="2" fill="#8a5c33" stroke="#33291e" stroke-width="1.2"/>'+
+        '<rect x="-12" y="-4" width="24" height="4" rx="2" fill="#8a5c33" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M-9 -32 L9 -32 L0 -19 Z" fill="#f0e2c4" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-9 -4 L9 -4 L0 -17 Z" fill="#f0e2c4" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-6 -32 L6 -32 L0 -22 Z" fill="#e0b45c"/>'+
+        '<path d="M-5 -4 L5 -4 L0 -12 Z" fill="#e0b45c"/>'+
+        '<path d="M-1 -19 L1 -19 L1 -17 L-1 -17 Z" fill="#e0b45c"/>',
+      'колокол': '<path d="M0 -30 C8 -30 12 -23 12 -13 L14 -1 L-14 -1 L-12 -13 C-12 -23 -8 -30 0 -30 Z" fill="#d9b24c" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-3" y="-34" width="6" height="5" rx="2" fill="#b8902e" stroke="#33291e" stroke-width="1.1"/>'+
+        '<circle cx="0" cy="-4" r="3.2" fill="#b8902e" stroke="#33291e" stroke-width="1.2"/>',
+      'нота': '<ellipse cx="-6" cy="-5" rx="6" ry="4.4" fill="#3a3f4a" stroke="#33291e" stroke-width="1.2" transform="rotate(-18 -6 -5)"/>'+
+        '<rect x="-1.4" y="-30" width="2.8" height="25" fill="#3a3f4a" stroke="#33291e" stroke-width="1"/>'+
+        '<path d="M1.4 -30 C8 -28 10 -23 8 -17 C7 -23 4 -26 1.4 -27 Z" fill="#3a3f4a" stroke="#33291e" stroke-width="1.1"/>',
+      'скрипка': '<ellipse cx="0" cy="-10" rx="10" ry="9" fill="#c98a4c" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-22" rx="7.5" ry="7" fill="#c98a4c" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-4" y="-36" width="8" height="10" rx="2" fill="#8a5c33" stroke="#33291e" stroke-width="1.2"/>'+
+        '<path d="M-5 -36 q5 -5 10 0" stroke="#6b4520" stroke-width="2.2" fill="none"/>'+
+        '<circle cx="0" cy="-12" r="2.4" fill="#5c3a1c"/>'+
+        '<path d="M-3 -30 L-3 -8 M3 -30 L3 -8" stroke="#f6efe0" stroke-width="1"/>'+
+        '<path d="M-6 -6 q6 4 12 0" stroke="#5c3a1c" stroke-width="1.4" fill="none"/>',
+      'горшок': '<path d="M-11 -14 L-8 0 L8 0 L11 -14 Z" fill="#c96a4a" stroke="#33291e" stroke-width="1.4"/>'+
+        '<rect x="-13" y="-19" width="26" height="5" rx="2" fill="#b5533c" stroke="#33291e" stroke-width="1.3"/>'+
+        '<path d="M-11 -5 L11 -5" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/>',
+      'лейка': '<path d="M-10 0 L-12 -18 L10 -18 L12 0 Z" fill="#6fb0a8" stroke="#33291e" stroke-width="1.4"/>'+
+        '<path d="M-11 -15 L-21 -23 L-19 -26 L-9 -19 Z" fill="#6fb0a8" stroke="#33291e" stroke-width="1.2"/>'+
+        '<ellipse cx="-21" cy="-25" rx="4.6" ry="2.4" fill="#5a9a92" stroke="#33291e" stroke-width="1.1" transform="rotate(-30 -21 -25)"/>'+
+        '<path d="M-4 -18 C-4 -28 8 -30 8 -20" stroke="#33291e" stroke-width="2" fill="none"/>'+
+        '<path d="M-9 -8 L9 -8" stroke="rgba(255,255,255,.4)" stroke-width="1.6"/>',
+      'чайная_пара': '<ellipse cx="0" cy="-2" rx="15" ry="4" fill="#fffef4" stroke="#33291e" stroke-width="1.4"/>'+
+        '<path d="M-8 -4 L-6 -16 L6 -16 L8 -4 Z" fill="#fffef4" stroke="#33291e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-16" rx="6" ry="2.2" fill="#c98a5a" stroke="#33291e" stroke-width="1.1"/>'+
+        '<path d="M8 -13 C14 -12 14 -5 8 -4" stroke="#33291e" stroke-width="1.8" fill="none"/>'+
+        '<path d="M-3 -22 q3 -4 0 -8 M3 -22 q3 -4 0 -8" stroke="#c9c2d8" stroke-width="1.6" fill="none" stroke-linecap="round"/>'
+
     };
     const ф = фигуры[вид];
     return ф ? '<g transform="'+м+'">'+ф+'</g>' : '';
@@ -404,11 +647,16 @@ function pondSVG(){
         <ellipse cx="0" cy="-6" rx="6" ry="10" fill="#fff" transform="rotate(140)"/>
         <circle r="4" fill="#ffd45e"/>
       </g>
-      <!-- рыбки ПОД водой -->
+      <!-- рыбки ПОД водой.
+           У символа 'рыба' тело залито тем же синим #4a93d0, что и вода
+           пруда, — на воде остаётся виден только контур. Пока у символа нет
+           параметра цвета, перекрашиваем две его заливки в золотую.
+           Покачивание раньше висело на .c2a-fish text — текстовых узлов
+           больше нет, поэтому ту же анимацию c2fish вешаем на обёртки. -->
       <g class="c2a-fish">
-        <text x="52" y="150" font-size="30">🐟</text>
-        <text x="168" y="182" font-size="28">🐠</text>
-        <text x="272" y="140" font-size="26">🐟</text>
+        <g style="animation:c2fish 4.5s ease-in-out infinite alternate">${сим('рыба',67,146,1.0).replace(/#4a93d0/g,'#efa53c').replace(/#3f7fb0/g,'#c9862a')}</g>
+        <g style="animation:c2fish 4.5s ease-in-out -1.5s infinite alternate">${сим('рыба',182,177,0.95).replace(/#4a93d0/g,'#efa53c').replace(/#3f7fb0/g,'#c9862a')}</g>
+        <g style="animation:c2fish 4.5s ease-in-out -3s infinite alternate">${сим('рыба',285,137,0.90).replace(/#4a93d0/g,'#efa53c').replace(/#3f7fb0/g,'#c9862a')}</g>
       </g>
       <!-- пузырьки -->
       <g fill="#fff" opacity=".7">
@@ -442,7 +690,7 @@ function kitchenSVG(){
       <!-- полка с баночками -->
       <rect x="18" y="52" width="118" height="8" rx="2" fill="#9c6c3a"/>
       <rect x="18" y="52" width="118" height="3" fill="#c2915b"/>
-      <text x="46" y="44" font-size="22">🧂</text><text x="92" y="46" font-size="20">🍯</text>
+      ${сим('банка',57,50,0.90)}${сим('мёд',102,50,0.80)}
       <!-- пол -->
       <rect x="0" y="152" width="360" height="58" fill="url(#flK)"/>
       <g stroke="#7c5028" stroke-width="1.6" opacity=".5">
@@ -463,11 +711,11 @@ function kitchenSVG(){
       <!-- тарелка на столе -->
       <ellipse cx="150" cy="152" rx="30" ry="8" fill="#f4f0e4" stroke="#c9c2ae" stroke-width="2"/>
       <!-- пирожки НА тарелке/столе -->
-      <text x="128" y="151" font-size="22">🥧</text>
-      <text x="148" y="155" font-size="24">🥧</text>
-      <text x="170" y="151" font-size="22">🥧</text>
+      ${сим('пирог',139,153,0.80)}
+      ${сим('пирог',160,157,0.95)}
+      ${сим('пирог',181,153,0.80)}
       <!-- чайник на столе -->
-      <text x="252" y="156" font-size="30">🫖</text>
+      ${сим('чайник',267,154,1.0)}
     </svg>`;
   }
 
@@ -515,27 +763,28 @@ function coinsSVG(){
         <!-- оковка -->
         <line x1="211" y1="146" x2="211" y2="188" stroke="#8a5c1e" stroke-width="3"/>
         <rect x="204" y="160" width="14" height="10" rx="2" fill="#ffe08a" stroke="#8a5c1e" stroke-width="2"/>
-        <!-- монеты внутри сундука -->
-        <text x="160" y="180" font-size="22">🪙</text>
-        <text x="188" y="184" font-size="20">🪙</text>
-        <text x="214" y="176" font-size="24">🪙</text>
-        <text x="242" y="184" font-size="20">🪙</text>
-        <text x="264" y="178" font-size="22">🪙</text>
+        <!-- монеты внутри сундука (символа 'монета' пока нет — берём золотой шар) -->
+        ${сим('шар',170,180,1.15,'#f2c14e')}
+        ${сим('шар',197,184,1.05,'#e0a72e')}
+        ${сим('шар',225,176,1.20,'#f2c14e')}
+        ${сим('шар',251,184,1.05,'#e0a72e')}
+        ${сим('шар',274,178,1.15,'#f2c14e')}
       </g>
-      <!-- кучка монет на земле перед сундуком -->
+      <!-- кучка монет на земле перед сундуком.
+           Блеск раньше висел на .c2a-coin text — вешаем ту же c2glint на обёртки. -->
       <g class="c2a-coin">
-        <text x="176" y="200" font-size="20">🪙</text>
-        <text x="198" y="204" font-size="24">🪙</text>
-        <text x="224" y="199" font-size="20">🪙</text>
-        <text x="248" y="204" font-size="22">🪙</text>
-        <text x="272" y="199" font-size="20">🪙</text>
+        <g style="animation:c2glint 2.6s ease-in-out infinite">${сим('шар',185,200,1.05,'#f2c14e')}</g>
+        <g style="animation:c2glint 2.6s ease-in-out -.8s infinite">${сим('шар',209,202,1.20,'#e0a72e')}</g>
+        <g style="animation:c2glint 2.6s ease-in-out -1.6s infinite">${сим('шар',233,199,1.05,'#f2c14e')}</g>
+        <g style="animation:c2glint 2.6s ease-in-out infinite">${сим('шар',258,203,1.15,'#e0a72e')}</g>
+        <g style="animation:c2glint 2.6s ease-in-out -.8s infinite">${сим('шар',281,199,1.05,'#f2c14e')}</g>
       </g>
       <!-- одна монетка откатилась в сторону -->
-      <text x="92" y="203" font-size="20" class="c2a-coin">🪙</text>
+      <g class="c2a-coin" style="animation:c2glint 2.6s ease-in-out infinite">${сим('шар',101,203,1.05,'#f2c14e')}</g>
       <!-- искры -->
-      <text x="150" y="72" font-size="18" class="c2a-spark">✨</text>
-      <text x="282" y="60" font-size="18" class="c2a-spark">✨</text>
-      <text x="248" y="120" font-size="15" class="c2a-spark">✨</text>
+      <g class="c2a-spark">${сим('звезда',158,66,0.85)}</g>
+      <g class="c2a-spark">${сим('звезда',290,54,0.85)}</g>
+      <g class="c2a-spark">${сим('звезда',255,115,0.70)}</g>
     </svg>`;
   }
 
@@ -564,14 +813,14 @@ function coinsSVG(){
         <circle cx="158" cy="70" r="16"/><circle cx="205" cy="74" r="18"/><circle cx="178" cy="96" r="15"/></g>
       <!-- яблоки на дереве -->
       <g class="c2a-apple">
-        <text x="150" y="60" font-size="24">🍎</text><text x="196" y="52" font-size="24">🍎</text>
-        <text x="228" y="84" font-size="22">🍎</text><text x="128" y="92" font-size="22">🍎</text>
-        <text x="168" y="108" font-size="20">🍎</text></g>
+        ${сим('яблоко',162,63,1.09)}${сим('яблоко',208,55,1.09)}
+        ${сим('яблоко',239,87,1.00)}${сим('яблоко',139,95,1.00)}
+        ${сим('яблоко',178,111,0.91)}</g>
       <!-- корзина с яблоками справа на траве -->
       <path d="M236 168 L236 192 Q236 200 252 200 L282 200 Q298 200 298 192 L298 168 Z" fill="#b07a2e" stroke="#5f3f12" stroke-width="2.5"/>
       <path d="M236 168 Q267 156 298 168" stroke="#8a5c1e" stroke-width="4" fill="none"/>
-      <text x="252" y="158" font-size="20">🍎</text><text x="272" y="152" font-size="20">🍎</text><text x="262" y="176" font-size="18">🍎</text>
-      <text x="252" y="192" font-size="16">🍎</text><text x="272" y="190" font-size="16">🍎</text>
+      ${сим('яблоко',262,161,0.91)}${сим('яблоко',282,155,0.91)}${сим('яблоко',271,179,0.82)}
+      ${сим('яблоко',260,195,0.73)}${сим('яблоко',280,193,0.73)}
       <path d="M60 210 Q56 198 63 190" stroke="#6f9c46" stroke-width="2.5" fill="none"/>
     </svg>`; }
   function ogorodSVG(){ // огород: грядки с морковками
@@ -596,12 +845,12 @@ function coinsSVG(){
         <line x1="200" y1="120" x2="200" y2="160"/><line x1="222" y1="120" x2="222" y2="160"/><line x1="244" y1="120" x2="244" y2="160"/><line x1="266" y1="120" x2="266" y2="160"/><line x1="288" y1="120" x2="288" y2="160"/><line x1="310" y1="120" x2="310" y2="160"/></g>
       <!-- морковки в грядках -->
       <g class="c2a-carrot">
-        <text x="36" y="146" font-size="22">🥕</text><text x="78" y="146" font-size="22">🥕</text><text x="120" y="146" font-size="22">🥕</text>
-        <text x="210" y="140" font-size="22">🥕</text><text x="252" y="146" font-size="22">🥕</text><text x="294" y="140" font-size="22">🥕</text></g>
+        ${сим('морковь',36,140,0.75)}${сим('морковь',78,140,0.75)}${сим('морковь',120,140,0.75)}
+        ${сим('морковь',210,134,0.75)}${сим('морковь',252,140,0.75)}${сим('морковь',294,134,0.75)}</g>
       <!-- ведёрко с морковками -->
       <path d="M40 168 L40 198 Q40 204 50 204 L84 204 Q94 204 94 198 L94 168 Z" fill="#d98f3f" stroke="#7a4a26" stroke-width="2"/>
-      <text x="54" y="160" font-size="18">🥕</text><text x="72" y="162" font-size="18">🥕</text>
-      <text x="50" y="192" font-size="16">🥕</text><text x="70" y="194" font-size="16">🥕</text>
+      ${сим('морковь',54,164,0.62)}${сим('морковь',72,166,0.62)}
+      ${сим('морковь',50,185,0.60)}${сим('морковь',70,186,0.60)}
     </svg>`; }
   function fermaSVG(){ // птичий двор: куры и цыплята
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
@@ -622,10 +871,12 @@ function coinsSVG(){
       <g stroke="#c2915b" stroke-width="4"><line x1="14" y1="120" x2="14" y2="160"/><line x1="44" y1="120" x2="44" y2="160"/><line x1="74" y1="120" x2="74" y2="160"/><line x1="104" y1="120" x2="104" y2="160"/></g>
       <rect x="6" y="118" width="106" height="10" rx="4" fill="#c2915b"/><rect x="6" y="150" width="106" height="10" rx="4" fill="#c2915b"/>
       <!-- куры и цыплята -->
+      <!-- символа 'курица/цыплёнок' нет — двор населяем 'птицей'
+           (куры крупнее, цыплята мельче; цвет у символа один, синий) -->
       <g class="c2a-chick">
-        <text x="150" y="150" font-size="30">🐔</text><text x="196" y="156" font-size="28">🐔</text>
-        <text x="120" y="178" font-size="22">🐥</text><text x="146" y="184" font-size="20">🐥</text><text x="172" y="180" font-size="22">🐥</text>
-        <text x="206" y="184" font-size="18">🐥</text><text x="232" y="178" font-size="20">🐥</text></g>
+        ${сим('птица',163,151,1.10)}${сим('птица',209,157,1.05)}
+        ${сим('птица',130,178,0.80)}${сим('птица',155,184,0.75)}${сим('птица',182,180,0.80)}
+        ${сим('птица',214,184,0.72)}${сим('птица',241,178,0.75)}</g>
       <!-- зёрнышки -->
       <g fill="#e8d5a8"><circle cx="140" cy="168" r="1.6"/><circle cx="190" cy="172" r="1.6"/><circle cx="224" cy="170" r="1.6"/></g>
       <g stroke="#5c8f3e" stroke-width="2" fill="none">
@@ -642,15 +893,15 @@ function coinsSVG(){
       <!-- полки -->
       <g>
         <rect x="20" y="58" width="150" height="8" rx="3" fill="#a8721f"/><rect x="20" y="58" width="150" height="3" fill="#c2915b"/>
-        <text x="44" y="52" font-size="26">🧸</text><text x="92" y="54" font-size="24">🚗</text><text x="136" y="52" font-size="26">⚽</text>
+        ${сим('мишка',57,58,0.75)}${сим('машинка',104,58,1.00)}${сим('мяч',149,58,1.20)}
         <rect x="196" y="58" width="146" height="8" rx="3" fill="#a8721f"/><rect x="196" y="58" width="146" height="3" fill="#c2915b"/>
-        <text x="222" y="52" font-size="26">🎈</text><text x="270" y="52" font-size="26">🧸</text><text x="316" y="52" font-size="24">🚂</text>
+        ${сим('шар',235,58,1.20,'#d9503f')}${сим('мишка',283,58,0.75)}${сим('поезд',328,58,0.60)}
       </g>
       <g>
         <rect x="20" y="104" width="150" height="8" rx="3" fill="#a8721f"/><rect x="20" y="104" width="150" height="3" fill="#c2915b"/>
-        <text x="52" y="100" font-size="24">🪁</text><text x="98" y="100" font-size="26">🎲</text><text x="140" y="100" font-size="22">🧸</text>
+        ${сим('воздушный_змей',64,104,0.62)}${сим('кирпич',111,104,1.20,'#f6efe0')}${сим('мишка',150,104,0.65)}
         <rect x="196" y="104" width="146" height="8" rx="3" fill="#a8721f"/><rect x="196" y="104" width="146" height="3" fill="#c2915b"/>
-        <text x="220" y="100" font-size="26">⚽</text><text x="268" y="100" font-size="22">🚗</text><text x="314" y="100" font-size="22">🎈</text>
+        ${сим('мяч',233,104,1.20)}${сим('машинка',279,104,0.95)}${сим('шар',324,104,1.00,'#4a93d0')}
       </g>
       <!-- пол -->
       <rect x="0" y="148" width="360" height="62" fill="#c2915b"/>
@@ -661,7 +912,7 @@ function coinsSVG(){
       <!-- прилавок справа снизу -->
       <rect x="250" y="162" width="100" height="12" rx="3" fill="#a8721f" stroke="#6e441d" stroke-width="2"/>
       <rect x="262" y="174" width="10" height="30" fill="#8a5c33"/><rect x="330" y="174" width="10" height="30" fill="#8a5c33"/>
-      <text x="282" y="160" font-size="20">🧸</text>
+      ${сим('мишка',291,162,0.60)}
     </svg>`; }
   function cosmosSVG(){ // космос: звёзды, ракета, поверхность Луны
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
@@ -669,12 +920,14 @@ function coinsSVG(){
         <stop offset="0" stop-color="#1b2450"/><stop offset="1" stop-color="#3d4d94"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="150" fill="url(#skC2)"/>
       <g class="c2a-star">
-        <text x="40" y="40" font-size="22">⭐</text><text x="120" y="60" font-size="16">✨</text>
-        <text x="210" y="34" font-size="20">⭐</text><text x="300" y="70" font-size="18">✨</text>
-        <text x="84" y="92" font-size="14">✨</text><text x="270" y="120" font-size="16">⭐</text>
-        <text x="330" y="30" font-size="14">✨</text></g>
-      <text x="60" y="130" font-size="30">🪐</text>
-      <text x="296" y="60" font-size="34">🚀</text>
+        ${сим('звезда',50,32,1.00)}${сим('звезда',127,54,0.75)}
+        ${сим('звезда',219,27,0.90)}${сим('звезда',308,64,0.85)}
+        ${сим('звезда',90,87,0.65)}${сим('звезда',277,114,0.75)}
+        ${сим('звезда',336,25,0.65)}</g>
+      ${сим('планета',75,126,0.95)}
+      <!-- символа 'ракета' нет: корпус ракеты собираем из свечи, перевёрнутой
+           так, что фитиль-огонёк становится выхлопом снизу -->
+      <g transform="translate(313,27) scale(1,-1)">${сим('свеча',0,0,1.00)}</g>
       <!-- поверхность Луны -->
       <rect x="0" y="150" width="360" height="60" fill="#9aa0b8"/>
       <path d="M0 150 Q40 144 80 150 T160 150 T240 150 T320 150 T360 150 L360 162 L0 162 Z" fill="#7f859e" opacity=".6"/>
@@ -698,15 +951,15 @@ function coinsSVG(){
       ${сим('дерево',154,190,0.58)}
       ${сим('гриб',32,198,0.95)}${сим('гриб',210,202,0.85)}
       ${сим('ромашка',264,202,0.9)}${сим('цветок',122,198,0.9)}
-      <g class="c2a-spark"><text x="98" y="150" font-size="22">🌰</text><text x="240" y="158" font-size="18">🌰</text></g>
+      <g class="c2a-spark">${сим('камень',109,152,1.00,'#8a5a2c')}${сим('камень',249,160,0.82,'#8a5a2c')}</g>
     </svg>`; }
   function trainSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <defs><linearGradient id="skT" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#cfe6f5"/><stop offset="1" stop-color="#a8d2ea"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="120" fill="url(#skT)"/>
-      <g class="c2a-cloud"><text x="30" y="36" font-size="28">☁️</text><text x="240" y="30" font-size="24">☁️</text></g>
-      <text x="310" y="52" font-size="24">🌞</text>
+      <g class="c2a-cloud">${сим('облако',40,30,.85)}${сим('облако',252,22,.9)}</g>
+      ${сим('солнце',322,44,.8)}
       <rect x="0" y="120" width="360" height="14" fill="#8a9a5a"/>
       <rect x="0" y="134" width="360" height="10" fill="#7c6b4a"/>
       <!-- рельсы -->
@@ -725,7 +978,7 @@ function coinsSVG(){
       <circle cx="78" cy="140" r="12" fill="#3a3a3a" stroke="#33291e" stroke-width="3"/>
       <circle cx="34" cy="140" r="5" fill="#9aa0b8"/><circle cx="78" cy="140" r="5" fill="#9aa0b8"/>
       <rect x="26" y="80" width="34" height="16" rx="6" fill="#e67e22" stroke="#33291e" stroke-width="2.5"/>
-      <g class="c2a-smoke" font-size="26"><text x="52" y="74">💨</text><text x="40" y="52">💨</text></g>
+      <g class="c2a-smoke">${сим('облако',56,72,.6)}${сим('облако',46,52,.5)}</g>
       <rect x="30" y="102" width="26" height="20" rx="4" fill="#d9e8f5" stroke="#33291e" stroke-width="2"/>
       <!-- вагон 1 -->
       <rect x="112" y="104" width="70" height="44" rx="7" fill="#e8b04c" stroke="#33291e" stroke-width="3"/>
@@ -754,12 +1007,12 @@ function coinsSVG(){
       <rect x="0" y="0" width="360" height="120" fill="url(#skW)"/>
       <!-- полки с инструментами -->
       <rect x="8" y="16" width="130" height="8" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2"/>
-      <g font-size="20">
-        <text x="18" y="44">🔩</text><text x="52" y="40">⚙️</text><text x="86" y="44">🔧</text><text x="118" y="42">🔨</text>
+      <g>
+        ${сим('гайка',27,44,1.10)}${сим('гайка',61,46,1.20)}${сим('ключ',95,48,0.60)}${сим('молоток',127,50,0.60)}
       </g>
       <rect x="222" y="16" width="130" height="8" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2"/>
-      <g font-size="20">
-        <text x="234" y="42">📐</text><text x="270" y="42">🪛</text><text x="306" y="42">⚙️</text><text x="336" y="44">🛠️</text>
+      <g>
+        ${сим('флажок',243,48,0.60,'#e8d5a8')}${сим('отвёртка',279,48,0.60)}${сим('гайка',315,46,1.20)}${сим('молоток',345,50,0.60)}
       </g>
       <!-- висящая лампа -->
       <line x1="180" y1="0" x2="180" y2="10" stroke="#5f3a1a" stroke-width="2"/>
@@ -770,9 +1023,9 @@ function coinsSVG(){
       <rect x="300" y="136" width="20" height="50" fill="#7a4f26" stroke="#5f3a1a" stroke-width="2"/>
       <rect x="150" y="136" width="22" height="50" fill="#7a4f26" stroke="#5f3a1a" stroke-width="2"/>
       <!-- детали на верстаке -->
-      <g font-size="22">
-        <text x="60" y="116">⚙️</text><text x="96" y="114">🔩</text><text x="150" y="116">🧩</text>
-        <text x="196" y="114">⚙️</text><text x="240" y="116">🔧</text><text x="286" y="114">🧱</text>
+      <g>
+        ${сим('гайка',70,118,1.20)}${сим('гайка',106,117,1.05)}${сим('пазл',160,118,0.65)}
+        ${сим('гайка',206,117,1.20)}${сим('ключ',250,118,0.60)}${сим('кирпич',296,117,1.20)}
       </g>
       <!-- коробка-окошко x -->
       <g class="c2a-spark">
@@ -786,17 +1039,17 @@ function coinsSVG(){
       <defs><linearGradient id="skB" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#8fd3f0"/><stop offset="1" stop-color="#5fb8e0"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="120" fill="url(#skB)"/>
-      <text x="310" y="42" font-size="30">🌞</text>
-      <g class="c2a-cloud"><text x="30" y="40" font-size="26">☁️</text><text x="150" y="64" font-size="22">☁️</text></g>
+      ${сим('солнце',325,29,0.72)}
+      <g class="c2a-cloud">${сим('облако',43,29,0.80)}${сим('облако',160,53,0.70)}</g>
       <!-- море с волнами -->
       <path d="M0 96 Q40 88 80 96 T160 96 T240 96 T320 96 T360 96 L360 132 L0 132 Z" fill="#3f9ed6"/>
       <path d="M0 112 Q50 104 100 112 T200 112 T300 112 T360 112" stroke="#bfe6f7" stroke-width="3" fill="none"/>
       <!-- пляж -->
       <rect x="0" y="132" width="360" height="78" fill="#f0d9a8"/>
       <path d="M0 132 Q90 126 180 132 T360 132" fill="#e3c88e"/>
-      <g font-size="22">
-        <text x="36" y="172">🐚</text><text x="96" y="188">⭐</text><text x="180" y="180">🐚</text><text x="262" y="170">🐚</text>
-        <text x="318" y="190" font-size="16">⭐</text>
+      <g>
+        ${сим('ракушка',46,172,1.05)}${сим('звезда',107,180,1.00)}${сим('ракушка',190,180,1.05)}${сим('ракушка',272,170,1.05)}
+        ${сим('звезда',326,184,0.72)}
       </g>
       <!-- ведёрко и зонтик -->
       <rect x="268" y="118" width="26" height="24" rx="3" fill="#e86a5a" stroke="#33291e" stroke-width="2.5"/>
@@ -805,7 +1058,7 @@ function coinsSVG(){
       <path d="M110 96 Q132 78 158 92 Q140 102 122 100 Z" fill="#e86a5a" stroke="#33291e" stroke-width="2"/>
       <!-- вода в ведёрке -->
       <rect x="270" y="120" width="22" height="8" fill="#7fd1ff"/>
-      <g class="c2a-spark"><text x="150" y="200" font-size="18">💧</text></g>
+      <g class="c2a-spark">${сим('капля',158,200,0.80)}</g>
     </svg>`; }
 
   function winterSVG(){
@@ -813,9 +1066,9 @@ function coinsSVG(){
       <defs><linearGradient id="skW2" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#9fb8e8"/><stop offset="1" stop-color="#7f9ed8"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="150" fill="url(#skW2)"/>
-      <g class="c2a-cloud"><text x="30" y="36" font-size="26">☁️</text><text x="200" y="46" font-size="22">☁️</text></g>
-      <text x="60" y="30" font-size="20">❄️</text><text x="150" y="60" font-size="16">❄️</text>
-      <text x="300" y="34" font-size="20">❄️</text><text x="120" y="92" font-size="14">❄️</text>
+      <g class="c2a-cloud">${сим('облако',43,29,0.85)}${сим('облако',211,40,0.70)}</g>
+      ${сим('снежинка',69,26,0.80)}${сим('снежинка',157,56,0.62)}
+      ${сим('снежинка',309,30,0.80)}${сим('снежинка',126,88,0.60)}
       <rect x="0" y="150" width="360" height="60" fill="#eef3fb"/>
       <ellipse cx="80" cy="176" rx="46" ry="12" fill="#ffffff" opacity=".85"/>
       <ellipse cx="300" cy="188" rx="60" ry="14" fill="#ffffff" opacity=".8"/>
@@ -825,9 +1078,9 @@ function coinsSVG(){
       <polygon points="201,78 166,140 236,140" fill="#357f4f" stroke="#1f5c38" stroke-width="3"/>
       <polygon points="201,108 172,168 230,168" fill="#3a8a58" stroke="#1f5c38" stroke-width="3"/>
       <polygon points="201,26 174,70 228,70" fill="#2f7d4e" stroke="#1f5c38" stroke-width="2.5"/>
-      <text x="178" y="52" font-size="22">⭐</text>
-      <g class="c2a-coin" font-size="20">
-        <text x="190" y="86">🟡</text><text x="212" y="100">🔴</text><text x="188" y="126">🟡</text><text x="214" y="142">🔵</text>
+      ${сим('звезда',189,45,0.95)}
+      <g class="c2a-coin">
+        ${сим('шар',200,84,0.85,'#f2c14e')}${сим('шар',222,98,0.85,'#c9433a')}${сим('шар',198,124,0.85,'#f2c14e')}${сим('шар',224,140,0.85,'#4a93d0')}
       </g>
       <!-- сугроб и подарок -->
       <path d="M0 196 Q60 186 120 196 T240 196 T360 196 L360 210 L0 210 Z" fill="#ffffff"/>
@@ -842,7 +1095,7 @@ function coinsSVG(){
       <rect x="240" y="18" width="84" height="70" rx="6" fill="#bfe6f7" stroke="#8a5a2b" stroke-width="5"/>
       <line x1="282" y1="18" x2="282" y2="88" stroke="#8a5a2b" stroke-width="4"/>
       <line x1="240" y1="53" x2="324" y2="53" stroke="#8a5a2b" stroke-width="4"/>
-      <text x="252" y="44" font-size="18">🌞</text>
+      ${сим('солнце',261,38,.6)}
       <!-- пол -->
       <rect x="0" y="120" width="360" height="90" fill="#c89a6a"/>
       <path d="M0 120 L360 120" stroke="#a87c4f" stroke-width="4"/>
@@ -852,12 +1105,12 @@ function coinsSVG(){
       <ellipse cx="150" cy="184" rx="90" ry="16" fill="#d97f6a" opacity=".75"/>
       <!-- полка с игрушками -->
       <rect x="18" y="40" width="120" height="8" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2"/>
-      <g font-size="26">
-        <text x="26" y="76">🧸</text><text x="60" y="74">🚗</text><text x="96" y="76">⚽</text>
-        <text x="126" y="74">🧩</text>
+      <g>
+        ${сим('мишка',39,81,1.15)}${сим('машинка',73,79,1.1)}${сим('мяч',109,81,1.3)}
+        ${сим('пазл',139,79,1.05)}
       </g>
       <!-- кубики на полу -->
-      <g font-size="22"><text x="230" y="176">🧱</text><text x="258" y="182">🧱</text><text x="286" y="188">🧱</text></g>
+      <g>${сим('кирпич',241,181,1.05)}${сим('кирпич',269,187,1.05)}${сим('кирпич',297,193,1.05)}</g>
     </svg>`; }
   function circusSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
@@ -865,7 +1118,7 @@ function coinsSVG(){
         <stop offset="0" stop-color="#ffd76a"/><stop offset="1" stop-color="#f2b04c"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="150" fill="url(#skC3)"/>
       <!-- флажки -->
-      <g font-size="26"><text x="16" y="40">🚩</text><text x="320" y="36">🚩</text></g>
+      <g>${сим('флажок',20,46,.95)}${сим('флажок',324,42,.95)}</g>
       <!-- шатёр -->
       <path d="M40 150 L96 26 L180 6 L264 26 L320 150 Z" fill="#e86a5a" stroke="#7c2f24" stroke-width="4"/>
       <path d="M96 26 L264 26 L180 6 Z" fill="#f2a24c"/>
@@ -877,17 +1130,17 @@ function coinsSVG(){
       <ellipse cx="180" cy="150" rx="150" ry="18" fill="#c98a3a"/>
       <ellipse cx="180" cy="150" rx="130" ry="12" fill="#d9a441" opacity=".6"/>
       <!-- мячи -->
-      <g class="c2a-coin" font-size="22"><text x="120" y="140">🔴</text><text x="160" y="132">🟡</text><text x="200" y="132">🔵</text><text x="238" y="142">🟢</text></g>
-      <text x="150" y="196" font-size="28">🎪</text>
+      <g class="c2a-coin">${сим('шар',131,145,1.4,'#c9433a')}${сим('шар',171,137,1.4,'#e8c34a')}${сим('шар',211,137,1.4,'#4a93d0')}${сим('шар',249,147,1.4,'#5f9a6a')}</g>
+      ${сим('флажок',155,200,.85)}
     </svg>`; }
   function campSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <defs><linearGradient id="skCp" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#1c2450"/><stop offset="1" stop-color="#3d4d94"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="140" fill="url(#skCp)"/>
-      <g class="c2a-star" font-size="18">
-        <text x="40" y="34">⭐</text><text x="120" y="52">✨</text><text x="210" y="30">⭐</text>
-        <text x="300" y="56">✨</text><text x="160" y="86">⭐</text>
+      <g class="c2a-star">
+        ${сим('звезда',51,27,.8)}${сим('звезда',131,45,.5)}${сим('звезда',221,23,.8)}
+        ${сим('звезда',311,49,.5)}${сим('звезда',171,79,.8)}
       </g>
       <circle cx="330" cy="30" r="16" fill="#f4e9c8"/>
       <circle cx="330" cy="30" r="14" fill="#e8e0cc"/>
@@ -898,12 +1151,12 @@ function coinsSVG(){
       <!-- костёр -->
       <path d="M168 150 L180 132 L192 150 Z" fill="#c96b2a" stroke="#7c3a14" stroke-width="2.5"/>
       <path d="M172 150 L180 138 L188 150 Z" fill="#ffcf6a"/>
-      <g class="c2a-smoke" font-size="22"><text x="178" y="118">🔥</text><text x="168" y="96">🔥</text></g>
+      <g class="c2a-smoke">${сим('огонь',189,123,.62)}${сим('огонь',179,101,.5)}</g>
       <!-- брёвнышки -->
       <rect x="146" y="158" width="40" height="9" rx="4" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2" transform="rotate(-8 166 162)"/>
       <rect x="176" y="158" width="40" height="9" rx="4" fill="#9c6c3a" stroke="#5f3a1a" stroke-width="2" transform="rotate(8 196 162)"/>
       <!-- камни вокруг -->
-      <g font-size="18"><text x="120" y="180">🪨</text><text x="212" y="176">🪨</text><text x="160" y="190">🪨</text><text x="200" y="192">🪨</text></g>
+      <g>${сим('камень',131,184,1)}${сим('камень',223,180,1)}${сим('камень',171,194,1)}${сим('камень',211,196,1)}</g>
       <!-- палатка -->
       <path d="M40 196 L80 132 L120 196 Z" fill="#4a93d0" stroke="#2c5f8a" stroke-width="3"/>
       <path d="M80 132 L120 196 L80 196 Z" fill="#2c5f8a"/>
@@ -916,7 +1169,7 @@ function coinsSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <rect x="0" y="0" width="360" height="210" fill="#d9c39a"/>
       <rect x="0" y="0" width="360" height="96" fill="#b89a70"/>
-      <text x="20" y="60" font-size="26">🖼️</text><text x="300" y="64" font-size="26">🪔</text>
+      ${сим('картина',33,65,1)}${сим('лампа',313,69,1.1)}
       <!-- окно -->
       <rect x="120" y="16" width="90" height="64" rx="5" fill="#cfe6f5" stroke="#7c5a34" stroke-width="5"/>
       <line x1="165" y1="16" x2="165" y2="80" stroke="#7c5a34" stroke-width="4"/>
@@ -928,13 +1181,13 @@ function coinsSVG(){
       <!-- бумаги и письмо -->
       <rect x="60" y="72" width="70" height="34" rx="4" fill="#fffef4" stroke="#5f3a1a" stroke-width="2"/>
       <path d="M96 72 L96 106" stroke="#d9a441" stroke-width="3"/>
-      <g font-size="18"><text x="70" y="94">🍎=1</text><text x="100" y="94">🍐=2</text></g>
+      <g>${сим('яблоко',74,99,.55)}<text x="86" y="94" font-size="18">=1</text>${сим('виноград',118,99,.45)}<text x="126" y="94" font-size="18">=2</text></g>
       <rect x="210" y="78" width="80" height="30" rx="4" fill="#fffef4" stroke="#5f3a1a" stroke-width="2"/>
-      <text x="220" y="98" font-size="18">🍊=3 ?</text>
+      ${сим('шар',231,102,1.3,'#e8912a')}<text x="243" y="98" font-size="18">=3 ?</text>
       <!-- лупа и чернила -->
-      <text x="150" y="120" font-size="24">🔍</text>
+      ${сим('шар',163,125,1.7,'#cfe9f7')}
       <rect x="176" y="112" width="26" height="18" rx="3" fill="#3a5a8a" stroke="#2c3a5f" stroke-width="2"/>
-      <text x="282" y="120" font-size="24">✉️</text>
+      ${сим('письмо',294,125,1.2)}
       <rect x="0" y="190" width="360" height="20" fill="#8a6a44"/>
     </svg>`; }
   function parkSVG(){
@@ -942,8 +1195,8 @@ function coinsSVG(){
       <defs><linearGradient id="skPk" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#a8dcf0"/><stop offset="1" stop-color="#7fc3e0"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="110" fill="url(#skPk)"/>
-      <g class="c2a-cloud"><text x="30" y="36" font-size="26">☁️</text><text x="240" y="44" font-size="22">☁️</text></g>
-      <text x="310" y="36" font-size="26">🌞</text>
+      <g class="c2a-cloud">${сим('облако',43,29,.95)}${сим('облако',251,37,.85)}</g>
+      ${сим('солнце',324,27,.8)}
       <rect x="0" y="110" width="360" height="100" fill="#7fb45c"/>
       <path d="M0 110 Q90 100 180 110 T360 108 L360 130 L0 130 Z" fill="#6aa34e"/>
       <!-- дорожка -->
@@ -952,37 +1205,37 @@ function coinsSVG(){
       <g stroke="#5f3a1a" stroke-width="3">
         <rect x="96" y="148" width="120" height="40" rx="6" fill="#9c6c3a"/>
       </g>
-      <g font-size="20">
-        <text x="104" y="176">🌷</text><text x="128" y="176">🌷</text><text x="152" y="176">🌷</text>
-        <text x="104" y="156">🌷</text><text x="128" y="156">🌷</text><text x="152" y="156">🌷</text>
-        <text x="104" y="196">🌸</text><text x="128" y="196">🌸</text><text x="152" y="196">🌸</text>
+      <g>
+        ${сим('цветок',114,180.5,1)}${сим('цветок',138,180.5,1)}${сим('цветок',162,180.5,1)}
+        ${сим('цветок',114,160.5,1)}${сим('цветок',138,160.5,1)}${сим('цветок',162,160.5,1)}
+        ${сим('ромашка',114,206,.85)}${сим('ромашка',138,206,.85)}${сим('ромашка',162,206,.85)}
       </g>
       <!-- полоска вдоль дорожки -->
-      <text x="216" y="180" font-size="18">🌼</text><text x="240" y="186" font-size="18">🌼</text><text x="262" y="192" font-size="18">🌼</text>
-      <g font-size="44"><text x="12" y="150">🌳</text><text x="316" y="158">🌳</text></g>
+      ${сим('цветок',225,184.4,0.9)}${сим('цветок',249,190.4,0.9)}${сим('цветок',271,196.4,0.9)}
+      <g>${сим('дерево',34,160,.8)}${сим('дерево',338,168,.8)}</g>
     </svg>`; }
   function shelfSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <rect x="0" y="0" width="360" height="210" fill="#b9a07a"/>
       <rect x="0" y="0" width="360" height="150" fill="#cbb38c"/>
-      <text x="20" y="40" font-size="22">💡</text>
+      ${сим('лампа',31,44,1)}
       <!-- стеллаж -->
       <rect x="34" y="30" width="292" height="150" fill="#9c6c3a" stroke="#5f3a1a" stroke-width="4"/>
       <rect x="34" y="80" width="292" height="8" fill="#7a4f26"/>
       <rect x="34" y="130" width="292" height="8" fill="#7a4f26"/>
       <!-- коробки по 10 (ряды шариков) -->
-      <g font-size="14">
-        <text x="52" y="56">🔴🔵🟡🔴🔵🟡🔴🔵🟡🔴</text>
-        <text x="52" y="72">🔴🔵🟡🔴🔵🟡🔴🔵🟡🔴</text>
-        <text x="52" y="112">🔴🔵🟡🔴🔵🟡🔴🔵🟡🔴</text>
-        <text x="52" y="128">🔴🔵🟡🔴🔵🟡🔴🔵🟡🔴</text>
+      <g>
+        ${сим('шар',54.0,60,1.05,'#c9433a')}${сим('шар',69.5,60,1.05,'#4a93d0')}${сим('шар',85.0,60,1.05,'#e8c34a')}${сим('шар',100.5,60,1.05,'#c9433a')}${сим('шар',116.0,60,1.05,'#4a93d0')}${сим('шар',131.5,60,1.05,'#e8c34a')}${сим('шар',147.0,60,1.05,'#c9433a')}${сим('шар',162.5,60,1.05,'#4a93d0')}${сим('шар',178.0,60,1.05,'#e8c34a')}${сим('шар',193.5,60,1.05,'#c9433a')}
+        ${сим('шар',54.0,76,1.05,'#c9433a')}${сим('шар',69.5,76,1.05,'#4a93d0')}${сим('шар',85.0,76,1.05,'#e8c34a')}${сим('шар',100.5,76,1.05,'#c9433a')}${сим('шар',116.0,76,1.05,'#4a93d0')}${сим('шар',131.5,76,1.05,'#e8c34a')}${сим('шар',147.0,76,1.05,'#c9433a')}${сим('шар',162.5,76,1.05,'#4a93d0')}${сим('шар',178.0,76,1.05,'#e8c34a')}${сим('шар',193.5,76,1.05,'#c9433a')}
+        ${сим('шар',54.0,116,1.05,'#c9433a')}${сим('шар',69.5,116,1.05,'#4a93d0')}${сим('шар',85.0,116,1.05,'#e8c34a')}${сим('шар',100.5,116,1.05,'#c9433a')}${сим('шар',116.0,116,1.05,'#4a93d0')}${сим('шар',131.5,116,1.05,'#e8c34a')}${сим('шар',147.0,116,1.05,'#c9433a')}${сим('шар',162.5,116,1.05,'#4a93d0')}${сим('шар',178.0,116,1.05,'#e8c34a')}${сим('шар',193.5,116,1.05,'#c9433a')}
+        ${сим('шар',54.0,132,1.05,'#c9433a')}${сим('шар',69.5,132,1.05,'#4a93d0')}${сим('шар',85.0,132,1.05,'#e8c34a')}${сим('шар',100.5,132,1.05,'#c9433a')}${сим('шар',116.0,132,1.05,'#4a93d0')}${сим('шар',131.5,132,1.05,'#e8c34a')}${сим('шар',147.0,132,1.05,'#c9433a')}${сим('шар',162.5,132,1.05,'#4a93d0')}${сим('шар',178.0,132,1.05,'#e8c34a')}${сим('шар',193.5,132,1.05,'#c9433a')}
       </g>
       <!-- коробки-рамки -->
       <rect x="44" y="42" width="160" height="36" rx="5" fill="none" stroke="#5f3a1a" stroke-width="3" stroke-dasharray="6 4"/>
       <rect x="44" y="98" width="160" height="36" rx="5" fill="none" stroke="#5f3a1a" stroke-width="3" stroke-dasharray="6 4"/>
       <!-- отдельные шарики -->
-      <g font-size="20"><text x="240" y="60">🔵</text><text x="266" y="60">🟡</text><text x="292" y="60">🔴</text>
-        <text x="240" y="120">🔴</text><text x="266" y="120">🟡</text><text x="292" y="120">🔵</text></g>
+      <g>${сим('шар',250,64,1.3,'#4a93d0')}${сим('шар',276,64,1.3,'#e8c34a')}${сим('шар',302,64,1.3,'#c9433a')}
+        ${сим('шар',250,124,1.3,'#c9433a')}${сим('шар',276,124,1.3,'#e8c34a')}${сим('шар',302,124,1.3,'#4a93d0')}</g>
       <rect x="0" y="180" width="360" height="30" fill="#7a5a34"/>
     </svg>`; }
   function citySVG(){
@@ -990,8 +1243,8 @@ function coinsSVG(){
       <defs><linearGradient id="skCt" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#bfe3f0"/><stop offset="1" stop-color="#9fd0e8"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="120" fill="url(#skCt)"/>
-      <g class="c2a-cloud"><text x="30" y="34" font-size="24">☁️</text><text x="250" y="30" font-size="20">☁️</text></g>
-      <text x="316" y="52" font-size="24">🌞</text>
+      <g class="c2a-cloud">${сим('облако',42,27,.9)}${сим('облако',261,24,.75)}</g>
+      ${сим('солнце',328,43,.85)}
       <!-- дома на заднем плане -->
       <rect x="16" y="86" width="70" height="70" fill="#c9a86a" stroke="#8a6a44" stroke-width="2"/>
       <rect x="30" y="106" width="16" height="16" fill="#7fc4a6"/>
@@ -1015,7 +1268,7 @@ function coinsSVG(){
       <rect x="258" y="70" width="10" height="60" fill="#e86a5a" stroke="#7c2f24" stroke-width="2"/>
       <rect x="240" y="60" width="46" height="10" fill="#d95545" stroke="#7c2f24" stroke-width="2"/>
       <line x1="258" y1="70" x2="290" y2="84" stroke="#7c2f24" stroke-width="2"/>
-      <text x="48" y="196" font-size="22">🟫</text><text x="320" y="196" font-size="20">🟫</text>
+      ${сим('кирпич',59,200,1.2)}${сим('кирпич',331,200,1.15)}
     </svg>`; }
 
   function stageSVG(){
@@ -1023,8 +1276,8 @@ function coinsSVG(){
       <defs><linearGradient id="skSt" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#8a5ac0"/><stop offset="1" stop-color="#6b3f9e"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="110" fill="url(#skSt)"/>
-      <text x="18" y="40" font-size="24">🎵</text><text x="320" y="36" font-size="20">🎵</text>
-      <text x="60" y="60" font-size="16">♪</text><text x="290" y="66" font-size="16">♪</text>
+      ${сим('нота',31,45,.9)}${сим('нота',331,40,.75)}
+      ${сим('нота',65,63.5,.6)}${сим('нота',295,69.5,.6)}
       <!-- занавес -->
       <path d="M0 0 Q40 60 0 110 Z" fill="#c0392b"/>
       <path d="M360 0 Q320 60 360 110 Z" fill="#c0392b"/>
@@ -1033,12 +1286,12 @@ function coinsSVG(){
       <rect x="0" y="110" width="360" height="40" fill="#8a5a2b"/>
       <path d="M0 110 Q180 100 360 110" stroke="#6e4520" stroke-width="4" fill="none"/>
       <!-- ряды стульев 3 ряда по 4 -->
-      <g font-size="22">
-        <text x="60" y="140">🪑</text><text x="100" y="140">🪑</text><text x="140" y="140">🪑</text><text x="180" y="140">🪑</text>
-        <text x="60" y="170">🪑</text><text x="100" y="170">🪑</text><text x="140" y="170">🪑</text><text x="180" y="170">🪑</text>
-        <text x="60" y="200">🪑</text><text x="100" y="200">🪑</text><text x="140" y="200">🪑</text><text x="180" y="200">🪑</text>
+      <g>
+        ${сим('стул',72,144.5,.75)}${сим('стул',112,144.5,.75)}${сим('стул',152,144.5,.75)}${сим('стул',192,144.5,.75)}
+        ${сим('стул',72,174.5,.75)}${сим('стул',112,174.5,.75)}${сим('стул',152,174.5,.75)}${сим('стул',192,174.5,.75)}
+        ${сим('стул',72,204.5,.75)}${сим('стул',112,204.5,.75)}${сим('стул',152,204.5,.75)}${сим('стул',192,204.5,.75)}
       </g>
-      <g font-size="18"><text x="250" y="150">🎼</text><text x="250" y="180">🎻</text><text x="286" y="200">🎺</text></g>
+      <g>${сим('свиток',260,154,.75)}${сим('скрипка',260,184,.7)}${сим('колокол',296,204,.7)}</g>
     </svg>`; }
   function factorySVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
@@ -1047,12 +1300,11 @@ function coinsSVG(){
       <rect x="14" y="18" width="60" height="36" rx="4" fill="#7f96b8" stroke="#4a5a78" stroke-width="3"/>
       <rect x="24" y="28" width="18" height="16" fill="#d9e8f5"/>
       <rect x="52" y="28" width="14" height="16" fill="#d9e8f5"/>
-      <text x="200" y="44" font-size="20">🏭</text>
+      ${сим('кирпич',210,48,1.1,'#8a8a92')}
       <!-- конвейер -->
       <rect x="0" y="120" width="360" height="22" fill="#9aa0a8" stroke="#5f666e" stroke-width="3"/>
-      <g class="c2a-coin" font-size="18">
-        <text x="60" y="138">🍬</text><text x="110" y="138">🍬</text><text x="160" y="138">🍬</text>
-        <text x="210" y="138">🍬</text><text x="260" y="138">🍬</text>
+      <g class="c2a-coin">
+        ${сим('шар',70,142,1.3,'#d9503f')}${сим('шар',120,142,1.3,'#e8c34a')}${сим('шар',170,142,1.3,'#4a93d0')}${сим('шар',220,142,1.3,'#5f9a6a')}${сим('шар',270,142,1.3,'#e8912a')}
       </g>
       <!-- коробки -->
       <g>
@@ -1063,46 +1315,43 @@ function coinsSVG(){
       <rect x="0" y="196" width="360" height="14" fill="#8a8a92"/>
     </svg>`; }
   function tableSVG(){
+    /* Тарелки стоят на столешнице (её верх — y=96), а не висят под ней, как
+       эмодзи: у нарисованного символа (0,0) — земля под предметом. */
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <defs><linearGradient id="skTb" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#ffe9c9"/><stop offset="1" stop-color="#f0d3a0"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="100" fill="url(#skTb)"/>
-      <text x="40" y="46" font-size="26">🎈</text><text x="300" y="40" font-size="26">🎈</text>
+      ${сим('шар',53,48,1.6,'#e86a5a')}${сим('шар',313,42,1.6,'#e86a5a')}
       <!-- стол -->
       <rect x="16" y="96" width="328" height="22" rx="6" fill="#c89a6a" stroke="#8a5a2b" stroke-width="3"/>
       <rect x="30" y="118" width="16" height="72" fill="#8a5a2b"/>
       <rect x="314" y="118" width="16" height="72" fill="#8a5a2b"/>
       <!-- тарелки -->
-      <g font-size="26">
-        <text x="40" y="134">🍽️</text><text x="100" y="134">🍽️</text><text x="160" y="134">🍽️</text>
-        <text x="220" y="134">🍽️</text><text x="280" y="134">🍽️</text>
-      </g>
+      <g>${сим('тарелка',53,104,0.75)}${сим('тарелка',113,104,0.75)}${сим('тарелка',173,104,0.75)}${сим('тарелка',233,104,0.75)}${сим('тарелка',293,104,0.75)}</g>
       <!-- конфеты на тарелке -->
-      <g font-size="16">
-        <text x="46" y="122">🍬</text><text x="60" y="122">🍬</text><text x="53" y="112">🍬</text><text x="67" y="114">🍬</text>
-      </g>
-      <text x="250" y="176" font-size="20">🍰</text><text x="90" y="180" font-size="22">🥮</text>
+      <g>${сим('шар',48,101,0.7,'#e86a5a')}${сим('шар',62,101,0.7,'#5f9a6a')}${сим('шар',55,91,0.7,'#e8b04c')}${сим('шар',69,93,0.7,'#c9433a')}</g>
+      ${сим('пирог',263,188,0.8)}${сим('пирог',101,190,0.9)}
       <rect x="0" y="190" width="360" height="20" fill="#c89a6a"/>
     </svg>`; }
   function labSVG(){
+    /* Колб в библиотеке символов нет: пробирка и реторта заменены ближайшей
+       посудой — банкой и чашкой, чашка Петри — тарелкой. */
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <rect x="0" y="0" width="360" height="210" fill="#dbe4ee"/>
       <rect x="0" y="0" width="360" height="70" fill="#b8c6da"/>
-      <text x="20" y="44" font-size="20">💡</text>
+      ${сим('лампа',22,48,0.8)}
       <!-- доска с примерами -->
       <rect x="30" y="14" width="180" height="78" rx="6" fill="#2f4a3a" stroke="#1f3328" stroke-width="4"/>
       <text x="44" y="44" font-size="18" fill="#e8e0cc">10 + 2 · 3 = ?</text>
       <text x="44" y="68" font-size="18" fill="#e8e0cc">(8 + 4) : 2 = ?</text>
-      <!-- стол с колбами -->
+      <!-- стол с посудой -->
       <rect x="240" y="120" width="110" height="14" rx="4" fill="#7f96a8"/>
       <rect x="250" y="120" width="12" height="60" fill="#7f96a8"/>
       <rect x="330" y="120" width="12" height="60" fill="#7f96a8"/>
-      <g font-size="24">
-        <text x="256" y="112">🧪</text><text x="292" y="106">⚗️</text><text x="326" y="112">🧫</text>
-      </g>
+      <g>${сим('банка',268,120,0.85)}${сим('чашка',304,120,0.75)}${сим('тарелка',338,120,0.6)}</g>
       <!-- пол -->
       <rect x="0" y="180" width="360" height="30" fill="#8fa0b0"/>
-      <g font-size="20"><text x="60" y="196">📏</text><text x="120" y="196">📐</text></g>
+      <g>${сим('книга',71,198,1.05,'#d9a441')}${сим('книга',131,198,1.05,'#4a93d0')}</g>
     </svg>`; }
 
   function hiveSVG(){
@@ -1110,9 +1359,9 @@ function coinsSVG(){
       <defs><linearGradient id="skHv" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#bfe3a8"/><stop offset="1" stop-color="#8fc46a"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="120" fill="url(#skHv)"/>
-      <g class="c2a-cloud"><text x="30" y="36" font-size="26">☁️</text><text x="260" y="40" font-size="22">☁️</text></g>
-      <text x="312" y="50" font-size="26">🌞</text>
-      <g class="c2a-coin" font-size="18"><text x="80" y="80">🐝</text><text x="220" y="70">🐝</text><text x="150" y="56">🐝</text></g>
+      <g class="c2a-cloud">${сим('облако',30,28,0.76)}${сим('облако',260,32,0.65)}</g>
+      ${сим('солнце',314,46,0.95)}
+      <g class="c2a-coin">${сим('пчела',82,82,1)}${сим('пчела',222,72,1)}${сим('пчела',152,58,1)}</g>
       <rect x="0" y="120" width="360" height="90" fill="#7fb45c"/>
       <!-- ульи -->
       <g>
@@ -1124,23 +1373,27 @@ function coinsSVG(){
         <rect x="148" y="126" width="18" height="12" rx="3" fill="#7a4f26"/>
       </g>
       <!-- банки мёда -->
-      <g font-size="22">
-        <text x="250" y="150">🍯</text><text x="286" y="146">🍯</text><text x="268" y="178">🍯</text>
-      </g>
-      <g font-size="18"><text x="120" y="196">🌼</text><text x="230" y="200">🌼</text><text x="60" y="200">🌼</text></g>
+      <g>${сим('мёд',261,152,0.8)}${сим('мёд',297,148,0.8)}${сим('мёд',279,180,0.8)}</g>
+      <g>${сим('ромашка',122,198,0.9)}${сим('ромашка',232,202,0.9)}${сим('ромашка',62,202,0.9)}</g>
     </svg>`; }
   function librarySVG(){
+    /* Книги на полках рисует код: 12 книг в ряд, цвета прежних картинок —
+       красный, зелёный, синий, жёлтый. Вместо настенных часов — песочные:
+       обычных часов в библиотеке символов нет. */
+    const цвКниг=['#c9433a','#5f9a6a','#4a93d0','#d9a441'];
+    const полкаКниг=(y,сдвиг)=>Array.from({length:12},(_,i)=>
+      сим('книга',40+i*15.5,y,0.9,цвКниг[(i+сдвиг)%4])).join('');
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <rect x="0" y="0" width="360" height="210" fill="#c8b490"/>
-      <text x="20" y="36" font-size="22">🕰️</text>
+      ${сим('песочные_часы',31,38,0.75)}
       <!-- стеллажи с книгами -->
       <rect x="24" y="24" width="200" height="150" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="4"/>
       <rect x="24" y="74" width="200" height="8" fill="#5f3a1a"/>
       <rect x="24" y="124" width="200" height="8" fill="#5f3a1a"/>
-      <g font-size="15">
-        <text x="36" y="50">📕📗📘📙📕📗📘📙📕📗📘📙</text>
-        <text x="36" y="100">📘📙📕📗📘📙📕📗📘📙📕📗</text>
-        <text x="36" y="150">📗📘📙📕📗📘📙📕📗📘📙📕</text>
+      <g>
+        ${полкаКниг(73,0)}
+        ${полкаКниг(123,2)}
+        ${полкаКниг(173,1)}
       </g>
       <!-- стопки книг -->
       <g>
@@ -1150,7 +1403,7 @@ function coinsSVG(){
         <rect x="260" y="114" width="66" height="12" rx="3" fill="#e8b04c" stroke="#a3762a" stroke-width="2"/>
       </g>
       <rect x="0" y="176" width="360" height="34" fill="#9c6c3a"/>
-      <text x="300" y="200" font-size="22">🔔</text>
+      ${сим('колокол',311,202,0.75)}
     </svg>`; }
   function flatSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
@@ -1176,13 +1429,13 @@ function coinsSVG(){
       <!-- квадрат-образец -->
       <rect x="250" y="118" width="40" height="40" fill="#d9a441" stroke="#a3762a" stroke-width="3"/>
       <text x="258" y="144" font-size="14" fill="#5f3a1a">1 м²</text>
-      <text x="120" y="192" font-size="18">📏</text>
+      ${сим('книга',129,196,1,'#d9a441')}
     </svg>`; }
   function toysSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <rect x="0" y="0" width="360" height="210" fill="#f6e3c5"/>
       <rect x="0" y="0" width="360" height="90" fill="#eacfa3"/>
-      <g font-size="24"><text x="24" y="54">🎈</text><text x="316" y="46">🧸</text><text x="280" y="60" font-size="18">✈️</text></g>
+      <g>${сим('шар',36,56,1.5,'#e86a5a')}${сим('мишка',328,50,0.62)}${сим('воздушный_змей',289,62,0.5)}</g>
       <!-- пол -->
       <rect x="0" y="90" width="360" height="120" fill="#c89a6a"/>
       <!-- большой куб 3x3x3 -->
@@ -1201,7 +1454,7 @@ function coinsSVG(){
       <rect x="210" y="130" width="100" height="30" fill="#f2c26a" stroke="#a3762a" stroke-width="3"/>
       <rect x="216" y="136" width="12" height="12" fill="#fff" opacity=".6"/>
       <rect x="216" y="166" width="12" height="12" fill="#fff" opacity=".6"/>
-      <text x="160" y="200" font-size="22">🧱</text>
+      ${сим('кирпич',171,204,0.8)}
     </svg>`; }
 
   function clockSVG(){
@@ -1209,8 +1462,8 @@ function coinsSVG(){
       <defs><linearGradient id="skCl" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#8fd3f0"/><stop offset="1" stop-color="#5fb0d8"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="120" fill="url(#skCl)"/>
-      <g class="c2a-cloud"><text x="30" y="40" font-size="26">☁️</text><text x="240" y="36" font-size="22">☁️</text></g>
-      <text x="310" y="50" font-size="26">🌞</text>
+      <g class="c2a-cloud">${сим('облако',30,32,0.76)}${сим('облако',240,30,0.65)}</g>
+      ${сим('солнце',312,46,0.95)}
       <!-- башня -->
       <rect x="96" y="40" width="168" height="170" fill="#e0c39a" stroke="#8a6a44" stroke-width="3"/>
       <polygon points="180,0 96,40 264,40" fill="#a37c4f" stroke="#7c5a34" stroke-width="3"/>
@@ -1225,15 +1478,15 @@ function coinsSVG(){
       <!-- дуга угла -->
       <path d="M195 100 A 24 24 0 0 1 200 122" stroke="#e8b04c" stroke-width="3" fill="none"/>
       <rect x="0" y="180" width="360" height="30" fill="#7fb45c"/>
-      <g font-size="30"><text x="20" y="170">🌳</text><text x="320" y="170">🌳</text></g>
+      <g>${сим('дерево',22,176,0.45)}${сим('дерево',322,176,0.45)}</g>
     </svg>`; }
   function shipSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <defs><linearGradient id="skSh" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#8fd3f0"/><stop offset="1" stop-color="#4aa8d8"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="120" fill="url(#skSh)"/>
-      <g class="c2a-cloud"><text x="30" y="36" font-size="24">☁️</text><text x="270" y="30" font-size="20">☁️</text></g>
-      <g class="c2a-fish" font-size="16"><text x="40" y="150">🐬</text><text x="300" y="160">🐬</text></g>
+      <g class="c2a-cloud">${сим('облако',30,28,0.7)}${сим('облако',270,24,0.6)}</g>
+      <g class="c2a-fish">${сим('рыба',48,152,0.85)}${сим('рыба',308,162,0.85)}</g>
       <!-- море -->
       <path d="M0 120 Q60 112 120 120 T240 120 T360 120 L360 150 L0 150 Z" fill="#2f8fc4"/>
       <!-- палуба корабля -->
@@ -1245,7 +1498,7 @@ function coinsSVG(){
       <circle cx="96" cy="150" r="4" fill="#33291e"/>
       <line x1="96" y1="150" x2="116" y2="136" stroke="#c0392b" stroke-width="4" stroke-linecap="round"/>
       <line x1="96" y1="150" x2="70" y2="150" stroke="#33291e" stroke-width="3"/>
-      <text x="200" y="176" font-size="16">⚓</text>
+      ${сим('ключ',208,178,0.45)}
       <rect x="0" y="196" width="360" height="14" fill="#2f8fc4"/>
     </svg>`; }
   function yardSVG(){
@@ -1253,7 +1506,7 @@ function coinsSVG(){
       <defs><linearGradient id="skYd" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#a8dcf0"/><stop offset="1" stop-color="#7fb45c"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="120" fill="url(#skYd)"/>
-      <text x="300" y="40" font-size="26">🌞</text>
+      ${сим('солнце',302,36,0.95)}
       <!-- дом -->
       <rect x="16" y="70" width="130" height="90" fill="#e8c9a0" stroke="#8a6a44" stroke-width="3"/>
       <polygon points="4,70 81,30 158,70" fill="#c0563f" stroke="#8a3a28" stroke-width="3"/>
@@ -1266,11 +1519,11 @@ function coinsSVG(){
       <rect x="146" y="112" width="92" height="10" fill="#a87c4f"/>
       <rect x="0" y="160" width="360" height="50" fill="#7fb45c"/>
       <!-- шарики в небе -->
-      <g class="c2a-coin" font-size="24">
-        <text x="180" y="60">🔴</text><text x="230" y="80">🔵</text><text x="250" y="44">🟡</text>
-        <text x="120" y="90">🟢</text>
+      <g class="c2a-coin">
+        ${сим('мяч',192,64,1.3,'#d9503f')}${сим('мяч',242,84,1.3,'#4a93d0')}${сим('мяч',262,48,1.3,'#e8b04c')}
+        ${сим('мяч',132,94,1.3,'#5f9a6a')}
       </g>
-      <g class="c2a-spark" font-size="18"><text x="40" y="180">🌼</text><text x="320" y="185">🌼</text></g>
+      <g class="c2a-spark">${сим('ромашка',49,182,0.9)}${сим('ромашка',329,187,0.9)}</g>
     </svg>`; }
   function blueprintSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
@@ -1289,7 +1542,7 @@ function coinsSVG(){
       <rect x="230" y="70" width="56" height="56" fill="none" stroke="#5f9a6a" stroke-width="4"/>
       <text x="246" y="62" font-size="14" fill="#2c5f3a">5</text>
       <!-- инструменты -->
-      <text x="30" y="110" font-size="22">📏</text><text x="296" y="110" font-size="22">📐</text><text x="60" y="176" font-size="20">✏️</text>
+      ${сим('книга',41,120,1.1,'#d9a441')}${сим('книга',307,120,1.1,'#4a93d0')}${сим('отвёртка',70,180,0.5)}
     </svg>`; }
 
   function schoolSVG(){
@@ -1302,8 +1555,8 @@ function coinsSVG(){
       <text x="40" y="50" font-size="22" fill="#f4e9c8">7 + 8 = ?</text>
       
       <rect x="24" y="118" width="200" height="10" fill="#8a5a2b"/>
-      <text x="250" y="48" font-size="24">🖼️</text>
-      <text x="300" y="60" font-size="22">🌐</text>
+      ${сим('картина',262,50,0.85)}
+      ${сим('планета',311,62,0.9)}
       <!-- парты -->
       <rect x="30" y="160" width="120" height="14" rx="4" fill="#c89a6a" stroke="#8a5a2b" stroke-width="3"/>
       <rect x="46" y="174" width="12" height="30" fill="#8a5a2b"/>
@@ -1318,27 +1571,27 @@ function coinsSVG(){
       <defs><linearGradient id="skIc" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#d8e8f8"/><stop offset="1" stop-color="#9fc4e8"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="120" fill="url(#skIc)"/>
-      <g class="c2a-spark" font-size="16"><text x="40" y="40">❄️</text><text x="160" y="30">❄️</text><text x="300" y="44">❄️</text></g>
+      <g class="c2a-spark">${сим('снежинка',48,34,0.8)}${сим('снежинка',168,24,0.8)}${сим('снежинка',308,38,0.8)}</g>
       <!-- море -->
       <rect x="0" y="120" width="360" height="90" fill="#4a90c8"/>
       <path d="M0 120 Q60 112 120 120 T240 120 T360 120" stroke="#9fd0e8" stroke-width="4" fill="none"/>
       <!-- льдины -->
       <path d="M20 160 L80 146 L140 160 L120 196 L30 196 Z" fill="#e8f2fa" stroke="#a8c8e0" stroke-width="3"/>
       <path d="M170 170 L230 158 L300 174 L284 200 L196 200 Z" fill="#e8f2fa" stroke="#a8c8e0" stroke-width="3"/>
-      <!-- пингвины-эмодзи -->
-      <g font-size="26">
-        <text x="46" y="150">🐧</text><text x="96" y="158">🐧</text>
-        <text x="200" y="164">🐧</text><text x="256" y="176">🐧</text>
+      <!-- пингвины -->
+      <g>
+        ${сим('пингвин',59,152,0.6)}${сим('пингвин',109,160,0.6)}
+        ${сим('пингвин',213,166,0.6)}${сим('пингвин',269,178,0.6)}
       </g>
-      <text x="330" y="140" font-size="24">🐧</text>
+      ${сим('пингвин',342,142,0.6)}
     </svg>`; }
   function tileSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <defs><linearGradient id="skTl" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#a8d2ea"/><stop offset="1" stop-color="#7fb8d8"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="110" fill="url(#skTl)"/>
-      <g class="c2a-cloud"><text x="30" y="34" font-size="24">☁️</text><text x="270" y="36" font-size="20">☁️</text></g>
-      <text x="318" y="50" font-size="26">🌞</text>
+      <g class="c2a-cloud">${сим('облако',30,27,0.7)}${сим('облако',270,29,0.6)}</g>
+      ${сим('солнце',320,46,0.95)}
       <!-- земля -->
       <rect x="0" y="110" width="360" height="100" fill="#c89a6a"/>
       <!-- дорожка из плиток БЧБЧБ -->
@@ -1352,24 +1605,24 @@ function coinsSVG(){
       <!-- домино -->
       <rect x="40" y="74" width="46" height="22" rx="6" fill="#d9a441" stroke="#8a5a2b" stroke-width="3" transform="rotate(-12 63 85)"/>
       <line x1="63" y1="78" x2="63" y2="92" stroke="#8a5a2b" stroke-width="2" transform="rotate(-12 63 85)"/>
-      <text x="90" y="120" font-size="20">🛠️</text>
+      ${сим('молоток',100,122,0.55)}
     </svg>`; }
 
   function scaleSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <rect x="0" y="0" width="360" height="210" fill="#f0dcc0"/>
       <rect x="0" y="0" width="360" height="90" fill="#e0c8a0"/>
-      <text x="26" y="56" font-size="22">🧵</text>
+      ${сим('клубок',37,58,0.7,'#4a93d0')}
       <!-- весы -->
       <line x1="180" y1="60" x2="180" y2="120" stroke="#33291e" stroke-width="5"/>
       <rect x="168" y="112" width="24" height="26" rx="4" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="3"/>
       <line x1="108" y1="80" x2="252" y2="80" stroke="#33291e" stroke-width="5"/>
       <line x1="108" y1="80" x2="108" y2="118" stroke="#33291e" stroke-width="4"/>
       <line x1="252" y1="80" x2="252" y2="118" stroke="#33291e" stroke-width="4"/>
-      <g font-size="30">
-        <text x="86" y="140">🧶</text><text x="234" y="140">🧶</text>
+      <g>
+        ${сим('клубок',101,142,1.1,'#c96a8a')}${сим('клубок',249,142,1.1,'#5aa9d6')}
       </g>
-      <text x="164" y="140" font-size="28">🧶</text>
+      ${сим('клубок',178,142,1.0,'#7fb45c')}
       <!-- посуда с водой -->
       <rect x="280" y="120" width="44" height="34" rx="5" fill="#7fc4a6" stroke="#2c5f4a" stroke-width="3"/>
       <rect x="284" y="126" width="36" height="12" fill="#bfe6d8"/>
@@ -1381,19 +1634,19 @@ function coinsSVG(){
       <defs><linearGradient id="skSb" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#a8dcf0"/><stop offset="1" stop-color="#7fb45c"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="120" fill="url(#skSb)"/>
-      <g class="c2a-cloud"><text x="30" y="36" font-size="24">☁️</text><text x="260" y="40" font-size="20">☁️</text></g>
-      <text x="312" y="48" font-size="26">🌞</text>
+      <g class="c2a-cloud">${сим('облако',30,28,0.7)}${сим('облако',260,32,0.6)}</g>
+      ${сим('солнце',314,44,0.95)}
       <!-- песочница -->
       <rect x="40" y="104" width="280" height="76" rx="10" fill="#d9b878" stroke="#8a5a2b" stroke-width="5"/>
       <rect x="40" y="96" width="280" height="12" rx="6" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="3"/>
       <!-- две кучки -->
       <path d="M110 176 Q100 140 130 136 Q158 140 152 176 Z" fill="#e8cf94"/>
       <path d="M230 176 Q220 140 250 136 Q278 140 272 176 Z" fill="#e8cf94"/>
-      <g font-size="24">
-        <text x="116" y="140">🏖️</text><text x="140" y="140">🏖️</text>
-        <text x="236" y="140">🏖️</text><text x="260" y="140">🏖️</text>
+      <g>
+        ${сим('замок_песка',128,142,0.45)}${сим('замок_песка',152,142,0.45)}
+        ${сим('замок_песка',248,142,0.45)}${сим('замок_песка',272,142,0.45)}
       </g>
-      <g font-size="20"><text x="60" y="160">🪣</text><text x="300" y="168">🪀</text></g>
+      <g>${сим('корзина',70,162,0.6)}${сим('мяч',310,170,1.0,'#5f9a6a')}</g>
       <rect x="0" y="180" width="360" height="30" fill="#7fb45c"/>
     </svg>`; }
   function roadSVG(){
@@ -1401,8 +1654,8 @@ function coinsSVG(){
       <defs><linearGradient id="skRd" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#a8dcf0"/><stop offset="1" stop-color="#8fc9e8"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="100" fill="url(#skRd)"/>
-      <g class="c2a-cloud"><text x="30" y="34" font-size="24">☁️</text><text x="250" y="30" font-size="20">☁️</text></g>
-      <text x="314" y="46" font-size="24">🌞</text>
+      <g class="c2a-cloud">${сим('облако',30,27,0.7)}${сим('облако',250,24,0.6)}</g>
+      ${сим('солнце',316,42,0.95)}
       <!-- даль -->
       <rect x="0" y="100" width="360" height="40" fill="#7fb45c"/>
       <!-- дорога -->
@@ -1417,8 +1670,8 @@ function coinsSVG(){
       <rect x="84" y="112" width="20" height="10" rx="3" fill="#fffef4" stroke="#8a5a2b" stroke-width="2"/>
       <rect x="300" y="150" width="8" height="26" fill="#8a5a2b"/>
       <rect x="294" y="146" width="20" height="10" rx="3" fill="#fffef4" stroke="#8a5a2b" stroke-width="2"/>
-      <g font-size="46"><text x="120" y="170">🚲</text></g>
-      <g font-size="34"><text x="280" y="150">🌳</text></g>
+      <g>${сим('велосипед',143,172,1.4)}</g>
+      <g>${сим('дерево',282,152,0.5)}</g>
     </svg>`; }
 
   function boardFrame(title, lines){
@@ -1527,10 +1780,7 @@ function coinsSVG(){
       <text x="26" y="38" font-size="21" font-weight="bold" fill="#ffd76a">Вероятность = благоприятные : все</text>
       <!-- мешок -->
       <path d="M40 150 Q60 110 120 108 Q180 110 190 150 Q170 196 115 196 Q60 196 40 150 Z" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="4"/>
-      <g font-size="34">
-        <text x="70" y="150">🔴</text><text x="112" y="140">🔵</text>
-        <text x="118" y="166">🔴</text><text x="150" y="146">🔵</text><text x="156" y="172">🔵</text>
-      </g>
+      ${сим('шар',87,154,1.70,'#c9433a')}${сим('шар',129,144,1.70,'#3f7fd0')}${сим('шар',135,170,1.70,'#c9433a')}${сим('шар',167,150,1.70,'#3f7fd0')}${сим('шар',173,176,1.70,'#3f7fd0')}
       <text x="46" y="216" font-size="18" fill="#8fa08f">2 красных + 3 синих = 5</text>
       <!-- диаграмма -->
       <rect x="240" y="120" width="34" height="56" fill="#e86a5a"/>
@@ -1651,14 +1901,8 @@ function coinsSVG(){
         <line x1="180" y1="130" x2="160" y2="176"/><line x1="180" y1="130" x2="200" y2="176"/>
         <line x1="280" y1="130" x2="250" y2="176"/><line x1="280" y1="130" x2="310" y2="176"/>
       </g>
-      <g font-size="16" fill="#f4e9c8">
-        <text x="70" y="128">👕</text><text x="172" y="128">👕</text><text x="272" y="128">👕</text>
-        <text x="50" y="112">👔</text><text x="292" y="112">👔</text>
-      </g>
-      <g font-size="15" fill="#8fd1a8">
-        <text x="36" y="190">👔</text><text x="96" y="190">👔</text><text x="146" y="190">👔</text>
-        <text x="186" y="190">👔</text><text x="238" y="190">👔</text><text x="296" y="190">👔</text>
-      </g>
+      ${сим('ткань',78,134,0.80,'#7fc3e0')}${сим('ткань',180,134,0.80,'#7fc3e0')}${сим('ткань',280,134,0.80,'#7fc3e0')}${сим('ткань',58,118,0.80,'#f0f0f4')}${сим('ткань',300,118,0.80,'#f0f0f4')}
+      ${сим('ткань',44,196,0.75,'#f0f0f4')}${сим('ткань',104,196,0.75,'#f0f0f4')}${сим('ткань',154,196,0.75,'#f0f0f4')}${сим('ткань',194,196,0.75,'#f0f0f4')}${сим('ткань',246,196,0.75,'#f0f0f4')}${сим('ткань',304,196,0.75,'#f0f0f4')}
       <text x="180" y="222" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffd76a">4 · 3 = 12 комплектов</text>
     </svg>`; }
 
@@ -1720,7 +1964,7 @@ function coinsSVG(){
       <text x="60" y="206" font-size="17" fill="#9fc0e8">на 2, 5, 10 — последняя цифра · на 3, 9 — сумма цифр</text>
     </svg>`; }
   function combSVG(){
-    const F=['🍎','🍐','🍇','🍒']; let els='';
+    const F=['яблоко','яблоко','виноград','яблоко']; let els='';
     F.forEach((f,i)=>{ const x=60+i*66; els+=`<text x="${x}" y="90" font-size="40">${f}</text>`; });
     const lines=['0,1','0,2','0,3','1,2','1,3','2,3'];
     const coords={0:[60,100],1:[126,100],2:[192,100],3:[258,100]};
@@ -3121,8 +3365,14 @@ function coinsSVG(){
       .comic-top { display:flex; align-items:center; gap:10px; padding:10px 12px 4px; }
       .comic-top .ct-book { font-size:12px; font-weight:bold; color:#8a6d3b; letter-spacing:.06em; flex-shrink:0; }
       .comic-top .ct-title { font-size:16px; font-weight:bold; flex:1; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; }
-      .comic-top .ct-x { background:none; border:2px solid #33291e; border-radius:50%; width:30px; height:30px;
-        font-size:15px; line-height:1; color:#33291e; cursor:pointer; font-family:inherit; flex-shrink:0; }
+      /* Норма касания 44 px: кнопка была 30 px — по стандарту проекта это
+         промах пальцем. Визуальный кружок оставляем прежним, а цель касания
+         расширяем невидимой рамкой. */
+      .comic-top .ct-x { position:relative; background:none; border:2px solid #33291e; border-radius:50%;
+        width:34px; height:34px; font-size:16px; line-height:1; color:#33291e; cursor:pointer;
+        font-family:inherit; flex-shrink:0; }
+      .comic-top .ct-x::after { content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+        width:44px; height:44px; }
       .c2-page { flex:1 1 auto; width:100%; max-width:760px; margin:4px auto 10px; background:#fffdf4;
         border:6px solid #33291e; border-radius:10px; overflow:hidden; box-shadow:0 12px 34px rgba(0,0,0,.28);
         display:flex; flex-direction:column; position:relative; }
@@ -3144,6 +3394,15 @@ function coinsSVG(){
         font-size:14px; line-height:1.45; padding:8px 14px; display:flex; gap:8px; align-items:center; }
       .c2-capbar .c2cap-tag { color:#d9a441; font-weight:bold; flex-shrink:0; }
       .c2-capbar .c2cap-in { animation:c2capup .45s ease both; }
+      /* Мысль-подсказка кадра: «что здесь важно заметить». Показывается ПОСЛЕ
+         того, как реплика допечаталась, — иначе она перебивает саму реплику.
+         Текст живёт в данных кадра (поле note), движок только показывает. */
+      .c2-think { box-sizing:border-box; background:#1d3326; color:#eaf6ee; border-top:3px solid #4e7f2f;
+        font-size:14px; line-height:1.45; padding:0 14px; display:flex; gap:8px; align-items:flex-start;
+        max-height:0; opacity:0; overflow:hidden; transition:max-height .28s ease, opacity .28s ease, padding .28s ease; }
+      .c2-think.on { max-height:88px; opacity:1; padding:8px 14px 9px; }
+      .c2-think .ct-mark { flex:none; font-size:15px; line-height:1.35; }
+      .c2-think .ct-txt { min-width:0; }
       @keyframes c2capup { from{ opacity:0; transform:translateY(9px);} to{ opacity:1; transform:none;} }
       /* сцена: появление целиком + актёры */
       .c2-stage.c2-fresh { animation:c2staget .5s cubic-bezier(.2,.9,.3,1) both; }
@@ -3313,6 +3572,7 @@ function coinsSVG(){
           <div class="c2-talk" id="c2cur"><span class="c2-say"></span><span class="c2-caret"></span></div>
         </div>
         <div class="c2-capbar"><span class="c2cap-tag">${idx+1}/${frs.length} · </span><span class="c2cap-in">${escHtml(fr.cap||'')}</span></div>
+        ${fr.note?`<div class="c2-think" id="c2note"><span class="ct-mark">💡</span><span class="ct-txt">${escHtml(fr.note)}</span></div>`:''}
       </div>
       <div class="comic-nav">
         <span class="cn-dots">${dots}</span>
@@ -3372,7 +3632,9 @@ function coinsSVG(){
     const tick=()=>{ if(!root||root.style.display==='none') return;
       say.textContent=text.slice(0,++i);
       if(i<text.length){ tmr=setTimeout(tick, text.length>70?18:28); } else { caret.style.visibility='hidden';
-        try{ document.getElementById('c2cur').classList.add('ready'); }catch(e){} } };
+        try{ document.getElementById('c2cur').classList.add('ready'); }catch(e){}
+        /* мысль появляется после реплики — сначала ребёнок читает слова героя */
+        try{ const з=document.getElementById('c2note'); if(з) setTimeout(()=>з.classList.add('on'),140); }catch(e){} } };
     if(tmr){clearTimeout(tmr);} tmr=setTimeout(tick,160);
   }
 

@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="46 34 188 224" width="188" height="224" role="img" aria-label="Архимед — портрет">
+  <defs>
+    <!-- тёплый свет сцены: сверху-слева, как в комиксах -->
+    <linearGradient id="aSkin" x1="0.25" y1="0" x2="0.75" y2="1">
+      <stop offset="0" stop-color="#f7d3ae"/><stop offset="1" stop-color="#e0ac81"/>
+    </linearGradient>
+    <linearGradient id="aHair" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#fbfcff"/><stop offset="1" stop-color="#d5dceb"/>
+    </linearGradient>
+    <linearGradient id="aLaurel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7fb45c"/><stop offset="1" stop-color="#3c6b26"/>
+    </linearGradient>
+    <radialGradient id="aCheek" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e07a6a" stop-opacity="0.34"/><stop offset="1" stop-color="#e07a6a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <path d="M110 202 C124 216 156 216 170 202" stroke="#f6e0a8" stroke-width="2" fill="none" opacity="0.9"/>
+
+
+  <!-- уши -->
+  <path d="M62 118 C50 114 44 126 50 138 C54 146 62 148 68 144 Z" fill="url(#aSkin)" stroke="#33291e" stroke-width="2.4"/>
+  <path d="M218 118 C230 114 236 126 230 138 C226 146 218 148 212 144 Z" fill="url(#aSkin)" stroke="#33291e" stroke-width="2.4"/>
+  <path d="M58 126 C54 130 54 136 58 140" stroke="#c98f66" stroke-width="1.8" fill="none"/>
+  <path d="M222 126 C226 130 226 136 222 140" stroke="#c98f66" stroke-width="1.8" fill="none"/>
+
+  <!-- волосы: задний слой (объём вокруг головы) -->
+  <path d="M62 116 C54 84 76 58 140 58 C204 58 226 84 218 116 C226 104 226 86 214 72
+           C198 52 172 42 140 42 C108 42 82 52 66 72 C54 86 54 104 62 116 Z"
+        fill="#c6cfe0" stroke="#33291e" stroke-width="2.6"/>
+  <path d="M66 96 C86 78 112 70 140 70 C168 70 194 78 214 96" stroke="#aeb9cf" stroke-width="2.4" fill="none" opacity="0.8"/>
+
+  <!-- голова: мягкий овал, а не круг -->
+  <path d="M140 46 C186 46 212 76 212 116 C212 152 198 174 176 186
+           C164 192 116 192 104 186 C82 174 68 152 68 116 C68 76 94 46 140 46 Z"
+        fill="url(#aSkin)" stroke="#33291e" stroke-width="3"/>
+
+  <!-- виски: седина заходит на лицо -->
+  <path d="M70 104 C68 124 72 142 80 152 C78 132 76 116 80 100 Z" fill="#e7ebf5" opacity="0.95"/>
+  <path d="M210 104 C212 124 208 142 200 152 C202 132 204 116 200 100 Z" fill="#e7ebf5" opacity="0.95"/>
+
+  <!-- волосы: передний слой с прядями -->
+  <path d="M68 112 C60 82 82 54 140 54 C198 54 220 82 212 112
+           C206 92 194 78 172 70 C182 80 186 92 184 100 C176 84 160 74 140 74
+           C120 74 104 84 96 100 C94 92 98 80 108 70 C86 78 74 92 68 112 Z"
+        fill="url(#aHair)" stroke="#33291e" stroke-width="2.8"/>
+  <path d="M84 74 C98 62 118 56 140 56 M196 74 C182 62 162 56 140 56"
+        stroke="#fff" stroke-width="2.2" fill="none" opacity="0.75"/>
+
+  <!-- лавровый венок: ветвь слева и справа, листья с прожилкой -->
+  <g stroke="#33291e" stroke-width="1.1">
+    <path d="M74 92 C80 74 94 60 112 52" stroke="#4e7f2f" stroke-width="2.6" fill="none"/>
+    <path d="M206 92 C200 74 186 60 168 52" stroke="#4e7f2f" stroke-width="2.6" fill="none"/>
+    <g fill="url(#aLaurel)">
+      <ellipse cx="76" cy="88" rx="9" ry="4" transform="rotate(-38 76 88)"/>
+      <ellipse cx="82" cy="74" rx="9" ry="4" transform="rotate(-26 82 74)"/>
+      <ellipse cx="92" cy="62" rx="9" ry="4" transform="rotate(-16 92 62)"/>
+      <ellipse cx="104" cy="54" rx="9" ry="4" transform="rotate(-8 104 54)"/>
+      <ellipse cx="118" cy="49" rx="8.5" ry="3.8" transform="rotate(-2 118 49)"/>
+      <ellipse cx="204" cy="88" rx="9" ry="4" transform="rotate(38 204 88)"/>
+      <ellipse cx="198" cy="74" rx="9" ry="4" transform="rotate(26 198 74)"/>
+      <ellipse cx="188" cy="62" rx="9" ry="4" transform="rotate(16 188 62)"/>
+      <ellipse cx="176" cy="54" rx="9" ry="4" transform="rotate(8 176 54)"/>
+      <ellipse cx="162" cy="49" rx="8.5" ry="3.8" transform="rotate(2 162 49)"/>
+    </g>
+  </g>
+
+  <!-- лёгкие морщины: только намёк -->
+  <path d="M104 92 C120 85 132 85 140 88" stroke="#c98f66" stroke-width="1.8" fill="none" opacity="0.4"/>
+  <path d="M176 92 C160 85 148 85 140 88" stroke="#c98f66" stroke-width="1.8" fill="none" opacity="0.4"/>
+  <path d="M112 102 C124 97 132 97 138 99" stroke="#c98f66" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <path d="M168 102 C156 97 148 97 142 99" stroke="#c98f66" stroke-width="1.5" fill="none" opacity="0.3"/>
+
+  <!-- брови: густые, дугой вверх — добрый взгляд -->
+  <path d="M92 112 C104 100 122 100 132 108" stroke="#dbe1ee" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M188 112 C176 100 158 100 148 108" stroke="#dbe1ee" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M92 112 C104 100 122 100 132 108" stroke="#9aa6bd" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- глаза: белок с тенью, радужка с глубиной, два блика -->
+  <g>
+    <ellipse cx="112" cy="128" rx="15" ry="13.5" fill="#fdfaf3" stroke="#33291e" stroke-width="2.2"/>
+    <ellipse cx="168" cy="128" rx="15" ry="13.5" fill="#fdfaf3" stroke="#33291e" stroke-width="2.2"/>
+    <ellipse cx="112" cy="122" rx="13" ry="6" fill="#c9b79c" opacity="0.35"/>
+    <ellipse cx="168" cy="122" rx="13" ry="6" fill="#c9b79c" opacity="0.35"/>
+    <circle cx="113" cy="129" r="7.6" fill="#6b4426"/>
+    <circle cx="167" cy="129" r="7.6" fill="#6b4426"/>
+    <circle cx="113" cy="129" r="3.6" fill="#3b2413"/>
+    <circle cx="167" cy="129" r="3.6" fill="#3b2413"/>
+    <circle cx="115.6" cy="125.6" r="2.6" fill="#fff"/>
+    <circle cx="169.6" cy="125.6" r="2.6" fill="#fff"/>
+    <circle cx="110" cy="133" r="1.3" fill="#fff" opacity="0.65"/>
+    <circle cx="164" cy="133" r="1.3" fill="#fff" opacity="0.65"/>
+    <!-- верхнее веко -->
+    <path d="M97 124 C104 114 120 114 127 124" stroke="#8a5a3a" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.55"/>
+    <path d="M153 124 C160 114 176 114 183 124" stroke="#8a5a3a" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.55"/>
+  </g>
+
+  <!-- нос: спинка, крылья, мягкая тень -->
+  <path d="M140 122 C135 138 132 146 125 150 M140 122 C145 138 148 146 155 150"
+        stroke="#c98f66" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  <path d="M125 150 C132 157 148 157 155 150" stroke="#a9714a" stroke-width="2.4" fill="none"/>
+  <ellipse cx="131" cy="152" rx="3" ry="2" fill="#a9714a" opacity="0.6"/>
+  <ellipse cx="149" cy="152" rx="3" ry="2" fill="#a9714a" opacity="0.6"/>
+  <path d="M122 156 C120 164 120 170 122 176 M158 156 C160 164 160 170 158 176"
+        stroke="#c98f66" stroke-width="1.8" fill="none" opacity="0.42"/>
+
+  <!-- румянец: мягкие пятна, а не овалы -->
+  <circle cx="96" cy="152" r="17" fill="url(#aCheek)"/>
+  <circle cx="184" cy="152" r="17" fill="url(#aCheek)"/>
+
+  <!-- борода: цельный седой поток с вырезом под рот -->
+  <path d="M92 140 C76 152 70 176 78 202 C86 228 108 246 140 246
+           C172 246 194 228 202 202 C210 176 204 152 188 140
+           C192 162 186 180 176 190 C166 200 152 204 140 204
+           C128 204 114 200 104 190 C94 180 88 162 92 140 Z"
+        fill="url(#aHair)" stroke="#33291e" stroke-width="3"/>
+  <path d="M116 200 C122 216 128 228 140 236 M140 202 C140 216 140 228 140 236 M164 200 C158 216 152 228 140 236"
+        stroke="#c6cfe0" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <path d="M92 168 C102 180 116 188 130 190 M188 168 C178 180 164 188 150 190"
+        stroke="#c6cfe0" stroke-width="2" fill="none" opacity="0.75"/>
+  <path d="M86 190 C96 206 118 218 140 220" stroke="#fff" stroke-width="2" fill="none" opacity="0.6"/>
+
+  <!-- усы: два «крыла» с прорезью для рта -->
+  <path d="M138 172 C126 166 108 168 98 178 C90 186 92 196 100 199
+           C102 190 110 184 122 183 C132 182 138 180 138 176 Z"
+        fill="#fbfcff" stroke="#33291e" stroke-width="2.2"/>
+  <path d="M142 172 C154 166 172 168 182 178 C190 186 188 196 180 199
+           C178 190 170 184 158 183 C148 182 142 180 142 176 Z"
+        fill="#fbfcff" stroke="#33291e" stroke-width="2.2"/>
+  <path d="M104 190 C114 186 126 184 136 178 M176 190 C166 186 154 184 144 178"
+        stroke="#c6cfe0" stroke-width="1.8" fill="none" opacity="0.8"/>
+
+  <!-- рот: тёплая улыбка под усами -->
+  <path d="M126 202 C132 212 148 212 154 202" stroke="#a0504a" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+  <path d="M128 204 C134 210 146 210 152 204" stroke="#7c3326" stroke-width="1.4" fill="none" opacity="0.4"/>
+</svg>
