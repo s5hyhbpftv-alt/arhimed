@@ -6436,7 +6436,10 @@ window.RUPAPER = (function(){
   function right(it,val){
     const t=it.type||'single';
     if(t==='open') return true;            /* развёрнутый ответ машина не судит: сверяем с образцом */
-    if(t==='multi'){
+    if(t==='multi'||t==='paint'){
+      /* «paint» — раскраска рисунка: набор выбранных клеток сверяется так же,
+         как несколько верных ответов. Без этой ветки раскраска всегда
+         считалась неверной: сравнение падало в ветку «один ответ». */
       const a=(it.ans||[]).slice().sort().join('§'), b=((val&&val.length)?val:[]).slice().sort().join('§');
       return !!b && a===b;
     }
@@ -6486,6 +6489,15 @@ window.RUPAPER = (function(){
         return `<button type="button" class="${cls}" onclick="ruPaperFrag(${it._id},${it._step},${i})">
           <span class="k">${i+1}</span><span>${s}</span></button>`;}).join('')}</div>`;
     }
+    if(t==='paint'){
+      /* Раскраска рисунка: клики по клеткам обрабатывает сам лист
+         (cfg.paint), движок только держит выбор и вызывает проверку.
+         Так «Мастерские Сиракуз» получают седьмой формат ответа, не
+         ломая шесть прежних: разметку клеток знает лист, а не движок. */
+      return `<div class="hint">${it.ph||'Нажимай на клетки рисунка, затем нажми «Проверить».'}</div>`+
+        `<div class="hint" style="font-variant-numeric:tabular-nums">выбрано: ${(picked||[]).length}${checked?'':' из '+((it.ans||[]).length)}</div>`+
+        (checked?'':`<button type="button" class="check" ${(picked&&picked.length)?'':'disabled'} onclick="ruPaperCheck(${it._id},${it._step})">Проверить</button>`);
+    }
     if(t==='open'){
       return `<div class="open">
         <textarea rows="4" placeholder="${it.ph||'запиши ответ словами'}"
@@ -6520,16 +6532,21 @@ window.RUPAPER = (function(){
                     order:'Расставь по порядку и нажми «Проверить».',
                     fragment:'Нажми на предложение, о котором спрашивают.',
                     short:'Запиши ответ и нажми «Проверить».',
-                    open:'Запиши ответ словами, потом сверь его с образцом и критериями.'}[type];
+                    open:'Запиши ответ словами, потом сверь его с образцом и критериями.',
+                    paint:''}[type];
     el.innerHTML=`<div class="pp">
       <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div>
         <div class="of" style="display:flex;align-items:center;gap:8px">
-          <img src="img/mishutka.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">${cfg.brand||'Путь Мишутки'}</div></div>
+          ${cfg.brandIco===null?'':`<img src="${cfg.brandIco||'img/mishutka.png'}" alt="" style="width:34px;height:34px;object-fit:contain;border-radius:50%">`}${cfg.brand||'Путь Мишутки'}</div></div>
       <h2>${it.t}</h2>
-      <div class="fig">${String(cfg.art[it.k]())}</div>
+      <div class="fig" data-paint="${(it.type==='paint')?'1':''}">${String(cfg.art[it.k]())}</div>
       <div class="q">${it.q}</div>
       ${taskHint?`<div class="hint">${taskHint}</div>`:''}
       ${body(it,picked,checked,ok)}
+      ${(type==='paint') ? `<div class="mark ${checked?(ok?'ok':'no'):''}" ${checked?'':'hidden'}>
+          <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
+            :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
+          <p>${ok?'Верно. ':'Правильно: '+(Array.isArray(it.ans)?it.ans.join(' · '):it.ans)+'. '}${it.why||''}</p></div>` : ''}
       ${checked ? (type==='open'
           ? `<div class="self">
                <div class="ttl">Сверь свой ответ с образцом</div>
@@ -6595,6 +6612,19 @@ window.RUPAPER = (function(){
     st.ok[step]=checkNow(id,step);
     redraw();
   };
+  /* Раскраска: лист вызывает ruPaint(id,step,cell). Клик по уже выбранной
+     клетке снимает выбор, поэтому ошибиться можно и исправить тоже. */
+  window.ruPaint=function(id,step,cell){
+    const st=state(id);
+    if(st.ok[step]!=null) return;
+    const cur=Array.isArray(st.ans[step])?st.ans[step].slice():[];
+    const k=cur.indexOf(cell);
+    if(k>=0) cur.splice(k,1); else cur.push(cell);
+    st.ans[step]=cur;
+    redraw();
+  };
+  window.ruPaintDone=function(id,step){ return state(id).ok[step]!=null; };
+  window.ruPaintSel=function(id,step){ return state(id).ans[step]||[]; };
   /* cfg: {id, title, ico, src, brand, source, data, art, check, tasks} */
   function mount(cfg){
     REG[cfg.id]=cfg;
@@ -6604,8 +6634,10 @@ window.RUPAPER = (function(){
       /* персонажа гасит CSS, см. пояснение в листе 615 */
     };
     if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===cfg.id)){
-      window.ARH_LESSONS.push({id:cfg.id,title:cfg.title,ico:cfg.ico,src:cfg.src,subj:'rus',group:cfg.group||'mish',
-        explain:cfg.data.map((x,i)=>(i+1)+'. '+x.t),check:cfg.check,tasks:cfg.tasks,img:'img/mishutka.png'});
+      window.ARH_LESSONS.push({id:cfg.id,title:cfg.title,ico:cfg.ico,src:cfg.src,
+        subj:cfg.subj||'rus', group:cfg.group||'mish',
+        explain:cfg.data.map((x,i)=>(i+1)+'. '+x.t),check:cfg.check,tasks:cfg.tasks,
+        img:cfg.img||'img/mishutka.png'});
     }
   }
   return {mount:mount,css:css};

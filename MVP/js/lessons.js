@@ -14,7 +14,8 @@ const SUBJ_META={
   phys:{ico:'🍎', name:'Физика', dsc:'Ньютон · движение, силы, энергия'},
   chem:{ico:'⚗️', name:'Химия', dsc:'Лавуазье · вещества, реакции, растворы'},
   inf:{ico:'💻', name:'Информатика', dsc:'Код, алгоритмы, логика'},
-  rus:{ico:'📖', name:'Русский язык', dsc:'Части речи, орфография, пунктуация'}};
+  rus:{ico:'📖', name:'Русский язык', dsc:'Части речи, орфография, пунктуация'},
+  syra:{ico:'⚖️', name:'Мастерские Сиракуз', dsc:'Олимпиадные приёмы · 4–9 класс'}};
 
 /* ---------- фильтр по классу профиля ---------- */
 function profileClassNum(){ try{ const k=parseInt(String((typeof DB!=='undefined'&&DB.profile)?DB.profile.klass:''),10); return isNaN(k)?7:k; }catch(e){ return 7; } }
@@ -67,8 +68,11 @@ function isVisibleLesson(L){
 function lessonPool(){
   try{
     const junior=typeof isJunior==='function'&&isJunior();
+    /* Младшие классы видят полку «Начальная школа» — и полку «Мастерские
+       Сиракуз»: в ней уроки 4–9 классов, и урок для 4 класса иначе пропадал
+       бы из каталога совсем (каталог младших классов состоит из одной полки). */
     const pool= (junior
-      ? window.ARH_LESSONS.filter(L=>subjOf(L)==='jun')
+      ? window.ARH_LESSONS.filter(L=>subjOf(L)==='jun'||subjOf(L)==='syra')
       : window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun')).filter(isVisibleLesson);
     return sortByCurrentClass(pool.filter(lessonFits));
   }catch(e){ return window.ARH_LESSONS; }
@@ -85,7 +89,17 @@ function lessonRow(L){
   </div>`;
 }
 function bookSel(){
-  try{ if(typeof isJunior==='function'&&isJunior()) return 'jun'; }catch(e){}
+  /* Младшие классы по умолчанию видят «Начальную школу», но могут перейти
+     на другую полку — например, «Мастерские Сиракуз», где есть урок для
+     4 класса. Раньше выбор полки для них игнорировался: возвращался 'jun'
+     всегда, и открыть полку было нельзя, хотя она показывалась в списке. */
+  try{
+    if(typeof isJunior==='function'&&isJunior()){
+      const v=BK.subj;
+      if(v && v!=='jun' && v!=='mish' && v!=='all') return v;
+      return 'jun';
+    }
+  }catch(e){}
   return BK.subj;
 }
 /* строки уроков с разделителем: сверху — твой класс, ниже — остальные */
@@ -112,7 +126,7 @@ function renderBookList(){
   const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
   const totalL=pool.length;
   const junior=typeof isJunior==='function'&&isJunior();
-  const order=junior? ['jun'] : ['all','math','rus','phys','chem','inf','mish'];
+  const order=junior? ['jun','syra'] : ['all','math','rus','phys','chem','inf','mish','syra'];
   const grouped=order.filter(s=>s==='all'||pool.some(L=>subjOf(L)===s)).map(subj=>{
     if(subj==='all') return { subj:'all', meta:{ico:'📚',name:'Все предметы'}, items:pool };
     const meta=SUBJ_META[subj]; return { subj, meta, items:pool.filter(L=>subjOf(L)===subj) };
