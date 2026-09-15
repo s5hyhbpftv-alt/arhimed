@@ -6543,7 +6543,7 @@ window.RUPAPER = (function(){
       <div class="q">${it.q}</div>
       ${taskHint?`<div class="hint">${taskHint}</div>`:''}
       ${body(it,picked,checked,ok)}
-      ${type==='paint' ? `<div class="mark ${checked?(ok?'ok':'no'):''}" ${checked?'':'hidden'}>
+      ${(type==='paint'&&checked) ? `<div class="mark ${ok?'ok':'no'}">
           <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
             :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
           <p>${ok?'Верно. ':'Посмотри на рисунок: зелёным обведены все клетки, которые нужно было отметить, красным — лишние. '}${it.why||''}</p></div>` : ''}
@@ -6554,10 +6554,10 @@ window.RUPAPER = (function(){
                <ul>${(it.criteria||[]).map(c=>`<li>${c}</li>`).join('')}</ul>
                <div class="hint" style="margin-top:8px">Развёрнутый ответ проверяют по критериям, а не машиной: сравни свой ответ с образцом и посмотри, все ли пункты у тебя есть.</div>
              </div>`
-          : `<div class="mark ${ok?'ok':'no'}">
+          : (type==='paint' ? '' : `<div class="mark ${ok?'ok':'no'}">
                <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
                  :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
-               <p>${ok?'Верно. ':'Правильно: '+(Array.isArray(it.ans)?it.ans.join(' · '):it.ans)+'. '}${it.why}</p></div>`)
+               <p>${ok?'Верно. ':'Правильно: '+(Array.isArray(it.ans)?it.ans.join(' · '):it.ans)+'. '}${it.why}</p></div>`))
         : ''}
     </div>`;
   }
