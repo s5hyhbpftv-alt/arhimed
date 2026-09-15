@@ -1116,5 +1116,77 @@ const статьиРаунда=[
 /* старт */
 показать(parseInt((location.hash||'#s1').slice(2),10)-1 || 0);
 </script>
+
+<!-- ═══ ТЕЛЕФОН: свайп и полный экран ═════════════════════════════════════
+     Добавлено 15.09.2026 отдельным блоком: оформление первоначальной деки
+     не тронуто, меняется только управление. Листы здесь прокручиваются
+     внутри себя, поэтому вертикальный жест не перехватываем. -->
+<style>
+#воВесь{
+  position:fixed; right:14px; top:14px; z-index:40; display:none;
+  font-family:var(--mono); font-size:12px; color:var(--ivory);
+  background:var(--panel); border:1px solid var(--line); border-radius:4px;
+  padding:7px 11px; cursor:pointer;
+}
+#воВесь:active{transform:scale(.97)}
+#воВесь.видна{display:block}
+/* Пока кнопка на экране, верхняя строка листа уступает ей место. */
+body.с-кнопкой .slide{padding-right:clamp(90px,16vw,150px)}
+#свайпСовет{
+  position:fixed; left:50%; bottom:92px; transform:translateX(-50%); z-index:40;
+  font-family:var(--mono); font-size:13px; color:var(--muted);
+  background:rgba(10,22,17,.88); border:1px solid var(--line); border-radius:4px;
+  padding:8px 14px; pointer-events:none; opacity:0;
+}
+#свайпСовет.видна{animation:совет 3600ms ease forwards}
+@keyframes совет{0%{opacity:0}12%{opacity:1}72%{opacity:1}100%{opacity:0}}
+</style>
+<button id="воВесь" type="button" hidden>во весь экран</button>
+<div id="свайпСовет">листайте пальцем ←→</div>
+<script>
+'use strict';
+(function(){
+  /* Листаем пальцем. Жест считаем своим, только если он заметный, быстрый
+     и явно горизонтальный: вертикаль — это прокрутка самого листа. */
+  let x0=0, y0=0, t0=0, вЖесте=false;
+  document.addEventListener('touchstart', е=>{
+    if(е.touches.length!==1){ вЖесте=false; return; }
+    const т=е.touches[0]; x0=т.clientX; y0=т.clientY; t0=Date.now(); вЖесте=true;
+  }, {passive:true});
+  document.addEventListener('touchmove', е=>{ if(е.touches.length!==1) вЖесте=false; }, {passive:true});
+  document.addEventListener('touchend', е=>{
+    if(!вЖесте) return; вЖесте=false;
+    const т=е.changedTouches[0], dx=т.clientX-x0, dy=т.clientY-y0;
+    if(Date.now()-t0>900) return;
+    if(Math.abs(dx)<45) return;
+    if(Math.abs(dx)<Math.abs(dy)*1.6) return;
+    показать(текущий + (dx<0 ? 1 : -1));
+  }, {passive:true});
+  if(matchMedia('(hover: none) and (pointer: coarse)').matches){
+    const с=document.getElementById('свайпСовет');
+    if(с) requestAnimationFrame(()=>с.classList.add('видна'));
+  }
+
+  /* Кнопку полного экрана показываем только там, где браузер это умеет:
+     на iPhone Fullscreen API для элементов нет, мёртвая кнопка обманывала бы. */
+  const б=document.getElementById('воВесь');
+  const к=document.documentElement;
+  if(!б || !(к.requestFullscreen||к.webkitRequestFullscreen)) return;
+  const горизонт=matchMedia('(orientation: landscape) and (max-height: 560px)');
+  const показ=()=>{
+    const надо=горизонт.matches || !!document.fullscreenElement;
+    б.hidden=!надо; б.classList.toggle('видна',надо);
+    document.body.classList.toggle('с-кнопкой',надо);
+    б.textContent=document.fullscreenElement? 'выйти из полного экрана' : 'во весь экран';
+  };
+  б.onclick=()=>{
+    if(document.fullscreenElement) (document.exitFullscreen||document.webkitExitFullscreen).call(document);
+    else (к.requestFullscreen||к.webkitRequestFullscreen).call(к).catch(()=>{});
+  };
+  горизонт.addEventListener('change',показ);
+  document.addEventListener('fullscreenchange',показ);
+  показ();
+})();
+</script>
 </body>
 </html>

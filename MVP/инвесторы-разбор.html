@@ -66,8 +66,12 @@ body{
 }
 .сцена{
   position:relative; overflow:hidden;
+  /* dvh, а не vh: на телефоне vh считает вместе с полосой адреса,
+     и нижняя часть кадра уезжает под неё. */
   width:min(100vw, calc(100vh * 16 / 9));
   height:min(100vh, calc(100vw * 9 / 16));
+  width:min(100dvw, calc(100dvh * 16 / 9));
+  height:min(100dvh, calc(100dvw * 9 / 16));
   background:var(--поле);
   container-type:size;
   box-shadow:0 0 0 1px rgba(227,176,76,.14), 0 24px 80px rgba(0,0,0,.6);
@@ -155,6 +159,30 @@ b,strong{color:var(--латунь-св); font-weight:400}
 .ход button:hover{border-color:var(--латунь)}
 .ход button:active{transform:scale(.97)}
 .ход button:focus-visible{outline:2px solid var(--латунь); outline-offset:2px}
+
+.во-весь{
+  position:absolute; right:2.4cqw; top:2.4cqh; z-index:7; display:none;
+  font-family:var(--моно); font-size:.86cqw; color:var(--кость);
+  background:var(--поле-2); border:1px solid var(--линия); border-radius:2px;
+  padding:.5cqh .9cqw; cursor:pointer;
+  transition:transform 140ms var(--ход), border-color 140ms var(--ход);
+}
+.во-весь:hover{border-color:var(--латунь)}
+.во-весь:active{transform:scale(.97)}
+.во-весь.видна{display:block}
+/* Пока кнопка на экране, шапка листа уступает ей место — иначе метка шага
+   уезжает ей под низ. */
+.сцена.с-кнопкой .шапка{padding-right:13cqw}
+
+/* Подсказка про свайп — один раз, на телефоне, и сама гаснет. */
+.свайп-совет{
+  position:absolute; left:50%; bottom:3cqh; transform:translateX(-50%); z-index:7;
+  font-family:var(--моно); font-size:1cqw; color:var(--тихо);
+  background:rgba(10,22,17,.86); border:1px solid var(--линия); border-radius:2px;
+  padding:.7cqh 1.4cqw; pointer-events:none; opacity:0;
+}
+.свайп-совет.видна{animation:совет 3600ms ease forwards}
+@keyframes совет{0%{opacity:0}12%{opacity:1}72%{opacity:1}100%{opacity:0}}
 
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:1ms!important; transition-duration:1ms!important}
@@ -533,6 +561,9 @@ b,strong{color:var(--латунь-св); font-weight:400}
   </div>
   <div class="сноска">Порог — та аудитория, при которой выручка покрывает месячные затраты на плато.</div>
 </section>
+
+    <button class="во-весь" id="воВесь" type="button" hidden>во весь экран</button>
+    <div class="свайп-совет" id="свайпСовет">листайте пальцем ←→</div>
 
     <nav class="ход">
       <button id="назад" aria-label="Предыдущий лист">←</button>
@@ -1646,6 +1677,79 @@ const РИСУНКИ = [];
 
 <script>
 'use strict';
+/* ═══ ТЕЛЕФОН: свайп и полный экран ═════════════════════════════════════
+   Деку показывают не только с ноутбука. На телефоне кнопки в углу мелкие,
+   а листать хочется пальцем; в горизонтали полосы браузера съедают пятую
+   часть кадра. */
+
+/* --- листаем пальцем --------------------------------------------------
+   Считаем жест своим, только если он заметный и явно горизонтальный:
+   вертикальное движение — это прокрутка справочного листа, её не трогаем.
+   Двумя пальцами — это масштаб, тоже не наше дело. */
+(function(){
+  const сцена = document.getElementById('сцена');
+  if (!сцена) return;
+  let x0 = 0, y0 = 0, t0 = 0, вЖесте = false;
+  сцена.addEventListener('touchstart', е => {
+    if (е.touches.length !== 1){ вЖесте = false; return; }
+    const т = е.touches[0];
+    x0 = т.clientX; y0 = т.clientY; t0 = Date.now(); вЖесте = true;
+  }, {passive: true});
+  сцена.addEventListener('touchmove', е => {
+    if (е.touches.length !== 1) вЖесте = false;
+  }, {passive: true});
+  сцена.addEventListener('touchend', е => {
+    if (!вЖесте) return;
+    вЖесте = false;
+    const т = е.changedTouches[0];
+    const dx = т.clientX - x0, dy = т.clientY - y0, мс = Date.now() - t0;
+    if (мс > 900) return;                               /* долгое ведение — не листание */
+    if (Math.abs(dx) < 45) return;                      /* случайное касание */
+    if (Math.abs(dx) < Math.abs(dy) * 1.6) return;      /* это вертикаль */
+    показать(текущий + (dx < 0 ? 1 : -1));
+  }, {passive: true});
+
+  /* Совет показываем один раз за сеанс и только тому, кто пальцем. */
+  if (matchMedia('(hover: none) and (pointer: coarse)').matches){
+    const с = document.getElementById('свайпСовет');
+    if (с) requestAnimationFrame(() => с.classList.add('видна'));
+  }
+})();
+
+/* --- во весь экран ----------------------------------------------------
+   Кнопку показываем только там, где браузер это умеет: на iPhone
+   Fullscreen API для элементов нет вовсе, и мёртвая кнопка была бы
+   обманом. Там помогает установка на экран «Домой» — об этом написано
+   в инструкции. Появляется кнопка в горизонтали: вертикально деку 16:9
+   всё равно не развернуть на весь экран. */
+(function(){
+  const б = document.getElementById('воВесь');
+  if (!б) return;
+  const умеет = !!(document.documentElement.requestFullscreen
+                || document.documentElement.webkitRequestFullscreen);
+  if (!умеет) return;
+  const горизонт = matchMedia('(orientation: landscape) and (max-height: 560px)');
+  const показ = () => {
+    const надо = горизонт.matches || !!document.fullscreenElement;
+    б.hidden = !надо;
+    б.classList.toggle('видна', надо);
+    const сц = document.getElementById('сцена');
+    if (сц) сц.classList.toggle('с-кнопкой', надо);
+    б.textContent = document.fullscreenElement ? 'выйти из полного экрана' : 'во весь экран';
+  };
+  б.onclick = () => {
+    if (document.fullscreenElement){
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    } else {
+      const к = document.documentElement;
+      (к.requestFullscreen || к.webkitRequestFullscreen).call(к).catch(() => {});
+    }
+  };
+  горизонт.addEventListener('change', показ);
+  document.addEventListener('fullscreenchange', показ);
+  показ();
+})();
+
 /* Открываем первый лист. Без этого дека встречает зрителя пустым кадром:
    ни один лист не помечен видимым, пока не нажмут «вперёд». */
 показать(0);

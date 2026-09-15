@@ -72,6 +72,21 @@ section > p{max-width:36em;margin-top:12px}
 
 /* ── снимки экранов ────────────────────────────────────────────────── */
 .экраны{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:26px}
+/* На телефоне пять высоких экранов столбиком — это простыня. Кладём их в
+   ленту с прилипанием: палец листает, браузер сам держит кадр. Скрипта не
+   нужно, значит и ломаться нечему. */
+@media (max-width:620px){
+  .экраны{
+    display:flex; grid-template-columns:none; gap:14px;
+    overflow-x:auto; scroll-snap-type:x mandatory;
+    scroll-padding:0 20px; margin-inline:-20px; padding:0 20px 6px;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .экраны::-webkit-scrollbar{display:none}
+  .экраны figure{flex:0 0 76%; scroll-snap-align:center}
+}
+.лента-совет{display:none;font-size:13px;color:var(--muted);margin-top:10px}
+@media (max-width:620px){ .лента-совет{display:block} }
 figure{margin:0}
 figure img{
   display:block; width:100%; height:auto; border-radius:14px;
@@ -139,6 +154,24 @@ code{
 .кнопка:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.4)}
 .кнопка:active{transform:scale(.98)}
 .рядом{margin-top:18px;font-size:15px}
+
+#воВесь{
+  position:fixed; right:12px; top:12px; z-index:40; display:none;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px;
+  color:var(--ivory); background:var(--raise);
+  border:1px solid var(--line); border-radius:6px; padding:7px 11px; cursor:pointer;
+}
+#воВесь:active{transform:scale(.97)}
+#воВесь.видна{display:block}
+#свайпСовет{
+  position:fixed; left:50%; bottom:20px; transform:translateX(-50%); z-index:40;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px;
+  color:var(--muted); background:rgba(16,28,22,.92);
+  border:1px solid var(--line); border-radius:6px; padding:8px 14px;
+  pointer-events:none; opacity:0;
+}
+#свайпСовет.видна{animation:совет 3800ms ease forwards}
+@keyframes совет{0%{opacity:0}12%{opacity:1}74%{opacity:1}100%{opacity:0}}
 
 footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
   font-size:13.5px;color:var(--muted)}
@@ -212,6 +245,7 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
   <div class="номер">Как это выглядит</div>
   <h2>Пять экранов, которые вы увидите</h2>
   <p>Снимки сделаны с работающего приложения, а не нарисованы.</p>
+  <p class="лента-совет">Листайте ленту пальцем ←→</p>
 
   <div class="экраны">
     <figure>
@@ -447,5 +481,95 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
 </footer>
 
 </div>
+
+<button id="воВесь" type="button" hidden>во весь экран</button>
+<div id="свайпСовет">листайте разделы пальцем ←→</div>
+
+<script>
+'use strict';
+/* ═══ ТЕЛЕФОН: свайп по разделам и полный экран ═════════════════════════
+   Инструкцию читают с телефона. Пролистывать её пальцем удобнее, чем
+   скроллить длинную страницу, но ломать привычную прокрутку нельзя —
+   поэтому вертикальный жест остаётся прокруткой, а горизонтальный
+   переносит к следующему разделу. */
+(function(){
+  const якоря = [document.querySelector('header'),
+                 ...document.querySelectorAll('section'),
+                 document.querySelector('.призыв')].filter(Boolean);
+  const кКому = () => {
+    /* Текущим считаем тот раздел, чей верх ближе всего к верху экрана. */
+    let лучший = 0, мин = Infinity;
+    якоря.forEach((я, i) => {
+      const d = Math.abs(я.getBoundingClientRect().top - 12);
+      if (d < мин){ мин = d; лучший = i; }
+    });
+    return лучший;
+  };
+  /* Прокручиваем сами, а не scrollIntoView({behavior:'smooth'}): в части
+     браузеров плавный вариант молча не делает ничего, и свайп выглядит
+     сломанным. Здесь же честно уважаем «поменьше движения». */
+  const тише = matchMedia('(prefers-reduced-motion: reduce)');
+  let идёт = 0;
+  const кY = y => {
+    const с = scrollY, путь = y - с, t0 = performance.now(), мс = 420;
+    if (тише.matches || Math.abs(путь) < 2){ scrollTo(0, y); return; }
+    const метка = ++идёт;
+    (function шаг(t){
+      if (метка !== идёт) return;                 /* начался новый свайп */
+      const p = Math.min(1, (t - t0) / мс), e = 1 - Math.pow(1 - p, 3);
+      scrollTo(0, с + путь * e);
+      if (p < 1) requestAnimationFrame(шаг);
+    })(t0);
+  };
+  const кРазделу = д => {
+    const i = Math.max(0, Math.min(якоря.length - 1, кКому() + д));
+    const y = якоря[i].getBoundingClientRect().top + scrollY - 12;
+    кY(Math.max(0, Math.min(document.body.scrollHeight - innerHeight, y)));
+  };
+
+  let x0 = 0, y0 = 0, t0 = 0, вЖесте = false, вЛенте = false;
+  addEventListener('touchstart', е => {
+    if (е.touches.length !== 1){ вЖесте = false; return; }
+    const т = е.touches[0];
+    /* Жест, начатый на ленте снимков, принадлежит ленте — её не перебиваем. */
+    вЛенте = !!(т.target.closest && т.target.closest('.экраны'));
+    x0 = т.clientX; y0 = т.clientY; t0 = Date.now(); вЖесте = true;
+  }, {passive: true});
+  addEventListener('touchmove', е => { if (е.touches.length !== 1) вЖесте = false; }, {passive: true});
+  addEventListener('touchend', е => {
+    if (!вЖесте || вЛенте) return;
+    вЖесте = false;
+    const т = е.changedTouches[0], dx = т.clientX - x0, dy = т.clientY - y0;
+    if (Date.now() - t0 > 900) return;
+    if (Math.abs(dx) < 55) return;                      /* случайное касание */
+    if (Math.abs(dx) < Math.abs(dy) * 1.8) return;      /* это прокрутка */
+    кРазделу(dx < 0 ? 1 : -1);
+  }, {passive: true});
+
+  if (matchMedia('(hover: none) and (pointer: coarse)').matches){
+    const с = document.getElementById('свайпСовет');
+    if (с) requestAnimationFrame(() => с.classList.add('видна'));
+  }
+
+  /* Полный экран — только там, где браузер это умеет. На iPhone Fullscreen
+     API для элементов нет; там помогает установка на экран «Домой», о ней
+     эта же страница и рассказывает. */
+  const б = document.getElementById('воВесь'), к = document.documentElement;
+  if (!б || !(к.requestFullscreen || к.webkitRequestFullscreen)) return;
+  const горизонт = matchMedia('(orientation: landscape) and (max-height: 560px)');
+  const показ = () => {
+    const надо = горизонт.matches || !!document.fullscreenElement;
+    б.hidden = !надо; б.classList.toggle('видна', надо);
+    б.textContent = document.fullscreenElement ? 'выйти из полного экрана' : 'во весь экран';
+  };
+  б.onclick = () => {
+    if (document.fullscreenElement) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else (к.requestFullscreen || к.webkitRequestFullscreen).call(к).catch(() => {});
+  };
+  горизонт.addEventListener('change', показ);
+  document.addEventListener('fullscreenchange', показ);
+  показ();
+})();
+</script>
 </body>
 </html>
