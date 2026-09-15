@@ -1215,28 +1215,71 @@ function coinsSVG(){
       <g>${сим('дерево',34,160,.8)}${сим('дерево',338,168,.8)}</g>
     </svg>`; }
   function shelfSVG(){
+    /* Склад перерисован по методу скила arhimed-comic: разряды числа
+       показываются ПРЕДМЕТАМИ, а не плашкой «48 = 40 + 8». Четыре коробки по
+       десять шариков стоят стопкой вдоль стола, восемь отдельных шариков
+       лежат справа — один взгляд даёт и десятки, и единицы.
+       Пространство: горизонт на y=104, задняя стена уходит к точке схода
+       (180,104), стол нарисован трапецией, ряды коробок уменьшаются вглубь,
+       у каждой коробки видно крышку и боковину. Свет — одна тёплая лампа
+       слева, от неё на столе пятно света и тени вправо-вниз. */
+    const короб = (x, y, ш, в) => {
+      const г = в * 0.34;
+      return `<g>`+
+        `<ellipse cx="${x + ш / 2}" cy="${y + 3}" rx="${ш * 0.56}" ry="${в * 0.17}" fill="rgba(60,40,20,.22)"/>`+
+        `<rect x="${x}" y="${y}" width="${ш}" height="${в}" rx="3" fill="#b98a52" stroke="#5f3a1a" stroke-width="2.4"/>`+
+        `<path d="M${x + 4} ${y + 5} L${x + ш - 4} ${y + 5}" stroke="#d8ac74" stroke-width="2" opacity=".7"/>`+
+        `<path d="M${x + ш} ${y} l${г} ${-г * 0.7} l0 ${в} l${-г} ${г * 0.7} Z" fill="#9a6c3a" stroke="#5f3a1a" stroke-width="2.2"/>`+
+        `<path d="M${x} ${y} l${г} ${-г * 0.7} l${ш} 0 l${-г} ${г * 0.7} Z" fill="#d0a06a" stroke="#5f3a1a" stroke-width="2.2"/>`+
+        `</g>`;
+    };
+    /* 4 десятка = 4 коробки, в каждой 10 шариков; шарики меньше вглубь */
+    const шарики = (x, y, ш, n) => {
+      let s = '';
+      for (let i = 0; i < n; i++){
+        const к = i % 5, р = Math.floor(i / 5);
+        const м = 0.52 - р * 0.06;
+        s += сим('шар', x + 10 + к * 12, y + 15 + р * 10, м, ['#c9433a', '#4a93d0', '#e8c34a'][(i + р) % 3]);
+      }
+      return s;
+    };
+    let ящики = '';
+    [0, 1, 2, 3].forEach(i => { ящики += короб(30 + i * 62, 138, 56, 26); });
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
-      <rect x="0" y="0" width="360" height="210" fill="#b9a07a"/>
-      <rect x="0" y="0" width="360" height="150" fill="#cbb38c"/>
-      ${сим('лампа',31,44,1)}
-      <!-- стеллаж -->
-      <rect x="34" y="30" width="292" height="150" fill="#9c6c3a" stroke="#5f3a1a" stroke-width="4"/>
-      <rect x="34" y="80" width="292" height="8" fill="#7a4f26"/>
-      <rect x="34" y="130" width="292" height="8" fill="#7a4f26"/>
-      <!-- коробки по 10 (ряды шариков) -->
-      <g>
-        ${сим('шар',54.0,60,1.05,'#c9433a')}${сим('шар',69.5,60,1.05,'#4a93d0')}${сим('шар',85.0,60,1.05,'#e8c34a')}${сим('шар',100.5,60,1.05,'#c9433a')}${сим('шар',116.0,60,1.05,'#4a93d0')}${сим('шар',131.5,60,1.05,'#e8c34a')}${сим('шар',147.0,60,1.05,'#c9433a')}${сим('шар',162.5,60,1.05,'#4a93d0')}${сим('шар',178.0,60,1.05,'#e8c34a')}${сим('шар',193.5,60,1.05,'#c9433a')}
-        ${сим('шар',54.0,76,1.05,'#c9433a')}${сим('шар',69.5,76,1.05,'#4a93d0')}${сим('шар',85.0,76,1.05,'#e8c34a')}${сим('шар',100.5,76,1.05,'#c9433a')}${сим('шар',116.0,76,1.05,'#4a93d0')}${сим('шар',131.5,76,1.05,'#e8c34a')}${сим('шар',147.0,76,1.05,'#c9433a')}${сим('шар',162.5,76,1.05,'#4a93d0')}${сим('шар',178.0,76,1.05,'#e8c34a')}${сим('шар',193.5,76,1.05,'#c9433a')}
-        ${сим('шар',54.0,116,1.05,'#c9433a')}${сим('шар',69.5,116,1.05,'#4a93d0')}${сим('шар',85.0,116,1.05,'#e8c34a')}${сим('шар',100.5,116,1.05,'#c9433a')}${сим('шар',116.0,116,1.05,'#4a93d0')}${сим('шар',131.5,116,1.05,'#e8c34a')}${сим('шар',147.0,116,1.05,'#c9433a')}${сим('шар',162.5,116,1.05,'#4a93d0')}${сим('шар',178.0,116,1.05,'#e8c34a')}${сим('шар',193.5,116,1.05,'#c9433a')}
-        ${сим('шар',54.0,132,1.05,'#c9433a')}${сим('шар',69.5,132,1.05,'#4a93d0')}${сим('шар',85.0,132,1.05,'#e8c34a')}${сим('шар',100.5,132,1.05,'#c9433a')}${сим('шар',116.0,132,1.05,'#4a93d0')}${сим('шар',131.5,132,1.05,'#e8c34a')}${сим('шар',147.0,132,1.05,'#c9433a')}${сим('шар',162.5,132,1.05,'#4a93d0')}${сим('шар',178.0,132,1.05,'#e8c34a')}${сим('шар',193.5,132,1.05,'#c9433a')}
+      <defs>
+        <linearGradient id="skSt" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#d8c39c"/><stop offset="1" stop-color="#b9a07a"/></linearGradient>
+        <radialGradient id="skLamp" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#ffe9a8" stop-opacity=".75"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect x="0" y="0" width="360" height="104" fill="#6f5636"/>
+      <!-- дальняя стена уходит к точке схода: полки-направляющие -->
+      <path d="M0 44 L180 66 L360 44" stroke="#4f3c22" stroke-width="3" fill="none"/>
+      <path d="M0 74 L180 90 L360 74" stroke="#4f3c22" stroke-width="3" fill="none"/>
+      <g opacity=".55">
+        <path d="M70 52 L92 55 L92 74 L70 70 Z" fill="#5b452a"/>
+        <path d="M268 52 L290 55 L290 74 L268 70 Z" fill="#5b452a"/>
+        <path d="M120 60 L142 63 L142 82 L120 78 Z" fill="#5b452a"/>
+        <path d="M218 60 L240 63 L240 82 L218 78 Z" fill="#5b452a"/>
       </g>
-      <!-- коробки-рамки -->
-      <rect x="44" y="42" width="160" height="36" rx="5" fill="none" stroke="#5f3a1a" stroke-width="3" stroke-dasharray="6 4"/>
-      <rect x="44" y="98" width="160" height="36" rx="5" fill="none" stroke="#5f3a1a" stroke-width="3" stroke-dasharray="6 4"/>
-      <!-- отдельные шарики -->
-      <g>${сим('шар',250,64,1.3,'#4a93d0')}${сим('шар',276,64,1.3,'#e8c34a')}${сим('шар',302,64,1.3,'#c9433a')}
-        ${сим('шар',250,124,1.3,'#c9433a')}${сим('шар',276,124,1.3,'#e8c34a')}${сим('шар',302,124,1.3,'#4a93d0')}</g>
-      <rect x="0" y="180" width="360" height="30" fill="#7a5a34"/>
+      <rect x="0" y="104" width="360" height="106" fill="url(#skSt)"/>
+      <!-- свет лампы: пятно на стене и на столе -->
+      <ellipse cx="60" cy="120" rx="120" ry="70" fill="url(#skLamp)"/>
+      <!-- стол в перспективе -->
+      <path d="M-20 132 L380 132 L360 176 L0 176 Z" fill="#c9a476" stroke="#6f4a24" stroke-width="3"/>
+      <path d="M-20 132 L380 132 L378 138 L-18 138 Z" fill="#e0bd8c"/>
+      <path d="M0 176 L360 176 L360 210 L0 210 Z" fill="#8a6a44"/>
+      <path d="M0 176 L360 176 L360 182 L0 182 Z" fill="#a17c4e"/>
+      <!-- светильник на стене -->
+      ${сим('лампа',44,120,1.25)}
+      <!-- 4 коробки по десять шариков: десятки -->
+      ${ящики}
+      <!-- по десять шариков в каждой коробке -->
+      ${[0, 1, 2, 3].map(i => шарики(30 + i * 62, 138, 56, 10)).join('')}
+      <!-- отдельные шарики: единицы (8 штук, лежат вразброс и уходят вглубь) -->
+      ${сим('шар',286,168,1.15,'#c9433a')}${сим('шар',312,172,1.15,'#4a93d0')}${сим('шар',338,176,1.15,'#e8c34a')}
+      ${сим('шар',296,152,1.05,'#4a93d0')}${сим('шар',322,156,1.05,'#c9433a')}${сим('шар',348,160,1.05,'#e8c34a')}
+      ${сим('шар',306,136,0.95,'#e8c34a')}${сим('шар',332,140,0.95,'#4a93d0')}
     </svg>`; }
   function citySVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
@@ -3469,10 +3512,19 @@ function coinsSVG(){
       .c2-stage.c2-bg-dir { background:linear-gradient(#14241c,#101c15 45%,#0a140f); }
       .c2-stage.c2-bg-domino { background:linear-gradient(#16251c,#122017 45%,#0c1a11); }
       .c2-stage.c2-bg-inv { background:linear-gradient(#1e2433,#191f2c 45%,#12171f); }
-      .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
-        box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
-      .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
-        justify-content:space-between; padding:0 10px; pointer-events:none; z-index:4; }
+      /* Рисунок сцены занимал только верхнюю треть кадра: при сцене 378x663
+         (телефон) он выходил 378x221, а остальное заливалось ровным цветом.
+         С эмодзи это было незаметно, с нарисованными сценами бросается в глаза.
+         Растягиваем на всю высоту и прижимаем к низу: лишнее уходит из-под
+         верхней кромки (небо), земля и предметы остаются на месте. */
+      /* Пейзаж рисуется своей пропорцией в потоке: раньше он лежал абсолютно
+         поверх сцены и занимал лишь её треть (378x221 при 663), а низ заливался
+         ровным цветом. Растянуть его на всю высоту тоже нельзя — верх сцены
+         обрезается. Поэтому сцена идёт первой, герои и облачко — под ней. */
+      .c2-stage .c2-scene { position:relative; width:100%; height:auto; max-height:64%; display:block;
+        margin:0 auto; box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
+      .c2-cast { position:relative; display:flex; align-items:flex-end; justify-content:space-between;
+        gap:8px; padding:6px 12px 2px; pointer-events:none; z-index:4; }
       .c2-hero { pointer-events:auto; display:flex; flex-direction:column; align-items:center;
         width:142px; animation:c2hIn .5s cubic-bezier(.2,1.4,.4,1) both; }
       .c2-hero.listener-1 { width:116px; animation-delay:.1s; }
@@ -3497,12 +3549,13 @@ function coinsSVG(){
       .c2-hero.talker { width:166px; }
       .c2-hero.talker .c2h-name { font-size:14px; }
       @keyframes c2hIn { from{ opacity:0; transform:translateY(34px);} to{ opacity:1; transform:none;} }
-      .c2-talk { position:absolute; z-index:6; background:#fff; border:4px solid #33291e;
+      .c2-talk { position:relative; z-index:6; margin:0 12px 8px; background:#fff; border:4px solid #33291e;
         border-radius:18px; padding:11px 16px 13px; font-size:16px; line-height:1.5;
         box-shadow:0 6px 16px rgba(0,0,0,.22); animation:c2talk .3s cubic-bezier(.2,1.6,.4,1) both; }
-      .c2-talk::before { content:""; position:absolute; left:50%; top:100%; margin-left:-10px;
+      /* хвостик облачка смотрит вниз, к героям, которые теперь стоят под ним */
+      .c2-talk::before { content:""; position:absolute; left:44px; top:100%;
         border:10px solid transparent; border-top:16px solid #33291e; border-bottom:0; }
-      .c2-talk::after { content:""; position:absolute; left:50%; top:100%; margin-left:-6px;
+      .c2-talk::after { content:""; position:absolute; left:48px; top:100%;
         border:6px solid transparent; border-top:12px solid #fff; border-bottom:0; }
       .c2-page.st .c2-stage { min-height:0; }
       .c2-stepbar { box-sizing:border-box; min-height:120px; max-height:38%; overflow:auto;
@@ -3565,11 +3618,11 @@ function coinsSVG(){
       <div class="c2-page">
         <div class="c2-stage c2-fresh c2-bg-${scene}" id="c2stage">
           ${sceneArt(scene, fr)}
+          <div class="c2-talk" id="c2cur"><span class="c2-say"></span><span class="c2-caret"></span></div>
           <div class="c2-cast${many?' c2-many':(solo?' c2-solo':'')}">
             ${heroHTML(who, emo, 'talker')}
             ${(fr.with||[]).filter(w=>w!==who).slice(0,2).map((w,i)=>heroHTML(w,'smile','listener-'+(i+1))).join('')}
           </div>
-          <div class="c2-talk" id="c2cur"><span class="c2-say"></span><span class="c2-caret"></span></div>
         </div>
         <div class="c2-capbar"><span class="c2cap-tag">${idx+1}/${frs.length} · </span><span class="c2cap-in">${escHtml(fr.cap||'')}</span></div>
         ${fr.note?`<div class="c2-think" id="c2note"><span class="ct-mark">💡</span><span class="ct-txt">${escHtml(fr.note)}</span></div>`:''}
@@ -3590,41 +3643,8 @@ function coinsSVG(){
        («В лесу у дупла переполох» превращалось в «...перепол»). Теперь ширина
        начинается с 74 % сцены, а если высоты всё равно не хватает, кегль
        снижается шагами до 13 px — но не меньше. */
-    try{
-      const stage=document.getElementById('c2stage');
-      const talk=document.getElementById('c2cur');
-      const say=document.querySelector('#c2cur .c2-say');
-      if(stage&&talk){
-        const sr=stage.getBoundingClientRect();
-        const card=stage.querySelector('.c2-hero.talker .c2h-card');
-        if(card){
-          const cr=card.getBoundingClientRect();
-          const cardTop=cr.top-sr.top;
-          const центрX=(cr.left-sr.left)+cr.width/2;
-          /* ширина: до 74 % сцены, но не заходим на карточки соседей */
-          const соседи=[...stage.querySelectorAll('.c2-hero:not(.talker)')].map(x=>x.getBoundingClientRect());
-          const максВлево=соседи.length ? Math.min(...соседи.map(r=>r.left-sr.left))-10 : sr.width-10;
-          const максВправо=соседи.length ? Math.max(...соседи.map(r=>r.right-sr.left))+10 : 10;
-          let ш=Math.min(sr.width*0.74, центрX-максВправо, максВлево-центрX, 300);
-          if(!(ш>120)) ш=Math.min(sr.width*0.80, 300);
-          talk.style.maxWidth=Math.round(ш)+'px';
-          talk.style.left=Math.round(Math.max(6, Math.min(центрX-ш/2, sr.width-ш-6)))+'px';
-          talk.style.top='auto';
-          talk.style.bottom=Math.round(sr.height-cardTop+12)+'px';
-          const полный=fr.say||'';
-          const доступно=cardTop-20;
-          for(let кегль=16; кегль>=13; кегль--){
-            talk.style.fontSize=кегль+'px';
-            say.textContent=полный;                 // мерим по целому тексту
-            if(talk.getBoundingClientRect().height<=доступно || кегль===13) break;
-          }
-          say.textContent='';                        // вернуть пустым для печати по буквам
-        } else {
-          talk.style.top='10px'; talk.style.left='14px';
-          talk.style.maxWidth=Math.round(sr.width*0.8)+'px';
-        }
-      }
-    }catch(e){ console.warn('comic bubble anchor:', e); }
+    /* Облачко больше не позиционируется по голове героя: сцена, облачко и
+       герои идут в потоке друг за другом, поэтому привязка не нужна. */
     // печать реплики по буквам
     const cur=document.getElementById('c2cur'); const say=cur.querySelector('.c2-say'); const caret=cur.querySelector('.c2-caret');
     const text=fr.say||''; say.textContent=''; caret.style.visibility='visible';
