@@ -167,10 +167,10 @@ const COMIC = (function(){
       <path d="M54.2 87.8 Q60 90.6 65.8 87.8" stroke="#c2604f" stroke-width="2.6" fill="none"/>
       <ellipse cx="60" cy="93.6" rx="4.6" ry="2.2" fill="#c2604f"/>
       <path d="M60 79.5 l-4 -3.5 M60 79.5 l4 -3.5" stroke="#33291e" stroke-width="2.2" fill="none"/>`;
-    else if(emo==='sad') mouth=`<path d="M53 88 Q60 80 67 88" stroke="#7c4a33" stroke-width="3" fill="none" stroke-linecap="round"/>`;
-    else if(emo==='think') mouth=`<path d="M54 84 Q60 88 66 84" stroke="#7c4a33" stroke-width="2.8" fill="none" stroke-linecap="round"/>`;
-    else if(emo==='laugh') mouth=`<path d="M50 82 Q60 98 70 82 Q60 89 50 82 Z" fill="#8a3b33"/><path d="M50 82 Q60 90 70 82" stroke="#fff" stroke-width="1.6" fill="none"/>`;
-    else mouth=`<path d="M54 84 Q60 90 66 84" stroke="#a0504a" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    else if(emo==='sad') mouth=`<path d="M53 84 Q60 76 67 84" stroke="#7c4a33" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    else if(emo==='think') mouth=`<path d="M54.5 83 Q60 86.5 65.5 83" stroke="#7c4a33" stroke-width="2.8" fill="none" stroke-linecap="round"/>`;
+    else if(emo==='laugh') mouth=`<path d="M50 81 Q60 96 70 81 Q60 88 50 81 Z" fill="#8a3b33"/><path d="M50 81 Q60 89 70 81" stroke="#fff" stroke-width="1.6" fill="none"/>`;
+    else mouth=`<path d="M53.5 82.5 Q60 88.5 66.5 82.5" stroke="#a0504a" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
     return `<svg viewBox="0 0 120 140">
       <!-- тень -->
       <ellipse cx="60" cy="134" rx="33" ry="5" fill="rgba(0,0,0,.16)"/>
@@ -193,7 +193,8 @@ const COMIC = (function(){
       <circle cx="25" cy="55" r="7.5" fill="${skin}" stroke="#33291e" stroke-width="2"/>
       <circle cx="95" cy="55" r="7.5" fill="${skin}" stroke="#33291e" stroke-width="2"/>
       <!-- седые волосы по бокам (лысина сверху открыта) -->
-      <path d="M27 44 C27 26 40 15 60 15 C80 15 93 26 93 44 C91 30 82 22 60 22 C38 22 29 30 27 44 Z" fill="${hair}" stroke="${hairD}" stroke-width="1"/>
+      <path d="M25.5 48 C23 24 39 11 60 11 C81 11 97 24 94.5 48 C92.5 30 82 20 60 20 C38 20 27.5 30 25.5 48 Z" fill="${hair}" stroke="#33291e" stroke-width="2.4"/>
+      <path d="M31 34 C36 24 47 18 60 18 C73 18 84 24 89 34" stroke="${hairD}" stroke-width="1.8" fill="none" opacity=".65"/>
       <path d="M26 52 C24 40 27 34 32 30 C30 38 31 46 34 52 Z" fill="${hair}"/>
       <path d="M94 52 C96 40 93 34 88 30 C90 38 89 46 86 52 Z" fill="${hair}"/>
       <!-- лавровый венок: две веточки с листьями по дуге -->
@@ -210,36 +211,38 @@ const COMIC = (function(){
         <ellipse cx="84" cy="20" rx="5.4" ry="2.5" transform="rotate(64 84 20)"/>
       </g>
       <!-- морщины на лбу -->
-      <path d="M45 30 Q60 25 75 30" stroke="${skinD}" stroke-width="1.8" fill="none" opacity=".7"/>
-      <path d="M48 35.5 Q60 31 72 35.5" stroke="${skinD}" stroke-width="1.6" fill="none" opacity=".6"/>
+      <path d="M47 31.5 Q60 27.5 73 31.5" stroke="${skinD}" stroke-width="1.5" fill="none" opacity=".38"/>
+      <path d="M50 36.5 Q60 33 70 36.5" stroke="${skinD}" stroke-width="1.3" fill="none" opacity=".3"/>
       <!-- кустистые седые брови -->
-      <path d="M37 44 Q47 37 56 42" stroke="${hairD}" stroke-width="3.6" fill="none" stroke-linecap="round"/>
-      <path d="M64 42 Q73 37 83 44" stroke="${hairD}" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+      <path d="M36.5 46 Q46 38 56 44" stroke="${hairD}" stroke-width="3.8" fill="none" stroke-linecap="round"/>
+      <path d="M64 44 Q74 38 83.5 46" stroke="${hairD}" stroke-width="3.8" fill="none" stroke-linecap="round"/>
       <!-- глаза (чуть меньше, с мешками-морщинками) -->
-      <ellipse cx="46.5" cy="52" rx="5.8" ry="${wow?8:6.6}" fill="#fff" stroke="#33291e" stroke-width="1.9"/>
-      <ellipse cx="73.5" cy="52" rx="5.8" ry="${wow?8:6.6}" fill="#fff" stroke="#33291e" stroke-width="1.9"/>
-      <circle cx="48" cy="${wow?54.5:53.5}" r="${wow?2.6:3}" fill="#33291e"/><circle cx="72" cy="${wow?54.5:53.5}" r="${wow?2.6:3}" fill="#33291e"/>
-      <circle cx="49.4" cy="${wow?52.5:51.5}" r="1.2" fill="#fff"/><circle cx="73.4" cy="${wow?52.5:51.5}" r="1.2" fill="#fff"/>
-      <path d="M40 60 Q42 57 45 58" stroke="${skinD}" stroke-width="1.6" fill="none" opacity=".65"/>
-      <path d="M80 60 Q78 57 75 58" stroke="${skinD}" stroke-width="1.6" fill="none" opacity=".65"/>
+      <ellipse cx="46.5" cy="54.5" rx="6.8" ry="${wow?9:7.8}" fill="#fff" stroke="#33291e" stroke-width="1.8"/>
+      <ellipse cx="73.5" cy="54.5" rx="6.8" ry="${wow?9:7.8}" fill="#fff" stroke="#33291e" stroke-width="1.8"/>
+      <circle cx="47.6" cy="${wow?56.5:56}" r="${wow?3:3.5}" fill="#6b4426"/>
+      <circle cx="72.4" cy="${wow?56.5:56}" r="${wow?3:3.5}" fill="#6b4426"/>
+      <circle cx="49.4" cy="${wow?54:53.5}" r="1.7" fill="#fff"/><circle cx="74.2" cy="${wow?54:53.5}" r="1.7" fill="#fff"/>
+      <circle cx="46" cy="58" r=".9" fill="#fff" opacity=".7"/><circle cx="70.8" cy="58" r=".9" fill="#fff" opacity=".7"/>
+      <path d="M39.5 62.5 Q42 60.5 45.5 61.5" stroke="${skinD}" stroke-width="1.4" fill="none" opacity=".4"/>
+      <path d="M80.5 62.5 Q78 60.5 74.5 61.5" stroke="${skinD}" stroke-width="1.4" fill="none" opacity=".4"/>
       <!-- нос с носогубными складками -->
-      <path d="M60 50 C58 56 57 60 53 63 M60 50 C62 56 63 60 67 63" stroke="${skinD}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-      <path d="M53 63 Q60 67 67 63" stroke="#33291e" stroke-width="2" fill="none"/>
-      <path d="M50 66 Q49 71 50 75" stroke="${skinD}" stroke-width="1.7" fill="none" opacity=".7"/>
-      <path d="M70 66 Q71 71 70 75" stroke="${skinD}" stroke-width="1.7" fill="none" opacity=".7"/>
+      <path d="M60 54 C58.4 59 57.6 62.5 54.5 65 M60 54 C61.6 59 62.4 62.5 65.5 65" stroke="${skinD}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M54.5 65 Q60 68.2 65.5 65" stroke="${skinD}" stroke-width="1.8" fill="none"/>
+      <path d="M50.5 68 Q49.5 72 50.5 75" stroke="${skinD}" stroke-width="1.5" fill="none" opacity=".42"/>
+      <path d="M69.5 68 Q70.5 72 69.5 75" stroke="${skinD}" stroke-width="1.5" fill="none" opacity=".42"/>
       <!-- большая белая борода -->
-      <path d="M33 58 C30 76 34 92 44 100 C52 107 68 107 76 100 C86 92 90 76 87 58 C87 68 82 76 76 81 C80 78 83 72 83 64 C76 74 70 80 60 80 C50 80 44 74 37 64 C37 72 40 78 44 81 C38 76 33 70 33 58 Z" fill="${beard}" stroke="#33291e" stroke-width="2.4"/>
-      <!-- текстура бороды -->
-      <path d="M46 86 C49 93 54 99 60 102 M60 82 L60 103 M74 86 C71 93 66 99 60 102" stroke="${beardD}" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-      <path d="M40 76 C44 80 50 82 56 82 M80 76 C76 80 70 82 64 82" stroke="${beardD}" stroke-width="1.6" fill="none" opacity=".7"/>
+      <path d="M37 63 C31 69 29 79 33 89 C37 99 47 106 60 106 C73 106 83 99 87 89 C91 79 89 69 83 63 C85 72 82 80 77 84 C73 88 67 90 60 90 C53 90 47 88 43 84 C38 80 35 72 37 63 Z" fill="${beard}" stroke="#33291e" stroke-width="2.4"/>
+      <!-- мягкая текстура: борода читается как волосы, а не как белое пятно -->
+      <path d="M49 88 C52 95 55 100 60 103 M60 87 C60 94 60 99 60 103 M71 88 C68 95 65 100 60 103" stroke="${beardD}" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+      <path d="M43 79 C46 83 50 85 55 85 M77 79 C74 83 70 85 65 85" stroke="${beardD}" stroke-width="1.4" fill="none" opacity=".6"/>
       <!-- седые усы (висят по бокам рта) -->
-      <path d="M60 70 C53 70 47 73 44 78 C49 77 55 74 60 72 Z" fill="${beard}" stroke="#33291e" stroke-width="1.5"/>
-      <path d="M60 70 C67 70 73 73 76 78 C71 77 65 74 60 72 Z" fill="${beard}" stroke="#33291e" stroke-width="1.5"/>
-      <path d="M46 74 C50 74 54 73 58 71 M74 74 C70 74 66 73 62 71" stroke="${beardD}" stroke-width="1.5" fill="none" opacity=".8"/>
-      <!-- мягкая тень под усами -->
-      <ellipse cx="60" cy="80.5" rx="9" ry="3.4" fill="rgba(160,170,190,.25)"/>
-      <!-- рот (аккуратный, поверх бороды) -->
-      ${mouth}
+      <path d="M58 72.5 C52 70.5 46.5 71.8 43.2 76.2 C40.8 79.5 41.8 83 44.8 84.2 C45.6 80.2 49 78 53.2 77.5 C56.2 77.1 58 76.2 58 74.5 Z" fill="${beard}" stroke="#33291e" stroke-width="1.5"/>
+      <path d="M62 72.5 C68 70.5 73.5 71.8 76.8 76.2 C79.2 79.5 78.2 83 75.2 84.2 C74.4 80.2 71 78 66.8 77.5 C63.8 77.1 62 76.2 62 74.5 Z" fill="${beard}" stroke="#33291e" stroke-width="1.5"/>
+      <path d="M44.8 77.8 C48.8 76.2 53.2 75 56.6 73.6 M75.2 77.8 C71.2 76.2 66.8 75 63.4 73.6" stroke="${beardD}" stroke-width="1.4" fill="none" opacity=".7"/>
+      <!-- мягкая тень под усами, чтобы рот читался -->
+      <ellipse cx="60" cy="80.5" rx="7" ry="2.6" fill="rgba(160,170,190,.2)"/>
+      <!-- рот (аккуратный, поверх бороды): опущен ниже усов, иначе усы его съедают -->
+      <g transform="translate(0,7)">${mouth}</g>
       <!-- румянец -->
       <ellipse cx="34" cy="62" rx="6" ry="4" fill="rgba(232,120,110,.25)"/>
       <ellipse cx="86" cy="62" rx="6" ry="4" fill="rgba(232,120,110,.25)"/>
@@ -273,6 +276,76 @@ const COMIC = (function(){
     pig:{ svg:pigSVG, name:'Пятачок', color:'#a05a50' },
     squirrel:{ svg:squirrelSVG, name:'Рыжик', color:'#c97b2d' }
   };
+
+  /* ── библиотека нарисованных символов ─────────────────────────────────
+     Раньше деревья, шары, книги и лампы в сценах были эмодзи: рисунок
+     складывался из картинок чужого шрифта, без обводки и перспективы, и на
+     разных системах выглядел по-разному. Теперь каждый символ нарисован кодом
+     в той же манере, что и герои, и ставится вызовом сим('дерево', x, y, s),
+     где x,y — та же точка, где стоял эмодзи. */
+  function сим(вид, x, y, s, цвет){
+    const м = 'translate('+x+','+y+') scale('+(s==null?1:s)+')';
+    const фигуры = {
+      'дерево': '<path d="M-9 0 L-5 -22 L5 -22 L9 0 Z" fill="#7a4a26" stroke="#4a2c15" stroke-width="1.6"/>'+
+        '<circle cx="0" cy="-42" r="20" fill="#5c8f3e" stroke="#3c6b26" stroke-width="1.8"/>'+
+        '<circle cx="-15" cy="-34" r="14" fill="#6aa34e" stroke="#3c6b26" stroke-width="1.6"/>'+
+        '<circle cx="15" cy="-34" r="14" fill="#6aa34e" stroke="#3c6b26" stroke-width="1.6"/>'+
+        '<circle cx="0" cy="-56" r="13" fill="#7fb45c" stroke="#3c6b26" stroke-width="1.5"/>',
+      'ёлка': '<path d="M-7 0 L-3 -18 L3 -18 L7 0 Z" fill="#6b4520" stroke="#40280f" stroke-width="1.5"/>'+
+        '<path d="M0 -66 L-20 -30 L20 -30 Z" fill="#4e7f2f" stroke="#31531c" stroke-width="1.8"/>'+
+        '<path d="M0 -50 L-24 -16 L24 -16 Z" fill="#5c8f3e" stroke="#31531c" stroke-width="1.8"/>'+
+        '<path d="M0 -34 L-26 -6 L26 -6 Z" fill="#6aa34e" stroke="#31531c" stroke-width="1.8"/>',
+      'куст': '<circle cx="0" cy="-14" r="16" fill="#6aa34e" stroke="#3c6b26" stroke-width="1.6"/>'+
+        '<circle cx="-14" cy="-8" r="12" fill="#5c8f3e" stroke="#3c6b26" stroke-width="1.5"/>'+
+        '<circle cx="14" cy="-8" r="12" fill="#7fb45c" stroke="#3c6b26" stroke-width="1.5"/>',
+      'облако': '<g fill="#fff" opacity=".95"><ellipse cx="0" cy="0" rx="26" ry="13"/>'+
+        '<circle cx="-16" cy="-6" r="12"/><circle cx="14" cy="-4" r="14"/></g>',
+      'солнце': '<circle cx="0" cy="0" r="14" fill="#ffd76a" stroke="#e0a72e" stroke-width="1.6"/>'+
+        '<g stroke="#ffd76a" stroke-width="2.6" stroke-linecap="round" fill="none">'+
+        '<path d="M0 -20 L0 -26 M0 20 L0 26 M-20 0 L-26 0 M20 0 L26 0 M-14 -14 L-18 -18 M14 14 L18 18 M14 -14 L18 -18 M-14 14 L-18 18"/></g>',
+      'цветок': '<g stroke="#4e7f2f" stroke-width="1.6" fill="none"><path d="M0 0 L0 -11"/></g>'+
+        '<g fill="#f2c14e" stroke="#c9902e" stroke-width="1"><ellipse cx="0" cy="-16" rx="4" ry="6"/>'+
+        '<ellipse cx="-6" cy="-12" rx="4" ry="6" transform="rotate(-60 -6 -12)"/>'+
+        '<ellipse cx="6" cy="-12" rx="4" ry="6" transform="rotate(60 6 -12)"/></g>'+
+        '<circle cx="0" cy="-12" r="2.6" fill="#8a5a1c"/>',
+      'ромашка': '<path d="M0 0 L0 -10" stroke="#4e7f2f" stroke-width="1.5" fill="none"/>'+
+        '<g fill="#fff" stroke="#c9c2d8" stroke-width=".9">'+
+        '<ellipse cx="0" cy="-17" rx="3" ry="5.5"/><ellipse cx="5.5" cy="-14" rx="3" ry="5.5" transform="rotate(70 5.5 -14)"/>'+
+        '<ellipse cx="-5.5" cy="-14" rx="3" ry="5.5" transform="rotate(-70 -5.5 -14)"/>'+
+        '<ellipse cx="4" cy="-20" rx="3" ry="5.5" transform="rotate(35 4 -20)"/><ellipse cx="-4" cy="-20" rx="3" ry="5.5" transform="rotate(-35 -4 -20)"/></g>'+
+        '<circle cx="0" cy="-17" r="3" fill="#f2c14e" stroke="#c9902e" stroke-width="1"/>',
+      'гриб': '<rect x="-3" y="-12" width="6" height="12" rx="2" fill="#f0e2c4" stroke="#8a6d4a" stroke-width="1.2"/>'+
+        '<path d="M-13 -11 C-13 -22 13 -22 13 -11 Z" fill="#c65b4a" stroke="#7c3326" stroke-width="1.4"/>'+
+        '<circle cx="-5" cy="-16" r="2" fill="#f6efe0"/><circle cx="4" cy="-14" r="1.6" fill="#f6efe0"/>',
+      'морковь': '<path d="M0 0 C6 7 8 19 0 27 C-8 19 -6 7 0 0 Z" fill="#e2803a" stroke="#8a4a1c" stroke-width="1.3"/>'+
+        '<path d="M-5 -5 C-12 -12 -15 -22 -12 -28 M0 -7 C0 -15 2 -23 5 -28 M5 -5 C11 -12 17 -18 18 -25" stroke="#4e7f2f" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
+      'яблоко': '<path d="M0 -2 C-12 -14 -20 -4 -16 6 C-13 15 -4 19 0 14 C4 19 13 15 16 6 C20 -4 12 -14 0 -2 Z" fill="#c9433a" stroke="#8a2a24" stroke-width="1.4"/>'+
+        '<path d="M0 -4 C0 -10 2 -14 6 -16" stroke="#6b4520" stroke-width="2.4" fill="none" stroke-linecap="round"/>'+
+        '<path d="M6 -14 C12 -18 18 -16 18 -10 C12 -8 8 -10 6 -14 Z" fill="#4e7f2f" stroke="#31531c" stroke-width="1.1"/>',
+      'шар': '<circle cx="0" cy="-8" r="8" fill="'+(цвет||'#c9433a')+'" stroke="rgba(0,0,0,.28)" stroke-width="1.2"/>'+
+        '<circle cx="-3" cy="-11" r="2.4" fill="#fff" opacity=".55"/>',
+      'книга': '<rect x="-9" y="-14" width="18" height="14" rx="2" fill="'+(цвет||'#c9433a')+'" stroke="rgba(0,0,0,.3)" stroke-width="1.2"/>'+
+        '<rect x="-11" y="-15" width="4" height="16" rx="1.6" fill="rgba(0,0,0,.22)"/>'+
+        '<path d="M-6 -11 L6 -11 M-6 -7 L4 -7" stroke="rgba(255,255,255,.5)" stroke-width="1.2"/>',
+      'лампа': '<path d="M0 -26 L0 -14" stroke="#6b5b45" stroke-width="1.6" fill="none"/>'+
+        '<path d="M-13 -14 L13 -14 L8 -2 L-8 -2 Z" fill="#ffe9a8" stroke="#c9902e" stroke-width="1.4"/>'+
+        '<ellipse cx="0" cy="-2" rx="7" ry="3" fill="#ffd76a"/><circle cx="0" cy="-8" r="3" fill="#fff8d8"/>',
+      'снежинка': '<g stroke="#bfe0ef" stroke-width="2" stroke-linecap="round">'+
+        '<path d="M0 -12 L0 12 M-10 -6 L10 6 M-10 6 L10 -6"/>'+
+        '<path d="M0 -12 L-4 -8 M0 -12 L4 -8 M0 12 L-4 8 M0 12 L4 8"/></g>',
+      'пчела': '<ellipse cx="0" cy="-6" rx="8" ry="6" fill="#ffd76a" stroke="#8a5a1c" stroke-width="1.2"/>'+
+        '<path d="M-3 -12 L-3 0 M2 -12 L2 0" stroke="#5f3a1a" stroke-width="2"/>'+
+        '<ellipse cx="0" cy="-13" rx="8" ry="4" fill="#fff" opacity=".8"/>',
+      'звезда': '<path d="M0 -12 L3.6 -4 L12 -4 L5.4 1.6 L8 10 L0 5 L-8 10 L-5.4 1.6 L-12 -4 L-3.6 -4 Z" fill="#ffd76a" stroke="#e0a72e" stroke-width="1.2"/>',
+      'планета': '<circle cx="0" cy="-8" r="9" fill="#c98a5a" stroke="#8a5a2c" stroke-width="1.3"/>'+
+        '<ellipse cx="0" cy="-8" rx="16" ry="5" fill="none" stroke="#e0c9a0" stroke-width="2" transform="rotate(-18)"/>',
+      'снежок': '<circle cx="0" cy="-7" r="7" fill="#fff" stroke="#bfd8e8" stroke-width="1.2"/>',
+      'яйцо': '<ellipse cx="0" cy="-7" rx="6" ry="8" fill="#fdf6e0" stroke="#c9b48a" stroke-width="1.2"/>',
+      'камень': '<path d="M-9 0 C-11 -8 -4 -13 2 -12 C9 -11 12 -5 10 0 Z" fill="#9aa0a8" stroke="#6b7078" stroke-width="1.3"/>'
+    };
+    const ф = фигуры[вид];
+    return ф ? '<g transform="'+м+'">'+ф+'</g>' : '';
+  }
 
   /* плашка-надпись сцены (как реплика комикса) */
   function propTag(prop,x,y,w){
@@ -615,20 +688,16 @@ function coinsSVG(){
       <defs><linearGradient id="skL" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#a8dcf0"/><stop offset="1" stop-color="#7fc3e0"/></linearGradient></defs>
       <rect x="0" y="0" width="360" height="140" fill="url(#skL)"/>
-      <g class="c2a-cloud"><text x="40" y="40" font-size="30">☁️</text><text x="250" y="60" font-size="26">☁️</text></g>
-      <text x="306" y="40" font-size="26">🌞</text>
+      <g class="c2a-cloud">${сим('облако',40,34,0.9)}${сим('облако',250,52,0.75)}</g>
+      ${сим('солнце',308,36,0.95)}
       <path d="M0 118 Q90 92 180 116 T360 112 L360 150 L0 150 Z" fill="#7fb45c"/>
       <path d="M0 140 Q120 118 360 146 L360 168 L0 168 Z" fill="#5c8f3e"/>
       <rect x="0" y="150" width="360" height="60" fill="#4a7a33"/>
-      <g font-size="52">
-        <text x="18" y="172">🌲</text><text x="70" y="188">🌳</text>
-        <text x="288" y="168">🌲</text><text x="330" y="186">🌳</text>
-        <text x="150" y="186" font-size="40">🌳</text>
-      </g>
-      <g font-size="24">
-        <text x="30" y="196">🍄</text><text x="208" y="200">🍄</text>
-        <text x="262" y="200" font-size="18">🌼</text><text x="120" y="196" font-size="18">🌼</text>
-      </g>
+      ${сим('ёлка',20,174,0.72)}${сим('дерево',68,190,0.66)}
+      ${сим('ёлка',290,170,0.70)}${сим('дерево',330,190,0.64)}
+      ${сим('дерево',154,190,0.58)}
+      ${сим('гриб',32,198,0.95)}${сим('гриб',210,202,0.85)}
+      ${сим('ромашка',264,202,0.9)}${сим('цветок',122,198,0.9)}
       <g class="c2a-spark"><text x="98" y="150" font-size="22">🌰</text><text x="240" y="158" font-size="18">🌰</text></g>
     </svg>`; }
   function trainSVG(){
@@ -3225,10 +3294,10 @@ function coinsSVG(){
     const many=nList>=2;
     const solo=nList===0;
     const dots=frs.map((_,i)=>`<span class="cn-dot ${i===idx?'on':''}"></span>`).join('');
-    const DECO={pond:['🌾','🌼','🐞','🌷'],kitchen:['🧺','🪑','🌿','🫙'],coins:['🌼','🪙','🌻','🍄'],
-      sad:['🌼','🍄','🐞','🌿'],ogorod:['🐛','🌼','🪱','🌿'],ferma:['🌾','🐞','🌻','🌼'],
-      magazin:['🧸','🎈','🪁','🚂'],cosmos:['🌟','🪐','✨','🚀']};
-    const deco=(DECO[scene]||DECO.pond).map((e,i)=>`<span class="d${i+1}">${e}</span>`).join('');
+    /* Слой украшений из эмодзи убран: он клался ПОВЕРХ рисунка сцены и был
+       собран из картинок чужого шрифта — на фоне нарисованных травы и цветов
+       это читалось как случайные наклейки. Траву и цветы теперь рисует сама
+       сцена своим кодом (см. сим()). */
     root.innerHTML=`<div class="comic-top">
         <span class="ct-book">📖 ${escHtml(emojiFor(scene))} КОМИКС</span>
         <span class="ct-title">${escHtml(L.title)}</span>
@@ -3241,7 +3310,6 @@ function coinsSVG(){
             ${heroHTML(who, emo, 'talker')}
             ${(fr.with||[]).filter(w=>w!==who).slice(0,2).map((w,i)=>heroHTML(w,'smile','listener-'+(i+1))).join('')}
           </div>
-          <div class="c2-deco">${deco}</div>
           <div class="c2-talk" id="c2cur"><span class="c2-say"></span><span class="c2-caret"></span></div>
         </div>
         <div class="c2-capbar"><span class="c2cap-tag">${idx+1}/${frs.length} · </span><span class="c2cap-in">${escHtml(fr.cap||'')}</span></div>
@@ -3256,23 +3324,45 @@ function coinsSVG(){
         </div>
       </div>`;
         // облачко речи — НАД головой говорящего (лица не закрывает), хвостик вниз к голове
+    /* Облачко сначала измеряем, потом ставим. Раньше ширина бралась как 56 %
+       сцены, и на узком экране текст в 20 слов не влезал: облачко вылезало за
+       верх сцены, а сцена обрезает по overflow:hidden — хвост реплики пропадал
+       («В лесу у дупла переполох» превращалось в «...перепол»). Теперь ширина
+       начинается с 74 % сцены, а если высоты всё равно не хватает, кегль
+       снижается шагами до 13 px — но не меньше. */
     try{
       const stage=document.getElementById('c2stage');
       const talk=document.getElementById('c2cur');
+      const say=document.querySelector('#c2cur .c2-say');
       if(stage&&talk){
         const sr=stage.getBoundingClientRect();
         const card=stage.querySelector('.c2-hero.talker .c2h-card');
         if(card){
           const cr=card.getBoundingClientRect();
           const cardTop=cr.top-sr.top;
-          const centerX=(cr.left-sr.left)+cr.width/2;
-          const maxW=Math.min(sr.width*0.56, 240);
-          talk.style.maxWidth=maxW+'px';
-          talk.style.bottom=(sr.height-(cardTop-12))+'px'; // низ облачка чуть выше макушки
-          const left=Math.max(14, Math.min(centerX-maxW/2, sr.width-maxW-10));
-          talk.style.left=left+'px';
+          const центрX=(cr.left-sr.left)+cr.width/2;
+          /* ширина: до 74 % сцены, но не заходим на карточки соседей */
+          const соседи=[...stage.querySelectorAll('.c2-hero:not(.talker)')].map(x=>x.getBoundingClientRect());
+          const максВлево=соседи.length ? Math.min(...соседи.map(r=>r.left-sr.left))-10 : sr.width-10;
+          const максВправо=соседи.length ? Math.max(...соседи.map(r=>r.right-sr.left))+10 : 10;
+          let ш=Math.min(sr.width*0.74, центрX-максВправо, максВлево-центрX, 300);
+          if(!(ш>120)) ш=Math.min(sr.width*0.80, 300);
+          talk.style.maxWidth=Math.round(ш)+'px';
+          talk.style.left=Math.round(Math.max(6, Math.min(центрX-ш/2, sr.width-ш-6)))+'px';
           talk.style.top='auto';
-        } else { talk.style.top='10px'; talk.style.left='14px'; }
+          talk.style.bottom=Math.round(sr.height-cardTop+12)+'px';
+          const полный=fr.say||'';
+          const доступно=cardTop-20;
+          for(let кегль=16; кегль>=13; кегль--){
+            talk.style.fontSize=кегль+'px';
+            say.textContent=полный;                 // мерим по целому тексту
+            if(talk.getBoundingClientRect().height<=доступно || кегль===13) break;
+          }
+          say.textContent='';                        // вернуть пустым для печати по буквам
+        } else {
+          talk.style.top='10px'; talk.style.left='14px';
+          talk.style.maxWidth=Math.round(sr.width*0.8)+'px';
+        }
       }
     }catch(e){ console.warn('comic bubble anchor:', e); }
     // печать реплики по буквам
