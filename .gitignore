@@ -58,6 +58,9 @@ deepseek-harness/
 # инструкция называет их основными, а в git их не было — восстановлено.
 !/qa_frame.py
 !/qa_ru_trainers.py
+# qa_ru_paper.py — решаемость листов Мишутки через интерфейс. Без него листы
+# проверялись только на вид: что кадр нарисован, но не что ответ принимается.
+!/qa_ru_paper.py
 !/deploy/
 !/deploy/**
 deploy/deploy.local.env

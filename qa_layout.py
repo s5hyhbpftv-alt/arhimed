@@ -102,29 +102,103 @@ JS = r"""()=>{
   if(!leaves && !anyContent) out.push({k:'пустая сцена', t:(host.innerText||'').trim().slice(0,20)||'нет содержимого'});
   return {issues:out, dev:leaves?dev:0, leaves:leaves, texts:texts.length};
 }"""
-def run(ids):
+# ─────────────────────────────────────────────────────────────────────────
+# Как этот гейт ходит по кадрам
+#
+# Раньше кадр i показывался так: открыть урок заново и щёлкнуть «дальше» i раз.
+# То есть за урок из n кадров — n(n+1)/2 шагов вместо n, и на каждом свой сон.
+# Для урока из 16 кадров это 136 шагов там, где хватает 16.
+#
+# Теперь идём вперёд, как ходит ребёнок: открыли урок один раз и шагаем.
+# Старый обход остался под QA_SLOW=1 — он нужен, чтобы сверять оба пути между
+# собой; расхождение вердиктов означало бы, что состояние кадра зависит от
+# того, как в него пришли, и это была бы находка, а не помеха.
+#
+# Второе: вместо сна «1300 мс, пусть каскад доиграет» ждём сами анимации и
+# продолжаем, как только они кончились. Вечные (пульсация, свечение) из
+# ожидания выброшены — иначе ждали бы до конца света; сверху стоит тот же
+# потолок, что был сном, так что медленнее прежнего стать не может.
+# ─────────────────────────────────────────────────────────────────────────
+ОСЕЛО = r"""(cap)=>new Promise(res=>{
+  const готово=()=>res(1);
+  const t=setTimeout(готово,cap);
+  requestAnimationFrame(()=>{
+    const живые=(document.getAnimations?document.getAnimations():[]).filter(a=>{
+      const ct=a.effect&&a.effect.getComputedTiming&&a.effect.getComputedTiming();
+      return ct && ct.iterations!==Infinity;      /* вечные не ждём */
+    });
+    Promise.all(живые.map(a=>a.finished.catch(()=>{}))).then(()=>{
+      clearTimeout(t);
+      requestAnimationFrame(()=>requestAnimationFrame(готово));
+    });
+  });
+})"""
+
+ПОКАЗАТЬ = "()=>{const b=[...document.querySelectorAll('.wk-btn')].find(x=>/показать/.test(x.innerText)); if(b)b.click();}"
+
+
+def осело(pg, потолок=1300):
+    try:
+        pg.evaluate(ОСЕЛО, потолок)
+    except Exception:
+        pg.wait_for_timeout(потолок)
+
+
+def одна_ширина(W, ids, медленно=False):
+    """Один проход по урокам на одной ширине. Возвращает готовые строки отчёта."""
+    строки = []
     with sync_playwright() as p:
-        b=p.chromium.launch(executable_path=EXE,args=["--use-gl=swiftshader","--enable-unsafe-swiftshader"])
-        for W in (390,320):
-            pg=b.new_page(viewport={"width":W,"height":1400})
-            errs=[]; pg.on("pageerror", lambda e: errs.append(str(e)[:90]))
-            pg.goto(URL, wait_until="load", timeout=45000); pg.wait_for_timeout(900)
-            pg.evaluate("()=>{DB.profile=Object.assign({},DB.profile,{klass:'6'});}")
-            for lid in ids:
-                pg.evaluate(f"()=>openLessonView({lid})"); pg.wait_for_timeout(350)
-                n=pg.evaluate(f"()=>{{const L=lessonById({lid}); return L?(L.explain?L.explain.length:(L.comic?L.comic.length:0)):0;}}")
-                bad=[]; devs=[]
-                for i in range(n):
+        b = p.chromium.launch(executable_path=EXE,
+                              args=["--use-gl=swiftshader", "--enable-unsafe-swiftshader"])
+        pg = b.new_page(viewport={"width": W, "height": 1400})
+        errs = []; pg.on("pageerror", lambda e: errs.append(str(e)[:90]))
+        pg.goto(URL, wait_until="load", timeout=45000)
+        for _ in range(40):
+            pg.wait_for_timeout(120)
+            if pg.evaluate("()=>typeof openLessonView==='function'"): break
+        pg.evaluate("()=>{DB.profile=Object.assign({},DB.profile,{klass:'6'});}")
+        for lid in ids:
+            pg.evaluate(f"()=>openLessonView({lid})"); осело(pg, 400)
+            n = pg.evaluate(f"()=>{{const L=lessonById({lid}); return L?(L.explain?L.explain.length:(L.comic?L.comic.length:0)):0;}}")
+            bad = []; devs = []
+            for i in range(n):
+                if медленно:
                     pg.evaluate(f"()=>openLessonView({lid})"); pg.wait_for_timeout(90)
-                    for _ in range(i): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(60)
-                    pg.evaluate("()=>{const b=[...document.querySelectorAll('.wk-btn')].find(x=>/показать/.test(x.innerText)); if(b)b.click();}"); pg.wait_for_timeout(90)
-                    pg.wait_for_timeout(1300)   # ждём окончания входного каскада (60 мс × 8 + 420 мс)
-                    r=pg.evaluate(JS)
-                    if r.get('issues'): bad.append((i,r['issues'][:3]))
-                    devs.append(abs(r.get('dev',0)))
-                print(f"урок {lid} @{W}: шагов {n} | проблемных шагов {len(bad)} | макс.сдвиг центра {max(devs) if devs else 0}px | ошибок {len(errs)}")
-                for i,iss in bad[:6]: print(f"    шаг {i}: {iss}")
-            pg.close()
-        b.close()
+                    for _ in range(i):
+                        pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(60)
+                else:
+                    if i == 0: pg.evaluate(f"()=>openLessonView({lid})")
+                    else:      pg.evaluate("()=>lvStep(1)")
+                    осело(pg, 300)
+                pg.evaluate(ПОКАЗАТЬ)
+                осело(pg, 1300)
+                r = pg.evaluate(JS)
+                if r.get('issues'): bad.append((i, r['issues'][:3]))
+                devs.append(abs(r.get('dev', 0)))
+            строки.append(f"урок {lid} @{W}: шагов {n} | проблемных шагов {len(bad)} | "
+                          f"макс.сдвиг центра {max(devs) if devs else 0}px | ошибок {len(errs)}")
+            for i, iss in bad[:6]:
+                строки.append(f"    шаг {i}: {iss}")
+        pg.close(); b.close()
+    return строки
+
+
+def run(ids, ширины=(390, 320)):
+    медленно = bool(os.environ.get("QA_SLOW"))
+    # Ширины независимы друг от друга, поэтому идут разом: каждая в своём
+    # потоке со своим playwright (общие объекты между потоками не переживают).
+    # Один поток — это прежнее поведение, оно остаётся под QA_JOBS=1.
+    потоков = int(os.environ.get("QA_JOBS", "2"))
+    if потоков > 1 and len(ширины) > 1 and not медленно:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=min(потоков, len(ширины))) as пул:
+            пачки = list(пул.map(lambda W: одна_ширина(W, ids), ширины))
+    else:
+        пачки = [одна_ширина(W, ids, медленно) for W in ширины]
+    for пачка in пачки:
+        for строка in пачка:
+            print(строка)
+
+
 if __name__=="__main__":
     run([int(x) for x in sys.argv[1:]] or [51])

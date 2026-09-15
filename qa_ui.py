@@ -3,7 +3,7 @@
 Проверяет на каждом экране: контраст текста (WCAG AA), кегли по модульной шкале,
 цели касания, масштабирование текста анимацией, поддержку reduced-motion,
 переполнение раскладки на 390 / 768 / 1200 px. Печатает таблицу находок."""
-import sys, json
+import sys, json, os
 from playwright.sync_api import sync_playwright
 EXE="/Users/mihaildrozdov/Documents/DPsek/браузеры/chromium_headless_shell-1234/chrome-headless-shell-mac-arm64/chrome-headless-shell"
 BASE=sys.argv[1] if len(sys.argv)>1 else "http://127.0.0.1:8123/"
@@ -45,36 +45,75 @@ JS = r"""()=>{
   out.overflow=document.documentElement.scrollWidth>window.innerWidth+1;
   return out;
 }"""
+# Ждём сами анимации вместо сна вслепую: продолжаем, как только каскад
+# доиграл. Вечные (пульсация, свечение) из ожидания выброшены, сверху —
+# тот же потолок, что был сном, так что медленнее прежнего стать не может.
+ОСЕЛО = r"""(cap)=>new Promise(res=>{
+  const готово=()=>res(1);
+  const t=setTimeout(готово,cap);
+  requestAnimationFrame(()=>{
+    const живые=(document.getAnimations?document.getAnimations():[]).filter(a=>{
+      const ct=a.effect&&a.effect.getComputedTiming&&a.effect.getComputedTiming();
+      return ct && ct.iterations!==Infinity;
+    });
+    Promise.all(живые.map(a=>a.finished.catch(()=>{}))).then(()=>{
+      clearTimeout(t);
+      requestAnimationFrame(()=>requestAnimationFrame(готово));
+    });
+  });
+})"""
+
+
+def осело(pg, потолок=400):
+    try:
+        pg.evaluate(ОСЕЛО, потолок)
+    except Exception:
+        pg.wait_for_timeout(потолок)
+
+
 def run(pg,label):
     r=pg.evaluate(JS)
     return {"экран":label, "контраст":r['contrast'], "вне шкалы":r['scale'],
             "цели<44":sorted([t for t in r['targets'] if t<44]), "масштаб текста":r['scaled'],
             "переполнение":r['overflow'], "reduced-motion":r['reduced']}
-if __name__=="__main__":
+def одна_ширина(W):
+    """Аудит одной ширины. Ширины между собой не связаны, поэтому идут разом:
+    каждая в своём потоке со своим playwright — общие объекты между потоками
+    не переживают. Один поток возвращается через QA_JOBS=1."""
     rows=[]
     with sync_playwright() as p:
         b=p.chromium.launch(executable_path=EXE,args=["--use-gl=swiftshader","--enable-unsafe-swiftshader"])
-        for W in (390,768,1200):
-            pg=b.new_page(viewport={"width":W,"height":950})
-            pg.goto(BASE,wait_until="load",timeout=45000)
-            for _ in range(40):
-                pg.wait_for_timeout(250)
-                if pg.evaluate("()=>typeof DB==='object' && typeof openLessonView==='function'"): break
-            pg.evaluate("()=>{DB.profile={name:'Вика',klass:'6',color:'#d9a441',gender:'girl'};save();}")
-            # Смотрим не только 601 и 611: 602 — переложенный урок в новом каркасе
-            # (.s6), 617 — бумажный лист с форматами ответов (.pp), 619 — урок
-            # словарных слов младшей школы с кадром-списком (.rw). Раньше эти
-            # поверхности аудит не открывал вовсе.
-            for kind,lid in (("урок 601","601"),("урок 602","602"),("урок 607","607"),
-                             ("работа 611","611"),("лист 617","617"),("слова 619","619")):
-                pg.evaluate("(l)=>{openLessonView(l);}", int(lid)); pg.wait_for_timeout(700)
-                for _ in range(4): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(60)
-                pg.wait_for_timeout(400)
-                rows.append(run(pg,f"{kind} @{W}"))
-            pg.evaluate("()=>go('task-rus1')"); pg.wait_for_timeout(600); rows.append(run(pg,f"задача @{W}"))
-            pg.evaluate("()=>go('path')"); pg.wait_for_timeout(500); rows.append(run(pg,f"Путь @{W}"))
-            pg.close()
-        b.close()
+        pg=b.new_page(viewport={"width":W,"height":950})
+        pg.goto(BASE,wait_until="load",timeout=45000)
+        for _ in range(40):
+            pg.wait_for_timeout(120)
+            if pg.evaluate("()=>typeof DB==='object' && typeof openLessonView==='function'"): break
+        pg.evaluate("()=>{DB.profile={name:'Вика',klass:'6',color:'#d9a441',gender:'girl'};save();}")
+        # Смотрим не только 601 и 611: 602 — переложенный урок в новом каркасе
+        # (.s6), 617 — бумажный лист с форматами ответов (.pp), 619 — урок
+        # словарных слов младшей школы с кадром-списком (.rw). Раньше эти
+        # поверхности аудит не открывал вовсе.
+        for kind,lid in (("урок 601","601"),("урок 602","602"),("урок 607","607"),
+                         ("работа 611","611"),("лист 617","617"),("слова 619","619")):
+            pg.evaluate("(l)=>{openLessonView(l);}", int(lid)); осело(pg,700)
+            for _ in range(4): pg.evaluate("()=>lvStep(1)"); осело(pg,200)
+            осело(pg,400)
+            rows.append(run(pg,f"{kind} @{W}"))
+        pg.evaluate("()=>go('task-rus1')"); осело(pg,600); rows.append(run(pg,f"задача @{W}"))
+        pg.evaluate("()=>go('path')");      осело(pg,500); rows.append(run(pg,f"Путь @{W}"))
+        pg.close(); b.close()
+    return rows
+
+if __name__=="__main__":
+    ШИРИНЫ=(390,768,1200)
+    потоков=int(os.environ.get("QA_JOBS","3"))
+    if потоков>1:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=min(потоков,len(ШИРИНЫ))) as пул:
+            пачки=list(пул.map(одна_ширина, ШИРИНЫ))
+    else:
+        пачки=[одна_ширина(W) for W in ШИРИНЫ]
+    rows=[r for пачка in пачки for r in пачка]
     print(f"{'экран':<18}{'контраст':<10}{'вне шкалы':<11}{'цели<44':<10}{'масштаб':<9}{'переполн':<10}rm")
     bad=0
     for r in rows:

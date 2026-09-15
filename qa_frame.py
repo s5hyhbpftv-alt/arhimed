@@ -135,6 +135,32 @@ def steps_of(pg, lid):
     return pg.evaluate("(l)=>{const L=lessonById(l); return L?((L.explain||[]).length||(L.comic||[]).length):0;}", lid)
 
 
+# Ждём сами анимации вместо сна вслепую: продолжаем, как только каскад
+# доиграл. Вечные (пульсация, свечение) из ожидания выброшены, сверху — тот
+# же потолок, что был сном, так что медленнее прежнего стать не может.
+ОСЕЛО = r"""(cap)=>new Promise(res=>{
+  const готово=()=>res(1);
+  const t=setTimeout(готово,cap);
+  requestAnimationFrame(()=>{
+    const живые=(document.getAnimations?document.getAnimations():[]).filter(a=>{
+      const ct=a.effect&&a.effect.getComputedTiming&&a.effect.getComputedTiming();
+      return ct && ct.iterations!==Infinity;
+    });
+    Promise.all(живые.map(a=>a.finished.catch(()=>{}))).then(()=>{
+      clearTimeout(t);
+      requestAnimationFrame(()=>requestAnimationFrame(готово));
+    });
+  });
+})"""
+
+
+def осело(pg, потолок=650):
+    try:
+        pg.evaluate(ОСЕЛО, потолок)
+    except Exception:
+        pg.wait_for_timeout(потолок)
+
+
 def run(lid, only=None):
     os.makedirs(SHOTS, exist_ok=True)
     widths = [int(x) for x in os.environ.get("QA_W", "390,320").split(",")]
@@ -153,13 +179,24 @@ def run(lid, only=None):
             pg.evaluate("()=>{DB.profile=Object.assign({},DB.profile||{},{klass:'6',name:'Проверка'});}")
             n = steps_of(pg, lid)
             plan = only or list(range(n))
+            # Идём вперёд, как ходит ребёнок. Раньше ради кадра i урок
+            # открывали заново и щёлкали «дальше» i раз — n(n+1)/2 шагов
+            # вместо n. Старый обход остался под QA_SLOW=1: он нужен, чтобы
+            # сверять оба пути, а не для работы.
+            медленно = bool(os.environ.get("QA_SLOW"))
+            пришли = None
             for i in plan:
-                pg.evaluate("(l)=>{CHS[lidKey(l)]=CHS[lidKey(l)]||{}; openLessonView(l);}", lid)
-                pg.wait_for_timeout(120)
-                for _ in range(i):
+                if медленно or пришли is None or i != пришли + 1:
+                    pg.evaluate("(l)=>{CHS[lidKey(l)]=CHS[lidKey(l)]||{}; openLessonView(l);}", lid)
+                    осело(pg, 200)
+                    for _ in range(i):
+                        pg.evaluate("()=>lvStep(1)")
+                        pg.wait_for_timeout(55) if медленно else осело(pg, 200)
+                else:
                     pg.evaluate("()=>lvStep(1)")
-                    pg.wait_for_timeout(55)
-                pg.wait_for_timeout(650)
+                    осело(pg, 200)
+                пришли = i
+                осело(pg, 650)
                 r = pg.evaluate(JS)
                 iss = r.get("issues") or []
                 # снимок делаем только там, где есть замечание, или если попросили
