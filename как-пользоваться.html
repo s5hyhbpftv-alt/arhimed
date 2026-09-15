@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>АРХИМЕД · как пользоваться</title>
+<meta name="description" content="Короткая инструкция: как устроены приложение ученика и кабинет родителя и как поставить АРХИМЕД на телефон.">
+
+<style>
+/* ─────────────────────────────────────────────────────────────────────
+   Инструкция живёт в том же мире, что стартовая страница и само
+   приложение: тёмно-зелёное поле, латунь, слоновая кость, Georgia.
+   Токены скопированы из index.html, ничего нового не придумано.
+
+   Снимки экранов настоящие: сняты с прода 15.09.2026 на ширине телефона.
+   Схемы установки — рисованные: снять системное меню iOS изнутри
+   браузера нельзя, и выдавать рисунок за снимок было бы обманом,
+   поэтому они и подписаны как схемы.
+   ───────────────────────────────────────────────────────────────────── */
+:root{
+  --deep:#16241d; --raise:#1d3227; --sink:#101c16;
+  --line:rgba(255,215,106,.20);
+  --gold:#ffd76a; --gold-d:#e3b04c; --ivory:#f6efe0; --muted:#cbb89a;
+  --ok:#8fd1a8;
+  --ease:cubic-bezier(.22,.9,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scrollbar-color:var(--gold-d) var(--deep)}
+body{
+  font-family:Georgia,'Times New Roman',serif;
+  background:var(--deep); color:var(--ivory); line-height:1.62;
+  -webkit-font-smoothing:antialiased; padding:0 20px 80px;
+}
+::selection{background:rgba(255,215,106,.26);color:#fff8e4}
+.лист{max-width:820px;margin:0 auto}
+a{color:var(--gold);text-decoration-color:rgba(255,215,106,.4);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--gold)}
+
+/* ── шапка ─────────────────────────────────────────────────────────── */
+header{padding:56px 0 8px}
+.кто{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-d)}
+h1{font-size:clamp(30px,6vw,46px);line-height:1.1;color:var(--gold);font-weight:400;margin:14px 0 0;letter-spacing:-.01em}
+.вводка{font-size:clamp(17px,2.4vw,20px);color:var(--ivory);max-width:34em;margin-top:18px}
+.тихо{color:var(--muted)}
+
+h2{
+  font-size:clamp(21px,3.4vw,28px); font-weight:400; color:var(--gold);
+  margin:0 0 6px; letter-spacing:-.01em; line-height:1.2;
+}
+section{margin-top:64px;padding-top:26px;border-top:1px solid var(--line)}
+section > p{max-width:36em;margin-top:12px}
+.номер{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px;
+  letter-spacing:.2em; color:var(--gold-d); text-transform:uppercase;
+}
+
+/* ── два приложения ────────────────────────────────────────────────── */
+.пара{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;margin-top:26px}
+.карта{
+  background:var(--raise); border:1px solid var(--line); border-radius:14px;
+  padding:22px 20px 24px; display:flex; flex-direction:column; gap:14px;
+}
+.карта h3{font-size:20px;font-weight:400;color:var(--gold);margin:0}
+.карта .кому{font-size:13px;color:var(--muted);margin-top:-8px}
+.карта ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.карта li{position:relative;padding-left:20px;font-size:15.5px;line-height:1.5}
+.карта li::before{
+  content:''; position:absolute; left:2px; top:.62em; width:7px; height:7px;
+  border:1px solid var(--gold-d); border-radius:50%;
+}
+.карта li b{color:var(--gold);font-weight:400}
+
+/* ── снимки экранов ────────────────────────────────────────────────── */
+.экраны{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:26px}
+figure{margin:0}
+figure img{
+  display:block; width:100%; height:auto; border-radius:14px;
+  border:1px solid var(--line); background:var(--sink);
+}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.45}
+figcaption b{color:var(--ivory);font-weight:400}
+
+/* ── шаги ──────────────────────────────────────────────────────────── */
+ol.шаги{list-style:none;counter-reset:ш;margin-top:24px;display:flex;flex-direction:column;gap:2px}
+ol.шаги > li{
+  counter-increment:ш; display:grid; grid-template-columns:44px 1fr; gap:16px;
+  padding:16px 0; border-top:1px solid var(--line);
+}
+ol.шаги > li:first-child{border-top:none}
+ol.шаги > li::before{
+  content:counter(ш); font-family:ui-monospace,monospace; font-size:17px;
+  color:var(--gold); border:1px solid var(--line); border-radius:50%;
+  width:36px; height:36px; display:grid; place-items:center;
+}
+ol.шаги h3{font-size:17.5px;font-weight:400;color:var(--ivory);margin:0 0 3px}
+ol.шаги p{font-size:15.5px;color:var(--muted);margin:0;max-width:34em}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.92em;
+  color:var(--gold); background:rgba(255,215,106,.08);
+  padding:1px 6px; border-radius:4px; white-space:nowrap;
+}
+
+/* ── установка на телефон ──────────────────────────────────────────── */
+.телефоны{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:28px;margin-top:26px}
+.платформа h3{
+  font-size:19px;font-weight:400;color:var(--gold);margin-bottom:4px;
+  display:flex;align-items:center;gap:10px;
+}
+.платформа .чем{font-size:13px;color:var(--muted);margin-bottom:18px}
+.экранчик{display:grid;grid-template-columns:100px 1fr;gap:18px;align-items:center;
+  padding:14px 0;border-top:1px solid var(--line)}
+.экранчик svg{width:100px;height:auto;display:block}
+.экранчик p{font-size:15px;line-height:1.45;margin:0}
+.экранчик p b{color:var(--gold);font-weight:400}
+.схема-подпись{font-size:12.5px;color:var(--muted);margin-top:14px;opacity:.85}
+
+/* ── призыв ────────────────────────────────────────────────────────── */
+.призыв{
+  margin-top:72px; padding:40px 30px 44px; border-radius:18px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#1d3227 0%,#152520 100%);
+  text-align:center;
+}
+.призыв .строка{
+  font-size:clamp(20px,3.4vw,27px); line-height:1.4; color:var(--ivory);
+  max-width:20em; margin:0 auto;
+}
+.призыв .строка b{color:var(--gold);font-weight:400}
+.призыв .подпись{
+  margin-top:22px; font-size:15px; color:var(--muted);
+}
+.кнопка{
+  display:inline-block; margin-top:28px; padding:15px 30px; border-radius:12px;
+  background:linear-gradient(180deg,var(--gold) 0%,var(--gold-d) 100%);
+  color:#17261c; font-size:18px; text-decoration:none;
+  border:1px solid rgba(255,215,106,.5);
+  transition:transform 160ms var(--ease), box-shadow 160ms var(--ease);
+}
+.кнопка:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.4)}
+.кнопка:active{transform:scale(.98)}
+.рядом{margin-top:18px;font-size:15px}
+
+footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:13.5px;color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="лист">
+
+<header>
+  <div class="кто">Острова Познания · инструкция</div>
+  <h1>Как пользоваться АРХИМЕДом</h1>
+  <p class="вводка">
+    Два приложения: одно для ребёнка, другое для вас. Оба открываются в браузере
+    и ставятся на телефон как обычное приложение — без магазина, без установки,
+    без регистрации по почте. <span class="тихо">Читается за три минуты.</span>
+  </p>
+</header>
+
+<!-- ═══ Что это ═════════════════════════════════════════════════════ -->
+<section>
+  <div class="номер">Коротко</div>
+  <h2>Что это такое</h2>
+  <p>
+    АРХИМЕД — это школьная программа 1–9 класса, разобранная глубже, чем на уроке,
+    и олимпиадный слой поверх неё. Ребёнок идёт по карте островов: математика,
+    физика, химия, информатика, русский язык, начальная школа.
+  </p>
+  <p style="margin-top:14px">
+    В каждом уроке персонаж Архимед сначала объясняет приём по шагам, потом даёт
+    проверить, понял ли ты, и только потом — задачу. Ошибиться можно: на каждую
+    задачу есть лестница подсказок и полный разбор.
+  </p>
+</section>
+
+<!-- ═══ Два приложения ══════════════════════════════════════════════ -->
+<section>
+  <div class="номер">Устройство</div>
+  <h2>Два приложения, одно ребёнку и одно вам</h2>
+
+  <div class="пара">
+    <div class="карта">
+      <h3>Приложение ученика</h3>
+      <div class="кому">123.teramont.pro/MVP/</div>
+      <ul>
+        <li><b>Карта островов.</b> Каждый остров — предмет, внутри темы и задачи по классу ребёнка.</li>
+        <li><b>Книга знаний.</b> Каталог уроков: у каждого написан источник и сколько в нём шагов разбора.</li>
+        <li><b>Банк задач.</b> У каждой задачи подсказки и разбор, ни одной «просто задачи».</li>
+        <li><b>Тур.</b> Олимпиадный симулятор: тур с таймером, как на настоящем этапе.</li>
+        <li><b>Свой PIN.</b> Ребёнок придумывает его сам при первом входе — устройство привязывается к нему.</li>
+      </ul>
+    </div>
+
+    <div class="карта">
+      <h3>Кабинет родителя</h3>
+      <div class="кому">123.teramont.pro/MVP/parent/</div>
+      <ul>
+        <li><b>Отчёт о занятиях.</b> Что решал, сколько времени, где ошибался.</li>
+        <li><b>Заметка ребёнку.</b> Вы пишете — он видит её во весь экран при следующем входе.</li>
+        <li><b>Лимит времени.</b> Сколько минут в день приложение открыто.</li>
+        <li><b>Свой PIN.</b> Отдельный от детского: ребёнок в кабинет не войдёт.</li>
+        <li><b>Отвязка устройства.</b> Прогресс останется, вход начнётся заново.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Экраны ══════════════════════════════════════════════════════ -->
+<section>
+  <div class="номер">Как это выглядит</div>
+  <h2>Пять экранов, которые вы увидите</h2>
+  <p>Снимки сделаны с работающего приложения, а не нарисованы.</p>
+
+  <div class="экраны">
+    <figure>
+      <img src="снимки/острова.webp" alt="Первый экран ученика: код для родителя и карта островов" width="560" height="1010" loading="lazy">
+      <figcaption><b>Первый экран.</b> Наверху — код для родителя, ниже карта островов и строка Архимеда.</figcaption>
+    </figure>
+    <figure>
+      <img src="снимки/учебники.webp" alt="Книга знаний: каталог уроков по предметам" width="560" height="1010" loading="lazy">
+      <figcaption><b>Книга знаний.</b> У каждого урока виден источник и число шагов разбора.</figcaption>
+    </figure>
+    <figure>
+      <img src="снимки/урок.webp" alt="Урок «Числа-перевёртыши»: шаг 1 из 16" width="560" height="1010" loading="lazy">
+      <figcaption><b>Урок.</b> «Шаг 1 из 16» — ровно так объяснение и разбирается, по одному шагу.</figcaption>
+    </figure>
+    <figure>
+      <img src="снимки/родитель-вход.webp" alt="Вход в кабинет родителя: код ребёнка и PIN" width="560" height="1010" loading="lazy">
+      <figcaption><b>Вход родителя.</b> Код ребёнка, кто входит — мама или папа, и свой PIN.</figcaption>
+    </figure>
+    <figure>
+      <img src="снимки/родитель-кабинет.webp" alt="Кабинет родителя: заметка ребёнку и привязка устройства" width="560" height="1010" loading="lazy">
+      <figcaption><b>Кабинет.</b> Заметка ребёнку, лимит времени, привязка устройства.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══ Первый вход ═════════════════════════════════════════════════ -->
+<section>
+  <div class="номер">Первый вход</div>
+  <h2>Три шага, и можно решать</h2>
+
+  <ol class="шаги">
+    <li>
+      <div>
+        <h3>Ребёнок открывает приложение и знакомится</h3>
+        <p>Имя, класс и режим: <b>Новичок</b> — Архимед подробно объясняет каждый приём,
+           <b>Олимпиец</b> — объяснения короче, задания смелее. Потом придумывает свой PIN из четырёх цифр.</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h3>На главном экране появляется код</h3>
+        <p>Карточка «Твой код для родителя», вид <code>ARH-XXXX-XX</code>. Его надо показать вам —
+           один раз.</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h3>Вы открываете кабинет и вводите код</h3>
+        <p><code>123.teramont.pro/MVP/parent/</code> → выбираете «Папа» или «Мама» → вводите код
+           ребёнка → придумываете <b>свой</b> PIN. Детский и родительский PIN разные, и это важно.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<!-- ═══ Установка ═══════════════════════════════════════════════════ -->
+<section>
+  <div class="номер">На телефон</div>
+  <h2>Поставить как обычное приложение</h2>
+  <p>
+    Магазин не нужен: страница сама ставится на экран «Домой» и дальше открывается
+    без адресной строки, как любое приложение. Работает и без интернета — уроки
+    и задачи уже лежат на устройстве.
+  </p>
+
+  <div class="телефоны">
+
+    <!-- iPhone -->
+    <div class="платформа">
+      <h3>
+        <svg width="18" height="22" viewBox="0 0 18 22" aria-hidden="true">
+          <path d="M12.4 3.1c.7-.9 1.2-2.1 1-3.1-1 .05-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.1 1.2.1 2.4-.6 3.1-1.6z" fill="#ffd76a"/>
+          <path d="M13.3 5.3c-1.7-.1-3.1 1-3.9 1-.8 0-2-1-3.3-.9-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3 0 1.8-.8 3.3-.8 1.5 0 2 .8 3.3.8 1.4 0 2.2-1.2 3.1-2.5.7-1 1-1.5 1.5-2.6-3.9-1.5-4.5-6.9-.6-9-.9-1.2-2.3-1.3-3.7-1.3z" fill="#ffd76a"/>
+        </svg>
+        iPhone и iPad
+      </h3>
+      <div class="чем">Обязательно в Safari — из других браузеров iOS установить не даёт</div>
+
+      <!-- Схемы рисованные: системное меню iOS изнутри браузера не снять. -->
+      <div class="экранчик">
+        <svg viewBox="0 0 78 120" aria-label="Схема: нижняя панель Safari со значком «Поделиться»">
+          <rect x="4" y="2" width="70" height="116" rx="10" fill="#101c16" stroke="rgba(255,215,106,.25)"/>
+          <rect x="10" y="10" width="58" height="86" rx="4" fill="#16241d"/>
+          <text x="39" y="54" text-anchor="middle" font-size="9" fill="#cbb89a" font-family="Georgia,serif">АРХИМЕД</text>
+          <rect x="10" y="100" width="58" height="14" rx="5" fill="#1d3227" stroke="rgba(255,215,106,.18)"/>
+          <g stroke="#ffd76a" stroke-width="1.3" fill="none" stroke-linecap="round">
+            <rect x="34.5" y="104.5" width="9" height="7.5" rx="1.6"/>
+            <path d="M39 108.5V101M36.4 103.2 39 100.6l2.6 2.6"/>
+          </g>
+          <circle cx="39" cy="107.5" r="10.5" fill="none" stroke="#ffd76a" stroke-opacity=".55" stroke-dasharray="3 3"/>
+        </svg>
+        <p>Откройте <b>123.teramont.pro/MVP/</b> в Safari и нажмите значок <b>«Поделиться»</b> — квадрат со стрелкой вверх внизу экрана.</p>
+      </div>
+
+      <div class="экранчик">
+        <svg viewBox="0 0 78 120" aria-label="Схема: пункт меню «На экран Домой»">
+          <rect x="4" y="2" width="70" height="116" rx="10" fill="#101c16" stroke="rgba(255,215,106,.25)"/>
+          <rect x="10" y="34" width="58" height="80" rx="7" fill="#1d3227"/>
+          <rect x="15" y="41" width="48" height="9" rx="2.5" fill="#16241d"/>
+          <rect x="15" y="54" width="48" height="9" rx="2.5" fill="#16241d"/>
+          <rect x="14" y="66" width="50" height="13" rx="3" fill="#16241d" stroke="#ffd76a"/>
+          <g stroke="#ffd76a" stroke-width="1.2" fill="none">
+            <rect x="18" y="69.5" width="6" height="6" rx="1.2"/>
+            <path d="M21 71v3.2M19.6 72.4h2.8"/>
+          </g>
+          <text x="28" y="76.5" font-size="5.4" fill="#ffd76a" font-family="Georgia,serif">На экран «Домой»</text>
+          <rect x="15" y="83" width="48" height="9" rx="2.5" fill="#16241d"/>
+          <rect x="15" y="96" width="48" height="9" rx="2.5" fill="#16241d"/>
+        </svg>
+        <p>В открывшемся списке пролистайте вниз и выберите <b>«На экран „Домой“»</b>.</p>
+      </div>
+
+      <div class="экранчик">
+        <svg viewBox="0 0 78 120" aria-label="Схема: значок приложения на экране телефона">
+          <rect x="4" y="2" width="70" height="116" rx="10" fill="#101c16" stroke="rgba(255,215,106,.25)"/>
+          <g fill="#16241d"><rect x="12" y="16" width="16" height="16" rx="4.4"/><rect x="31" y="16" width="16" height="16" rx="4.4"/><rect x="50" y="16" width="16" height="16" rx="4.4"/><rect x="12" y="40" width="16" height="16" rx="4.4"/></g>
+          <rect x="31" y="40" width="16" height="16" rx="4.4" fill="#1d3227" stroke="#ffd76a" stroke-width="1.2"/>
+          <circle cx="39" cy="48" r="4.6" fill="none" stroke="#ffd76a" stroke-width="1.1"/>
+          <circle cx="39" cy="48" r="1.5" fill="#ffd76a"/>
+          <text x="39" y="63.5" text-anchor="middle" font-size="5" fill="#ffd76a" font-family="Georgia,serif">АРХИМЕД</text>
+          <g fill="#16241d"><rect x="50" y="40" width="16" height="16" rx="4.4"/><rect x="12" y="70" width="16" height="16" rx="4.4"/><rect x="31" y="70" width="16" height="16" rx="4.4"/><rect x="50" y="70" width="16" height="16" rx="4.4"/></g>
+        </svg>
+        <p>Нажмите <b>«Добавить»</b>. Значок встанет на экран рядом с остальными приложениями.</p>
+      </div>
+
+      <p class="схема-подпись">Схемы нарисованы: снять системное меню iPhone изнутри страницы нельзя.</p>
+    </div>
+
+    <!-- Android -->
+    <div class="платформа">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M5.4 4.1 4.3 2.2a.35.35 0 0 1 .6-.35l1.15 1.95A6.6 6.6 0 0 1 10 3.1c1.1 0 2.1.24 2.95.66l1.15-1.95a.35.35 0 0 1 .6.35l-1.1 1.9A5.6 5.6 0 0 1 16.3 8.9H3.7a5.6 5.6 0 0 1 1.7-4.8z" fill="#ffd76a"/>
+          <rect x="3.7" y="9.9" width="12.6" height="6.6" rx="1.4" fill="#ffd76a"/>
+          <rect x="1" y="9.9" width="2" height="5.4" rx="1" fill="#ffd76a"/>
+          <rect x="17" y="9.9" width="2" height="5.4" rx="1" fill="#ffd76a"/>
+          <circle cx="7.2" cy="6.6" r=".8" fill="#16241d"/><circle cx="12.8" cy="6.6" r=".8" fill="#16241d"/>
+        </svg>
+        Android
+      </h3>
+      <div class="чем">Chrome, Яндекс.Браузер или любой на движке Chromium</div>
+
+      <div class="экранчик">
+        <svg viewBox="0 0 78 120" aria-label="Схема: кнопка меню из трёх точек в браузере">
+          <rect x="4" y="2" width="70" height="116" rx="10" fill="#101c16" stroke="rgba(255,215,106,.25)"/>
+          <rect x="10" y="8" width="58" height="13" rx="6" fill="#1d3227" stroke="rgba(255,215,106,.18)"/>
+          <text x="18" y="16.6" font-size="5" fill="#cbb89a" font-family="Georgia,serif">123.teramont.pro</text>
+          <g fill="#ffd76a"><circle cx="62" cy="11.4" r="1.3"/><circle cx="62" cy="14.5" r="1.3"/><circle cx="62" cy="17.6" r="1.3"/></g>
+          <circle cx="62" cy="14.5" r="8.6" fill="none" stroke="#ffd76a" stroke-opacity=".55" stroke-dasharray="3 3"/>
+          <rect x="10" y="26" width="58" height="86" rx="4" fill="#16241d"/>
+          <text x="39" y="70" text-anchor="middle" font-size="9" fill="#cbb89a" font-family="Georgia,serif">АРХИМЕД</text>
+        </svg>
+        <p>Откройте <b>123.teramont.pro/MVP/</b> и нажмите <b>три точки</b> в правом верхнем углу.</p>
+      </div>
+
+      <div class="экранчик">
+        <svg viewBox="0 0 78 120" aria-label="Схема: пункт меню «Установить приложение»">
+          <rect x="4" y="2" width="70" height="116" rx="10" fill="#101c16" stroke="rgba(255,215,106,.25)"/>
+          <rect x="26" y="8" width="42" height="78" rx="5" fill="#1d3227"/>
+          <rect x="30" y="14" width="34" height="8" rx="2.2" fill="#16241d"/>
+          <rect x="30" y="26" width="34" height="8" rx="2.2" fill="#16241d"/>
+          <rect x="29" y="38" width="36" height="12" rx="3" fill="#16241d" stroke="#ffd76a"/>
+          <g stroke="#ffd76a" stroke-width="1.2" fill="none" stroke-linecap="round">
+            <path d="M34 41.5v5M32 44.5l2 2 2-2"/>
+          </g>
+          <text x="40" y="47.5" font-size="5" fill="#ffd76a" font-family="Georgia,serif">Установить</text>
+          <rect x="30" y="54" width="34" height="8" rx="2.2" fill="#16241d"/>
+          <rect x="30" y="66" width="34" height="8" rx="2.2" fill="#16241d"/>
+        </svg>
+        <p>Выберите <b>«Установить приложение»</b>. В некоторых браузерах пункт называется <b>«Добавить на главный экран»</b>.</p>
+      </div>
+
+      <div class="экранчик">
+        <svg viewBox="0 0 78 120" aria-label="Схема: значок приложения на экране телефона">
+          <rect x="4" y="2" width="70" height="116" rx="10" fill="#101c16" stroke="rgba(255,215,106,.25)"/>
+          <g fill="#16241d"><rect x="12" y="16" width="16" height="16" rx="4.4"/><rect x="31" y="16" width="16" height="16" rx="4.4"/><rect x="50" y="16" width="16" height="16" rx="4.4"/><rect x="12" y="40" width="16" height="16" rx="4.4"/></g>
+          <rect x="31" y="40" width="16" height="16" rx="4.4" fill="#1d3227" stroke="#ffd76a" stroke-width="1.2"/>
+          <circle cx="39" cy="48" r="4.6" fill="none" stroke="#ffd76a" stroke-width="1.1"/>
+          <circle cx="39" cy="48" r="1.5" fill="#ffd76a"/>
+          <text x="39" y="63.5" text-anchor="middle" font-size="5" fill="#ffd76a" font-family="Georgia,serif">АРХИМЕД</text>
+          <g fill="#16241d"><rect x="50" y="40" width="16" height="16" rx="4.4"/><rect x="12" y="70" width="16" height="16" rx="4.4"/><rect x="31" y="70" width="16" height="16" rx="4.4"/><rect x="50" y="70" width="16" height="16" rx="4.4"/></g>
+        </svg>
+        <p>Подтвердите установку — значок появится на главном экране.</p>
+      </div>
+
+      <p class="схема-подпись">Схемы нарисованы: системное меню браузера изнутри страницы не снять.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:28px" class="тихо">
+    Кабинет родителя ставится так же — только откройте сначала
+    <code>123.teramont.pro/MVP/parent/</code>. Тогда на телефоне будет два значка:
+    детский и ваш.
+  </p>
+</section>
+
+<!-- ═══ Если что-то пошло не так ════════════════════════════════════ -->
+<section>
+  <div class="номер">Если что</div>
+  <h2>Короткие ответы</h2>
+  <ol class="шаги">
+    <li><div><h3>Ребёнок забыл PIN</h3>
+      <p>Зайдите в кабинет родителя и нажмите «Отвязать устройство». Ребёнок введёт PIN заново,
+         прогресс останется на месте.</p></div></li>
+    <li><div><h3>Код потерялся</h3>
+      <p>Он всегда на первом экране приложения ученика, в карточке «Твой код для родителя».
+         Кнопка «Скопировать» рядом.</p></div></li>
+    <li><div><h3>Нет интернета</h3>
+      <p>Приложение работает: уроки и задачи лежат на устройстве. Отчёт родителю уедет,
+         когда связь вернётся.</p></div></li>
+    <li><div><h3>Хочу поменять класс или режим</h3>
+      <p>В приложении ученика нажмите «Выйти» и пройдите знакомство заново. Решённое сохранится.</p></div></li>
+  </ol>
+</section>
+
+<!-- ═══ Призыв ══════════════════════════════════════════════════════ -->
+<div class="призыв">
+  <p class="строка">
+    Не покупайте курс. Не составляйте расписание.<br>
+    Просто дайте ребёнку <b>одну задачу</b> сегодня.
+  </p>
+  <p class="подпись">
+    Архимед покажет приём, разрешит ошибиться и разберёт ошибку.<br>
+    Завтра ребёнок попросит вторую сам — и вот тогда начнётся самое интересное.
+  </p>
+  <a class="кнопка" href="MVP/">Открыть приложение ученика →</a>
+  <p class="рядом"><a href="MVP/parent/">Я родитель — открыть кабинет</a></p>
+</div>
+
+<footer>
+  <a href="./">← на главную</a> · приложение работает в браузере и ставится на телефон как PWA ·
+  снимки экранов сделаны с работающего приложения 15 сентября 2026 года
+</footer>
+
+</div>
+</body>
+</html>
