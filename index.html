@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>АРХИМЕД · Острова Познания</title>
-<meta name="description" content="АРХИМЕД — углублённое изучение математики, русского языка, физики, химии и информатики и подготовка к олимпиадам. 449 уроков, 700 задач, 1–9 класс.">
+<meta name="description" content="АРХИМЕД — углублённое изучение математики, русского языка, физики, химии и информатики и подготовка к олимпиадам. 451 урок, 700 задач, 1–9 класс.">
 <link rel="icon" type="image/svg+xml" href="MVP/img/icons/favicon-student.svg">
 <link rel="apple-touch-icon" href="MVP/img/icons/student-apple.png">
 <style>
@@ -18,6 +18,7 @@
   --gold:#ffd76a; --gold-d:#e3b04c; --ivory:#f6efe0; --muted:#cbb89a;
   --ok:#8fd1a8; --no:#e8917c;
   --ease:cubic-bezier(.22,.9,.24,1);
+  --моно:ui-monospace,SFMono-Regular,Menlo,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scrollbar-color:var(--gold-d) var(--deep)}
@@ -43,8 +44,31 @@ body{
 .claim em{font-style:normal;color:var(--gold)}
 .sub{font-size:18px;color:var(--muted);margin-top:16px;max-width:30em}
 
+/* ─── общий заголовок раздела ─── */
+.part{margin-top:56px;border-top:1px solid var(--line);padding-top:32px}
+.part h2{font-size:clamp(22px,4.4vw,30px);line-height:1.22;font-weight:normal;
+  color:var(--ivory);letter-spacing:-.01em;text-wrap:balance}
+.part h2 b{color:var(--gold);font-weight:normal;font-variant-numeric:tabular-nums}
+.part p{font-size:17.5px;line-height:1.58;margin-top:16px;max-width:34em;color:var(--ivory)}
+.part p.quiet{color:var(--muted)}
+.part p b{color:var(--gold);font-weight:normal}
+
+/* ─── поле точек: финал ВсОШ в натуральную величину ─── */
+.field{margin-top:26px;padding:22px 20px 20px;border:1px solid var(--line);
+  border-radius:14px;background:var(--raise);box-shadow:0 3px 14px rgba(0,0,0,.3)}
+.field svg{display:block;width:100%;height:auto}
+.field .legend{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:16px;font-size:15.5px}
+.field .legend span{display:flex;align-items:baseline;gap:9px;white-space:nowrap}
+.field .legend i{width:10px;height:10px;border-radius:50%;flex:none;
+  transform:translateY(-1px)}
+.field .legend i.full{background:var(--gold)}
+.field .legend i.empty{border:1px solid rgba(255,215,106,.45)}
+.field .legend var{font-style:normal;color:var(--ivory);font-variant-numeric:tabular-nums}
+.field .legend u{text-decoration:none;color:var(--muted)}
+.field figcaption{font-size:14px;color:var(--muted);margin-top:14px;line-height:1.5}
+
 /* ─── урок: настоящая задача ─── */
-.lesson{margin-top:44px;border-top:1px solid var(--line);padding-top:32px}
+.lesson{margin-top:56px;border-top:1px solid var(--line);padding-top:32px}
 .from{font-size:15px;color:var(--muted)}
 .from b{color:var(--ivory);font-weight:normal}
 .story{font-size:19px;line-height:1.55;margin-top:16px;max-width:34em}
@@ -83,8 +107,18 @@ body{
 .told{font-size:17px;line-height:1.55;margin-top:24px;max-width:34em;color:var(--muted)}
 .told b{color:var(--ivory);font-weight:normal}
 
+/* ─── почему мы ─── */
+.why{margin-top:28px;display:flex;flex-direction:column}
+.why > div{padding:22px 0;border-top:1px solid var(--line)}
+.why > div:first-child{border-top:none;padding-top:6px}
+.why h3{font-size:20px;font-weight:normal;color:var(--gold);margin-bottom:8px;
+  letter-spacing:-.01em;text-wrap:balance;line-height:1.28}
+.why p{font-size:17px;line-height:1.56;max-width:34em;color:var(--ivory)}
+.why .факт{display:block;margin-top:11px;font-family:var(--моно);font-size:13.5px;
+  letter-spacing:.02em;color:var(--gold-d);font-variant-numeric:tabular-nums}
+
 /* ─── масштаб как следствие ─── */
-.scale{margin-top:48px;border-top:1px solid var(--line);padding-top:32px}
+.scale{margin-top:56px;border-top:1px solid var(--line);padding-top:32px}
 .scale h2{font-size:clamp(22px,4.4vw,30px);line-height:1.22;font-weight:normal;
   color:var(--ivory);letter-spacing:-.01em;text-wrap:balance}
 .scale h2 b{color:var(--gold);font-weight:normal;font-variant-numeric:tabular-nums}
@@ -118,14 +152,6 @@ a.ln{color:var(--ok);text-decoration:none;
   padding:11px 0;display:inline-block;line-height:22px;min-height:44px}
 a.ln:hover{color:var(--gold);border-bottom-color:var(--gold)}
 
-/* ─── разработчику ─── */
-.dev{margin-top:56px;border-top:1px solid var(--line);padding-top:28px;font-size:16px;color:var(--muted)}
-.dev p{max-width:34em}
-.dev pre{font-family:Menlo,Consolas,monospace;font-size:14px;line-height:1.8;color:var(--ok);
-  background:#12201a;border:1px solid var(--line);border-radius:10px;
-  padding:16px;margin:16px 0;overflow-x:auto}
-.dev nav{margin-top:8px;display:flex;flex-wrap:wrap;gap:0 24px}
-
 @media (min-width:760px){ body{padding:64px 32px 88px} }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
@@ -155,11 +181,44 @@ a.ln:hover{color:var(--gold);border-bottom-color:var(--gold)}
 <main class="page">
 
   <p class="name">Архимед · Острова Познания</p>
-  <h1 class="claim">Углублённое изучение предметов и <em>подготовка к олимпиадам</em></h1>
-  <p class="sub">Математика, русский язык, физика, химия, информатика. 1–9 класс.</p>
+  <h1 class="claim">Олимпиада открывает дверь в вуз. <em>Приёмам, которыми её решают, в школе не учат</em></h1>
+  <p class="sub">АРХИМЕД ведёт ребёнка с 1 по 9 класс: школьная тема — и сразу за ней олимпиадный приём
+    из той же темы. Математика, русский язык, физика, химия, информатика.</p>
+
+  <!-- ═══ Разрыв: почему это вообще нужно ═══════════════════════════════
+       Числа не наши и не выдуманные: финал ВсОШ по математике 2026 года,
+       те же, что стоят в инвесторской презентации (MVP/инвестор-2026.html).
+       499 участников 9–11 классов, 224 диплома. -->
+  <section class="part">
+    <h2>Дверь открыта всем. Лестницу к ней не показывают</h2>
+
+    <p>Диплом всероссийской олимпиады — это поступление без экзаменов и сто баллов там,
+      где их не хватило. Участвовать формально может любой: школьный этап пишут миллионы детей.</p>
+
+    <p>А вот как выглядит финал по математике. Вся страна, 2026 год:</p>
+
+    <figure class="field">
+      <svg id="поле" viewBox="0 0 258 208" role="img"
+           aria-label="499 точек — участники финала всероссийской олимпиады по математике 2026 года среди 9–11 классов; 224 из них залиты — столько получили дипломы"></svg>
+      <p class="legend">
+        <span><i class="full"></i><var>224</var>&nbsp;<u>получили диплом</u></span>
+        <span><i class="empty"></i><var>275</var>&nbsp;<u>не получили</u></span>
+      </p>
+      <figcaption>Каждая точка — живой человек: финал ВсОШ по математике, 9–11 класс, 2026 год.
+        Если нарисовать в том же масштабе школьный этап, эта страница не кончится.</figcaption>
+    </figure>
+
+    <p style="margin-top:26px">Между этими двумя числами нет ничего таинственного. Там приёмы:
+      инвариант, чётность, принцип Дирихле, оценка и пример, выигрышная стратегия. Каждый из них
+      можно объяснить шестикласснику за один вечер. <b>Просто в школьной программе их нет — ни одного.</b></p>
+
+    <p class="quiet">Репетитор их знает. Он стоит как месяц занятий, приходит два раза в неделю
+      и всё равно не даёт того, что нужно больше всего, — порядка: что учить сейчас, а что через год.</p>
+  </section>
 
   <section class="lesson">
-    <p class="from">Задача из банка приложения. <b>Глава 1 · Логика.</b> Попробуй сам, это две минуты.</p>
+    <p class="from">Вот один из этих приёмов — задача из банка приложения. <b>Глава 1 · Логика.</b>
+      Попробуйте сами, это две минуты.</p>
 
     <p class="story">Перед тобой две двери: за одной оружейная, за другой ловушка. У каждой стоит
       стражник. Один всегда говорит правду, другой всегда лжёт, а кто есть кто, неизвестно.
@@ -181,8 +240,69 @@ a.ln:hover{color:var(--gold);border-bottom-color:var(--gold)}
       и лишь затем даём решать.</p>
   </section>
 
+  <!-- ═══ Почему мы ═══════════════════════════════════════════════════════
+       Каждый пункт опирается на число, снятое замером продукта
+       (инвесторы/замер_продукта.js), а не написанное от руки. -->
+  <section class="part">
+    <h2>Почему это работает лучше, чем ещё один курс</h2>
+
+    <div class="why">
+      <div>
+        <h3>Ответ не выдаётся. Никогда</h3>
+        <p>Ребёнок ошибся — и не получил красный крест. Он получил намёк. Ошибся снова — получил
+          ход мысли. И только если совсем не вышло, увидит полное решение. Ни одной «просто задачи»
+          в приложении нет.</p>
+        <span class="факт">3978 подсказок на 700 задач — почти шесть на каждую</span>
+      </div>
+
+      <div>
+        <h3>Урок — это разговор, а не видео</h3>
+        <p>Архимед показывает приём по шагам и на каждом спрашивает, понял ли ты. Ответил неверно —
+          шаг объясняется иначе. Видео этого не умеет: оно идёт дальше, даже если в комнате уже
+          никто не понимает.</p>
+        <span class="факт">451 урок · 4485 шагов разбора · в среднем 9 шагов на урок</span>
+      </div>
+
+      <div>
+        <h3>Олимпиадный приём растёт из школьной темы</h3>
+        <p>Не отдельный кружок «для сильных», куда ещё надо попасть. Ребёнок проходит дроби — и тут же,
+          на том же острове, встречает олимпиадную задачу, которая на дробях и держится. Так школьная
+          программа и олимпиада перестают быть двумя разными жизнями.</p>
+        <span class="факт">79 олимпиадных уроков, вшитых в общую карту 1–9 класса</span>
+      </div>
+
+      <div>
+        <h3>«Ошибаться можно» написано прямо на входе</h3>
+        <p>Это не вежливость. Ребёнок, который боится ошибиться, олимпиадную задачу просто не начнёт:
+          там первые двадцать минут всегда ничего не получается, и это нормальная часть работы.
+          Мы учим сидеть в этих двадцати минутах спокойно.</p>
+      </div>
+
+      <div>
+        <h3>Спросить можно вслух, посреди урока</h3>
+        <p>Архимед — голосовой помощник на искусственном интеллекте. Он слышит вопрос и отвечает
+          голосом: объяснит приём другими словами, разберёт именно ту ошибку, которую сделал ребёнок,
+          договорит то, что осталось непонятным. Печатать не нужно — достаточно спросить.</p>
+      </div>
+
+      <div>
+        <h3>Ничего не надо покупать, ставить и настраивать</h3>
+        <p>Открывается в браузере на любом телефоне, ставится на экран одной кнопкой и работает без
+          интернета — уроки и задачи лежат на устройстве. Ни магазина приложений, ни почты, ни
+          подписки на входе.</p>
+      </div>
+
+      <div>
+        <h3>Родитель видит занятие, а не отметку</h3>
+        <p>Что решал, где застрял, сколько сидел. Можно написать записку — ребёнок увидит её во весь
+          экран при следующем входе. Можно отправить задание на решение. И ни одной чужой задачи:
+          кабинет показывает только то, что по классу вашего ребёнка.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="scale">
-    <h2>Задач с подсказками и разбором — <b>700</b>. Уроков, где приём сначала объясняют, — <b>449</b>.</h2>
+    <h2>Задач с подсказками и разбором — <b>700</b>. Уроков, где приём сначала объясняют, — <b>451</b>.</h2>
 
     <div class="band" id="band" role="img"
          aria-label="700 задач: русский язык 324, начальная школа 188, разбор с Мишуткой 57, математика 41, физика 41, информатика 27, химия 22"></div>
@@ -288,7 +408,28 @@ opts.addEventListener('click', function(e){
   }
 });
 
-/* Состав банка задач — числа сняты из приложения, а не записаны от руки. */
+/* ─── Финал ВсОШ по математике 2026: 499 человек, 224 диплома ───────────
+   Рисуем ровно столько точек, сколько было людей. Ничего не округляем и
+   ничего не масштабируем: смысл картинки в том, что их можно пересчитать. */
+(function(){
+  var ВСЕГО = 499, С_ДИПЛОМОМ = 224, КОЛОНОК = 25, ШАГ = 10, R = 3.4, ОТСТУП = 5;
+  var поле = document.getElementById('поле'), ns = 'http://www.w3.org/2000/svg', куски = [];
+  for (var i = 0; i < ВСЕГО; i++){
+    var x = ОТСТУП + (i % КОЛОНОК) * ШАГ + R,
+        y = ОТСТУП + Math.floor(i / КОЛОНОК) * ШАГ + R,
+        свой = i < С_ДИПЛОМОМ;
+    куски.push('<circle cx="' + x + '" cy="' + y + '" r="' + R + '" ' +
+      (свой ? 'fill="#ffd76a"' : 'fill="none" stroke="rgba(255,215,106,.45)" stroke-width="1"') + '/>');
+  }
+  поле.innerHTML = куски.join('');
+  /* Высоту считаем по числу рядов, а не забиваем в разметку: изменится
+     число участников — картинка не разъедется. */
+  var рядов = Math.ceil(ВСЕГО / КОЛОНОК);
+  поле.setAttribute('viewBox', '0 0 ' + (ОТСТУП * 2 + КОЛОНОК * ШАГ) + ' ' + (ОТСТУП * 2 + рядов * ШАГ));
+})();
+
+/* Состав банка задач — числа сняты из приложения (инвесторы/замер_продукта.js),
+   а не записаны от руки. Сумма обязана давать 700. */
 var СОСТАВ = [
   ['Русский язык',      324, '#ffd76a'],
   ['Начальная школа',   188, '#e3b04c'],
