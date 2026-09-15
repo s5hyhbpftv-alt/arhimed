@@ -1179,10 +1179,28 @@ body.с-кнопкой .slide{padding-right:clamp(90px,16vw,150px)}
     document.body.classList.toggle('с-кнопкой',надо);
     б.textContent=document.fullscreenElement? 'выйти из полного экрана' : 'во весь экран';
   };
+  const войти=()=>{ (к.requestFullscreen||к.webkitRequestFullscreen).call(к).catch(()=>{}); };
   б.onclick=()=>{
     if(document.fullscreenElement) (document.exitFullscreen||document.webkitExitFullscreen).call(document);
-    else (к.requestFullscreen||к.webkitRequestFullscreen).call(к).catch(()=>{});
+    else войти();
   };
+  /* Полный экран «сам» при повороте. Браузеры включают его только по жесту
+     пользователя — поворот жестом не считается. Поэтому ждём первое касание
+     после поворота: им оказывается тот же свайп, которым листают. Насовсем
+     панели убирает установка на экран «Домой». */
+  let снятьОжидание=null;
+  const ждатьЖест=()=>{
+    if(снятьОжидание||document.fullscreenElement||!горизонт.matches) return;
+    const один=()=>{убрать();войти()};
+    const убрать=()=>{removeEventListener('pointerup',один,true);снятьОжидание=null};
+    снятьОжидание=убрать; addEventListener('pointerup',один,true);
+  };
+  горизонт.addEventListener('change',()=>{
+    if(горизонт.matches) ждатьЖест();
+    else { if(снятьОжидание) снятьОжидание();
+      if(document.fullscreenElement) (document.exitFullscreen||document.webkitExitFullscreen).call(document); }
+  });
+  ждатьЖест();
   горизонт.addEventListener('change',показ);
   document.addEventListener('fullscreenchange',показ);
   показ();

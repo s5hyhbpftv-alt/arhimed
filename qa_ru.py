@@ -21,6 +21,11 @@ LESSONS_MAP = {
     # 611 и 612 — словарные работы: 1 кадр вступления (три прежних слиты в один),
     # 30 и 25 слов-кадров и 2 кадра итога
     611: 33, 612: 28, 613: 17, 614: 22, 615: 13, 616: 6, 617: 10, 618: 7,
+    # 621 — лист МЦКО, продолжение естественнонаучного блока: 4 задания
+    # ситуации «Почему металл кажется холоднее» + 4-е задание «Мошек»
+    621: 5,
+    # 622 — чтение диаграмм, графиков и таблиц: 13 кадров, одна тема целиком
+    622: 13,
 }
 ok, bad = [], []
 
@@ -58,8 +63,18 @@ def node(code):
     require('%s/MVP/data/vis_pw.js');
     require('%s/MVP/data/vis_ru.js');
     try{ require('%s/MVP/data/lessons_fg6.js'); }catch(e){}
+    /* Листы Мишутки вне спецификации МЦКО: отдельным файлом, чтобы было
+       видно, что из спецификации, а что нет. Список не жёсткий — новый лист
+       подхватывается сам, иначе проверка молча его не заметит (так уже было
+       с 622). */
+    try{
+      const fs = require('fs'), path = require('path');
+      const dir = '%s/MVP/data';
+      fs.readdirSync(dir).filter(f => /^lessons_mish_/.test(f)).sort()
+        .forEach(f => { try{ require(path.join(dir, f)); }catch(e){} });
+    }catch(e){}
     %s
-    """ % (ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, code)
+    """ % (ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, ROOT, code)
     # в vis_ru.js при загрузке стартует сторож кадров (setInterval), из-за него
     # node не завершается сам: выходим явно и всё равно ограничиваем время
     src += "\nprocess.stdout.write('', ()=>{ process.exit(0); });\n"
@@ -79,8 +94,13 @@ data = json.loads(node("""
   console.log(JSON.stringify(out));
 """))
 got_ids = [L['id'] for L in data]
-check('уроков и работ в направлении ровно 18', len(data) == 18, got_ids)
-check('номера уроков 601…618 без пропусков', got_ids == list(range(601, 619)), got_ids)
+# Список ожидаемых уроков берём из LESSONS_MAP, а не пишем числом: рецепт
+# «добавить урок» велит внести id туда, и проверка должна идти следом.
+# Смысл инварианта прежний — ничего не потерялось и не появилось молча.
+ЖДЁМ = sorted(LESSONS_MAP)
+check(f'уроков и работ в направлении ровно {len(ЖДЁМ)}', len(data) == len(ЖДЁМ), got_ids)
+check('состав уроков совпадает с LESSONS_MAP', got_ids == ЖДЁМ,
+      f'лишние {sorted(set(got_ids) - set(ЖДЁМ))}, пропали {sorted(set(ЖДЁМ) - set(got_ids))}')
 for L in data:
     exp = LESSONS_MAP.get(L['id'])
     check('урок %d: %d кадров и своя сцена' % (L['id'], exp), L['steps'] == exp and L['scene'],
@@ -199,7 +219,9 @@ if os.environ.get('QA_RU_NO_LAYOUT'):
     print('  (пропущено по QA_RU_NO_LAYOUT — раскладку проверяйте отдельно: qa_layout.py 601 … 618)')
 try:
     # диапазон идёт до 618 включительно: листов теперь восемнадцать (601–618)
-    p = subprocess.run([sys.executable, os.path.join(ROOT, 'qa_layout.py')] + [str(i) for i in range(601, 619)],
+    # Список уроков берём из LESSONS_MAP: иначе новые листы (621, 622) молча
+    # не попадают в раскладку, а гейт при этом остаётся зелёным.
+    p = subprocess.run([sys.executable, os.path.join(ROOT, 'qa_layout.py')] + [str(i) for i in sorted(LESSONS_MAP)],
                        capture_output=True, text=True, cwd=ROOT,
                        env=dict(os.environ, PYTHONPATH=os.path.join(ROOT, '.py-libs')))
     out = p.stdout
