@@ -1449,31 +1449,67 @@ function coinsSVG(){
       ${сим('колокол',311,202,0.75)}
     </svg>`; }
   function flatSVG(){
+    /* Комната перерисована под площадь: ковёр лежит на полу В ПЕРСПЕКТИВЕ и
+       расчерчен на квадраты — площадь читается как «сколько квадратов
+       поместилось», а не как формула «5 · 2 = 10».
+       Пространство: точка схода (180,92), пол — трапеция, ковёр — тоже
+       трапеция, линии сетки сходятся к точке схода, дальние квадраты мельче.
+       Свет — из окна справа: на ковре световое пятно. */
+    /* Линии сетки считаем по кромкам трапеции: раньше они выходили за ковёр
+       и висели на полу зелёными штрихами. Кромки: слева 42→26, справа 232→248,
+       глубина 112→196. Квадраты выходят мельче вглубь — это и есть перспектива. */
+    const лев=(y)=>42-((y-112)/84)*16, прав=(y)=>232+((y-112)/84)*16;
+    let сетка='';
+    for(let i=1;i<5;i++){
+      const y=112+(84/5)*i;
+      сетка+=`<path d="M${лев(y).toFixed(1)} ${y.toFixed(1)} L${прав(y).toFixed(1)} ${y.toFixed(1)}" stroke="#3a6b46" stroke-width="1.6" opacity=".6"/>`;
+    }
+    for(let i=1;i<8;i++){
+      const t=i/8, xв=42+(232-42)*t, xн=26+(248-26)*t;
+      сетка+=`<path d="M${xв.toFixed(1)} 112 L${xн.toFixed(1)} 196" stroke="#3a6b46" stroke-width="1.6" opacity=".6"/>`;
+    }
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
-      <rect x="0" y="0" width="360" height="210" fill="#f0e0c0"/>
-      <rect x="0" y="0" width="360" height="96" fill="#e0cfa8"/>
-      <!-- окно -->
-      <rect x="250" y="14" width="90" height="60" rx="5" fill="#bfe6f7" stroke="#7c5a34" stroke-width="5"/>
-      <line x1="295" y1="14" x2="295" y2="74" stroke="#7c5a34" stroke-width="4"/>
-      <!-- пол-плитка -->
-      <g stroke="#b3905f" stroke-width="2">
-        <line x1="0" y1="96" x2="360" y2="96"/>
-        <line x1="0" y1="130" x2="360" y2="130"/>
-        <line x1="0" y1="164" x2="360" y2="164"/>
-        <line x1="0" y1="198" x2="360" y2="198"/>
+      <defs>
+        <linearGradient id="flWall" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#eadfc4"/><stop offset="1" stop-color="#dccb9f"/></linearGradient>
+        <linearGradient id="flFloor" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#c8a473"/><stop offset="1" stop-color="#a9834f"/></linearGradient>
+        <radialGradient id="flSun" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#fff6d8" stop-opacity=".8"/><stop offset="1" stop-color="#fff6d8" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect x="0" y="0" width="360" height="92" fill="url(#flWall)"/>
+      <!-- окно — источник света кадра -->
+      <rect x="238" y="10" width="104" height="66" rx="5" fill="#fff" stroke="#7c5a34" stroke-width="6"/>
+      <rect x="246" y="18" width="88" height="50" fill="#cbe9fb"/>
+      <circle cx="316" cy="34" r="8" fill="#ffe08a"/>
+      <ellipse cx="272" cy="34" rx="12" ry="5" fill="#fff" opacity=".9"/>
+      <line x1="290" y1="18" x2="290" y2="68" stroke="#7c5a34" stroke-width="4"/>
+      <line x1="246" y1="43" x2="334" y2="43" stroke="#7c5a34" stroke-width="4"/>
+      <path d="M238 10 q10 22 0 34 q-4 -6 0 -34 Z" fill="#d97b6c"/>
+      <path d="M342 10 q-10 22 0 34 q4 -6 0 -34 Z" fill="#d97b6c"/>
+      <rect x="0" y="88" width="360" height="6" fill="#bfa173"/>
+      <!-- пол в перспективе -->
+      <path d="M0 94 L360 94 L360 210 L0 210 Z" fill="url(#flFloor)"/>
+      <ellipse cx="268" cy="140" rx="120" ry="66" fill="url(#flSun)"/>
+      <!-- ковёр 5 x 2: трапеция на полу, расчерченная на квадраты -->
+      <path d="M26 196 L248 196 L232 112 L42 112 Z" fill="#5f9a6a" stroke="#33603f" stroke-width="4"/>
+      ${сетка}
+      <path d="M26 196 L248 196 L246 188 L28 188 Z" fill="#7fb45c" opacity=".5"/>
+      <path d="M42 112 L232 112 L230 118 L44 118 Z" fill="#7fb45c" opacity=".4"/>
+      <!-- образец: один квадратный метр объёмом -->
+      <g transform="translate(276,134)">
+        <path d="M0 34 L34 34 L34 0 L0 0 Z" fill="#d9a441" stroke="#a3762a" stroke-width="3"/>
+        <path d="M0 0 L10 -8 L44 -8 L34 0 Z" fill="#e8b95c" stroke="#a3762a" stroke-width="3"/>
+        <path d="M34 0 L44 -8 L44 26 L34 34 Z" fill="#c1912f" stroke="#a3762a" stroke-width="3"/>
       </g>
-      <!-- ковёр 5x2 (условно) -->
-      <rect x="30" y="104" width="170" height="60" rx="8" fill="#5f9a6a" stroke="#3a6b46" stroke-width="4"/>
-      <rect x="46" y="120" width="26" height="26" fill="#7fb45c"/>
-      <rect x="86" y="120" width="26" height="26" fill="#7fb45c"/>
-      <rect x="126" y="120" width="26" height="26" fill="#7fb45c"/>
-      <rect x="166" y="120" width="26" height="26" fill="#7fb45c"/>
-      <rect x="46" y="160" width="26" height="26" fill="#7fb45c" opacity=".6"/>
-      <!-- квадрат-образец -->
-      <rect x="250" y="118" width="40" height="40" fill="#d9a441" stroke="#a3762a" stroke-width="3"/>
-      <text x="258" y="144" font-size="14" fill="#5f3a1a">1 м²</text>
-      ${сим('книга',129,196,1,'#d9a441')}
+      <!-- кресло у окна, чтобы комната читалась комнатой -->
+      <g transform="translate(296,146)">
+        <path d="M0 58 L0 16 C0 6 10 0 20 0 L40 0 C48 0 54 6 54 16 L54 58 Z" fill="#a8503c" stroke="#6e3226" stroke-width="3"/>
+        <path d="M54 58 L54 18 C54 10 60 8 66 10 L72 14 L72 58 Z" fill="#8f4433" stroke="#6e3226" stroke-width="3"/>
+        <path d="M0 46 L72 46 L72 58 L0 58 Z" fill="#c26a52" stroke="#6e3226" stroke-width="3"/>
+      </g>
     </svg>`; }
+
   function toysSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <rect x="0" y="0" width="360" height="210" fill="#f6e3c5"/>
