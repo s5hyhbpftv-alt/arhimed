@@ -16,7 +16,7 @@
    ГЛАВНОЕ РЕШЕНИЕ КАРТИНОК: десяток в каждом кадре — НОВЫЙ ПРЕДМЕТ.
    Первый заход рисовал домик подряд в пяти кадрах, и урок выглядел как одна
    картинка с разными числами. Теперь: пальцы, домик, гирлянда, звёзды,
-   свиток, два домика рядом, ночное небо, домик с орехами, грядка, свиток.
+   свиток, два домика рядом, ночное небо, домик со светлячками, грядка, свиток.
    Так у ребёнка складывается не «запомнил эту картинку», а «десять бывает
    любым — важно, как оно делится».
 
@@ -31,7 +31,7 @@
      лестница    — заполнить пропуски в списке пар;
      зеркало     — сравнить две записи;
      молния      — четыре быстрых ответа подряд;
-     орехи       — перенести ровно столько, сколько нужно.
+     светлячки   — перенести ровно столько, сколько нужно.
 
    Кегли, контраст и цели касания — по правилам проекта: не меньше 44 px на
    палец первоклассника, контраст текста не ниже 4,5:1, всякое движение
@@ -256,19 +256,19 @@
     display:inline-flex; align-items:center; justify-content:center}
   #lvis .${ДОМ} .дырка.выбран{border-color:var(--верно); background:#fff8d8; border-style:solid}
 
-  /* орехи в лапке */
+  /* то, что ребёнок переносит в руке: светлячки и морковки */
   #lvis .${ДОМ} .лапка{
     display:grid; grid-template-columns:repeat(3,56px); gap:10px;
     justify-content:center; max-width:300px;
   }
-  #lvis .${ДОМ} .орех{
+  #lvis .${ДОМ} .нести{
     appearance:none; width:56px; height:56px; padding:0; background:none;
     border:none; cursor:pointer; transition:transform 180ms ease, opacity 240ms ease;
   }
-  #lvis .${ДОМ} .орех svg{width:100%; height:100%; display:block}
-  #lvis .${ДОМ} .орех:active{transform:scale(.9)}
-  #lvis .${ДОМ} .орех.улетел{opacity:.2; transform:scale(.72); pointer-events:none}
-  #lvis .${ДОМ} .орех:focus-visible{outline:3px solid #fff; outline-offset:2px; border-radius:50%}
+  #lvis .${ДОМ} .нести svg{width:100%; height:100%; display:block}
+  #lvis .${ДОМ} .нести:active{transform:scale(.9)}
+  #lvis .${ДОМ} .нести.улетел{opacity:.2; transform:scale(.72); pointer-events:none}
+  #lvis .${ДОМ} .нести:focus-visible{outline:3px solid #fff; outline-offset:2px; border-radius:50%}
 
   /* подсказка снизу и итог */
   #lvis .${ДОМ} .что-делать{
@@ -293,7 +293,7 @@
     #lvis .${ДОМ} .грядка{gap:6px; padding:10px 6px 14px}
     #lvis .${ДОМ} .сцена{padding:12px 6px 10px}
     #lvis .${ДОМ} .лапка{grid-template-columns:repeat(3,52px); gap:8px}
-    #lvis .${ДОМ} .орех{width:52px; height:52px}
+    #lvis .${ДОМ} .нести{width:52px; height:52px}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -657,10 +657,10 @@
     }).join('') + `</div>`;
 
   /* ── морковка для грядки: в корзинке у морковной грядки должна лежать
-        морковка, а не орех ── */
+        морковка, а не светлячок ── */
   const морковка = (улетел, шагНомер, надо, n) =>
-    `<button type="button" class="орех${улетел?' улетел':''}"
-       onclick="ЖК10.орех(${шагНомер},${надо})" aria-label="Морковка ${n}">
+    `<button type="button" class="нести${улетел?' улетел':''}"
+       onclick="ЖК10.нести(${шагНомер},${надо})" aria-label="Морковка ${n}">
       <svg viewBox="0 0 56 56">
         <path d="M28,20 C21,13 15,9 10,4 C18,6 25,12 28,20 Z" fill="#4f8f3a" stroke="#2c5a20" stroke-width="2.4" stroke-linejoin="round"/>
         <path d="M28,20 C24,12 22,7 22,1 C28,6 30,13 28,20 Z" fill="#5ea343" stroke="#2c5a20" stroke-width="2.4" stroke-linejoin="round"/>
@@ -674,16 +674,32 @@
         <path d="M23,24 q5,-2.4 10,0" stroke="rgba(255,255,255,.42)" stroke-width="2.8" fill="none"/>
       </svg></button>`;
 
-  /* ── ОРЕХ ── */
-  const орех = (улетел, шагНомер, надо, n) =>
-    `<button type="button" class="орех${улетел?' улетел':''}"
-       onclick="ЖК10.орех(${шагНомер},${надо})" aria-label="Орешек ${n}">
+  /* ── СВЕТЛЯЧОК ──
+     Здесь был орешек, и это была ошибка по смыслу: орех в окно не летит и
+     окна не зажигает. В грядку морковка ложится сама собой, а домику нужен
+     тот, кто даёт свет. Светлячок влетает в тёмное окно — и окно горит;
+     ребёнку не нужно объяснять связь, она видна. ── */
+  const светлячок = (улетел, шагНомер, надо, n) =>
+    `<button type="button" class="нести${улетел?' улетел':''}"
+       onclick="ЖК10.нести(${шагНомер},${надо})" aria-label="Светлячок ${n}">
       <svg viewBox="0 0 56 56">
-        <path d="M28,4 q20,0 20,22 q0,20 -20,28 q-20,-8 -20,-28 q0,-22 20,-22 z"
-              fill="#c98a45" stroke="#6b4423" stroke-width="4"/>
-        <path d="M28,6 v46" stroke="#6b4423" stroke-width="3" opacity=".6"/>
-        <path d="M14,24 q14,6 28,0" stroke="#6b4423" stroke-width="3" fill="none" opacity=".45"/>
-        <ellipse cx="20" cy="18" rx="5" ry="7" fill="#e3ab72" opacity=".55"/>
+        <circle cx="28" cy="36" r="14" fill="var(--свет)" opacity=".2"/>
+        <ellipse cx="18" cy="22" rx="10" ry="6" transform="rotate(-28 18 22)"
+                 fill="#fff8e0" opacity=".5" stroke="#e8dcb8" stroke-width="1.4"/>
+        <ellipse cx="38" cy="22" rx="10" ry="6" transform="rotate(28 38 22)"
+                 fill="#fff8e0" opacity=".5" stroke="#e8dcb8" stroke-width="1.4"/>
+        <path d="M25,11 C22,7 20,5 19,4" stroke="#2a2118" stroke-width="2.2"
+              fill="none" stroke-linecap="round"/>
+        <path d="M31,11 C34,7 36,5 37,4" stroke="#2a2118" stroke-width="2.2"
+              fill="none" stroke-linecap="round"/>
+        <ellipse cx="28" cy="31" rx="8" ry="14" fill="#5b4a2a" stroke="#2a2118" stroke-width="2.6"/>
+        <path d="M21,30 q7,3 14,0 M22,37 q6,2.6 12,0" stroke="#2a2118"
+              stroke-width="1.8" fill="none" opacity=".55"/>
+        <circle cx="28" cy="15" r="6" fill="#6b5a35" stroke="#2a2118" stroke-width="2.4"/>
+        <circle cx="25.6" cy="14.4" r="1.5" fill="#fff"/>
+        <circle cx="30.4" cy="14.4" r="1.5" fill="#fff"/>
+        <circle cx="28" cy="42" r="7" fill="var(--свет)" stroke="var(--свет-2)" stroke-width="2"/>
+        <circle cx="28" cy="41" r="3.4" fill="#fff6c9"/>
       </svg></button>`;
 
   const числа = (список, выбран, верный, шагНомер, ключ, мимо) =>
@@ -818,22 +834,24 @@
     готов: st => (st.пройдено||[]).length === 4,
     делать:'Четыре вопроса подряд'
   },
-  /* 7 · ДОМИК И ОРЕХИ — возврат к домику осмысленный: это его развязка */ {
+  /* 7 · ДОМИК И СВЕТЛЯЧКИ — возврат к домику осмысленный: это его развязка */ {
     t:'Зачем это нужно: 8 и ещё 5',
-    say:'В домике горит восемь. У меня пять орешков. Сколько станет всего?',
+    say:'В домике горит восемь. У меня пять светлячков. Сколько станет всего?',
     рисуй(i, st){
       const п = st.перенесено || 0;
       const горят = Array.from({length:8+п},(_,j)=>j);
       return `<div class="сцена">${небо(9)}<div class="поверх">
         ${домик(горят, false, i)}
-        <div class="лапка">` + Array.from({length:5},(_,j)=>орех(j<п, i, 2, j+1)).join('') + `</div>
+        <div class="лапка">` + Array.from({length:5},(_,j)=>светлячок(j<п, i, 2, j+1)).join('') + `</div>
         <p class="счёт"><span class="жёлт">в домике <b>${8+п}</b></span>
-          <span class="синь">в лапке <b>${5-п}</b></span></p>
+          <span class="синь">ждут <b>${5-п}</b></span></p>
       </div></div>`
-      + (п>=2 ? готово('Домик полон — это 10. В лапке осталось 3. Десять и ещё три — тринадцать!') : '');
+      + (п>=2 ? готово('Домик полон — это 10. И ещё три светлячка. Десять и три — тринадцать!') : '');
     },
     готов: st => (st.перенесено||0) >= 2,
-    делать:'Дополни домик до десяти'
+    /* Подпись называет то, что РЕАЛЬНО нажимается: окна здесь disabled,
+       домик задан условием, ребёнок отправляет светлячков. */
+    делать:'Нажми на светлячка — он влетит в тёмное окно'
   },
   /* 8 · ГРЯДКА */ {
     t:'Теперь сам: 7 и ещё 6',
@@ -906,7 +924,7 @@
       if (ключ === 'зеркало' || ключ === 'ответ'){ st.ответ = n; перерисовать(); return; }
     },
     дырка(i, j){ const st = сост(i); st.выбираю = j; перерисовать(); },
-    орех(i, надо){
+    нести(i, надо){
       const st = сост(i); st.перенесено = Math.min(надо, (st.перенесено || 0) + 1);
       перерисовать();
     }
