@@ -3514,12 +3514,36 @@ function coinsSVG(){
   }
 
   /* HTML-герой: крупный, полностью видимый, стоит на «земле» сцены */
-  function heroHTML(who, emo, side){
+  /* ── портреты Архимеда картинками ─────────────────────────────────────
+     Владелец нарисовал набор вариаций: пять выражений лица (спокойный, удивление,
+     размышление, смех, тревога) и фигуру в рост с циркулем. Здесь они идут в
+     кадр вместо векторной головы: живые выражения читаются лучше на телефоне.
+     Если картинка не загрузилась, onerror возвращает прежний вектор — кадр не
+     ломается ни при обрыве сети, ни в офлайне до первой загрузки. */
+  const ФОТО_АРХ = {
+    smile: 'img/arch_smile.jpg',
+    wow:   'img/arch_wow.jpg',
+    think: 'img/arch_think.jpg',
+    laugh: 'img/arch_laugh.jpg',
+    sad:   'img/arch_sad.jpg'
+  };
+  const ФОТО_ТЕЛО = 'img/arch_body.png';
+  function archPhoto(emo, вид){
+    const файл = ФОТО_АРХ[emo] || ФОТО_АРХ.smile;
+    if(вид === 'тело') return `<img class="c2h-foto c2h-тело" src="${ФОТО_ТЕЛО}" alt=""
+      onerror="this.style.display='none'">`;
+    return `<img class="c2h-foto" src="${файл}" alt="" onerror="this.style.display='none'">`;
+  }
+  function heroHTML(who, emo, side, один){
     const P=PERS[who]||PERS.arch;
     const nm = who==='kid' ? (heroKidName()||'Ты') : P.name;
     const col = who==='kid' ? heroKidColor() : P.color;
+    /* Архимеда показываем картинкой владельца; остальные герои — вектором.
+       Когда он в кадре один, берём фигуру в рост: так в уроке чередуются
+       портрет и полный рост, и кадры не выглядят одинаковыми. */
+    const внутри = who==='arch' ? archPhoto(emo, один ? 'тело' : null) : P.svg(emo);
     return `<div class="c2-hero ${side}" data-hero="${who}">
-      <div class="c2h-card">${P.svg(emo)}</div>
+      <div class="c2h-card">${внутри}</div>
       <div class="c2h-name" style="color:${col}">${escHtml(nm)}</div>
     </div>`;
   }
@@ -3668,6 +3692,16 @@ function coinsSVG(){
       .c2-hero .c2h-card { width:100%; border-radius:16px 16px 6px 6px; overflow:hidden;
         border:4px solid #33291e; background:#fff; box-shadow:0 8px 20px rgba(0,0,0,.25); }
       .c2-hero .c2h-card svg { display:block; width:100%; height:auto; }
+      /* Портрет владельца: заполняет карточку, лицо держим в верхней части,
+         иначе на узком кадре голова уезжает за нижний край. */
+      /* Обе картинки показываем ЦЕЛИКОМ. Было object-fit:cover с min-height —
+         и верх головы срезался: карточка ниже минимума, а cover добивает кадр
+         по ширине и обрезает лишнее сверху. Теперь contain: картинка входит в
+         карточку без обрезки, портрет стоит по центру, фигура — от нижнего края,
+         как герой на земле. */
+      .c2-hero .c2h-card .c2h-foto { display:block; width:100%; height:100%;
+        object-fit:contain; object-position:50% 50%; }
+      .c2-hero .c2h-card .c2h-тело { object-position:50% 100%; }
       .c2-hero .c2h-name { margin-top:4px; font-size:13px; font-weight:bold; background:#fffdf4;
         padding:1px 8px; border-radius:999px; border:2px solid #33291e;
         max-width:100%; box-sizing:border-box; white-space:nowrap; overflow:hidden;
@@ -3746,7 +3780,7 @@ function coinsSVG(){
           ${sceneArt(scene, fr)}
           <div class="c2-talk" id="c2cur"><span class="c2-say"></span><span class="c2-caret"></span></div>
           <div class="c2-cast${many?' c2-many':(solo?' c2-solo':'')}">
-            ${heroHTML(who, emo, 'talker')}
+            ${heroHTML(who, emo, 'talker', solo)}
             ${(fr.with||[]).filter(w=>w!==who).slice(0,2).map((w,i)=>heroHTML(w,'smile','listener-'+(i+1))).join('')}
           </div>
         </div>
