@@ -44,11 +44,11 @@ window.NCOMIC_BOOK = {
       say: 'Каждой морковке с первой грядки ищем пару на второй. Всем хватило пары — значит поровну. Где-то осталась без пары — там больше.',
       thinking: 'Пара нашлась у всех? Кучки одинаковые. Осталась лишняя? В той кучке больше.' },
 
-    /* 4. правило словами */
-    { art: 'none', who: { name: 'Настя', kind: 'girl', emo: 'wow' },
+    /* 4. правило, нарисованное на трёх парах предметов */
+    { art: 'rule', who: { name: 'Настя', kind: 'girl', emo: 'wow' },
       t: 'Три слова: больше, меньше, столько же',
       cap: 'Это и есть сравнение.',
-      say: 'Столько же — каждой нашлась пара. Больше — есть лишние без пары. Меньше — лишние нашлись в другой кучке. И считать не пришлось!' },
+      thinking: 'Всем нашлась пара — столько же. Остались лишние — больше. Лишние у другого — меньше. Считать не пришлось!' },
 
     /* 5. развилка-ловушка */
     { ask: 'Морковки лежат на грядках разной длины. Что это значит?',
@@ -120,13 +120,13 @@ window.NCOMIC_BOOK = {
 
     /* 13. разворот истории */
     { art: 'story', t: 'Разворот истории',
-      thinking: 'Вот все твои решения. Красная точка — там, где история повернула на разбор ошибки.' },
+      thinking: 'Твои решения — на щите: зелёная галка значит «верно», красный крестик — «здесь история повернула на разбор ошибки».' },
 
     /* 14. итог */
-    { art: 'none', who: { name: 'Батюшка', kind: 'farmer', emo: 'smile' },
+    { art: 'final', who: { name: 'Батюшка', kind: 'farmer', emo: 'smile' },
       t: 'Что мы сегодня поняли',
       cap: 'Три слова, которыми пользуются математики.',
-      say: 'Столько же — всем предметам нашлась пара. Больше — остались лишние. Меньше — лишние нашлись у другого. Длина, вес и место не помогают: сравниваем сами предметы.' }
+      say: 'Спасибо, Настенька! Теперь мы знаем: сравниваем сами предметы, а не место, где они лежат.' }
   ],
 
   check: {
@@ -192,10 +192,11 @@ window.NCOMIC_BOOK = {
 
   /* ── предметы ─────────────────────────────────────────────────────── */
   const морковь = (x, y, s) => `<g transform="translate(${x},${y}) scale(${s})">
-      <path d="M0 0 C7 8 9 22 0 32 C-9 22 -7 8 0 0 Z" fill="#e2803a" stroke="#8a4a1c" stroke-width="1.4"/>
-      <path d="M-6 -6 C-14 -14 -18 -26 -14 -34" stroke="#4e7f2f" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M0 -8 C0 -18 2 -28 6 -34" stroke="#4e7f2f" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M6 -6 C13 -14 20 -22 22 -30" stroke="#4e7f2f" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M0 0 C4.5 -10 7 -22 5 -32 C1 -40 -3 -40 -6 -32 C-10 -22 -6 -10 0 0 Z" fill="#e2803a" stroke="#8a4a1c" stroke-width="1.4"/>
+      <path d="M-4 -29 C-5 -34 -3 -38 -1 -40" stroke="#c96a2c" stroke-width="1" fill="none" opacity=".7"/>
+      <path d="M-5 -33 C-11 -41 -15 -50 -13 -57" stroke="#4e7f2f" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M1 -35 C2 -45 4 -52 8 -58" stroke="#4e7f2f" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M6 -32 C12 -39 17 -46 19 -53" stroke="#4e7f2f" stroke-width="3" fill="none" stroke-linecap="round"/>
     </g>`;
   const гриб = (x, y, s) => `<g transform="translate(${x},${y}) scale(${s})">
       <rect x="-4" y="0" width="8" height="18" rx="3" fill="#f0e2c4" stroke="#8a6d4a" stroke-width="1.4"/>
@@ -204,17 +205,47 @@ window.NCOMIC_BOOK = {
     </g>`;
   const предметы = { carrot: морковь, mushroom: гриб };
 
+  /* ── вспомогательное для сцен ─────────────────────────────────────── */
+  /* Фигура в кадре: коробка берётся СТРОГО той же пропорции, что и её
+     viewBox, — при чужой пропорции `meet` вписывает фигуру по ширине,
+     коробка оказывается выше фигуры и низ уезжает под землю. */
+  const ростФигуры = (ш) => ш * 130 / 120;
+  const фигура = (ч, x, линия, ш, лицом) => `<g transform="translate(${x},${(линия - ростФигуры(ш)).toFixed(1)})">
+      <svg x="0" y="0" width="${ш}" height="${ростФигуры(ш).toFixed(1)}" viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet">${(лица[ч.kind] || лица.farmer)(ч.emo || 'smile')}</svg>
+    </g>`;
+  const фигураВлево = (ч, x, линия, ш) => `<g transform="translate(${x},${(линия - ростФигуры(ш)).toFixed(1)}) translate(${ш},0) scale(-1,1)">
+      <svg x="0" y="0" width="${ш}" height="${ростФигуры(ш).toFixed(1)}" viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet">${(лица[ч.kind] || лица.farmer)(ч.emo || 'smile')}</svg>
+    </g>`;
+  /* Морковка «лёжа» (или приподнятая): хвостик вправо, ботва вправо-вверх.
+     Стоящая морковка в ряду грядки читается как частокол, лежащая — как
+     грядка. Тело 34×14 при масштабе 1: оранжевое видно и над доской. */
+  const морковьЛежит = (x, y, s, цв) => `<g transform="translate(${x},${y}) scale(${s})">
+      <path d="M0 0 C12 5 26 7 34 3 C24 13 10 14 0 11 Z" fill="${цв || '#e2803a'}" stroke="#8a4a1c" stroke-width="1.6"/>
+      <path d="M33 2 C39 -4 43 -10 44 -15" stroke="#4e7f2f" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M33 4 C40 2 46 0 50 -4" stroke="#4e7f2f" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    </g>`;
+  /* Грибы и морковки в корзинах заметно мельче грядковых: иначе семь штук
+     не помещаются между героями и залезают на них. */
+  const грибМелкий = (x, y, s) => `<g transform="translate(${x},${y})">
+      <rect x="-2.6" y="0" width="5.2" height="11" rx="2" fill="#f0e2c4" stroke="#8a6d4a" stroke-width="1.1"/>
+      <path d="M-11 1 C-11 -8 11 -8 11 1 Z" fill="#c65b4a" stroke="#7c3326" stroke-width="1.3"/>
+      <circle cx="-4" cy="-3" r="1.6" fill="#f6efe0"/><circle cx="3.4" cy="-1.4" r="1.3" fill="#f6efe0"/>
+    </g>`;
+
+  const ТЕКСТ = 'font-family="Georgia,\'Times New Roman\',serif"';
+  const ОБВОД = (ш) => `stroke="#2f4a1f" stroke-width="${ш}" paint-order="stroke" stroke-linejoin="round"`;
+
   /* ── фоны ─────────────────────────────────────────────────────────── */
-  function фон(scene, земляЗадана){
-    const земля = земляЗадана || 240, низ = земля + 200;
+  function фон(scene, земляЗадана, высотаЗадана){
+    const земля = земляЗадана || 240, низ = высотаЗадана || (земля + 200);
     if (scene === 'yard') return `
       <rect x="0" y="0" width="360" height="${земля}" fill="#bfe0ef"/>
       <circle cx="310" cy="42" r="24" fill="#ffd76a"/>
       <ellipse cx="80" cy="48" rx="34" ry="15" fill="#eaf3fa"/>
       <rect x="0" y="${земля}" width="360" height="${низ - земля}" fill="#8fae62"/>
-      <path d="M244 ${земля} L244 ${земля - 62} L322 ${земля - 62} L322 ${земля} Z" fill="#c98a5a" stroke="#7c5230" stroke-width="2.6"/>
-      <path d="M236 ${земля - 62} L283 ${земля - 94} L330 ${земля - 62} Z" fill="#a8503c" stroke="#7c3326" stroke-width="2.6"/>
-      <rect x="270" y="${земля - 40}" width="26" height="40" fill="#8a5a3a" stroke="#5e3a24" stroke-width="2"/>`;
+      <path d="M296 ${земля} L296 ${земля - 40} L352 ${земля - 40} L352 ${земля} Z" fill="#c98a5a" stroke="#7c5230" stroke-width="2.6"/>
+      <path d="M288 ${земля - 40} L324 ${земля - 64} L360 ${земля - 40} Z" fill="#a8503c" stroke="#7c3326" stroke-width="2.6"/>
+      <rect x="312" y="${земля - 27}" width="20" height="27" fill="#8a5a3a" stroke="#5e3a24" stroke-width="2"/>`;
     return `
       <rect x="0" y="0" width="360" height="${земля}" fill="#bfe0ef"/>
       <circle cx="308" cy="38" r="22" fill="#ffd76a"/>
@@ -225,7 +256,229 @@ window.NCOMIC_BOOK = {
       <path d="M328 ${земля} C328 ${земля - 34} 322 ${земля - 58} 312 ${земля - 74}" stroke="#6f8f4a" stroke-width="3" fill="none"/>`;
   }
 
-  /* ── живая сцена сравнения ────────────────────────────────────────── */
+  /* ============ СЦЕНЫ СТРАНИЦ-РАЗВИЛОК (индексы 1, 4, 9) ============
+     До правки развилка была голым вопросом: две кнопки на пустом фоне, ни
+     героев, ни предмета выбора. Ребёнок 6–7 лет терял нить: непонятно, где
+     он и что сравнивает. Теперь у каждой развилки своя сцена: сад или двор,
+     оба героя и ТОТ САМЫЙ предмет, о котором спрашивают.
+     Кадр короткий (360×178) намеренно: под облачком с вопросом и кнопками
+     должно остаться место на экране 390×640, иначе сцена уходит под сгиб. */
+  const ВЫСОТА_РАЗВИЛКИ = 178;
+  /* Сцена разворота истории ниже: решение рисуется планшетом в рост героя, и
+     при высоте развилки внизу оставалось пустое поле травы. */
+  const ВЫСОТА_РАЗВОРОТА = 118;
+  const ЛИНИЯ_РАЗВОРОТА = 104;
+  /* Сцена-итог выше: герои прощаются в полный рост, а на столбе висят три
+     плашки с правилами. */
+  const ВЫСОТА_ИТОГА = 210;
+  const ЛИНИЯ_ИТОГА = 110;
+
+  /* Подпись с числами поверх травы: тёмная обводка держит контраст. */
+  const подписьРазвилки = (x, y, t, р) => `<text x="${x}" y="${y}" text-anchor="middle" ${ТЕКСТ}
+      font-size="${р || 14}" font-weight="bold" fill="#fdf6e0" ${ОБВОД(4)}>${t}</text>`;
+
+  /* Общее обрамление сцены развилки: небо и земля по краям фигур.
+     Линия земли на 78 — не выше: грядки и корзины поднимаются вверх, а под
+     фигурами должен остаться кусок травы, иначе они стоят на самой кромке
+     кадра. Кадр низкий намеренно: под ним ещё облачко с вопросом и кнопки,
+     и на экране 390×640 всё вместе должно попадать в поле зрения. */
+  const ЛИНИЯ_РАЗВИЛКИ = 78;
+  const рамаРазвилки = (scene) => `${фон(scene === 'yard' ? 'yard' : 'garden', ЛИНИЯ_РАЗВИЛКИ, ВЫСОТА_РАЗВИЛКИ)}
+      <line x1="0" y1="${ЛИНИЯ_РАЗВИЛКИ}" x2="360" y2="${ЛИНИЯ_РАЗВИЛКИ}" stroke="#4a7a33" stroke-width="2"/>`;
+
+  /* Ветка первая: две грядки, на левой 4 морковки, на правой 6.
+     Морковки СТОЯТ на грядке: у лежащей на боку была видна одна ботва, и
+     грядка читалась как трава. Стоящая морковка показывает и оранжевое
+     тело, и ботву — то, что ребёнок и должен сравнивать. */
+  function сценаГрядок(){
+    const доска = (x, ш) => `<rect x="${x}" y="66" width="${ш}" height="10" rx="5"
+        fill="#a9773f" stroke="#6f4a24" stroke-width="1.8"/>`;
+    const грядка = (n, x, шаг, s, ш, y) => {
+      let out = '';
+      for (let i = 0; i < n; i++) out += морковь(x + i * шаг, y || 61, s);
+      return out + доска(x - 14, ш);
+    };
+    return рамаРазвилки('garden') +
+      грядка(4, 42, 32, 0.72, 136, 54) +
+      грядка(6, 180, 28, 0.64, 172, 54) +
+      `<line x1="163" y1="24" x2="163" y2="86" stroke="#6f4a24" stroke-width="2" stroke-dasharray="5 5"/>` +
+      подписьРазвилки(88, 94, 'первая: 4', 14) +
+      подписьРазвилки(258, 94, 'вторая: 6', 14);
+  }
+
+  /* Ветка вторая: длинная грядка с редкой морковкой и короткая с густой. */
+  function сценаЛовушки(){
+    const доска = (x, ш) => `<rect x="${x}" y="66" width="${ш}" height="10" rx="5"
+        fill="#a9773f" stroke="#6f4a24" stroke-width="1.8"/>`;
+    const грядка = (n, x, шаг, s, ш, y) => {
+      let out = '';
+      for (let i = 0; i < n; i++) out += морковь(x + i * шаг, y || 61, s);
+      return out + доска(x - 14, ш);
+    };
+    /* Длинная грядка — редкая морковка, короткая — густая: длина есть, а
+       моркови на короткой больше. Это и есть ловушка страницы. */
+    return рамаРазвилки('garden') +
+      грядка(4, 40, 44, 0.76, 164, 54) +
+      грядка(5, 218, 28, 0.62, 138, 54) +
+      подписьРазвилки(97, 94, 'длинная: 4', 14) +
+      подписьРазвилки(273, 94, 'короткая: 5', 14);
+  }
+
+  /* Ветка третья: корзина Насти и корзина Батюшки, 7 и 5 грибов.
+     Грибы стоят кучками на земле и обведены кольцами у лишних, а корзины
+     лежат рядом — так видно и «сколько», и «у кого больше». */
+  function сценаКорзин(){
+    const корзина = (x, цв) => `<g>
+      <path d="M${x - 24} 66 L${x + 24} 66 L${x + 17} 79 L${x - 17} 79 Z"
+        fill="${цв}" stroke="#7c5230" stroke-width="2.2"/>
+      <path d="M${x - 22} 72 L${x + 22} 72" stroke="#8a6a45" stroke-width="1.4"/>
+      <path d="M${x - 20} 66 C${x - 16} 53 ${x + 16} 53 ${x + 20} 66"
+        fill="none" stroke="#7c5230" stroke-width="2"/>
+    </g>`;
+    const грибыРяд = (n, x, y, меньш) => {
+      let out = '';
+      for (let i = 0; i < n; i++){
+        out += грибМелкий(x + i * 19, y, 1.05);
+        if (i >= меньш) out += `<circle cx="${x + i * 19}" cy="${y - 4}" r="12.5"
+          fill="none" stroke="${GOLD}" stroke-width="2.6" stroke-dasharray="4 3"/>`;
+      }
+      return out;
+    };
+    /* У Насти 7 грибов — два ряда, два верхних обведены: они и есть
+       «больше». У Батюшки 5 — один ряд, кольца нет. */
+    return рамаРазвилки('yard') +
+      грибыРяд(4, 16, 46, 4) + грибыРяд(3, 16, 64, 0) +
+      корзина(56, '#c98a5a') +
+      грибыРяд(5, 206, 64, 0) +
+      корзина(252, '#a8503c') +
+      подписьРазвилки(56, 96, 'Настя: 7', 13) + подписьРазвилки(252, 96, 'Батюшка: 5', 13);
+  }
+
+  /* ── сцена разворота истории (индекс 12) ────────────────────────────
+     Список решений был просто строками текста. Теперь решения показаны
+     дощечками на щите — верное отмечено зелёной галкой, ошибочное
+     крестиком, — а рядом стоят герои и держат щит. */
+  function сценаРазворота(очередь){
+    const метки = (очередь || []).slice(0, 3).map(v => !!v);
+    /* Рамка разворота ниже развилки, поэтому у неё своя линия земли: иначе
+       под планшетом оставалось пустое поле травы в половину кадра. */
+    const земля = ЛИНИЯ_РАЗВОРОТА, высота = ВЫСОТА_РАЗВОРОТА;
+    const фонСцены = `${фон('garden', земля, высота)}
+      <line x1="0" y1="${земля}" x2="360" y2="${земля}" stroke="#4a7a33" stroke-width="2"/>`;
+    /* Планшет: одна доска на все три решения, слоты нарисованы заранее, а
+       сверху кладутся отметки — верное зелёной галкой, ошибочное красным
+       крестиком. Доска стоит НА линии земли и не выше героев. */
+    const доска = (i) => {
+      const y = 56 + i * 15;
+      if (i >= метки.length) return '';
+      const ок = метки[i];
+      return `<g>
+        <rect x="145" y="${y}" width="70" height="13" rx="4" fill="#fdf6e0" stroke="#7c5230" stroke-width="1.6"/>
+        <path d="${ок ? `M${155} ${y + 7} l3.5 4 l8 -9` : `M${156} ${y + 2.5} l9 9 M${165} ${y + 2.5} l-9 9`}"
+          stroke="${ок ? '#2f6b46' : '#a8503c'}" stroke-width="2.2" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </g>`;
+    };
+    const щит = `<g>
+      <rect x="176" y="92" width="8" height="12" fill="#8a5a3a" stroke="#5e3a24" stroke-width="1.8"/>
+      <rect x="138" y="50" width="84" height="48" rx="7" fill="#c98a5a" stroke="#7c5230" stroke-width="2.4"/>
+      ${[0, 1, 2].map(i => `<rect x="145" y="${56 + i * 15}" width="70" height="13" rx="4"
+        fill="#fdf6e0" stroke="#7c5230" stroke-width="1.6" opacity=".4"/>`).join('')}
+      ${[0, 1, 2].map(доска).join('')}
+    </g>`;
+    return фонСцены +
+      `<circle cx="52" cy="14" r="13" fill="#ffd76a"/>` +
+      фигура({ kind: 'farmer', emo: 'think' }, 16, земля, 74) +
+      фигураВлево({ kind: 'girl', emo: 'wow' }, 270, земля, 74) +
+      щит;
+  }
+
+  /* ── сцена-итог (индекс 13): герои прощаются, три правила на щите ──
+     Правила — три плашки на столбе между героями. Раньше они стояли
+     справа и наезжали на лица: подписи теперь внутри плашек, а облачка
+     прощания подняты в небо и стоят над головами фигур. */
+  function сценаИтога(){
+    const земля = ЛИНИЯ_ИТОГА, высота = ВЫСОТА_ИТОГА;
+    const знак = (y, т) => `<g>
+      <rect x="136" y="${y}" width="88" height="22" rx="5" fill="#fdf6e0" stroke="#7c5230" stroke-width="1.8"/>
+      <text x="180" y="${y + 16}" text-anchor="middle" ${ТЕКСТ} font-size="14"
+        font-weight="bold" fill="#2a2118">${т}</text>
+    </g>`;
+    /* Облачка прощания стоят НА ТРАВЕ у ног героев: в небе они наезжали
+       на плашки правил, а плашки — на лица. */
+    const облачко = (x, y, т) => `<g>
+      <rect x="${x}" y="${y}" width="62" height="28" rx="11" fill="#fdf6e0" stroke="#c9b48a" stroke-width="1.6"/>
+      <text x="${x + 31}" y="${y + 19}" text-anchor="middle" ${ТЕКСТ} font-size="15" font-weight="bold" fill="#2a2118">${т}</text>
+    </g>`;
+    return `${фон('garden', земля, высота)}
+      <line x1="0" y1="${земля}" x2="360" y2="${земля}" stroke="#4a7a33" stroke-width="2"/>` +
+      `<circle cx="52" cy="18" r="14" fill="#ffd76a"/>` +
+      /* столб с тремя плашками стоит на линии земли и растёт вверх */
+      `<rect x="175" y="92" width="10" height="18" fill="#8a5a3a" stroke="#5e3a24" stroke-width="2"/>` +
+      `<rect x="128" y="14" width="104" height="80" rx="8" fill="#c98a5a" stroke="#7c5230" stroke-width="2.4"/>` +
+      знак(20, 'столько же') + знак(46, 'больше') + знак(72, 'меньше') +
+      фигура({ kind: 'farmer', emo: 'smile' }, 8, земля, 118) +
+      фигураВлево({ kind: 'girl', emo: 'smile' }, 246, земля, 118) +
+      облачко(6, 118, 'Пока!') + облачко(292, 118, 'Пока!') +
+      `<text x="180" y="${высота - 6}" text-anchor="middle" ${ТЕКСТ} font-size="10"
+        fill="#fdf6e0" ${ОБВОД(3)}>Сравниваем предметы — не длину, не вес и не место</text>`;
+  }
+
+  /* ── врезка-правило (индекс 3): три пары предметов ─────────────────
+     Было `art:'none'` — правило только словами. Ребёнку 6–7 лет правило без
+     предмета не правило: рисуем три случая и к каждому живую пару.
+     Каждый случай — своя строка: (а) каждой нашлась пара, (б) осталась
+     лишняя, (в) лишняя у другого. Подписи стоят НАД предметами: под ними
+     линия земли, и текст наезжал на грибы. */
+  function врезкаПравило(){
+    const надзаголовок = (x, y, t, цв) => `<text x="${x}" y="${y}" ${ТЕКСТ}
+      font-size="15" font-weight="bold" fill="${цв}">${t}</text>`;
+    const пояснение = (y, t, цв, x) => `<text x="${x || 262}" y="${y}" text-anchor="middle"
+      ${ТЕКСТ} font-size="13" font-weight="bold" fill="${цв}">${t}</text>`;
+    /* Грибы стоят НА линии земли каждой строки: шляпка выше, ножка у самой
+       травы. Раньше ножка уходила под линию, и гриб «сидел» в траве. */
+    const грибы = (n, x, y, s, меньш) => {
+      let out = '';
+      for (let i = 0; i < n; i++){
+        out += грибМелкий(x + i * 24, y - 11 * s, s);
+        if (меньш != null && i >= меньш) out += `<circle cx="${x + i * 24}" cy="${y - 22 * s}"
+          r="${13 * s}" fill="none" stroke="#c9902a" stroke-width="2.6" stroke-dasharray="4 3"/>`;
+      }
+      return out;
+    };
+    /* Пунктирная нитка «пара — паре»: одной нашлась пара у другой. */
+    const нитка = (x0, x1, y) => `<path d="M${x0} ${y} L${x1} ${y}" stroke="#8a6a45"
+      stroke-width="2" stroke-dasharray="5 4"/>`;
+    return `<svg viewBox="0 0 360 250" width="100%" style="display:block">
+      <rect x="0" y="0" width="360" height="250" rx="12" fill="#fdf6e0"/>
+      <rect x="6" y="6" width="348" height="76" rx="10" fill="#ffffff" stroke="#3c6b26" stroke-width="2"/>
+      <rect x="6" y="86" width="348" height="76" rx="10" fill="#ffffff" stroke="#a8503c" stroke-width="2"/>
+      <rect x="6" y="166" width="348" height="76" rx="10" fill="#ffffff" stroke="#2f5f8a" stroke-width="2"/>
+
+      ${надзаголовок(18, 26, 'Столько же', '#3c6b26')}
+      <line x1="18" y1="66" x2="342" y2="66" stroke="#6aa34e" stroke-width="2"/>
+      ${грибы(4, 32, 66, 0.9)}
+      ${нитка(40, 140, 66)}
+      ${грибы(4, 152, 66, 0.9)}
+      ${пояснение(26, 'лишних нет', '#3c6b26')}
+
+      ${надзаголовок(18, 106, 'Больше', '#a8503c')}
+      <line x1="18" y1="146" x2="342" y2="146" stroke="#6aa34e" stroke-width="2"/>
+      ${грибы(4, 32, 146, 0.9)}
+      ${нитка(40, 140, 146)}
+      ${грибы(5, 152, 146, 0.9, 4)}
+      ${пояснение(106, 'осталась лишняя', '#a8503c')}
+
+      ${надзаголовок(18, 186, 'Меньше', '#2f5f8a')}
+      <line x1="18" y1="226" x2="342" y2="226" stroke="#6aa34e" stroke-width="2"/>
+      ${грибы(5, 32, 226, 0.9, 4)}
+      ${нитка(40, 140, 226)}
+      ${грибы(4, 152, 226, 0.9)}
+      ${пояснение(186, 'лишняя у другого', '#2f5f8a')}
+    </svg>`;
+  }
+
+  /* ── сцена живого сравнения ────────────────────────────────────────── */
   function сценаСравнения(d, пары){
     const рисуй = предметы[d.icon] || морковь;
     /* Раскладка «в кучке»: до РЯД_МАКС в ряд, остаток переносится выше.
@@ -294,16 +547,27 @@ window.NCOMIC_BOOK = {
         ${морковь(212, 52 + i * 30, 0.62)}`).join('')}
       <text x="180" y="192" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#6b5b45">каждой нашлась пара</text>
     </svg>`;
-    if (kind === 'two-baskets') return `<svg viewBox="0 0 360 150" width="100%" style="display:block">
-      <rect x="0" y="0" width="360" height="150" rx="10" fill="#fdf6e0"/>
-      <rect x="26" y="52" width="150" height="12" rx="5" fill="#8a6a45"/>
-      ${[0, 1, 2, 3].map(i => морковь(48 + i * 33, 44, 0.62)).join('')}
-      <text x="101" y="86" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#6b5b45">длинная: 4</text>
-      <rect x="196" y="52" width="130" height="12" rx="5" fill="#8a6a45"/>
-      ${[0, 1, 2, 3, 4, 5].map(i => морковь(212 + i * 21, 44, 0.62)).join('')}
-      <text x="261" y="86" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#6b5b45">короткая: 6</text>
-      <text x="180" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#9c2f22">длиннее — не значит больше</text>
-    </svg>`;
+    /* Ловушка «длина обманывает»: та же пара грядок, что на развилке, но
+       числа видны прямо на них. Раньше здесь была пустая заглушка в 40
+       единиц — страница разбора показывала пустой экран. */
+    if (kind === 'two-baskets'){
+      const доска = (x, ш) => `<rect x="${x}" y="66" width="${ш}" height="9" rx="4"
+        fill="#a9773f" stroke="#6f4a24" stroke-width="1.6"/>`;
+      const грядка = (n, x, шаг, sc, ш) => {
+        let out = '';
+        for (let i = 0; i < n; i++) out += морковь(x + i * шаг, 61, sc);
+        return out + доска(x - 10, ш);
+      };
+      return `<svg viewBox="0 0 360 116" width="100%" style="display:block">
+        <rect x="0" y="0" width="360" height="116" rx="10" fill="#fdf6e0"/>
+        ${грядка(4, 40, 42, 0.6, 142)}
+        ${грядка(6, 196, 26, 0.54, 154)}
+        <line x1="163" y1="14" x2="163" y2="56" stroke="#6f4a24" stroke-width="2" stroke-dasharray="5 5"/>
+        <line x1="14" y1="80" x2="346" y2="80" stroke="#6aa34e" stroke-width="2"/>
+        <text x="80" y="102" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#6b5b45">длинная: 4</text>
+        <text x="272" y="102" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#6b5b45">короткая: 6</text>
+      </svg>`;
+    }
     return `<svg viewBox="0 0 360 40" width="100%" style="display:block"></svg>`;
   }
 
@@ -361,6 +625,36 @@ window.NCOMIC_BOOK = {
   #lvis .ncb .srow .txt{font-size:16px;line-height:1.45}
   #lvis .ncb .srow .txt b{color:${GOLD}}
   #lvis .ncb .srow .txt i{font-style:normal;color:${MUT}}
+  #lvis .ncb .sheet.fork{gap:10px}
+  #lvis .ncb .sheet.fork .top{padding-bottom:6px}
+  #lvis .ncb .sheet.fork h2{font-size:19px}
+  #lvis .ncb .sheet.fork .opts{gap:8px}
+  #lvis .ncb .sheet.fork .opt{min-height:52px;padding:8px 12px;gap:10px;font-size:16px;line-height:1.25}
+  #lvis .ncb .sheet.fork .bubble{padding:10px 12px;font-size:16px;line-height:1.4}
+  #lvis .ncb .sheet.fork .say{gap:10px}
+  #lvis .ncb .sheet.fork .face{flex:0 0 58px;width:58px;height:64px}
+  /* значок-предмет на кнопке выбора: ребёнок видит, чем один вариант
+     отличается от другого, ещё до нажатия */
+  #lvis .ncb .opt .ic{flex:none;width:46px;height:40px;border-radius:9px;
+    background:rgba(180,150,90,.16);border:1px solid rgba(120,95,45,.35);
+    display:flex;align-items:center;justify-content:center}
+  #lvis .ncb .opt .ic svg{display:block}
+  #lvis .ncb .opt .tx{flex:1 1 auto;min-width:0}
+  /* карточка решения на развороте истории */
+  #lvis .ncb .dcard{display:flex;gap:10px;align-items:flex-start;border-radius:12px;
+    border:1.5px solid rgba(255,215,106,.3);background:rgba(255,255,255,.05);padding:10px 12px}
+  #lvis .ncb .dcard.ok{border-color:#8fd1a8;background:rgba(143,209,168,.12)}
+  #lvis .ncb .dcard.no{border-color:#e8917c;background:rgba(232,145,124,.12)}
+  #lvis .ncb .dcard .mark{flex:none;width:26px;height:26px;border-radius:50%;display:flex;
+    align-items:center;justify-content:center;font-size:15px;font-weight:700;
+    background:rgba(255,215,106,.16);border:1.5px solid rgba(255,215,106,.5);color:${GOLD}}
+  #lvis .ncb .dcard.ok .mark{background:rgba(143,209,168,.2);border-color:#8fd1a8;color:#d6f3e2}
+  #lvis .ncb .dcard.no .mark{background:rgba(232,145,124,.2);border-color:#e8917c;color:#ffe2da}
+  #lvis .ncb .dcard .qs{font-size:12px;letter-spacing:.06em;color:${MUT};line-height:1.3}
+  #lvis .ncb .dcard .ch{font-size:16px;line-height:1.3;margin:3px 0 0}
+  #lvis .ncb .dcard .vd{font-size:13px;line-height:1.35;color:${MUT};margin:4px 0 0}
+  #lvis .ncb .dcard.ok .vd{color:#cdeedb}
+  #lvis .ncb .dcard.no .vd{color:#ffd9d0}
   @media (prefers-reduced-motion:reduce){#lvis .ncb *{transition:none!important;animation:none!important}}
   @media (max-width:360px){#lvis .ncb .face{flex:0 0 62px;width:62px;height:70px}
     #lvis .ncb .bubble{font-size:16px}#lvis .ncb .opt{font-size:16px}}
@@ -380,13 +674,52 @@ window.NCOMIC_BOOK = {
     return CHS[ключ()];
   }
 
+  /* ── связь с приложением ────────────────────────────────────────────
+     Приложение листает урок своим счётчиком LV.step (нижние кнопки
+     «Дальше ▶» / «◀ Назад» и lvStep), а движок рисовал страницу из своего
+     CHS[...].page. Счётчики были не связаны: ребёнок жал нижнюю «Дальше» —
+     кадр стоял на первой странице, а точки и номер шага уезжали вперёд.
+     Теперь оба счётчика идут вместе: рисовать() берёт страницу из LV.step,
+     а свои переходы движок пишет и в состояние, и в LV.step. */
+  const шагов = () => КНИГА.pages.length;
+  function шаг(){ return (typeof LV !== 'undefined' && LV && typeof LV.step === 'number') ? LV.step : null; }
+  /* Поставить страницу n: обновляет состояние и LV.step. */
+  function страница(n){
+    const st = состояние();
+    const к = Math.max(0, Math.min(шагов() - 1, n | 0));
+    st.page = к;
+    if (typeof LV !== 'undefined' && LV) LV.step = к;
+    return к;
+  }
+  /* Перерисовать кадр после смены страницы своим переходом: если открыт
+     экран урока — через renderLessonView (точки и номер шага сверху тоже
+     обновятся), а если движок рисуют напрямую — просто перерисовать. */
+  function перейти(n){
+    страница(n);
+    if (typeof LV !== 'undefined' && LV && LV.phase === 'explain' && typeof renderLessonView === 'function'){
+      renderLessonView();
+      return;
+    }
+    перерисовать();
+  }
+
   function рисовать(el){
     injectCss();
     const st = состояние();
     const страницы = КНИГА.pages;
+    /* Страницу берём из LV.step: это счётчик приложения, и именно его
+       двигают нижние кнопки урока. Состояние подтягиваем под него. */
+    const с = шаг();
+    if (с !== null){
+      const к = Math.max(0, Math.min(страницы.length - 1, с));
+      if (st.page !== к) st.page = к;
+    }
     const n = Math.max(0, Math.min(страницы.length - 1, st.page));
     const p = страницы[n];
     const части = [];
+    /* Высота кадра у страниц разная: у сравнения полотно выше, у развилки
+       низкое — под ним ещё облачко с вопросом и кнопки. */
+    let рамка = 340;
 
     const точки = страницы.map((x, i) => {
       const выбор = st.выборы.find(v => v.page === i);
@@ -397,7 +730,8 @@ window.NCOMIC_BOOK = {
 
     if (p.art === 'compare'){
       const показывать = st.живые[n] || p.auto;
-      части.push(`<div class="frame"><svg viewBox="0 0 360 ${показывать ? 420 : 360}" width="100%">${сценаСравнения(p, показывать)}</svg></div>`);
+      рамка = показывать ? 420 : 360;
+      части.push(`<div class="frame"><svg viewBox="0 0 360 ${рамка}" width="100%">${сценаСравнения(p, показывать)}</svg></div>`);
       if (p.t) части.push(`<h2>${p.t}</h2>`);
       if (p.cap) части.push(`<p class="cap">${p.cap}</p>`);
       if (p.thinking) части.push(`<div class="thinking">${p.thinking}</div>`);
@@ -408,14 +742,16 @@ window.NCOMIC_BOOK = {
       ];
       const был = st.выборы.find(v => v.page === n);
       if (!был){
+        /* На кнопке — та же кучка, что нарисована в кадре: ребёнок видит
+           оба варианта и понимает, чем рискует, ещё до нажатия. */
         части.push(`<div class="opts">${ответы.map((o, i) =>
-          `<button class="opt" onclick="ncbСравнить(${i})"><span class="k">${i + 1}</span><span>${o.t}</span></button>`).join('')}</div>`);
+          `<button class="opt" onclick="ncbСравнить(${i})"><span class="k">${i + 1}</span><span class="tx">${o.t}</span></button>`).join('')}</div>`);
       } else {
         части.push(`<div class="opts">${ответы.map((o, i) => {
           const верно = o.v === p.answer;
           const выбран = был.ответ === o.v;
           return `<button class="opt ${верно ? 'right' : (выбран ? 'wrong' : '')}" disabled>
-            <span class="k">${верно ? '✓' : i + 1}</span><span>${o.t}</span></button>`;
+            <span class="k">${верно ? '✓' : i + 1}</span><span class="tx">${o.t}</span></button>`;
         }).join('')}</div>`);
         части.push(`<div class="turn"><h3>${был.ok ? 'Верно' : 'Смотри внимательнее'}</h3><p>${p.explain || ''}</p></div>`);
         части.push(`<button class="next" onclick="ncbДальше()">Дальше →</button>`);
@@ -424,17 +760,65 @@ window.NCOMIC_BOOK = {
       return;
     }
 
+    /* ===== СТРАНИЦА-РАЗВИЛКА =====
+       Сцена + оба героя + предмет выбора, вопрос в облачке, кнопки ПОД сценой.
+       До правки здесь был только вопрос и кнопки: ни рисунка, ни героев. */
+    if (p.ask){
+      const живёт = !!st.живые[n];
+      рамка = ВЫСОТА_РАЗВИЛКИ;
+      const сцена = n === 1 ? сценаГрядок()
+        : n === 4 ? сценаЛовушки()
+        : n === 9 ? сценаКорзин()
+        : `${фон(p.art === 'yard' ? 'yard' : 'garden', 130, ВЫСОТА_РАЗВИЛКИ)}<line x1="0" y1="130" x2="360" y2="130" stroke="#4a7a33" stroke-width="2"/>`;
+      части.push(`<div class="frame"><svg viewBox="0 0 360 ${рамка}" width="100%">${сцена}</svg></div>`);
+      if (p.t) части.push(`<h2>${p.t}</h2>`);
+      const был = st.выборы.find(v => v.page === n);
+      if (был){
+        части.push(`<div class="opts">${p.opts.map((o, i) => {
+          const верно = o.sound === 'ok';
+          const выбран = был.выбор === o.t;
+          return `<button class="opt ${верно ? 'right' : (выбран ? 'wrong' : '')}" disabled>
+            <span class="k">${верно ? '✓' : '✕'}</span><span class="tx">${o.t}</span></button>`;
+        }).join('')}</div>`);
+        части.push(`<div class="turn"><h3>${был.ok ? 'Верно' : 'Смотри внимательнее'}</h3>
+          <p>${был.пояснение || (был.ok ? 'Так и есть.' : 'Попробуй ещё раз.')}</p></div>`);
+        части.push(`<button class="next" onclick="ncbДальше()">Дальше →</button>`);
+      } else {
+        части.push(`<div class="say"><div class="face">${(лица[(p.who && p.who.kind) || 'farmer'])((p.who && p.who.emo) || 'think')}</div>
+          <div class="bubble"><span class="who">${(p.who && p.who.name) || 'Батюшка'}</span>${p.ask}</div></div>`);
+        части.push(`<div class="opts">${p.opts.map((o, i) =>
+          `<button class="opt" onclick="ncbВыбор(${i})"><span class="k">${i + 1}</span><span class="tx">${o.t}</span></button>`).join('')}</div>`);
+      }
+      el.innerHTML = `<div class="ncb"><div class="sheet fork">${части.join('')}</div></div>`;
+      return;
+    }
+
     if (p.art === 'story'){
-      части.push(`<h2>${p.t}</h2>`);
-      const строки = st.выборы.map((v, i) => {
+      /* Разворот истории: сцена с героями сверху, а решения ребёнка —
+         карточками с пометкой верно/ошибочно. До правки это был пустой
+         экран со списком строк. */
+      const выборы = st.выборы;
+      const ряд = st.живые;
+      const карточка = (v, i) => {
         const страница = страницы[v.page];
         const вопрос = страница.ask || страница.t || 'Выбор';
-        return `<div class="srow"><span class="mark">${v.ok ? '✅' : '🔎'}</span>
-          <span class="txt">${i + 1}. <b>${вопрос}</b><br>${v.выбор}<br><i>${v.пояснение || ''}</i></span></div>`;
-      }).join('');
-      части.push(`<div class="story">${строки || '<p class="cap">Выборов пока не было.</p>'}</div>`);
-      if (st.выборы.length) части.push(`<div class="score">Верных выборов: ${st.верных} из ${st.выборы.length}</div>`);
+        return `<div class="dcard ${v.ok ? 'ok' : 'no'}">
+          <span class="mark">${v.ok ? '✓' : '✕'}</span>
+          <span class="tx"><span class="qs">${i + 1}. ${вопрос}</span>
+            <p class="ch">Ты выбрал: ${v.выбор}</p>
+            <p class="vd">${v.ok ? 'Верно. ' : 'Ошибка. '}${v.пояснение || ''}</p></span></div>`;
+      };
+      const карточки = выборы.map(карточка).join('');
+      const итог = выборы.length
+        ? `<div class="score">Верных выборов: ${st.верных} из ${выборы.length}</div>`
+        : `<p class="cap">Ты ещё не сделал ни одного выбора — история прошла без поворотов.</p>`;
+      const картинка = `<div class="frame"><svg viewBox="0 0 360 ${ВЫСОТА_РАЗВОРОТА}" width="100%">${сценаРазворота(выборы.map(v => v.ok))}</svg></div>`;
+      if (p.t) части.push(`<h2>${p.t}</h2>`);
+      /* Сначала рисунок, потом решения: без рисунка разворот пустой. */
+      части.push(картинка);
       if (p.thinking) части.push(`<div class="thinking">${p.thinking}</div>`);
+      if (карточки) части.push(`<div class="story">${карточки}</div>`);
+      части.push(итог);
       части.push(`<button class="next" onclick="ncbСначала()">Прочитать комикс заново ↺</button>`);
       el.innerHTML = `<div class="ncb"><div class="sheet">${части.join('')}</div></div>`;
       return;
@@ -451,23 +835,39 @@ window.NCOMIC_BOOK = {
          вписывает фигуру по ширине, коробка выше фигуры, и низ уезжает. */
       const земля = 240, N = (p.hold || []).length || 1;
       const ширина = N > 2 ? 96 : 116, шаг = N > 2 ? 106 : 124;
+      /* Высоту кадра считаем от земли: у развилки земля ниже, чем у
+         «садовой» сцены, и полотно должно кончаться под фигурами, а не
+         оставлять внизу зияющее поле травы. */
       const рост = ширина * 130 / 120;
+      const полотно = p.земля ? p.земля + 46 : 340;
+      const линия = p.земля || земля;
       const x0 = (360 - (N * шаг - (шаг - ширина))) / 2;
       const фигурки = (p.hold || []).map((ч, i) => {
         const повернуть = (i % 2 === 1);
-        const x = x0 + i * шаг, y = земля - рост;
+        const x = x0 + i * шаг, y = линия - рост;
         return `<g transform="translate(${x},${y})${повернуть ? ` translate(${ширина},0) scale(-1,1)` : ''}">
           <svg x="0" y="0" width="${ширина}" height="${рост}" viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet">${(лица[ч.kind] || лица.farmer)(ч.emo || 'smile')}</svg>
         </g>`;
       }).join('');
-      части.push(`<div class="frame"><svg viewBox="0 0 360 340" width="100%">${фон(p.art)}${фигурки}</svg></div>`);
+      рамка = полотно;
+      части.push(`<div class="frame"><svg viewBox="0 0 360 ${полотно}" width="100%">${фон(p.art, линия, полотно)}${фигурки}</svg></div>`);
+    } else if (p.art === 'rule'){
+      рамка = 250;
+      части.push(`<div class="frame" style="background:#fdf6e0">${врезкаПравило()}</div>`);
+    } else if (p.art === 'final'){
+      рамка = ВЫСОТА_ИТОГА;
+      части.push(`<div class="frame"><svg viewBox="0 0 360 ${рамка}" width="100%">${сценаИтога()}</svg></div>`);
     } else if (p.art && p.art !== 'none'){
       части.push(`<div class="frame">${врезка(p.art)}</div>`);
     }
     if (p.t) части.push(`<h2>${p.t}</h2>`);
     if (p.cap) части.push(`<p class="cap">${p.cap}</p>`);
     if (p.thinking) части.push(`<div class="thinking">${p.thinking}</div>`);
-    if (p.say){
+    /* У страницы-правила рисунок сам показывает и «столько же», и «больше»,
+       и «меньше» — реплика голосом только повторяла бы подписи в трёх
+       строках и вытесняла кнопку «Дальше» за нижний край. */
+    const правило = (p.art === 'rule');
+    if (p.say && !правило){
       части.push(`<div class="say">
         <div class="face">${(лица[(p.who && p.who.kind) || 'farmer'])((p.who && p.who.emo) || 'smile')}</div>
         <div class="bubble"><span class="who">${(p.who && p.who.name) || 'Батюшка'}</span>${p.say}</div>
@@ -477,7 +877,11 @@ window.NCOMIC_BOOK = {
       части.push(`<div class="opts">${p.opts.map((o, i) =>
         `<button class="opt" onclick="ncbВыбор(${i})"><span class="k">${i + 1}</span><span>${o.t}</span></button>`).join('')}</div>`);
     } else {
-      части.push(`<button class="next" onclick="ncbДальше()">Дальше →</button>`);
+      /* На последней странице своя кнопка ведёт к проверке — как нижняя
+         кнопка приложения на предыдущих шагах. */
+      const последняя = (n === страницы.length - 1);
+      части.push(`<button class="next" onclick="${последняя ? 'ncbКонец()' : 'ncbДальше()'}">${
+        последняя ? 'Понял! Проверю себя →' : 'Дальше →'}</button>`);
     }
     el.innerHTML = `<div class="ncb"><div class="sheet">${части.join('')}</div></div>`;
   }
@@ -488,13 +892,26 @@ window.NCOMIC_BOOK = {
   }
   window.ncbДальше = function(){
     const st = состояние();
-    if (st.page < КНИГА.pages.length - 1) st.page++;
+    if (st.page >= шагов() - 1){
+      window.ncbКонец();
+      return;
+    }
+    перейти(st.page + 1);
+  };
+  /* Комикс кончился — отдаём уроку его собственный переход: приложение само
+     переведёт экран к проверке, и счётчики останутся согласованными. */
+  window.ncbКонец = function(){
+    if (typeof lvToCheck === 'function' && typeof LV !== 'undefined' && LV && LV.phase === 'explain'){
+      lvToCheck();
+      return;
+    }
     перерисовать();
   };
   window.ncbСначала = function(){
     const st = состояние();
-    st.page = 0; st.верных = 0; st.выборы = []; st.живые = {};
-    перерисовать();
+    st.верных = 0; st.выборы = []; st.живые = {};
+    перейти(0);
+    if (typeof window.scrollTo === 'function') window.scrollTo(0, 0);
   };
   window.ncbВыбор = function(i){
     const st = состояние();
@@ -504,8 +921,10 @@ window.NCOMIC_BOOK = {
     const ok = o.sound === 'ok';
     st.выборы.push({ page: st.page, ok, выбор: o.t, пояснение: o.note || '', вопрос: p.ask });
     if (ok) st.верных++;
-    st.page = (typeof o.goto === 'number') ? o.goto : st.page + 1;
-    перерисовать();
+    /* Развилка ведёт не на соседнюю страницу, а на свою: у верного выбора
+       это страница поворота, у неверного — разбор ошибки. Именно поэтому
+       переход задаёт goto, а не +1. */
+    перейти((typeof o.goto === 'number') ? o.goto : st.page + 1);
   };
   window.ncbСравнить = function(i){
     const st = состояние();
@@ -520,6 +939,8 @@ window.NCOMIC_BOOK = {
     });
     if (ok) st.верных++;
     st.живые[st.page] = true;
+    /* Здесь страница не меняется — меняется только картинка: кучки встают
+       в пары, лишние обводятся. Рисуем тот же кадр заново. */
     перерисовать();
   };
 
