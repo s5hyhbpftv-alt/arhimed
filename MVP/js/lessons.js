@@ -122,9 +122,32 @@ function lessonPool(){
   }catch(e){ return window.ARH_LESSONS; }
 }
 let BK={ subj:'all', open:{} };   // фильтр по предмету + раскрытые секции
-/* Строка игры-квеста (урок с полем game, см. MVP/data/quest.js). Игра живёт
-   на своей странице, поэтому строка — ссылка, а не openLessonView: так полка
-   «Начальная школа» остаётся прежней, а у игры нет кадров «объясни → реши». */
+
+
+function lessonRow(L){
+  const rec=DB.lessons&&DB.lessons[L.id];
+  const done=!!(rec&&rec.done);
+  return `<div class="lesson-row ${done?'done':''}" onclick="openLessonView(${L.id})">
+    <span class="lr-ico">${L.img?`<img src="${L.img}" alt="" style="width:26px;height:26px;object-fit:contain;border-radius:50%;display:block">`:L.ico}</span>
+    <span class="lr-ti"><span class="lr-tt">${esc(L.title)}</span>
+    <span class="lr-td">${esc(L.src)} · ${L.comic? L.comic.length+' кадров': L.explain.length+' шагов'}</span></span>
+    <span class="lr-pr">${done?'✅':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐ 0/2')}</span>
+  </div>`;
+}
+function bookSel(){
+  /* Младшие классы по умолчанию видят «Начальную школу», но могут перейти
+     на другую полку — например, «Мастерские Сиракуз», где есть урок для
+     4 класса. Раньше выбор полки для них игнорировался: возвращался 'jun'
+     всегда, и открыть полку было нельзя, хотя она показывалась в списке. */
+  try{
+    if(typeof isJunior==='function'&&isJunior()){
+      const v=BK.subj;
+      if(v && v!=='jun' && v!=='mish' && v!=='all') return v;
+      return 'jun';
+    }
+  }catch(e){}
+  return BK.subj;
+}
 /* Строки уроков полки. «Начальная школа» делится на три подгруппы со своими
    заголовками (подгруппа ребёнка — первой), остальные полки и «Все предметы»
    рисуются как раньше: сверху уроки текущего класса, ниже — остальные. */
@@ -222,7 +245,9 @@ function bookToggle(subj){
 /* ---------- экран урока ---------- */
 function openLessonView(id){
   const L=lessonById(id); if(!L) return;
-  
+  /* Игра-квест — отдельная страница (MVP/играть.html): сцена, «замки» и свои
+     задания. Если её открыли не из каталога (например, ссылкой lesson-258),
+     просто уводим на страницу игры, а не рисуем пустой экран урока. */
   LV={ id, step:0, phase:'explain', ch:null, task:0, hints:0, sel:null };
   LX={ a:1, b:7, c:2, pigeons:null, hour:0, cells:[64,0,0,0,0,0,0] };
   if(L.comic&&typeof COMIC!=='undefined'&&COMIC.open){ COMIC.open(L); return; }
