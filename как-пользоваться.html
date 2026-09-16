@@ -176,6 +176,49 @@ code{
 .призыв .подпись{
   margin-top:22px; font-size:15px; color:var(--muted);
 }
+/* Две кнопки установки: с них и начинается любая установка на телефон —
+   сначала открыть приложение, потом уже «На экран Домой». Раньше адреса
+   лежали на странице простым текстом, и их приходилось перепечатывать. */
+.установка{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px; margin-top:26px;
+}
+.установка a{
+  display:flex; align-items:center; gap:14px; text-decoration:none;
+  background:var(--raise); border:1px solid var(--line); border-radius:14px;
+  padding:16px 18px; color:var(--ivory);
+  transition:border-color 160ms var(--ease), transform 160ms var(--ease),
+             background 160ms var(--ease);
+}
+.установка a:hover{border-color:var(--gold); background:#22392c; transform:translateY(-2px)}
+.установка a:active{transform:scale(.99)}
+.установка a:focus-visible{outline:2px solid var(--gold); outline-offset:3px}
+.установка .знак{
+  flex:0 0 46px; height:46px; border-radius:11px; display:grid; place-items:center;
+  background:linear-gradient(168deg,#2c4a38,#1d3227); border:1px solid var(--line);
+}
+.установка .знак svg{width:24px;height:24px;display:block}
+.установка b{display:block; font-size:17.5px; font-weight:400; color:var(--gold)}
+.установка span{
+  display:block; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12.5px; color:var(--muted); margin-top:3px; word-break:break-all;
+}
+/* Адрес в карточке приложения — тоже ссылка, а не надпись. */
+a.кому{
+  display:inline-flex; align-self:flex-start; align-items:center; min-height:44px;
+  text-decoration:none; border-bottom:1px solid rgba(255,215,106,.35); margin-top:-10px;
+}
+a.кому:hover{color:var(--gold); border-bottom-color:var(--gold)}
+a.кому:focus-visible{outline:2px solid var(--gold); outline-offset:3px}
+/* Ссылка под главной кнопкой — тоже цель касания, а не строчка текста. */
+.рядом a{
+  display:inline-flex; align-items:center; min-height:44px; padding:0 4px;
+  color:var(--gold); text-decoration:none;
+  border-bottom:1px solid rgba(255,215,106,.4);
+}
+.рядом a:hover{border-bottom-color:var(--gold)}
+.рядом a:focus-visible{outline:2px solid var(--gold); outline-offset:3px}
+
 .кнопка{
   display:inline-block; margin-top:28px; padding:15px 30px; border-radius:12px;
   background:linear-gradient(180deg,var(--gold) 0%,var(--gold-d) 100%);
@@ -293,13 +336,13 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
       <h3>Ответ не выдаётся. Никогда</h3>
       <p>Ребёнок ошибся — и получил не красный крест, а намёк. Ошибся снова — получил ход мысли.
          И только если совсем не вышло, увидит полное решение. «Просто задач» в приложении нет.</p>
-      <span class="факт">3996 подсказок на 700 задач — почти шесть на каждую</span>
+      <span class="факт">4006 подсказок на 700 задач — почти шесть на каждую</span>
     </div>
     <div>
       <h3>Урок — это разговор, а не видео</h3>
       <p>Архимед разбирает приём по шагам и на каждом спрашивает, понял ли ты. Видео так не умеет:
          оно идёт дальше, даже если в комнате уже никто не понимает.</p>
-      <span class="факт">уроков 454 · шагов разбора 4533 · в среднем 9 шагов на урок</span>
+      <span class="факт">уроков 462 · шагов разбора 4642 · в среднем 9 шагов на урок</span>
     </div>
     <div>
       <h3>Олимпиадный приём растёт из школьной темы</h3>
@@ -328,7 +371,7 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
   <div class="пара">
     <div class="карта">
       <h3>Приложение ученика</h3>
-      <div class="кому">123.teramont.pro/MVP/</div>
+      <a class="кому" href="MVP/">123.teramont.pro/MVP/</a>
       <ul>
         <li><b>Карта островов.</b> Каждый остров — предмет, внутри темы и задачи по классу ребёнка.</li>
         <li><b>Книга знаний.</b> Каталог уроков: у каждого написан источник и сколько в нём шагов разбора.</li>
@@ -342,7 +385,7 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
 
     <div class="карта">
       <h3>Кабинет родителя</h3>
-      <div class="кому">123.teramont.pro/MVP/parent/</div>
+      <a class="кому" href="MVP/parent/">123.teramont.pro/MVP/parent/</a>
       <ul>
         <li><b>Отчёт о занятиях.</b> Что решал, сколько времени, где ошибался.</li>
         <li><b>Заметка ребёнку.</b> Вы пишете — он видит её во весь экран при следующем входе.</li>
@@ -433,7 +476,7 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
     <li>
       <div>
         <h3>Вы открываете кабинет и вводите код</h3>
-        <p><code>123.teramont.pro/MVP/parent/</code> → выбираете «Папа» или «Мама» → вводите код
+        <p><a href="MVP/parent/"><code>123.teramont.pro/MVP/parent/</code></a> → выбираете «Папа» или «Мама» → вводите код
            ребёнка → придумываете <b>свой</b> PIN. Детский и родительский PIN разные, и это важно.</p>
       </div>
     </li>
@@ -449,6 +492,36 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
     без адресной строки, как любое приложение. Работает и без интернета — уроки
     и задачи уже лежат на устройстве.
   </p>
+  <p style="margin-top:14px">
+    Начните отсюда — откройте нужное приложение прямо с этой страницы,
+    а дальше действуйте по схемам ниже.
+  </p>
+
+  <div class="установка">
+    <a href="MVP/">
+      <span class="знак" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ffd76a" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6.5 12 4l9 2.5v11L12 20l-9-2.5z"/><path d="M12 4v16"/>
+          <path d="M7.5 9.5 12 8.2l4.5 1.3"/></svg>
+      </span>
+      <span style="flex:1 1 auto;min-width:0">
+        <b>Приложение ученика</b>
+        <span>123.teramont.pro/MVP/</span>
+      </span>
+    </a>
+    <a href="MVP/parent/">
+      <span class="знак" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ffd76a" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></svg>
+      </span>
+      <span style="flex:1 1 auto;min-width:0">
+        <b>Кабинет родителя</b>
+        <span>123.teramont.pro/MVP/parent/</span>
+      </span>
+    </a>
+  </div>
 
   <div class="телефоны">
 
@@ -476,7 +549,7 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
           </g>
           <circle cx="39" cy="107.5" r="10.5" fill="none" stroke="#ffd76a" stroke-opacity=".55" stroke-dasharray="3 3"/>
         </svg>
-        <p>Откройте <b>123.teramont.pro/MVP/</b> в Safari и нажмите значок <b>«Поделиться»</b> — квадрат со стрелкой вверх внизу экрана.</p>
+        <p>Откройте <a href="MVP/"><b>123.teramont.pro/MVP/</b></a> в Safari и нажмите значок <b>«Поделиться»</b> — квадрат со стрелкой вверх внизу экрана.</p>
       </div>
 
       <div class="экранчик">
@@ -537,7 +610,7 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
           <rect x="10" y="26" width="58" height="86" rx="4" fill="#16241d"/>
           <text x="39" y="70" text-anchor="middle" font-size="9" fill="#cbb89a" font-family="Georgia,serif">АРХИМЕД</text>
         </svg>
-        <p>Откройте <b>123.teramont.pro/MVP/</b> и нажмите <b>три точки</b> в правом верхнем углу.</p>
+        <p>Откройте <a href="MVP/"><b>123.teramont.pro/MVP/</b></a> и нажмите <b>три точки</b> в правом верхнем углу.</p>
       </div>
 
       <div class="экранчик">
@@ -576,8 +649,8 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
 
   <p style="margin-top:28px" class="тихо">
     Кабинет родителя ставится так же — только откройте сначала
-    <code>123.teramont.pro/MVP/parent/</code>. Тогда на телефоне будет два значка:
-    детский и ваш.
+    <a href="MVP/parent/"><code>123.teramont.pro/MVP/parent/</code></a>. Тогда на телефоне
+    будет два значка: детский и ваш.
   </p>
 </section>
 
