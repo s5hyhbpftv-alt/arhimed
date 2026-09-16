@@ -65,6 +65,26 @@ function isVisibleLesson(L){
   if(subjOf(L)==='inf' && !(L.id>=500 && L.id<=599)) return false;
   return true;
 }
+/* Порядок по плану обучения. Файл MVP/data/plan_order.js проставляет урокам
+   поле __планПорядок — позицию темы в программе (петерсон_1-9.md и слайды
+   «Единый план · класс 1…4»). Здесь уроки с номером встают по возрастанию,
+   а без номера — после них, сохраняя прежний порядок: новый урок не потеряется,
+   даже если его ещё не вписали в план. Если файла нет — порядок не меняется. */
+function sortByPlan(list){
+  try{
+    if(!list.some(L=>L && L.__планПорядок!=null)) return list;
+    return list
+      .map((L,i)=>({L,i}))
+      .sort((a,b)=>{
+        const па=a.L.__планПорядок, пб=b.L.__планПорядок;
+        if(па!=null && пб!=null) return па-пб || a.i-b.i;
+        if(па!=null) return -1;
+        if(пб!=null) return 1;
+        return a.i-b.i;
+      })
+      .map(x=>x.L);
+  }catch(e){ return list; }
+}
 function lessonPool(){
   try{
     const junior=typeof isJunior==='function'&&isJunior();
@@ -74,7 +94,7 @@ function lessonPool(){
     const pool= (junior
       ? window.ARH_LESSONS.filter(L=>subjOf(L)==='jun'||subjOf(L)==='syra')
       : window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun')).filter(isVisibleLesson);
-    return sortByCurrentClass(pool.filter(lessonFits));
+    return sortByPlan(sortByCurrentClass(pool.filter(lessonFits)));
   }catch(e){ return window.ARH_LESSONS; }
 }
 let BK={ subj:'all', open:{} };   // фильтр по предмету + раскрытые секции
