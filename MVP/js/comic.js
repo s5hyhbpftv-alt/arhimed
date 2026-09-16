@@ -1511,29 +1511,62 @@ function coinsSVG(){
     </svg>`; }
 
   function toysSVG(){
+    /* Объём перерисован предметом: кубики нарисованы изометрией 2:1 — глубина
+       уходит вправо-вверх, поэтому видно ВСЕ ТРИ измерения, а по рёбрам передней
+       грани кубики пересчитываются глазами. Плашка «3 · 3 · 3 = 27» больше не
+       главный носитель смысла. Первая попытка легла назад (глубина уходила
+       влево-вверх) — фигуры читались наклонёнными от зрителя; исправлено сменой
+       знака оси глубины.
+       Пространство: пол трапецией, окно слева — источник света, тени лежат
+       вправо-вниз от фигур. */
+    const Г={x:0.5,y:-0.25};                    /* ось глубины: вправо-вверх */
+    const P=(o,u,v,w)=>[o[0]+u+w*Г.x, o[1]-v+w*Г.y];
+    const тч=(p)=>p[0].toFixed(1)+' '+p[1].toFixed(1);
+    const куб=(o,ш,в,г,цв)=>{
+      /* Все грани — через явные углы, без индексов: индексированная сборка
+         дважды давала вырожденную грань (верхняя схлопывалась в линию, потом
+         куб разваливался на треугольник). Углы: передняя грань — прямоугольник,
+         её четыре угла задают всё остальное. */
+      const A=P(o,0,в,0), B=P(o,ш,в,0), C=P(o,ш,0,0), D=P(o,0,0,0);   /* передняя */
+      const A2=P(o,0,в,г), B2=P(o,ш,в,г), C2=P(o,ш,0,г);              /* задние */
+      const [передняя,верх,бок]=цв;
+      let s2=`<path d="M${тч(A)} L${тч(B)} L${тч(C)} L${тч(D)} Z" fill="${передняя}" stroke="#241d14" stroke-width="2.4"/>`;
+      s2+=`<path d="M${тч(A)} L${тч(B)} L${тч(B2)} L${тч(A2)} Z" fill="${верх}" stroke="#241d14" stroke-width="2.4"/>`;
+      s2+=`<path d="M${тч(B)} L${тч(C)} L${тч(C2)} L${тч(B2)} Z" fill="${бок}" stroke="#241d14" stroke-width="2.4"/>`;
+      /* рёбра передней грани: видно, что кубиков ш на в */
+      for(let i=1;i<Math.round(ш/17);i++) s2+=`<path d="M${тч(P(o,i*17,в,0))} L${тч(P(o,i*17,0,0))}" stroke="#241d14" stroke-width="1.3" opacity=".45"/>`;
+      for(let j=1;j<Math.round(в/17);j++) s2+=`<path d="M${тч(P(o,0,j*17,0))} L${тч(P(o,ш,j*17,0))}" stroke="#241d14" stroke-width="1.3" opacity=".45"/>`;
+      return s2;
+    };
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
-      <rect x="0" y="0" width="360" height="210" fill="#f6e3c5"/>
-      <rect x="0" y="0" width="360" height="90" fill="#eacfa3"/>
-      <g>${сим('шар',36,56,1.5,'#e86a5a')}${сим('мишка',328,50,0.62)}${сим('воздушный_змей',289,62,0.5)}</g>
-      <!-- пол -->
-      <rect x="0" y="90" width="360" height="120" fill="#c89a6a"/>
-      <!-- большой куб 3x3x3 -->
-      <g>
-        <rect x="60" y="140" width="120" height="50" fill="#4a93d0" stroke="#2c5f8a" stroke-width="3"/>
-        <rect x="60" y="122" width="120" height="18" fill="#7fb4d8" stroke="#2c5f8a" stroke-width="3"/>
-        <rect x="60" y="104" width="120" height="18" fill="#4a93d0" stroke="#2c5f8a" stroke-width="3"/>
-        <rect x="66" y="108" width="14" height="14" fill="#fff" opacity=".5"/>
-        <rect x="66" y="126" width="14" height="14" fill="#fff" opacity=".5"/>
-        <rect x="66" y="144" width="14" height="14" fill="#fff" opacity=".5"/>
-        <rect x="86" y="108" width="14" height="14" fill="#fff" opacity=".5"/>
-        <rect x="86" y="126" width="14" height="14" fill="#fff" opacity=".5"/>
-      </g>
-      <!-- параллелепипед 2x2x5 -->
-      <rect x="210" y="160" width="100" height="30" fill="#e8b04c" stroke="#a3762a" stroke-width="3"/>
-      <rect x="210" y="130" width="100" height="30" fill="#f2c26a" stroke="#a3762a" stroke-width="3"/>
-      <rect x="216" y="136" width="12" height="12" fill="#fff" opacity=".6"/>
-      <rect x="216" y="166" width="12" height="12" fill="#fff" opacity=".6"/>
-      ${сим('кирпич',171,204,0.8)}
+      <defs>
+        <linearGradient id="tyWall" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f6e3c5"/><stop offset="1" stop-color="#e6cda4"/></linearGradient>
+        <linearGradient id="tyFloor" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#d9b184"/><stop offset="1" stop-color="#b98a5c"/></linearGradient>
+        <radialGradient id="tySun" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#fff3d0" stop-opacity=".9"/><stop offset="1" stop-color="#fff3d0" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect x="0" y="0" width="360" height="74" fill="url(#tyWall)"/>
+      <rect x="0" y="70" width="360" height="5" fill="#c8a473"/>
+      <path d="M0 75 L360 75 L360 210 L0 210 Z" fill="url(#tyFloor)"/>
+      <!-- окно слева: источник света кадра -->
+      <rect x="12" y="6" width="84" height="56" rx="5" fill="#fff" stroke="#8a5c33" stroke-width="5"/>
+      <rect x="19" y="13" width="70" height="42" fill="#cfeafc"/>
+      <circle cx="32" cy="28" r="7" fill="#ffe08a"/>
+      <line x1="54" y1="13" x2="54" y2="55" stroke="#8a5c33" stroke-width="3.5"/>
+      <ellipse cx="300" cy="126" rx="130" ry="76" fill="url(#tySun)" opacity=".65"/>
+      <!-- полка с игрушками на дальней стене -->
+      <rect x="252" y="42" width="96" height="6" rx="2" fill="#8a5c33"/>
+      ${сим('мишка',272,40,0.5)}${сим('воздушный_змей',314,38,0.4)}
+      <!-- образец: один кубик 1 x 1 x 1 -->
+      ${куб([30,178],16,16,16,['#d96a5a','#f0958a','#b8503f'])}
+      <!-- куб 3 x 3 x 3 -->
+      <ellipse cx="116" cy="188" rx="60" ry="9" fill="rgba(80,50,20,.18)"/>
+      ${куб([56,176],51,51,51,['#4a93d0','#8fc4e6','#356f9e'])}
+      <!-- параллелепипед 2 x 2 x 5 -->
+      <ellipse cx="286" cy="192" rx="52" ry="9" fill="rgba(80,50,20,.18)"/>
+      ${куб([226,180],34,34,85,['#e8b04c','#f4cf82','#c08f2e'])}
     </svg>`; }
 
   function clockSVG(){
