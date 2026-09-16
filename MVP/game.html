@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<title>Заброшенная обсерватория · игра · АРХИМЕД</title>
+<!-- ============ ЭКРАН ИГРЫ · «ЗАБРОШЕННАЯ ОБСЕРВАТОРИЯ» ==================
+     Лист 259. Игра-исследование для 5–6 класса: четыре комнаты, в каждой одна
+     задача (делимость · дроби · проценты · координаты), найденный предмет даёт
+     одну цифру кода, четыре цифры открывают сейф.
+
+     Устройство страницы. Рисунок и данные живут в MVP/data/game.js — эту
+     страницу править не нужно, если меняешь задачи или комнаты. Здесь только:
+       • рамка кадра и слои поверх фона (свет, туман, пыль, виньетка);
+       • цели касания зон — НЕ в SVG, а в HTML: тогда они всегда 92×92 px и не
+         зависят от масштаба сцены, значит палец попадает без прицеливания;
+       • карточка досье и карточка задачи;
+       • колесо кода на двери сейфа;
+       • сохранение прогресса.
+
+     СОХРАНЕНИЕ — как во всём проекте (см. MVP/data/game.js, ключ
+     arhimed_game_259): решённые комнаты, найденные предметы, открытый сейф.
+     В журнал приложения уезжает DB.lessons[259], поэтому на полке каталога
+     появляется галочка.
+
+     ОФЛАЙН. Ни одного внешнего адреса, ни одного запроса: шрифт системный
+     (Georgia), рисунок векторный, фотореалистичный фон — необязательные файлы
+     из MVP/img/game/. Если их нет, рисуется векторный вариант комнаты.
+-->
+<style>
+  :root{
+    /* утверждённая арт-дирекция: ламповая ночь в обсерватории */
+    --ночь:#0b1410;      --камень:#16241d;   --камень2:#20342a;
+    --небо:#1d3a4a;      --панель:#101f18;   --панель2:#182f24;
+    --латунь:#d9a441;    --латунь-тёмн:#a3762a;
+    --золото:#ffd76a;    --тёплый:#ffd08a;   --тёплый-свет:#f0c75e;
+    --светлый:#f6efe0;   --служебный:#cbb89a;
+    --волосок:rgba(217,164,65,.28);
+    --ok:#8fd1a8;        --ошибка:#e86a5a;
+    /* движение: одна кривая на всё приложение */
+    --ease:cubic-bezier(.23,1,.32,1);
+    --тень:0 12px 32px rgba(0,0,0,.45);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; }
+  body{
+    font-family:Georgia,'Times New Roman',serif;
+    color:var(--светлый);
+    -webkit-font-smoothing:antialiased; text-rendering:geometricPrecision;
+    background:
+      radial-gradient(ellipse 90% 55% at 50% -8%,#1c3a2c 0%,transparent 62%),
+      radial-gradient(ellipse 70% 40% at 82% 8%,rgba(217,164,65,.09) 0%,transparent 70%),
+      var(--ночь);
+    display:flex; flex-direction:column; overflow:hidden; overflow-x:hidden;
+    width:100%; max-width:100%;
+  }
+  /* размеры заданы в html-атрибутах (ширина/высота), поэтому SVG не
+     масштабируется второй раз и координаты зон совпадают с пикселями кадра */
+
+  /* ─────────── шапка ─────────── */
+  .g-top{ flex:none; display:flex; align-items:center; gap:8px; padding:8px 16px 0; }
+  .g-back{ display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:8px 16px;
+    border-radius:12px; font-family:inherit; font-size:14px; text-decoration:none;
+    color:var(--светлый); background:var(--панель2); border:1.5px solid var(--волосок);
+    transition:border-color 180ms var(--ease), color 180ms var(--ease); }
+  .g-back:hover{ border-color:var(--латунь); }
+  .g-back:active{ transform:translateY(2px); }
+  .g-names{ flex:1; min-width:0; }
+  /* overflow и min-width обязательны: без min-width заголовок 20 px
+     «Обсерватория» требовал 118 px при доступных 94 и вылезал из шапки */
+  .g-names h1{ font-size:20px; line-height:1.15; color:var(--золото); letter-spacing:-.02em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  @media (max-width:430px){
+    .g-names h1{ font-size:16px; }
+  }
+  .g-names p{ font-size:12px; line-height:1.3; color:var(--служебный); margin-top:2px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .g-progress{ flex:none; display:flex; align-items:center; gap:8px; min-height:44px; padding:0 12px;
+    border-radius:12px; background:var(--панель); border:1.5px solid var(--волосок); }
+  .g-progress b{ font-size:20px; color:var(--золото); font-variant-numeric:tabular-nums; }
+  .g-progress span{ font-size:12px; color:var(--служебный); line-height:1.2; }
+
+  /* ─────────── кадр сцены ───────────
+     Один источник света на сцену, тени — в противоположную сторону,
+     три плана глубины: стена в тумане · предметы · тёмный край кадра. */
+  .g-reset{ flex:none; width:44px; height:44px; border-radius:12px; font-family:inherit;
+    font-size:20px; line-height:1; color:var(--служебный); background:var(--панель);
+    border:1.5px solid var(--волосок); cursor:pointer;
+    transition:border-color 180ms var(--ease), color 180ms var(--ease); }
+  .g-reset:hover{ border-color:var(--латунь); color:var(--золото); }
+  .g-reset:active{ transform:translateY(2px); }
+  .g-reset:focus-visible{ outline:2px solid var(--золото); outline-offset:2px; }
+  .g-reset[hidden]{ display:none; }
+
+  /* Сцена занимает свободное место, но не меньше 136 px: этого хватает, чтобы
+     кадр 16:9 читался и цели касания 48 px не слипались. Остаток высоты
+     забирает карточка задания — она и есть работа ребёнка.
+
+     Замер до этой правки: карточка 56vh = 358 px сжимала сцену до 240×135 и
+     всё равно не помещалась целиком (высота содержимого 387 px) — приходилось
+     прокручивать внутри карточки, а на 390×640 полоска находок и подпись
+     вообще выдавливали сцену. */
+  .g-stage{ flex:1 1 auto; min-height:136px; display:flex; align-items:center; justify-content:center;
+    padding:8px 16px; overflow:hidden; }
+  /* кадр сцены 16:9. На ноутбуке он не растягивается на всю ширину: 1600 px
+     поперёк — это уже не кадр, а панорама, и зоны разъезжаются по краям. */
+  .g-frame{ position:relative; width:100%; max-width:1120px; aspect-ratio:16/9;
+    border-radius:16px; overflow:hidden;
+    border:1.5px solid var(--волосок); box-shadow:var(--тень);
+    background:var(--камень); }
+  .g-frame[hidden]{ display:none; }
+  /* Один приём вытягивает всю сцену из темноты: вектор нарисован нарочно
+     тёмным (ночь), и на телефоне с яркостью экрана 50 % он читался чёрным
+     прямоугольником. Яркость 1.22 и насыщенность 1.05 возвращают объём,
+     сохраняя схему «тёплый свет против холодной тени». */
+  .g-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(1.12) saturate(1.06); }
+  .g-scene{ position:absolute; inset:0; width:100%; height:100%; display:block;
+    pointer-events:none;   /* нажатия ловят .g-zone, а не фигуры сцены */
+    filter:brightness(1.12) saturate(1.06); }
+  .g-scene [data-зона]{ transition:opacity 180ms var(--ease); }
+  .g-scene [data-зона].on{ opacity:1; }
+  .g-over{ position:absolute; inset:0; width:100%; height:100%; display:block;
+    pointer-events:none; }
+  /* ЦЕЛИ КАСАНИЯ. Живут в HTML, а не в SVG, поэтому их размер не зависит от
+     масштаба сцены. Размер — clamp(48px, 7vw, 92px): на телефоне 390 px это
+     48 px (минимум Apple — 44), на планшете и ноутбуке — до 92 px. Почему не
+     92 px везде: три круглые цели по 92 px + зазор 8 px требуют 292 px при
+     кадре 390×219, и они физически налезают друг на друга; с 48 px центры
+     расходятся и зазор положительный на всех пяти ширинах (см. замер). */
+  .g-zone{ position:absolute; transform:translate(-50%,-50%);
+    width:clamp(48px,7vw,92px); height:clamp(48px,7vw,92px);
+    padding:0; border:0; background:none; border-radius:50%; cursor:pointer;
+    color:var(--тёплый-свет);
+    transition:transform 180ms var(--ease), filter 180ms var(--ease); }
+  .g-zone:hover{ filter:brightness(1.16); transform:translate(-50%,-50%) translateY(-3px); }
+  .g-zone:active{ transform:translate(-50%,-50%) translateY(1px); }
+  .g-zone:focus{ outline:none; }
+  .g-zone:focus-visible{ outline:3px solid var(--золото); outline-offset:3px; }
+  /* подпись зоны: всплывает над кольцом. Не «все имена сразу» — иначе кадр
+     превращается в частокол; имя нужно в момент выбора */
+  .g-tip{ position:absolute; left:50%; bottom:calc(100% + 6px); transform:translateX(-50%);
+    padding:4px 12px; border-radius:12px; font-size:12px; line-height:1.2; white-space:nowrap;
+    color:#ffe9ad; background:rgba(43,33,24,.94); border:1px solid var(--волосок);
+    opacity:0; transition:opacity 180ms var(--ease); pointer-events:none; }
+  .g-zone:hover .g-tip,.g-zone:focus-visible .g-tip,.g-zone.найдено .g-tip{ opacity:1; }
+  .g-zone.найдено .g-tip::before{ content:'✓ '; color:var(--золото); }
+  /* подпись не должна вылезать за кадр: у крайних зон она выходила за
+     границу и кадр получал лишние 6 px ширины */
+  .g-zone .g-tip{ max-width:44vw; white-space:nowrap; text-overflow:ellipsis;
+    overflow:hidden; }
+  .g-frame[data-узко="да"] .g-tip{ display:none; }
+
+  /* ─────────── панель под кадром ─────────── */
+  .g-foot{ flex:none; padding:0 16px calc(8px + env(safe-area-inset-bottom,0px));
+    display:flex; flex-direction:column; gap:8px; max-width:100%; }
+  /* Пока открыта карточка задания, полоска находок и строка подсказки уходят
+     с кадра: на 640 px высоты они отбирали у сцены 100 px, а текст задания и
+     цифры и так есть в самой карточке. Замер: карточка 243 px + низ 56 px +
+     шапка 52 px оставляли сцене всего 221 px. */
+  body.карточка-открыта .g-chips,
+  body.карточка-открыта .g-line{ display:none; }
+  /* между карточкой и стрелками всегда есть отступ: вплотную плашка и кнопка
+     читаются как один блок, и палец бьёт по стрелке вместо кнопки в карточке */
+  .g-line{ display:flex; align-items:flex-start; gap:8px; }
+  .g-speak{ flex:1; min-width:0; font-size:14px; line-height:1.45; color:var(--светлый); }
+  .g-speak b{ color:var(--золото); font-weight:normal; }
+  .g-chips{ display:flex; gap:8px; flex-wrap:wrap; max-width:100%; }
+  .g-chip{ display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:6px 12px;
+    border-radius:12px; background:var(--панель); border:1.5px solid var(--волосок);
+    font-size:14px; color:var(--светлый); }
+  .g-chip i{ font-style:normal; font-size:20px; line-height:1; }
+  .g-chip.digit b{ font-size:20px; color:var(--золото); font-variant-numeric:tabular-nums; }
+  .g-chip.пусто{ color:var(--служебный); }
+  /* minmax(0,1fr), а не 1fr: колонка 1fr не сжимается ниже содержимого,
+     из-за чего низ вылезал на 39 px и вся страница получала
+     горизонтальную прокрутку (замер: nav 374 → 413). */
+  .g-nav{ display:grid; grid-template-columns:44px minmax(0,1fr) 44px; gap:8px;
+    align-items:stretch; max-width:100%; margin-top:8px; }
+  .g-arrow{ min-height:48px; border-radius:12px; font-family:inherit; font-size:20px;
+    color:var(--светлый); background:var(--панель2); border:1.5px solid var(--волосок);
+    cursor:pointer; transition:border-color 180ms var(--ease), color 180ms var(--ease); }
+  .g-arrow:hover:not(:disabled){ border-color:var(--латунь); color:var(--золото); }
+  .g-arrow:active:not(:disabled){ transform:translateY(2px); }
+  .g-arrow:disabled{ opacity:.4; cursor:default; }
+  .g-arrow:focus-visible{ outline:2px solid var(--золото); outline-offset:2px; }
+  .g-room{ min-height:48px; border-radius:12px; font-family:inherit; font-size:16px;
+    font-weight:600; letter-spacing:.01em; text-align:left; padding:8px 16px;
+    color:#201a08; background:linear-gradient(180deg,#ffd76a,#e2b23f); border:none;
+    cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:8px;
+    transition:filter 180ms var(--ease); }
+  .g-room:hover{ filter:brightness(1.06); }
+  .g-room:active{ transform:translateY(2px); }
+  /* Подпись в кнопке: тёмный тёплый тон вместо белого с прозрачностью.
+     Белое «исследовать» на золоте давало контраст 1,08:1 — невидимый текст. */
+  .g-room span{ font-size:12px; font-weight:normal; color:#201a08; opacity:.72; }
+  /* на 390 px текст в кнопке ужимается до 16 px и в одну строку: две строки
+     в кнопке 48 px не помещаются и она начинает переполняться */
+  .g-room b{ font-weight:600; font-size:16px; min-width:0; white-space:nowrap;
+    overflow:hidden; text-overflow:ellipsis; }
+  @media (max-width:420px){
+    .g-room b{ font-size:16px; }
+    .g-room span{ font-size:12px; }
+  }
+  .g-room:focus-visible{ outline:2px solid var(--светлый); outline-offset:2px; }
+
+  /* ─────────── карточки: досье и задача ─────────── */
+  .g-card{ background:linear-gradient(180deg,#1c3327,#152419); border:1.5px solid var(--волосок);
+    border-radius:16px; padding:12px 16px; display:flex; flex-direction:column; gap:8px;
+    /* Ограничение — 46vh и не больше 340 px: содержимое самой высокой карточки
+       (проверка ответа) 387 px, поэтому на 390×640 карточка прокручивается
+       внутри себя; 380 px оставляли колонке сцены меньше 100 px. */
+    max-height:min(46vh,340px); overflow-y:auto; overflow-x:hidden;
+    box-shadow:var(--тень); max-width:100%;
+    animation:gCard 420ms var(--ease) both; }
+  .g-card[hidden]{ display:none; }
+  /* Прокрутка в карточке всегда видна: на 390×640 самая высокая карточка
+     (проверка ответа) не помещается целиком, и без этой полосы ребёнок не
+     понимает, что ниже есть кнопка. Полоса не перехватывает нажатие. */
+  .g-card::-webkit-scrollbar, .g-final::-webkit-scrollbar{ width:6px; }
+  .g-card::-webkit-scrollbar-thumb, .g-final::-webkit-scrollbar-thumb{
+    background:var(--латунь); border-radius:99px; }
+  .g-card::-webkit-scrollbar-track, .g-final::-webkit-scrollbar-track{
+    background:rgba(8,16,13,.5); border-radius:99px; }
+  @keyframes gCard{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+  .g-card h2{ font-size:20px; line-height:1.2; color:var(--золото); letter-spacing:-.02em; }
+  .g-kicker{ font-size:12px; line-height:1.3; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--служебный); }
+  .g-text{ font-size:16px; line-height:1.55; }
+  .g-text.small{ font-size:14px; line-height:1.5; color:var(--служебный); }
+  .g-answers{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .g-answers.три{ grid-template-columns:1fr 1fr 1fr; }
+  /* Четыре варианта ответа — один ряд по 56 px. Две строки по 48 давали
+     +56 px высоты, из-за чего карточка переставала помещаться на 390×640.
+     56 px по короткой стороне — норма проекта (буква-кнопка 62–70 px). */
+  .g-answers.ряд{ grid-template-columns:repeat(4,1fr); }
+  .g-answer{ min-height:48px; border-radius:12px; font-family:inherit; font-size:20px;
+    font-weight:bold; color:var(--светлый); background:linear-gradient(180deg,#213a2c,#172b20);
+    border:2px solid #3d5c49; cursor:pointer;
+    transition:border-color 180ms var(--ease), background 180ms var(--ease); }
+  .g-answer:hover:not(:disabled){ border-color:var(--латунь); }
+  .g-answer:active:not(:disabled){ transform:translateY(2px); }
+  .g-answer:focus-visible{ outline:2px solid var(--золото); outline-offset:2px; }
+  .g-answer.верно{ border-color:var(--ok); background:#1e3a26; }
+  .g-answer.неверно{ border-color:var(--ошибка); background:#3a211c; }
+  .g-answer:disabled{ cursor:default; }
+  .g-row{ display:flex; align-items:center; gap:8px; }
+  .g-input{ flex:1 1 auto; min-width:0; min-height:48px; border-radius:12px; padding:8px 16px; font-family:inherit;
+    font-size:20px; color:var(--светлый); background:var(--панель);
+    border:2px dashed rgba(217,164,65,.45); font-variant-numeric:tabular-nums; }
+  .g-input::placeholder{ color:var(--служебный); }
+  .g-input:focus{ outline:none; border-style:solid; border-color:var(--золото); }
+  .g-unit{ font-size:14px; color:var(--служебный); }
+  .g-fb{ border-radius:12px; padding:8px 16px; font-size:14px; line-height:1.5; }
+  .g-fb.верно{ background:#1e3a26; border:1px solid var(--ok); }
+  .g-fb.неверно{ background:#3a211c; border:1px solid var(--ошибка); }
+  .g-fb b{ font-weight:600; }
+  .g-btns{ display:flex; gap:8px; flex-wrap:wrap; }
+  .g-btn{ min-height:48px; padding:8px 16px; border-radius:12px; font-family:inherit; font-size:16px;
+    font-weight:600; color:#201a08; background:linear-gradient(180deg,#ffd76a,#e2b23f);
+    border:none; cursor:pointer; transition:filter 180ms var(--ease); }
+  .g-btn:hover{ filter:brightness(1.06); }
+  .g-btn:active{ transform:translateY(2px); }
+  .g-btn.тихо{ background:none; color:var(--светлый); border:1.5px solid var(--волосок);
+    font-weight:normal; }
+  .g-btn.тихо:hover{ border-color:var(--латунь); color:var(--золото); }
+  .g-btn:focus-visible{ outline:2px solid var(--светлый); outline-offset:2px; }
+
+  /* ─────────── колесо кода на двери сейфа ─────────── */
+  .g-wheels{ display:flex; gap:16px; justify-content:center; }
+  .g-wheel{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .g-wheel button{ width:56px; height:44px; border-radius:8px; font-family:inherit; font-size:14px;
+    color:var(--светлый); background:var(--панель2); border:1.5px solid var(--волосок);
+    cursor:pointer; }
+  .g-wheel button:hover{ border-color:var(--латунь); color:var(--золото); }
+  .g-wheel button:active{ transform:translateY(2px); }
+  .g-wheel .g-drum{ width:56px; min-height:56px; display:flex; align-items:center;
+    justify-content:center; border-radius:12px; font-size:32px; color:var(--золото);
+    background:radial-gradient(circle at 32% 26%,#3a4a42,#101f18 72%);
+    border:2px solid var(--латунь-тёмн); font-variant-numeric:tabular-nums; }
+  .g-wheel .g-drum.пусто{ color:var(--служебный); }
+
+  /* ─────────── финал ─────────── */
+  .g-final{ background:linear-gradient(180deg,#22392a,#152419); border:2px solid var(--латунь);
+    border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:16px;
+    /* Финал: 56vh давали на 390×640 карточку 420 px, и нижний край с кнопками
+       уезжал за экран (замер: страница 740 при окне 640). 46vh и текст короче —
+       кнопки на месте, прокрутка не нужна. */
+    max-height:min(46vh,400px); overflow-y:auto; overflow-x:hidden;
+    box-shadow:var(--тень); max-width:100%;
+    animation:gCard 520ms var(--ease) both; }
+  .g-final[hidden]{ display:none; }
+  .g-final .g-big{ font-size:20px; line-height:1.35; }
+  .g-final .g-list{ display:flex; flex-direction:column; gap:8px; }
+  .g-final .g-li{ display:flex; align-items:center; gap:8px; font-size:14px; line-height:1.4;
+    background:var(--панель); border:1px solid var(--волосок); border-radius:12px; padding:8px 12px; }
+  .g-final .g-li i{ font-style:normal; width:24px; flex:none; text-align:center; font-size:16px; }
+  .g-final .g-mem{ font-size:14px; line-height:1.5; background:rgba(217,164,65,.14);
+    border-left:4px solid var(--латунь); border-radius:8px; padding:8px 16px; }
+
+  /* ─────────── низкие и узкие экраны ─────────── */
+  @media (max-height:700px){
+    /* Короткий экран: колонка сцены ужимается до 104 px, карточка — до 42vh,
+       иначе низ с кнопками уезжал за экран (замер на 390×640: страница 676
+       при окне 640, стрелки «←/→» оказывались под срезом). */
+    .g-stage{ padding:8px 16px 0; min-height:104px; }
+    .g-card{ max-height:min(42vh,300px); }
+    .g-final{ max-height:min(42vh,320px); }
+    .g-names h1{ font-size:16px; }
+    .g-names p{ display:none; }
+    .g-speak{ font-size:12px; }
+    .g-chip{ min-height:40px; }
+  }
+  @media (max-width:400px){
+    .g-top,.g-foot{ padding-left:8px; padding-right:8px; }
+    .g-stage{ padding-left:8px; padding-right:8px; }
+  }
+  /* оживление гасится целиком: ни мерцания лампы, ни дрейфа пыли */
+  @media (prefers-reduced-motion:reduce){
+    *{ animation:none !important; transition:none !important; }
+    .g-card,.g-final{ animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="g-top">
+  <a class="g-back" href="../index.html" id="gBack">← Каталог</a>
+  <div class="g-names">
+    <h1 id="gTitle">Заброшенная обсерватория</h1>
+    <p id="gSub">4 комнаты · 4 задачи · код от сейфа · 5–6 класс</p>
+  </div>
+  <div class="g-progress" aria-live="polite">
+    <b id="gDone">0/4</b><span>комнат<br>решено</span>
+  </div>
+  <button class="g-reset" type="button" id="gReset" hidden title="Начать заново"
+          aria-label="Начать игру заново">↺</button>
+</header>
+
+<main class="g-stage">
+  <div class="g-frame" id="gFrame">
+    <img class="g-bg" id="gBg" alt="" hidden>
+    <div id="gScene"></div>
+    <div id="gOver"></div>
+    <div id="gZones"></div>
+  </div>
+</main>
+
+<section class="g-foot">
+  <p class="g-line"><span class="g-speak" id="gSpeak"></span></p>
+  <div class="g-chips" id="gChips"></div>
+  <div class="g-card" id="gCard" hidden></div>
+  <div class="g-final" id="gFinal" hidden></div>
+  <nav class="g-nav" id="gNav" aria-label="Переход между комнатами">
+    <button class="g-arrow" type="button" id="gPrev" aria-label="Предыдущая комната">←</button>
+    <button class="g-room" type="button" id="gRoom"><b id="gRoomName">Комната 1</b><span>исследовать</span></button>
+    <button class="g-arrow" type="button" id="gNext" aria-label="Следующая комната">→</button>
+  </nav>
+</section>
+
+<script src="data/game.js?v=1"></script>
+<script>
+/* ============ ИГРА «ЗАБРОШЕННАЯ ОБСЕРВАТОРИЯ» ============================
+   Логика короткая и без библиотек: сцена рисуется в data/game.js, здесь —
+   переходы между комнатами, досье, задачи, колесо кода и сохранение.
+   Ни одного сетевого запроса. */
+(function(){
+  'use strict';
+
+  var G = window.ARH_GAME;
+  function эл(id){ return document.getElementById(id); }
+
+  var кадр = эл('gFrame'), слойСцена = эл('gScene'), слойПоверх = эл('gOver');
+  var слойЗоны = эл('gZones'), фон = эл('gBg'), карточка = эл('gCard'), итог = эл('gFinal');
+  var подпись = эл('gSpeak'), навигация = эл('gNav');
+
+  /* game.js мог не загрузиться (старый кэш или файл не доехал). Тогда честно
+     говорим об этом, а не показываем пустой кадр. */
+  if (!G || typeof G.векторСцена !== 'function'){
+    if (слойСцена) слойСцена.innerHTML = '';
+    if (подпись) подпись.textContent = 'Не удалось загрузить игру (файл data/game.js). Обновите страницу.';
+    if (навигация) навигация.hidden = true;
+    return;
+  }
+
+  /* ── состояние ── */
+  var есть = {};                       /* какие зоны уже осмотрены (в этой сессии) */
+  var состояние = G.читать();
+  var комната = G.комнаты[0];
+  var досьеОткрыто = null;
+  var задачаОткрыта = false;
+  var попыткаНеверна = false;
+  var вводЗначение = '';
+  var колесо = ['·','·','·','·'];
+  var колесоНеверно = false;
+
+  /* ── журнал приложения: в каталоге у игры появляется галочка ── */
+  function отметитьПрогресс(){
+    var n = G.решеноСколько(состояние);
+    try{
+      var д = JSON.parse(localStorage.getItem(G.ключПриложения) || 'null') || {};
+      if (!д.lessons) д.lessons = {};
+      var зап = д.lessons[G.id] = д.lessons[G.id] || {};
+      зап.gameOpen = n;
+      зап.gameFound = состояние.найдено.length;
+      if (n === 4){ зап.done = true; if (!зап.doneAt) зап.doneAt = new Date().toISOString(); }
+      localStorage.setItem(G.ключПриложения, JSON.stringify(д));
+    } catch(e){ /* приложение может быть не открыто — игре это не мешает */ }
+  }
+
+  /* ── кадр: размеры в пикселях, чтобы координаты зон совпали с картинкой ── */
+  function уложить(){
+    var stage = document.querySelector('.g-stage');
+    if (!stage) return;
+    var ш = Math.max(240, stage.clientWidth - 32);
+    var в = Math.max(120, stage.clientHeight - 16);
+    var к = Math.min(ш / 1600, в / 900);
+    var Ш = Math.max(240, Math.round(1600 * к));
+    var В = Math.max(135, Math.round(900 * к));
+    кадр.style.width = Ш + 'px';
+    кадр.style.height = В + 'px';
+    /* подпись зоны живёт внутри кадра: при кадре уже 360 px её пора убрать
+       совсем, иначе она налезает на соседнее кольцо */
+    кадр.setAttribute('data-узко', Ш < 360 ? 'да' : 'нет');
+  }
+
+  /* «Начать заново» нужно и до финала: игра сохраняется, поэтому без кнопки
+     сброса второй ребёнок за той же партой получил бы чужой прогресс. Кнопка
+     стоит в шапке отдельным квадратом 44×44, чтобы её не нажали по дороге. */
+  function сбросПоказать(){
+    var к = эл('gReset');
+    if (!к) return;
+    к.hidden = (состояние.найдено.length === 0 && G.решеноСколько(состояние) === 0 && !состояние.сейф);
+  }
+
+  /* ── фон и слои ── */
+  function нарисоватьФон(){
+    if (!комната.фон){ фон.hidden = true; фон.removeAttribute('src'); return; }
+    фон.hidden = false;
+    фон.alt = 'Фон комнаты «' + комната.имя + '»';
+    /* Файла нет — картинка не показывается, остаётся вектор. Внешних адресов
+       здесь нет: путь локальный, внутри приложения. */
+    var путь = комната.фон;
+    if (фон.getAttribute('src') !== путь){
+      фон.setAttribute('src', путь);
+      фон.onerror = function(){ фон.hidden = true; };
+      фон.onload = function(){ фон.hidden = false; };
+    }
+  }
+  function нарисоватьСцену(){
+    /* Кольца зон рисует движок (G.зоны) ВНУТРИ кадра сцены: они масштабируются
+       вместе с вектором и потому стоят ровно на предмете. Раньше эта строка
+       вообще не вызывалась — движок умел рисовать маркеры, а страница их не
+       звала, и на сцене не было ни одного ориентира: ребёнок видел комнату и
+       не знал, куда нажимать. */
+    var сцена = G.векторСцена(комната);
+    сцена = сцена.replace('</svg>', G.зоны(комната, состояние, досьеОткрыто) + '</svg>');
+    слойСцена.innerHTML = сцена;
+    слойПоверх.innerHTML = G.слои(комната);
+    /* Цели касания живут в HTML: 48 px на телефоне, 92 px на ноутбуке —
+       они не зависят от масштаба кадра и всегда попадаются пальцем. */
+    нарисоватьЦели();
+    уложить();
+  }
+
+  /* ЦЕЛИ КАСАНИЯ. Живут в HTML, а не в SVG: 92×92 px при любом масштабе сцены.
+     Координаты — в единицах кадра (x 0…1000, y 0…900), пересчёт в проценты. */
+  function нарисоватьЦели(){
+    var ш = '';
+    for (var i = 0; i < комната.зоны.length; i++){
+      var з = комната.зоны[i];
+      var найдена = состояние.найдено.indexOf(з.ключ) >= 0;
+      ш += '<button class="g-zone' + (найдена ? ' найдено' : '') + '" type="button"' +
+        ' data-зона="' + G.эск(з.ключ) + '"' +
+        ' style="left:' + (з.x / 10).toFixed(2) + '%;top:' + (з.y / 9).toFixed(2) + '%"' +
+        ' aria-label="' + G.эск(з.имя + (найдена ? ', уже осмотрено' : ', осмотреть')) + '">' +
+        '<span class="g-tip">' + G.эск(з.имя) + '</span></button>';
+    }
+    слойЗоны.innerHTML = ш;
+  }
+
+  /* ── шапка и подписи ── */
+  function обновитьШапку(){
+    var n = G.решеноСколько(состояние);
+    эл('gDone').textContent = n + '/4';
+    if (состояние.сейф){
+      эл('gTitle').textContent = 'Сейф открыт';
+      эл('gSub').textContent = 'Все четыре комнаты пройдены';
+    } else {
+      /* В шапке короткое имя: «Заброшенная обсерватория» на 390 px рвалось
+         многоточием сразу после «Заброшенная …» — это выглядело поломкой. */
+      эл('gTitle').textContent = 'Обсерватория';
+      эл('gSub').textContent = 'Комната ' + комната.номер + ' из 4 · ' + комната.имя + ' · ' + комната.подпись;
+    }
+    эл('gPrev').disabled = комната.номер === 1;
+    эл('gNext').disabled = комната.номер === 4;
+    /* на кнопке — что именно сейчас под ногами: «Обойти комнату» ничего не
+       говорило о том, где ребёнок находится */
+    эл('gRoomName').textContent = 'Комната ' + комната.номер;
+    сбросПоказать();
+  }
+  /* полоска находок: предмет · цифра. Пустое место честно помечено точкой. */
+  function полосаНаходок(){
+    var ш = '';
+    for (var i = 0; i < G.комнаты.length; i++){
+      var к = G.комнаты[i], найдено = состояние.найдено.indexOf(к.задача.досье) >= 0;
+      ш += '<span class="g-chip' + (найдено ? ' digit' : ' пусто') + '">' +
+        '<i aria-hidden="true">' + (найдено ? '◆' : '◇') + '</i>' +
+        (найдено ? '<b>' + к.задача.цифра + '</b>' : 'ком.' + к.номер) + '</span>';
+    }
+    if (состояние.сейф) ш += '<span class="g-chip digit"><i aria-hidden="true">🔓</i><b>сейф открыт</b></span>';
+    эл('gChips').innerHTML = ш;
+  }
+  function сказать(текст){ подпись.innerHTML = текст; }
+  /* что говорить под кадром: зависит от состояния комнаты и находок */
+  function подсказкаКомнаты(){
+    var и = G.индексКомнаты(комната.ключ);
+    if (состояние.решено[и]){
+      var главная = комната.задача.досье, найдена = состояние.найдено.indexOf(главная) >= 0;
+      if (найдена) сказать('<b>Комната пройдена.</b> Цифра <b>' + комната.задача.цифра + '</b> в мешке: ' + комната.задача.находка);
+      else сказать('<b>Задача решена.</b> Теперь осмотри комнату и забери предмет с цифрой.');
+      return;
+    }
+    if (комната.ключ === 'ком4'){
+      сказать('Купол открыт, свет падает на телескоп. ' + комната.вход +
+        ' За дверью — код из четырёх цифр.');
+      return;
+    }
+    сказать(комната.вход + ' Нажми на светящееся кольцо.');
+  }
+
+  /* ── открыть зону: досье, а у главной зоны комнаты — задача ── */
+  function открытьЗону(ключ){
+    var з = null;
+    for (var i = 0; i < комната.зоны.length; i++) if (комната.зоны[i].ключ === ключ) з = комната.зоны[i];
+    if (!з) return;
+    досьеОткрыто = ключ;
+    есть[ключ] = true;
+    задачаОткрыта = (комната.задача.досье === з.досье);
+    попыткаНеверна = false;
+    вводЗначение = '';
+    итог.hidden = true;
+    /* активная зона подсвечивается: кольца живут в сцене, поэтому перерисовываем её */
+    var сцена2 = G.векторСцена(комната);
+    слойСцена.innerHTML = сцена2.replace('</svg>', G.зоны(комната, состояние, ключ) + '</svg>');
+    показатьКарточку();
+  }
+  function закрытьКарточку(){
+    досьеОткрыто = null;
+    задачаОткрыта = false;
+    попыткаНеверна = false;
+    колесоНеверно = false;
+    карточка.hidden = true;
+    карточка.innerHTML = '';
+    document.body.classList.remove('карточка-открыта');
+    нарисоватьСцену();
+    подсказкаКомнаты();
+  }
+
+  function показатьКарточку(){
+    if (!досьеОткрыто){ return; }
+    var з = null;
+    for (var i = 0; i < комната.зоны.length; i++) if (комната.зоны[i].ключ === досьеОткрыто) з = комната.зоны[i];
+    if (!з) return;
+    var ш = '';
+    if (задачаОткрыта) ш = карточкаЗадачи(з);
+    else {
+      ш = '<p class="g-kicker">' + G.эск(комната.имя) + ' · осмотр</p>' +
+        '<h2>' + G.эск(з.имя) + '</h2>' +
+        '<p class="g-text">' + G.эск(G.досье[з.досье] || '') + '</p>' +
+        кнопкаЗакрыть('Вернуться к комнате');
+    }
+    карточка.innerHTML = ш;
+    карточка.hidden = false;
+    document.body.classList.add('карточка-открыта');
+    уложить();
+  }
+  function кнопкаЗакрыть(текст){
+    return '<div class="g-btns"><button class="g-btn тихо" type="button" data-закрыть>' +
+      G.эск(текст) + '</button></div>';
+  }
+
+  /* ── карточка задачи ── */
+  function карточкаЗадачи(з){
+    var з2 = комната.задача;
+    var решена = !!состояние.решено[G.индексКомнаты(комната.ключ)];
+    var ш = '<p class="g-kicker">' + G.эск(з2.тема) + ' · задача комнаты</p>' +
+      '<h2>' + G.эск(з2.заголовок) + '</h2>' +
+      '<p class="g-text">' + G.эск(з2.задача) + '</p>';
+    if (решена){
+      ш += '<div class="g-fb верно"><b>Верно.</b> ' + G.эск(з2.пояснение) + '</div>' +
+        (состояние.найдено.indexOf(з2.досье) >= 0
+          ? '<p class="g-text small">Цифра <b>' + G.эск(з2.цифра) + '</b> уже в мешке.</p>'
+          : '<p class="g-text small">Ты нашёл предмет комнаты. Цифра <b>' + G.эск(з2.цифра) + '</b> в мешке.</p>') +
+        кнопкаЗакрыть('Вернуться к комнате');
+      return ш;
+    }
+    if (з2.тип === 'выбор'){
+      var три = з2.варианты.length === 3;
+      var ряд = з2.варианты.length === 4;
+      ш += '<div class="g-answers' + (три ? ' три' : (ряд ? ' ряд' : '')) + '">';
+      for (var i = 0; i < з2.варианты.length; i++){
+        var класс = '';
+        if (попыткаНеверна && выбранное === i && i !== з2.ответ) класс = ' неверно';
+        ш += '<button class="g-answer' + класс + '" type="button" data-ответ="' + i + '">' +
+          G.эск(з2.варианты[i]) + '</button>';
+      }
+      ш += '</div>';
+    } else {
+      ш += '<div class="g-row">' +
+        '<input class="g-input" id="gInput" type="text" inputmode="numeric" autocomplete="off"' +
+        ' placeholder="запиши число" aria-label="Ответ" value="' + G.эск(вводЗначение) + '">' +
+        '<span class="g-unit">' + G.эск(з2.единица || '') + '</span>' +
+        '<button class="g-btn" type="button" data-проверить>Проверить</button>' +
+        '</div>';
+    }
+    if (попыткаНеверна){
+      ш += '<div class="g-fb неверно"><b>Пока не так.</b> Подсказка: ' + G.эск(з2.подсказка) +
+        ' Попробуй ещё — попытка не потеряна.</div>';
+    }
+    ш += кнопкаЗакрыть('Вернусь позже');
+    return ш;
+  }
+  var выбранное = null;
+
+  /* ── ответ ── */
+  function ответВерный(){
+    var и = G.индексКомнаты(комната.ключ);
+    if (!состояние.решено[и]){
+      состояние.решено[и] = true;
+      /* предмет комнаты сразу попадает в мешок: цифра и есть награда */
+      var д = комната.задача.досье;
+      if (состояние.найдено.indexOf(д) < 0) состояние.найдено.push(д);
+      состояние = G.писать(состояние);
+      отметитьПрогресс();
+    }
+    попыткаНеверна = false;
+    выбранное = null;
+    нарисоватьСцену();
+    обновитьШапку();
+    полосаНаходок();
+    подсказкаКомнаты();
+    if (комната.ключ === 'ком4'){
+      /* в зале телескопа после задачи открывается дверь сейфа: код собирать
+         больше негде, значит сразу к колесу */
+      задачаОткрыта = false;
+      досьеОткрыто = null;
+      показатьСейф();
+      return;
+    }
+    показатьКарточку();
+  }
+  function ответ(i){
+    if (i === комната.задача.ответ){ ответВерный(); return; }
+    попыткаНеверна = true;
+    выбранное = i;
+    состояние.попытки = (состояние.попытки || 0) + 1;
+    состояние = G.писать(состояние);
+    показатьКарточку();
+  }
+  function проверитьВвод(){
+    var п = эл('gInput');
+    вводЗначение = п ? п.value : '';
+    if (G.проверкаЧисла(вводЗначение, комната.задача.ответЧисло)){ ответВерный(); return; }
+    попыткаНеверна = true;
+    состояние.попытки = (состояние.попытки || 0) + 1;
+    состояние = G.писать(состояние);
+    показатьКарточку();
+    var п2 = эл('gInput');
+    if (п2){ п2.value = вводЗначение; п2.focus(); }
+  }
+
+  /* ── дверь сейфа: четыре колеса и код ── */
+  function крутить(и, д){
+    if (колесо[и] === '·') колесо[и] = д > 0 ? '0' : '9';
+    else колесо[и] = String((parseInt(колесо[и], 10) + д + 10) % 10);
+    колесоНеверно = false;
+    показатьСейф();
+  }
+  function показатьСейф(){
+    if (!состояние.решено[3]){
+      карточка.innerHTML = '<p class="g-kicker">Зал телескопа · дверь сейфа</p>' +
+        '<h2>Сейф заперт</h2>' +
+        '<p class="g-text">' + G.эск(G.досье.сейф) + '</p>' +
+        '<p class="g-text small">Сначала реши задачу комнаты: на телескопе есть подсказка.</p>' +
+        кнопкаЗакрыть('Вернуться к комнате');
+      карточка.hidden = false;
+      document.body.classList.add('карточка-открыта');
+      return;
+    }
+    if (состояние.сейф){ показатьИтог(); return; }
+    var собранный = G.собранныйКод(состояние);
+    var ш = '<p class="g-kicker">Зал телескопа · дверь сейфа</p>' +
+      '<h2>Введи код из четырёх цифр</h2>' +
+      '<p class="g-text">Цифры ты забрал в комнатах: <b>' + G.эск(собранный) + '</b>. ' +
+      'На пьедестале телескопа выбит год постройки — он и есть код.</p>' +
+      '<div class="g-wheels" data-колесо>';
+    for (var i = 0; i < 4; i++){
+      ш += '<div class="g-wheel">' +
+        '<button type="button" data-вверх="' + i + '" aria-label="Цифра ' + (i + 1) + ' больше">▲</button>' +
+        '<span class="g-drum' + (колесо[i] === '·' ? ' пусто' : '') + '">' + колесо[i] + '</span>' +
+        '<button type="button" data-вниз="' + i + '" aria-label="Цифра ' + (i + 1) + ' меньше">▼</button>' +
+        '</div>';
+    }
+    ш += '</div>';
+    if (колесоНеверно){
+      ш += '<div class="g-fb неверно"><b>Не открылось.</b> Сверь цифры с мешком — ' +
+        'каждая цифра пришла из своей комнаты: гвоздь 1, карточка 9, шестерня 2, осколок 6.</div>';
+    }
+    ш += '<div class="g-btns">' +
+      '<button class="g-btn" type="button" data-открыть>Открыть сейф</button>' +
+      '<button class="g-btn тихо" type="button" data-закрыть>Вернуться к комнате</button>' +
+      '</div>';
+    карточка.innerHTML = ш;
+    карточка.hidden = false;
+    document.body.classList.add('карточка-открыта');
+    итог.hidden = true;
+    уложить();
+  }
+  function открытьСейф(){
+    var набрано = колесо.join('');
+    if (G.нормализуйКод(набрано) !== G.игра.код){
+      колесоНеверно = true;
+      состояние.попытки = (состояние.попытки || 0) + 1;
+      состояние = G.писать(состояние);
+      показатьСейф();
+      return;
+    }
+    состояние.сейф = true;
+    состояние = G.писать(состояние);
+    отметитьПрогресс();
+    показатьИтог();
+  }
+
+  /* ── финал ── */
+  function показатьИтог(){
+    var n = G.решеноСколько(состояние);
+    /* Список комнат в финале БЫЛ — и на 390×844 карточка вырастала до 620 px,
+       нижний край с кнопками уезжал за экран: ребёнок не видел ни итога, ни
+       «Вернуться в каталог». Темы комнат теперь одной строкой, а сами комнаты
+       и цифры видны в полоске находок над карточкой. */
+    var темы = [];
+    for (var i = 0; i < G.комнаты.length; i++){
+      var к = G.комнаты[i];
+      темы.push(G.эск(к.имя) + ' — ' + G.эск(к.задача.тема) + ' (цифра ' + G.эск(к.задача.цифра) + ')');
+    }
+    var строки = '<div class="g-li"><i aria-hidden="true">✓</i><span>' + темы.join(' · ') + '</span></div>';
+    итог.innerHTML =
+      '<p class="g-kicker">Финал · ' + G.эск(G.игра.название) + '</p>' +
+      '<h2>Сейф открыт! Код 1926 — год постройки обсерватории</h2>' +
+      '<p class="g-big">' + (G.имяУченика() ? G.эск(G.имяУченика()) + ': код' : 'Код') +
+      ' собран из четырёх цифр. Комнат решено: ' + n + ' из 4. ' +
+      'В сейфе — журнал наблюдений и латунная оправа для линзы.</p>' +
+      '<div class="g-list">' + строки + '</div>' +
+      '<div class="g-mem"><b>Что запомнить.</b> Делимость: 24 делится и на 3, и на 4. ' +
+      'Дроби: три четверти от 24 — это 18, остаётся 6. Проценты: 1 % от 150 — это 1,5, ' +
+      'скидка 20 % — 30 монет. Координаты: вправо — к первой координате, вверх — ко второй.</div>' +
+      '<div class="g-btns">' +
+        '<button class="g-btn" type="button" data-кКаталогу>Вернуться в каталог</button>' +
+        '<button class="g-btn тихо" type="button" data-заново>Пройти заново</button>' +
+      '</div>' +
+      '<p class="g-text small">Игра сохранена: закроешь страницу — решённые комнаты и код останутся.</p>';
+    итог.hidden = false;
+    карточка.hidden = true;
+    карточка.innerHTML = '';
+    document.body.classList.remove('карточка-открыта');
+    обновитьШапку();
+    полосаНаходок();
+    сказать('<b>Готово.</b> Сейф открыт, код 1926 — год постройки обсерватории.');
+    уложить();
+    try { if (итог.scrollIntoView) итог.scrollIntoView(); } catch(e){}
+  }
+  function заново(){
+    состояние = G.писать(G.пустое());
+    колесо = ['·','·','·','·'];
+    колесоНеверно = false;
+    итог.hidden = true;
+    карточка.hidden = true;
+    карточка.innerHTML = '';
+    document.body.classList.remove('карточка-открыта');
+    досьеОткрыто = null; задачаОткрыта = false; попыткаНеверна = false;
+    нарисоватьСцену();
+    обновитьШапку();
+    полосаНаходок();
+    подсказкаКомнаты();
+    сказать('Начнём сначала. ' + комната.вход);
+  }
+
+  /* ── переход по комнатам ── */
+  function перейти(номер){
+    var к = G.комнаты[Math.max(0, Math.min(G.комнаты.length - 1, номер - 1))];
+    комната = к;
+    досьеОткрыто = null; задачаОткрыта = false; попыткаНеверна = false; колесоНеверно = false;
+    карточка.hidden = true;
+    карточка.innerHTML = '';
+    document.body.classList.remove('карточка-открыта');
+    /* в зале телескопа: сейф уже открыт — сразу итог, а не пустая комната */
+    if (к.ключ === 'ком4' && состояние.сейф){ нарисоватьСцену(); обновитьШапку(); полосаНаходок(); показатьИтог(); return; }
+    нарисоватьСцену();
+    нарисоватьФон();
+    обновитьШапку();
+    полосаНаходок();
+    подсказкаКомнаты();
+  }
+  /* «Обойти комнату»: подсказывает, что в комнате ещё не осмотрено */
+  function обойти(){
+    var неОсмотрено = [];
+    for (var i = 0; i < комната.зоны.length; i++){
+      var з = комната.зоны[i];
+      if (!есть[з.ключ]) неОсмотрено.push(з.имя);
+    }
+    if (неОсмотрено.length) сказать('В комнате ещё не осмотрено: ' + неОсмотрено.join(', ') + '. Нажми на кольцо.');
+    else if (состояние.решено[G.индексКомнаты(комната.ключ)])
+      сказать('<b>Всё осмотрено.</b> Переходи в следующую комнату — стрелкой справа.');
+    else сказать('Всё осмотрено, но задача комнаты ещё не решена. Найди кольцо на задаче и реши её.');
+  }
+
+  /* ── нажатия ── */
+  слойЗоны.addEventListener('click', function(e){
+    var т = e.target;
+    while (т && т !== слойЗоны && !(т.getAttribute && т.getAttribute('data-зона'))) т = т.parentNode;
+    if (!т || т === слойЗоны) return;
+    открытьЗону(т.getAttribute('data-зона'));
+  });
+  карточка.addEventListener('click', function(e){
+    var т = e.target;
+    if (!т || !т.getAttribute) return;
+    if (т.hasAttribute('data-закрыть')){ закрытьКарточку(); return; }
+    if (т.hasAttribute('data-проверить')){ проверитьВвод(); return; }
+    if (т.hasAttribute('data-открыть')){ открытьСейф(); return; }
+    var вверх = т.getAttribute('data-вверх');
+    if (вверх != null){ крутить(parseInt(вверх, 10), 1); return; }
+    var вниз = т.getAttribute('data-вниз');
+    if (вниз != null){ крутить(parseInt(вниз, 10), -1); return; }
+    var о = т.getAttribute('data-ответ');
+    if (о != null){ ответ(parseInt(о, 10)); return; }
+  });
+  карточка.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && e.target && e.target.id === 'gInput'){ e.preventDefault(); проверитьВвод(); }
+  });
+  итог.addEventListener('click', function(e){
+    var т = e.target;
+    if (!т || !т.getAttribute) return;
+    if (т.hasAttribute('data-заново')){ заново(); return; }
+    if (т.hasAttribute('data-кКаталогу')){ location.href = '../index.html'; return; }
+  });
+  эл('gPrev').addEventListener('click', function(){ перейти(комната.номер - 1); });
+  эл('gNext').addEventListener('click', function(){ перейти(комната.номер + 1); });
+  эл('gReset').addEventListener('click', function(){
+    if (!window.confirm('Начать игру заново? Решённые комнаты и собранные цифры сотрутся.')) return;
+    заново();
+  });
+  эл('gRoom').addEventListener('click', function(){
+    if (комната.ключ === 'ком4' && состояние.решено[3]){
+      for (var i = 0; i < комната.зоны.length; i++) if (комната.зоны[i].досье === 'сейф'){ открытьЗону(комната.зоны[i].ключ); return; }
+    }
+    обойти();
+  });
+
+  /* стрелками по комнатам — как в остальных играх приложения */
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft'){ перейти(комната.номер - 1); }
+    else if (e.key === 'ArrowRight'){ перейти(комната.номер + 1); }
+  });
+
+  var назад = эл('gBack');
+  if (назад) назад.addEventListener('click', function(e){
+    try{
+      if (document.referrer && document.referrer.indexOf('index.html') >= 0){ e.preventDefault(); history.back(); }
+    }catch(_){}
+  });
+
+  /* ── старт ── */
+  (function следитьЗаРазмером(){
+    var stage = document.querySelector('.g-stage');
+    if (!stage || typeof ResizeObserver !== 'function') return;
+    try { new ResizeObserver(function(){ уложить(); }).observe(stage); } catch(e){}
+  })();
+  window.addEventListener('resize', function(){ уложить(); });
+  window.addEventListener('orientationchange', function(){ setTimeout(уложить, 120); });
+
+  нарисоватьСцену();
+  нарисоватьФон();
+  обновитьШапку();
+  полосаНаходок();
+  подсказкаКомнаты();
+  if (состояние.сейф) показатьИтог();
+  setTimeout(уложить, 60);
+})();
+</script>
+</body>
+</html>
