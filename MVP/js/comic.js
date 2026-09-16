@@ -3694,21 +3694,6 @@ function coinsSVG(){
       .c2-deco .d2 { right:12px; bottom:14px; }
       .c2-deco .d3 { right:40px; bottom:86px; font-size:22px; opacity:.65; }
       .c2-deco .d4 { left:46px; bottom:92px; font-size:20px; opacity:.6; }
-      /* Низкий экран (телефон с панелью браузера): ужимаем пейзаж, героев и
-         подпись, чтобы кадр помещался целиком и не приходилось листать. */
-      @media (max-height:820px){
-        .c2-stage .c2-scene { max-height:46%; }
-        .c2-hero { width:118px; } .c2-hero.talker { width:138px; }
-        .c2-hero.listener-1, .c2-hero.listener-2 { width:98px; }
-        .c2-cast.c2-many .c2-hero.talker { width:126px; } .c2-cast.c2-many .c2-hero { width:94px; }
-        .c2-talk { font-size:15px; padding:9px 13px 11px; }
-        .c2-capbar { min-height:52px; font-size:13px; }
-      }
-      @media (max-height:700px){
-        .c2-stage .c2-scene { max-height:40%; }
-        .c2-hero { width:104px; } .c2-hero.talker { width:124px; }
-        .c2-hero.listener-1, .c2-hero.listener-2 { width:88px; }
-      }
       .c2-hero .c2h-card { width:100%; border-radius:16px 16px 6px 6px; overflow:hidden;
         border:4px solid #33291e; background:#fff; box-shadow:0 8px 20px rgba(0,0,0,.25); }
       .c2-hero .c2h-card svg { display:block; width:100%; height:auto; }
@@ -3762,6 +3747,27 @@ function coinsSVG(){
       .cbtn:active { transform:translateY(2px); box-shadow:0 1px 0 #33291e; }
       .cbtn.primary { background:#f0c75e; border-color:#8a6d1e; box-shadow:0 3px 0 #8a6d1e; }
       .cbtn:disabled { opacity:.35; cursor:default; transform:none; box-shadow:0 3px 0 #33291e; }
+      /* Низкий экран телефона. Правила обязаны стоять В КОНЦЕ таблицы: медиа-запрос
+         не добавляет специфичности, поэтому при равной специфичности побеждает
+         то правило, что ниже. В прошлый раз блок стоял выше основных правил и не
+         работал вовсе — герой оставался 166 px, кадр не помещался, и низ героев
+         срезал край экрана. */
+      @media (max-height:820px){
+        .c2-stage .c2-scene { max-height:190px; object-fit:cover; }
+        .c2-hero { width:112px; } .c2-hero.talker { width:124px; }
+        .c2-hero.listener-1, .c2-hero.listener-2 { width:92px; }
+        .c2-cast.c2-many .c2-hero.talker { width:116px; } .c2-cast.c2-many .c2-hero { width:88px; }
+        .c2-talk { font-size:15px; padding:9px 13px 11px; }
+        .c2-capbar { min-height:48px; font-size:13px; padding:6px 12px; }
+        .c2-think { font-size:13px; }
+      }
+      @media (max-height:700px){
+        .c2-stage .c2-scene { max-height:150px; object-fit:cover; }
+        .c2-hero { width:96px; } .c2-hero.talker { width:106px; }
+        .c2-hero.listener-1, .c2-hero.listener-2 { width:80px; }
+        .c2-talk { font-size:14px; padding:8px 12px 10px; }
+        .c2-capbar { min-height:44px; font-size:12px; }
+      }
     `;
     document.head.appendChild(st);
     root=document.createElement('div');
