@@ -3762,11 +3762,12 @@ function coinsSVG(){
         .c2-think { font-size:13px; }
       }
       @media (max-height:700px){
-        .c2-stage .c2-scene { max-height:150px; object-fit:cover; }
+        .c2-stage .c2-scene { max-height:132px; object-fit:cover; }
         .c2-hero { width:96px; } .c2-hero.talker { width:106px; }
         .c2-hero.listener-1, .c2-hero.listener-2 { width:80px; }
         .c2-talk { font-size:14px; padding:8px 12px 10px; }
-        .c2-capbar { min-height:44px; font-size:12px; }
+        .c2-capbar { min-height:42px; font-size:12px; padding:5px 11px; }
+        .c2-think { font-size:12px; padding-left:11px; padding-right:11px; }
       }
     `;
     document.head.appendChild(st);
