@@ -1,7 +1,7 @@
 /* АРХИМЕД MVP · service worker
    HTML/JS всегда с сети. В Cache API не кладём код — иначе залипает старый урок.
    Картинки можно из кэша. */
-const CACHE='arhimed-mvp-v619';
+const CACHE='arhimed-mvp-v620';
 /* В кэш кладём только то, что реально есть в репозитории.
    Раньше здесь был путь вне MVP (../МОБ_ПРИЛОЖЕНИЕ/...), его на сервере нет —
    addAll падал, и service worker вообще не устанавливался. */
@@ -10,6 +10,7 @@ const ASSETS=[
   /* вариации Архимеда владельца: пять выражений лица и фигура в рост */
   'img/arch_smile.jpg','img/arch_wow.jpg','img/arch_think.jpg','img/arch_laugh.jpg','img/arch_sad.jpg',
   'img/arch_body.png',
+  'img/pykh.png',
   'img/icons/student-192.png','img/icons/student-512.png','img/icons/student-apple.png',
   'img/icons/parent-192.png','img/icons/parent-512.png','img/icons/parent-apple.png',
   'img/icons/favicon-student.svg','img/icons/favicon-parent.svg'

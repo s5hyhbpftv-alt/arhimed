@@ -55,7 +55,11 @@
     const рот = настроение === 'рад'
       ? '<path d="M30 42 q12 10 24 0" stroke="#2b2118" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
       : '<path d="M32 44 q10 4 20 0" stroke="#2b2118" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
-    return `<g>
+    /* Пых — картинка владельца (MVP/img/pykh.png); прежний вектор остаётся
+       под ней запасным вариантом. */
+    return `<span class="пых-лицо">
+      <img src="img/pykh.png" alt="" onerror="this.style.display='none'">
+      <span class="пых-запас"><g>
       <ellipse cx="42" cy="66" rx="22" ry="3.6" fill="rgba(0,0,0,.28)"/>
       <path d="M42 6 L68 34 C68 50 56 60 42 60 C28 60 16 50 16 34 Z" fill="#b08155" stroke="#3a2a1c" stroke-width="2.4"/>
       <path d="M42 10 L42 58 M29 16 L48 54 M55 16 L36 54 M22 26 L62 26" stroke="#8f6640" stroke-width="1.6" opacity=".55"/>
@@ -139,7 +143,8 @@
       <g class="пых" style="transform:translate(${xПыха}px,0)">
         <g transform="translate(-19,92) scale(0.55)">${пых(о.рад ? 'рад' : 'думает')}</g>
       </g>
-    </svg>`;
+    </svg></span>
+    </span>`;
   }
 
   /* ─────────── кнопки прыжка ─────────── */
@@ -310,6 +315,11 @@
     с.id = 's257';
     с.textContent = `
       .${ДОМ}{ display:flex; flex-direction:column; gap:12px; }
+      /* Пых: картинка сверху, вектор под ней как запасной вариант */
+      .${ДОМ} .пых-лицо{ position:relative; display:inline-block; width:62px; height:78px; flex:none; }
+      .${ДОМ} .пых-лицо img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:2; }
+      .${ДОМ} .пых-запас{ position:absolute; inset:0; display:block; z-index:1; }
+      .${ДОМ} .пых-запас svg{ width:100%; height:100%; }
       .${ДОМ} .реплика{ display:flex; gap:10px; align-items:flex-start; }
       .${ДОМ} .реплика p{ margin:0; font-size:17px; line-height:1.5; }
       .${ДОМ} .сцена{ display:flex; flex-direction:column; gap:10px; align-items:center; }

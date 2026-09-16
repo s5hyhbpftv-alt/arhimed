@@ -81,7 +81,13 @@
       : (настроение === 'грустит'
         ? '<path d="M35 48 q10 -6 20 0" stroke="#2b2118" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
         : '<path d="M35 46 q10 4 20 0" stroke="#2b2118" stroke-width="2.6" fill="none" stroke-linecap="round"/>');
-    return `<svg viewBox="0 0 90 80" width="74" height="66" aria-label="Ёжик Пых">
+    /* Пых — картинка владельца (MVP/img/pykh.png), вырезана из листа и
+       лежит в кеше приложения. Прежний вектор остаётся под ней запасным
+       вариантом: если картинка не загрузилась, onerror её прячет, и кадр
+       показывает нарисованного ежа — урок не ломается в офлайне. */
+    return `<span class="пых-лицо">
+      <img src="img/pykh.png" alt="" onerror="this.style.display='none'">
+      <span class="пых-запас"><svg viewBox="0 0 90 80" width="74" height="66" aria-label="Ёжик Пых">
       <ellipse cx="45" cy="72" rx="26" ry="4" fill="rgba(0,0,0,.16)"/>
       <path d="M45 8 L74 40 C74 58 60 68 45 68 C30 68 16 58 16 40 Z" fill="#a97a52" stroke="#2b2118" stroke-width="2.6"/>
       <path d="M45 12 L45 66 M30 18 L52 62 M60 18 L38 62 M22 30 L66 30" stroke="#8a5f3c" stroke-width="1.8" opacity=".55"/>
@@ -91,7 +97,8 @@
       <ellipse cx="45" cy="41" rx="6" ry="5" fill="#3a2c20"/>
       <circle cx="43" cy="39" r="1.6" fill="#fff"/>
       ${рот}
-    </svg>`;
+    </svg></span>
+    </span>`;
   }
 
   /* ─────────── предметы ─────────── */
@@ -324,6 +331,11 @@
     с.id = 's256';
     с.textContent = `
       .${ДОМ}{ display:flex; flex-direction:column; gap:12px; }
+      /* Пых: картинка сверху, вектор под ней как запасной вариант */
+      .${ДОМ} .пых-лицо{ position:relative; display:inline-block; width:64px; height:80px; flex:none; }
+      .${ДОМ} .пых-лицо img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:2; }
+      .${ДОМ} .пых-запас{ position:absolute; inset:0; display:block; z-index:1; }
+      .${ДОМ} .пых-запас svg{ width:100%; height:100%; }
       .${ДОМ} .реплика{ display:flex; gap:10px; align-items:flex-start; }
       .${ДОМ} .реплика p{ margin:0; font-size:17px; line-height:1.5; }
       .${ДОМ} .сцена{ display:flex; flex-direction:column; gap:10px; align-items:center; }
