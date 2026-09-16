@@ -1657,6 +1657,62 @@ function coinsSVG(){
       ${сим('книга',41,120,1.1,'#d9a441')}${сим('книга',307,120,1.1,'#4a93d0')}${сим('отвёртка',70,180,0.5)}
     </svg>`; }
 
+  function sumsSVG(){
+    /* Инвариант перерисован предметом: числа — деревянные карточки, которые
+       ПЕРЕСТАВЛЯЮТ, а сумма chalk'ом на доске не меняется. Плашка «3 + 5 + 7 = 15»
+       теперь подкреплена движением: под карточкой видны её прежние места
+       (пунктирные контуры), над рядом — дуга переноса, а на доске итог обведён
+       мелом. Это и есть инвариант: переставляй как угодно, итог тот же. */
+    const карточка=(x,y,число,поворот,прозрачность)=>`
+      <g transform="translate(${x},${y}) rotate(${поворот||0})" opacity="${прозрачность==null?1:прозрачность}">
+        <rect x="-17" y="-24" width="34" height="34" rx="4" fill="#e8cf9c" stroke="#8a5a2b" stroke-width="2.6"/>
+        <rect x="-17" y="-24" width="34" height="9" rx="4" fill="#d9b978" stroke="#8a5a2b" stroke-width="2"/>
+        <text x="0" y="2" text-anchor="middle" font-family="Georgia,serif" font-size="21" font-weight="bold" fill="#4a3520">${число}</text>
+      </g>`;
+    const мел=`font-family="Georgia,serif" fill="#f4e9c8"`;
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs>
+        <linearGradient id="smW" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f6e3c5"/><stop offset="1" stop-color="#e3cba0"/></linearGradient>
+        <linearGradient id="smD" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3c5c48"/><stop offset="1" stop-color="#2b4234"/></linearGradient>
+        <radialGradient id="smGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#ffe9a8" stop-opacity=".55"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect x="0" y="0" width="360" height="132" fill="url(#smW)"/>
+      <!-- доска -->
+      <rect x="20" y="10" width="238" height="98" rx="5" fill="url(#smD)" stroke="#7c4f26" stroke-width="6"/>
+      <rect x="26" y="16" width="226" height="86" rx="3" fill="none" stroke="#4e7f5f" stroke-width="1.6" opacity=".5"/>
+      <!-- запись мелом: слагаемые меняются местами, итог обведён -->
+      <text x="44" y="60" ${мел} font-size="24">3 + 5 + 7</text>
+      <text x="158" y="60" ${мел} font-size="24">=</text>
+      <text x="180" y="60" ${мел} font-size="26" font-weight="bold">15</text>
+      <ellipse cx="196" cy="52" rx="34" ry="21" fill="none" stroke="#ffe9a8" stroke-width="2.6" stroke-dasharray="7 5"/>
+      <!-- след мела и полочка -->
+      <path d="M36 92 q70 6 150 0" stroke="#f4e9c8" stroke-width="2" fill="none" opacity=".35"/>
+      <rect x="16" y="108" width="248" height="9" rx="3" fill="#8a5a2b"/>
+      ${сим('чашка',246,106,0.7)}
+      <!-- пол класса -->
+      <rect x="0" y="180" width="360" height="30" fill="#b98a5c"/>
+      <path d="M0 180 L360 180 L360 185 L0 185 Z" fill="#cba173"/>
+      <!-- стол ученика: столешница трапецией и передняя кромка -->
+      <path d="M34 138 L326 138 L346 168 L14 168 Z" fill="#c9a476" stroke="#7c4f26" stroke-width="3"/>
+      <path d="M34 138 L326 138 L328 144 L32 144 Z" fill="#e3c193"/>
+      <path d="M14 168 L346 168 L346 176 L14 176 Z" fill="#a87b4a" stroke="#7c4f26" stroke-width="2"/>
+      <path d="M64 170 L64 210 M296 170 L296 210" stroke="#8a5a2b" stroke-width="9"/>
+      <path d="M64 170 L64 210 M296 170 L296 210" stroke="#a8721f" stroke-width="3" opacity=".5"/>
+      <ellipse cx="180" cy="188" rx="120" ry="12" fill="rgba(80,50,20,.14)"/>
+      <!-- прежние места карточек: пунктирные контуры -->
+      ${карточка(96,152,3,0,0.22)}${карточка(150,152,5,0,0.22)}${карточка(204,152,7,0,0.22)}
+      <!-- дуга переноса: карточки двигают -->
+      <path d="M96 124 Q152 100 204 124" stroke="#6b4426" stroke-width="2.4" fill="none" stroke-dasharray="6 5" opacity=".7"/>
+      <path d="M196 118 L206 125 L194 129" fill="none" stroke="#6b4426" stroke-width="2.4" stroke-linecap="round"/>
+      <!-- карточки на новых местах: ряд переставлен -->
+      ${карточка(96,152,7,-4)}${карточка(150,152,3,3)}${карточка(204,152,5,-2)}
+      <!-- свечение вокруг итога: сумма не изменилась -->
+      <ellipse cx="196" cy="52" rx="64" ry="34" fill="url(#smGlow)"/>
+      ${сим('свиток',300,148,0.6)}
+    </svg>`; }
   function schoolSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
       <defs><linearGradient id="skSc" x1="0" y1="0" x2="0" y2="1">
@@ -3398,6 +3454,7 @@ function coinsSVG(){
     else if(scene==='yard') base=yardSVG();
     else if(scene==='blueprint') base=blueprintSVG();
     else if(scene==='school') base=schoolSVG();
+    else if(scene==='sums') base=sumsSVG();
     else if(scene==='ice') base=iceSVG();
     else if(scene==='tile') base=tileSVG();
     else if(scene==='scale') base=scaleSVG();
