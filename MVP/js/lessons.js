@@ -127,8 +127,13 @@ let BK={ subj:'all', open:{} };   // фильтр по предмету + рас
 function lessonRow(L){
   const rec=DB.lessons&&DB.lessons[L.id];
   const done=!!(rec&&rec.done);
+  /* В разделе «Путь Мишутки» у строк уроков — разные мишки, чтобы список не был
+     одинаковым. Берётся по номеру урока: в одном уроке мишка всегда один и тот
+     же, при перезагрузке не меняется. Только строки этой полки: аватарка внутри
+     самого урока, значок полки и другие разделы остаются прежними. */
+  const мишка = (L.group==='mish'||L.subj==='mish') ? `img/mishutka-${(Number(L.id)%6)+1}.png` : L.img;
   return `<div class="lesson-row ${done?'done':''}" onclick="openLessonView(${L.id})">
-    <span class="lr-ico">${L.img?`<img src="${L.img}" alt="" style="width:26px;height:26px;object-fit:contain;border-radius:50%;display:block">`:L.ico}</span>
+    <span class="lr-ico">${мишка?`<img src="${мишка}" alt="" style="width:26px;height:26px;object-fit:contain;border-radius:50%;display:block">`:L.ico}</span>
     <span class="lr-ti"><span class="lr-tt">${esc(L.title)}</span>
     <span class="lr-td">${esc(L.src)} · ${L.comic? L.comic.length+' кадров': L.explain.length+' шагов'}</span></span>
     <span class="lr-pr">${done?'✅':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐ 0/2')}</span>
