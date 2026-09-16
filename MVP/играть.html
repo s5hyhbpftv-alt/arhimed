@@ -2,106 +2,509 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Играть · АРХИМЕД</title>
-<!-- ============ ЭКРАН ИГРЫ (Genially) ============
-     Отдельный экран для интерактивных игр, сделанных во внешнем сервисе
-     Genially. Уроки он не трогает: если сети нет или сервис недоступен, экран
-     честно об этом говорит, а уроки и тренажёры работают как обычно — они
-     лежат в приложении и кешируются офлайн.
-
-     ЧТО НУЖНО ОТ ВЛАДЕЛЬЦА: ссылка на опубликованный материал Genially.
-     Вставьте её в GENIALLY_URL ниже — вид "https://view.genially.com/xxxxxxxx".
-     Пока строка пустая, экран показывает памятку, а не пустой iframe.
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<title>Кладовая Пыха · игра · АРХИМЕД</title>
+<!-- ============ ЭКРАН ИГРЫ · «КЛАДОВАЯ ПЫХА» ============
+     Наша интерактивная картинка с «замками» — то, что раньше отдавали внешнему
+     сервису Genially. Сделана своим кодом и работает офлайн:
+       • ни одного iframe и ни одного внешнего адреса;
+       • вся сцена — SVG, нарисованный вручную в MVP/data/quest.js;
+       • заданий пять, по одному на предмет; ошибка не засчитывается, но и не
+         наказывается: подсказка объясняет приём, попытку можно повторить;
+       • прогресс лежит в localStorage (ключ arhimed_quest_258) и попадает в
+         журнал приложения (DB.lessons[258] = пройдено), поэтому в каталоге у
+         игры появляется галочка.
+     Данные и рисунок живут в quest.js: эту страницу править не нужно, если
+     меняешь задания или предметы.
 -->
 <style>
-  :root{ --deep:#0b1712; --card:#182f24; --brass:#d9a441; --brass-d:#a3762a;
-         --ivory:#e8e0cc; --muted:#9fb0a0; --glass:#7fb8a0; }
-  *{ box-sizing:border-box; }
-  body{ margin:0; min-height:100vh; font-family:Georgia,'Times New Roman',serif;
+  :root{ --deep:#0b1712; --panel:#13251c; --card:#182f24; --card2:#101f18;
+         --brass:#d9a441; --brass-d:#a3762a; --ivory:#e8e0cc; --muted:#9fb0a0;
+         --ok:#5f9a6a; --danger:#e86a5a; --hairline:rgba(217,164,65,.25); }
+  *{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; }
+  body{ font-family:Georgia,'Times New Roman',serif; color:var(--ivory);
         background:radial-gradient(ellipse at 50% -10%,#1a3226 0%,transparent 55%),var(--deep);
-        color:var(--ivory); display:flex; flex-direction:column; }
-  header{ display:flex; align-items:center; gap:12px; padding:14px 16px 6px; }
-  header .ico{ font-size:28px; }
-  header h1{ margin:0; font-size:22px; color:var(--brass); letter-spacing:.01em; }
-  header p{ margin:2px 0 0; font-size:13px; color:var(--muted); }
-  main{ flex:1; display:flex; flex-direction:column; padding:10px 16px 18px; gap:12px; }
-  .рамка{ flex:1; position:relative; background:#0f2018; border:2px solid rgba(217,164,65,.35);
-          border-radius:14px; overflow:hidden; min-height:320px; }
-  .рамка iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
-  .пусто{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center;
-          gap:10px; padding:22px 20px; text-align:left; }
-  .пусто h2{ margin:0; font-size:19px; color:var(--brass); }
-  .пусто p{ margin:0; font-size:16px; line-height:1.55; }
-  .пусто code{ font-family:ui-monospace,Menlo,monospace; font-size:14px;
-               background:rgba(217,164,65,.14); padding:2px 6px; border-radius:6px; color:#f0dfae; }
-  .нет_сети{ display:none; margin:0; padding:10px 14px; border-radius:10px; font-size:15px;
-             background:rgba(217,164,65,.16); border-left:4px solid var(--brass); }
-  body.офлайн .нет_сети{ display:block; }
-  body.офлайн .рамка{ display:none; }
-  .кнопки{ display:flex; gap:10px; flex-wrap:wrap; }
-  a.кнопка{ display:inline-flex; align-items:center; justify-content:center; min-height:46px;
-            padding:10px 18px; border-radius:12px; font-size:16px; text-decoration:none;
-            background:linear-gradient(180deg,#ffd76a,#e2b23f); color:#20180a; font-weight:600;
-            border:1.5px solid rgba(217,164,65,.5); }
-  a.кнопка.тихая{ background:#182f24; color:var(--ivory); border-color:rgba(217,164,65,.35); }
-  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+        display:flex; flex-direction:column; overflow:hidden; }
+
+  /* ── шапка игры: назад, название, счётчик замков ── */
+  .qk-top{ flex:none; display:flex; align-items:center; gap:10px; padding:8px 12px 6px; }
+  .qk-back{ display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    min-height:44px; min-width:44px; padding:8px 14px; border-radius:12px; font-family:inherit;
+    font-size:16px; text-decoration:none; background:#182f24; color:var(--ivory);
+    border:1.5px solid var(--hairline); cursor:pointer; }
+  .qk-back:hover{ border-color:var(--brass); }
+  .qk-titles{ flex:1; min-width:0; }
+  .qk-titles h1{ font-size:20px; line-height:1.15; color:var(--brass); letter-spacing:.01em; }
+  .qk-titles p{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .qk-score{ flex:none; text-align:right; }
+  .qk-score b{ display:block; font-size:20px; color:var(--brass); line-height:1.1; }
+  .qk-score span{ font-size:12px; color:var(--muted); }
+  .qk-bar{ display:flex; gap:5px; margin:2px 12px 4px; }
+  .qk-bar i{ flex:1; height:6px; border-radius:99px; background:#0d1a13;
+    border:1px solid var(--hairline); transition:background .3s; }
+  .qk-bar i.on{ background:linear-gradient(90deg,var(--brass-d),var(--brass)); }
+
+  /* ── поляна ── */
+  .qk-stage{ flex:1; min-height:0; display:flex; align-items:center; justify-content:center;
+    padding:2px 10px; overflow:hidden; }
+  .qk-wrap{ position:relative; line-height:0; }
+  svg.qk-scene{ display:block; border-radius:14px; border:1.5px solid var(--hairline);
+    background:#e9d7ae; touch-action:manipulation; }
+  .qk-lock{ cursor:pointer; }
+  /* Клик ловит ТОЛЬКО круг-цель (qk-hit): рисунки предметов широкие и
+     налезают друг на друга — без этого правила нажатие на дупло попадало в
+     грядку, и наоборот. Подписи и сияние тоже не перехватывают нажатие. */
+  .qk-lock > *{ pointer-events:none; }
+  .qk-lock > .qk-hit{ pointer-events:auto; }
+  .qk-lock:focus-visible{ filter:drop-shadow(0 0 0 #0b1712) drop-shadow(0 0 6px rgba(217,164,75,.95)); }
+  .qk-lock.on{ filter:drop-shadow(0 0 6px rgba(217,164,65,.85)); }
+  .qk-lock:focus{ outline:none; }
+  .qk-lock:focus-visible .qk-ring{ stroke:#0b1712; stroke-width:4; }
+  .qk-lock .qk-glow{ animation:qkGlow 2.4s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  @keyframes qkGlow{ 0%,100%{ opacity:.18; } 50%{ opacity:.42; } }
+  /* Подсказка стоит ПОД поляной, а не поверх неё: на 640 высоты плашка
+     закрывала сундук — последний замок, до которого ребёнку и надо дойти. */
+  .qk-hint{ margin:0 0 8px; padding:8px 12px; border-radius:12px; font-size:14px; line-height:1.35;
+    color:#f4ead2; background:rgba(43,33,24,.92); border:1px solid rgba(217,164,65,.3);
+    text-align:center; }
+  .qk-hint[hidden]{ display:none; }
+
+  /* ── карточка задания ── */
+  .qk-panel{ flex:none; padding:0 12px calc(10px + env(safe-area-inset-bottom,0px)); }
+  .qk-card{ background:linear-gradient(180deg,#1c3327,#152419); border:1.5px solid var(--hairline);
+    border-radius:14px; padding:10px 12px; display:flex; flex-direction:column; gap:8px;
+    max-height:52vh; overflow:auto; }
+  .qk-card[hidden]{ display:none; }
+  .qk-card h2{ font-size:15px; line-height:1.25; color:var(--brass); }
+  .qk-card .qk-task{ font-size:15.5px; line-height:1.4; }
+  .qk-choices{ display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .qk-choices.three{ grid-template-columns:1fr 1fr 1fr; }
+  .qk-choice{ min-height:48px; font-family:inherit; font-size:20px; font-weight:bold; color:var(--ivory);
+    background:linear-gradient(180deg,#213a2c,#172b20); border:2px solid #3d5c49; border-radius:12px;
+    cursor:pointer; transition:transform .12s, border-color .18s, background .18s; }
+  .qk-choice:hover{ border-color:var(--brass); }
+  .qk-choice:active{ transform:translateY(1px) scale(.99); }
+  .qk-choice:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+  .qk-choice.right{ border-color:var(--ok); background:#1e3a26; }
+  .qk-choice.wrong{ border-color:var(--danger); background:#3a211c; }
+  .qk-choice:disabled{ cursor:default; opacity:.9; }
+  .qk-fb{ font-size:14px; line-height:1.4; border-radius:10px; padding:8px 10px; }
+  .qk-fb.ok{ background:#1e3a26; border:1px solid var(--ok); }
+  .qk-fb.no{ background:#3a211c; border:1px solid var(--danger); }
+  .qk-close{ align-self:flex-end; min-height:44px; padding:9px 16px; border-radius:12px; font-family:inherit;
+    font-size:14.5px; color:var(--glass,#7fb8a0); background:none; border:1px solid rgba(127,184,160,.45);
+    cursor:pointer; }
+  .qk-close:hover{ border-color:var(--brass); color:var(--ivory); }
+  .qk-row{ display:flex; align-items:center; gap:10px; background:#fdf6e0; border:2px solid #d9c9a8;
+    border-radius:12px; padding:4px 12px; align-self:flex-start; }
+  .qk-row .qk-part,.qk-row .qk-res{ font-size:21px; font-weight:bold; color:#2b2118; min-width:24px; text-align:center; }
+  .qk-row .qk-op{ font-size:19px; color:#6b5a44; }
+  .qk-row .qk-res{ color:#5f9a6a; }
+
+  /* ── итог ── */
+  .qk-final{ background:linear-gradient(180deg,#22392a,#152419); border:2px solid var(--brass);
+    border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:8px; max-height:52vh; overflow:auto; }
+  .qk-final[hidden]{ display:none; }
+  .qk-final h2{ font-size:16px; line-height:1.25; color:var(--brass); }
+  .qk-final .qk-big{ font-size:18px; line-height:1.3; }
+  .qk-final .qk-list{ display:flex; flex-direction:column; gap:5px; }
+  .qk-final .qk-li{ display:flex; align-items:center; gap:8px; font-size:14px;
+    background:#101f18; border:1px solid var(--hairline); border-radius:10px; padding:6px 10px; }
+  .qk-final .qk-li .qk-mark{ width:22px; flex:none; text-align:center; font-size:17px; }
+  .qk-final .qk-li .qk-first{ margin-left:auto; font-size:12px; color:var(--muted); }
+  .qk-final .qk-mem{ font-size:14px; line-height:1.45; background:rgba(217,164,65,.14);
+    border-left:4px solid var(--brass); border-radius:8px; padding:8px 10px; }
+  .qk-btns{ display:flex; gap:10px; flex-wrap:wrap; }
+  .qk-btn{ min-height:46px; padding:10px 16px; border-radius:12px; font-family:inherit; font-size:15px;
+    font-weight:bold; color:#201a08; background:linear-gradient(180deg,#ffd76a,#e2b23f); border:none;
+    cursor:pointer; }
+  .qk-btn.ghost{ background:none; color:var(--ivory); border:1.5px solid var(--hairline); font-weight:normal; }
+  .qk-btn:hover{ filter:brightness(1.05); }
+  .qk-note{ font-size:12.5px; color:var(--muted); }
+
+  @media (max-height:700px){
+    .qk-titles h1{ font-size:17px; }
+    .qk-titles p{ display:none; }
+    .qk-card .qk-task{ font-size:15px; }
+    .qk-choice{ min-height:46px; font-size:20px; }
+  }
+  @media (max-width:360px){
+    .qk-choices{ grid-template-columns:1fr 1fr; }
+    .qk-titles h1{ font-size:16px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <span class="ico">🎮</span>
-  <div>
-    <h1>Играть</h1>
-    <p>Интерактивные игры по темам уроков · АРХИМЕД</p>
+
+<header class="qk-top">
+  <a class="qk-back" href="../index.html" id="qkBack">← Каталог</a>
+  <div class="qk-titles">
+    <h1>Кладовая Пыха</h1>
+    <p id="qkHello">Полянка с пятью замками · 1–2 класс</p>
   </div>
+  <div class="qk-score"><b id="qkOpen">0 из 5</b><span>замков открыто</span></div>
 </header>
+<div class="qk-bar" id="qkBar" aria-hidden="true"></div>
 
-<main>
-  <p class="нет_сети">Похоже, сети нет. Игры открываются из интернета, поэтому сейчас они недоступны — а уроки и тренажёры работают как обычно: они уже в приложении.</p>
-
-  <div class="рамка">
-    <div class="пусто" id="пусто">
-      <h2>Игра ещё не подключена</h2>
-      <p>Чтобы она появилась здесь, вставьте ссылку на опубликованный материал Genially в строку <code>GENIALLY_URL</code> в файле <code>MVP/играть.html</code>.</p>
-      <p>Пока ссылки нет, этот экран — заготовка: место для игры уже готово, ничего не сломано.</p>
-    </div>
-  </div>
-
-  <div class="кнопки">
-    <a class="кнопка тихая" href="../index.html">← На главную</a>
-    <a class="кнопка тихая" id="в_новой" href="#" style="display:none" target="_blank" rel="noopener">Открыть в новой вкладке ↗</a>
+<main class="qk-stage">
+  <div class="qk-wrap" id="qkWrap">
+    <div id="qkScene"></div>
   </div>
 </main>
 
+<section class="qk-panel">
+  <p class="qk-hint" id="qkHint">Нажми на предмет на полянке — откроется задание</p>
+  <div class="qk-card" id="qkCard" hidden></div>
+  <div class="qk-final" id="qkFinal" hidden></div>
+</section>
+
+<script src="data/quest.js?v=625"></script>
 <script>
-  /* Ссылка на материал Genially. Вид: https://view.genially.com/xxxxxxxxxxxx */
-  var GENIALLY_URL = '';
+/* ============ ИГРА «КЛАДОВАЯ ПЫХА» ============
+   Логика нарочно короткая: сцена рисуется в quest.js, здесь — только реакции
+   на нажатие, проверка ответа и сохранение. Ни одного сетевого запроса. */
+(function(){
+  'use strict';
 
-  (function(){
-    var рамка = document.querySelector('.рамка');
-    var пусто = document.getElementById('пусто');
-    var вНовой = document.getElementById('в_новой');
+  function эл(id){ return document.getElementById(id); }
+  /* текст между тегами */
+  function эск(т){
+    return String(т == null ? '' : т).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+  /* В разметку имена замков и текст подсказок уезжают только номерами и уже
+     проверенными строками, поэтому кавычку в атрибут не подставляем: &quot;
+     внутри data-и="…" браузер разобрал бы как обрыв атрибута. */
 
-    function офлайн(){ document.body.classList.toggle('офлайн', navigator.onLine === false); }
-    офлайн();
-    window.addEventListener('online', офлайн);
-    window.addEventListener('offline', офлайн);
+  /* quest.js мог не загрузиться (старый кэш). Тогда честно говорим об этом,
+     а не показываем пустую поляну. */
+  var Q = window.ARH_QUEST;
+  var сценаЭл = эл('qkScene');
+  var подсказкаЭл = эл('qkHint');
+  var карточкаЭл = эл('qkCard');
+  var итогЭл = эл('qkFinal');
 
-    if (GENIALLY_URL){
-      var ф = document.createElement('iframe');
-      /* allowfullscreen — игры Genially часто разворачивают на весь экран;
-         loading=lazy — не грузим игру, пока экран не открыт. */
-      ф.src = GENIALLY_URL;
-      ф.setAttribute('allowfullscreen','');
-      ф.setAttribute('loading','lazy');
-      ф.setAttribute('title','Интерактивная игра');
-      рамка.appendChild(ф);
-      пусто.style.display = 'none';
-      вНовой.href = GENIALLY_URL;
-      вНовой.style.display = 'inline-flex';
+  if (!Q || typeof Q.сцена !== 'function'){
+    if (сценаЭл) сценаЭл.innerHTML = '';
+    if (подсказкаЭл){
+      подсказкаЭл.hidden = false;
+      подсказкаЭл.textContent = 'Не удалось загрузить сцену игры (файл data/quest.js). Обновите страницу.';
     }
+    return;
+  }
+
+  var состояние = Q.читать();
+  var задача = { открыто: null, попытка: 0, решено: false };
+
+  /* ── запись в журнал приложения: в каталоге у игры появляется галочка ──
+     Ключ localStorage совпадает с ключом приложения (см. MVP/js/core.js). */
+  var КЛЮЧ_ПРИЛОЖЕНИЯ = 'arhimed_mvp_v1';
+  function журнал(){
+    try { return JSON.parse(localStorage.getItem(КЛЮЧ_ПРИЛОЖЕНИЯ) || 'null') || {}; }
+    catch(e){ return {}; }
+  }
+  function отметитьПрогресс(){
+    var n = Q.открытоСколько(состояние);
+    try{
+      var д = журнал();
+      if (!д.lessons) д.lessons = {};
+      var зап = д.lessons[Q.id] = д.lessons[Q.id] || {};
+      var было = зап.gameOpen || 0;
+      зап.gameOpen = n;
+      if (n === 5){ зап.done = true; if (!зап.doneAt) зап.doneAt = new Date().toISOString(); }
+      зап.gameFirst = состояние.first;
+      if (n !== было || зап.done) localStorage.setItem(КЛЮЧ_ПРИЛОЖЕНИЯ, JSON.stringify(д));
+    } catch(e){ /* приложение может быть не открыто — игре это не мешает */ }
+  }
+
+  /* ── размер поляны: вписываем сцену в свободное место, ничего не срезая ── */
+  function уложить(){
+    var обёртка = эл('qkWrap');
+    var stage = document.querySelector('.qk-stage');
+    var svg = сценаЭл.querySelector('svg');
+    if (!обёртка || !stage || !svg) return;
+    var ш = Math.max(120, stage.clientWidth - 20);
+    var в = Math.max(0, stage.clientHeight - 6);
+    var к = Math.min(ш / 360, в / 520);
+    svg.setAttribute('width', Math.round(360 * к));
+    svg.setAttribute('height', Math.round(520 * к));
+    обёртка.style.width = Math.round(360 * к) + 'px';
+  }
+
+  /* ── отрисовка ── */
+  function полоса(){
+    var n = Q.открытоСколько(состояние);
+    var b = эл('qkBar');
+    if (!b) return;
+    var и = '';
+    for (var i = 0; i < 5; i++) и += '<i class="' + (i < n ? 'on' : '') + '"></i>';
+    b.innerHTML = и;
+  }
+  function нарисоватьСцену(){
+    сценаЭл.innerHTML = Q.сцена(состояние, задача.открыто);
+    уложить();
+  }
+  function обновитьШапку(){
+    var n = Q.открытоСколько(состояние);
+    эл('qkOpen').textContent = n === 5 ? 'все 5' : (n + ' из 5');
+    var имя = Q.имяУченика();
+    var привет = имя ? (имя + ', на полянке пять замков. Нажми на предмет — откроется задание.')
+                     : 'Полянка с пятью замками · 1–2 класс';
+    эл('qkHello').textContent = привет;
+  }
+
+  /* ── карточка задания ── */
+  function закрытьКарточку(){
+    задача = { открыто: null, попытка: 0, решено: false };
+    карточкаЭл.hidden = true;
+    карточкаЭл.innerHTML = '';
+    итогЭл.hidden = true;
+    нарисоватьСцену();
+    подсказка_поСостоянию();
+  }
+  function показатьПодсказку(текст){
+    if (!подсказкаЭл) return;
+    if (текст){ подсказкаЭл.textContent = текст; подсказкаЭл.hidden = false; }
+    else { подсказкаЭл.hidden = true; }
+    уложить();
+  }
+  /* Панель меняет высоту (карточка, итог, подсказка) — поляна должна
+     подстроиться, иначе она выталкивает карточку за экран. */
+  (function следитьЗаРазмером(){
+    var stage = document.querySelector('.qk-stage');
+    if (!stage || typeof ResizeObserver !== 'function') return;
+    try { new ResizeObserver(function(){ уложить(); }).observe(stage); } catch(e){}
   })();
+
+  /* подсказка под поляной: когда задание закрыто, она честно говорит, сколько
+     замков ещё закрыто и какие именно — «сам увижу, что делать дальше» */
+  function подсказка_поСостоянию(){
+    var n = Q.открытоСколько(состояние);
+    if (n === 5) { показатьПодсказку('Все пять замков открыты — сундук открылся!'); return; }
+    показатьПодсказку('Ещё закрыто: ' + закрытыеИмена() + '. Нажми на предмет на полянке');
+  }
+
+  function открытьЗамок(ключ){
+    var з = Q.задания[ключ];
+    if (!з) return;
+    /* игра уже пройдена, а ребёнок вернулся и нажимает сундук — он ждёт итог,
+       а не карточку «замок уже открыт»: так подсказка под поляной и говорит */
+    if (состояние.done && Q.открытоСколько(состояние) === 5 && ключ === 'сундук'){
+      задача = { открыто: null, попытка: 0, решено: false };
+      нарисоватьСцену();
+      показатьИтог();
+      return;
+    }
+    if (состояние.open[Q.порядок.indexOf(ключ)]){   /* уже открыт — покажем, что решено */
+      задача = { открыто: ключ, попытка: 0, решено: true };
+      нарисоватьСцену();
+      карточкаЭл.innerHTML =
+        '<h2>Замок «' + эск(з.имя) + '» уже открыт</h2>' +
+        '<p class="qk-task">' + эск(з.пояснение) + '</p>' +
+        '<div class="qk-row"><span class="qk-part">решено</span>' +
+        '<span class="qk-op">·</span><span class="qk-res">✓</span></div>' +
+        '<button class="qk-close" type="button" data-close>Закрыть</button>';
+      карточкаЭл.hidden = false;
+      подсказка_поСостоянию();
+      return;
+    }
+    задача = { открыто: ключ, попытка: 0, решено: false };
+    нарисоватьСцену();
+    показатьКарточку();
+    /* Пока задание открыто, подсказку под поляной убираем: две подсказки
+       спорят друг с другом, и на 640 высоты поляна из-за неё сжималась в
+       полоску. Подсказка вернётся, когда карточка закроется. */
+    показатьПодсказку(null);
+  }
+
+  function показатьКарточку(){
+    var ключ = задача.открыто;
+    if (!ключ) return;
+    var з = Q.задания[ключ];
+    var решено = !!задача.решено;
+    var варианты = з.варианты || [];
+    var три = варианты.length === 3;
+    var кн = '';
+    for (var i = 0; i < варианты.length; i++){
+      var метка = '';
+      var верный = (i === з.ответ);          /* з.ответ — номер верного варианта */
+      if (решено && верный) метка = ' right';
+      else if (задача.выбрано != null && i === задача.выбрано && !верный) метка = ' wrong';
+      /* В разметке едет НОМЕР варианта (data-и): сравнивать «индекс с ответом»
+         нельзя — 0-й вариант против ответа 7 всегда давал «не так», и верный
+         ответ ребёнка не открывал замок. Кнопки гасим только после верного
+         ответа: пока ответ не найден, нажать можно снова. */
+      кн += '<button class="qk-choice' + метка + '" type="button" data-и="' + i + '"' +
+        (решено ? ' disabled' : '') + '>' + эск(варианты[i]) + '</button>';
+    }
+    var отклик = '';
+    if (решено){
+      отклик = '<div class="qk-fb ok"><b>Верно!</b> ' + эск(з.пояснение) + '</div>';
+    } else if (задача.выбрано != null){
+      отклик = '<div class="qk-fb no"><b>Пока не так.</b> Подсказка: ' + эск(з.подсказка) +
+        ' Попробуй ещё — попытка не потеряна.</div>';
+    }
+    var запись = (ключ === 'дупло') ? Q.запись(3, '+', '?', 10, false)
+               : (ключ === 'лоток') ? Q.запись(4, '+', 3, 7, решено)
+               : (ключ === 'грядка') ? Q.запись(6, '+', 4, 10, решено)
+               : (ключ === 'сундук') ? Q.запись(10, '−', 6, 4, решено)
+               : '';
+    карточкаЭл.innerHTML =
+      '<h2>Замок «' + эск(з.имя) + '» · ' + эск(з.заголовок) + '</h2>' +
+      '<p class="qk-task">' + эск(з.задача) + '</p>' +
+      (запись ? запись : '') +
+      '<div class="qk-choices' + (три ? ' three' : '') + '">' + кн + '</div>' +
+      отклик +
+      '<button class="qk-close" type="button" data-close>' + (решено ? 'Продолжить' : 'Вернусь позже') + '</button>';
+    карточкаЭл.hidden = false;
+    уложить();
+  }
+
+  function ответить(i){
+    var ключ = задача.открыто;
+    if (!ключ) return;
+    var з = Q.задания[ключ];
+    if (задача.решено) return;              /* замок уже открыт — повтор не считаем */
+    задача.попытка++;
+    задача.выбрано = i;
+    if (i === з.ответ){
+      задача.решено = true;
+      var место = Q.порядок.indexOf(ключ);
+      if (!состояние.open[место]){
+        состояние.open[место] = true;
+        if (задача.попытка === 1) состояние.first = Math.min(5, состояние.first + 1);
+      }
+      if (Q.открытоСколько(состояние) === 5) состояние.done = true;
+      состояние = Q.писать(состояние);
+      отметитьПрогресс();
+      нарисоватьСцену();
+      обновитьШапку();
+      полоса();
+      /* Пятый замок открыт — сундук открывается сразу. Раньше финал ждал
+         таймер и мог не показаться вовсе (ребёнок закрыл игру за секунду);
+         теперь замок защёлкивается, карточка убирается, итог на месте. */
+      if (состояние.done){ показатьИтог(); return; }
+      показатьКарточку();
+      показатьПодсказку(null);
+      return;
+    }
+    /* неверно: попытка не засчитана, задание остаётся открытым */
+    показатьКарточку();
+  }
+
+  /* ── финал: сундук открыт, показываем, что пройдено ── */
+  function показатьИтог(){
+    var n = Q.открытоСколько(состояние);
+    var строки = '';
+    for (var i = 0; i < Q.порядок.length; i++){
+      var ключ = Q.порядок[i];
+      var з = Q.задания[ключ];
+      строки += '<div class="qk-li"><span class="qk-mark">✓</span><span>' + эск(з.имя) +
+        ' — ' + эск(з.заголовок) + '</span></div>';
+    }
+    var память = '<div class="qk-mem"><b>Что запомнить.</b> Сложение соединяет части, ' +
+      'вычитание убирает часть. Пустые клетки — это сколько ещё поместится.</div>';
+    итогЭл.innerHTML =
+      '<h2>Сундук открыт! Ты прошёл игру «Кладовая Пыха»</h2>' +
+      '<p class="qk-big">Замков открыто: ' + n + ' из 5.<br>С первой попытки: ' + состояние.first + ' из 5.</p>' +
+      (n < 5 ? '<p class="qk-note">Ещё закрыты: ' + эск(закрытыеИмена()) + '.</p>' : '') +
+      '<div class="qk-list">' + строки + '</div>' +
+      память +
+      '<div class="qk-btns">' +
+        '<button class="qk-btn" type="button" data-close>Вернуться на полянку</button>' +
+        '<button class="qk-btn ghost" type="button" data-reset>Начать заново</button>' +
+      '</div>' +
+      '<p class="qk-note">Игра сохранена: закроешь страницу — замки останутся открытыми.</p>';
+    итогЭл.hidden = false;
+    карточкаЭл.hidden = true;
+    карточкаЭл.innerHTML = '';
+    задача = { открыто: null, попытка: 0, решено: false };
+    уложить();
+    показатьПодсказку(n < 5 ? ('Ещё закрыто: ' + закрытыеИмена()) : 'Все пять замков открыты — сундук открылся!');
+    /* Показать итог — это только снять hidden. Прокрутку зовём отдельно:
+       scrollIntoView с объектом настроек в части браузеров бросает исключение, и
+       раньше оно съедалось вместе с показом итога — финал не появлялся вовсе. */
+    try { if (итогЭл.scrollIntoView) итогЭл.scrollIntoView(); } catch(e){}
+  }
+  function закрытыеИмена(){
+    var имена = [];
+    for (var i = 0; i < Q.порядок.length; i++)
+      if (!состояние.open[i]) имена.push(Q.названия[Q.порядок[i]]);
+    return имена.join(', ');
+  }
+
+  function сбросить(){
+    состояние = Q.писать(Q.пустое());
+    задача = { открыто: null, попытка: 0, решено: false };
+    итогЭл.hidden = true;
+    карточкаЭл.hidden = true;
+    карточкаЭл.innerHTML = '';
+    нарисоватьСцену();
+    обновитьШапку();
+    полоса();
+    показатьПодсказку('Начнём сначала: нажми на предмет');
+  }
+
+  /* ── нажатия: и по сцене, и по карточке, и с клавиатуры ── */
+  сценаЭл.addEventListener('click', function(e){
+    var t = e.target;
+    while (t && t !== сценаЭл && !(t.getAttribute && t.getAttribute('data-lock'))) t = t.parentNode;
+    if (!t || t === сценаЭл) return;
+    открытьЗамок(t.getAttribute('data-lock'));
+  });
+  сценаЭл.addEventListener('keydown', function(e){
+    if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+    var t = e.target;
+    var ключ = t && t.getAttribute ? t.getAttribute('data-lock') : null;
+    if (!ключ) return;
+    e.preventDefault();
+    открытьЗамок(ключ);
+  });
+  карточкаЭл.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.getAttribute) return;
+    var номер = t.getAttribute('data-и');
+    if (номер != null){ ответить(parseInt(номер, 10)); return; }
+    if (t.hasAttribute('data-close')){ закрытьКарточку(); }
+  });
+  итогЭл.addEventListener('click', function(e){
+    var t = e.target;
+    if (t.hasAttribute && t.hasAttribute('data-reset')){ сбросить(); return; }
+    if (t.hasAttribute && t.hasAttribute('data-close')){
+      итогЭл.hidden = true;
+      показатьПодсказку(null);
+    }
+  });
+
+  /* «← Каталог»: если игру открыли из приложения — возвращаемся назад,
+     если открыли ссылкой — идём в каталог. Внешних адресов нет. */
+  var назад = эл('qkBack');
+  if (назад) назад.addEventListener('click', function(e){
+    try{
+      if (document.referrer && document.referrer.indexOf('index.html') >= 0){ e.preventDefault(); history.back(); }
+    }catch(_){}
+  });
+
+  window.addEventListener('resize', function(){ уложить(); });
+  window.addEventListener('orientationchange', function(){ setTimeout(уложить, 120); });
+
+  /* ── старт ── */
+  нарисоватьСцену();
+  обновитьШапку();
+  полоса();
+  if (состояние.done){
+    показатьПодсказку('Все пять замков открыты. Нажми на сундук — покажу итог.');
+  } else if (Q.открытоСколько(состояние) > 0){
+    подсказка_поСостоянию();
+  }
+  setTimeout(уложить, 60);
+})();
 </script>
 </body>
 </html>

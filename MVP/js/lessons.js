@@ -122,7 +122,26 @@ function lessonPool(){
   }catch(e){ return window.ARH_LESSONS; }
 }
 let BK={ subj:'all', open:{} };   // фильтр по предмету + раскрытые секции
+/* Строка игры-квеста (урок с полем game, см. MVP/data/quest.js). Игра живёт
+   на своей странице, поэтому строка — ссылка, а не openLessonView: так полка
+   «Начальная школа» остаётся прежней, а у игры нет кадров «объясни → реши». */
+function gameRow(L){
+  let открыто=0;
+  try{ открыто=parseInt((DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].gameOpen)||0,10)||0; }catch(e){ открыто=0; }
+  const done=!!(DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done);
+  /* Ссылка — значит цвет и подчёркивание браузера надо погасить: на тёмной
+     панели синий цвет даёт контраст ниже 4,5:1 и ломает вид полки. */
+  return `<a class="lesson-row ${done?'done':''}" href="${L.gameUrl||'играть.html'}"
+    style="text-decoration:none;color:inherit"
+    onclick="try{logEvent('game',{id:${L.id}});}catch(e){}">
+    <span class="lr-ico">${L.ico||'🔑'}</span>
+    <span class="lr-ti"><span class="lr-tt">${esc(L.title)}</span>
+    <span class="lr-td">${esc(L.src)} · ${esc(L.gameDesc||'игра')}${открыто} из 5</span></span>
+    <span class="lr-pr">${done?'✅':'▶ играть'}</span>
+  </a>`;
+}
 function lessonRow(L){
+  if(L&&L.game) return gameRow(L);
   const rec=DB.lessons&&DB.lessons[L.id];
   const done=!!(rec&&rec.done);
   return `<div class="lesson-row ${done?'done':''}" onclick="openLessonView(${L.id})">
@@ -243,6 +262,10 @@ function bookToggle(subj){
 /* ---------- экран урока ---------- */
 function openLessonView(id){
   const L=lessonById(id); if(!L) return;
+  /* Игра-квест — отдельная страница (MVP/играть.html): сцена, «замки» и свои
+     задания. Если её открыли не из каталога (например, ссылкой lesson-258),
+     просто уводим на страницу игры, а не рисуем пустой экран урока. */
+  if(L.game){ location.href=(L.gameUrl||'играть.html'); return; }
   LV={ id, step:0, phase:'explain', ch:null, task:0, hints:0, sel:null };
   LX={ a:1, b:7, c:2, pigeons:null, hour:0, cells:[64,0,0,0,0,0,0] };
   if(L.comic&&typeof COMIC!=='undefined'&&COMIC.open){ COMIC.open(L); return; }
