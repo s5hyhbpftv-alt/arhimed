@@ -3566,8 +3566,13 @@ function coinsSVG(){
         font-family:inherit; flex-shrink:0; }
       .comic-top .ct-x::after { content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
         width:44px; height:44px; }
+      /* Кадр листается целиком. Раньше у страницы стояло overflow:hidden, а у
+         сцены min-height:0: на телефоне (высота 844 и меньше) пейзаж, облачко и
+         герои вместе выше сцены, и низ героев срезался краем — ребёнок видел
+         обрезанных персонажей, а под ними сразу шла подпись кадра. Теперь сцена
+         растёт под содержимое, а листается сама страница. */
       .c2-page { flex:1 1 auto; width:100%; max-width:760px; margin:4px auto 10px; background:#fffdf4;
-        border:6px solid #33291e; border-radius:10px; overflow:hidden; box-shadow:0 12px 34px rgba(0,0,0,.28);
+        border:6px solid #33291e; border-radius:10px; overflow:auto; box-shadow:0 12px 34px rgba(0,0,0,.28);
         display:flex; flex-direction:column; position:relative; }
       .c2-scene { width:100%; height:auto; display:block; }
       .c2a-cloud { animation:c2drift 11s ease-in-out infinite alternate; }
@@ -3604,7 +3609,7 @@ function coinsSVG(){
       @keyframes c2prop { from{ opacity:0; transform:translateY(-14px) scale(.7);} to{ opacity:1; transform:none;} }
       .c2a-prop rect { filter:drop-shadow(0 3px 6px rgba(0,0,0,.18)); }
       /* сцена-кадр: фон-панорама + герои поверх */
-      .c2-stage { position:relative; flex:1 1 auto; min-height:0; width:100%; overflow:hidden;
+      .c2-stage { position:relative; flex:1 0 auto; min-height:auto; width:100%; overflow:visible;
         border-bottom:5px solid #33291e; background:linear-gradient(#8fc060,#5c8f3e 45%,#4a7a33); }
       .c2-stage.c2-bg-pond, .c2-stage.c2-bg-sad, .c2-stage.c2-bg-ferma { background:linear-gradient(#7fb45c,#5c8f3e 50%,#4a7a33); }
       .c2-stage.c2-bg-kitchen, .c2-stage.c2-bg-magazin { background:linear-gradient(#c2915b,#9c6c3a 45%,#7a4f26); }
@@ -3689,6 +3694,21 @@ function coinsSVG(){
       .c2-deco .d2 { right:12px; bottom:14px; }
       .c2-deco .d3 { right:40px; bottom:86px; font-size:22px; opacity:.65; }
       .c2-deco .d4 { left:46px; bottom:92px; font-size:20px; opacity:.6; }
+      /* Низкий экран (телефон с панелью браузера): ужимаем пейзаж, героев и
+         подпись, чтобы кадр помещался целиком и не приходилось листать. */
+      @media (max-height:820px){
+        .c2-stage .c2-scene { max-height:46%; }
+        .c2-hero { width:118px; } .c2-hero.talker { width:138px; }
+        .c2-hero.listener-1, .c2-hero.listener-2 { width:98px; }
+        .c2-cast.c2-many .c2-hero.talker { width:126px; } .c2-cast.c2-many .c2-hero { width:94px; }
+        .c2-talk { font-size:15px; padding:9px 13px 11px; }
+        .c2-capbar { min-height:52px; font-size:13px; }
+      }
+      @media (max-height:700px){
+        .c2-stage .c2-scene { max-height:40%; }
+        .c2-hero { width:104px; } .c2-hero.talker { width:124px; }
+        .c2-hero.listener-1, .c2-hero.listener-2 { width:88px; }
+      }
       .c2-hero .c2h-card { width:100%; border-radius:16px 16px 6px 6px; overflow:hidden;
         border:4px solid #33291e; background:#fff; box-shadow:0 8px 20px rgba(0,0,0,.25); }
       .c2-hero .c2h-card svg { display:block; width:100%; height:auto; }
