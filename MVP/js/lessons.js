@@ -38,6 +38,30 @@ function lessonClassRange(L){
     return sub==='phys'?[7,9] : sub==='chem'?[8,9] : sub==='inf'?[7,9] : [5,9];
   }catch(e){ return [5,9]; }
 }
+/* Подгруппа начальной школы для урока. Полка «Начальная школа» одна, но внутри
+   неё классы слишком разные: у первоклассника рядом с составом числа стояли
+   дроби, проценты и задачи на движение 4 класса. Поэтому делим полку на три
+   подгруппы — «1–2», «3», «4» — и уроки разных подгрупп не смешиваем.
+   Диапазон берём у lessonClassRange; если он не попадает ни в одну подгруппу
+   (например 1–4 у урока без класса в src), относим к ближайшей по НИЖНЕЙ
+   границе: урок «1–4 класс» — это урок для младших, он встаёт в «1–2». */
+function junGroup(L){
+  try{
+    const r=lessonClassRange(L);
+    const lo=(r&&r[0]!=null)?+r[0]:1, hi=(r&&r[1]!=null)?+r[1]:lo;
+    if(hi<=2) return '1–2';
+    if(lo<=2) return '1–2';   /* диапазон шире подгруппы — по нижней границе */
+    if(lo===3) return '3';
+    return '4';
+  }catch(e){ return '1–2'; }
+}
+/* Подгруппа самого ребёнка: 1 и 2 класс — «1–2», 3 — «3», 4 — «4» */
+function junMyGroup(){ try{ const k=profileClassNum(); return k<=2?'1–2':(k===3?'3':'4'); }catch(e){ return '1–2'; } }
+/* Заголовок подгруппы начальной школы: тот же стиль, что у прежнего
+   разделителя «— другие классы —», только с осмысленным названием. */
+function junHead(text, first){
+  return `<div class="jun-group-head" style="text-align:center;font-size:11.5px;color:var(--muted);margin:${first?2:14}px 0 6px;letter-spacing:.02em">— ${text} класс —</div>`;
+}
 function lessonFits(L){ /* при открытом мире уроки не прячем по классу — как и задачи */
   try{ if(typeof worldOpen==='function' && worldOpen()) return true; }catch(e){}
   const r=lessonClassRange(L), o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
@@ -122,13 +146,33 @@ function bookSel(){
   }catch(e){}
   return BK.subj;
 }
-/* строки уроков с разделителем: сверху — твой класс, ниже — остальные */
-function lessonsWithDivider(items){
+/* Строки уроков полки. «Начальная школа» делится на три подгруппы со своими
+   заголовками (подгруппа ребёнка — первой), остальные полки и «Все предметы»
+   рисуются как раньше: сверху уроки текущего класса, ниже — остальные. */
+function lessonsWithDivider(items, subj){
+  if(subj==='jun') return lessonsByJunGroup(items);
   const k=profileClassNum(); let out='', seenOther=false;
   for(const L of items){
     const r=lessonClassRange(L), cur=(k>=r[0] && k<=r[1]);
     if(!cur && !seenOther){ out+=`<div style="text-align:center;font-size:11.5px;color:var(--muted);margin:12px 0 6px;letter-spacing:.02em">— другие классы —</div>`; seenOther=true; }
     out+=lessonRow(L);
+  }
+  return out;
+}
+/* Полка «Начальная школа»: три подгруппы — «1–2 класс», «3 класс», «4 класс».
+   Подгруппа ребёнка идёт первой, остальные ниже и каждая под своим заголовком.
+   Уроки разных подгрупп не смешиваются: внутри подгруппы порядок остаётся тем,
+   что пришёл из пула уроков (план обучения, MVP/data/plan_order.js). */
+function lessonsByJunGroup(items){
+  const mine=junMyGroup();
+  const ordered=[mine].concat(['1–2','3','4'].filter(g=>g!==mine));
+  const buckets={ '1–2':[], '3':[], '4':[] };
+  for(const L of items) buckets[junGroup(L)].push(L);
+  let out='', first=true;
+  for(const g of ordered){
+    if(!buckets[g].length) continue;          /* пустую подгруппу не показываем */
+    out+=junHead(g, first); first=false;
+    for(const L of buckets[g]) out+=lessonRow(L);
   }
   return out;
 }
@@ -170,7 +214,7 @@ function renderBookList(){
             <span class="bsh-ico">${bookIcoHTML(g.subj,g.meta,true)}</span>
             <span><b>${g.meta.name}</b><br>
             <span class="small" style="color:var(--muted)">${esc(g.meta.dsc)} · ${gd}/${g.items.length} пройдено</span></span>
-          </div>${lessonsWithDivider(g.items)}`; })()
+          </div>${lessonsWithDivider(g.items, g.subj)}`; })()
     : grouped.filter(g=>g.subj!=='all').map((g,i)=>{
         const isOpen = BK.open[g.subj]!==false;   /* разделы каталога раскрыты по умолчанию: уроки видно сразу */
         const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
