@@ -56,10 +56,36 @@
 
   /* ---------- состояние ---------- */
   let wrapEl=null, bubEl=null, panEl=null;
+  /* Лист-задание урока (бумажный лист RUPAPER/RU615PAPER .pp, русский тренажёр .s6,
+     «Мишутка» .ms, разбор .rl-wrap, скобки .sk6): пока он открыт, помощник не
+     показывается — раньше пузырь висел поверх листа и съедал первый тап. */
+  function sheetOpen(){
+    try{ return !!document.querySelector('#lvis .pp, #lvis .s6, #lvis .ms, #lvis .rl-wrap, #lvis .sk6'); }
+    catch(e){ return false; }
+  }
+  /* Урок открыт (любая фаза: объяснение, проверка, задачи). Пузырь здесь ничего
+     не добавляет — текст шага и так стоит в рамке Архимеда, — а на телефоне он
+     ложился на нижнюю часть рисунка и закрывал кнопки. Поэтому в уроке молчим.
+     Признак берём из разметки урока (пустая #lvis в объяснении и кнопка
+     «← Книга знаний» в остальных фазах), а не из LV: после выхода из урока
+     LV остаётся заполненным, и по нему стартовый экран считался бы уроком. */
+  function lessonOpen(){
+    try{
+      if(document.getElementById('lvis')) return true;
+      const btns=document.querySelectorAll('#screen button');
+      for(let i=0;i<btns.length;i++) if(btns[i].textContent.indexOf('Книга знаний')>=0) return true;
+      return false;
+    }catch(e){ return false; }
+  }
+  function hushBub(){ if(bubEl) bubEl.classList.remove('show'); }
   function ensure(){ if(!wrapEl){ wrapEl=build(); bubEl=document.getElementById('asstBub'); panEl=document.getElementById('asstPanel'); }
     syncBuildTag();
     watchMenu(); tipLoop(); }
   function sayBub(t,holdMs){ caption=t||''; if(!bubEl) return;
+    /* Пока открыт урок или лист-задание, пузырь не показываем: он ложился поверх
+       листа/рисунка и перехватывал первый тап (CSS гасит помощника на листах,
+       это — страховка, чтобы класс .show не остался «зажжённым»). */
+    if(t && (sheetOpen()||lessonOpen())){ hushBub(); return; }
     if(t){ bubEl.innerHTML=esc(t); bubEl.classList.add('show'); lastAt=Date.now(); }
     else if(holdMs){ setTimeout(()=>{ if(Date.now()-lastAt>holdMs-200) bubEl.classList.remove('show'); }, holdMs); }
     else bubEl.classList.remove('show');
@@ -237,6 +263,10 @@
     if(!onStartScreen()) return;                          // и только на стартовом экране
     setTimeout(()=>{ try{
       if(!(DB&&DB.profile)) return;                       // не показываем до создания профиля
+      /* За 2,5 с ожидания могли открыть урок: проверяем экран ещё раз — иначе
+         подсказка «Жми ➡ Дальше» всплывала поверх листа урока. */
+      if(!onStartScreen()) return;
+      if(sheetOpen()) return;
       if(typeof AGENTLIVE!=='undefined'&&AGENTLIVE.state&&AGENTLIVE.state()) return; // не мешать разговору
       if(bubEl&&bubEl.classList.contains('show')) return;  // не перебивать уже показанное
       const pool=TIPS[tipKind()]||TIPS.path; if(!pool.length) return;
@@ -251,7 +281,12 @@
     if(menuTimer) return;
     menuTimer=setInterval(()=>{ if(panEl&&panEl.classList.contains('open')) ctxMenu(); },900);
     try{
-      const obs=new MutationObserver(()=>{ if(panEl&&panEl.classList.contains('open')) setTimeout(ctxMenu,350); });
+      const obs=new MutationObserver(()=>{
+        if(panEl&&panEl.classList.contains('open')) setTimeout(ctxMenu,350);
+        /* Сменился экран и открылся урок — гасим уже показанный пузырь, чтобы он
+           не «прилип» поверх рисунка или листа. */
+        if(lessonOpen()) hushBub();
+      });
       const sc=document.getElementById('screen'); if(sc) obs.observe(sc,{childList:true,subtree:false});
     }catch(e){}
   }
