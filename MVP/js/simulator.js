@@ -37,45 +37,6 @@ function olympTours(){
   return T.slice().sort((a,b)=>(a.klass-b.klass)||String(a.title).localeCompare(String(b.title),'ru'));
 }
 
-function tourListHTML(){
-  const T=olympTours();
-  if(!T.length) return '';
-  const по = {};
-  T.forEach(t=>{ (по[t.subject]=по[t.subject]||[]).push(t); });
-  const порядок=['math','rus','inf','phys','chem'];
-  const имена={math:'Математика',rus:'Русский язык',inf:'Информатика',phys:'Физика',chem:'Химия'};
-  const иконы={math:'🏛',rus:'📖',inf:'💻',phys:'🍎',chem:'⚗️'};
-  const done=id=>{ try{ return !!(DB.lessons&&DB.lessons[id]&&DB.lessons[id].done); }catch(e){ return false; } };
-  const rows=порядок.filter(s=>по[s]).map(s=>{
-    const карточки=по[s].map(t=>{
-      const d=done(t.id);
-      return `<button type="button" class="olymp-tour" onclick="openOlympTour(${t.id})"
-          style="display:flex;align-items:center;gap:10px;width:100%;text-align:left;min-height:56px;
-                 padding:10px 12px;border-radius:14px;border:1px solid rgba(255,215,106,.28);
-                 background:${d?'rgba(143,209,168,.10)':'rgba(255,255,255,.04)'};color:inherit;cursor:pointer;font-family:inherit">
-          <span style="flex:1;min-width:0">
-            <span style="display:block;font-size:16px;font-weight:600">${t.klass} класс · ${esc(t.title.replace(/^[^·]*·\s*\d+\s*класс\s*·\s*/,''))}</span>
-            <span style="display:block;font-size:14px;color:var(--muted);margin-top:2px">${t.items.length} заданий · до ${t.макс} баллов${t.время?' · '+t.время+' мин':''}${d?' · пройден':''}</span>
-          </span>
-          <span style="flex:none;font-size:18px;color:var(--brass)">${d?'✓':'▶'}</span>
-        </button>`;
-    }).join('');
-    return `<div style="margin-top:10px">
-      <div style="font-size:15px;font-weight:bold;color:var(--brass);margin-bottom:6px">${иконы[s]||'🏆'} ${имена[s]||s}</div>
-      <div style="display:flex;flex-direction:column;gap:8px">${карточки}</div>
-    </div>`;
-  }).join('');
-  return `<div class="card" style="margin-top:12px">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">
-        <div style="font-size:34px">🏆</div>
-        <div style="flex:1"><b style="font-size:16px">Туры ВсОШ</b>
-        <div class="small" style="color:var(--muted);margin-top:2px">${T.length} туров по предметам и классам · сюжет, баллы, время, разбор каждого задания</div></div>
-      </div>
-      <div class="small" style="color:var(--muted);line-height:1.5">Задания проверяются сразу: увидишь верное решение и разбор. В конце — балл, процент выполнения и темы на повтор.</div>
-      ${rows}
-    </div>`;
-}
-
 function renderTourScreen(){
   const s=document.getElementById('screen');
   const isls=tourIsls();
@@ -119,7 +80,54 @@ function renderTourScreen(){
         <span style="font-size:20px">${I.ico}</span><span>${esc(I.name)}</span></button>`).join('')}</div>
       ${duelBest?`<div class="small" style="margin-top:8px;color:var(--muted)">Рейтинг <b style="color:var(--brass)">${duelBest.rating}</b> · побед ${duelBest.wins}/${duelBest.games}${duelBest.best? ' · лучший счёт '+duelBest.best:''}</div>`:''}
     </div>`;
-  s.innerHTML=hero+tourListHTML()+tourCards+duel;
+  s.innerHTML=hero+olympButton()+tourCards+duel;
+  hud();
+}
+
+/* Одна кнопка на туры ВсОШ: список из 25 туров — отдельным экраном, чтобы
+   раздел «Тур» остался таким, как был (быстрый тур по островам и дуэль). */
+function olympButton(){
+  const T=(typeof window.ARH_TOURS!=='undefined'&&window.ARH_TOURS)||[];
+  if(!T.length) return '';
+  const заданий=T.reduce((a,t)=>a+t.items.length,0);
+  const пройдено=T.filter(t=>{ try{ return !!(DB.lessons&&DB.lessons[t.id]&&DB.lessons[t.id].done); }catch(e){ return false; } }).length;
+  return `<div class="card" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;padding:14px">
+      <div style="font-size:30px">🏆</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:16px;font-weight:bold;color:var(--brass)">Туры ВсОШ</div>
+        <div class="small" style="color:var(--muted);margin-top:2px">${T.length} туров · ${заданий} заданий · баллы и время${пройдено?' · пройдено '+пройдено:''}</div>
+      </div>
+      <button class="btn" style="margin:0;min-height:44px" onclick="go('olymp')">Выбрать тур →</button>
+    </div>`;
+}
+
+/* Экран выбора тура: предметы, в них классы. Отсюда открывается сам тур. */
+function renderOlympScreen(){
+  const s=document.getElementById('screen');
+  const T=olympTours();
+  const порядок=['math','rus','inf','phys','chem'];
+  const имена={math:'Математика',rus:'Русский язык',inf:'Информатика',phys:'Физика',chem:'Химия'};
+  const иконы={math:'🏛',rus:'📖',inf:'💻',phys:'🍎',chem:'⚗️'};
+  const по={};
+  T.forEach(t=>{ (по[t.subject]=по[t.subject]||[]).push(t); });
+  const блоки=порядок.filter(п=>по[п]).map(п=>{
+    const карточки=по[п].map(t=>{
+      let пройден=false; try{ пройден=!!(DB.lessons&&DB.lessons[t.id]&&DB.lessons[t.id].done); }catch(e){}
+      return `<button type="button" class="choice" style="text-align:left;display:block;width:100%;min-height:56px"
+          onclick="openOlympTour(${t.id})">
+          <b>${t.klass} класс</b> · ${esc(String(t.title).replace(/^[^·]*·\s*\d+\s*класс\s*·\s*/,''))}
+          <span class="small" style="display:block;color:var(--muted);margin-top:2px">${t.items.length} заданий · до ${t.макс} баллов${t.время?' · '+t.время+' мин':''}${пройден?' · ✅ пройден':''}</span>
+        </button>`;
+    }).join('');
+    return `<div style="margin-top:12px">
+        <div style="font-size:15px;font-weight:bold;color:var(--brass);margin-bottom:6px">${иконы[п]||'🏆'} ${имена[п]||п}</div>
+        <div style="display:flex;flex-direction:column;gap:8px">${карточки}</div>
+      </div>`;
+  }).join('');
+  s.innerHTML=`<button class="btn ghost" onclick="go('tour')">← К турам</button>
+    <h2 style="margin:8px 0 4px">🏆 Туры ВсОШ</h2>
+    <div class="small" style="color:var(--muted);margin-bottom:8px">Выбери предмет и класс. Задание проверяется сразу: увидишь решение и разбор, в конце — балл и процент выполнения.</div>
+    <div class="card" style="padding:12px 12px 16px">${блоки}</div>`;
   hud();
 }
 function renderTour(){

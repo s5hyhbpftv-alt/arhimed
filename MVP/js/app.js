@@ -67,6 +67,7 @@ function go(target){
   if(target==='book'){ setTab('book'); renderBookList(); return; }
   if(target==='legend'){ setTab(''); renderLegend(); return; }
   if(target==='tour'){ setTab('tour'); renderTourScreen(); return; }
+  if(target==='olymp'){ setTab('tour'); renderOlympScreen(); return; }
   if(target.startsWith('lesson-')){ setTab(''); openLessonView(parseInt(target.slice(7))); return; }
   if(target.startsWith('island-')){ setTab(''); UI.islName=decodeURIComponent(target.slice(7)); renderIsland(UI.islName); return; }
   if(target.startsWith('task-')){ openTask(target.slice(5), UI.islName? 'island-'+UI.islName : 'path'); return; }
