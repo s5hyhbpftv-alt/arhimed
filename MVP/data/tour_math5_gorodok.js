@@ -1153,6 +1153,22 @@
   window.WAVE_B = window.WAVE_B || {};
   window.WAVE_B[ID] = function(el){ рисовать(el); };
 
+
+  /* Раздел «Тур» строит список из ARH_TOURS. Без этой записи тур был бы
+     в каталоге, но в списке туров его не видно — именно так три тура
+     и «пропали». */
+  (function(){
+    window.ARH_TOURS = window.ARH_TOURS || [];
+    if(window.ARH_TOURS.some(t=>t && t.id===ID)) return;
+    window.ARH_TOURS.push({
+      id: ID, klass: 5, subject: 'math',
+      title: 'Математика · 5 класс · «Снежный городок»',
+      макс: 10, время: 45,
+      items: [1,2,3,4,5].map(i=>({ n:i })),
+      hand: true
+    });
+  })();
+
   (function(){
     const L = {
       id: ID, title:'Снежный городок', ico:'⛄',
