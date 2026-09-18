@@ -111,6 +111,14 @@
        ${жирный?'font-weight="bold"':''} fill="${цвет||ПЕРО}"
        font-family="Georgia,'Times New Roman',serif">${esc(текст)}</text>`;
 
+  /* Подсветка верного ответа: мягкое свечение рамки, без масштабирования
+     текста (правило 1 стандарта — текст анимацией не масштабировать). */
+  const свечение = (x,y,w,h,цвет) =>
+    `<rect x="${x-2}" y="${y-2}" width="${w+4}" height="${h+4}" rx="12" fill="none"
+      stroke="${цвет}" stroke-width="2" opacity=".5">
+      <animate attributeName="opacity" values=".2;.6;.2" dur="1.8s" repeatCount="indefinite"/>
+    </rect>`;
+
   const рамка = (x,y,w,h,заливка,обводка,скругл,толщ) =>
     `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${скругл==null?10:скругл}"
        fill="${заливка||'rgba(255,255,255,.05)'}" stroke="${обводка||ЛИНИЯ}"
@@ -121,27 +129,36 @@
       ${обводка?`stroke="${обводка}" stroke-width="1.6"`:''}/>`;
 
   /* Теория: короткая плашка «приём» под рисунком */
-  const теория = (заголовок, строки, цвет) =>
-    `<div class="card" style="border-color:${цвет||ЗОЛОТО};padding:12px 14px">
-       <div style="font-size:15px;font-weight:bold;color:${цвет||ЗОЛОТО};margin-bottom:6px">📘 ${esc(заголовок)}</div>
-       ${строки.map(с=>`<div style="font-size:16px;line-height:1.5;color:var(--ink,#f4e9c8);margin-top:4px">${с}</div>`).join('')}
+  /* Теория приёма. У каждого приёма свой знак и свой цвет: блоки не должны
+     выглядеть одним и тем же шаблоном (правило 9 стандарта). */
+  const теория = (заголовок, строки, цвет, знак) =>
+    `<div class="card ${ДОМ}-теория" style="border-left-color:${цвет||ЗОЛОТО};padding:12px 14px">
+       <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+         <span style="font-size:24px;line-height:1">${знак||'📘'}</span>
+         <span style="font-size:16px;font-weight:bold;color:${цвет||ЗОЛОТО};letter-spacing:-.01em">${esc(заголовок)}</span>
+       </div>
+       ${строки.map((с,i)=>`<div style="display:flex;gap:10px;margin-top:6px">
+           <span style="flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid ${цвет||ЗОЛОТО};
+             font-size:12px;line-height:17px;text-align:center;color:${цвет||ЗОЛОТО};font-variant-numeric:tabular-nums">${i+1}</span>
+           <span style="font-size:16px;line-height:1.5;color:#f4e9c8">${с}</span>
+         </div>`).join('')}
      </div>`;
 
   /* Разбор: подробно, с «частой ошибкой» */
   const разбор = (текст, ошибка) =>
     `<div class="card" style="border-color:${ЗЕЛЁН};padding:12px 14px">
-       <div style="font-size:15px;font-weight:bold;color:${ЗЕЛЁН};margin-bottom:6px">✅ Разбор</div>
+       <div style="font-size:16px;font-weight:bold;color:${ЗЕЛЁН};margin-bottom:6px">✅ Разбор</div>
        <div style="font-size:16px;line-height:1.55">${esc(текст)}</div>
-       ${ошибка?`<div style="font-size:15px;line-height:1.5;color:${КРАСН};margin-top:8px">⚠ ${esc(ошибка)}</div>`:''}
+       ${ошибка?`<div style="font-size:14px;line-height:1.5;color:${КРАСН};margin-top:8px">⚠ ${esc(ошибка)}</div>`:''}
      </div>`;
 
   const шапка = (номер, название, тема) =>
     `<div class="card" style="padding:10px 12px">
        <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
          <span style="font-size:14px;color:var(--muted)">Дело ${номер} из 5</span>
-         <span style="font-size:14px;color:${ЗОЛОТО}">${2} балла</span>
+         <span style="font-size:14px;color:${ЗОЛОТО};font-variant-numeric:tabular-nums">2 балла</span>
        </div>
-       <div style="font-size:19px;font-weight:bold;color:${ЛАМПА};margin-top:2px">${esc(название)}</div>
+       <div style="font-size:20px;font-weight:bold;color:${ЛАМПА};margin-top:2px">${esc(название)}</div>
        <div style="font-size:14px;color:var(--muted);margin-top:2px">${esc(тема)}</div>
      </div>`;
 
@@ -170,7 +187,7 @@
       s += `<path d="M26 100 L26 78 L52 62 L78 78 L78 100 Z" fill="rgba(255,255,255,.05)" stroke="${ЛИНИЯ}" stroke-width="1.4"/>`;
       s += `<path d="M118 100 L118 74 L150 54 L182 74 L182 100 Z" fill="rgba(255,255,255,.05)" stroke="${ЛИНИЯ}" stroke-width="1.4"/>`;
       s += `<path d="M222 100 L222 80 L254 62 L286 80 L286 100 Z" fill="rgba(255,255,255,.05)" stroke="${ЛИНИЯ}" stroke-width="1.4"/>`;
-      s += т(168,120,'пять дел во дворике — пять задач',11.5,ТИХО);
+      s += т(168,120,'пять дел во дворике — пять задач',12,ТИХО);
       return svg(s,134);
     },
     низ(){
@@ -192,8 +209,8 @@
         const x=52+i*78, задержка=(i*0.06).toFixed(2);
         s += `<g style="animation:${ДОМ}-въезд 0.4s ease-out ${задержка}s both">
                 ${круг(x,74,20,'rgba(255,255,255,.06)',i%2?СИНЬ:ЗОЛОТО)}
-                ${т(x,79,им.slice(0,6),11,ПЕРО,true)}
-                ${т(x,108,i%2?'апельсин':'яблоко',11,i%2?СИНЬ:ЗОЛОТО)}
+                ${т(x,79,им.slice(0,6), 12,ПЕРО,true)}
+                ${т(x,108,i%2?'апельсин':'яблоко', 12,i%2?СИНЬ:ЗОЛОТО)}
               </g>`;
         if(i<имена.length-1)
           s += `<line x1="${x+22}" y1="74" x2="${x+56}" y2="74" stroke="${ЛИНИЯ}" stroke-width="1.6" marker-end="url(#${ДОМ}-стрелка)"/>`;
@@ -205,8 +222,8 @@
         'Если у двух соседей <b>разное</b>, то у следующего снова то же, что у первого.',
         'Достаточно решить за одного — дальше всё чередуется само.',
         'Считай по шагам: первый, второй, третий… и проверяй, что соседи разные.'
-      ]) + `<div class="card" style="padding:12px 14px">
-        <div style="font-size:16px">Пять друзей и корзина с яблоками и апельсинами. Соедини каждого с его фруктом.</div>
+      ], ЗОЛОТО, '🔗') + `<div class="card" style="padding:12px 14px">
+        <div style="font-size:16px;line-height:1.5">Пять друзей и корзина с яблоками и апельсинами. Дальше соедини каждого с его фруктом.</div>
       </div>`;
     }
   });
@@ -225,12 +242,12 @@
         const цвет = выбран ? (верно?ЗЕЛЁН:КРАСН) : ЛИНИЯ;
         s += `<g style="animation:${ДОМ}-въезд .45s ease-out ${(i*0.05).toFixed(2)}s both">
                 ${рамка(x-28,44,56,40,'rgba(255,255,255,.05)',цвет,10,1.6)}
-                ${т(x,70,им.slice(0,6),11,ПЕРО,true)}
-                ${выбран?т(x,100,выбран==='яблоки'?'🍎 яблоки':'🍊 апельсины',10,верно?ЗЕЛЁН:КРАСН):' '}
+                ${т(x,70,им.slice(0,6), 12,ПЕРО,true)}
+                ${выбран?т(x,100,выбран==='яблоки'?'🍎 яблоки':'🍊 апельсины', 12,верно?ЗЕЛЁН:КРАСН):' '}
               </g>`;
       });
       const готово = имена.every(им=>отв[им]===ЗАДАЧИ[0].ответ[им]);
-      s += т(168,126, готово?'все пятеро угаданы':'нажми на карточку и выбери фрукт',11,готово?ЗЕЛЁН:ТИХО);
+      s += т(168,126, готово?'все пятеро угаданы':'нажми на карточку и выбери фрукт', 12,готово?ЗЕЛЁН:ТИХО);
       return svg(s,150);
     },
     низ(){
@@ -239,18 +256,19 @@
       const выбранное = имена.filter(им=>отв[им]).length;
       const готово = имена.every(им=>отв[им]===ЗАДАЧИ[0].ответ[им]);
       let блок = `<div class="card" style="padding:12px 14px">
-        <div style="font-size:15px;color:var(--muted);margin-bottom:6px">Условие</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:6px">Условие</div>
         <div style="font-size:16px;line-height:1.55">${esc(ЗАДАЧИ[0].условие)}</div>
         <div style="font-size:16px;font-weight:bold;margin-top:8px">${esc(ЗАДАЧИ[0].вопрос)}</div>
       </div>`;
-      блок += `<div class="card" style="padding:12px 14px">
+      const неотвечено = !готово;
+      блок += `<div class="card ${неотвечено?ДОМ+'-ждёт':''}" style="padding:12px 14px">
         <div style="display:flex;flex-direction:column;gap:8px">` + имена.map(им=>
         `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
            <span style="min-width:70px;font-size:16px">${esc(им)}</span>
            <button class="btn" style="min-height:44px;margin:0" onclick="Т701.фрукт('${им}','яблоки')">🍎 яблоки</button>
            <button class="btn" style="min-height:44px;margin:0" onclick="Т701.фрукт('${им}','апельсины')">🍊 апельсины</button>
          </div>`).join('') + `</div>
-        <div style="font-size:15px;color:var(--muted);margin-top:8px">Отмечено ${выбранное} из 5</div>
+        <div style="font-size:14px;color:var(--muted);margin-top:8px">Отмечено ${выбранное} из 5</div>
       </div>`;
       if(готово){
         блок += разбор(ЗАДАЧИ[0].разбор, 'Частая ошибка — начинать с середины. Начинай с первого в цепочке: он задаёт всё остальное.');
@@ -271,11 +289,11 @@
         const x=40+i*64;
         s += `<g style="animation:${ДОМ}-лампа 0.4s ease-out ${(i*0.06).toFixed(2)}s both">
                 ${рамка(x-26,50,52,38,'rgba(255,215,106,.10)',ЗОЛОТО,9,1.6)}
-                ${т(x,76,String(n),17,ПЕРО,true)}
+                ${т(x,76,String(n), 16,ПЕРО,true)}
               </g>`;
-        if(i<ряд.length-1) s += т(x+32,76,'+4',11,ЗЕЛЁН);
+        if(i<ряд.length-1) s += т(x+32,76,'+4', 12,ЗЕЛЁН);
       });
-      s += т(168,120,'разница между соседями одна и та же',11,ТИХО);
+      s += т(168,120,'разница между соседями одна и та же', 12,ТИХО);
       return svg(s,150);
     },
     низ(){
@@ -283,7 +301,7 @@
         'Выпиши числа <b>по возрастанию</b> — так сразу видно порядок.',
         'Посчитай разницы между соседними числами.',
         'Если все разницы одинаковые — ряд ровный, эта разница и есть <b>шаг</b>.'
-      ]);
+      ], СИНЬ, '📏');
     }
   });
 
@@ -313,20 +331,20 @@
       if(выбр!=null){
         const порядок=[...числа].sort((a,b)=>a-b);
         const ост=порядок.filter(n=>n!==числа[выбр]);
-        s += т(168,104,ост.join(' , '),13,ЗЕЛЁН,true);
+        s += т(168,104,ост.join(' , '), 12,ЗЕЛЁН,true);
         const шаги=[]; for(let j=1;j<ост.length;j++) шаги.push(ост[j]-ост[j-1]);
-        s += т(168,126, 'шаги: '+шаги.join(', '),11,ТИХО);
+        s += т(168,126, 'шаги: '+шаги.join(', '), 12,ТИХО);
       }
       return svg(s,150);
     },
     низ(){
       const п=память(), выбр=п.ответы[1];
       let блок = `<div class="card" style="padding:12px 14px">
-        <div style="font-size:15px;color:var(--muted);margin-bottom:6px">Условие</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:6px">Условие</div>
         <div style="font-size:16px;line-height:1.55">${esc(ЗАДАЧИ[1].условие)}</div>
         <div style="font-size:16px;font-weight:bold;margin-top:8px">${esc(ЗАДАЧИ[1].вопрос)}</div>
       </div>`;
-      блок += `<div class="card" style="padding:12px 14px"><div style="display:flex;flex-wrap:wrap;gap:8px">` +
+      блок += `<div class="card ${выбр==null?ДОМ+'-ждёт':''}" style="padding:12px 14px"><div style="display:flex;flex-wrap:wrap;gap:8px">` +
         [11,7,23,13,19,15].map((n,i)=>
           `<button class="btn" style="min-height:44px;margin:0;min-width:56px" onclick="Т701.гирлянда(${i})">${n}</button>`).join('') +
         `</div></div>`;
@@ -356,10 +374,10 @@
           ? `${рамка(x-18,46,36,34,'rgba(127,209,255,.18)',СИНЬ,6,1.6)}`
           : `${круг(x,63,19,'rgba(255,215,106,.16)',ЗОЛОТО)}`;
         s += `<g style="animation:${ДОМ}-въезд .45s ease-out ${(i*0.05).toFixed(2)}s both">
-                ${фигура}${т(x,96,цвета[i],10,ТИХО)}
+                ${фигура}${т(x,96,цвета[i], 12,ТИХО)}
               </g>`;
       });
-      s += т(168,122,'сначала отбрось невозможное — останется одно',11,ТИХО);
+      s += т(168,122,'сначала отбрось невозможное — останется одно', 12,ТИХО);
       return svg(s,150);
     },
     низ(){
@@ -367,7 +385,7 @@
         'Когда вариантов <b>мало</b>, их перебирают все — по одному.',
         'Сначала отбрасывай невозможные: так вариантов становится меньше.',
         'Проверяй каждый вариант до конца: если где-то не сходится, вариант отпадает.'
-      ]);
+      ], ЗЕЛЁН, '🔀');
     }
   });
 
@@ -381,7 +399,7 @@
         {ф:'квадрат',ц:'синий'},{ф:'треугольник',ц:'красный'}
       ];
       let s = рамка(8,8,320,134,'#12261f',ЛИНИЯ,12);
-      s += т(168,22, ходы.петя&&ходы.лиза ? 'осталась одна фигура' : 'Убери две соседние — это ход Пети',11.5,ЗОЛОТО,true);
+      s += т(168,22, ходы.петя&&ходы.лиза ? 'осталась одна фигура' : 'Убери две соседние — это ход Пети',12,ЗОЛОТО,true);
       фигуры.forEach((ф,i)=>{
         const x=44+i*62, убран=ходы.убрано && ходы.убрано.indexOf(i)>=0;
         const выбран=ходы.выбор && ходы.выбор.indexOf(i)>=0;
@@ -397,23 +415,23 @@
           : круг(x,63,19, выбран?'rgba(255,255,255,.12)':'rgba(255,215,106,.16)', выбран?ЛАМПА:ц);
         s += `<g style="animation:${ДОМ}-въезд .4s ease-out ${(i*0.03).toFixed(2)}s both" onclick="Т701.фигура(${i})" style2="cursor:pointer">
                 ${фигура}
-                ${т(x,98,убран?'':ф.ц,10,убран?ТИХО:ПЕРО)}
+                ${т(x,98,убран?'':ф.ц, 12,убран?ТИХО:ПЕРО)}
               </g>`;
       });
-      s += т(168,124,'нажимай на фигуры: сначала две соседние, потом одинаковой формы',10.5,ТИХО);
+      s += т(168,124,'нажимай на фигуры: сначала две соседние, потом одинаковой формы',12,ТИХО);
       return svg(s,150);
     },
     низ(){
       const п=память(), отв=п.ответы[2];
       let блок = `<div class="card" style="padding:12px 14px">
-        <div style="font-size:15px;color:var(--muted);margin-bottom:6px">Условие</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:6px">Условие</div>
         <div style="font-size:16px;line-height:1.55">${esc(ЗАДАЧИ[2].условие)}</div>
         <div style="font-size:16px;font-weight:bold;margin-top:8px">${esc(ЗАДАЧИ[2].вопрос)}</div>
       </div>`;
-      блок += `<div class="card" style="padding:12px 14px"><div style="display:flex;flex-wrap:wrap;gap:8px">` +
+      блок += `<div class="card ${отв==null?ДОМ+'-ждёт':''}" style="padding:12px 14px"><div style="display:flex;flex-wrap:wrap;gap:8px">` +
         ЗАДАЧИ[2].варианты.map((в,i)=>
           `<button class="btn" style="min-height:44px;margin:0" onclick="Т701.ковёр(${i})">${esc(в)}</button>`).join('') +
-        `</div><div style="font-size:15px;color:var(--muted);margin-top:8px">Можно и просто перебрать два хода руками — нажми на фигуры выше.</div></div>`;
+        `</div><div style="font-size:14px;color:var(--muted);margin-top:8px">Можно и просто перебрать два хода руками — нажми на фигуры выше.</div></div>`;
       if(отв===ЗАДАЧИ[2].верный){
         блок += разбор(ЗАДАЧИ[2].разбор, 'Частая ошибка — не проверить вариант до конца. Если хоть один ход невозможен, вариант отпадает.');
         блок += `<div class="btnrow"><button class="btn ok2" onclick="lvStep(1)">Дальше: Саша Ким →</button></div>`;
@@ -433,15 +451,15 @@
       /* две семьи: по три ребёнка, пол неизвестен — отмечаем знаками вопроса */
       ['Петровы','Сидоровы'].forEach((семья,i)=>{
         const y=48+i*52;
-        s += т(28,y+6,семья,11,ТИХО,false,'start');
+        s += т(28,y+6,семья, 12,ТИХО,false,'start');
         ['Валя','Костя','Женя'].forEach((им,j)=>{
           const x=118+j*62;
           s += `<g style="animation:${ДОМ}-печать .45s ease-out ${((i*3+j)*0.03).toFixed(2)}s both">
                   ${рамка(x-26,y-12,52,26,'rgba(255,255,255,.05)',ЛИНИЯ,8,1.4)}
-                  ${т(x,y+5,им.slice(0,5),10.5,ПЕРО)}
+                  ${т(x,y+5,им.slice(0,5),12,ПЕРО)}
                 </g>`;
         });
-        s += т(310,y+6,'?',15,ЛАМПА,true);
+        s += т(310,y+6,'?', 14,ЛАМПА,true);
       });
       s += т(168,126,'один мальчик у Петровых, три у Сидоровых',11,ТИХО);
       return svg(s,150);
@@ -451,7 +469,7 @@
         'Каждое условие — как <b>запрет</b>: оно вычёркивает часть вариантов.',
         'Оба Кости — мальчики. Значит у Петровых мальчик — это Костя, а Валя, Женя и Саша — девочки.',
         'Проверь вывод по второй семье: он должен сойтись, иначе рассуждение неверное.'
-      ]);
+      ], ЗОЛОТО, '🔍');
     }
   });
   ШАГИ.push({
@@ -469,11 +487,11 @@
         const цвет=о?(верно?ЗЕЛЁН:КРАСН):ЛИНИЯ;
         s += `<g style="animation:${ДОМ}-печать .4s ease-out ${(i*0.03).toFixed(2)}s both">
                 ${рамка(x-36,y-14,72,30,о?(верно?'rgba(143,209,168,.12)':'rgba(232,106,90,.12)'):'rgba(255,255,255,.05)',цвет,8,1.5)}
-                ${т(x,y+2,им.slice(0,12),9.5,ПЕРО)}
-                ${о?т(x,y+14,о,8.5,верно?ЗЕЛЁН:КРАСН):' '}
+                ${т(x,y+2,им.slice(0,12),12,ПЕРО)}
+                ${о?т(x,y+14,о, 12,верно?ЗЕЛЁН:КРАСН):' '}
               </g>`;
       });
-      s += т(168,132, люди.every((им,i)=>отв[им]===правда[i])?'все определены':'отметь пол каждого',10.5,ТИХО);
+      s += т(168,132, люди.every((им,i)=>отв[им]===правда[i])?'все определены':'отметь пол каждого',12,ТИХО);
       return svg(s,150);
     },
     низ(){
@@ -481,13 +499,13 @@
       const люди=['Костя Петров','Валя Петрова','Женя Петрова','Саша Ким','Костя Сидоров','Валя Сидоров','Женя Сидоров'];
       const правда=['мальчик','девочка','девочка','девочка','мальчик','мальчик','мальчик'];
       let блок = `<div class="card" style="padding:12px 14px">
-        <div style="font-size:15px;color:var(--muted);margin-bottom:6px">Условие</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:6px">Условие</div>
         <div style="font-size:16px;line-height:1.55">${esc(ЗАДАЧИ[3].условие)}</div>
         <div style="font-size:16px;font-weight:bold;margin-top:8px">${esc(ЗАДАЧИ[3].вопрос)}</div>
       </div>`;
       блок += `<div class="card" style="padding:12px 14px"><div style="display:flex;flex-direction:column;gap:8px">` +
         люди.map(им=>`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            <span style="min-width:112px;font-size:15px">${esc(им)}</span>
+            <span style="min-width:112px;font-size:16px">${esc(им)}</span>
             <button class="btn" style="min-height:44px;margin:0" onclick="Т701.пол('${им}','мальчик')">мальчик</button>
             <button class="btn" style="min-height:44px;margin:0" onclick="Т701.пол('${им}','девочка')">девочка</button>
           </div>`).join('') + `</div></div>`;
@@ -510,15 +528,15 @@
       [[0,СИНЬ,'свой — врёт'],[1,ЗЕЛЁН,'чужой — правда']].forEach((с,i)=>{
         const y=50+i*46;
         s += `<g style="animation:${ДОМ}-печать 0.4s ease-out ${(i*0.25).toFixed(2)}s both">
-                ${круг(48,y,16,'rgba(127,209,255,.16)',СИНЬ)}${т(48,y+5,i?'эльф':'эльф',11,ПЕРО,true)}
+                ${круг(48,y,16,'rgba(127,209,255,.16)',СИНЬ)}${т(48,y+5,i?'эльф':'эльф', 12,ПЕРО,true)}
                 ${круг(120,y,16,i?'rgba(143,209,168,.16)':'rgba(127,209,255,.16)',i?ЗЕЛЁН:СИНЬ)}
-                ${т(120,y+5,i?'гном':'эльф',11,ПЕРО,true)}
-                ${т(210,y+5,с[2],10.5,ТИХО)}
+                ${т(120,y+5,i?'гном':'эльф', 12,ПЕРО,true)}
+                ${т(210,y+5,с[2],12,ТИХО)}
                 ${рамка(250,y-14,70,28,'rgba(255,215,106,.12)',ЗОЛОТО,8,1.4)}
-                ${т(285,y+5,'Ты гном',10.5,ЛАМПА,true)}
+                ${т(285,y+5,'Ты гном',12,ЛАМПА,true)}
               </g>`;
       });
-      s += т(168,130,'у гнома так же всегда выходит «Ты эльф»',11,ТИХО);
+      s += т(168,130,'у гнома так же всегда выходит «Ты эльф»', 12,ТИХО);
       return svg(s,150);
     },
     низ(){
@@ -526,7 +544,7 @@
         'Разбери <b>по случаям</b>, что скажет каждый: своему он врёт, чужому говорит правду.',
         'У эльфа оба случая дают одно и то же — «Ты гном».',
         'У гнома оба случая дают «Ты эльф». Значит по числу фраз видно, кого сколько.'
-      ]);
+      ], КРАСН, '💬');
     }
   });
   ШАГИ.push({
@@ -547,16 +565,16 @@
       }
       s += `<circle cx="168" cy="76" r="34" fill="rgba(255,215,106,.06)" stroke="${ЛИНИЯ}" stroke-width="1.2"/>`;
       s += т(168,72,'7 фраз',12,ЛАМПА,true);
-      s += т(168,88,'«Ты эльф»',11,ТИХО);
-      s += т(168,112,'9 фраз «Ты гном»',11,ТИХО);
+      s += т(168,88,'«Ты эльф»', 12,ТИХО);
+      s += т(168,112,'9 фраз «Ты гном»', 12,ТИХО);
       if(отв.гномов!=null)
-        s += т(168,132, (отв.гномов===7 && отв.эльфов===9) ? 'сходится: 7 и 9' : 'проверь ещё раз',11,(отв.гномов===7&&отв.эльфов===9)?ЗЕЛЁН:КРАСН,true);
+        s += т(168,132, (отв.гномов===7 && отв.эльфов===9) ? 'сходится: 7 и 9' : 'проверь ещё раз', 12,(отв.гномов===7&&отв.эльфов===9)?ЗЕЛЁН:КРАСН,true);
       return svg(s,150);
     },
     низ(){
       const п=память(), отв=п.ответы[4]||{};
       let блок = `<div class="card" style="padding:12px 14px">
-        <div style="font-size:15px;color:var(--muted);margin-bottom:6px">Условие</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:6px">Условие</div>
         <div style="font-size:16px;line-height:1.55">${esc(ЗАДАЧИ[4].условие)}</div>
         <div style="font-size:16px;font-weight:bold;margin-top:8px">${esc(ЗАДАЧИ[4].вопрос)}</div>
       </div>`;
@@ -596,10 +614,10 @@
       },0);
       const процент = Math.round(балл/10*100);
       let s = рамка(8,8,320,134,'#12261f',ЛИНИЯ,12);
-      s += т(168,30,'Протокол тура',13,ЗОЛОТО,true);
-      s += т(168,64,балл+' из 10',22,балл>=8?ЗЕЛЁН:(балл>=5?ЛАМПА:КРАСН),true);
+      s += т(168,30,'Протокол тура', 12,ЗОЛОТО,true);
+      s += т(168,64,балл+' из 10', 20,балл>=8?ЗЕЛЁН:(балл>=5?ЛАМПА:КРАСН),true);
       s += т(168,88,'выполнение '+процент+' %',12,ПЕРО);
-      s += т(168,110, балл>=8?'отличный результат':(балл>=5?'хорошо, но есть что разобрать':'вернись к приёмам и попробуй снова'),11,ТИХО);
+      s += т(168,110, балл>=8?'отличный результат':(балл>=5?'хорошо, но есть что разобрать':'вернись к приёмам и попробуй снова'), 12,ТИХО);
       /* полоса выполнения */
       s += рамка(48,118,240,10,'rgba(255,255,255,.06)',ЛИНИЯ,5,1);
       s += `<rect x="48" y="118" width="${Math.round(240*балл/10)}" height="10" rx="5"
@@ -626,11 +644,39 @@
     s.id=ДОМ+'-стиль';
     s.textContent = `
       @keyframes ${ДОМ}-лампа{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-      @keyframes ${ДОМ}-въезд{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+      @keyframes ${ДОМ}-въезд{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
       @keyframes ${ДОМ}-печать{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-      #lvis svg g{will-change:opacity,transform}
+      @keyframes ${ДОМ}-уезд{to{opacity:0;transform:translateY(-10px) rotate(-6deg)}}
+      @keyframes ${ДОМ}-полоса{from{width:0}to{width:var(--ш,100%)}}
+      @keyframes ${ДОМ}-появление{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+      @keyframes ${ДОМ}-пульс{0%,100%{opacity:.45}50%{opacity:1}}
+
+      .${ДОМ}{display:flex;flex-direction:column;align-items:stretch;gap:12px;
+        font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased;
+        text-rendering:geometricPrecision}
+      .${ДОМ}-шапка{text-align:center;font-size:14px;color:var(--muted,#cbb89a);
+        letter-spacing:.02em;font-variant-numeric:tabular-nums}
+      .${ДОМ}-шапка b{color:#ffd76a;font-weight:600}
+      .${ДОМ}-сцена{display:flex;justify-content:center;width:100%}
+      .${ДОМ}-сцена svg{display:block;width:100%;max-width:420px;height:auto;margin:0 auto}
+      .${ДОМ}-низ{display:flex;flex-direction:column;gap:12px;animation:${ДОМ}-появление 320ms cubic-bezier(.23,1,.32,1) both}
+      .${ДОМ} .card{text-align:left}
+      .${ДОМ} .card>div{text-wrap:pretty}
+      /* Ответ ждёт нажатия: пунктир и лёгкая пульсация, как в стандарте. */
+      .${ДОМ}-ждёт{animation:${ДОМ}-пульс 1.6s ease-in-out infinite}
+      .${ДОМ} button{transition:transform 140ms cubic-bezier(.23,1,.32,1),
+        border-color 140ms ease,background-color 140ms ease;will-change:transform}
+      .${ДОМ} button:active{transform:translateY(2px) scale(.985)}
+      .${ДОМ} button:focus-visible{outline:3px solid #ffd76a;outline-offset:2px}
+      .${ДОМ} input{font-variant-numeric:tabular-nums}
+      /* Теория: у каждого приёма свой цвет и своя подпись, чтобы блоки не
+         выглядели одним шаблоном. */
+      .${ДОМ}-теория{border-left-width:4px;border-left-style:solid}
+      @media (min-width: 700px){
+        .${ДОМ}{max-width:560px;margin:0 auto}
+      }
       @media (prefers-reduced-motion: reduce){
-        #lvis svg g, #lvis svg *{animation:none!important;transition:none!important}
+        .${ДОМ} *, #lvis svg *{animation:none!important;transition:none!important}
       }`;
     document.head.appendChild(s);
   }
@@ -641,9 +687,9 @@
     const i = ТЕКУЩИЙ(), шаг = ШАГИ[i];
     if(!шаг){ el.innerHTML=''; return; }
     el.innerHTML = `<div class="${ДОМ}">
-        <div style="font-size:15px;color:var(--muted);margin-bottom:6px">Шаг ${i+1} из ${ШАГИ.length} · ${esc(шаг.т)}</div>
-        ${шаг.рисунок ? шаг.рисунок() : ''}
-        <div style="margin-top:10px">${шаг.низ ? шаг.низ() : ''}</div>
+        <div class="${ДОМ}-шапка">Шаг <b>${i+1}</b> из ${ШАГИ.length} · ${esc(шаг.т)}</div>
+        ${шаг.рисунок ? `<div class="${ДОМ}-сцена">${шаг.рисунок()}</div>` : ''}
+        <div class="${ДОМ}-низ">${шаг.низ ? шаг.низ() : ''}</div>
       </div>`;
   }
 
