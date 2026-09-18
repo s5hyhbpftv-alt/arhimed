@@ -279,7 +279,13 @@ function openLessonView(id){
   if(L.comic&&typeof COMIC!=='undefined'&&COMIC.open){ COMIC.open(L); return; }
   renderLessonView();
 }
-function lessonTitle(){ const L=lessonById(LV.id); return `${L.ico} Урок ${L.id} · ${L.title}`; }
+/* Подпись открытого материала. Тур — не урок: это работа на баллы и время,
+   поэтому и называется туром. */
+function lessonTitle(){
+  const L=lessonById(LV.id);
+  const слово = (L && L.subj==='tour') ? 'Тур' : 'Урок';
+  return `${L.ico} ${слово} ${L.id} · ${L.title}`;
+}
 /* персонажи комиксов */
 const COMIC_CH={
   arch:{ emoji:'🧙‍♂️', name:'Архимед', bg:'rgba(217,164,65,.14)' },
