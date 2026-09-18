@@ -25,6 +25,57 @@ function fmt(sec){ const m=Math.floor(sec/60), s=sec%60; return (m<10?'0':'')+m+
 function tourIsls(){ return ISLANDS.filter(I=>{ if(typeof isJunior==='function'&&isJunior()) return I.name==='Начальная школа'; return I.name!=='Начальная школа'; }); }
 function tourLabel(n){ return typeof isJunior==='function'&&isJunior()? 'Тур по начальной школе' : 'Олимпиадный тур'; }
 function bestTour(isl){ try{ return (DB.tours||[]).filter(t=>t.island===isl); }catch(e){ return []; } }
+/* ── Туры ВсОШ: отдельный раздел, не «Учебники» ──────────────────────
+   Тур — это работа на баллы и время с разбором после каждого задания,
+   а не урок. Поэтому он живёт здесь, рядом с быстрым туром по островам
+   и дуэлью. Открывается тем же просмотром урока: RUKEXAM рисует обложку,
+   задания и протокол. */
+function openOlympTour(id){ try{ openLessonView(id); }catch(e){ toast('Тур не открылся'); } }
+
+function olympTours(){
+  const T=(typeof window.ARH_TOURS!=='undefined'&&window.ARH_TOURS)||[];
+  return T.slice().sort((a,b)=>(a.klass-b.klass)||String(a.title).localeCompare(String(b.title),'ru'));
+}
+
+function tourListHTML(){
+  const T=olympTours();
+  if(!T.length) return '';
+  const по = {};
+  T.forEach(t=>{ (по[t.subject]=по[t.subject]||[]).push(t); });
+  const порядок=['math','rus','inf','phys','chem'];
+  const имена={math:'Математика',rus:'Русский язык',inf:'Информатика',phys:'Физика',chem:'Химия'};
+  const иконы={math:'🏛',rus:'📖',inf:'💻',phys:'🍎',chem:'⚗️'};
+  const done=id=>{ try{ return !!(DB.lessons&&DB.lessons[id]&&DB.lessons[id].done); }catch(e){ return false; } };
+  const rows=порядок.filter(s=>по[s]).map(s=>{
+    const карточки=по[s].map(t=>{
+      const d=done(t.id);
+      return `<button type="button" class="olymp-tour" onclick="openOlympTour(${t.id})"
+          style="display:flex;align-items:center;gap:10px;width:100%;text-align:left;min-height:56px;
+                 padding:10px 12px;border-radius:14px;border:1px solid rgba(255,215,106,.28);
+                 background:${d?'rgba(143,209,168,.10)':'rgba(255,255,255,.04)'};color:inherit;cursor:pointer;font-family:inherit">
+          <span style="flex:1;min-width:0">
+            <span style="display:block;font-size:16px;font-weight:600">${t.klass} класс · ${esc(t.title.replace(/^[^·]*·\s*\d+\s*класс\s*·\s*/,''))}</span>
+            <span style="display:block;font-size:14px;color:var(--muted);margin-top:2px">${t.items.length} заданий · до ${t.макс} баллов${t.время?' · '+t.время+' мин':''}${d?' · пройден':''}</span>
+          </span>
+          <span style="flex:none;font-size:18px;color:var(--brass)">${d?'✓':'▶'}</span>
+        </button>`;
+    }).join('');
+    return `<div style="margin-top:10px">
+      <div style="font-size:15px;font-weight:bold;color:var(--brass);margin-bottom:6px">${иконы[s]||'🏆'} ${имена[s]||s}</div>
+      <div style="display:flex;flex-direction:column;gap:8px">${карточки}</div>
+    </div>`;
+  }).join('');
+  return `<div class="card" style="margin-top:12px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">
+        <div style="font-size:34px">🏆</div>
+        <div style="flex:1"><b style="font-size:16px">Туры ВсОШ</b>
+        <div class="small" style="color:var(--muted);margin-top:2px">${T.length} туров по предметам и классам · сюжет, баллы, время, разбор каждого задания</div></div>
+      </div>
+      <div class="small" style="color:var(--muted);line-height:1.5">Задания проверяются сразу: увидишь верное решение и разбор. В конце — балл, процент выполнения и темы на повтор.</div>
+      ${rows}
+    </div>`;
+}
+
 function renderTourScreen(){
   const s=document.getElementById('screen');
   const isls=tourIsls();
@@ -68,7 +119,7 @@ function renderTourScreen(){
         <span style="font-size:20px">${I.ico}</span><span>${esc(I.name)}</span></button>`).join('')}</div>
       ${duelBest?`<div class="small" style="margin-top:8px;color:var(--muted)">Рейтинг <b style="color:var(--brass)">${duelBest.rating}</b> · побед ${duelBest.wins}/${duelBest.games}${duelBest.best? ' · лучший счёт '+duelBest.best:''}</div>`:''}
     </div>`;
-  s.innerHTML=hero+tourCards+duel;
+  s.innerHTML=hero+tourListHTML()+tourCards+duel;
   hud();
 }
 function renderTour(){

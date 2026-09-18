@@ -15,8 +15,7 @@ const SUBJ_META={
   chem:{ico:'⚗️', name:'Химия', dsc:'Лавуазье · вещества, реакции, растворы'},
   inf:{ico:'💻', name:'Информатика', dsc:'Код, алгоритмы, логика'},
   rus:{ico:'📖', name:'Русский язык', dsc:'Части речи, орфография, пунктуация'},
-  syra:{ico:'⚖️', name:'Мастерские Сиракуз', dsc:'Олимпиадные приёмы · 4–9 класс'},
-  tour:{ico:'🏆', name:'Олимпиадные туры', dsc:'Туры ВсОШ · баллы, время, шкала'}};
+  syra:{ico:'⚖️', name:'Мастерские Сиракуз', dsc:'Олимпиадные приёмы · 4–9 класс'}};
 
 /* ---------- фильтр по классу профиля ---------- */
 function profileClassNum(){ try{ const k=parseInt(String((typeof DB!=='undefined'&&DB.profile)?DB.profile.klass:''),10); return isNaN(k)?7:k; }catch(e){ return 7; } }
@@ -87,6 +86,9 @@ function sortByCurrentClass(list){
    (всё, что не из нового курса «с нуля» 500–509) не показываем в списках */
 function isVisibleLesson(L){
   if(!L || L.hidden) return false;
+  /* Олимпиадные туры ВсОШ (subj:'tour') в «Учебниках» не показываем: у них
+     свой раздел «Тур» — это работа на баллы и время, а не урок. */
+  if(subjOf(L)==='tour') return false;
   if(subjOf(L)==='inf' && !(L.id>=500 && L.id<=599)) return false;
   return true;
 }
@@ -213,7 +215,7 @@ function renderBookList(){
   const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
   const totalL=pool.length;
   const junior=typeof isJunior==='function'&&isJunior();
-  const order=junior? ['jun','syra'] : ['all','math','rus','phys','chem','inf','mish','syra','tour'];
+  const order=junior? ['jun','syra'] : ['all','math','rus','phys','chem','inf','mish','syra'];
   const grouped=order.filter(s=>s==='all'||pool.some(L=>subjOf(L)===s)).map(subj=>{
     if(subj==='all') return { subj:'all', meta:{ico:'📚',name:'Все предметы'}, items:pool };
     const meta=SUBJ_META[subj]; return { subj, meta, items:pool.filter(L=>subjOf(L)===subj) };

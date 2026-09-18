@@ -2817,6 +2817,61 @@ window.RUKEXAM = (function(){
     if(!поля.length) return String(it.shown == null ? '' : it.shown);
     return поля.map(п => (п.ключ ? п.ключ + ': ' : '') + String(п.эталон)).join('; ');
   }
+  /* Длинную тему задания переносим на две строки: у туров тема бывает до
+     78 знаков («9 класс · Геометрия · прямоугольный треугольник, окружности
+     и касательные»), а место в сцене — около тридцати. Раньше строка
+     центрировалась и вылезала за левый край кадра. Режем по словам, не
+     больше двух строк, каждую — не длиннее 46 знаков. */
+  function темаСтроки(тема){
+    const т=String(тема==null?'':тема).trim();
+    if(!т) return [''];
+    if(т.length<=46) return [т];
+    const слова=т.split(' ');
+    const строки=[]; let текущая='';
+    for(const с of слова){
+      if(!текущая) { текущая=с; continue; }
+      if((текущая+' '+с).length<=46) текущая+=' '+с;
+      else { строки.push(текущая); текущая=с; if(строки.length===2) break; }
+    }
+    if(строки.length<2 && текущая) строки.push(текущая);
+    if(строки.length===2){
+      /* если остаток не влез, помечаем многоточием — обрезать молча нельзя */
+      const осталось=слова.slice(строки.join(' ').split(' ').length).join(' ');
+      if(осталось) строки[1]=строки[1].slice(0,43)+'…';
+    }
+    return строки.slice(0,2);
+  }
+  /* Рисунок задания. У туров он свой у каждого задания (window.TOUR_ART —
+     собрано план-1-9/build_art.js из данных задания: вид по теме, числа и
+     подписи из условия). У работ МЦКО рисунка нет — там сцена рисует значок. */
+  /* Рисунок задания отдельной полосой под сценой: так он не налезает на
+     подписи и на портрет, и его не режет край сцены. */
+  function рисунокПолосой(id, n, it){
+    try{
+      if(typeof window.TOUR_ART !== 'function') return '';
+      const Т=(window.ARH_TOURS||[]).find(t=>t.id===id);
+      if(!Т) return '';
+      const задание=Object.assign({}, it, {темаКоротко:it.темаКоротко||it.theme||''});
+      const р=window.TOUR_ART(id, n, задание, {x:0, y:0, w:336, h:168});
+      return р ? '<div style="margin-top:10px">'+р+'</div>' : '';
+    }catch(e){ return ''; }
+  }
+
+  function рисунокЗадания(id, n, it){
+    try{
+      if(typeof window.TOUR_ART === 'function'){
+        const Т=(window.ARH_TOURS||[]).find(t=>t.id===id);
+        if(Т){
+          const задание=Object.assign({}, it, {темаКоротко:it.темаКоротко||it.theme||''});
+          /* Полоса рисунка: под подписями задания (тема и баллы кончаются
+             около 116-й строки сцены), высота viewBox сцены — 252. */
+          const р=window.TOUR_ART(id, n, задание, {x:8, y:118, w:320, h:126});
+          if(р) return р;
+        }
+      }
+    }catch(e){}
+    return icon(it.icon || 'schedule', 26, 38, 0.52);
+  }
   function buildMcko(cfg){
     const items = cfg.items;
     const maxAll = items.reduce((a, it) => a + (it.points || 1), 0);
@@ -2857,8 +2912,8 @@ window.RUKEXAM = (function(){
           <g>${dots}</g>
           ${icon(it.icon || 'schedule', 26, 38, 0.52)}
           ${T(120,52,'Задание ' + (qi+1) + ' из ' + qN, GOLD, {fs:13.5})}
-          ${T2(120,74, it.theme, PALE, {fs:11})}
-          ${T2(120,94, (it.points||1) + ' ' + ((it.points||1) === 1 ? 'балл' : 'балла') + (done ? ' · получено ' + pts : ''), done ? (pts === (it.points||1) ? GREEN : (pts > 0 ? GOLD : RED)) : MUTED, {fs:11})}
+          ${темаСтроки(it.theme).map((с,i)=>T2(122,74+i*15, с, PALE, {fs:11})).join('')}
+          ${T2(122,74+темаСтроки(it.theme).length*15+4, (it.points||1) + ' ' + ((it.points||1) === 1 ? 'балл' : 'балла') + (done ? ' · получено ' + pts : ''), done ? (pts === (it.points||1) ? GREEN : (pts > 0 ? GOLD : RED)) : MUTED, {fs:11})}
           ${done
             ? R.rule(112, pts === (it.points||1) ? 'Верно' : (pts > 0 ? 'Частично верно' : 'Ошибка'), it.sol, pts === (it.points||1) ? GREEN : (pts > 0 ? GOLD : RED), 52)
             : R.rule(112, it.ask || 'Выполни задание', it.hint || 'Вспомни правило и выбери ответ.', GOLD, 52)}
@@ -2957,7 +3012,10 @@ window.RUKEXAM = (function(){
           }
           extra = parts.join('');
         }
-        el.innerHTML = `<div class="wv"><div class="wv-col">${scene(step, st)}${extra}</div></div>`;
+        const qi2 = step - cfg.intro.length;
+        const полоса = (qi2 >= 0 && qi2 < items.length)
+          ? рисунокПолосой(cfg.id, qi2 + 1, items[qi2]) : '';
+        el.innerHTML = `<div class="wv"><div class="wv-col">${scene(step, st)}${полоса}${extra}</div></div>`;
       }catch(e){ el.innerHTML = ''; }
     }
 
