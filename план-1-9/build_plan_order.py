@@ -127,7 +127,8 @@ def main():
         pg.goto(BASE, wait_until="load", timeout=60000)
         pg.wait_for_timeout(2500)
         уроки = pg.evaluate(r"""() => (window.ARH_LESSONS||[]).map((L,i) => ({
-            i, id:L.id, title:L.title||'', src:L.src||'', subj:L.subj||null, group:L.group||null
+            i, id:L.id, title:L.title||'', src:L.src||'', subj:L.subj||null, group:L.group||null,
+            soon:!!L.soon
         }))""")
         b.close()
 
@@ -148,7 +149,12 @@ def main():
           % (len(младшие), len(младшие) + len(вне), len(вне)))
 
     остаток = []
-    for i in sorted(вне, key=lambda x: (по_id[x]["к"] or 99, x)):
+    # Порядок: сначала готовые уроки вне прежней линии (по регистрации i),
+    # затем темы, которые готовятся, — тоже по регистрации, потому что модуль
+    # soon_lessons.js записан по порядку учебника.
+    for i in sorted(вне, key=lambda x: (по_id[x]["к"] or 99,
+                                        1 if по_id[x].get("soon") else 0,
+                                        по_id[x]["i"])):
         опора = ВСТАВКИ_ПОСЛЕ.get(i)
         if опора is not None and опора in младшие:
             младшие.insert(младшие.index(опора) + 1, i)
