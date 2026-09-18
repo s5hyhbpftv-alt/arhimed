@@ -2646,7 +2646,7 @@ window.RUKEXAM = (function(){
           const picked = st.ans[qi];
           const labels = it.opts || [it.ans];
           extra = `<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;width:100%">
-            ${labels.map(o => `<button type="button" class="btn" style="min-width:74px;font-size:17px;padding:14px 10px;border-radius:14px;${picked===o?'border-color:'+GOLD:''}"
+            ${labels.map(o => `<button type="button" class="btn" style="min-width:74px;font-size:16px;padding:14px 10px;border-radius:14px;${picked===o?'border-color:'+GOLD:''}"
               onclick="ruExamPick(${cfg.id},${qi},'${o}')">${o}</button>`).join('')}</div>
             <div class="wv-sml" style="color:${MUTED}">${picked!=null ? 'нажми другой вариант, если хочешь исправить ответ' : 'выбери верное написание'}</div>`;
         }
@@ -2906,9 +2906,9 @@ window.RUKEXAM = (function(){
           const got = st.ans[qi];
           const locked = got != null;
           const parts = [];
-          const boxS = 'width:100%;box-sizing:border-box;text-align:left;color:#f6efe0;font-size:18px;line-height:1.62;font-family:Georgia,serif';
+          const boxS = 'width:100%;box-sizing:border-box;text-align:left;color:#f6efe0;font-size:16px;line-height:1.62;font-family:Georgia,serif';
           if(it.material) parts.push(`<div style="${boxS};box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,215,106,.22);border-radius:14px;padding:12px 14px">${it.material}</div>`);
-          parts.push(`<div style="${boxS};font-size:21px;line-height:1.45;font-weight:600;color:#ffe9a8">${it.q}</div>`);
+          parts.push(`<div style="${boxS};font-size:20px;line-height:1.45;font-weight:600;color:#ffe9a8">${it.q}</div>`);
           if(!locked){
             const labels = it.opts || [];
             if(it.kind === 'fields'){
@@ -2920,7 +2920,7 @@ window.RUKEXAM = (function(){
                    <span style="flex:0 0 auto;min-width:96px;font-size:15px;color:#cdbfa4">${п.ключ || 'ответ'}</span>
                    <input id="mkF${i}" type="text" inputmode="${typeof п.эталон === 'number' ? 'decimal' : 'text'}"
                      autocomplete="off" placeholder="${п.множественный ? 'через запятую' : 'впиши ответ'}"
-                     style="flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid #3d5c49;background:rgba(255,255,255,.05);color:#e8dcc8;font-size:17px">
+                     style="flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid #3d5c49;background:rgba(255,255,255,.05);color:#e8dcc8;font-size:16px">
                  </label>`).join('') + '</div>'
                 + `<button type="button" class="btn" onclick="ruMckoCheck(${cfg.id})">Ответить</button>`);
             } else if(it.kind === 'text'){
@@ -2931,12 +2931,12 @@ window.RUKEXAM = (function(){
             } else if(it.kind === 'multi'){
               const chosen = ((st.tmp||{})[qi] || []);
               parts.push(`<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">${labels.map((o,k) =>
-                `<button type="button" class="btn" style="text-align:left;font-size:17.5px;padding:16px 16px;border-radius:16px;${chosen.indexOf(k)>=0?'border-color:#ffd76a;background:rgba(255,215,106,.12)':''}"
+                `<button type="button" class="btn" style="text-align:left;font-size:16px;padding:16px 16px;border-radius:16px;${chosen.indexOf(k)>=0?'border-color:#ffd76a;background:rgba(255,215,106,.12)':''}"
                   onclick="ruMckoToggle(${cfg.id},${k})">${o}</button>`).join('')}</div>
                 <button type="button" class="btn" onclick="ruMckoCheck(${cfg.id})">Ответить</button>`);
             } else {
               parts.push(`<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">${labels.map((o,k) =>
-                `<button type="button" class="btn" style="text-align:left;font-size:17.5px;padding:16px 16px;border-radius:16px" onclick="ruMckoPick(${cfg.id},${k})">${o}</button>`).join('')}</div>`);
+                `<button type="button" class="btn" style="text-align:left;font-size:16px;padding:16px 16px;border-radius:16px" onclick="ruMckoPick(${cfg.id},${k})">${o}</button>`).join('')}</div>`);
             }
           } else {
             const pts2 = itemScore(it, got);
@@ -4983,10 +4983,10 @@ window.RU615 = (function(){
   #lvis .mk .kick{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:${M}}
   #lvis .mk h2{font-size:clamp(20px,5.6vw,24px);line-height:1.14;font-weight:600;color:${G};margin:0;letter-spacing:-.02em}
   #lvis .mk .art{background:linear-gradient(180deg,#1d3027,#15231c);border:1px solid rgba(255,215,106,.24);border-radius:18px;padding:12px 10px;box-shadow:0 16px 38px rgba(0,0,0,.45)}
-  #lvis .mk .q{font-size:clamp(15px,4.2vw,17px);line-height:1.5}
+  #lvis .mk .q{font-size:clamp(15px,4.2vw,16px);line-height:1.5}
   #lvis .mk .opts{display:flex;gap:12px;flex-wrap:wrap}
   #lvis .mk .opt{flex:1 1 28%;min-width:88px;padding:15px 12px;border-radius:16px;cursor:pointer;font-family:${F};
-    font-size:clamp(17px,4.8vw,20px);font-weight:600;color:${P};background:linear-gradient(180deg,#25392e,#182720);
+    font-size:clamp(16px,4.8vw,20px);font-weight:600;color:${P};background:linear-gradient(180deg,#25392e,#182720);
     border:1.5px solid rgba(255,215,106,.26);transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 160ms}
   #lvis .mk .opt:active{transform:translateY(2px)}
   #lvis .mk .opt:focus-visible{outline:3px solid ${G};outline-offset:3px}
@@ -5071,7 +5071,7 @@ window.RU615PAPER = (function(){
   #lvis .pp .opts{display:flex;flex-direction:column;gap:10px}
   #lvis .pp .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
     padding:clamp(11px,3.2vw,14px) clamp(12px,3.4vw,16px);border-radius:10px;border:1px solid ${RULE};
-    background:${PAPER2};font-family:${F};font-size:clamp(15px,4.2vw,17px);color:${INK};
+    background:${PAPER2};font-family:${F};font-size:clamp(15px,4.2vw,16px);color:${INK};
     transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 140ms,background 140ms}
   #lvis .pp .opt:hover{border-color:#b9a67f}
   #lvis .pp .opt:active{transform:translateY(1px)}
