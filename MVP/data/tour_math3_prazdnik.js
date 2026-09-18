@@ -642,14 +642,26 @@
       const y=104, шаг=62, x0=40;
       имена.forEach((им,i)=>{
         const x=x0+i*шаг, з=0.12+i*0.12;
-        s += `<g style="${появляется(з,380)}">${ребёнок(x,y,i%2?СИНЬ:ЗОЛОТО,26)}</g>`;
-        s += `<g style="${появляется(з+0.10,340)}">
-                ${ябл[i] ? яблоко(x,y-40,1.15) : апельсин(x,y-40,1.15)}
+        s += `<g>${ребёнок(x,y,i%2?СИНЬ:ЗОЛОТО,26)}
+                <animateTransform attributeName="transform" type="translate"
+                  values="0 0; 0 -2; 0 0" dur="${(2.4+i*0.18).toFixed(2)}s"
+                  begin="${(i*0.2).toFixed(2)}s" repeatCount="indefinite"/>
               </g>`;
-        s += `<g style="${появляется(з+0.18,320)}">${т(x,y+16,им,12,ПЕРО)}</g>`;
+        /* фрукт над головой покачивается: движение показывает, чей это вкус */
+        s += `<g>${ябл[i] ? яблоко(x,y-40,1.15) : апельсин(x,y-40,1.15)}
+                <animateTransform attributeName="transform" type="translate"
+                  values="0 0; 0 -3; 0 0" dur="${(1.9+i*0.13).toFixed(2)}s"
+                  begin="${(0.3+i*0.17).toFixed(2)}s" repeatCount="indefinite"
+                  additive="sum"/>
+              </g>`;
+        s += `<g>${т(x,y+16,им,12,ПЕРО)}</g>`;
         if(i<имена.length-1){
           s += линияРисуется(x+16,y-4,x+шаг-16,y-4,ЛИНИЯ,1.6,0.3+i*0.13);
-          s += `<g style="${появляется(0.55+i*0.13,300)}">${т(x+шаг/2,y-14,'≠',14,КРАСН,true)}</g>`;
+          /* знак «разное» пульсирует по очереди — правило проверяется на каждой паре */
+          s += `<g>${т(x+шаг/2,y-14,'≠',14,КРАСН,true)}
+                  <animate attributeName="opacity" values=".35;1;.35"
+                    dur="2.2s" begin="${(0.6+i*0.35).toFixed(2)}s" repeatCount="indefinite"/>
+                </g>`;
         }
       });
 
@@ -657,6 +669,16 @@
               ${яблоко(126,152,0.9)}${т(140,156,'яблоко',12,ТИХО,false,'start')}
               ${апельсин(214,152,0.9)}${т(228,156,'апельсин',12,ТИХО,false,'start')}
             </g>`;
+      /* Проверяемая пара подсвечивается: кольцо идёт по цепочке вместе с
+         указателем, поэтому видно, что правило проверяют на КАЖДОЙ паре. */
+      s += `<ellipse cx="${x0+шаг/2}" cy="${y-4}" rx="${шаг/2-8}" ry="30" fill="none"
+              stroke="${ЗЕЛЁН}" stroke-width="2" opacity=".5">
+              <animate attributeName="cx" values="${x0+шаг/2};${x0+шаг*3.5}" dur="3.6s"
+                begin="0.9s" repeatCount="indefinite" calcMode="spline"
+                keySplines="0.4 0 0.2 1" keyTimes="0;1"/>
+              <animate attributeName="opacity" values="0;.55;.55;0" dur="3.6s"
+                begin="0.9s" repeatCount="indefinite"/>
+            </ellipse>`;
       s += `<circle cx="${x0}" cy="${y+34}" r="3.6" fill="${ЗЕЛЁН}">
               <animate attributeName="cx" values="${x0};${x0+шаг*4}" dur="3.6s" begin="0.9s"
                 repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1" keyTimes="0;1"/>
