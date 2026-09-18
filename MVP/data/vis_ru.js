@@ -2752,7 +2752,70 @@ window.RUKEXAM = (function(){
       if(hits && !wrong) return Math.max(1, Math.floor(max / 2));
       return 0;
     }
+    if(it.kind === 'fields') return поляБалл(it, got, max);
     return got === it.correct ? max : 0;
+  }
+  /* ── задания с полями: олимпиадные туры ──────────────────────────────
+     У задания тура ответ состоит из нескольких частей: «а», «б», «в»,
+     «объём, л», «Алиса» и т.п. Сравниваем каждую часть отдельно, чтобы
+     за верные части начислить часть баллов — как в критериях олимпиады.
+     Числа принимаем с запятой и с точкой и с допуском: 1,252 и 1.25 —
+     один и тот же ответ, ребёнок не обязан угадать все знаки. */
+  function турЧисло(s){
+    const t = String(s == null ? '' : s).replace(/\s/g, '').replace(',', '.');
+    if(!/^-?\d+(\.\d+)?$/.test(t)) return null;
+    const n = Number(t);
+    return isFinite(n) ? n : null;
+  }
+  function турПолеВерно(эталон, дано){
+    if(дано == null || String(дано).trim() === '') return false;
+    /* Ответ-перечисление: в туре это список («начало, окончание, початок»),
+       порядок перечисления значения не имеет — сравниваем как множества. */
+    if(Array.isArray(эталон)){
+      const разбить = s => String(s == null ? '' : s).split(/[,;]+/)
+        .map(x => x.trim().toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' '))
+        .filter(Boolean).sort();
+      const а = разбить(эталон.join(',')), б = разбить(дано);
+      if(!б.length) return false;
+      const в = (x, y) => x.length === y.length && x.every((s, i) => s === y[i]);
+      if(в(а, б)) return true;
+      /* «6 8» и «6, 8» — одно и то же: пробел тоже разделитель */
+      const разбить2 = s => String(s == null ? '' : s).split(/[,;\s]+/)
+        .map(x => x.trim().toLowerCase().replace(/ё/g, 'е')).filter(Boolean).sort();
+      const а2 = разбить2(эталон.join(' ')), б2 = разбить2(дано);
+      return б2.length > 0 && в(а2, б2);
+    }
+    if(typeof эталон === 'boolean'){
+      const s = String(дано).trim().toLowerCase();
+      if(['да','верно','true','истина','1','+'].indexOf(s) >= 0) return эталон === true;
+      if(['нет','неверно','false','ложь','0','-'].indexOf(s) >= 0) return эталон === false;
+      return false;
+    }
+    if(typeof эталон === 'number'){
+      const ч = турЧисло(дано);
+      if(ч === null) return false;
+      const доп = Math.max(0.02, Math.abs(эталон) * 0.02);
+      return Math.abs(ч - эталон) <= доп;
+    }
+    const оч = s => String(s == null ? '' : s).toLowerCase().replace(/ё/g, 'е')
+      .replace(/[^a-zа-я0-9.,\- ]/g, ' ').replace(/\s+/g, ' ').trim();
+    return оч(эталон) === оч(дано);
+  }
+  function поляБалл(it, got, max){
+    const поля = it.поля || [];
+    if(!поля.length) return 0;
+    const ответы = Array.isArray(got) ? got : [got];
+    let верных = 0;
+    поля.forEach((п, i) => { if(турПолеВерно(п.эталон, ответы[i])) верных++; });
+    if(верных === поля.length) return max;
+    if(!верных) return 0;
+    return Math.max(1, Math.round(max * верных / поля.length));
+  }
+  /* Как показать эталон в разборе: «ключ — значение» через точку с запятой. */
+  function поляТекст(it){
+    const поля = it.поля || [];
+    if(!поля.length) return String(it.shown == null ? '' : it.shown);
+    return поля.map(п => (п.ключ ? п.ключ + ': ' : '') + String(п.эталон)).join('; ');
   }
   function buildMcko(cfg){
     const items = cfg.items;
@@ -2760,10 +2823,10 @@ window.RUKEXAM = (function(){
     const explain = [];
     cfg.intro.forEach(t => explain.push(t));
     items.forEach((it, i) => explain.push('Задание ' + (i+1) + ' из ' + items.length + '. ' + it.theme + '. ' + (it.ask || '')));
-    cfg.tail.forEach(t => explain.push(t));
+    (cfg.tail || []).forEach(t => explain.push(t));
     const lesson = {
       id: cfg.id, title: cfg.title, ico: cfg.ico || '🎓',
-      src: 'Русский язык · ' + cfg.klass + ' · МЦКО', subj: 'rus',
+      src: cfg.src || ('Русский язык · ' + cfg.klass + ' · МЦКО'), subj: cfg.subj || 'rus',
       explain: explain, check: cfg.check, tasks: cfg.tasks || []
     };
     const stepsN = explain.length;
@@ -2848,7 +2911,19 @@ window.RUKEXAM = (function(){
           parts.push(`<div style="${boxS};font-size:21px;line-height:1.45;font-weight:600;color:#ffe9a8">${it.q}</div>`);
           if(!locked){
             const labels = it.opts || [];
-            if(it.kind === 'text'){
+            if(it.kind === 'fields'){
+              /* Олимпиадный тур: у задания несколько частей ответа — по полю на
+                 каждую. Подпись поля берём из ключа ответа («а», «объём, л»). */
+              const поля = it.поля || [];
+              parts.push('<div style="display:flex;flex-direction:column;gap:8px;width:min(100%,360px)">' + поля.map((п, i) =>
+                `<label style="display:flex;gap:10px;align-items:center">
+                   <span style="flex:0 0 auto;min-width:96px;font-size:15px;color:#cdbfa4">${п.ключ || 'ответ'}</span>
+                   <input id="mkF${i}" type="text" inputmode="${typeof п.эталон === 'number' ? 'decimal' : 'text'}"
+                     autocomplete="off" placeholder="${п.множественный ? 'через запятую' : 'впиши ответ'}"
+                     style="flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid #3d5c49;background:rgba(255,255,255,.05);color:#e8dcc8;font-size:17px">
+                 </label>`).join('') + '</div>'
+                + `<button type="button" class="btn" onclick="ruMckoCheck(${cfg.id})">Ответить</button>`);
+            } else if(it.kind === 'text'){
               parts.push(`<div style="display:flex;gap:6px;align-items:center;width:min(100%,340px)">
                 <input id="mkIn" type="text" placeholder="впиши ответ" autocomplete="off"
                   style="flex:1;min-width:0;padding:8px 10px;border-radius:10px;border:1px solid #3d5c49;background:rgba(255,255,255,.05);color:#e8dcc8;font-size:14px">
@@ -2865,8 +2940,20 @@ window.RUKEXAM = (function(){
             }
           } else {
             const pts2 = itemScore(it, got);
+            const верное = it.kind === 'fields' ? поляТекст(it) : it.shown;
+            /* По частям видно, что именно сошлось, а что нет: у тура ответ
+               состоит из нескольких полей, и «правильно: …» одним куском
+               не подскажет, где ошибка. */
+            const почастям = (it.kind === 'fields' && (it.поля || []).length > 1)
+              ? '<div style="margin-top:6px;font-size:15px;color:#cdbfa4">' + (it.поля || []).map((п, i) => {
+                  const ок = турПолеВерно(п.эталон, (Array.isArray(got) ? got : [got])[i]);
+                  return (ок ? '✅ ' : '❌ ') + (п.ключ ? п.ключ + ': ' : '') + String(п.эталон);
+                }).join('<br>') + '</div>'
+              : '';
             parts.push(`<div style="${boxS};background:rgba(255,255,255,.04);border:1px solid ${pts2 === (it.points||1) ? '#8fd1a8' : (pts2 > 0 ? '#ffd76a' : '#e86a5a')};border-radius:12px;padding:8px 10px">
-              ${pts2 === (it.points||1) ? '✅ верно' : (pts2 > 0 ? '🟡 частично верно' : '❌ ошибка')} · правильно: <b>${it.shown}</b></div>`);
+              ${pts2 === (it.points||1) ? '✅ верно' : (pts2 > 0 ? '🟡 частично верно' : '❌ ошибка')} · ${pts2} из ${it.points||1} · правильно: <b>${верное}</b>${почастям}</div>`);
+            if(it.sol) parts.push(`<div style="${boxS};font-size:16px;line-height:1.5;color:#d8e8d8">${it.sol}</div>`);
+            if(it.trap) parts.push(`<div style="${boxS};font-size:15px;line-height:1.45;color:#e8b0a4">Ловушка: ${it.trap}</div>`);
           }
           extra = parts.join('');
         }
@@ -2891,7 +2978,13 @@ window.RUKEXAM = (function(){
       check: function(){
         const lk=lidKey(LV.id); CHS[lk]=CHS[lk]||{}; CHS[lk].ans=CHS[lk].ans||{}; const q=cur();
         const it=items[q];
-        if(it.kind==='text'){
+        if(it.kind==='fields'){
+          /* Несколько полей: собираем все, пустые не считаем ответом. */
+          const поля=it.поля||[];
+          const значения=поля.map((п,i)=>{ const el=document.getElementById('mkF'+i); return el?el.value:''; });
+          if(!значения.some(v=>String(v).trim()!=='')) return;
+          CHS[lk].ans[q]=значения;
+        } else if(it.kind==='text'){
           const inp=document.getElementById('mkIn');
           const val=inp?inp.value:'';
           if(!val.trim()) return;

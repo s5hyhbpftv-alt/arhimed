@@ -15,7 +15,8 @@ const SUBJ_META={
   chem:{ico:'⚗️', name:'Химия', dsc:'Лавуазье · вещества, реакции, растворы'},
   inf:{ico:'💻', name:'Информатика', dsc:'Код, алгоритмы, логика'},
   rus:{ico:'📖', name:'Русский язык', dsc:'Части речи, орфография, пунктуация'},
-  syra:{ico:'⚖️', name:'Мастерские Сиракуз', dsc:'Олимпиадные приёмы · 4–9 класс'}};
+  syra:{ico:'⚖️', name:'Мастерские Сиракуз', dsc:'Олимпиадные приёмы · 4–9 класс'},
+  tour:{ico:'🏆', name:'Олимпиадные туры', dsc:'Туры ВсОШ · баллы, время, шкала'}};
 
 /* ---------- фильтр по классу профиля ---------- */
 function profileClassNum(){ try{ const k=parseInt(String((typeof DB!=='undefined'&&DB.profile)?DB.profile.klass:''),10); return isNaN(k)?7:k; }catch(e){ return 7; } }
@@ -212,7 +213,7 @@ function renderBookList(){
   const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
   const totalL=pool.length;
   const junior=typeof isJunior==='function'&&isJunior();
-  const order=junior? ['jun','syra'] : ['all','math','rus','phys','chem','inf','mish','syra'];
+  const order=junior? ['jun','syra'] : ['all','math','rus','phys','chem','inf','mish','syra','tour'];
   const grouped=order.filter(s=>s==='all'||pool.some(L=>subjOf(L)===s)).map(subj=>{
     if(subj==='all') return { subj:'all', meta:{ico:'📚',name:'Все предметы'}, items:pool };
     const meta=SUBJ_META[subj]; return { subj, meta, items:pool.filter(L=>subjOf(L)===subj) };

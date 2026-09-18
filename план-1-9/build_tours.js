@@ -1,0 +1,262 @@
+#!/usr/bin/env node
+/* ============ СБОРКА ОЛИМПИАДНЫХ ТУРОВ ДЛЯ ПРИЛОЖЕНИЯ ============
+
+   Берёт 25 туров из deploy/ТУР_*.json (формат: tour, макс_балл, tasks[])
+   и пишет MVP/data/tours_olymp.js — уроки приложения на движке RUKEXAM
+   (баллы, шкала выполнения, разбор после каждого задания).
+
+   Как устроен тур в приложении:
+     • обложка  — сюжет, источник, максимум баллов, время, число заданий;
+     • задание  — одно на экран: «Задание N из M · <тема> · <баллы>»;
+     • ответ    — поля по числу частей ответа, выбор вариантов или несколько
+                  вариантов; сравнение с допуском для чисел (2 % или 0,02);
+     • разбор   — решение, ловушка и подсказки после ответа;
+     • итог     — балл, процент, отметка по шкале и список тем на повтор.
+
+   Пересобрать: node план-1-9/build_tours.js
+   Проверить:   node --check MVP/data/tours_olymp.js
+   ============================================================================ */
+'use strict';
+const fs = require('fs');
+const path = require('path');
+
+const ROOT = '/Users/mihaildrozdov/Documents/DPsek';
+const SRC = path.join(ROOT, 'deploy');
+const OUT = path.join(ROOT, 'MVP', 'data', 'tours_olymp.js');
+
+/* Каталог туров: файл → (класс для подписи, предмет, код). Класс берём из имени
+   файла: он же стоит в подписи урока и решает, на какой полке тур виден. */
+const ПРЕДМЕТ = { МАТЕМАТИКА: 'math', РУССКИЙ: 'rus', ИНФОРМАТИКА: 'inf', ФИЗИКА: 'phys', ХИМИЯ: 'chem' };
+const ИМЯ_ПРЕДМЕТА = { math: 'Математика', rus: 'Русский язык', inf: 'Информатика', phys: 'Физика', chem: 'Химия' };
+const ИКОНА = { math: '🏛', rus: '📖', inf: '💻', phys: '🍎', chem: '⚗️' };
+
+/* Балл за верный ответ: дробные ответы (1,252 литра) сравниваем с допуском —
+   ребёнок не обязан угадать все знаки после запятой. */
+const ДОПУСК_ДОЛИ = 0.02;   /* 2 % от ответа */
+const ДОПУСК_АБС = 0.02;
+
+function нормализоватьЧисло(s){
+  return String(s).replace(/\s/g, '').replace(',', '.');
+}
+function число(v){
+  const s = нормализоватьЧисло(v);
+  if(!/^-?\d+(\.\d+)?$/.test(s)) return null;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
+}
+/* Сравнение одного поля ответа. Возвращает true/false. */
+function полеВерно(эталон, дано){
+  if(дано == null) return false;
+  if(typeof эталон === 'boolean'){
+    const s = String(дано).trim().toLowerCase();
+    if(['да','верно','true','истина','1','+'].indexOf(s) >= 0) return эталон === true;
+    if(['нет','неверно','false','ложь','0','-'].indexOf(s) >= 0) return эталон === false;
+    return false;
+  }
+  if(typeof эталон === 'number'){
+    const ч = число(дано);
+    if(ч === null) return false;
+    const доп = Math.max(ДОПУСК_АБС, Math.abs(эталон) * ДОПУСК_ДОЛИ);
+    return Math.abs(ч - эталон) <= доп;
+  }
+  /* текст: без регистра, ё→е, лишних пробелов и знаков */
+  const оч = s => String(s == null ? '' : s).toLowerCase().replace(/ё/g, 'е')
+    .replace(/[^a-zа-я0-9.,\- ]/g, ' ').replace(/\s+/g, ' ').trim();
+  return оч(эталон) === оч(дано);
+}
+
+/* Разбор эталонного ответа в список полей: [{ключ, эталон}] или {варианты, верные}. */
+function формаОтвета(тип, ответ, задача){
+  /* варианты выбора: либо ответ — список индексов (multi), либо в самой задаче
+     есть opts/choices, а ответ — текст или число. */
+  const список = Array.isArray(ответ);
+  if(тип === 'multi' || (список && ответ.every(x => typeof x === 'number') && (задача.opts || задача.choices))){
+    return { вид: 'много', верные: ответ.slice() };
+  }
+  if(тип === 'choice' || тип === 'choice2'){
+    return { вид: 'один', эталон: ответ };
+  }
+  if(!список && typeof ответ !== 'object'){
+    return { вид: 'поля', поля: [{ ключ: null, эталон: ответ }] };
+  }
+  if(список){
+    return { вид: 'поля', поля: ответ.map((v, i) => ({ ключ: 'часть ' + (i + 1), эталон: v })) };
+  }
+  /* объект: поле на каждый ключ; вложенные объекты разворачиваем в «ключ · подкл» */
+  const поля = [];
+  Object.keys(ответ).forEach(k => {
+    const v = ответ[k];
+    if(v && typeof v === 'object' && !Array.isArray(v)){
+      Object.keys(v).forEach(k2 => поля.push({ ключ: k + ' · ' + k2, эталон: v[k2] }));
+    } else if(Array.isArray(v)){
+      поля.push({ ключ: k, эталон: v, множественный: true });
+    } else {
+      поля.push({ ключ: k, эталон: v });
+    }
+  });
+  return { вид: 'поля', поля };
+}
+
+/* Текст задания: условие + вопрос. Условие сторителлинга — своё поле story. */
+function текстЗадания(t){
+  return String(t.q || '').trim();
+}
+function материал(t){
+  const куски = [];
+  if(t.story) куски.push(String(t.story).trim());
+  if(t.rule) куски.push('Правило: ' + String(t.rule).trim());
+  return куски.join('\n\n');
+}
+
+function собратьТур(файл, всегоТуров){
+  const данные = JSON.parse(fs.readFileSync(path.join(SRC, файл), 'utf8'));
+  const m = /^ТУР_([А-ЯЁ]+)_(\d+)\.json$/.exec(файл);
+  if(!m) throw new Error('не разобрал имя файла: ' + файл);
+  const предмет = ПРЕДМЕТ[m[1]];
+  const класс = Number(m[2]);
+  if(!предмет) throw new Error('неизвестный предмет: ' + m[1]);
+
+  /* Номер урока для тура: свободный диапазон 700+ (701, 702, …), чтобы туры
+     не сталкивались с уроками и их можно было двигать отдельно. */
+  const id = 700 + всегоТуров;
+
+  const items = данные.tasks.map(t => {
+    const форма = формаОтвета(t.type, t.answer, t);
+    /* kind — то, что понимает движок RUKEXAM: поля ответа, несколько
+       вариантов или выбор одного. */
+    const kind = форма.вид === 'поля' ? 'fields' : (форма.вид === 'много' ? 'multi' : 'radio');
+    const it = {
+      kind: kind,
+      points: t.points || 1,
+      theme: (t.theme || '') + (t.diff ? ' · сложность ' + t.diff : ''),
+      q: текстЗадания(t),
+      материал: материал(t),
+      заголовок: t.title || '',
+      type: t.type || 'input',
+      форма: форма.вид,
+      эталон: форма.эталон,
+      поля: форма.поля,
+      верные: форма.верные,
+      opts: (t.opts || t.choices || []).slice(),
+      ask: (t.title ? t.title + '. ' : '') + 'Ответь на задание тура.',
+      hint: (t.hints && t.hints[0]) || 'Вспомни разбор приёма и проверь ответ.',
+      hints: (t.hints || []).slice(),
+      sol: t.sol || '',
+      trap: t.trap || '',
+      tourAns: t.answer
+    };
+    if(форма.вид === 'один' && typeof t.answer === 'number' && it.opts.length){
+      it.correct = t.answer;
+      it.shown = it.opts[t.answer] != null ? it.opts[t.answer] : String(t.answer);
+    } else if(форма.вид === 'один'){
+      it.correct = t.answer;
+      it.shown = String(t.answer);
+    } else if(форма.вид === 'много'){
+      it.correct = t.answer.slice();
+      it.shown = it.correct.join(', ');
+    } else {
+      it.shown = JSON.stringify(t.answer);
+    }
+    return it;
+  });
+
+  const макс = items.reduce((a, it) => a + (it.points || 1), 0);
+  const темы = [...new Set(items.map(it => it.theme))].join(' · ');
+  const тур = {
+    id: id,
+    файл: файл,
+    klass: класс,
+    subject: предмет,
+    title: данные.tour,
+    источник: данные.источник,
+    макс: макс,
+    время: данные.время_минут || 0,
+    оценивание: данные.оценивание || '',
+    items: items
+  };
+  return тур;
+}
+
+/* ── сборка ── */
+const файлы = fs.readdirSync(SRC).filter(f => /^ТУР_[А-ЯЁ]+_\d+\.json$/.test(f)).sort((a, b) => {
+  const pa = /^ТУР_([А-ЯЁ]+)_(\d+)/.exec(a), pb = /^ТУР_([А-ЯЁ]+)_(\d+)/.exec(b);
+  const order = ['МАТЕМАТИКА', 'РУССКИЙ', 'ИНФОРМАТИКА', 'ФИЗИКА', 'ХИМИЯ'];
+  const d = order.indexOf(pa[1]) - order.indexOf(pb[1]);
+  return d !== 0 ? d : Number(pa[2]) - Number(pb[2]);
+});
+if(!файлы.length) throw new Error('туры не найдены в ' + SRC);
+
+const туры = файлы.map((f, i) => собратьТур(f, i + 1));
+console.log('туров собрано:', туры.length, '| заданий:', туры.reduce((a, t) => a + t.items.length, 0));
+
+const шапка = `/* ============ ОЛИМПИАДНЫЕ ТУРЫ В ПРИЛОЖЕНИИ ============
+
+   Файл собран из deploy/ТУР_*.json построителем план-1-9/build_tours.js.
+   Руками не править: правь исходный тур в deploy/ и пересобери.
+
+   Каждый тур — это урок приложения на движке RUKEXAM: обложка с сюжетом,
+   задания по одному на экран, баллы за каждое, шкала выполнения и разбор
+   после ответа. Задания проверяются сразу, как в настоящей работе.
+
+   Полка «Олимпиадные туры»: туры лежат в каталоге наравне с уроками, у них
+   свой предмет (subj:'tour'), поэтому они не смешиваются с уроками.
+
+   Подключение: строка в MVP/index.html после data/vis_ru.js.
+   ============================================================================ */
+(function(){
+  'use strict';
+  if(!window.RUKEXAM){ try{ console.warn('туры: RUKEXAM не загружен'); }catch(e){} return; }
+
+  const ТУРЫ = ${JSON.stringify(туры.map(t => ({
+    id: t.id, klass: t.klass, subject: t.subject, title: t.title,
+    источник: t.источник, макс: t.макс, время: t.время, оценивание: t.оценивание,
+    items: t.items
+  })), null, 1)};
+
+  const ИМЯ = ${JSON.stringify(ИМЯ_ПРЕДМЕТА)};
+  const ИКОНА = ${JSON.stringify(ИКОНА)};
+
+  window.ARH_TOURS = ТУРЫ;
+
+  ТУРЫ.forEach(function(T){
+    const предмет = ИМЯ[T.subject] || T.subject;
+    const время = T.время ? ' · ' + T.время + ' минут' : '';
+    const intro = [
+      T.источник,
+      'В туре ' + T.items.length + ' заданий на ' + T.макс + ' баллов' + время + '. Ответ проверяется сразу: увидишь верное решение и разбор.',
+      T.оценивание
+    ].filter(Boolean);
+    const introCards = [
+      ['Что за тур', [предмет + ' · ' + T.klass + ' класс', T.title,
+        T.items.length + ' заданий · максимум ' + T.макс + ' баллов' + время], ['Источник', T.источник, '#7fd1ff']],
+      ['Как отвечать', ['Впиши ответ в поля или выбери варианты.',
+        'Числа можно писать с запятой или с точкой: 37,5 и 37.5 — одно и то же.',
+        'Дробные ответы принимаются с небольшой погрешностью.',
+        'После ответа появится решение и ловушка.'], ['Баллы', 'У каждого задания свой вес: за неполный ответ начисляется часть баллов.', '#ffd76a']]
+    ];
+    window.RUKEXAM.buildMcko({
+      id: T.id,
+      klass: T.klass + ' класс',
+      title: T.title,
+      ico: ИКОНА[T.subject] || '🏆',
+      subj: 'tour',
+      src: 'Олимпиадные туры · ' + предмет + ' · ' + T.klass + ' класс',
+      intro: intro,
+      introCards: introCards,
+      items: T.items,
+      check: { q: 'Сколько баллов можно получить за этот тур?', choices: [String(T.макс), String(T.items.length), '10', '100'], ans: 0,
+               exp: 'В туре ' + T.items.length + ' заданий, вместе они дают ' + T.макс + ' баллов — как в официальном комплекте.' },
+      tasks: []
+    });
+  });
+
+  try{ console.info('олимпиадные туры: подключено', ТУРЫ.length, 'туров'); }catch(e){}
+})();
+`;
+
+fs.writeFileSync(OUT, шапка, 'utf8');
+console.log('записано:', OUT, '—', (шапка.length / 1024).toFixed(1), 'КБ');
+console.log('\nтуры по предметам:');
+const по = {};
+туры.forEach(t => { по[t.subject] = (по[t.subject] || 0) + 1; });
+Object.keys(по).forEach(k => console.log('   ' + k + ': ' + по[k]));
