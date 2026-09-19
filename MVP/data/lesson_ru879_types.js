@@ -98,6 +98,18 @@
   #lvis .s6.l879 .plan .row .k{flex:none;font-size:16px;color:var(--gold);width:118px;line-height:1.25}
   #lvis .s6.l879 .plan .row .v{color:var(--ink)}
   #lvis .s6.l879 .plan .row.empty .v{color:var(--mut)}
+  /* карточки задания: вопрос и разбор — отдельными карточками, вопрос всегда первый */
+  #lvis .s6.l879 .карт{width:100%;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line)}
+  #lvis .s6.l879 .карт.вопрос{border-color:${GOLD}}
+  #lvis .s6.l879 .карт.верно{border-color:${GREEN}}
+  #lvis .s6.l879 .карт.ошибка{border-color:${RED}}
+  #lvis .s6.l879 .карт .метка{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  #lvis .s6.l879 .карт .текст{font-size:20px;line-height:1.45;color:var(--ink)}
+  #lvis .s6.l879 .уровни{display:flex;gap:8px;align-items:center;width:100%}
+  #lvis .s6.l879 .уровни .точка{flex:1 1 0;height:10px;border-radius:6px;background:rgba(255,255,255,.09)}
+  #lvis .s6.l879 .уровни .точка.пройдено{background:${GREEN}}
+  #lvis .s6.l879 .уровни .точка.сейчас{background:${GOLD}}
   #lvis .s6.l879 [data-anim]{animation:l879rise .42s cubic-bezier(.23,1,.32,1) both;animation-delay:calc(var(--i,0)*70ms)}
   #lvis .s6.l879[data-frame="2"] [data-anim]{animation-name:l879pop}
   #lvis .s6.l879[data-frame="3"] [data-anim]{animation-name:l879slide}
@@ -311,12 +323,19 @@
     const и = (s.тНомер||0)%ТРЕНАЖЁР.length;
     const з = ТРЕНАЖЁР[и], отв = s.тОтвет, готово = отв != null;
     const верно = отв===з.в;
-    return `${A(0,'kicker','Тренажёр')}
-      ${A(1,'sheet','<p>'+з.ф+'</p>')}
-      <div class="ask">${з.о.map((о,к)=>BTN(2+к, готово&&к===з.в?'hit':(готово&&к===отв?'miss':''), о, `r879Train(${к})`)).join('')}</div>
-      ${готово ? A(6,'verdict '+(верно?'ok':'no'), (верно?'Верно: ':'Не так: ')+з.р) : A(6,'verdict','Выбери ответ.')}
+    const точки = Array.from({length:ТРЕНАЖЁР.length},(_,к)=>
+      `<span class="точка ${к<и?'пройдено':(к===и?'сейчас':'')}"></span>`).join('');
+    return `${A(0,'уровни',точки)}
+      ${A(1,'cap','Уровень '+(и+1)+' из '+ТРЕНАЖЁР.length)}
+      ${A(2,'карт вопрос','<span class="метка">Вопрос</span><div class="текст">'+з.ф+'</div>')}
+      <div class="ask">${з.о.map((о,к)=>BTN(3+к, готово&&к===з.в?'hit':(готово&&к===отв?'miss':''), о, `r879Train(${к})`)).join('')}</div>
+      ${готово
+        ? A(8,'карт '+(верно?'верно':'ошибка'),
+            '<span class="метка">'+(верно?'Верно':'Разбор ошибки')+'</span><div class="текст">'+
+            (верно?'✅ ':'❌ ')+з.р+'</div>')
+        : A(8,'карт','<span class="метка">Ответ</span><div class="текст">Выбери один из вариантов выше.</div>')}
       <p class="score">верно: ${s.тВерно||0} · ошибок: ${s.тОшибки||0} · всего: ${ТРЕНАЖЁР.length}</p>
-      ${готово ? `<div class="ask">${BTN(7,'','следующий вопрос','r879NextQ()')}</div>` : ''}`;
+      ${готово ? `<div class="ask">${BTN(9,'','следующий уровень','r879NextQ()')}</div>` : ''}`;
   }
 
   /* ---------- вопрос-проверка в кадре ---------- */
@@ -354,16 +373,11 @@
       {к:'b', т:'вывода', ок:0, fb:'вывод нужен рассуждению'}]]
   };
 
+  /* Карточка вопроса: показывается первой, до рисунка и вариантов.
+     Варианты ответа у каждого кадра свои — здесь только вопрос. */
   function pred(f, st){
     const в = ВОПРОСЫ[f]; if(!в) return '';
-    const [вопрос, варианты] = в;
-    const cur = st['в'+f];
-    const выбран = варианты.find(о=>о.к===cur);
-    return `<div class="ask">${варианты.map((о,и)=>
-      BTN(10+и, cur===о.к?(о.ок?'hit':'miss'):'', о.т, `r879Ask(${f},'${о.к}')`)).join('')}</div>
-      ${cur ? `<div class="verdict ${выбран.ок?'ok':'no'}">${выбран.ок?'✅ ':'❌ '}${выбран.fb}</div>`
-            : `<div class="verdict">Выбери ответ.</div>`}
-      <div class="cap">${вопрос}</div>`;
+    return A(0,'карт вопрос','<span class="метка">Вопрос</span><div class="текст">'+в[0]+'</div>');
   }
 
   /* ---------- запись урока ---------- */
@@ -445,10 +459,9 @@
     const [кикер, заголовок] = ЗАГОЛОВКИ[f] || ['Типы речи','Типы речи'];
 
     el.innerHTML = `<div class="s6 l879" data-frame="${f}">
-        ${A(0,'kicker',`Урок 879 · ${кикер}`)}
         <h2>${заголовок}</h2>
-        ${сцена}
         ${pred(f, s)}
+        ${сцена}
       </div>`;
   }
 

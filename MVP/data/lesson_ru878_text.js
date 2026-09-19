@@ -72,6 +72,18 @@
   #lvis .s6.l878 .stairs .step.on{border-color:var(--gold);color:var(--ink)}
   #lvis .s6.l878 .stairs .step .n{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;
     justify-content:center;font-size:16px;font-weight:700;color:#17261e;background:linear-gradient(180deg,#ffd76a,#d9a441)}
+  /* карточки задания: вопрос и разбор — отдельными карточками, вопрос всегда первый */
+  #lvis .s6.l878 .карт{width:100%;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line)}
+  #lvis .s6.l878 .карт.вопрос{border-color:${GOLD}}
+  #lvis .s6.l878 .карт.верно{border-color:${GREEN}}
+  #lvis .s6.l878 .карт.ошибка{border-color:${RED}}
+  #lvis .s6.l878 .карт .метка{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  #lvis .s6.l878 .карт .текст{font-size:20px;line-height:1.45;color:var(--ink)}
+  #lvis .s6.l878 .уровни{display:flex;gap:8px;align-items:center;width:100%}
+  #lvis .s6.l878 .уровни .точка{flex:1 1 0;height:10px;border-radius:6px;background:rgba(255,255,255,.09)}
+  #lvis .s6.l878 .уровни .точка.пройдено{background:${GREEN}}
+  #lvis .s6.l878 .уровни .точка.сейчас{background:${GOLD}}
   #lvis .s6.l878 [data-anim]{animation:l878rise .42s cubic-bezier(.23,1,.32,1) both;animation-delay:calc(var(--i,0)*70ms)}
   #lvis .s6.l878[data-frame="2"] [data-anim],#lvis .s6.l878[data-frame="3"] [data-anim]{animation-name:l878drop}
   #lvis .s6.l878[data-frame="5"] [data-anim],#lvis .s6.l878[data-frame="11"] [data-anim]{animation-name:l878pop}
@@ -83,7 +95,19 @@
     #lvis .s6.l878 .slot{flex:1 1 46%}
   }
   @media (prefers-reduced-motion: reduce){
-    #lvis .s6.l878 [data-anim]{animation:none!important}
+    /* карточки задания: вопрос и разбор — отдельными карточками, вопрос всегда первый */
+  #lvis .s6.l878 .карт{width:100%;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line)}
+  #lvis .s6.l878 .карт.вопрос{border-color:${GOLD}}
+  #lvis .s6.l878 .карт.верно{border-color:${GREEN}}
+  #lvis .s6.l878 .карт.ошибка{border-color:${RED}}
+  #lvis .s6.l878 .карт .метка{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  #lvis .s6.l878 .карт .текст{font-size:20px;line-height:1.45;color:var(--ink)}
+  #lvis .s6.l878 .уровни{display:flex;gap:8px;align-items:center;width:100%}
+  #lvis .s6.l878 .уровни .точка{flex:1 1 0;height:10px;border-radius:6px;background:rgba(255,255,255,.09)}
+  #lvis .s6.l878 .уровни .точка.пройдено{background:${GREEN}}
+  #lvis .s6.l878 .уровни .точка.сейчас{background:${GOLD}}
+  #lvis .s6.l878 [data-anim]{animation:none!important}
   }`;
 
   function css(){
@@ -501,12 +525,19 @@
   function F11(s){
     const и = (s.тНомер||0)%ТРЕНАЖЁР.length;
     const з = ТРЕНАЖЁР[и], отв = s.тОтвет, готово = отв!=null, верно = отв===з.в;
-    return `${A(0,'kicker','Тренажёр')}
-      ${A(1,'sheet','<p>'+з.ф+'</p>')}
-      <div class="ask">${з.о.map((о,к)=>BTN(2+к, готово&&к===з.в?'hit':(готово&&к===отв?'miss':''), о, `r878Train(${к})`)).join('')}</div>
-      ${готово ? A(6,'verdict '+(верно?'ok':'no'), (верно?'Верно: ':'Не так: ')+з.р) : A(6,'verdict','Выбери ответ.')}
+    const точки = Array.from({length:ТРЕНАЖЁР.length},(_,к)=>
+      `<span class="точка ${к<и?'пройдено':(к===и?'сейчас':'')}"></span>`).join('');
+    return `${A(0,'уровни',точки)}
+      ${A(1,'cap','Уровень '+(и+1)+' из '+ТРЕНАЖЁР.length)}
+      ${A(2,'карт вопрос','<span class="метка">Вопрос</span><div class="текст">'+з.ф+'</div>')}
+      <div class="ask">${з.о.map((о,к)=>BTN(3+к, готово&&к===з.в?'hit':(готово&&к===отв?'miss':''), о, `r878Train(${к})`)).join('')}</div>
+      ${готово
+        ? A(8,'карт '+(верно?'верно':'ошибка'),
+            '<span class="метка">'+(верно?'Верно':'Разбор ошибки')+'</span><div class="текст">'+
+            (верно?'✅ ':'❌ ')+з.р+'</div>')
+        : A(8,'карт','<span class="метка">Ответ</span><div class="текст">Выбери один из вариантов выше.</div>')}
       <p class="score">верно: ${s.тВерно||0} · ошибок: ${s.тОшибки||0} · всего: ${ТРЕНАЖЁР.length}</p>
-      ${готово ? `<div class="ask">${BTN(7,'','следующий вопрос','r878NextQ()')}</div>` : ''}`;
+      ${готово ? `<div class="ask">${BTN(9,'','следующий уровень','r878NextQ()')}</div>` : ''}`;
   }
 
   const ВОПРОСЫ = {
@@ -551,16 +582,11 @@
       {к:'b', т:'увеличить объём', ок:0, fb:'план — это порядок, а не объём'}]]
   };
 
+  /* Карточка вопроса: показывается первой, до рисунка и вариантов.
+     Варианты ответа у каждого кадра свои — здесь только вопрос. */
   function pred(f, st){
     const в = ВОПРОСЫ[f]; if(!в) return '';
-    const [вопрос, варианты] = в;
-    const cur = st['в'+f];
-    const выбран = варианты.find(о=>о.к===cur);
-    return `<div class="ask">${варианты.map((о,и)=>
-      BTN(10+и, cur===о.к?(о.ок?'hit':'miss'):'', о.т, `r878Ask(${f},'${о.к}')`)).join('')}</div>
-      ${cur ? `<div class="verdict ${выбран.ок?'ok':'no'}">${выбран.ок?'✅ ':'❌ '}${выбран.fb}</div>`
-            : `<div class="verdict">Выбери ответ.</div>`}
-      <div class="cap">${вопрос}</div>`;
+    return A(0,'карт вопрос','<span class="метка">Вопрос</span><div class="текст">'+в[0]+'</div>');
   }
 
   const L878 = {
@@ -648,10 +674,9 @@
     const [кикер, заголовок] = ЗАГОЛОВКИ[f] || ['Текст','Текст и его признаки'];
 
     el.innerHTML = `<div class="s6 l878" data-frame="${f}">
-        ${A(0,'kicker',`Урок 878 · ${кикер}`)}
         <h2>${заголовок}</h2>
-        ${сцена}
         ${pred(f, s)}
+        ${сцена}
       </div>`;
   }
 
