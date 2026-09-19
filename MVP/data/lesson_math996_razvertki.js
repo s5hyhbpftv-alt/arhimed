@@ -132,36 +132,36 @@
         <stop offset="1" stop-color="#131f18"/>
       </linearGradient>
       <linearGradient id="c996-перед" x1="0" y1="0" x2="0" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#fff3ce"/><stop offset="0.18" stop-color="#ffe08f"/>
-        <stop offset="0.6" stop-color="#f0c24c"/><stop offset="1" stop-color="#b9821a"/>
+        <stop offset="0" stop-color="#d9a13a"/><stop offset="0.5" stop-color="#b8842a"/>
+        <stop offset="1" stop-color="#8a6116"/>
       </linearGradient>
       <linearGradient id="c996-верх" x1="0" y1="0" x2="1" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#fffbe8"/><stop offset="0.5" stop-color="#ffeab4"/>
-        <stop offset="1" stop-color="#e8c474"/>
+        <stop offset="0" stop-color="#ffe9a8"/><stop offset="0.5" stop-color="#f3cf6a"/>
+        <stop offset="1" stop-color="#dcae43"/>
       </linearGradient>
       <linearGradient id="c996-бок" x1="0" y1="0" x2="0" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#d8ab4a"/><stop offset="0.55" stop-color="#a87c1c"/>
-        <stop offset="1" stop-color="#6f5210"/>
+        <stop offset="0" stop-color="#8e661a"/><stop offset="0.55" stop-color="#644711"/>
+        <stop offset="1" stop-color="#3d2c08"/>
       </linearGradient>
       <linearGradient id="c996-перед2" x1="0" y1="0" x2="0" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#ddf2ff"/><stop offset="0.2" stop-color="#9fd8f7"/>
-        <stop offset="0.62" stop-color="#5fadd8"/><stop offset="1" stop-color="#2f6b93"/>
+        <stop offset="0" stop-color="#8cc9ea"/><stop offset="0.45" stop-color="#5aa3cd"/>
+        <stop offset="1" stop-color="#2b6488"/>
       </linearGradient>
       <linearGradient id="c996-верх2" x1="0" y1="0" x2="1" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#f2fbff"/><stop offset="0.55" stop-color="#c3e5f7"/>
-        <stop offset="1" stop-color="#8fc0dd"/>
+        <stop offset="0" stop-color="#cfe8f7"/><stop offset="0.55" stop-color="#9fc9e4"/>
+        <stop offset="1" stop-color="#79a9c9"/>
       </linearGradient>
       <linearGradient id="c996-бок2" x1="0" y1="0" x2="0" y2="1" color-interpolation="linearRGB">
         <stop offset="0" stop-color="#5b9fc9"/><stop offset="0.6" stop-color="#356f96"/>
         <stop offset="1" stop-color="#22506e"/>
       </linearGradient>
       <linearGradient id="c996-перед3" x1="0" y1="0" x2="0" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#dcf7e8"/><stop offset="0.2" stop-color="#a8e2c4"/>
-        <stop offset="0.62" stop-color="#6db894"/><stop offset="1" stop-color="#3d7a5c"/>
+        <stop offset="0" stop-color="#9ed7b6"/><stop offset="0.45" stop-color="#6db894"/>
+        <stop offset="1" stop-color="#38704f"/>
       </linearGradient>
       <linearGradient id="c996-верх3" x1="0" y1="0" x2="1" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#f0fdf6"/><stop offset="0.55" stop-color="#c4ecd6"/>
-        <stop offset="1" stop-color="#8fc9ab"/>
+        <stop offset="0" stop-color="#cdeeda"/><stop offset="0.55" stop-color="#9ccfae"/>
+        <stop offset="1" stop-color="#7cb08f"/>
       </linearGradient>
       <linearGradient id="c996-бок3" x1="0" y1="0" x2="0" y2="1" color-interpolation="linearRGB">
         <stop offset="0" stop-color="#6aa98a"/><stop offset="0.6" stop-color="#417f61"/>
@@ -210,26 +210,30 @@
     `<svg viewBox="0 0 336 ${высота||236}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
        ${ОПРЕДЕЛЕНИЯ}${тело}</svg>`;
 
-  /* ОБЪЁМНОЕ ТЕЛО: перед, верх и бок — три видимые грани */
+  /* ОБЪЁМНОЕ ТЕЛО: перед, верх и бок — три видимые грани.
+     Построение (y растёт вниз, глубина уходит вправо-вверх на гл):
+       перед: (x,y) (x+ш,y) (x+ш,y-в) (x,y-в)
+       верх:  (x,y-в) (x+ш,y-в) (x+ш+гл,y-в-гл) (x+гл,y-в-гл)
+       бок:   (x+ш,y-в) (x+ш,y) (x+ш+гл,y-гл) (x+ш+гл,y-в-гл)
+     Здесь была ошибка: у верхней грани задние вершины брали y-гл вместо
+     (y-в)-гл, поэтому верх уезжал вниз, боковая грань вырождалась в
+     треугольник, и куб читался как квадрат со стрелкой (нашёл владелец).
+     Тона плоские и различимые: перед — основной, верх — светлее, бок — темнее. */
   function коробка(x,y,ш,в,гл,цвета,нач,подписи){
-    const ц=цвета||['url(#c996-перед)','url(#c996-верх)','url(#c996-бок)'];
-    const x1=x, y1=y-в, x2=x+ш, y2=y, x3=x+ш+гл, y3=y-гл;
+    const ц=цвета||['#e0ab3c','#ffe08f','#a87c1c'];
+    const x1=x, y1=y-в, x2=x+ш, y2=y, x3=x+ш+гл;
+    const yt=y1-гл, yb=y-гл;          /* задние верх и низ */
     return `<g>
       <ellipse cx="${(x+ш/2+гл/2).toFixed(1)}" cy="${y+6}" rx="${(ш/2+гл/2+6).toFixed(1)}" ry="7"
         fill="#0b1c2a" opacity=".22" filter="url(#c996-отброс)"/>
       <ellipse cx="${(x+ш/2).toFixed(1)}" cy="${y+2}" rx="${(ш/2+2).toFixed(1)}" ry="4"
         fill="#231a12" opacity=".4" filter="url(#c996-контакт)"/>
-      <polygon points="${x},${y} ${x+ш},${y} ${x2},${y1} ${x1},${y1}" fill="${ц[0]}" stroke="#33291e" stroke-width="1.8">
-        ${проявить('9s',нач||0.05,(нач||0.05)+0.06)}</polygon>
-      <polygon points="${x1},${y1} ${x2},${y1} ${x3},${y3} ${x+гл},${y3}" fill="${ц[1]}" stroke="#33291e" stroke-width="1.8">
+      <polygon points="${x1},${y1} ${x2},${y1} ${x3},${yt} ${x1+гл},${yt}" fill="${ц[1]}" stroke="#33291e" stroke-width="1.8" stroke-linejoin="round">
         ${проявить('9s',(нач||0.05)+0.1,(нач||0.05)+0.16)}</polygon>
-      <polygon points="${x2},${y1} ${x2},${y2} ${x3},${y-гл} ${x3},${y3}" fill="${ц[2]}" stroke="#33291e" stroke-width="1.8">
+      <polygon points="${x2},${y1} ${x2},${y2} ${x3},${yb} ${x3},${yt}" fill="${ц[2]}" stroke="#33291e" stroke-width="1.8" stroke-linejoin="round">
         ${проявить('9s',(нач||0.05)+0.2,(нач||0.05)+0.26)}</polygon>
-      <polygon points="${x1+3},${y1-2} ${x1+ш*0.62},${y1-2} ${x1+ш*0.62+гл},${y3-2} ${x+гл+3},${y3-2}"
-        fill="url(#c996-блик)" opacity=".55"/>
-      <line x1="${x1}" y1="${y1}" x2="${x1}" y2="${y}" stroke="rgba(255,250,230,.5)" stroke-width="1.6"/>
-      <line x1="${x+гл}" y1="${y3}" x2="${x+ш+гл}" y2="${y3}" stroke="rgba(255,246,214,.35)" stroke-width="1.2"/>
-      <line x1="${x+3}" y1="${y-3}" x2="${x+ш-3}" y2="${y-3}" stroke="rgba(255,238,200,.28)" stroke-width="2"/>
+      <polygon points="${x1},${y2} ${x2},${y2} ${x2},${y1} ${x1},${y1}" fill="${ц[0]}" stroke="#33291e" stroke-width="1.8" stroke-linejoin="round">
+        ${проявить('9s',нач||0.05,(нач||0.05)+0.06)}</polygon>
       ${подписи?`<g>${проявить('9s',(нач||0.05)+0.3,(нач||0.05)+0.34)}
         ${т(x+ш/2,y+20,подписи,12,МУТ)}</g>`:''}
     </g>`;
@@ -237,7 +241,7 @@
 
   /* ПИРАМИДА: основание — ромб, видны две передние грани, задние рёбра штриховые */
   function пирамида(x,y,ш,выс,глуб,цвета,нач){
-    const ц=цвета||['url(#c996-перед)','url(#c996-бок)'];
+    const ц=цвета||['#e0ab3c','#a87c1c'];
     const л=[x,y], п=[x+ш/2,y+глуб], пр=[x+ш,y], з=[x+ш/2,y-глуб], в=[x+ш/2,y-выс];
     return `<g>
       <ellipse cx="${(x+ш/2).toFixed(1)}" cy="${y+глуб/2+6}" rx="${(ш/2+глуб/2+6).toFixed(1)}" ry="7"
@@ -289,8 +293,8 @@
         ${фон(216)}
         ${т(168,22,'Объёмные тела',14,GOLD,true)}
         ${коробка(34,150,58,58,26,null,0.05,'куб')}
-        ${коробка(126,150,72,44,28,['url(#c996-перед2)','url(#c996-верх2)','url(#c996-бок2)'],0.4,'параллелепипед')}
-        ${пирамида(232,126,84,58,26,['url(#c996-перед3)','url(#c996-бок3)'],0.72)}
+        ${коробка(126,150,72,44,28,['#5aa3cd','#b9e0f5','#2f6b93'],0.4,'параллелепипед')}
+        ${пирамида(232,126,84,58,26,['#6db894','#3d7a5c'],0.72)}
         ${т(274,176,'пирамида',12,МУТ)}
         ${т(168,196,'у каждого тела есть грани, рёбра и вершины',12,ИНК)}
       `,216)}</div>` +
@@ -354,7 +358,7 @@
         }).join('')}
         ${т(100,214,'шесть квадратов — развёртка',12,ИНК)}
         ${т(200,134,'→',20,GOLD,true)}
-        ${коробка(216,178,48,48,22,['url(#c996-перед)','url(#c996-верх)','url(#c996-бок)'],0.2,null)}
+        ${коробка(216,178,48,48,22,['#e0ab3c','#ffe08f','#a87c1c'],0.2,null)}
         ${т(252,214,'то же тело',12,МУТ)}
         ${т(168,236,'одна и та же фигура: плоская и сложенная',12,МУТ)}
       `,244)}</div>` +
@@ -496,7 +500,7 @@
           <path d="M182 136 L214 136" stroke="${GOLD}" stroke-width="2.4"/>
           <path d="M208 130 L218 136 L208 142 Z" fill="${GOLD}"/>
         </g>
-        ${пирамида(224,158,88,62,28,['url(#c996-перед)','url(#c996-бок)'],0.62)}
+        ${пирамида(224,158,88,62,28,['#e0ab3c','#a87c1c'],0.62)}
         ${т(268,232,'пирамида',12,МУТ)}
       `,252)}</div>` +
       `<div class="ask">
@@ -528,13 +532,13 @@
           <path d="M150 132 L196 132" stroke="${GOLD}" stroke-width="2.4"/>
           <path d="M190 126 L200 132 L190 138 Z" fill="${GOLD}"/>
         </g>
-        <ellipse cx="262" cy="86" rx="36" ry="13" fill="url(#c996-верх2)" stroke="rgba(20,35,28,.6)" stroke-width="1.4"/>
+        <ellipse cx="262" cy="86" rx="36" ry="13" fill="#b9e0f5" stroke="rgba(20,35,28,.6)" stroke-width="1.4"/>
         <ellipse cx="266" cy="166" rx="46" ry="9" fill="#0b1c2a" opacity=".22" filter="url(#c996-отброс)"/>
         <ellipse cx="262" cy="157" rx="36" ry="6" fill="#231a12" opacity=".38" filter="url(#c996-контакт)"/>
-        <path d="M226 86 L226 150 A36 13 0 0 0 298 150 L298 86" fill="url(#c996-перед2)"
+        <path d="M226 86 L226 150 A36 13 0 0 0 298 150 L298 86" fill="#5aa3cd"
           stroke="#33291e" stroke-width="1.8" opacity=".95">${светит('11s',0.7)}</path>
-        <ellipse cx="262" cy="150" rx="36" ry="13" fill="url(#c996-бок2)" stroke="#33291e" stroke-width="1.6" opacity=".8"/>
-        <path d="M236 92 L236 146" stroke="rgba(255,255,255,.35)" stroke-width="3"/>
+        <ellipse cx="262" cy="150" rx="36" ry="13" fill="#2f6b93" stroke="#33291e" stroke-width="1.6" opacity=".8"/>
+        <path d="M238 96 L238 142" stroke="rgba(255,255,255,.22)" stroke-width="4"/>
         ${т(262,224,'цилиндр',12,МУТ)}
       `,252)}</div>` +
       `<div class="ask">
@@ -588,7 +592,7 @@
       `<div class="pic">${свг(`
         ${фон(268)}
         ${т(168,22,'Материал на коробку',14,GOLD,true)}
-        ${коробка(18,116,60,42,22,['url(#c996-перед)','url(#c996-верх)','url(#c996-бок)'],0.05,null)}
+        ${коробка(18,116,60,42,22,['#e0ab3c','#ffe08f','#a87c1c'],0.05,null)}
         ${т(48,140,'2 × 3 × 4',12,ИНК)}
         ${[[176,44,3,2,0.10],[248,44,4,3,0.34],[176,116,2,4,0.58]].map(([x1,y1,ш,в0,нач],и)=>`
           <g>
