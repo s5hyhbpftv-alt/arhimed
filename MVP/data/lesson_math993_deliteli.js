@@ -149,10 +149,6 @@
       анТ('0 0;0 0;'+(x1-x0).toFixed(1)+' '+(y1-y0).toFixed(1)+';0 0',длит,
           'keyTimes="0;0.08;0.55;1"'+(нач!=null?' begin="'+нач+'s"':''))+
     `</circle>`;
-  const едетПолоса = (x,y,ш,в,r,цвет,шаги,длит) =>
-    `<g>${анТ(шаги,длит,'keyTimes="'+шаги.split(';').map((_,i,arr)=>i===0?'0':(i===arr.length-1?'1':(i/(arr.length-1)).toFixed(2))).join(';')+'"')}
-      <rect x="${x}" y="${y}" width="${ш}" height="${в}" rx="${r}" fill="none" stroke="${цвет}" stroke-width="2"/>
-    </g>`;
 
   const свг = (тело, высота) =>
     `<svg viewBox="0 0 336 ${высота||180}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
