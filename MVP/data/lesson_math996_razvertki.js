@@ -176,12 +176,11 @@
         <stop offset="0.55" stop-color="#fff6dd" stop-opacity=".22"/>
         <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
       </radialGradient>
-      <filter id="c996-тень" x="-40%" y="-40%" width="190%" height="190%" color-interpolation-filters="linearRGB">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="3.2" result="размытие"/>
-        <feOffset in="размытие" dx="3" dy="5" result="сдвиг"/>
-        <feFlood flood-color="#0d2233" flood-opacity="0.55" result="цвет"/>
-        <feComposite in="цвет" in2="сдвиг" operator="in" result="тень"/>
-        <feMerge><feMergeNode in="тень"/><feMergeNode in="SourceGraphic"/></feMerge>
+      <filter id="c996-тень" x="-45%" y="-45%" width="200%" height="200%" color-interpolation-filters="linearRGB">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="4.2" result="размытие"/>
+        <feOffset in="размытие" dx="4" dy="6" result="сдвиг"/>
+        <feFlood flood-color="#0b1c2a" flood-opacity="0.5" result="цвет"/>
+        <feComposite in="цвет" in2="сдвиг" operator="in"/>
       </filter>
       <filter id="c996-шум" x="0" y="0" width="100%" height="100%" color-interpolation-filters="linearRGB">
         <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" result="шум"/>
@@ -299,7 +298,8 @@
         <polygon points="${x},${y-в0} ${x+ш},${y-в0} ${x+ш+гл},${y-в0-гл} ${x+гл},${y-в0-гл}" fill="url(#c996-верх)" stroke="rgba(20,35,28,.6)" stroke-width="1.4"/>
         <polygon points="${x+ш},${y-в0} ${x+ш},${y} ${x+ш+гл},${y-гл} ${x+ш+гл},${y-в0-гл}" fill="url(#c996-бок)" stroke="rgba(20,35,28,.6)" stroke-width="1.4"/>
         ''}
-        <line x1="${x}" y1="${y}" x2="${x+ш+гл}" y2="${y-гл}" stroke="${GOLD}" stroke-width="4">${светит('9s',2.6)}</line>
+        <line x1="${x+ш}" y1="${y}" x2="${x+ш+гл}" y2="${y-гл}" stroke="${GOLD}" stroke-width="4">${светит('9s',2.6)}</line>
+        <line x1="${x+ш}" y1="${y}" x2="${x+ш}" y2="${y-в0}" stroke="${GOLD}" stroke-width="4">${светит('9s',2.6)}</line>
         <circle cx="${x+ш}" cy="${y-в0}" r="7" fill="${GREEN}">${светит('9s',4.4)}</circle>
         <g>${проявить('9s',0.5,0.56)}${т(268,66,'грань',16,GOLD,true)}</g>
         <g>${проявить('9s',3,3.06)}${т(268,110,'ребро',16,BLUE,true)}</g>
@@ -334,7 +334,7 @@
             ${светит('10s',i*0.7)}</rect>`;
         }).join('')}
         ${т(100,214,'шесть квадратов — развёртка',12,ИНК)}
-        ${т(168,132,'→',20,МУТ)}
+        ${т(200,134,'→',20,GOLD,true)}
         ${коробка(216,178,48,48,22,['url(#c996-перед)','url(#c996-верх)','url(#c996-бок)'],0.2,null)}
         ${т(252,214,'то же тело',12,МУТ)}
         ${т(168,236,'одна и та же фигура: плоская и сложенная',12,МУТ)}
