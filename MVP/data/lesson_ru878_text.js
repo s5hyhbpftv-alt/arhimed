@@ -1,88 +1,86 @@
-/* ============ РУССКИЙ ЯЗЫК · УРОК 878 · «ТЕКСТ И ЕГО ПРИЗНАКИ» ============
-   5 класс, ФРП, I четверть («Текст»). Сделан как урок 877 и переделанные
-   601, 603–604, 610: свой рендерер поверх WAVE_B, каркас .s6 из RUKIT,
-   у каждого кадра своя сцена и своё движение, вопрос-проверка внутри кадра,
-   в конце — тренажёр со счётом.
+/* ============ РУССКИЙ ЯЗЫК · УРОК 878 · «ТЕКСТ И ЕГО ПРИЗНАКИ» (переделан) ============
+   5 класс, ФРП, I четверть, раздел «Текст».
 
-   ДЕВЯТЬ КАДРОВ, и у каждого свой рабочий приём, а не одна форма на все:
-     1. набор предложений против текста — две стопки, надо выбрать текст;
-     2. признаки текста — пять марок, каждая раскрывается нажатием;
-     3. тема и основная мысль — два вопроса к одному тексту;
-     4. связь предложений — цепочка со стрелками, надо найти слово-связку;
-     5. порядок предложений — перепутанные полоски собираются в текст;
-     6. абзац и красная строка — переключатель показать/скрыть отступ;
-     7. заголовок — выбрать тот, что отражает тему;
-     8. лишнее предложение — найти фразу не по теме;
-     9. тренажёр из четырёх вопросов со счётом.
+   СВЕРКА С УЧЕБНИКОМ (Ладыженская, 5 класс, рабочая программа):
+     • «Текст. Тема текста, его основная мысль»;
+     • «Изложение подробное, по плану»; «Правка текста»;
+     • нормы построения текста: «логичность, последовательность, связность,
+       соответствие теме»; членение текста на части.
+   Отсюда одиннадцать кадров: что такое текст, тема, основная мысль, связность,
+   последовательность, абзац, заголовок, ключевые слова, лишнее предложение,
+   план и тренажёр.
 
-   СТАНДАРТ: заголовок 24, лид 20, подпись 16, текст кадра 20, служебное 14;
-   цели касания 48–56 px; анимация только переносом и прозрачностью; есть
-   prefers-reduced-motion; замерено на 390, 768 и 1200 px.
+   ЧТО ИЗМЕНИЛОСЬ ПО СРАВНЕНИЮ С ПЕРВОЙ РЕДАКЦИЕЙ:
+     • шаги идут по порядку разбора текста — от «что такое текст» до «план»;
+     • у каждого кадра свой РИСУНОК (вектор, свои градиенты, свет и тени):
+       листки и сшитая книга, осенний лес, клин птиц, цепь звеньев, три кадра
+       про щенка, страница в линейку, обложка книги, зимний двор, лестница плана;
+     • объяснения подробнее: разбор по шагам, названная частая ошибка, способ
+       проверить себя;
+     • добавлены ключевые слова и план текста — их в первой редакции не было.
 
-   МЕСТО: подключается после data/lesson_ru877_dialog.js; перекрывает
-   заглушку 878 и рисовальщиком, и записью урока в ARH_LESSONS. */
+   СТАНДАРТ: заголовок 24, лид 20, текст кадра 20, подпись 16, служебное 14;
+   в SVG кегли только 12/14/16/20/24/32; цели касания 48–56 px; движение только
+   вертикальное и прозрачность; есть prefers-reduced-motion. */
 (function(){
   'use strict';
 
   const ID = 878;
 
   const GOLD='#ffd76a', GREEN='#8fd1a8', BLUE='#7fd1ff', RED='#e86a5a';
+  const ИНК='#f6efe0', МУТ='#cbb89a', ЛИНИЯ='#3f7a5f';
 
   const CSS=`
   #lvis .s6.l878{gap:14px}
-  #lvis .s6.l878 .cols{display:flex;gap:12px;width:100%;flex-wrap:wrap}
-  #lvis .s6.l878 .col{flex:1 1 44%;min-width:150px;display:flex;flex-direction:column;gap:8px;padding:14px 12px;border-radius:16px;
-    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);cursor:pointer}
-  #lvis .s6.l878 .col.picked{border-color:var(--gold)}
-  #lvis .s6.l878 .col.hit{border-color:var(--ok)}
-  #lvis .s6.l878 .col.miss{border-color:var(--no)}
-  #lvis .s6.l878 .col .ttl{font-size:16px;color:var(--mut)}
-  #lvis .s6.l878 .col p{margin:0;font-size:20px;line-height:1.4}
-  #lvis .s6.l878 .marks{display:flex;flex-direction:column;gap:10px;width:100%}
-  #lvis .s6.l878 .mark{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;min-height:56px;padding:14px;
-    border-radius:16px;background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);font-size:16px}
-  #lvis .s6.l878 .mark .n{flex:none;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-    font-size:20px;font-weight:700;color:#17261e;background:linear-gradient(180deg,#ffd76a,#d9a441)}
-  #lvis .s6.l878 .mark b{display:block;font-size:20px;line-height:1.25;color:var(--gold)}
-  #lvis .s6.l878 .mark i{font-style:normal;font-size:16px;line-height:1.45;color:var(--ink)}
-  #lvis .s6.l878 .mark.open{border-color:var(--gold)}
+  #lvis .s6.l878 .pic{width:100%;max-width:352px;margin:0 auto}
+  #lvis .s6.l878 .pic svg{display:block;width:100%;height:auto}
   #lvis .s6.l878 .sheet{width:100%;padding:16px 14px;border-radius:16px;background:linear-gradient(180deg,#22362c,#17261e);
     border:1.5px solid var(--line);display:flex;flex-direction:column;gap:8px}
   #lvis .s6.l878 .sheet p{margin:0;font-size:20px;line-height:1.5}
   #lvis .s6.l878 .sheet p.marked{background:rgba(255,215,106,.14);border-radius:8px;padding:4px 8px;margin:0 -8px}
-  #lvis .s6.l878 .chain{display:flex;flex-direction:column;gap:6px;width:100%}
-  #lvis .s6.l878 .link{display:flex;align-items:center;gap:10px;padding-left:8px;font-size:16px;color:var(--mut)}
-  #lvis .s6.l878 .link .arrow{color:var(--gold);font-size:20px;line-height:1}
-  #lvis .s6.l878 .link b{color:${GREEN}}
-  #lvis .s6.l878 .band{display:flex;flex-direction:column;gap:10px;width:100%}
-  #lvis .s6.l878 .band button{min-height:56px;padding:14px;text-align:left;font-size:20px;line-height:1.4;border-radius:14px}
-  #lvis .s6.l878 .band button.done{opacity:.4}
-  #lvis .s6.l878 .abz{width:100%;padding:16px 14px;border-radius:16px;background:linear-gradient(180deg,#22362c,#17261e);
-    border:1.5px solid var(--line);display:flex;flex-direction:column;gap:10px}
-  #lvis .s6.l878 .abz p{margin:0;font-size:20px;line-height:1.5}
-  #lvis .s6.l878 .abz p.red{text-indent:32px}
-  #lvis .s6.l878 .abz p.red:before{content:'¶ ';color:var(--gold);margin-left:-24px}
+  #lvis .s6.l878 .sheet p .key{color:${GOLD};font-weight:700}
   #lvis .s6.l878 .ask{display:flex;gap:10px;flex-wrap:wrap;width:100%}
   #lvis .s6.l878 .ask button{flex:1 1 44%;min-height:56px;padding:12px 14px;font-size:16px;font-weight:600;line-height:1.3;text-align:left}
   #lvis .s6.l878 .ask button.hit{border-color:var(--ok)}
   #lvis .s6.l878 .ask button.miss{border-color:var(--no)}
+  #lvis .s6.l878 button[disabled]{opacity:.45}
   #lvis .s6.l878 .verdict{font-size:16px;line-height:1.45}
   #lvis .s6.l878 .verdict.ok{color:var(--ok)}
   #lvis .s6.l878 .verdict.no{color:var(--no)}
   #lvis .s6.l878 .score{font-size:16px;color:var(--mut);text-align:center;font-variant-numeric:tabular-nums}
+  #lvis .s6.l878 .chain{display:flex;flex-direction:column;gap:6px;width:100%}
+  #lvis .s6.l878 .chain .link{display:flex;align-items:center;gap:10px;padding-left:10px;font-size:16px;color:var(--mut)}
+  #lvis .s6.l878 .chain .link .arrow{color:var(--gold);font-size:20px;line-height:1}
+  #lvis .s6.l878 .chain .link b{color:${GREEN}}
+  #lvis .s6.l878 .band{display:flex;flex-direction:column;gap:10px;width:100%}
+  #lvis .s6.l878 .band button{min-height:56px;padding:14px;text-align:left;font-size:20px;line-height:1.4;border-radius:14px}
+  #lvis .s6.l878 .slots{display:flex;gap:8px;width:100%;flex-wrap:wrap;justify-content:center}
+  #lvis .s6.l878 .slot{flex:1 1 30%;min-width:96px;border-radius:14px;border:1.5px dashed var(--line);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px}
+  #lvis .s6.l878 .slot.on{border-style:solid;border-color:var(--gold);background:rgba(255,215,106,.08)}
+  #lvis .s6.l878 .slot .nm{font-size:14px;color:var(--gold);letter-spacing:.06em}
+  #lvis .s6.l878 .slot svg{width:80px;height:auto}
+  #lvis .s6.l878 .page{width:100%;padding:14px;border-radius:16px;background:#f7f0dd;color:#2a2118;
+    border:1.5px solid #d8c9a8;display:flex;flex-direction:column;gap:10px}
+  #lvis .s6.l878 .page p{margin:0;font-size:20px;line-height:1.6}
+  #lvis .s6.l878 .page p.red{text-indent:34px}
+  #lvis .s6.l878 .page p.red:before{content:'¶';color:#a3761a;margin-left:-28px;margin-right:6px}
+  #lvis .s6.l878 .stairs{display:flex;flex-direction:column;gap:8px;width:100%}
+  #lvis .s6.l878 .stairs .step{display:flex;gap:12px;align-items:center;padding:14px;border-radius:14px;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);min-height:60px;
+    font-size:20px;color:var(--mut)}
+  #lvis .s6.l878 .stairs .step.on{border-color:var(--gold);color:var(--ink)}
+  #lvis .s6.l878 .stairs .step .n{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;
+    justify-content:center;font-size:16px;font-weight:700;color:#17261e;background:linear-gradient(180deg,#ffd76a,#d9a441)}
   #lvis .s6.l878 [data-anim]{animation:l878rise .42s cubic-bezier(.23,1,.32,1) both;animation-delay:calc(var(--i,0)*70ms)}
-  #lvis .s6.l878[data-frame="2"] [data-anim]{animation-name:l878drop}
-  #lvis .s6.l878[data-frame="4"] [data-anim]{animation-name:l878side}
-  #lvis .s6.l878[data-frame="5"] [data-anim]{animation-name:l878pop}
-  #lvis .s6.l878[data-frame="6"] [data-anim]{animation-name:l878side}
-  #lvis .s6.l878[data-frame="9"] [data-anim]{animation-name:l878pop}
+  #lvis .s6.l878[data-frame="2"] [data-anim],#lvis .s6.l878[data-frame="3"] [data-anim]{animation-name:l878drop}
+  #lvis .s6.l878[data-frame="5"] [data-anim],#lvis .s6.l878[data-frame="11"] [data-anim]{animation-name:l878pop}
   @keyframes l878rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
   @keyframes l878drop{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
-  @keyframes l878side{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
   @keyframes l878pop{0%{opacity:0;transform:scale(.94)}70%{transform:scale(1.03)}100%{opacity:1;transform:none}}
   @media (max-width:370px){
-    #lvis .s6.l878 .col{flex:1 1 100%}
     #lvis .s6.l878 .ask button{flex:1 1 100%}
+    #lvis .s6.l878 .slot{flex:1 1 46%}
   }
   @media (prefers-reduced-motion: reduce){
     #lvis .s6.l878 [data-anim]{animation:none!important}
@@ -104,177 +102,405 @@
     return CHS[lk];
   };
   const A = (i,cls,html) => `<div data-anim style="--i:${i}" class="${cls||''}">${html}</div>`;
-  const BTN = (i,cls,html,on) => `<button type="button" data-anim style="--i:${i}" class="${cls||''}" onclick="${on}">${html}</button>`;
+  const BTN = (i,cls,html,on,off) =>
+    `<button type="button" data-anim style="--i:${i}" class="${cls||''}" ${off?'disabled':''} onclick="${on}">${html}</button>`;
 
-  /* ---------- кадр 1: набор предложений против текста ---------- */
-  const НАБОР = 'На столе лежит тетрадь. Вчера шёл дождь. У берёзы белый ствол. Я люблю яблоки. Самолёт летит высоко.';
-  const ТЕКСТ = 'Осенью в лесу тихо. Листья падают на землю и ложатся мягким ковром. Птицы собираются в стаи и улетают на юг. Скоро лес уснёт до весны.';
+  /* ================= РИСУНКИ ================= */
+  const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const т = (x,y,текст,кегль,цвет,жирный,якорь) =>
+    `<text x="${x}" y="${y}" text-anchor="${якорь||'middle'}" font-size="${кегль||14}"
+       ${жирный?'font-weight="bold"':''} fill="${цвет||ИНК}"
+       font-family="Georgia,'Times New Roman',serif">${esc(текст)}</text>`;
+
+  const ОПРЕДЕЛЕНИЯ = `
+    <defs>
+      <linearGradient id="c878-небо" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3b2f4a"/><stop offset="0.55" stop-color="#6b4a4a"/>
+        <stop offset="1" stop-color="#c07a4a"/>
+      </linearGradient>
+      <linearGradient id="c878-лист" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fdf6e0"/><stop offset="1" stop-color="#e2d3ad"/>
+      </linearGradient>
+      <linearGradient id="c878-обложка" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7a4a2a"/><stop offset="1" stop-color="#3f2412"/>
+      </linearGradient>
+      <radialGradient id="c878-крона" cx="0.35" cy="0.3" r="0.8">
+        <stop offset="0" stop-color="#e8a33d"/><stop offset="0.6" stop-color="#c9741f"/>
+        <stop offset="1" stop-color="#8a4610"/>
+      </radialGradient>
+      <radialGradient id="c878-крона2" cx="0.35" cy="0.3" r="0.8">
+        <stop offset="0" stop-color="#d98b3a"/><stop offset="0.65" stop-color="#a85c1a"/>
+        <stop offset="1" stop-color="#6f3510"/>
+      </radialGradient>
+      <linearGradient id="c878-земля" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4a5a2a"/><stop offset="1" stop-color="#22301a"/>
+      </linearGradient>
+      <linearGradient id="c878-снег" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#eaf4ff"/><stop offset="1" stop-color="#b9cbdd"/>
+      </linearGradient>
+      <linearGradient id="c878-цепь" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f0d79a"/><stop offset="1" stop-color="#9a7a3a"/>
+      </linearGradient>
+      <filter id="c878-тень" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="3"/>
+      </filter>
+    </defs>`;
+
+  const свг = (тело, высота) =>
+    `<svg viewBox="0 0 336 ${высота||168}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+       ${ОПРЕДЕЛЕНИЯ}${тело}</svg>`;
+
+  const лист = (x,y,w,h,наклон,подпись) => `
+    <g transform="rotate(${наклон||0} ${x+w/2} ${y+h/2})">
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="url(#c878-лист)"
+        stroke="#b8a06a" stroke-width="1.2" filter="url(#c878-тень)"/>
+      ${[0,1,2].map(i=>`<line x1="${x+7}" y1="${y+13+i*11}" x2="${x+w-8}" y2="${y+13+i*11}"
+        stroke="#b9a67f" stroke-width="1.6" stroke-linecap="round"/>`).join('')}
+      ${подпись?т(x+w/2,y+h-6,подпись,12,'#8a7350'):''}
+    </g>`;
+
+  const книга = (x,y,w,h,заголовок) => `
+    <g>
+      <rect x="${x+5}" y="${y+5}" width="${w}" height="${h}" rx="6" fill="rgba(0,0,0,.45)" filter="url(#c878-тень)"/>
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="url(#c878-обложка)"
+        stroke="#2a160a" stroke-width="1.4"/>
+      <rect x="${x}" y="${y}" width="12" height="${h}" rx="6" fill="#5a3418" opacity=".9"/>
+      <rect x="${x+22}" y="${y+16}" width="${w-38}" height="${h-52}" rx="4" fill="rgba(255,246,224,.14)"
+        stroke="rgba(255,246,224,.35)" stroke-width="1"/>
+      ${заголовок?т(x+w/2+6,y+h*0.45,'Осень',16,'#ffe9a8',true):''}
+      ${заголовок?т(x+w/2+6,y+h*0.45+24,'в лесу',16,'#ffe9a8',true):''}
+      <line x1="${x+w/2+6}" y1="${y+h-30}" x2="${x+w/2+6}" y2="${y+h-14}" stroke="#c9971f" stroke-width="2"/>
+    </g>`;
+
+  const дерево = (x,y,м,осень) => {
+    const к=м||1;
+    return `<g transform="translate(${x} ${y}) scale(${к})">
+      <ellipse cy="4" rx="26" ry="6" fill="rgba(0,0,0,.4)"/>
+      <path d="M-5 0 L-4 -34 L4 -34 L5 0 Z" fill="#6b4423" stroke="#3a2412" stroke-width="1"/>
+      <path d="M-4 -24 L-16 -34 M4 -22 L16 -32" stroke="#6b4423" stroke-width="3.4" stroke-linecap="round"/>
+      <circle cx="-14" cy="-46" r="17" fill="${осень?'url(#c878-крона2)':'url(#c878-крона)'}"/>
+      <circle cx="14" cy="-44" r="16" fill="${осень?'url(#c878-крона)':'url(#c878-крона2)'}"/>
+      <circle cx="0" cy="-58" r="18" fill="url(#c878-крона)"/>
+      <circle cx="-6" cy="-62" r="6" fill="#ffd08a" opacity=".35"/>
+    </g>`;
+  };
+
+  const листок = (x,y,наклон,цвет,м) => `
+    <g transform="translate(${x} ${y}) rotate(${наклон}) scale(${м||1})">
+      <path d="M0 0 C7 -4 12 -10 12 -18 C4 -16 -2 -10 -2 -2 Z" fill="${цвет}" opacity=".9"
+        stroke="#8a4610" stroke-width="0.7"/>
+      <line x1="0" y1="0" x2="10" y2="-16" stroke="#8a4610" stroke-width="0.6" opacity=".7"/>
+    </g>`;
+
+  const птица = (x,y,м,цвет) => {
+    const к=м||1;
+    return `<g transform="translate(${x} ${y}) scale(${к})">
+      <path d="M-12 0 C-6 -5 -2 -5 0 0 C2 -5 6 -5 12 0" fill="none" stroke="${цвет||'#2b2118'}"
+        stroke-width="2.2" stroke-linecap="round"/>
+    </g>`;
+  };
+
+  const щенок = (x,y,м,дорога) => {
+    const к=м||1;
+    return `<g transform="translate(${x} ${y}) scale(${к})">
+      ${дорога?'<path d="M-46 6 L46 6" stroke="#5a4426" stroke-width="2" stroke-dasharray="6 5"/>':''}
+      <ellipse cy="6" rx="24" ry="5" fill="rgba(0,0,0,.35)"/>
+      <ellipse cx="0" cy="-8" rx="20" ry="13" fill="#c9924f" stroke="#7a5426" stroke-width="1.2"/>
+      <circle cx="16" cy="-18" r="12" fill="#d8a563" stroke="#7a5426" stroke-width="1.2"/>
+      <path d="M8 -26 C4 -36 12 -36 14 -28 Z" fill="#a5723a"/>
+      <path d="M24 -26 C28 -36 20 -36 18 -28 Z" fill="#a5723a"/>
+      <circle cx="12" cy="-20" r="1.8" fill="#2b2118"/>
+      <circle cx="21" cy="-20" r="1.8" fill="#2b2118"/>
+      <circle cx="17" cy="-14" r="3" fill="#2b2118"/>
+      <path d="M-18 -14 C-28 -20 -30 -8 -22 -6" fill="none" stroke="#a5723a" stroke-width="4" stroke-linecap="round"/>
+    </g>`;
+  };
+
+  const дворЗимой = () => `
+    <g>
+      <rect x="0" y="0" width="336" height="120" fill="url(#c878-небо)"/>
+      <rect x="0" y="104" width="336" height="46" fill="url(#c878-снег)"/>
+      <path d="M0 104 Q60 96 120 104 T240 104 T336 102 L336 168 L0 168 Z" fill="#f2f8ff" opacity=".92"/>
+      <rect x="30" y="52" width="86" height="54" fill="#8a5f3a" stroke="#4a2a10" stroke-width="1.4"/>
+      <path d="M24 52 L73 22 L122 52 Z" fill="url(#c878-снег)" stroke="#8fa8bd" stroke-width="1.4"/>
+      <rect x="46" y="72" width="22" height="22" fill="#ffe9a8" opacity=".85" stroke="#4a2a10" stroke-width="1.2"/>
+      <rect x="82" y="72" width="20" height="34" fill="#5a3a1c"/>
+      <path d="M186 110 Q226 58 266 110 Z" fill="url(#c878-снег)" stroke="#9fb6c9" stroke-width="1.4"/>
+      <circle cx="236" cy="52" r="9" fill="#fff" opacity=".9"/>
+      <g transform="translate(300 100)">
+        <circle cy="0" r="14" fill="#f7fbff" stroke="#a9bccd" stroke-width="1.2"/>
+        <circle cy="-24" r="10" fill="#f7fbff" stroke="#a9bccd" stroke-width="1.2"/>
+        <circle cx="-3" cy="-26" r="1.6" fill="#2b2118"/><circle cx="3" cy="-26" r="1.6" fill="#2b2118"/>
+        <path d="M-6 -36 L6 -36" stroke="#e86a5a" stroke-width="3"/>
+      </g>
+      ${[[60,30],[150,22],[210,38],[286,30],[120,44],[250,20]].map(([x,y])=>
+        `<circle cx="${x}" cy="${y}" r="1.8" fill="#fff" opacity=".8"/>`).join('')}
+    </g>`;
+
+  const звено = (x,y,w) => `
+    <rect x="${x}" y="${y}" width="${w}" height="34" rx="17" fill="none" stroke="url(#c878-цепь)" stroke-width="5"/>
+    <rect x="${x+6}" y="${y+6}" width="${w-12}" height="22" rx="11" fill="rgba(255,215,106,.08)"/>`;
+
+  const тетрадьКусок = (x,y,w,h) => `
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="url(#c878-лист)" stroke="#d8c9a8" stroke-width="1.2"/>
+    ${[0,1,2,3].map(i=>`<line x1="${x+10}" y1="${y+18+i*16}" x2="${x+w-12}" y2="${y+18+i*16}"
+      stroke="#cbb894" stroke-width="1.2"/>`).join('')}`;
+
+  /* ================= КАДРЫ ================= */
 
   function F1(s){
-    const в = s.выбор;
-    /* выбор сделан: верная стопка зеленеет, ошибочная краснеет — цвет вместе со знаком */
-    const кл1 = в==='набор' ? ' miss' : '';
-    const кл2 = в==='текст' ? ' hit' : '';
+    const в = s.выбор1;
+    const рисунок = свг(`
+      <rect x="0" y="0" width="336" height="168" fill="#101c14"/>
+      <rect x="0" y="0" width="336" height="168" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
+      ${лист(24,34,66,84,-8,'листок')}
+      ${лист(30,46,66,84,6,'')}
+      ${лист(26,60,66,84,-3,'')}
+      ${т(62,148,'о разном',12,МУТ)}
+      ${книга(206,30,96,112,true)}
+      ${т(254,156,'одна тема, один порядок',12,МУТ)}
+    `,168);
     const ответ = в==null ? '' :
-      (в==='текст' ? A(3,'verdict ok','✅ Верно: в правой стопке предложения держатся одной темы и идут по порядку.')
-                   : A(3,'verdict no','❌ Нет: слева пять предложений о разном. Тему не назвать — это не текст.'));
-    return `${A(0,'cap','Обе стопки прочитай целиком — тема ищется в целом, а не в одном предложении.')}
-      <div class="cols">
-        ${BTN(1,'col'+кл1, `<span class="ttl">Стопка 1</span><p>${НАБОР}</p>`, "r878Side('набор')")}
-        ${BTN(2,'col'+кл2, `<span class="ttl">Стопка 2</span><p>${ТЕКСТ}</p>`, "r878Side('текст')")}
+      (в==='книга' ? A(3,'verdict ok','✅ Верно: справа текст — предложения связаны темой и порядком. Слева просто набор листков.')
+                   : A(3,'verdict no','❌ Нет: слева пять предложений о разном, их нельзя назвать одним словом.'));
+    return `<div class="pic">${рисунок}</div>
+      <div class="ask">
+        ${BTN(1,'', 'Листки — это текст', "r878Side('листки')")}
+        ${BTN(2,'', 'Книга — это текст', "r878Side('книга')")}
       </div>
       ${ответ}`;
   }
 
-  /* ---------- кадр 2: пять признаков текста ---------- */
-  const ПРИЗНАКИ = [
-    ['Тема', 'О чём этот текст. Если тему не назвать одним словом — текста нет.'],
-    ['Основная мысль', 'Что хотел сказать автор. Ради неё текст и написан.'],
-    ['Связность', 'Предложения соединены: повтором, синонимом, местоимением, союзом.'],
-    ['Последовательность', 'Предложения идут по порядку: нельзя переставить два и получить то же самое.'],
-    ['Завершённость', 'Есть начало, середина и конец. Мысль доведена до точки.']
+  const ТЕКСТ2 = [
+    'Осенью в лесу тихо.',
+    'Листья падают на землю и ложатся мягким ковром.',
+    'Птицы собираются в стаи и улетают на юг.',
+    'Скоро лес уснёт до весны.'
   ];
   function F2(s){
-    const открыт = s.открыт;
-    return `${A(0,'cap','Пять признаков текста. Нажми на каждый — раскроется объяснение.')}
-      <div class="marks">${ПРИЗНАКИ.map(([н,о],и)=>
-        BTN(1+и, 'mark'+(открыт===и?' open':''),
-            `<span class="n">${и+1}</span><span><b>${н}</b>${открыт===и?`<i>${о}</i>`:''}</span>`,
-            `r878Mark(${и})`)).join('')}</div>
-      ${открыт!=null ? A(7,'cap','Проверь текст по всем пяти признакам — тогда и узнаешь, текст это или нет.') : ''}`;
-  }
-
-  /* ---------- кадр 3: тема и основная мысль ---------- */
-  const ТЕКСТ3 = 'Осенью в лесу тихо. Листья падают на землю и ложатся мягким ковром. Птицы собираются в стаи и улетают на юг. Скоро лес уснёт до весны.';
-  function F3(s){
-    const тема = s.тема, мысль = s.мысль;
-    return `${A(0,'sheet','<p>'+ТЕКСТ3+'</p>')}
-      ${A(1,'cap','О чём текст — это тема. Что хотел сказать автор — это основная мысль.')}
+    const в = s.тема;
+    const рисунок = свг(`
+      <rect x="0" y="0" width="336" height="168" fill="url(#c878-небо)"/>
+      <rect x="0" y="126" width="336" height="42" fill="url(#c878-земля)"/>
+      <path d="M0 128 Q84 118 168 128 T336 126 L336 168 L0 168 Z" fill="#3d4a22" opacity=".9"/>
+      ${дерево(66,128,1,true)}
+      ${дерево(168,132,1.18,true)}
+      ${дерево(276,128,0.95,true)}
+      ${листок(40,70,24,'#e0a13c',1)}
+      ${листок(120,52,-18,'#d98b3a',0.9)}
+      ${листок(212,78,32,'#e8b44a',1)}
+      ${листок(300,60,-24,'#c9741f',0.85)}
+      ${птица(250,40,1,'#2b2118')}${птица(272,32,0.8,'#2b2118')}${птица(292,44,0.9,'#2b2118')}
+      ${т(168,20,'Осенний лес',14,'#ffe9a8',true)}
+    `,168);
+    const ответ = в==null ? '' :
+      (в==='осень' ? A(4,'verdict ok','✅ Верно: тема — осень в лесу. Её называют одним словом — «осень».')
+                   : A(4,'verdict no','❌ Нет: про самолёты в тексте нет ни слова.'));
+    return `<div class="pic">${рисунок}</div>
+      ${A(1,'sheet', ТЕКСТ2.map((п,i)=>`<p class="${i===0?'marked':''}">${п}</p>`).join(''))}
+      ${A(2,'cap','Тема — то, о чём текст. Её называют коротко: одним словом или словосочетанием.')}
       <div class="ask">
-        ${BTN(2, тема==='осень'?'hit':(тема?'miss':''), 'Тема: осень в лесу', "r878Тема('осень')")}
-        ${BTN(3, тема==='яблоки'?'miss':'', 'Тема: как я собирал яблоки', "r878Тема('яблоки')")}
+        ${BTN(3, в==='осень'?'hit':(в?'miss':''), 'Тема: осень в лесу', "r878Тема('осень')")}
+        ${BTN(4, в==='самолёт'?'miss':'', 'Тема: как летают самолёты', "r878Тема('самолёт')")}
       </div>
-      ${тема ? `<div class="ask">
-        ${BTN(4, мысль==='покой'?'hit':(мысль?'miss':''), 'Мысль: природа готовится к покою и зимнему сну', "r878Мысль('покой')")}
-        ${BTN(5, мысль==='птицы'?'miss':'', 'Мысль: птицы умеют летать', "r878Мысль('птицы')")}
-      </div>` : ''}
-      ${мысль ? A(6,'verdict '+(мысль==='покой'?'ok':'no'),
-        мысль==='покой' ? 'Верно: тема — осень в лесу, а мысль — природа готовится к зимнему покою.'
-                       : 'Не так: про то, что птицы летают, здесь речь не идёт. Перечитай последнее предложение.') : ''}`;
+      ${ответ}`;
   }
 
-  /* ---------- кадр 4: связь предложений ---------- */
+  function F3(s){
+    const в = s.мысль;
+    const рисунок = свг(`
+      <rect x="0" y="0" width="336" height="168" fill="url(#c878-небо)"/>
+      <rect x="0" y="132" width="336" height="36" fill="url(#c878-земля)"/>
+      ${дерево(40,132,0.8,true)}
+      ${дерево(300,132,0.72,true)}
+      ${птица(120,64,1.5,'#2b2118')}${птица(168,48,1.8,'#2b2118')}
+      ${птица(216,66,1.4,'#2b2118')}${птица(258,38,1.2,'#2b2118')}
+      ${т(168,26,'Птицы улетают — лес готовится к зиме',14,'#ffe9a8',true)}
+      ${т(168,150,'что хотел сказать автор?',12,МУТ)}
+    `,168);
+    const ответ = в==null ? '' :
+      (в==='покой' ? A(6,'verdict ok','✅ Верно: автор сказал не «наступила осень», а «лес готовится к покою» — это и есть основная мысль.')
+                   : A(6,'verdict no','❌ Нет: про то, что птицы умеют летать, автор не говорит. Смотри на последнее предложение текста.'));
+    return `<div class="pic">${рисунок}</div>
+      ${A(1,'sheet','<p><span class="key">Осенью в лесу тихо.</span> Листья падают на землю. Птицы собираются в стаи и улетают на юг. <span class="key">Скоро лес уснёт до весны.</span></p>')}
+      ${A(2,'cap','Тема отвечает на вопрос «о чём?», основная мысль — на вопрос «что автор хотел сказать?».')}
+      <div class="ask">
+        ${BTN(3, в==='покой'?'hit':(в?'miss':''), 'Мысль: лес готовится к зимнему покою', "r878Мысль('покой')")}
+        ${BTN(4, в==='летать'?'miss':'', 'Мысль: птицы умеют летать', "r878Мысль('летать')")}
+      </div>
+      ${в==null?A(5,'cap','Тема — осень в лесу. Теперь найди мысль.'):''}
+      ${ответ}`;
+  }
+
   const ЦЕПОЧКА = [
-    { т:'У нас во дворе растёт старая берёза.', связь:null },
-    { т:'Она высокая, с белым стволом и густой кроной.', связь:'местоимение «она» вместо слова «берёза»' },
-    { т:'Каждое утро под берёзой собираются ребята.', связь:'повтор слова «берёза»' },
-    { т:'Они играют в тени её ветвей.', связь:'местоимение «они» вместо слова «ребята»' }
+    'У нас во дворе растёт старая берёза.',
+    'Она высокая, с белым стволом и густой кроной.'
   ];
   function F4(s){
     const выбран = s.связка;
-    return `${A(0,'cap','Предложения в тексте соединены. Найди, чем второе предложение держится за первое.')}
+    const рисунок = свг(`
+      <rect x="0" y="0" width="336" height="130" fill="#101c14"/>
+      <rect x="0" y="0" width="336" height="130" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
+      ${звено(24,48,84)}${звено(100,48,84)}${звено(176,48,84)}${звено(252,48,60)}
+      ${т(66,100,'1',14,GOLD,true)}
+      ${т(142,100,'2',14,GOLD,true)}
+      ${т(218,100,'3',14,GOLD,true)}
+      ${т(282,100,'далее',12,МУТ)}
+      ${т(168,26,'Звенья держат друг друга',14,'#ffe9a8',true)}
+      ${т(168,120,'1, 2, 3 — предложения текста',12,МУТ)}
+    `,130);
+    const ответ = выбран==null ? '' :
+      (выбран==='мест' ? A(6,'verdict ok','✅ Верно: «она» — это берёза из первого предложения. Местоимение и связало две фразы.')
+                       : A(6,'verdict no','❌ Нет: без связи фразы рассыпались бы. Смотри: «она» — это и есть берёза.'));
+    return `<div class="pic">${рисунок}</div>
       <div class="chain">
-        ${A(1,'sheet','<p>'+ЦЕПОЧКА[0].т+'</p>')}
+        ${A(1,'sheet','<p>'+ЦЕПОЧКА[0]+'</p>')}
         ${A(2,'link','<span class="arrow">↓</span><span>чем связано?</span>')}
-        ${A(3,'sheet','<p>'+ЦЕПОЧКА[1].т+'</p>')}
+        ${A(3,'sheet','<p>'+ЦЕПОЧКА[1]+'</p>')}
       </div>
       <div class="ask">
         ${BTN(4, выбран==='мест'?'hit':(выбран?'miss':''), 'Местоимением «она»', "r878Связка('мест')")}
-        ${BTN(5, выбран==='повтор'?'miss':'', 'Ничем: предложения просто стоят рядом', "r878Связка('повтор')")}
+        ${BTN(5, выбран==='нет'?'miss':'', 'Ничем: просто стоят рядом', "r878Связка('нет')")}
       </div>
-      ${выбран ? A(6,'verdict '+(выбран==='мест'?'ok':'no'),
-        выбран==='мест' ? 'Верно: «она» — это берёза из первого предложения. Местоимение и связало две фразы.'
-                        : 'Не так: без связи фразы рассыпались бы. Смотри: «она» — это и есть берёза.') : ''}
-      ${выбран==='мест' ? A(7,'cap','Дальше в тексте работают и повтор слова, и местоимения. Одно и то же имя повторять не обязательно — его заменяют.') : ''}`;
+      ${ответ}
+      ${выбран==='мест'?A(7,'cap','Так же связывают повтор слова, синоним, союз и наречие. Одно и то же имя повторять каждый раз не нужно.'):''}`;
   }
 
-  /* ---------- кадр 5: собрать предложения по порядку ---------- */
   const ЧАСТИ = [
-    { т:'Однажды я нашёл на дороге маленького щенка.', м:'начало' },
-    { т:'Он дрожал от холода и смотрел мне в глаза.', м:'середина' },
-    { т:'Я принёс его домой, обогрел и напоил молоком.', м:'середина' },
-    { т:'Теперь это мой самый верный друг.', м:'конец' }
+    { мест:'начало', к:'Однажды я нашёл на дороге маленького щенка.' },
+    { мест:'середина', к:'Я принёс его домой, обогрел и напоил молоком.' },
+    { мест:'конец', к:'Теперь это мой самый верный друг.' }
+  ];
+  const РИСУНКИ5 = [
+    щенок(88,78,1,true),
+    `<g>${щенок(150,78,1,false)}
+       <path d="M120 50 L108 34 M180 50 L192 34" stroke="#e8d9b8" stroke-width="3" stroke-linecap="round"/></g>`,
+    `<g>${щенок(150,78,1,false)}
+       <path d="M196 70 C214 58 224 70 214 80" fill="none" stroke="#e86a5a" stroke-width="3" stroke-linecap="round"/></g>`
   ];
   function F5(s){
     const собрано = s.сборка||0;
-    const строки = ЧАСТИ.slice(0,собрано).map(ч=>
-      `<div class="sheet"><p>${ч.т}</p><span class="cap">${ч.м}</span></div>`).join('');
-    const пусто = Array.from({length: Math.max(0, ЧАСТИ.length-собрано)}, () =>
-      `<div class="sheet" style="opacity:.45;border-style:dashed"><p>предложение</p><span class="cap">ждёт своей очереди</span></div>`).join('');
+    const коробки = ЧАСТИ.map((ч,и)=>
+      `<div class="slot${и<собрано?' on':''}">
+         <span class="nm">${и<собрано?ч.мест.toUpperCase():'МЕСТО '+(и+1)}</span>
+         ${и<собрано ? свг(РИСУНКИ5[и],104)
+                     : `<div style="height:104px;display:flex;align-items:center;color:${МУТ};font-size:14px">пусто</div>`}
+       </div>`).join('');
     const осталось = ЧАСТИ.map((ч,и)=>({ч,и})).filter(x=>x.и>=собрано);
     const готово = собрано===ЧАСТИ.length;
-    return `${A(0,'cap','Предложения перепутались. Нажимай их по порядку — от начала к концу.')}
-      <div class="band">${строки}${пусто}</div>
-      ${готово ? A(1,'verdict ok','Текст собран: есть начало, середина и конец. Так работает признак завершённости.')
+    return `<div class="slots">${коробки}</div>
+      ${готово ? A(1,'verdict ok','✅ Текст собран: начало, середина и конец. Каждое следующее предложение продолжает предыдущее.')
                : `<div class="band">` + осталось.map((x,к)=>
-                   BTN(2+к, s.мимо===x.и?'miss':'', x.ч.т, `r878Next(${x.и})`)).join('') + `</div>`}
-      ${!готово && s.мимо!=null ? A(3,'verdict no','Эта часть пока не подходит: посмотри, чем кончается предыдущее предложение, и продолжай с него.') : ''}
+                   BTN(2+к, s.мимо===x.и?'miss':'', x.ч.к, `r878Next(${x.и})`)).join('') + `</div>`}
+      ${!готово && s.мимо!=null ? A(3,'verdict no','❌ Эта часть пока не подходит: посмотри на картинки и на то, чем кончается предыдущее предложение.') : ''}
       ${готово ? `<div class="ask">${BTN(4,'','собрать заново','r878Rebuild()')}</div>` : ''}`;
   }
 
-  /* ---------- кадр 6: абзац и красная строка ---------- */
   function F6(s){
     const вкл = !!s.красная;
-    return `${A(0,'cap','Текст делят на абзацы: каждый абзац — своя маленькая тема. Новый абзац начинают с красной строки.')}
-      <div class="abz">
+    const рисунок = свг(`
+      <rect x="0" y="0" width="336" height="120" fill="#101c14"/>
+      ${тетрадьКусок(66,12,204,96)}
+      <text x="86" y="46" font-size="16" fill="#2a2118" font-family="Georgia,serif">Текст делят на части:</text>
+      <text x="86" y="68" font-size="16" fill="#2a2118" font-family="Georgia,serif">у каждой своя тема</text>
+      <path d="M80 30 L80 96" stroke="#e86a5a" stroke-width="2" stroke-dasharray="5 4" opacity=".5"/>
+      ${т(168,112, вкл?'красная строка показана':'красной строки нет',12, вкл?GREEN:МУТ)}
+    `,120);
+    return `<div class="pic">${рисунок}</div>
+      <div class="page">
         <p class="${вкл?'red':''}">Осенью в лесу тихо. Листья падают на землю и ложатся мягким ковром.</p>
         <p class="${вкл?'red':''}">Птицы собираются в стаи и улетают на юг. Скоро лес уснёт до весны.</p>
       </div>
       <div class="ask">${BTN(1, вкл?'hit':'', вкл?'Скрыть красную строку':'Показать красную строку', 'r878Абзац()')}</div>
-      ${вкл ? A(2,'verdict ok','Так видно деление: два абзаца — две маленькие темы: «как выглядит осенний лес» и «что делают птицы».')
-            : A(2,'cap','Пока текст идёт сплошняком — попробуй показать красную строку.')}`;
+      ${вкл ? A(2,'verdict ok','✅ Видно деление: первый абзац — как выглядит осенний лес, второй — что делают птицы.')
+            : A(2,'cap','Новый абзац начинают с красной строки — с отступа. Так видно маленькие темы.')}`;
   }
 
-  /* ---------- кадр 7: заголовок ---------- */
-  const ТЕКСТ7 = 'У нашей бабушки живёт кот Барсик. Шерсть у него дымчатая и пушистая. Целыми днями он спит на подоконнике, а вечером просит рыбу. Мы все его очень любим.';
   function F7(s){
     const в = s.заголовок;
-    return `${A(0,'sheet','<p>'+ТЕКСТ7+'</p>')}
-      ${A(1,'cap','Заголовок называет тему или главную мысль. Какой подойдёт этому тексту?')}
+    const рисунок = свг(`
+      <rect x="0" y="0" width="336" height="150" fill="#101c14"/>
+      ${книга(112,16,112,118,true)}
+      ${т(168,146,'заголовок называет тему или мысль',12,МУТ)}
+    `,150);
+    const ответ = в==null ? '' :
+      (в==='кот' ? A(5,'verdict ok','✅ Верно: «Наш кот Барсик» называет именно то, о чём текст.')
+      : в==='животные' ? A(5,'verdict no','❌ Слишком широко: «домашние животные» — про всех, а текст про одного кота.')
+      : A(5,'verdict no','❌ Про лето в тексте нет ни слова.'));
+    return `<div class="pic">${рисунок}</div>
+      ${A(1,'sheet','<p>У нашей бабушки живёт кот Барсик. Шерсть у него дымчатая и пушистая. Целый день он спит на подоконнике, а вечером просит рыбу. Мы все его очень любим.</p>')}
       <div class="ask">
         ${BTN(2, в==='кот'?'hit':(в?'miss':''), 'Наш кот Барсик', "r878Title('кот')")}
         ${BTN(3, в==='животные'?'miss':'', 'Домашние животные', "r878Title('животные')")}
         ${BTN(4, в==='лето'?'miss':'', 'Как я провёл лето', "r878Title('лето')")}
       </div>
-      ${в ? A(5,'verdict '+(в==='кот'?'ok':'no'),
-        в==='кот' ? 'Верно: заголовок называет то, о чём текст, — про кота Барсика.'
-        : в==='животные' ? 'Слишком широко: «домашние животные» — это про всех, а текст про одного кота.'
-        : 'Не подходит: про лето в тексте нет ни слова.') : ''}`;
+      ${ответ}`;
   }
 
-  /* ---------- кадр 8: лишнее предложение ---------- */
+  const СЛОВА8 = ['Осенью','в','лесу','тихо.','Листья','падают','на','землю.'];
+  const КЛЮЧИ8 = [true,false,true,true,true,false,false,false];
+  function F8(s){
+    const выб = s.ключи || {};
+    const верных = СЛОВА8.filter((_,и)=>КЛЮЧИ8[и] && выб[и]).length;
+    const ложных = СЛОВА8.filter((_,и)=>!КЛЮЧИ8[и] && выб[и]).length;
+    return `${A(0,'cap','Ключевые слова называют тему. Нажми на слова, без которых текст потеряет смысл.')}
+      <div class="ask" style="gap:8px">${СЛОВА8.map((с,и)=>{
+        const взят = !!выб[и];
+        return BTN(1+и, взят ? (КЛЮЧИ8[и]?'hit':'miss') : '', с, `r878Key(${и})`);
+      }).join('')}</div>
+      <p class="score">ключевых слов найдено: ${верных} · лишних: ${ложных}</p>
+      ${верных>=4 && ложных===0 ? A(9,'verdict ok','✅ Так и есть: «осень, лес, тихо, листья» — по этим словам тему видно сразу.') : ''}`;
+  }
+
   const ЛИШНЕЕ = [
     { т:'Зимой наш двор становится белым.', л:false },
     { т:'Снег ложится на крыши и на деревья.', л:false },
     { т:'Летом мы ездили на море и купались.', л:true },
     { т:'Ребята лепят снеговика и катаются с горки.', л:false }
   ];
-  function F8(s){
+  function F9(s){
     const выбран = s.лишнее;
-    const выбрано = ЛИШНЕЕ[выбран];
-    return `${A(0,'cap','Одно предложение выпадает из текста. Найди его.')}
+    const выб = ЛИШНЕЕ[выбран];
+    return `<div class="pic">${свг(дворЗимой(),168)}</div>
       <div class="band">${ЛИШНЕЕ.map((п,и)=>
         BTN(1+и, выбран===и?(п.л?'hit':'miss'):'', п.т, `r878Odd(${и})`)).join('')}</div>
-      ${выбран!=null ? A(5,'verdict '+(выбрано.л?'ok':'no'),
-        выбрано.л ? 'Верно: в тексте речь о зиме, а это предложение про лето. Тема у него своя — значит, в этом тексте оно лишнее.'
-                  : 'Не так: это предложение как раз про зиму, оно держится общей темы.') : ''}`;
+      ${выбран!=null ? A(5,'verdict '+(выб.л?'ok':'no'),
+        выб.л ? '✅ Верно: весь текст про зиму, а это предложение про лето. Тема у него своя — значит, здесь оно лишнее.'
+              : '❌ Нет: это предложение как раз про зиму и держит общую тему.') : A(5,'cap','На картинке зима. Найди предложение, которое выпадает из текста.')}`;
   }
 
-  /* ---------- кадр 9: тренажёр ---------- */
+  const ПЛАН = [
+    'Осенний лес становится тихим.',
+    'Листья ложатся ковром.',
+    'Птицы улетают на юг.',
+    'Лес засыпает до весны.'
+  ];
+  function F10(s){
+    const поставлено = s.планПункт||0;
+    const готово = поставлено===ПЛАН.length;
+    const осталось = ПЛАН.map((п,и)=>({п,и})).filter(x=>x.и>=поставлено);
+    return `${A(0,'cap','План — это ступени текста. Каждый пункт — одна маленькая тема, по порядку.')}
+      <div class="stairs">${ПЛАН.map((п,и)=>
+        `<div class="step${и<поставлено?' on':''}"><span class="n">${и+1}</span><span>${и<поставлено?п:'— пункт не открыт'}</span></div>`).join('')}</div>
+      ${готово ? A(5,'verdict ok','✅ План готов: по нему можно пересказать текст и написать изложение.')
+               : `<div class="ask">` + осталось.map((x,к)=>
+                   BTN(2+к, s.мимо===x.и?'miss':'', x.п, `r878PlanStep(${x.и})`)).join('') + `</div>`}
+      ${!готово && s.мимо!=null ? A(6,'verdict no','❌ Пункты идут по порядку текста: сначала тишина леса, потом листья, потом птицы и сон леса.') : ''}`;
+  }
+
   const ТРЕНАЖЁР = [
     { ф:'Что делает пять предложений текстом?', о:['общая тема и связь','то, что они стоят рядом','то, что они длинные'], в:0,
       р:'текст держат тема, связность и порядок.' },
     { ф:'«Тема текста» — это…', о:['то, о чём текст','то, что хотел сказать автор','первое предложение'], в:0,
-      р:'о чём текст — тема; что хотел сказать автор — основная мысль.' },
-    { ф:'Как начинают новый абзац?', о:['с красной строки','с большой буквы в середине строки','с новой страницы'], в:0,
-      р:'новый абзац начинают с красной строки.' },
-    { ф:'Заголовок «Домашние животные» к тексту про одного кота — какой?', о:['слишком широкий','точный','лишний'], в:0,
-      р:'он называет всех животных, а текст — про одного кота.' }
+      р:'о чём текст — тема; зачем он написан — основная мысль.' },
+    { ф:'Как начинают новый абзац?', о:['с красной строки','с новой страницы','с большой буквы в середине строки'], в:0,
+      р:'новый абзац начинают с красной строки — с отступа.' },
+    { ф:'Зачем нужен план текста?', о:['чтобы не потерять порядок частей','чтобы текст был длиннее','чтобы поставить запятые'], в:0,
+      р:'план держит порядок: по нему пересказывают и пишут изложение.' }
   ];
-  function F9(s){
+  function F11(s){
     const и = (s.тНомер||0)%ТРЕНАЖЁР.length;
-    const з = ТРЕНАЖЁР[и], отв = s.тОтвет, готово = отв != null;
-    const верно = отв===з.в;
+    const з = ТРЕНАЖЁР[и], отв = s.тОтвет, готово = отв!=null, верно = отв===з.в;
     return `${A(0,'kicker','Тренажёр')}
       ${A(1,'sheet','<p>'+з.ф+'</p>')}
       <div class="ask">${з.о.map((о,к)=>BTN(2+к, готово&&к===з.в?'hit':(готово&&к===отв?'miss':''), о, `r878Train(${к})`)).join('')}</div>
@@ -283,35 +509,46 @@
       ${готово ? `<div class="ask">${BTN(7,'','следующий вопрос','r878NextQ()')}</div>` : ''}`;
   }
 
-  /* ---------- вопрос-проверка в кадре ---------- */
   const ВОПРОСЫ = {
     1: ['Что отличает текст от набора предложений?', [
-      {к:'a', т:'общая тема и связь предложений', ок:1, fb:'верно: тему можно назвать, предложения держатся друг за друга'},
-      {к:'b', т:'количество предложений', ок:0, fb:'даже пять предложений о разном — не текст'}]],
+      {к:'a', т:'общая тема и связь предложений', ок:1, fb:'верно: тему можно назвать коротко, предложения держат друг друга'},
+      {к:'b', т:'количество предложений', ок:0, fb:'пять предложений о разном — всё ещё не текст'}]],
 
-    2: ['Какой признак отвечает на вопрос «о чём текст»?', [
-      {к:'a', т:'тема', ок:1, fb:'верно'},
-      {к:'b', т:'завершённость', ок:0, fb:'завершённость — это начало, середина и конец'}]],
+    2: ['Как называют то, о чём написан текст?', [
+      {к:'a', т:'тема', ок:1, fb:'верно: тема — о чём текст'},
+      {к:'b', т:'основная мысль', ок:0, fb:'основная мысль — что хотел сказать автор'}]],
 
     3: ['«Скоро лес уснёт до весны» — это…', [
       {к:'a', т:'основная мысль', ок:1, fb:'верно: здесь сказано, что хотел сказать автор'},
-      {к:'b', т:'тема', ок:0, fb:'тема — осень в лесу, а это мысль'}]],
+      {к:'b', т:'тема', ок:0, fb:'тема — осень в лесу'}]],
 
     4: ['Чем второе предложение связано с первым?', [
-      {к:'a', т:'местоимением вместо повтора', ок:1, fb:'верно: «она» заменяет слово «берёза»'},
-      {к:'b', т:'ничем, просто стоит рядом', ок:0, fb:'без связи получился бы набор предложений'}]],
+      {к:'a', т:'местоимением «она»', ок:1, fb:'верно: «она» заменяет слово «берёза»'},
+      {к:'b', т:'ничем', ок:0, fb:'без связи получился бы набор предложений'}]],
 
-    6: ['Зачем текст делят на абзацы?', [
-      {к:'a', т:'чтобы показать маленькие темы', ок:1, fb:'верно: абзац — своя микротема'},
-      {к:'b', т:'чтобы текст был длиннее', ок:0, fb:'дело не в длине'}]],
+    5: ['Почему части текста нельзя переставить?', [
+      {к:'a', т:'нарушится порядок событий', ок:1, fb:'верно: каждое предложение продолжает предыдущее'},
+      {к:'b', т:'станет больше слов', ок:0, fb:'дело не в длине, а в порядке'}]],
 
-    7: ['Заголовок должен…', [
-      {к:'a', т:'называть тему или главную мысль', ок:1, fb:'верно'},
-      {к:'b', т:'быть самым коротким', ок:0, fb:'короткий, но не о том — плохой заголовок'}]],
+    6: ['Что такое абзац?', [
+      {к:'a', т:'часть текста со своей маленькой темой', ок:1, fb:'верно'},
+      {к:'b', т:'любые три предложения', ок:0, fb:'абзац держит свою микротему, а не счёт предложений'}]],
 
-    8: ['Предложение не по теме текста — это…', [
+    7: ['Хороший заголовок…', [
+      {к:'a', т:'называет тему или основную мысль', ок:1, fb:'верно'},
+      {к:'b', т:'самый короткий', ок:0, fb:'короткий, но не о том — плохой заголовок'}]],
+
+    8: ['Что такое ключевые слова?', [
+      {к:'a', т:'слова, по которым видна тема', ок:1, fb:'верно: осень, лес, тихо, листья'},
+      {к:'b', т:'самые длинные слова', ок:0, fb:'длина тут ни при чём'}]],
+
+    9: ['Предложение не по теме текста — какое?', [
       {к:'a', т:'лишнее', ок:1, fb:'верно: его убирают'},
-      {к:'b', т:'главное', ок:0, fb:'наоборот, оно мешает тексту'}]]
+      {к:'b', т:'главное', ок:0, fb:'наоборот, оно разрушает текст'}]],
+
+    10: ['Зачем тексту план?', [
+      {к:'a', т:'держать порядок частей', ок:1, fb:'верно: по плану пересказывают и пишут изложение'},
+      {к:'b', т:'увеличить объём', ок:0, fb:'план — это порядок, а не объём'}]]
   };
 
   function pred(f, st){
@@ -326,39 +563,42 @@
       <div class="cap">${вопрос}</div>`;
   }
 
-  /* ---------- запись урока ---------- */
   const L878 = {
     id: ID, title:'Текст и его признаки', ico:'📄',
     src:'Русский язык · 5 класс · Текст', subj:'rus',
     explain: [
-      'Пять предложений, стоящих рядом, — ещё не текст. «На столе лежит тетрадь. Вчера шёл дождь. У берёзы белый ствол» — каждое предложение само по себе, темы нет. Текст начинается там, где предложения держатся одной темы и стоят в нужном порядке. Сравни две стопки на кадре и выбери ту, где получился текст.',
+      'Текст — это несколько предложений, которые связаны по смыслу и стоят в нужном порядке. Три признака видно сразу: у текста есть тема, предложения связаны друг с другом, и их нельзя переставить без потери смысла. Сравни два рисунка в кадре: слева три листка с разными предложениями — «на столе лежит тетрадь», «вчера шёл дождь», «у берёзы белый ствол». Справа сшитая книга: там предложения держатся одной темы. Первое можно назвать набором предложений, второе — текстом.',
 
-      'У текста пять признаков, и по ним его узнают. Тема — о чём текст. Основная мысль — что хотел сказать автор. Связность — предложения соединены друг с другом. Последовательность — их нельзя переставить без потери смысла. Завершённость — есть начало, середина и конец. Открой на кадре каждую марку: там объяснение и пример. Частая ошибка — считать текстом любой длинный набор предложений. Как проверить себя: назови тему одним словом — если не получается, текста ещё нет.',
+      'Тема — это то, о чём написан текст. Её называют коротко: одним словом или словосочетанием. В тексте про осень ключевые слова подсказывают тему: «осенью», «в лесу», «листья», «птицы». Отсюда тема — осень в лесу. Частая ошибка — пересказывать содержание, когда спрашивают тему: «там сказано, что листья падают» — это не тема, а пересказ. Как проверить себя: попробуй озаглавить текст одним словом. Получилось «Осень» — тему нашёл.',
 
-      'Тема и основная мысль — разные вещи, и их часто путают. Тема отвечает на вопрос «о чём текст»: осень в лесу. Основная мысль отвечает на вопрос «что автор хотел сказать»: природа готовится к зимнему покою. Тема называет предмет речи, мысль — то, ради чего текст написан. Частая ошибка — принять за мысль последнее предложение целиком. Как проверить себя: спроси «зачем автор это написал?» — ответ и будет основной мыслью.',
+      'Основная мысль — это то, что автор хотел сказать своим текстом. Тема отвечает на вопрос «о чём?», основная мысль — на вопрос «что автор хотел сказать?». Текст про осень можно написать по-разному: можно сказать «наступила осень», а можно — «лес готовится к зимнему покою». Второе и есть мысль. Частая ошибка — считать основной мыслью первое предложение: оно называет тему, а не мысль. Как проверить себя: спроси «зачем автор это написал?» — ответ и будет основной мыслью.',
 
-      'Предложения в тексте соединены — это признак связности. Связывают по-разному: повторяют слово («берёза» — «под берёзой»), заменяют его местоимением («берёза» — «она»), берут синоним, ставят союз или наречие. Найди на кадре, чем второе предложение держится за первое. Частая ошибка — повторять одно и то же слово в каждом предложении: речь становится вялой. Как проверить себя: убери связку — фразы рассыпятся, станут чужими друг другу.',
+      'Связность — предложения в тексте соединены, как звенья цепи. Связывают по-разному: повторяют слово («берёза» — «под берёзой»), заменяют его местоимением («берёза» — «она»), берут синоним, ставят союз или наречие. Найди на кадре, чем второе предложение держится за первое: слово «она» — это и есть берёза. Частая ошибка — повторять одно и то же имя в каждом предложении: речь становится вялой, и тогда на помощь приходят местоимения и синонимы. Как проверить себя: убери связку — фразы сразу станут чужими друг другу.',
 
-      'Последовательность — третий признак. Предложения в тексте идут так, что каждое следующее продолжает предыдущее. Собери рассыпавшийся текст на кадре: начало, середина, конец. Частая ошибка — ставить концовку в начало: тогда читатель не понимает, о чём речь. Как проверить себя: поменяй два предложения местами — если смысл сломался, порядок в тексте был правильный.',
+      'Последовательность — части текста идут по порядку: начало, середина, конец. Собери рассыпавшийся текст про щенка: сначала находка, потом забота, потом дружба. Каждое следующее предложение продолжает предыдущее. Частая ошибка — поставить концовку в начало: читатель не поймёт, о чём речь. Как проверить себя: поменяй два предложения местами — если смысл сломался, порядок был правильный.',
 
-      'Текст делят на абзацы. Абзац — часть текста, в которой своя маленькая тема. Новый абзац начинают с красной строки: с отступа. В нашем тексте два абзаца: в первом — как выглядит осенний лес, во втором — что делают птицы. Включи красную строку на кадре — и деление станет видно. Частая ошибка — писать весь текст сплошняком: тогда маленькие темы сливаются и читать трудно.',
+      'Текст делят на абзацы. Абзац — часть текста, у которой своя маленькая тема; новый абзац начинают с красной строки, то есть с отступа. В нашем тексте два абзаца: в первом — как выглядит осенний лес, во втором — что делают птицы. Включи красную строку на рисунке — деление станет видно. Частая ошибка — писать весь текст сплошняком: маленькие темы сливаются, и читать трудно. Как проверить себя: в каждом абзаце должна быть одна мысль, а не три.',
 
-      'Заголовок называют тему или основную мысль текста. Он должен подходить именно этому тексту: «Наш кот Барсик» — хорошо, «Домашние животные» — слишком широко, «Как я провёл лето» — просто не о том. Выбери заголовок на кадре и послушай разбор. Частая ошибка — брать красивый, но чужой заголовок. Как проверить себя: прочитай заголовок и текст вместе — они должны говорить об одном.',
+      'Заголовок называет тему или основную мысль текста. Он должен подходить именно этому тексту: «Наш кот Барсик» — хорошо; «Домашние животные» — слишком широко, ведь текст про одного кота; «Как я провёл лето» — просто не о том. Частая ошибка — взять красивый, но чужой заголовок. Как проверить себя: прочитай заголовок и текст вместе — они должны говорить об одном.',
 
-      'В хорошем тексте нет лишних предложений. Если фраза не о том, о чём весь текст, её убирают — иначе читатель теряет нить. Найди на кадре предложение не по теме: весь текст про зиму, а оно про лето. Частая ошибка — оставлять в тексте всё, что вспомнилось. Как проверить себя: к каждому предложению задай вопрос «а это о том же?».',
+      'Ключевые слова — те, по которым тему видно сразу. В тексте «Осенью в лесу тихо. Листья падают на землю» ключевые — «осенью», «в лесу», «тихо», «листья». Служебные слова вроде «в» и «на» темой не управляют: без них смысл сохранится. Частая ошибка — выделять ключевыми самые длинные слова. Как проверить себя: попробуй по выделенным словам назвать тему — если получается, ключевые слова найдены верно.',
 
-      'Соберём признаки вместе. Тема — о чём текст. Основная мысль — зачем он написан. Связность — чем предложения держатся друг за друга. Последовательность — почему их нельзя переставить. Завершённость — есть ли начало, середина и конец. Абзацы — где начинаются маленькие темы. Заголовок — как текст называется. Дальше — тренажёр со счётом.'
+      'В хорошем тексте нет лишних предложений. Если фраза не о том, о чём весь текст, её убирают — иначе читатель теряет нить. На картинке зимний двор: дом, горка, снеговик. Три предложения говорят о зиме, а одно — про лето на море. Оно лишнее: у него своя тема. Частая ошибка — оставлять в тексте всё, что вспомнилось. Как проверить себя: к каждому предложению задай вопрос «а это о том же?».',
+
+      'План текста — это его ступени: каждая ступень — одна маленькая тема, и все они идут по порядку. По плану удобно пересказывать и писать изложение: «лес становится тихим», «листья ложатся ковром», «птицы улетают», «лес засыпает». Открой ступени на кадре. Частая ошибка — писать план одним пунктом на весь текст: тогда он не помогает. Как проверить себя: по каждому пункту должно вспоминаться хотя бы одно предложение текста.',
+
+      'Соберём признаки вместе. Тема — о чём текст. Основная мысль — зачем он написан. Связность — чем предложения держатся друг за друга. Последовательность — почему их нельзя переставить. Абзац — где начинается маленькая тема. Заголовок — как текст называется. Ключевые слова — по ним тему видно сразу. План — ступени текста. Дальше тренажёр со счётом.'
     ],
     check: {
       q:'Что делает несколько предложений текстом?',
       choices:['общая тема и связь предложений','то, что они записаны рядом','то, что они длинные'],
       ans:0,
-      exp:'Текст держат тема, связность и порядок предложений. Просто рядом стоящие предложения о разном — не текст.'
+      exp:'Текст держат тема, связность и порядок. Просто рядом стоящие предложения о разном — ещё не текст.'
     },
     tasks: [
-      { q:'Сколько признаков текста мы разобрали?', kind:'unit', ans:5, tol:0,
-        hints:['Тема, основная мысль, связность…','…последовательность и завершённость.'],
-        sol:'Пять: тема, основная мысль, связность, последовательность, завершённость.' },
+      { q:'Сколько признаков текста мы разобрали?', kind:'unit', ans:8, tol:1,
+        hints:['Тема, основная мысль, связность, последовательность…','…абзац, заголовок, ключевые слова, план.'],
+        sol:'Восемь: тема, основная мысль, связность, последовательность, абзац, заголовок, ключевые слова, план.' },
       { q:'Как называют то, о чём написан текст?', kind:'choice',
         choices:['тема','основная мысль','заголовок'], ans:0,
         hints:['Это можно назвать одним словом.','Основная мысль — зачем текст написан.'],
@@ -367,14 +607,13 @@
         choices:['с красной строки','с новой страницы','с большой буквы в середине строки'], ans:0,
         hints:['Это отступ в начале строки.','Так видно деление на маленькие темы.'],
         sol:'Новый абзац начинают с красной строки — с отступа.' },
-      { q:'В тексте про зиму встретилось предложение про лето. Какое оно?', kind:'choice',
-        choices:['лишнее','главное','начальное'], ans:0,
-        hints:['Оно не о той теме, о которой весь текст.','Такое предложение убирают.'],
-        sol:'Лишнее: оно не держит общую тему текста.' }
+      { q:'Зачем нужен план текста?', kind:'choice',
+        choices:['чтобы держать порядок частей','чтобы текст был длиннее','чтобы расставить запятые'], ans:0,
+        hints:['По нему пересказывают текст.','Каждая ступень — одна маленькая тема.'],
+        sol:'План держит порядок частей: по нему пересказывают и пишут изложение.' }
     ]
   };
 
-  /* ---------- рисовальщик ---------- */
   function render(el){
     css();
     const s = S();
@@ -389,18 +628,22 @@
     else if(f===6) сцена=F6(s);
     else if(f===7) сцена=F7(s);
     else if(f===8) сцена=F8(s);
-    else сцена=F9(s);
+    else if(f===9) сцена=F9(s);
+    else if(f===10) сцена=F10(s);
+    else сцена=F11(s);
 
     const ЗАГОЛОВКИ = {
-      1:['Текст','Где текст?'],
-      2:['Признаки','Пять признаков текста'],
-      3:['Тема и мысль','Тема и основная мысль'],
-      4:['Связность','Чем связаны предложения'],
-      5:['Порядок','Собери текст по порядку'],
-      6:['Абзац','Абзац и красная строка'],
+      1:['Что такое текст','Листки и книга'],
+      2:['Тема','О чём текст'],
+      3:['Основная мысль','Что хотел сказать автор'],
+      4:['Связность','Чем держатся предложения'],
+      5:['Последовательность','Собери текст по порядку'],
+      6:['Абзац','Красная строка'],
       7:['Заголовок','Как назвать текст'],
-      8:['Лишнее','Найди предложение не по теме'],
-      9:['Практика','Тренажёр: признаки текста']
+      8:['Ключевые слова','По ним видно тему'],
+      9:['Лишнее','Найди предложение не по теме'],
+      10:['План','Ступени текста'],
+      11:['Практика','Тренажёр: признаки текста']
     };
     const [кикер, заголовок] = ЗАГОЛОВКИ[f] || ['Текст','Текст и его признаки'];
 
@@ -412,11 +655,9 @@
       </div>`;
   }
 
-  /* ---------- действия ---------- */
   window.r878Ask = (f,k) => { S()['в'+f]=k; chRender(0); };
-  window.r878Side = (к) => { S().выбор=к; chRender(0); };
-  window.r878Mark = (и) => { const s=S(); s.открыт = (s.открыт===и ? null : и); chRender(0); };
-  window.r878Тема = (к) => { const s=S(); s.тема=к; s.мысль=null; chRender(0); };
+  window.r878Side = (к) => { S().выбор1=к; chRender(0); };
+  window.r878Тема = (к) => { S().тема=к; chRender(0); };
   window.r878Мысль = (к) => { S().мысль=к; chRender(0); };
   window.r878Связка = (к) => { S().связка=к; chRender(0); };
   window.r878Next = (и) => {
@@ -425,9 +666,15 @@
     chRender(0);
   };
   window.r878Rebuild = () => { const s=S(); s.сборка=0; s.мимо=null; chRender(0); };
-  window.r878Абзац = () => { const s=S(); s.красная = !s.красная; chRender(0); };
+  window.r878Абзац = () => { const s=S(); s.красная=!s.красная; chRender(0); };
   window.r878Title = (к) => { S().заголовок=к; chRender(0); };
+  window.r878Key = (и) => { const s=S(); s.ключи=s.ключи||{}; s.ключи[и]=!s.ключи[и]; chRender(0); };
   window.r878Odd = (и) => { S().лишнее=и; chRender(0); };
+  window.r878PlanStep = (и) => {
+    const s=S();
+    if(и===(s.планПункт||0)){ s.планПункт=(s.планПункт||0)+1; s.мимо=null; } else s.мимо=и;
+    chRender(0);
+  };
   window.r878Train = (к) => {
     const s=S();
     if(s.тОтвет != null) return;
@@ -443,7 +690,6 @@
     chRender(0);
   };
 
-  /* ---------- регистрация ---------- */
   if(window.WAVE_B){
     const прежний = window.WAVE_B[ID];
     window.WAVE_B[ID] = function(el){ try{ render(el); }catch(e){ try{ прежний(el); }catch(e2){} } };
