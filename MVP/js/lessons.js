@@ -364,7 +364,8 @@ function renderLessonView(){
     <div class="small" style="margin-bottom:6px">${esc(L.src)}</div>${dots}
     <div class="card"><div class="arch" style="margin-top:0">${msg}</div>
       ${LV.phase==='explain'?`<div id="lvis"></div>`:''}</div>
-    <div class="btnrow" style="margin-bottom:8px">${nav}</div>${phase2}`;
+    ${phase2}
+    <div class="btnrow" style="margin-bottom:8px">${nav}</div>`;
   if(LV.phase==='explain') renderLessonVis();
   hud();
 }
