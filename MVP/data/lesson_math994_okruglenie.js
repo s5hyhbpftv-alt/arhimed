@@ -69,13 +69,15 @@
   #lvis .s6.l994 .уровни .точка{flex:1 1 0;height:10px;border-radius:6px;background:rgba(255,255,255,.09);
     transition:background 200ms cubic-bezier(.23,1,.32,1)}
   #lvis .s6.l994 .уровни .точка.пройдено{background:${GREEN}}
-  #lvis .s6.l994 .уровни .точка.сейчас{background:${GOLD}}
+  #lvis .s6.l994 .уровни .точка.сейчас{background:${GOLD};animation:l994dot 1.6s cubic-bezier(.23,1,.32,1) infinite}
+  @keyframes l994dot{0%,100%{opacity:1}50%{opacity:.45}}
   #lvis .s6.l994 .score{font-size:16px;color:var(--mut);text-align:center;font-variant-numeric:tabular-nums}
   #lvis .s6.l994 [data-anim]{animation:l994rise 280ms cubic-bezier(.23,1,.32,1) both;animation-delay:calc(min(var(--i,0),5)*45ms)}
   @keyframes l994rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   @media (max-width:370px){ #lvis .s6.l994 .ask button{flex:1 1 100%} }
   @media (prefers-reduced-motion: reduce){
     #lvis .s6.l994 [data-anim]{animation:none!important}
+    #lvis .s6.l994 .уровни .точка.сейчас{animation:none!important}
     #lvis .s6.l994 .ask button{transition:none}
   }`;
 
@@ -119,6 +121,18 @@
     ДВИЖ ? `<animate attributeName="${имя}" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
   const анТ = (значения,длит,доп) =>
     ДВИЖ ? `<animateTransform attributeName="transform" type="translate" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
+
+  const пульс = (длит,нач) => ан('opacity','1;0.35;1',длит, нач!=null?'begin="'+нач+'s"':'');
+  const кольцо = (x,y,r,цвет,длит,нач) =>
+    `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${цвет}" stroke-width="2">`+
+      ан('opacity','0;0.9;0',длит,'keyTimes="0;0.5;1"'+(нач!=null?' begin="'+нач+'s"':''))+
+      ан('r',r+';'+(r+9)+';'+r,длит,'keyTimes="0;0.5;1"'+(нач!=null?' begin="'+нач+'s"':''))+
+    `</circle>`;
+  const летит = (x0,y0,x1,y1,длит,нач) =>
+    `<circle cx="${x0}" cy="${y0}" r="5" fill="${GOLD}">`+
+      анТ('0 0;0 0;'+(x1-x0).toFixed(1)+' '+(y1-y0).toFixed(1)+';0 0',длит,
+          'keyTimes="0;0.08;0.55;1"'+(нач!=null?' begin="'+нач+'s"':''))+
+    `</circle>`;
 
   const ОПРЕДЕЛЕНИЯ = `
     <defs>
@@ -199,8 +213,9 @@
       <rect x="0" y="0" width="336" height="186" fill="url(#c994-стена)"/>
       <rect x="0" y="0" width="336" height="186" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
       ${т(168,24,'На ценнике — примерно',14,GOLD,true)}
-      ${ценник(24,66,132,'38 ₽','точная цена')}
-      ${ценник(180,66,132,'≈ 40 ₽','как пишут на ярлыке',GOLD)}
+      <g>${пульс('7s',0)}${ценник(24,66,132,'38 ₽','точная цена')}</g>
+      <g>${пульс('7s',3)}${ценник(180,66,132,'≈ 40 ₽','как пишут на ярлыке',GOLD)}</g>
+      ${кольцо(246,66,80,GOLD,'7s',1.4)}
       ${т(168,132,'покупателю важно быстро понять порядок цены',12,ИНК)}
       ${т(168,158,'для этого точное число заменяют круглым',12,МУТ)}
     `,186);
@@ -347,6 +362,9 @@
           ${т(262,y+2,п,12,МУТ)}
         </g>`;
       }).join('')}
+      <g>${анТ('0 0;0 0;0 44;0 44;0 88;0 88;0 0','8s','keyTimes="0;0.06;0.24;0.36;0.54;0.72;1"')}
+        <rect x="18" y="28" width="300" height="42" rx="11" fill="none" stroke="${GOLD}" stroke-width="2.2"/>
+      </g>
       ${т(168,184,'единицы решают, десятки отвечают',12,МУТ)}
     `,190);
     return ВОПРОС('Округляем 45 до десятков. Что получится?') +
@@ -413,6 +431,9 @@
           ${т(258,y+2,п,12,МУТ)}
         </g>`;
       }).join('')}
+      <g>${анТ('0 0;0 0;0 44;0 44;0 88;0 88;0 0','8s','keyTimes="0;0.06;0.24;0.36;0.54;0.72;1"')}
+        <rect x="16" y="32" width="304" height="42" rx="11" fill="none" stroke="${GOLD}" stroke-width="2.2"/>
+      </g>
       ${т(168,186,'тысячи решает разряд сотен',12,МУТ)}
     `,190);
     return ВОПРОС('Округляем 4 680 до тысяч. Что получится?') +
@@ -464,9 +485,11 @@
       ${т(168,24,'Прикидка в магазине',14,GOLD,true)}
       ${ценник(16,66,96,'487 ₽',null)}
       ${ценник(120,66,96,'296 ₽',null)}
+      ${летит(112,66,258,66,'6s',0)}
+      ${летит(216,66,258,66,'6s',0.8)}
       ${т(230,74,'+',20,МУТ)}
       ${ценник(240,66,80,'≈ ?','сумма',GOLD)}
-      ${т(168,126,'487 ≈ 500 и 296 ≈ 300',16,ИНК,true)}
+      <g>${пульс('6s',1.6)}${т(168,126,'487 ≈ 500 и 296 ≈ 300',16,ИНК,true)}</g>
       ${т(168,156,'500 + 300 = 800 — примерно столько и выйдет',12,GOLD)}
     `,186);
     return ВОПРОС('Сколько примерно стоят две покупки: 487 ₽ и 296 ₽?') +
