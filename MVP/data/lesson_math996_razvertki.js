@@ -182,6 +182,18 @@
         <feFlood flood-color="#0b1c2a" flood-opacity="0.5" result="цвет"/>
         <feComposite in="цвет" in2="сдвиг" operator="in"/>
       </filter>
+      <filter id="c996-контакт" x="-60%" y="-120%" width="220%" height="340%" color-interpolation-filters="linearRGB">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="1.6" result="р"/>
+        <feOffset in="р" dx="0" dy="1" result="с"/>
+        <feFlood flood-color="#231a12" flood-opacity="0.40" result="ц"/>
+        <feComposite in="ц" in2="с" operator="in"/>
+      </filter>
+      <filter id="c996-отброс" x="-60%" y="-120%" width="220%" height="340%" color-interpolation-filters="linearRGB">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="р"/>
+        <feOffset in="р" dx="5" dy="7" result="с"/>
+        <feFlood flood-color="#0b1c2a" flood-opacity="0.22" result="ц"/>
+        <feComposite in="ц" in2="с" operator="in"/>
+      </filter>
       <filter id="c996-шум" x="0" y="0" width="100%" height="100%" color-interpolation-filters="linearRGB">
         <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" result="шум"/>
         <feColorMatrix in="шум" type="saturate" values="0"/>
@@ -203,18 +215,21 @@
     const ц=цвета||['url(#c996-перед)','url(#c996-верх)','url(#c996-бок)'];
     const x1=x, y1=y-в, x2=x+ш, y2=y, x3=x+ш+гл, y3=y-гл;
     return `<g>
-      <polygon points="${x},${y} ${x+ш},${y} ${x+ш+гл},${y3} ${x+гл},${y3}"
-        fill="rgba(0,0,0,.35)" transform="translate(3 4)" filter="url(#c996-тень)"/>
-      <polygon points="${x},${y} ${x+ш},${y} ${x2},${y1} ${x1},${y1}" fill="${ц[0]}" stroke="rgba(20,35,28,.6)" stroke-width="1.4">
+      <ellipse cx="${(x+ш/2+гл/2).toFixed(1)}" cy="${y+6}" rx="${(ш/2+гл/2+6).toFixed(1)}" ry="7"
+        fill="#0b1c2a" opacity=".22" filter="url(#c996-отброс)"/>
+      <ellipse cx="${(x+ш/2).toFixed(1)}" cy="${y+2}" rx="${(ш/2+2).toFixed(1)}" ry="4"
+        fill="#231a12" opacity=".4" filter="url(#c996-контакт)"/>
+      <polygon points="${x},${y} ${x+ш},${y} ${x2},${y1} ${x1},${y1}" fill="${ц[0]}" stroke="#33291e" stroke-width="1.8">
         ${проявить('9s',нач||0.05,(нач||0.05)+0.06)}</polygon>
-      <polygon points="${x1},${y1} ${x2},${y1} ${x3},${y3} ${x+гл},${y3}" fill="${ц[1]}" stroke="rgba(20,35,28,.6)" stroke-width="1.4">
+      <polygon points="${x1},${y1} ${x2},${y1} ${x3},${y3} ${x+гл},${y3}" fill="${ц[1]}" stroke="#33291e" stroke-width="1.8">
         ${проявить('9s',(нач||0.05)+0.1,(нач||0.05)+0.16)}</polygon>
-      <polygon points="${x2},${y1} ${x2},${y2} ${x3},${y-гл} ${x3},${y3}" fill="${ц[2]}" stroke="rgba(20,35,28,.6)" stroke-width="1.4">
+      <polygon points="${x2},${y1} ${x2},${y2} ${x3},${y-гл} ${x3},${y3}" fill="${ц[2]}" stroke="#33291e" stroke-width="1.8">
         ${проявить('9s',(нач||0.05)+0.2,(нач||0.05)+0.26)}</polygon>
       <polygon points="${x1+3},${y1-2} ${x1+ш*0.62},${y1-2} ${x1+ш*0.62+гл},${y3-2} ${x+гл+3},${y3-2}"
         fill="url(#c996-блик)" opacity=".55"/>
       <line x1="${x1}" y1="${y1}" x2="${x1}" y2="${y}" stroke="rgba(255,250,230,.5)" stroke-width="1.6"/>
       <line x1="${x+гл}" y1="${y3}" x2="${x+ш+гл}" y2="${y3}" stroke="rgba(255,246,214,.35)" stroke-width="1.2"/>
+      <line x1="${x+3}" y1="${y-3}" x2="${x+ш-3}" y2="${y-3}" stroke="rgba(255,238,200,.28)" stroke-width="2"/>
       ${подписи?`<g>${проявить('9s',(нач||0.05)+0.3,(нач||0.05)+0.34)}
         ${т(x+ш/2,y+20,подписи,12,МУТ)}</g>`:''}
     </g>`;
@@ -225,8 +240,12 @@
     const ц=цвета||['url(#c996-перед)','url(#c996-бок)'];
     const л=[x,y], п=[x+ш/2,y+глуб], пр=[x+ш,y], з=[x+ш/2,y-глуб], в=[x+ш/2,y-выс];
     return `<g>
-      <polygon points="${л} ${п} ${в}" fill="${ц[0]}" stroke="rgba(20,35,28,.6)" stroke-width="1.4">${проявить('9s',нач||0.05,(нач||0.05)+0.08)}</polygon>
-      <polygon points="${п} ${пр} ${в}" fill="${ц[1]}" stroke="rgba(20,35,28,.6)" stroke-width="1.4">${проявить('9s',(нач||0.05)+0.08,(нач||0.05)+0.16)}</polygon>
+      <ellipse cx="${(x+ш/2).toFixed(1)}" cy="${y+глуб/2+6}" rx="${(ш/2+глуб/2+6).toFixed(1)}" ry="7"
+        fill="#0b1c2a" opacity=".22" filter="url(#c996-отброс)"/>
+      <ellipse cx="${(x+ш/2).toFixed(1)}" cy="${y+глуб/2+2}" rx="${(ш/2).toFixed(1)}" ry="4"
+        fill="#231a12" opacity=".38" filter="url(#c996-контакт)"/>
+      <polygon points="${л} ${п} ${в}" fill="${ц[0]}" stroke="#33291e" stroke-width="1.8">${проявить('9s',нач||0.05,(нач||0.05)+0.08)}</polygon>
+      <polygon points="${п} ${пр} ${в}" fill="${ц[1]}" stroke="#33291e" stroke-width="1.8">${проявить('9s',(нач||0.05)+0.08,(нач||0.05)+0.16)}</polygon>
       <line x1="${л[0]}" y1="${л[1]}" x2="${з[0]}" y2="${з[1]}" stroke="rgba(20,35,28,.45)" stroke-width="1.2" stroke-dasharray="4 3"/>
       <line x1="${пр[0]}" y1="${пр[1]}" x2="${з[0]}" y2="${з[1]}" stroke="rgba(20,35,28,.45)" stroke-width="1.2" stroke-dasharray="4 3"/>
       <line x1="${з[0]}" y1="${з[1]}" x2="${в[0]}" y2="${в[1]}" stroke="rgba(20,35,28,.35)" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -510,9 +529,11 @@
           <path d="M190 126 L200 132 L190 138 Z" fill="${GOLD}"/>
         </g>
         <ellipse cx="262" cy="86" rx="36" ry="13" fill="url(#c996-верх2)" stroke="rgba(20,35,28,.6)" stroke-width="1.4"/>
+        <ellipse cx="266" cy="166" rx="46" ry="9" fill="#0b1c2a" opacity=".22" filter="url(#c996-отброс)"/>
+        <ellipse cx="262" cy="157" rx="36" ry="6" fill="#231a12" opacity=".38" filter="url(#c996-контакт)"/>
         <path d="M226 86 L226 150 A36 13 0 0 0 298 150 L298 86" fill="url(#c996-перед2)"
-          stroke="rgba(20,35,28,.6)" stroke-width="1.4" opacity=".9">${светит('11s',0.7)}</path>
-        <ellipse cx="262" cy="150" rx="36" ry="13" fill="url(#c996-бок2)" stroke="rgba(20,35,28,.6)" stroke-width="1.4" opacity=".75"/>
+          stroke="#33291e" stroke-width="1.8" opacity=".95">${светит('11s',0.7)}</path>
+        <ellipse cx="262" cy="150" rx="36" ry="13" fill="url(#c996-бок2)" stroke="#33291e" stroke-width="1.6" opacity=".8"/>
         <path d="M236 92 L236 146" stroke="rgba(255,255,255,.35)" stroke-width="3"/>
         ${т(262,224,'цилиндр',12,МУТ)}
       `,252)}</div>` +
