@@ -39,7 +39,7 @@
 
   const ID = 1011;
   const GOLD='#ffd76a', GREEN='#8fd1a8', BLUE='#7fd1ff', RED='#e86a5a';
-  const РОЗ='#f2a0b8', ИНК='#f6efe0', МУТ='#cbb89a', ЛИНИЯ='#3f7a5f', ОБВОД='#33291e';
+  const РОЗ='#f2a0b8', ИНК='#fdf8ec', МУТ='#ded0b0', ЛИНИЯ='#4d8f70', ОБВОД='#241d14';
 
   const CSS=`
   #lvis .s6.l1011{gap:14px}
@@ -139,17 +139,17 @@
         <stop offset="0" stop-color="#2a3f33"/><stop offset="0.45" stop-color="#1e3128"/>
         <stop offset="1" stop-color="#111c15"/>
       </linearGradient>
-      <linearGradient id="c1011-бумага" x1="0" y1="0" x2="0.25" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#fdfaf1"/><stop offset="0.5" stop-color="#f1e7d2"/>
-        <stop offset="1" stop-color="#d6cbb0"/>
+      <linearGradient id="c1011-бумага" x1="0" y1="0" x2="0.3" y2="1" color-interpolation="linearRGB">
+        <stop offset="0" stop-color="#ffd98a"/><stop offset="0.45" stop-color="#f2b64a"/>
+        <stop offset="1" stop-color="#c07f1c"/>
       </linearGradient>
-      <linearGradient id="c1011-бумага2" x1="0" y1="0" x2="0.25" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#e8f4ff"/><stop offset="0.5" stop-color="#c6dff2"/>
-        <stop offset="1" stop-color="#9dbfd6"/>
+      <linearGradient id="c1011-бумага2" x1="0" y1="0" x2="0.3" y2="1" color-interpolation="linearRGB">
+        <stop offset="0" stop-color="#a8dcff"/><stop offset="0.45" stop-color="#5fa8d8"/>
+        <stop offset="1" stop-color="#2b6d99"/>
       </linearGradient>
-      <linearGradient id="c1011-бумага3" x1="0" y1="0" x2="0.25" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#e6f7ec"/><stop offset="0.5" stop-color="#c3e6d0"/>
-        <stop offset="1" stop-color="#9cc4ac"/>
+      <linearGradient id="c1011-бумага3" x1="0" y1="0" x2="0.3" y2="1" color-interpolation="linearRGB">
+        <stop offset="0" stop-color="#ffb3a0"/><stop offset="0.45" stop-color="#e8735a"/>
+        <stop offset="1" stop-color="#a83c28"/>
       </linearGradient>
       <linearGradient id="c1011-металл" x1="0" y1="0" x2="1" y2="0" color-interpolation="linearRGB">
         <stop offset="0" stop-color="#5d6a76"/><stop offset="0.18" stop-color="#e8eef4"/>
@@ -215,7 +215,7 @@
     const стороны=[[A,B,'AB'],[B,C,'BC'],[C,A,'CA']];
     return `<g>
       <path d="${d}" transform="translate(2,4)" fill="#08171f" opacity=".34" filter="url(#c1011-тень)"/>
-      <path d="${d}" fill="url(#c1011-${материал||'бумага'})" stroke="${ОБВОД}" stroke-width="1.8">
+      <path d="${d}" fill="url(#c1011-${материал||'бумага'})" stroke="${ОБВОД}" stroke-width="2.4">
         ${нач!=null?проявить('12s',нач,нач+0.06):''}</path>
       ${(засечки||[]).map(([ном,кол])=>{
         const [p,q]=стороны[ном];
@@ -226,7 +226,7 @@
             '0;'+кт(0.3+i*0.06)+';'+кт(0.38+i*0.06)+';1')}
           <line x1="${(mx+nx*0.5+(i-0.5)*5*nx/6).toFixed(1)}" y1="${(my+ny*0.5+(i-0.5)*5*ny/6).toFixed(1)}"
             x2="${(mx-nx*0.5+(i-0.5)*5*nx/6).toFixed(1)}" y2="${(my-ny*0.5+(i-0.5)*5*ny/6).toFixed(1)}"
-            stroke="${GREEN}" stroke-width="2"/></g>`).join('');
+            stroke="#7dffc0" stroke-width="2.4"/></g>`).join('');
       }).join('')}
       ${прямой!=null?(()=>{
         const [p,q,r]=[P[прямой==='A'?0:прямой==='B'?1:2], null, null];
@@ -245,7 +245,7 @@
         const i = кто==='A'?0:кто==='B'?1:2;
         const p=P[i];
         const dx=(центр[0]-p[0]), dy=(центр[1]-p[1]), len=Math.hypot(dx,dy)||1;
-        return т(p[0]+dx/len*19, p[1]+dy/len*19+4, текст, 12, цвет||'#2b2110', true);
+        return подпись(p[0]+dx/len*20, p[1]+dy/len*20+4, текст, цвет||GOLD, 12);
       }).join('')}
     </g>`;
   }
@@ -257,6 +257,17 @@
     <rect x="${x}" y="${y}" width="${ш}" height="${в}" rx="6" fill="none" filter="url(#c1011-шум)" opacity=".08"/>
     <line x1="${x+5}" y1="${y+5}" x2="${x+ш-5}" y2="${y+5}" stroke="rgba(255,255,255,.5)" stroke-width="1.2"/>
   </g>`;
+
+  /* ПОДПИСЬ НА ПОДЛОЖКЕ: тёмная плашка + светлый жирный текст.
+     Так подпись читается и на светлой фигуре, и на тёмном фоне. */
+  const подпись = (x,y,текст,цвет,кегль) => {
+    const ш=String(текст).length*(кегль||13)*0.62+14, в=(кегль||13)+10;
+    return `<g>
+      <rect x="${(x-ш/2).toFixed(1)}" y="${(y-в+3).toFixed(1)}" width="${ш.toFixed(1)}" height="${в}"
+        rx="${(в/2).toFixed(1)}" fill="rgba(10,22,17,.82)" stroke="${цвет||GOLD}" stroke-width="1.2"/>
+      ${т(x,y-2,текст,кегль||13,цвет||GOLD,true)}
+    </g>`;
+  };
 
   const стекло = (x,y,ш,в,нач) => `<g>
     <rect x="${x+3}" y="${y+4}" width="${ш}" height="${в}" rx="8" fill="#08171f" opacity=".32" filter="url(#c1011-тень)"/>
