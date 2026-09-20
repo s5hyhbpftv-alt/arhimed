@@ -61,7 +61,7 @@
     background:linear-gradient(180deg,rgba(255,215,106,.14),rgba(255,215,106,.05));font-size:20px;line-height:1.45}
   #lvis .s6.l848 .правило b{color:${GOLD}}
   #lvis .s6.l848 .ask{display:flex;gap:10px;flex-wrap:wrap;width:100%}
-  #lvis .s6.l848 .ask button{flex:1 1 44%;min-height:56px;padding:12px 14px;font-size:16px;font-weight:600;line-height:1.3;text-align:left;
+  #lvis .s6.l848 .ask button{flex:1 1 100%;min-height:56px;height:auto;padding:13px 16px;overflow-wrap:anywhere;word-break:break-word;font-size:16px;font-weight:600;line-height:1.3;text-align:left;
     touch-action:manipulation;-webkit-tap-highlight-color:transparent;
     transition:transform 150ms cubic-bezier(.23,1,.32,1),border-color 150ms cubic-bezier(.23,1,.32,1)}
   #lvis .s6.l848 .ask button:active{transform:translateY(2px)}
