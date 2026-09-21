@@ -965,7 +965,43 @@ function pathSay(doneN,total){
   /* без имени (профиль ещё не заведён) послание начинается с маленькой буквы — поднимаем её */
   return s.charAt(0).toUpperCase()+s.slice(1);
 }
+/* Хвост «Пути»: острова и переключатели. Вынесен отдельно, потому что путь
+   начальной школы (MVP/js/path_junior.js) рисует свой маршрут, но острова и
+   «открыть весь мир» оставляет на месте — иначе ребёнок 1–4 класса потерял бы
+   доступ к банку задач и к картам старших островов. */
+window.pathTailHTML=function(){
+  pdCss(); ptCss();
+  const islands=ISLANDS.filter(islandVisible);
+  const islRows=islands.map(function(I){
+    const st=islStats(I.name), locked=st.total===0;
+    const pct=st.total? Math.round(st.done/st.total*100):0;
+    const on=PLAN.open.indexOf(encodeURIComponent(I.name))>=0;
+    const ic=locked? '<span class="pt-lock">🔒</span>' : ringHTML(pct,44,I.ico,I.img);
+    const meta=locked? 'задач для твоего класса пока нет' : (st.done+' из '+st.total+' · '+pct+'%');
+    return `<button type="button" class="pt-isl" aria-expanded="${on}" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">
+        <span class="pt-isl-ic">${ic}</span>
+        <span class="pt-isl-b">
+          <span class="pt-isl-nm">${esc(I.name)}</span>
+          <span class="pt-isl-meta">${meta}</span>
+          ${locked?'':'<span class="pt-bar"><i style="--w:'+(pct/100).toFixed(3)+'"></i></span>'}
+        </span>
+        <span class="pt-chev">${on?'▾':'▸'}</span>
+      </button>` + (on? dashExpanded(I) : '');
+  }).join('');
+  const tools=`<div class="pt-tools">
+      <button type="button" class="pt-tool" onclick="worldToggle()">${worldOpen()?'🌍 вернуть задачи своего класса':'🔒 открыть весь мир'}</button>
+      <button type="button" class="pt-tool" onclick="planOpenAll()">развернуть все острова</button>
+      ${PLAN.open.length? '<button type="button" class="pt-tool" onclick="planCloseAll()">свернуть</button>':''}
+    </div>
+    <div class="pt-note">${worldOpen()?'Сейчас открыты задачи всех классов. «Вернуть задачи своего класса» оставит только твои.':'Показаны задачи твоего класса.'}</div>`;
+  return `<div class="pt-h">Острова</div>` + islRows + tools + `<div class="pt-spacer"></div>`;
+};
 function renderPath(){
+  /* 1–4 класс идут своим маршрутом: у каждого класса свой мир и своя форма
+     пути, шаги собраны из уроков и задач именно его класса. */
+  if(typeof isJunior==='function' && isJunior() && typeof window.renderPathJunior==='function'){
+    return window.renderPathJunior();
+  }
   pdCss(); ptCss();
   const pool=taskPool();
   const doneN=pool.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;

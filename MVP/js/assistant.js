@@ -204,8 +204,17 @@
       out.push(vchip('🗣 Расскажи легенду','Расскажи коротко легенду об Архимеде: Внутреннее море, острова Познания и почему ты учишь ребят.'));
       out.push(chip('📖 К урокам',()=>go('book')));
     } else { label='Путь / карта островов';
-      const nxt=window.ARH_TASKS.find(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done);
-      if(nxt) out.push(chip('🎯 Продолжить: '+nxt.title,()=>go('task-'+nxt.id)));
+      /* У младших следующий шаг маршрута — это карточка наверху «Пути»
+         (урок или задача), а не первая нерешённая задача банка. */
+      const младш=(function(){ try{ return typeof isJunior==='function' && isJunior(); }catch(e){ return false; } })();
+      const карточка=младш? document.querySelector('.jp-now') : null;
+      if(карточка){
+        const имяШага=(карточка.querySelector('.n-t')||{}).textContent||'следующий шаг';
+        out.push(chip('🎯 Дальше: '+имяШага,()=>{ try{ карточка.click(); }catch(e){} }));
+      } else {
+        const nxt=window.ARH_TASKS.find(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done);
+        if(nxt) out.push(chip('🎯 Продолжить: '+nxt.title,()=>go('task-'+nxt.id)));
+      }
       out.push(chip('📖 Книга знаний',()=>go('book')));
       out.push(vchip('🗣 Что мне делать?','Ученик на карте островов. Посоветуй, что делать дальше, чтобы готовиться к олимпиаде.'));
     }
@@ -225,6 +234,19 @@
     parent:['Смотрите прогресс и слабые темы ребёнка','Можно поставить лимит времени на день'],
     library:['Выбирай задачи по темам — от простых к сложным'],
     legend:['Листай главы легенды — их семь, как шагов к титулу Стратега','Полная легенда — в файле ЛЕГЕНДА_АРХИМЕДА.md'] };
+  /* У начальной школы на «Пути» свой маршрут (MVP/js/path_junior.js): там нет
+     кнопки «Продолжить», а разговор про ВсОШ и инварианты ребёнку 1–4 класса
+     ничего не объясняет. Поэтому для младших — свои подсказки. */
+  const TIPS_JUN={
+    path:['Верхняя карточка — твой следующий шаг. Нажми её','Участок открывается нажатием: посмотри, что дальше','Сначала урок — потом задачка по нему','Не получилось? Нажми меня, дам подсказку'],
+    task:['Прочитай условие вслух — так понятнее','Не бойся ошибиться: я покажу, как правильно','Считать на пальцах можно, это честно'],
+    taskDone:['Получилось! Идём дальше','Хочешь, объясню ещё раз? Нажми «📜 Объясни решение»'],
+    lesson:['Жми «➡ Дальше» — кадр за кадром','Понял? Проверь себя кнопкой «❓ Проверь меня»'],
+    book:['Здесь все уроки твоего класса','Открой урок — Архимед всё покажет по шагам'] };
+  function наборПодсказок(){
+    try{ if(typeof isJunior==='function' && isJunior()) return TIPS_JUN; }catch(e){}
+    return TIPS;
+  }
   function tipKind(){
     const lesson=!!document.querySelector('.sdot');
     const task=!!document.querySelector('.q')&&!lesson;
@@ -269,7 +291,8 @@
       if(sheetOpen()) return;
       if(typeof AGENTLIVE!=='undefined'&&AGENTLIVE.state&&AGENTLIVE.state()) return; // не мешать разговору
       if(bubEl&&bubEl.classList.contains('show')) return;  // не перебивать уже показанное
-      const pool=TIPS[tipKind()]||TIPS.path; if(!pool.length) return;
+      const набор=наборПодсказок();
+      const pool=набор[tipKind()]||набор.path||TIPS.path; if(!pool.length) return;
       tipDayMark();
       bubEl.innerHTML=esc(pool[0]); bubEl.classList.add('show');
       clearTimeout(tipHideTimer);
