@@ -288,17 +288,23 @@
       return `<svg viewBox="0 0 360 78" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
         <path d="M0 70h360" ${л} stroke-width="1.4" opacity=".35"/>
 
-        <path d="M12 66h54M16 60h54M10 54h54M18 48h50" ${л} stroke-width="2.6" opacity=".7"/>
+        <path d="M12 66h52M12 60h52M12 54h52M12 48h48" ${л} stroke-width="2.4" opacity=".7"/>
+        <path d="M12 45v24M64 51v18M60 45v6" ${л} stroke-width="1.2" opacity=".5"/>
 
-        <path d="M107 26 99 12" ${л} stroke-width="2.2"/>
-        <path d="M107 26C101 38 105 50 119 59" ${л} stroke-width="2.2"/>
-        <path d="M249 37c7 7 6 16-2 23" ${л} stroke-width="2.2"/>
-        <path d="M107 26C150 20 214 23 249 37" ${л} stroke-width="2"/>
-        <path d="M119 59C152 64 214 64 247 60" ${л} stroke-width="2.6"/>
-        <path d="M112 42C150 37 212 39 250 47" ${л} stroke-width="1.2" opacity=".6"/>
-        <path d="M116 51C150 50 212 52 249 55" ${л} stroke-width="1.2" opacity=".6"/>
-        <path d="M134 61c-6-11-8-22-8-33M161 63c-4-12-6-24-5-36M188 64c-2-12-3-25-2-37M215 63c1-12 1-25 3-36M241 61c4-10 5-20 6-28" ${л} stroke-width="1.3" opacity=".5"/>
-        <path d="M130 62l-8 8M238 61l8 9M184 64v6" ${л} stroke-width="1.5" opacity=".6"/>
+        <path d="M128 57C124 44 122 32 122 21M158 58c-2-13-3-24-2-32M190 58c0-13 1-24 3-31M222 58c2-13 5-23 8-29" ${л} stroke-width="1.2" opacity=".5"/>
+
+        <path d="M92 15C98 31 106 45 116 56" ${л} stroke-width="2.6"/>
+        <path d="M116 56 246 58" ${л} stroke-width="2.8"/>
+        <path d="M246 58 258 33" ${л} stroke-width="2.6"/>
+        <path d="M92 15C130 36 210 41 258 33" ${л} stroke-width="2.2"/>
+
+        <path d="M98 24C134 41 210 45 254 36" ${л} stroke-width="1.3" opacity=".72"/>
+        <path d="M103 32C138 47 208 50 250 41" ${л} stroke-width="1.3" opacity=".62"/>
+        <path d="M108 40C142 52 206 54 247 45" ${л} stroke-width="1.3" opacity=".52"/>
+        <path d="M113 48C146 56 205 58 244 50" ${л} stroke-width="1.3" opacity=".42"/>
+
+        <path d="M134 57 128 70M186 58v12M232 58 238 70" ${л} stroke-width="1.6" opacity=".7"/>
+        <path d="M118 70h28M172 70h28M224 70h28" ${л} stroke-width="2" opacity=".5"/>
 
         <path d="M292 42h60" ${л} stroke-width="2.6" opacity=".8"/>
         <path d="M301 43l-7 24M301 43l7 24M343 43l-7 24M343 43l7 24" ${л} stroke-width="1.4" opacity=".65"/>
@@ -306,14 +312,20 @@
     }
     if(форма === 'вехи'){
       /* вдоль берега: слева суша, лодка под парусом, три вехи в ряд */
+      /* Лодка построена по тем же правилам, что и верфь: седловатость борта,
+         задранный форштевень, транец. Парус — прямой на рее, с пузом от ветра,
+         а не треугольный флажок на палке. */
       return `<svg viewBox="0 0 360 78" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
         <path d="M0 30c16 10 30 2 44 10s18 16 30 18" ${л} stroke-width="1.6" opacity=".55"/>
         ${вода}
-        <path d="M112 62h64l-10 14h-44z" ${л} stroke-width="1.8"/>
-        <path d="M144 62V26l30 18-30 8" ${л} stroke-width="1.7"/>
-        <path d="M228 60V24M228 24l18 8-18 8" ${л} stroke-width="1.6"/>
-        <path d="M288 60V30M288 30l14 6-14 6" ${л} stroke-width="1.4" opacity=".8"/>
-        <path d="M338 60V38M338 38l11 5-11 5" ${л} stroke-width="1.3" opacity=".6"/>
+        <path d="M118 46c2 10 10 18 30 18s42-6 50-20" ${л} stroke-width="2"/>
+        <path d="M118 46c22 6 58 6 80-2" ${л} stroke-width="1.6"/>
+        <path d="M154 44V38M154 20v-6" ${л} stroke-width="1.8"/>
+        <path d="M135 18h38" ${л} stroke-width="1.6"/>
+        <path d="M135 18C131 26 131 32 134 38M173 18c4 8 4 14 1 20M134 38c12 5 27 5 40 0" ${л} stroke-width="1.5"/>
+        <path d="M244 60V26M244 26l18 8-18 8" ${л} stroke-width="1.6"/>
+        <path d="M296 60V32M296 32l14 6-14 6" ${л} stroke-width="1.4" opacity=".8"/>
+        <path d="M340 60V40M340 40l11 5-11 5" ${л} stroke-width="1.3" opacity=".6"/>
       </svg>`;
     }
     /* открытое море: компас-роза, лодка, остров с колонной на горизонте */
@@ -322,8 +334,11 @@
       <path d="M52 10v60M22 40h60" ${л} stroke-width="1" opacity=".45"/>
       <path d="M52 16l9 19 19 5-19 5-9 19-9-19-19-5 19-5z" ${л} stroke-width="1.7"/>
       ${вода}
-      <path d="M150 62h58l-9 14h-40z" ${л} stroke-width="1.7"/>
-      <path d="M179 62V28l26 16-26 8" ${л} stroke-width="1.6"/>
+      <path d="M146 44c2 10 10 18 31 18s43-6 51-20" ${л} stroke-width="2"/>
+      <path d="M146 44c23 6 60 6 82-2" ${л} stroke-width="1.6"/>
+      <path d="M183 42v-6M183 16v-6" ${л} stroke-width="1.8"/>
+      <path d="M163 14h40" ${л} stroke-width="1.6"/>
+      <path d="M163 14c-4 9-4 16-1 22M203 14c4 9 4 16 1 22M162 36c13 6 28 6 42 0" ${л} stroke-width="1.5"/>
       <path d="M268 56c6-20 16-30 26-30s20 10 26 30z" ${л} stroke-width="1.6" opacity=".85"/>
       <path d="M294 26V10M286 10h16M290 16h8" ${л} stroke-width="1.3" opacity=".85"/>
     </svg>`;
