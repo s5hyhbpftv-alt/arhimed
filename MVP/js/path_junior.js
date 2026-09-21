@@ -281,14 +281,27 @@
       </svg>`;
     }
     if(форма === 'доски'){
-      /* верфь: остов лодки на стапеле, ряды досок, подпорки */
+      /* Верфь панорамой: слева штабель досок, в центре лодка В НАБОРЕ на
+         стапеле (киль, форштевень, шпангоуты, два пояса обшивки), справа
+         козлы с доской. Прежний рисунок был трапецией с поперечными линиями
+         и читался как корзина, а не как строящаяся лодка. */
       return `<svg viewBox="0 0 360 78" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
-        <path d="M62 66c56 14 180 14 236 0" ${л} stroke-width="2"/>
-        <path d="M62 66 78 16M298 66 282 16" ${л} stroke-width="1.8"/>
-        <path d="M84 56h192M80 44h200M76 32h208" ${л} stroke-width="1.3" opacity=".7"/>
-        <path d="M120 20v44M180 16v50M240 20v44" ${л} stroke-width="1.2" opacity=".5"/>
-        <path d="M46 74l22-12M314 74l-22-12" ${л} stroke-width="1.5" opacity=".7"/>
-        <path d="M0 76h360" ${л} stroke-width="1.4" opacity=".4"/>
+        <path d="M0 70h360" ${л} stroke-width="1.4" opacity=".35"/>
+
+        <path d="M12 66h54M16 60h54M10 54h54M18 48h50" ${л} stroke-width="2.6" opacity=".7"/>
+
+        <path d="M107 26 99 12" ${л} stroke-width="2.2"/>
+        <path d="M107 26C101 38 105 50 119 59" ${л} stroke-width="2.2"/>
+        <path d="M249 37c7 7 6 16-2 23" ${л} stroke-width="2.2"/>
+        <path d="M107 26C150 20 214 23 249 37" ${л} stroke-width="2"/>
+        <path d="M119 59C152 64 214 64 247 60" ${л} stroke-width="2.6"/>
+        <path d="M112 42C150 37 212 39 250 47" ${л} stroke-width="1.2" opacity=".6"/>
+        <path d="M116 51C150 50 212 52 249 55" ${л} stroke-width="1.2" opacity=".6"/>
+        <path d="M134 61c-6-11-8-22-8-33M161 63c-4-12-6-24-5-36M188 64c-2-12-3-25-2-37M215 63c1-12 1-25 3-36M241 61c4-10 5-20 6-28" ${л} stroke-width="1.3" opacity=".5"/>
+        <path d="M130 62l-8 8M238 61l8 9M184 64v6" ${л} stroke-width="1.5" opacity=".6"/>
+
+        <path d="M292 42h60" ${л} stroke-width="2.6" opacity=".8"/>
+        <path d="M301 43l-7 24M301 43l7 24M343 43l-7 24M343 43l7 24" ${л} stroke-width="1.4" opacity=".65"/>
       </svg>`;
     }
     if(форма === 'вехи'){
@@ -518,7 +531,7 @@
   .jp-top{position:relative;border-radius:20px;padding:16px 18px 78px;margin:0 0 14px;overflow:hidden;
      background:linear-gradient(160deg,rgba(var(--jp-arg),.16),rgba(0,0,0,.2) 62%),#1b2c23;
      border:1px solid rgba(var(--jp-arg),.34)}
-  .jp-scene{position:absolute;left:0;right:0;bottom:-2px;width:100%;height:78px;
+  .jp-scene{position:absolute;left:0;right:0;bottom:0;width:100%;height:78px;
      color:var(--jp-a);opacity:.42;pointer-events:none}
   .jp-tr{display:flex;align-items:flex-start;gap:12px;position:relative}
   .jp-top .jp-tb{flex:1;min-width:0}
@@ -538,18 +551,26 @@
      background:linear-gradient(90deg,rgba(var(--jp-arg),.6),var(--jp-a));
      transition:transform 520ms cubic-bezier(.23,1,.32,1)}
 
-  /* ── сегодняшний шаг ── */
-  .jp-now{display:flex;align-items:center;gap:14px;width:100%;text-align:left;margin:0 0 20px;padding:16px;
-     border-radius:18px;border:1px solid rgba(var(--jp-arg),.5);background:rgba(var(--jp-arg),.13);
-     color:inherit;font:inherit;cursor:pointer;
-     transition:transform 140ms cubic-bezier(.23,1,.32,1)}
-  .jp-now:active{transform:translateY(2px)}
+  /* ── сегодняшний шаг ──
+     Кнопки экрана говорят на языке оболочки (.btn в index.html): заливка,
+     тёмный текст, тень 3 px снизу и посадка на 2 px при нажатии — кнопка
+     ведёт себя как настоящая. Раньше главное действие было полупрозрачной
+     плашкой и не отличалось от соседних карточек. Цвет — акцент своей главы,
+     а не общая латунь. */
+  .jp-now{display:flex;align-items:center;gap:14px;width:100%;text-align:left;margin:0 0 20px;padding:14px 16px;
+     border-radius:18px;border:0;cursor:pointer;font:inherit;
+     background:linear-gradient(180deg,var(--jp-a),rgba(var(--jp-arg),.72));
+     box-shadow:0 3px 0 rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.4);
+     transition:transform 120ms ease, box-shadow 180ms ease, filter 180ms ease}
+  .jp-now:hover{filter:brightness(1.05)}
+  .jp-now:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.3)}
+  .jp-now:focus-visible{outline:2px solid #fff6e4;outline-offset:2px}
   .jp-now .n-ic{flex:0 0 48px;width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;
-     background:var(--jp-a);color:#132019}
+     background:rgba(16,26,20,.16);color:#16241c;border:1px solid rgba(16,26,20,.2)}
   .jp-now .n-b{min-width:0;flex:1}
-  .jp-now .n-k{display:block;font-size:14px;line-height:1.2;color:#d9c9a6}
-  .jp-now .n-t{display:block;font-size:20px;line-height:1.25;color:#fff6e4;margin-top:2px}
-  .jp-now .n-arr{flex:0 0 auto;color:var(--jp-a);font-size:24px}
+  .jp-now .n-k{display:block;font-size:14px;line-height:1.2;color:rgba(20,32,24,.72)}
+  .jp-now .n-t{display:block;font-size:20px;line-height:1.25;color:#16241c;margin-top:2px}
+  .jp-now .n-arr{flex:0 0 auto;color:#16241c;font-size:24px}
 
   /* ── участок ── */
   .jp-stage{margin:0 0 26px}
@@ -569,19 +590,30 @@
   /* Сюжет участка — одна живая фраза, ради которой участок вообще назван так. */
   .jp-plot{margin:0 2px 14px;padding:0 0 0 12px;border-left:2px solid rgba(var(--jp-arg),.38);
      font-size:14px;line-height:1.5;color:#b6a98e;max-width:46ch;text-wrap:pretty}
+  /* Второстепенная кнопка: без заливки, но с той же физикой — рамка сплошная,
+     не пунктирная (пунктир во всю ширину читался как «поле для перетаскивания»). */
   .jp-more{display:block;width:100%;min-height:48px;margin-top:12px;padding:12px;border-radius:12px;
-     border:1px dashed rgba(var(--jp-arg),.4);background:none;color:var(--jp-a);font:inherit;font-size:16px;cursor:pointer;
-     transition:background 140ms cubic-bezier(.23,1,.32,1)}
-  .jp-more:active{background:rgba(var(--jp-arg),.1)}
+     border:1px solid rgba(var(--jp-arg),.45);background:rgba(var(--jp-arg),.07);
+     color:var(--jp-a);font:inherit;font-size:16px;cursor:pointer;
+     box-shadow:0 2px 0 rgba(0,0,0,.3);
+     transition:transform 120ms ease, box-shadow 180ms ease, background 180ms ease}
+  .jp-more:hover{background:rgba(var(--jp-arg),.12)}
+  .jp-more:active{transform:translateY(2px);box-shadow:0 0 0 rgba(0,0,0,.3)}
+  .jp-more:focus-visible{outline:2px solid var(--jp-a);outline-offset:2px}
 
   /* Печать «Эврика» — на участке, пройденном целиком. */
   .jp-evr{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:99px;
      border:1px solid rgba(143,209,168,.5);color:#9fd9b4;font-size:12px;letter-spacing:.14em}
   .jp-evr svg{width:14px;height:14px}
 
-  /* ── общий вид шага ── */
+  /* ── общий вид шага ──
+     Шаг — тоже кнопка: при нажатии садится, как всё остальное на экране.
+     Без этого камень и доска не отзывались на палец вовсе. */
   .jp-step{position:relative;display:block;width:100%;text-align:left;border:0;background:none;color:inherit;
-     font:inherit;cursor:pointer;padding:0}
+     font:inherit;cursor:pointer;padding:0;
+     transition:transform 110ms ease}
+  .jp-step:active{transform:translateY(1px)}
+  .jp-step:focus-visible{outline:2px solid var(--jp-a);outline-offset:3px;border-radius:12px}
   .jp-step .st-t{display:block;font-size:16px;line-height:1.35;color:#f2e9d6;text-wrap:pretty}
   .jp-step .st-m{display:block;font-size:14px;line-height:1.3;color:#a99a7e}
   .jp-step.done .st-t{color:#a9bda9}
@@ -606,9 +638,15 @@
   .jp-yard{display:flex;flex-direction:column;gap:6px}
   /* width:auto обязателен: у .jp-step ширина 100 %, и смещение ряда внакрой
      добавлялось к полной ширине — экран уезжал вбок на 18 px. */
+  /* Доска, а не плашка: волокно тонкой линией вдоль, торец темнее, и лежит
+     она на тени — поэтому ряд читается как обшивка, а не как список карточек. */
   .jp-yard .jp-step{width:auto;display:flex;align-items:center;gap:12px;min-height:56px;padding:10px 14px;border-radius:5px;
-     background:linear-gradient(180deg,rgba(var(--jp-arg),.13),rgba(0,0,0,.14));
-     border:1px solid rgba(var(--jp-arg),.26);border-bottom-width:3px}
+     background:
+       repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 7px),
+       linear-gradient(180deg,rgba(var(--jp-arg),.16),rgba(0,0,0,.16));
+     border:1px solid rgba(var(--jp-arg),.26);border-bottom-width:3px;
+     box-shadow:0 2px 0 rgba(0,0,0,.28)}
+  .jp-yard .jp-step:active{box-shadow:0 0 0 rgba(0,0,0,.28)}
   .jp-yard .jp-step:nth-child(odd){margin-right:26px}
   .jp-yard .jp-step:nth-child(even){margin-left:26px}
   .jp-yard .jp-step.done{background:linear-gradient(180deg,rgba(143,209,168,.14),rgba(0,0,0,.14));border-color:rgba(143,209,168,.4)}
@@ -684,10 +722,13 @@
   .jp-rule b{display:block;font-size:20px;line-height:1.25;color:var(--jp-a);margin-bottom:6px;text-wrap:balance}
   .jp-rule p{margin:0;font-size:14px;line-height:1.5;color:#cfc2a6;max-width:46ch;text-wrap:pretty}
   .jp-legend{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;margin:0 0 24px;padding:12px 14px;
-     border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);
+     border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);
      color:inherit;font:inherit;cursor:pointer;text-align:left;
-     transition:background 140ms cubic-bezier(.23,1,.32,1)}
-  .jp-legend:active{background:rgba(255,255,255,.07)}
+     box-shadow:0 2px 0 rgba(0,0,0,.3);
+     transition:transform 120ms ease, box-shadow 180ms ease, background 180ms ease}
+  .jp-legend:hover{background:rgba(255,255,255,.09)}
+  .jp-legend:active{transform:translateY(2px);box-shadow:0 0 0 rgba(0,0,0,.3)}
+  .jp-legend:focus-visible{outline:2px solid var(--jp-a);outline-offset:2px}
   .jp-legend .lg-ic{flex:0 0 32px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--jp-a)}
   .jp-legend .lg-b{flex:1;min-width:0}
   .jp-legend .lg-b b{display:block;font-size:16px;line-height:1.25;color:#f2e9d6}
@@ -697,7 +738,7 @@
   .jp-h{margin:26px 2px 10px;font-size:20px;line-height:1.2;color:#ffd76a}
 
   @media (prefers-reduced-motion: reduce){
-    .jp-rail i,.jp-now,.jp-sh.as-btn,.jp-more,.jp-legend{transition:none}
+    .jp-rail i,.jp-now,.jp-sh.as-btn,.jp-more,.jp-legend,.jp-step{transition:none}
   }
   `;
     document.head.appendChild(st);
