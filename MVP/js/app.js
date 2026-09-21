@@ -578,14 +578,69 @@ function finishOnboard(){
     klass:String(chosenKlass),
     level:chosenLevel,
     limitMin:45, createdAt:Date.now() };
-  DB.sessionStart=Date.now(); save(); showNav(true); go('path'); toast('Добро пожаловать, '+name+'!');
+  /* Свой сундук, если этот Исследователь уже занимался на устройстве,
+     иначе чистый лист — чужой прогресс не достаётся никому. */
+  const вернулся = сундукДостать(DB.profile);
+  DB.sessionStart=Date.now(); save(); showNav(true); go('path');
+  toast(вернулся ? ('С возвращением, '+name+'! Твой прогресс на месте.') : ('Добро пожаловать, '+name+'!'));
   /* сразу просим придумать свой PIN — устройство привязывается к ученику */
   try{ if (typeof kidGate === 'function') setTimeout(kidGate, 250); }catch(e){}
 }
+/* ---------- СУНДУК ИССЛЕДОВАТЕЛЯ ----------------------------------------
+   Прогресс хранится ПО ИССЛЕДОВАТЕЛЯМ, а не общей кучей на устройство.
+   Раньше выход только обнулял DB.profile, а tasks, lessons, points, streak
+   и код родителя оставались общими. Из-за этого следующий ребёнок получал
+   чужое: проверка показала, что Петя (2 класс) входил с очками 140, серией 5,
+   двумя уроками и семью задачами Вики, а его занятия уезжали родителю Вики.
+   Теперь при выходе прогресс складывается в сундук под ключом «имя · класс»,
+   а при входе достаётся свой. Ничего не стирается: сундуки лежат рядом. */
+const ПОЛЯ_ПРОГРЕССА = ['tasks','lessons','points','streak','best','history','days','events','totalMin','today'];
+
+/* Ключ — только имя. Класс в ключ не входит намеренно: ребёнок переходит в
+   следующий класс, и если бы класс был частью ключа, он при этом терял бы
+   весь свой прогресс — проверка это и показала. */
+function ключИсследователя(п){
+  if(!п || !п.name) return '';
+  return String(п.name).trim().toLowerCase().replace(/\s+/g,' ');
+}
+function сундукПоложить(п){
+  const к = ключИсследователя(п);
+  if(!к) return;
+  DB.сундуки = DB.сундуки || {};
+  const с = {};
+  ПОЛЯ_ПРОГРЕССА.forEach(f=>{ if(DB[f]!==undefined) с[f]=DB[f]; });
+  /* код привязки к родителю тоже принадлежит ребёнку, а не устройству:
+     иначе отчёт нового ребёнка уходит родителю прежнего */
+  if(DB.kid) с.kid = DB.kid;
+  с.сохранён = Date.now();
+  DB.сундуки[к] = с;
+}
+function сундукДостать(п){
+  const к = ключИсследователя(п);
+  const пусто = emptyState();
+  const с = (DB.сундуки||{})[к];
+  ПОЛЯ_ПРОГРЕССА.forEach(f=>{
+    DB[f] = (с && с[f]!==undefined) ? с[f] : (пусто[f]!==undefined ? пусто[f] : (f==='lessons'?{}:DB[f]));
+  });
+  if(!DB.lessons) DB.lessons={};
+  DB.kid = (с && с.kid) ? с.kid : {};
+  try{
+    if(с && с.kid && typeof kidSaveState==='function') kidSaveState();
+    else localStorage.removeItem('arh_kid_v1');
+  }catch(e){}
+  return !!с;
+}
+
 /* ---------- ВЫХОД ИЗ ПРОФИЛЯ ---------- */
 function logoutProfile(){
   if(!DB.profile) return;
   if(!confirm('Выйти из профиля «'+DB.profile.name+'»? Прогресс сохранится — вернёмся к начальному экрану.')) return;
+  сундукПоложить(DB.profile);
+  const пусто = emptyState();
+  ПОЛЯ_ПРОГРЕССА.forEach(f=>{ DB[f] = (пусто[f]!==undefined) ? пусто[f] : {}; });
+  DB.lessons={};
+  DB.kid={};
+  try{ localStorage.removeItem('arh_kid_v1'); }catch(e){}
   DB.profile=null;
   DB.sessionStart=Date.now();
   save();
