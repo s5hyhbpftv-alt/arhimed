@@ -81,7 +81,7 @@
     4: {
       ключ:'more', форма:'курс', глава:4,
       имя:'Открытое море',
-      под:'Берега больше нет: курс держат по компасу и по углам. Идут галсами — короткими ломаными, — и на горизонте уже видна земля.',
+      под:'Берега нет: курс держат по компасу, а идут галсами — короткими ломаными. На горизонте уже видна земля.',
       короткое:'Открытое море',
       акцент:'#9db7ff', акцентRGB:'157,183,255',
       спутник:{имя:'Архимед', img:'img/arch_wow.jpg'},
@@ -523,7 +523,7 @@
 
   /* ── полоса глав: где ты в истории ──
      Пять точек: четыре главы пролога и остров, к которому они ведут. */
-  .jp-saga{display:flex;align-items:stretch;gap:0;margin:0 0 14px;padding:0;list-style:none;
+  .jp-saga{display:flex;align-items:stretch;gap:0;margin:0 0 10px;padding:0;list-style:none;
      border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden;background:rgba(0,0,0,.16)}
   .jp-saga li{flex:1 1 0;min-width:0;padding:8px 4px 9px;text-align:center;font-size:12px;line-height:1.25;
      color:#8d9a8c;border-right:1px solid rgba(255,255,255,.07)}
@@ -543,10 +543,10 @@
      и два одинаковых лица на одном экране — это дубль. Освободившееся место
      занимает рисунок главы: берег, верфь, вехи, компас. Рисунок лежит полосой
      по низу шапки, поэтому его видно целиком, а не куском из-под портрета. */
-  .jp-top{position:relative;border-radius:20px;padding:16px 18px 78px;margin:0 0 14px;overflow:hidden;
+  .jp-top{position:relative;border-radius:20px;padding:14px 18px 70px;margin:0 0 10px;overflow:hidden;
      background:linear-gradient(160deg,rgba(var(--jp-arg),.16),rgba(0,0,0,.2) 62%),#1b2c23;
      border:1px solid rgba(var(--jp-arg),.34)}
-  .jp-scene{position:absolute;left:0;right:0;bottom:0;width:100%;height:78px;
+  .jp-scene{position:absolute;left:0;right:0;bottom:0;width:100%;height:70px;
      color:var(--jp-a);opacity:.42;pointer-events:none}
   .jp-tr{display:flex;align-items:flex-start;gap:12px;position:relative}
   .jp-top .jp-tb{flex:1;min-width:0}
@@ -559,7 +559,7 @@
   .jp-band{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 8px;padding:0 2px}
   .jp-band b{font-size:24px;color:#fff6e4;font-variant-numeric:tabular-nums}
   .jp-band span{font-size:14px;color:#c3b393}
-  .jp-rail{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin:0 2px 20px}
+  .jp-rail{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin:0 2px 10px}
   /* Полоса растёт масштабом, а не шириной: анимация width дёргает раскладку. */
   .jp-rail i{display:block;height:100%;width:100%;border-radius:99px;transform-origin:left center;
      transform:scaleX(var(--w,0));
@@ -736,18 +736,21 @@
      background:linear-gradient(150deg,rgba(var(--jp-arg),.1),rgba(0,0,0,.14))}
   .jp-rule b{display:block;font-size:20px;line-height:1.25;color:var(--jp-a);margin-bottom:6px;text-wrap:balance}
   .jp-rule p{margin:0;font-size:14px;line-height:1.5;color:#cfc2a6;max-width:46ch;text-wrap:pretty}
-  .jp-legend{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;margin:0 0 24px;padding:12px 14px;
-     border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);
+  /* Строка входа в легенду стоит ВВЕРХУ, под полосой глав, и потому нарочно
+     компактна: 48 px в одну строку. Карточка на 82 px, какой она была внизу,
+     отодвинула бы главное действие — «следующий урок» — за первый экран. */
+  .jp-legend{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;margin:0 0 10px;padding:8px 12px;
+     border-radius:12px;border:1px solid rgba(var(--jp-arg),.34);background:rgba(var(--jp-arg),.08);
      color:inherit;font:inherit;cursor:pointer;text-align:left;
-     box-shadow:0 2px 0 rgba(0,0,0,.3);
+     box-shadow:0 2px 0 rgba(0,0,0,.28);
      transition:transform 120ms ease, box-shadow 180ms ease, background 180ms ease}
-  .jp-legend:hover{background:rgba(255,255,255,.09)}
-  .jp-legend:active{transform:translateY(2px);box-shadow:0 0 0 rgba(0,0,0,.3)}
+  .jp-legend:hover{background:rgba(var(--jp-arg),.14)}
+  .jp-legend:active{transform:translateY(2px);box-shadow:0 0 0 rgba(0,0,0,.28)}
   .jp-legend:focus-visible{outline:2px solid var(--jp-a);outline-offset:2px}
-  .jp-legend .lg-ic{flex:0 0 32px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--jp-a)}
+  .jp-legend .lg-ic{flex:0 0 24px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:var(--jp-a)}
   .jp-legend .lg-b{flex:1;min-width:0}
-  .jp-legend .lg-b b{display:block;font-size:16px;line-height:1.25;color:#f2e9d6}
-  .jp-legend .lg-b span{display:block;font-size:14px;line-height:1.3;color:#a99a7e}
+  .jp-legend .lg-b b{display:block;font-size:16px;line-height:1.2;color:#f2e9d6}
+  .jp-legend .lg-b span{display:block;font-size:12px;line-height:1.3;color:#a99a7e}
   .jp-legend .lg-arr{flex:0 0 auto;color:var(--jp-a);font-size:20px}
 
   .jp-h{margin:26px 2px 10px;font-size:20px;line-height:1.2;color:#ffd76a}
@@ -971,18 +974,25 @@
 
     /* Правило Хранителя — по тому, где ребёнок в главе. */
     const п = !сделано ? ПРАВИЛА.начало : (следующий ? ПРАВИЛА.путь : ПРАВИЛА.конец);
-    const правило = `<div class="jp-rule"><b>${esc2(п[0])}</b><p>${esc2(п[1])}</p></div>
-      <button type="button" class="jp-legend" onclick="go('legend')">
-        <span class="lg-ic"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+    const правило = `<div class="jp-rule"><b>${esc2(п[0])}</b><p>${esc2(п[1])}</p></div>`;
+
+    /* Вход в легенду стоит НАВЕРХУ, сразу под полосой глав: маршрут — это её
+       пролог, и «что это за море и кто такой Архимед» ребёнок должен иметь
+       возможность прочитать до того, как пойдёт по главе, а не после неё.
+       Строка нарочно компактная (48 px, одна строка): вверху уже стоят шапка
+       приложения и полоса глав, и карточка на 82 px отодвинула бы главное
+       действие — «следующий урок» — за пределы первого экрана. */
+    const легенда = `<button type="button" class="jp-legend" onclick="go('legend')">
+        <span class="lg-ic"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
           <path d="M5 4h11l3 3v13H5zM16 4v3h3M8 11h8M8 15h5" fill="none" stroke="currentColor"
             stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span class="lg-b"><b>Легенда об Архимеде</b><span>кто такой Хранитель и откуда взялись острова</span></span>
+        <span class="lg-b"><b>Легенда об Архимеде</b><span>кто такой Хранитель и откуда острова</span></span>
         <span class="lg-arr">→</span>
       </button>`;
 
     const s = document.getElementById('screen');
     s.innerHTML = `<div class="jp" style="--jp-a:${мир.акцент};--jp-arg:${мир.акцентRGB}">
-        ${сага}${шапка}${полоса}${сейчас}${слово}${участки}${горизонт}${правило}
+        ${сага}${легенда}${шапка}${полоса}${сейчас}${слово}${участки}${горизонт}${правило}
       </div>`;
 
     /* Острова и переключатели прежнего «Пути» остаются ниже: ребёнок может
