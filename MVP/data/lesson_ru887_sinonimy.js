@@ -1,4 +1,4 @@
-/* ============ РУССКИЙ ЯЗЫК · УРОК 1051 · «СИНОНИМЫ, АНТОНИМЫ, ОМОНИМЫ» ============
+/* ============ РУССКИЙ ЯЗЫК · УРОК 887 · «СИНОНИМЫ, АНТОНИМЫ, ОМОНИМЫ» ============
    5 класс, «Лексика». Продолжение линии 877–883 (речь, текст, фонетика,
    орфоэпия, шипящие) и 1000 (паронимы).
 
@@ -22,7 +22,7 @@
 (function(){
   'use strict';
 
-  const ID = 1051;
+  const ID = 887;
   const R = window.RUKIT;
   if(!R){ return; }
   const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -63,7 +63,7 @@
                : `<p class="verdict">Сначала подумай: значения совпадают, спорят или одинаково пишутся?</p>`}
       <div class="row">${варианты.map(о=>
         `<button type="button" class="chip" style="flex:1 1 40%;font-size:20px"
-           onclick="ru1051Game('${esc(о)}')">${esc(о)}</button>`).join('')}</div>
+           onclick="ru887Game('${esc(о)}')">${esc(о)}</button>`).join('')}</div>
       <p class="score">верно: ${st.gOk||0} · ошибок: ${st.gBad||0} · всего: ${GAME.length}</p>
       ${cap(готово?'Нажми любую кнопку — следующее задание.':'Сначала вопрос, потом название.')}`;
   }
@@ -129,7 +129,7 @@
   ]});
 
   /* ── карточка каталога: тексты пояснений и задачи ── */
-  const L1051={
+  const L887={
     id:ID, title:'Синонимы, антонимы, омонимы', ico:'📚',
     src:'Русский язык · 5 класс · Лексика', subj:'rus', group:null,
     explain:[
@@ -167,7 +167,7 @@
     const arr=window.ARH_LESSONS;
     if(arr){
       const м=arr.findIndex(L=>L && L.id===ID);
-      if(м>=0) arr[м]=L1051; else arr.push(L1051);
+      if(м>=0) arr[м]=L887; else arr.push(L887);
     }
   }catch(e){}
 
@@ -186,5 +186,5 @@
     }
     if(typeof chRender==='function') chRender(0);
   }
-  window.ru1051Game=function(о){ try{ игра(о); }catch(e){} };
+  window.ru887Game=function(о){ try{ игра(о); }catch(e){} };
 })();
