@@ -256,7 +256,7 @@
   /* ---------- рисунок главы: сцена в шапке ----------------------------------
      Четыре разные сцены, а не одна перекрашенная: берег, верфь, вехи, компас.
      Линии тонкие, заливок почти нет — это чертёж на полях, а не картинка. */
-  /* Кадр 360×78 повторяет пропорции своего места — полосы по низу шапки
+  /* Кадр 360×70 повторяет пропорции своего места — полосы по низу шапки
      (≈ 4,6:1). Если этого не соблюсти, SVG впишется по одной стороне и повиснет
      маленьким пятном посередине: на этом уже спотыкались в инвесторской деке. */
   function сцена(форма){
@@ -267,7 +267,7 @@
       /* Камни разной формы и разного размера: четыре одинаковых полукруга в ряд
          читались как арки моста, а не как находки на песке. Под ними — линия
          сырого песка, иначе камни висят на нижней кромке и срезаются. */
-      return `<svg viewBox="0 0 360 78" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
+      return `<svg viewBox="0 0 360 70" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
         <path d="M0 34c22 8 38-8 60-8s38 12 60 12 38-12 60-12 38 12 60 12 38-10 60-10 38 6 60 6" ${л} stroke-width="1.6" opacity=".45"/>
         <path d="M0 50h360" stroke="currentColor" stroke-width="1" opacity=".35" fill="none" stroke-dasharray="7 9"/>
         <path d="M36 66c-2-9 5-16 14-16 10 0 16 6 15 16z" ${л} stroke-width="1.8"/>
@@ -276,7 +276,7 @@
         <path d="M176 66c-3-8 3-13 10-13 8 0 12 5 10 13z" ${л} stroke-width="1.8"/>
         <path d="M232 66c-5-11 4-20 16-20 13 0 20 9 16 20z" ${л} stroke-width="1.8"/>
         <path d="M300 66c-3-12 5-19 15-19 11 0 17 7 15 19z" ${л} stroke-width="1.8"/>
-        <path d="M0 68h360" ${л} stroke-width="1.3" opacity=".4"/>
+        <path d="M0 67h360" ${л} stroke-width="1.3" opacity=".4"/>
         <path d="M252 16c7-7 14-7 21 0m5 0c7-7 14-7 21 0" ${л} stroke-width="1.5" opacity=".7"/>
       </svg>`;
     }
@@ -285,26 +285,26 @@
          стапеле (киль, форштевень, шпангоуты, два пояса обшивки), справа
          козлы с доской. Прежний рисунок был трапецией с поперечными линиями
          и читался как корзина, а не как строящаяся лодка. */
-      return `<svg viewBox="0 0 360 78" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
-        <path d="M0 70h360" ${л} stroke-width="1.4" opacity=".35"/>
+      return `<svg viewBox="0 0 360 70" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
+        <path d="M0 69h360" ${л} stroke-width="1.4" opacity=".35"/>
 
         <path d="M12 66h52M12 60h52M12 54h52M12 48h48" ${л} stroke-width="2.4" opacity=".7"/>
         <path d="M12 45v24M64 51v18M60 45v6" ${л} stroke-width="1.2" opacity=".5"/>
 
         <path d="M128 57C124 44 122 32 122 21M158 58c-2-13-3-24-2-32M190 58c0-13 1-24 3-31M222 58c2-13 5-23 8-29" ${л} stroke-width="1.2" opacity=".5"/>
 
-        <path d="M92 15C98 31 106 45 116 56" ${л} stroke-width="2.6"/>
+        <path d="M92 11C98 29 106 44 116 56" ${л} stroke-width="2.6"/>
         <path d="M116 56 246 58" ${л} stroke-width="2.8"/>
         <path d="M246 58 258 33" ${л} stroke-width="2.6"/>
-        <path d="M92 15C130 36 210 41 258 33" ${л} stroke-width="2.2"/>
+        <path d="M92 11C130 34 210 40 258 32" ${л} stroke-width="2.2"/>
 
         <path d="M98 24C134 41 210 45 254 36" ${л} stroke-width="1.3" opacity=".72"/>
         <path d="M103 32C138 47 208 50 250 41" ${л} stroke-width="1.3" opacity=".62"/>
         <path d="M108 40C142 52 206 54 247 45" ${л} stroke-width="1.3" opacity=".52"/>
         <path d="M113 48C146 56 205 58 244 50" ${л} stroke-width="1.3" opacity=".42"/>
 
-        <path d="M134 57 128 70M186 58v12M232 58 238 70" ${л} stroke-width="1.6" opacity=".7"/>
-        <path d="M118 70h28M172 70h28M224 70h28" ${л} stroke-width="2" opacity=".5"/>
+        <path d="M134 57 128 67M186 58v9M232 58 238 67" ${л} stroke-width="1.6" opacity=".7"/>
+        <path d="M118 67h28M172 67h28M224 67h28" ${л} stroke-width="2" opacity=".5"/>
 
         <path d="M292 42h60" ${л} stroke-width="2.6" opacity=".8"/>
         <path d="M301 43l-7 24M301 43l7 24M343 43l-7 24M343 43l7 24" ${л} stroke-width="1.4" opacity=".65"/>
@@ -315,32 +315,32 @@
       /* Лодка построена по тем же правилам, что и верфь: седловатость борта,
          задранный форштевень, транец. Парус — прямой на рее, с пузом от ветра,
          а не треугольный флажок на палке. */
-      return `<svg viewBox="0 0 360 78" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
+      return `<svg viewBox="0 0 360 70" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
         <path d="M0 30c16 10 30 2 44 10s18 16 30 18" ${л} stroke-width="1.6" opacity=".55"/>
         ${вода}
-        <path d="M118 46c2 10 10 18 30 18s42-6 50-20" ${л} stroke-width="2"/>
-        <path d="M118 46c22 6 58 6 80-2" ${л} stroke-width="1.6"/>
-        <path d="M154 44V38M154 20v-6" ${л} stroke-width="1.8"/>
-        <path d="M135 18h38" ${л} stroke-width="1.6"/>
-        <path d="M135 18C131 26 131 32 134 38M173 18c4 8 4 14 1 20M134 38c12 5 27 5 40 0" ${л} stroke-width="1.5"/>
-        <path d="M244 60V26M244 26l18 8-18 8" ${л} stroke-width="1.6"/>
-        <path d="M296 60V32M296 32l14 6-14 6" ${л} stroke-width="1.4" opacity=".8"/>
-        <path d="M340 60V40M340 40l11 5-11 5" ${л} stroke-width="1.3" opacity=".6"/>
+        <path d="M116 48c2 11 11 20 32 20s45-7 53-22" ${л} stroke-width="2"/>
+        <path d="M116 48c23 7 61 7 85-2" ${л} stroke-width="1.6"/>
+        <path d="M154 46v-6M154 14V8" ${л} stroke-width="1.8"/>
+        <path d="M133 12h42" ${л} stroke-width="1.6"/>
+        <path d="M133 12c-5 10-5 18-1 25M175 12c5 10 5 18 1 25M132 37c14 6 30 6 44 0" ${л} stroke-width="1.5"/>
+        <path d="M244 68V22M244 22l19 9-19 9" ${л} stroke-width="1.6"/>
+        <path d="M296 68V30M296 30l15 7-15 7" ${л} stroke-width="1.4" opacity=".8"/>
+        <path d="M340 68V40M340 40l12 6-12 6" ${л} stroke-width="1.3" opacity=".6"/>
       </svg>`;
     }
     /* открытое море: компас-роза, лодка, остров с колонной на горизонте */
-    return `<svg viewBox="0 0 360 78" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
-      <circle cx="52" cy="40" r="30" ${л} stroke-width="1.4" opacity=".7"/>
-      <path d="M52 10v60M22 40h60" ${л} stroke-width="1" opacity=".45"/>
-      <path d="M52 16l9 19 19 5-19 5-9 19-9-19-19-5 19-5z" ${л} stroke-width="1.7"/>
+    return `<svg viewBox="0 0 360 70" aria-hidden="true" class="jp-scene" preserveAspectRatio="xMidYMax meet">
+      <circle cx="52" cy="37" r="27" ${л} stroke-width="1.4" opacity=".7"/>
+      <path d="M52 10v54M25 37h54" ${л} stroke-width="1" opacity=".45"/>
+      <path d="M52 15l8 17 17 5-17 5-8 17-8-17-17-5 17-5z" ${л} stroke-width="1.7"/>
       ${вода}
-      <path d="M146 44c2 10 10 18 31 18s43-6 51-20" ${л} stroke-width="2"/>
-      <path d="M146 44c23 6 60 6 82-2" ${л} stroke-width="1.6"/>
+      <path d="M146 46c2 11 11 20 32 20s44-7 52-22" ${л} stroke-width="2"/>
+      <path d="M146 46c23 7 61 7 84-2" ${л} stroke-width="1.6"/>
       <path d="M183 42v-6M183 16v-6" ${л} stroke-width="1.8"/>
       <path d="M163 14h40" ${л} stroke-width="1.6"/>
       <path d="M163 14c-4 9-4 16-1 22M203 14c4 9 4 16 1 22M162 36c13 6 28 6 42 0" ${л} stroke-width="1.5"/>
-      <path d="M268 56c6-20 16-30 26-30s20 10 26 30z" ${л} stroke-width="1.6" opacity=".85"/>
-      <path d="M294 26V10M286 10h16M290 16h8" ${л} stroke-width="1.3" opacity=".85"/>
+      <path d="M266 62c6-22 17-33 28-33s22 11 28 33z" ${л} stroke-width="1.6" opacity=".85"/>
+      <path d="M294 29V12M286 12h16M290 18h8" ${л} stroke-width="1.3" opacity=".85"/>
     </svg>`;
   }
 
