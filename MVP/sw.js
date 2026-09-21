@@ -1,7 +1,7 @@
 /* АРХИМЕД MVP · service worker
    HTML/JS всегда с сети. В Cache API не кладём код — иначе залипает старый урок.
    Картинки можно из кэша. */
-const CACHE='arhimed-mvp-v785';
+const CACHE='arhimed-mvp-v786';
 /* В кэш кладём только то, что реально есть в репозитории.
    Раньше здесь был путь вне MVP (../МОБ_ПРИЛОЖЕНИЕ/...), его на сервере нет —
    addAll падал, и service worker вообще не устанавливался. */
@@ -62,7 +62,24 @@ function isCode(url){
 self.addEventListener('fetch',e=>{
   if(e.request.method!=='GET') return;
   const req=e.request;
-  if(req.mode==='navigate' || isCode(req.url)){
+
+  /* КОД (js/css/json) ИДЁТ БЕЗ ТАЙМАУТА — это важно.
+     Раньше на него стоял netFirst с обрывом: сначала 2,5 с, потом 8 с. Но у
+     кода нет запасного пути (в Cache API его не кладём намеренно), поэтому
+     обрыв означал не «возьмём из кэша», а гарантированный 504 и невыполненный
+     скрипт. Замер на медленном 3G это показал: 32 файла из 143 получили 504,
+     и в приложение попало 632 урока вместо 657 — часть просто исчезала из
+     каталога. Браузер дождался бы их сам, это воркер обрывал загрузку.
+     Если сети действительно нет, fetch отклонится сам, и мы уйдём в catch. */
+  if(isCode(req.url) && req.mode!=='navigate'){
+    e.respondWith(
+      fetch(req, {cache:'no-store'})
+        .catch(()=>caches.match(req).then(hit=>hit || new Response('', {status:504, statusText:'offline'})))
+    );
+    return;
+  }
+
+  if(req.mode==='navigate'){
     e.respondWith(
       netFirst(req).catch(()=>caches.match(req).then(hit=>{
         if(hit) return hit;
@@ -71,8 +88,7 @@ self.addEventListener('fetch',e=>{
            обещание разрешалось в undefined, respondWith падал, и вместо
            сообщения ребёнок видел ошибку браузера ERR_INTERNET_DISCONNECTED.
            Проверено: офлайн страница не открывалась совсем. */
-        if(req.mode==='navigate') return безСети();
-        return new Response('', {status:504, statusText:'offline'});
+        return безСети();
       }))
     );
     return;
