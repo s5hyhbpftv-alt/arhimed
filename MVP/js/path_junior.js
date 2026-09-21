@@ -548,6 +548,18 @@
      border:1px solid rgba(var(--jp-arg),.34)}
   .jp-scene{position:absolute;left:0;right:0;bottom:0;width:100%;height:70px;
      color:var(--jp-a);opacity:.42;pointer-events:none}
+  /* На широком экране рисунок вписывается по высоте и повисает маленьким
+     пятном посреди пустой полосы: кадр 360×70 при ширине места 750 даёт
+     масштаб 1, и по бокам остаётся по 195 px пустоты. Поэтому с 560 px полоса
+     становится выше — рисунок растёт вместе с ней. */
+  @media (min-width:560px){
+    .jp-scene{height:118px}
+    .jp-top{padding-bottom:118px}
+  }
+  @media (min-width:760px){
+    .jp-scene{height:150px}
+    .jp-top{padding-bottom:150px}
+  }
   .jp-tr{display:flex;align-items:flex-start;gap:12px;position:relative}
   .jp-top .jp-tb{flex:1;min-width:0}
   .jp-top h2{margin:0;font-size:32px;line-height:1.15;letter-spacing:-.02em;color:#fff6e4;text-wrap:balance}
