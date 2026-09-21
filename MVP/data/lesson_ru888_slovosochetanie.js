@@ -73,7 +73,7 @@
     const кнопки = `<div class="row">${варианты.map(о=>
       `<button type="button" class="chip" style="flex:1 1 40%;font-size:18px"
          onclick="ru888Game('${esc(о)}')">${esc(о)}</button>`).join('')}</div>`;
-    const ответ = готово ? (верно ? R.NOTE('ok','верно',it[2]) : R.NOTE('no','исправить',it[2]))
+    const ответ = готово ? (верно ? window.RUFEED.note('ok','верно',it[2]) : window.RUFEED.note('no','исправить',it[2]))
                          : `<p class="verdict">Сначала найди главное слово и задай от него вопрос.</p>`;
     return `${kick('16 · Тренажёр')}
       ${word(it[0],'выбери ответ')}

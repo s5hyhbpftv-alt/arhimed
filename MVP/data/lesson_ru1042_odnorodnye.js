@@ -79,7 +79,7 @@
     const варианты = ((st.gIdx||0)%2) ? [it[3], it[1]] : [it[1], it[3]];
     return `${kick('14 · Тренажёр')}
       ${word(it[0],'выбери ответ')}
-      ${готово ? (верно ? R.NOTE('ok','верно',it[2]) : R.NOTE('no','исправить',it[2]))
+      ${готово ? (верно ? window.RUFEED.note('ok','верно',it[2]) : window.RUFEED.note('no','исправить',it[2]))
                : `<p class="verdict">Сначала найди однородные члены и посмотри, есть ли обобщающее слово.</p>`}
       <div class="row">${варианты.map(о=>
         `<button type="button" class="chip" style="flex:1 1 40%;font-size:18px"

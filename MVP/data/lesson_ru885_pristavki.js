@@ -64,7 +64,7 @@
     const варианты = ((st.gIdx||0)%2) ? [it[3], it[1]] : [it[1], it[3]];
     return `${kick('12 · Тренажёр')}
       ${word(it[0],'вставь з или с')}
-      ${готово ? (верно ? R.NOTE('ok','верно',it[2]) : R.NOTE('no','исправить',it[2]))
+      ${готово ? (верно ? window.RUFEED.note('ok','верно',it[2]) : window.RUFEED.note('no','исправить',it[2]))
                : `<p class="verdict">Сначала найди приставку и посмотри на первую букву корня.</p>`}
       <div class="row">${варианты.map(о=>
         `<button type="button" class="chip" style="flex:1 1 40%;font-size:20px"

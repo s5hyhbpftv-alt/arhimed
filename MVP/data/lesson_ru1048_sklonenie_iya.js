@@ -93,7 +93,7 @@
     const готово = st.gRes!=null, верно = st.gRes===true;
     const варианты = ((st.gIdx||0)%2) ? [it[3], it[1]] : [it[1], it[3]];
     const кн = варианты.map(о=>кноп(о,`ru1048Game('${esc(о)}')`)).join('');
-    const ответ = готово ? (верно ? R.NOTE('ok','верно',it[2]) : R.NOTE('no','исправить',it[2]))
+    const ответ = готово ? (верно ? window.RUFEED.note('ok','верно',it[2]) : window.RUFEED.note('no','исправить',it[2]))
                          : `<p class="verdict">Сначала посмотри, на что оканчивается слово.</p>`;
     return `${kick('16 · Тренажёр')}
       ${word(it[0],'выбери букву')}

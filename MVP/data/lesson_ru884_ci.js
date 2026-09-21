@@ -55,7 +55,7 @@
     const варианты = ((st.gIdx||0)%2) ? [it[3], it[1]] : [it[1], it[3]];
     return `${kick('10 · Тренажёр')}
       ${word(it[0],'вставь букву: ы или и')}
-      ${готово ? (верно ? R.NOTE('ok','верно',it[2]) : R.NOTE('no','исправить',it[2]))
+      ${готово ? (верно ? window.RUFEED.note('ok','верно',it[2]) : window.RUFEED.note('no','исправить',it[2]))
                : `<p class="verdict">Сначала посмотри, где стоит буква: в корне, в окончании или это исключение?</p>`}
       <div class="row">${варианты.map(о=>
         `<button type="button" class="chip" style="flex:1 1 40%;font-size:20px"
