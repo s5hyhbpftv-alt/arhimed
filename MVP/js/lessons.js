@@ -386,11 +386,23 @@ function renderLessonView(){
     nav=`<button class="btn ghost" onclick="lvBackExplain()">↺ Перечитать объяснение</button>`;
   } else { // done
     msg=`<span class="who">◈ Архимед</span>Отлично! Приём «${esc(L.title)}» усвоен — он работает на любых похожих задачах ВсОШ.`;
-    nav=`<button class="btn ok2" onclick="go('book')">К списку уроков →</button>`;
+    /* Если урок открыт из «Пути» (1–4 класс), ребёнок продолжает маршрут:
+       сразу следующий шаг, а не список уроков. Раньше отсюда всегда уводило
+       в «Книгу знаний», и цепочка занятий обрывалась. */
+    const цепь = (typeof jpВПути==='function' && jpВПути()) ? jpСледующийШаг() : null;
+    nav = цепь
+      ? `<button class="btn ok2" onclick="jpОткрыть('${цепь.вид}',${цепь.вид==='задача'?("'"+цепь.id+"'"):цепь.id})">Дальше → ${esc(цепь.имя)}</button>
+         <button class="btn ghost" onclick="jpВышли();go('path')">В путь</button>`
+      : ((typeof jpВПути==='function' && jpВПути())
+          ? `<button class="btn ok2" onclick="jpВышли();go('path')">Маршрут пройден — в путь 🏆</button>`
+          : `<button class="btn ok2" onclick="go('book')">К списку уроков →</button>`);
     phase2=`<div class="card" style="text-align:center"><div style="font-size:30px">🏆</div>
       <div style="font-size:16px;margin:4px 0">Урок пройден!</div><div class="small">+2 ⭐ к прогрессу</div></div>`;
   }
-  screen.innerHTML=`<button class="btn ghost" onclick="go('book')">← Книга знаний</button>
+  const назад = (typeof jpВПути==='function' && jpВПути())
+    ? `<button class="btn ghost" onclick="jpВышли();go('path')">← Путь</button>`
+    : `<button class="btn ghost" onclick="go('book')">← Книга знаний</button>`;
+  screen.innerHTML=`${назад}
     <h2 style="margin:6px 0 2px">${esc(lessonTitle())}</h2>
     <div class="small" style="margin-bottom:6px">${esc(L.src)}</div>${dots}
     <div class="card"><div class="arch" style="margin-top:0">${msg}</div>

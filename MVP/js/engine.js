@@ -27,7 +27,7 @@ function renderTask(){
       ${fbHtml(t,done)}
     </div>`;
   document.getElementById('screen').innerHTML = `
-    <button class="btn ghost" onclick="go('${UI.backTab}')">← Назад</button>${body}
+    <button class="btn ghost" onclick="${(typeof jpВПути==='function'&&jpВПути())?"jpВышли();go('path')":"go('"+UI.backTab+"')"}">← Назад</button>${body}
     <div class="btnrow" id="afterRow"></div>`;
   if(done){ afterRow(t); }
   hud();
@@ -103,6 +103,18 @@ function win(){
   save(); renderTask(); showConfetti(); hud();
 }
 function afterRow(t){
+  /* Ребёнок 1–4 класса, пришедший по маршруту «Пути», продолжает МАРШРУТ:
+     следующий шаг берётся из его цепочки, а не первая попавшаяся задача из
+     общего банка, и «в меню» ведёт в «Путь», а не в каталог, откуда он не
+     приходил. Для остальных поведение прежнее. */
+  if(typeof jpВПути==='function' && jpВПути()){
+    const цепь = (typeof jpСледующийШаг==='function') ? jpСледующийШаг() : null;
+    document.getElementById('afterRow').innerHTML = цепь
+      ? `<button class="btn" onclick="jpОткрыть('${цепь.вид}',${цепь.вид==='задача'?("'"+цепь.id+"'"):цепь.id})">Дальше → ${esc(цепь.имя)}</button>
+         <button class="btn ghost" onclick="jpВышли();go('path')">В путь</button>`
+      : `<button class="btn ghost" onclick="jpВышли();go('path')">Маршрут пройден — в путь 🏆</button>`;
+    return;
+  }
   const remaining = window.ARH_TASKS.filter(x=>!DB.tasks[x.id]||!DB.tasks[x.id].done);
   const nxt = remaining.find(x=>x.island===t.island) || remaining[0];
   document.getElementById('afterRow').innerHTML = nxt
