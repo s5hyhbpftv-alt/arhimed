@@ -69,9 +69,14 @@ function lessonFits(L){ /* при открытом мире уроки не пр
 function subjOf(L){
   const src=(L&&L.src)||'';
   if(L&&L.group) return L.group;   /* «Путь Мишутки» — отдельная полка, предмет у уроков остаётся свой */
+  /* Подпись «Начальная школа» важнее поля subj: русский урок 1–2 класса лежит
+     в полке младшей школы, а его subj — «rus». Раньше subj побеждал, и такие
+     уроки пропадали у младших классов: в профиле 3 класса русских уроков
+     оказывалось НОЛЬ. */
+  if(/Начальная школа/.test(src)) return 'jun';
   if(L&&L.subj) return L.subj;
-  if(/Русский язык/.test(src)) return 'rus';   /* единственная добавленная ветка */
-  return /Начальная школа/.test(src)?'jun':/Информатика/.test(src)?'inf':/физика/i.test(src)?'phys':'math';
+  if(/Русский язык/.test(src)) return 'rus';
+  return /Информатика/.test(src)?'inf':/физика/i.test(src)?'phys':'math';
 }
 /* сортировка списка: сначала уроки ТЕКУЩЕГО класса (в порядке обучения),
    затем все остальные (в прежнем порядке). Порядок внутри групп сохраняется. */
@@ -141,8 +146,14 @@ function lessonPool(){
     /* Младшие классы видят полку «Начальная школа» — и полку «Мастерские
        Сиракуз»: в ней уроки 4–9 классов, и урок для 4 класса иначе пропадал
        бы из каталога совсем (каталог младших классов состоит из одной полки). */
+    /* Младший профиль (1–4 класс) видит полку «Начальная школа» и «Мастерские
+       Сиракуз», а также уроки своего класса: русские уроки 3–4 класса лежат с
+       подписью «Русский язык · 3 класс», и раньше они пропадали у младших —
+       их предмет «rus», а младшая полка брала только «jun». */
+    const классЛ=(L)=>{ try{ return (typeof lessonClassNum==='function')?lessonClassNum(L):null; }catch(e){ return null; } };
     const pool= (junior
-      ? window.ARH_LESSONS.filter(L=>subjOf(L)==='jun'||subjOf(L)==='syra')
+      ? window.ARH_LESSONS.filter(L=>{ const к=классЛ(L);
+          return subjOf(L)==='jun'||subjOf(L)==='syra'||(к!=null&&к<=4); })
       : window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun')).filter(isVisibleLesson);
     return sortByPlan(sortByCurrentClass(pool.filter(lessonFits)));
   }catch(e){ return window.ARH_LESSONS; }
