@@ -83,26 +83,27 @@
     try{
       const c=document.createElement('canvas');
       const ctx=c.getContext('2d');
-      ИЗМ=ctx?(ш,size)=>{ ctx.font=size+'px '+F; return ctx.measureText(String(ш)).width; }:false;
+      ИЗМ=ctx?(ш,size,жир)=>{ ctx.font=(жир?'bold ':'')+size+'px '+F; return ctx.measureText(String(ш)).width; }:false;
     }catch(e){ ИЗМ=false; }
     return ИЗМ;
   }
-  const шир=(ш,size)=>{ const m=измеритель(); return m?m(ш,size):String(ш).length*size*0.83; };
+  /* жирная строка шире обычной: мерить её обычной — значит вылезти из плашки */
+  const шир=(ш,size,жир)=>{ const m=измеритель(); return m?m(ш,size,жир):String(ш).length*size*(жир?0.9:0.83); };
   /* подобрать наибольший кегль из шкалы, при котором строка влезает в w */
-  const под=(ш,w,size)=>{ size=size||16; for(const s2 of [size,14,12]) if(шир(ш,s2)<=w) return s2; return 12; };
+  const под=(ш,w,size,жир)=>{ size=size||16; for(const s2 of [size,14,12]) if(шир(ш,s2,жир)<=w) return s2; return 12; };
   /* txw — одна строка с подбором кегля под ширину w */
-  const txw=(x,y,ш,w,size,fill,anchor,жир)=>tx(x,y,ш,под(ш,w,size),fill,anchor,жир);
+  const txw=(x,y,ш,w,size,fill,anchor,жир)=>tx(x,y,ш,под(ш,w,size,жир),fill,anchor,жир);
   /* txl — абзац: переносим по словам, подбирая кегль под ширину w.
      Нужен там, где фраза длиннее холста: вместо обрезки — вторая строка. */
   function txl(x,y,ш,w,size,fill,жир){
     const тек=String(ш);
-    const кегль=под(тек,w,size);
-    if(шир(тек,кегль)<=w) return tx(x,y,тек,кегль,fill,'middle',жир);
+    const кегль=под(тек,w,size,жир);
+    if(шир(тек,кегль,жир)<=w) return tx(x,y,тек,кегль,fill,'middle',жир);
     const слова=тек.split(' ');
     const строки=[]; let текущая='';
     for(const с of слова){
       const проба=текущая?текущая+' '+с:с;
-      if(шир(проба,кегль)<=w||!текущая) текущая=проба;
+      if(шир(проба,кегль,жир)<=w||!текущая) текущая=проба;
       else { строки.push(текущая); текущая=с; }
     }
     if(текущая) строки.push(текущая);
@@ -205,7 +206,7 @@
 
   /* 1 · что такое отрицательное число: таблица примеров */
   function f1(){
-    let inner=txw(160,24,'величина ушла вниз от нуля',290,20,GOLD,undefined,1);
+    let inner=txw(160,24,'величина ушла вниз от нуля',284,20,GOLD,undefined,1);
     const rows=[
       ['долг 300 рублей','\u2212300',RED,'меньше нуля'],
       ['мороз 15 градусов','\u221215',CYAN,'ниже нуля на 15'],
@@ -219,7 +220,7 @@
       inner+=tx(296,y+24,r[1],20,r[2],'end',1);
     });
     inner+=rc(12,208,296,34,'rgba(217,164,65,.10)',GOLD,10,1.4);
-    inner+=txw(160,230,'знак \u2212 показывает: величина ниже нуля',286,14,GOLD,undefined,1);
+    inner+=txw(160,230,'знак \u2212 показывает: величина ниже нуля',270,14,GOLD,undefined,1);
     /* подпись назначения каждого числа — отдельной строкой ниже, без наложений */
     inner+=txw(160,258,'долг и мороз, глубина \u2014 всё это отрицательные числа',286,12,MUTE);
     return bg(274,inner);
@@ -239,7 +240,7 @@
       }
     });
     inner+=rc(12,148,296,30,CARD,HAIR,10,1.2);
-    inner+=tx(160,168,go>=3?'A(\u22125), O(0), B(3) \u2014 так записывают координаты':'нажимай кнопку \u2014 точки встают по шагам',13,go>=3?GOLD:MUTE,undefined,1);
+    inner+=txw(160,168,go>=3?'A(\u22125), O(0), B(3) \u2014 так записывают координаты':'нажимай кнопку \u2014 точки встают по шагам',284,14,go>=3?GOLD:MUTE,undefined,1);
     inner+=rc(12,186,296,56,'rgba(143,209,168,.08)',GREEN,10,1.2);
     inner+=tx(160,207,'слева от нуля \u2014 отрицательные числа,',14,IVORY);
     inner+=tx(160,227,'справа от нуля \u2014 положительные',14,IVORY);

@@ -505,9 +505,9 @@
         <path d="M168 94 C168 112 252 104 252 122" fill="none" stroke="${ЛИНИЯ}" stroke-width="2">${проявить('12s',0.28,0.36)}</path>
         <g>${проявить('12s',0.4,0.48)}
           <rect x="18" y="122" width="132" height="44" rx="9" fill="url(#c1034-стекло)" stroke="rgba(190,225,245,.5)" stroke-width="1.2"/>
-          ${т(84,150,'дано целое → умножаем',12,GREEN,true)}
+          ${т(84,140,'дано целое',12,GREEN,true)}${т(84,158,'→ умножаем',12,GREEN,true)}
           <rect x="186" y="122" width="132" height="44" rx="9" fill="url(#c1034-стекло)" stroke="rgba(255,215,106,.6)" stroke-width="1.3"/>
-          ${т(252,150,'дана часть → делим',12,GOLD,true)}</g>
+          ${т(252,140,'дана часть',12,GOLD,true)}${т(252,158,'→ делим',12,GOLD,true)}</g>
         <g>${анД('M0 0 C0 20 84 12 84 56','9s')}
           <circle cx="168" cy="94" r="8" fill="url(#c1034-металл)" stroke="rgba(20,35,28,.6)" stroke-width="1.2"/>
           <circle cx="165.4" cy="91.4" r="2.4" fill="#fff" opacity=".8"/>

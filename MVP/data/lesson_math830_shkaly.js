@@ -104,10 +104,15 @@
   const ДВИЖ = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const ан = (имя,значения,длит,доп) =>
     ДВИЖ ? `<animate attributeName="${имя}" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
+  /* Chrome не заводит таймлайн SVG, где есть только animateTransform и ни
+     одного <animate>: теги на месте, а предмет стоит (замер положения во
+     времени, 23.09.2026). Поэтому рядом с каждым сдвигом — невидимый завод:
+     пустой прямоугольник с одним <animate>. */
+  const ЗАВОД = `<rect width="0" height="0" fill="none"><animate attributeName="x" values="0;0" dur="1s" repeatCount="indefinite"/></rect>`;
   const анТ = (значения,длит,доп) =>
-    ДВИЖ ? `<animateTransform attributeName="transform" type="translate" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
+    ДВИЖ ? `<animateTransform attributeName="transform" type="translate" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>${ЗАВОД}` : '';
   const анП = (значения,длит,доп) =>
-    ДВИЖ ? `<animateTransform attributeName="transform" type="rotate" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
+    ДВИЖ ? `<animateTransform attributeName="transform" type="rotate" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>${ЗАВОД}` : '';
   /* штрих растёт из середины — так проступает деление шкалы */
   const штрихРастёт = (x,y0,y1,цвет,нач,толщ) =>
     `<line x1="${x}" y1="${((y0+y1)/2).toFixed(1)}" x2="${x}" y2="${((y0+y1)/2).toFixed(1)}" stroke="${цвет}" stroke-width="${толщ||1.6}">`+
@@ -180,12 +185,15 @@
     return `<g>
       <rect x="${x}" y="${y}" width="26" height="${в}" rx="13" fill="url(#c830-стекло)" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
       <circle cx="${x+13}" cy="${y+в+10}" r="13" fill="url(#c830-ртуть)" stroke="#8a2b1c" stroke-width="1.4"/>
-      <rect x="${x+8}" y="${y+в}" width="10" height="0" rx="5" fill="url(#c830-ртуть)">
+      ${/* без движения столбик стоит на своём значении, а не пустой */''}
+      <rect x="${x+8}" y="${y+в-столб}" width="10" height="${столб}" rx="5" fill="url(#c830-ртуть)">
         ${ан('y',(y+в)+';'+(y+в)+';'+(y+в-столб)+';'+(y+в-столб),'7s','keyTimes="0;0.15;0.5;1"')}
         ${ан('height','0;0;'+столб+';'+столб,'7s','keyTimes="0;0.15;0.5;1"')}
       </rect>
-      ${[0,1,2,3,4].map(i=>`<line x1="${x+20}" y1="${(y+в-i*в/4).toFixed(1)}" x2="${x+26}" y2="${(y+в-i*в/4).toFixed(1)}" stroke="${ЛИНИЯ}" stroke-width="1.2"/>`).join('')}
-      ${т(x+52,y+22,String(значение)+'°',16,GOLD,true)}
+      ${/* риски через 10 — те же, что на шкале рядом (было через четверть: 7,5 и 22,5) */''}
+      ${Array.from({length:Math.floor(макс/10)+1},(_,i)=>`<line x1="${x+20}" y1="${(y+в-i*10*в/макс).toFixed(1)}" x2="${x+26}" y2="${(y+в-i*10*в/макс).toFixed(1)}" stroke="${ЛИНИЯ}" stroke-width="1.2"/>`).join('')}
+      ${/* значение — слева от трубки, у верха столбика: справа его теснили подписи шкалы */''}
+      ${т(x-24,(y+в-столб+6).toFixed(1),String(значение)+'°',16,GOLD,true)}
     </g>`;
   }
 
@@ -386,17 +394,17 @@
     const в = s.термометр;
     return ВОПРОС('Столбик термометра поднялся до деления 22. Что он показывает?') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="190" fill="url(#c830-стена)"/>
-        <rect x="0" y="0" width="336" height="190" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
+        <rect x="0" y="0" width="336" height="204" fill="url(#c830-стена)"/>
+        <rect x="0" y="0" width="336" height="204" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
         ${т(168,22,'Термометр: своя шкала',14,GOLD,true)}
         ${термометр(70,44,104,22,30)}
-        <g>${[0,10,20,30].map(i=>`<line x1="96" y1="${(148-i*104/3).toFixed(1)}" x2="120" y2="${(148-i*104/3).toFixed(1)}" stroke="${ЛИНИЯ}" stroke-width="1.4"/>${т(134,(148-i*104/3+4).toFixed(1),String(i),12,МУТ,false,'start')}`).join('')}</g>
+        <g>${/* отметка v стоит на 148 − v·104/30: раньше делили на 3, и 10, 20, 30 улетали за верх кадра */''}${[0,10,20,30].map(i=>`<line x1="96" y1="${(148-i*104/30).toFixed(1)}" x2="120" y2="${(148-i*104/30).toFixed(1)}" stroke="${ЛИНИЯ}" stroke-width="1.4"/>${т(134,(148-i*104/30+4).toFixed(1),String(i),12,МУТ,false,'start')}`).join('')}</g>
         ${т(240,80,'деление 22',16,GOLD,true)}
         ${т(240,110,'цена деления 1',12,МУТ)}
         ${т(240,134,'столбик дошёл',12,ИНК)}
         ${т(240,158,'до отметки 22',12,ИНК)}
-        ${т(168,186,'по шкале читают значение: 22 °C',12,МУТ)}
-      `,190)}</div>` +
+        ${т(168,192,'по шкале читают значение: 22 °C',12,МУТ)}
+      `,204)}</div>` +
       `<div class="ask">
         ${BTN(3, в==='двадцать два'?'hit':(в?'miss':''), '22 °C: столбик на отметке 22', "r830Thermo('двадцать два')")}
         ${BTN(4, в==='двадцать'?'miss':'', '20 °C: округляем до круглого', "r830Thermo('двадцать')")}

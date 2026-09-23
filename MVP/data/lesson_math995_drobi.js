@@ -104,8 +104,13 @@
   const ДВИЖ = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const ан = (имя,значения,длит,доп) =>
     ДВИЖ ? `<animate attributeName="${имя}" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
+  /* Chrome не заводит таймлайн SVG, где есть только animateTransform и ни
+     одного <animate>: теги на месте, а предмет стоит (замер положения во
+     времени, 23.09.2026). Поэтому рядом с каждым сдвигом — невидимый завод:
+     пустой прямоугольник с одним <animate>. */
+  const ЗАВОД = `<rect width="0" height="0" fill="none"><animate attributeName="x" values="0;0" dur="1s" repeatCount="indefinite"/></rect>`;
   const анТ = (значения,длит,доп) =>
-    ДВИЖ ? `<animateTransform attributeName="transform" type="translate" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
+    ДВИЖ ? `<animateTransform attributeName="transform" type="translate" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>${ЗАВОД}` : '';
   /* линия растёт из середины наружу — так полоса делится на части */
   const растёт = (x,y0,y1,цвет,нач,толщ) =>
     `<line x1="${x}" y1="${((y0+y1)/2).toFixed(1)}" x2="${x}" y2="${((y0+y1)/2).toFixed(1)}" stroke="${цвет}" stroke-width="${толщ||1.6}">`+
@@ -182,8 +187,8 @@
     const x0=26, ш=284, часть=ш/4, y0=56, h=48;
     return ВОПРОС('Портной отрезал 3/4 метра. Как записать эту длину десятичной дробью?') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="190" fill="url(#c995-стена)"/>
-        <rect x="0" y="0" width="336" height="190" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
+        <rect x="0" y="0" width="336" height="206" fill="url(#c995-стена)"/>
+        <rect x="0" y="0" width="336" height="206" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
         ${т(168,24,'Лента: режем три четверти',14,GOLD,true)}
         ${[0,1,2,3].map(i=>`<rect x="${(x0+i*часть).toFixed(1)}" y="${y0}" width="${(часть-2).toFixed(1)}" height="${h}" rx="4"
             fill="${i<3?'url(#c995-ткань)':'rgba(255,255,255,.04)'}" stroke="${i<3?'#8a5f05':ЛИНИЯ}" stroke-width="1.4">
@@ -200,8 +205,8 @@
         <circle cx="168" cy="157" r="5" fill="${GOLD}">
           ${анТ('0 0;0 0;'+(182-168)+' 0;'+(182-168)+' 0;0 0','6s','keyTimes="0;0.34;0.58;0.86;1"')}
         </circle>
-        ${т(168,188,'та же длина — две записи',12,МУТ)}
-      `,190)}</div>` +
+        ${т(168,196,'та же длина — две записи',12,МУТ)}
+      `,206)}</div>` +
       `<div class="ask">
         ${BTN(3, в==='десятичная'?'hit':(в?'miss':''), 'Перевести в десятичную запись: 0,75 м', "r995Tape('десятичная')")}
         ${BTN(4, в==='оставить'?'miss':'', 'Оставить 3/4 — это то же самое', "r995Tape('оставить')")}
@@ -349,11 +354,11 @@
   /* 6. Клетки собираются в четверти */
   function F6(s){
     const в = s.обратно;
-    const x=112, y=44, кл=14;
+    const x=98, y=44, кл=14;
     return ВОПРОС('Запиши 0,25 обыкновенной дробью в самом простом виде.') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="190" fill="url(#c995-стена)"/>
-        <rect x="0" y="0" width="336" height="190" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
+        <rect x="0" y="0" width="336" height="214" fill="url(#c995-стена)"/>
+        <rect x="0" y="0" width="336" height="214" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
         ${т(168,22,'Двадцать пять клеток — это четверть',14,GOLD,true)}
         ${сетка(x,y,кл,25,'url(#c995-ткань)',false)}
         <line x1="${x+кл*5}" y1="${y}" x2="${x+кл*5}" y2="${y+кл*10}" stroke="${GOLD}" stroke-width="2">
@@ -369,8 +374,8 @@
         ${т(48,110,'=',16,МУТ)}
         ${т(48,136,'25/100',20,GOLD,true)}
         ${т(288,84,'= 1/4',20,GREEN,true)}
-        ${т(168,186,'залита ровно одна четверть сетки',12,МУТ)}
-      `,190)}</div>` +
+        ${т(168,204,'залита ровно одна четверть сетки',12,МУТ)}
+      `,214)}</div>` +
       `<div class="ask">
         ${BTN(3, в==='четверть'?'hit':(в?'miss':''), '1/4: 25/100 сокращаем на 25', "r995Back('четверть')")}
         ${BTN(4, в==='двадцать'?'miss':'', '25/100 — короче не станет', "r995Back('двадцать')")}

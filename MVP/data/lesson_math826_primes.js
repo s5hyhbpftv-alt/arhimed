@@ -114,7 +114,7 @@
   const анТ = (значения,длит,доп) =>
     ДВИЖ ? `<animateTransform attributeName="transform" type="translate" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
   const кт = (v) => Math.min(0.95, Math.max(0.03, v)).toFixed(2);
-  const светит = (длит,нач) => ан('opacity','1;0.45;1',длит, нач!=null?'begin="'+нач+'s"':'');
+  const светит = (длит,нач) => ан('opacity','1;0.6;1',длит, нач!=null?'begin="'+нач+'s"':'');
   const проявить = (длит,доля,конец) => ан('opacity','0.3;0.3;1;1',длит,
     'keyTimes="0;'+кт(доля)+';'+кт(конец)+';1"');
 

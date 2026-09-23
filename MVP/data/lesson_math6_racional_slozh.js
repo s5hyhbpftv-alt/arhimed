@@ -135,8 +135,9 @@
     return tx(x,y,s,k,fill,bold);
   }
   function chip(x,y,w,h,text,fill,stroke,color,size){
-    const k=size||S(16);
-    let s=rect(x,y,w,h,fill,stroke,h/2,(h/2)-0.2);
+    let k=size||S(16);
+    while(k>S(16) && ширина(text,k,true)>w-24) k-=2;
+    let s=rect(x,y,w,h,fill,stroke,h/2,1.8);
     s+=tx(x+w/2,y+h/2+k*0.35,text,k,color||fill,true);
     return s;
   }
@@ -207,18 +208,19 @@
       +inner(W)+`</svg></div></div>`;
   }
   /* заголовок кадра внутри листа — служебная подпись, 16 px */
-  const head=(W,text)=>tx(W/2,24,text,S(16),MUT,false);
+  const head=(W,text)=>tx(W/2,24,text,ширина(text,S(16))>W-40?S(14):S(16),MUT,false);
   /* кнопки-шаги внутри рисунка: цель не меньше 44 CSS-пикселей по высоте
      (48 единиц при ширине карточки 320 — с запасом на узких телефонах)
      и зазор 10 единиц — это больше 8 px из стандарта. */
   function btns(x,y,list){
     let s='', cx=x;
-    for(const b of list){
-      if(!b) continue;
-      const w=b.w||96;
+    const есть=list.filter(Boolean), всего=есть.reduce((a,b)=>a+(b.w||96),0)+10*(есть.length-1);
+    const сжать=Math.min(1,(paperW()-2*x)/всего);   /* 320 px: ряд не вылезает за лист */
+    for(const b of есть){
+      const w=Math.floor((b.w||96)*сжать), k=ширина(b.text,S(16),true)>w-20?S(14):S(16);
       s+=`<g class="m6-hit" onclick="${b.on}">`
         +rect(cx,y,w,48,b.fill,b.stroke,10,1.6)
-        +tx(cx+w/2,y+31,b.text,S(16),b.color,true)+`</g>`;
+        +tx(cx+w/2,y+30,b.text,k,b.color,true)+`</g>`;
       cx+=w+10;
     }
     return s;
@@ -230,30 +232,43 @@
      прямоугольников текста в браузере (наложения). Если текст не влезает
      в четыре строки, кегль сам опускается, но не ниже 14 в системе координат:
      это 16 px на экране телефона и 17,5 px на планшете.                        */
+  /* ширина строки в единицах листа — по настоящему шрифту (canvas), а не по
+     числу знаков: при счёте «45 знаков в строке» фразы вылезали за лист
+     на 5–140 единиц (замер 23.09.2026). */
+  let КАНВА=null;
+  function ширина(t,size,bold){
+    try{ КАНВА=КАНВА||document.createElement('canvas').getContext('2d');
+      КАНВА.font=(bold?'bold ':'')+size+"px Georgia,'Times New Roman',serif";
+      return КАНВА.measureText(String(t)).width; }
+    catch(e){ return String(t).length*size*(bold?0.58:0.53); }
+  }
+  /* панель ошибки / проверки / второго способа: подпись жирная в начале
+     первой строки, дальше фраза переносится по ширине панели. Строки
+     обязаны лечь внутрь панели; если при кегле 16 не ложатся — кегль
+     опускается до 14 (нижняя ступень шкалы). */
   function note(x,y,w,h,kind1,label,kindColor,color,body){
     let s=rect(x,y,w,h,kind1,kindColor,10,1.8);
-    let size=S(16), max=45;
-    const вСтроки=(k)=>{
+    const поле=w-32;
+    const разбить=(size)=>{
+      const отступ=ширина(label,size,true)+6;
       const слова=String(body).split(' '); let стр='', строки=[];
       for(const сл of слова){
-        if((стр+' '+сл).trim().length>k){ строки.push(стр.trim()); стр=сл; }
-        else стр=(стр+' '+сл).trim();
+        const проба=(стр+' '+сл).trim(), место=строки.length?поле:поле-отступ;
+        if(стр && ширина(проба,size)>место){ строки.push(стр); стр=сл; }
+        else стр=проба;
       }
       if(стр) строки.push(стр);
-      return строки;
+      return {строки,отступ};
     };
-    let строки=вСтроки(max);
-    while(строки.length>4 && size>S(14)){ size-=1; max=Math.round(max*1.06); строки=вСтроки(max); }
-    строки=строки.slice(0,4);
-    const шаг=size*1.7, верх=y+size+18;
-    строки.forEach((t,i)=>{
+    let size=S(16), р=разбить(size);
+    const влезает=(k,n)=> y+k+14 + (n-1)*k*1.55 <= y+h-10;
+    while(!влезает(size,р.строки.length) && size>S(14)){ size-=1; р=разбить(size); }
+    const шаг=size*1.55, верх=y+size+14;
+    р.строки.forEach((t,i)=>{
       if(i===0){
-        const k=label.length*size*0.62+8;
-        s+=tx(x+16,верх+i*шаг,label,size,kindColor,true,'start');
-        s+=tx(x+16+k,верх+i*шаг,t,size,color,false,'start');
-      } else {
-        s+=tx(x+16,верх+i*шаг,t,size,color,false,'start');
-      }
+        s+=tx(x+16,верх,label,size,kindColor,true,'start');
+        s+=tx(x+16+р.отступ,верх,t,size,color,false,'start');
+      } else s+=tx(x+16,верх+i*шаг,t,size,color,false,'start');
     });
     return s;
   }
@@ -268,12 +283,12 @@
   const sc0=()=>{ const H=222, W=paperW();
     let s=head(W,'все числа со знаком — на одной прямой');
     s+=numberLine(W,110,-5,5,{}).svg;
-    s+=tx(W/2,196,'слева от нуля — минус, справа — плюс',S(16),MUT);
+    s+=tx(W/2,196,'слева от нуля минус, справа плюс',S(16),MUT);
     return paper(()=>s,H); };
 
   /* 1 · модуль — расстояние до нуля */
   const sc1=()=>{ const H=306, W=paperW();
-    let s=head(W,'модуль — расстояние от нуля, оно без минуса');
+    let s=head(W,'модуль — расстояние до нуля');
     const nl=numberLine(W,132,-5,5,{extra:(sc)=>{
       let a=arrow(sc.x(-3),164,sc.x(0),164,BLUED,2.4);
       a+=tx((sc.x(-3)+sc.x(0))/2,190,'|−3| = 3',S(16),BLUED,true);
@@ -282,21 +297,21 @@
       return a; }});
     s+=nl.svg;
     s+=rect(16,212,W-32,50,CHK_BG,OK,10,1.6);
-    s+=tx(W/2,243,'расстояние не бывает отрицательным',S(16),OK,true);
+    s+=tx(W/2,243,'модуль всегда без минуса',S(16),OK,true);
     return paper(()=>s,H); };
 
   /* 2 · как ходить по прямой */
   function sc2(){ const H=346, W=paperW();
     const st=st6(LV.id); if(st.d==null) st.d=1;
     const d=st.d, from=-2, to=from+d;
-    let s=head(W,'сложение — это сдвиг: «+» вправо, «−» влево');
+    let s=head(W,'«+» — шаг вправо, «−» — шаг влево');
     s+=numberLine(W,152,Math.min(-6,from,to)-1,Math.max(6,from,to)+1,{
       extra:(sc)=>jump(sc,152,from,to,d>0?RED:BLUED,true,(d>0?'+':'−')+Math.abs(d))}).svg;
     s+=btns(16,194,[
       {text:'+3',w:62,on:`M6ACT('d',3)`,fill:d===3?TWO_BG:CELL,stroke:d===3?GOLDT:RULE,color:INK},
       {text:'−5',w:62,on:`M6ACT('d',-5)`,fill:d===-5?ERR_BG:CELL,stroke:d===-5?NO:RULE,color:INK},
       {text:'−1',w:62,on:`M6ACT('d',-1)`,fill:d===-1?'#e9f2fb':CELL,stroke:d===-1?BLUED:RULE,color:INK},
-      {text:'сбросить',w:104,on:`M6ACT('rst')`,fill:'#f7f0de',stroke:RULE,color:INK}]);
+      {text:'заново',w:104,on:`M6ACT('rst')`,fill:'#f7f0de',stroke:RULE,color:INK}]);
     s+=note(16,244,W-32,86,d>0?CHK_BG:ERR_BG,(d>0?'Вправо: ':'Влево: '),d>0?OK:NO,
       INK,'из −2 шагаем на '+Math.abs(d)+' и приходим в '+String(to).replace('-','−')+'.');
     return paper(()=>s,H);
@@ -314,19 +329,19 @@
   /* 4 · почему так: долг 3 и долг 5 */
   const sc4=()=>{ const H=308, W=paperW(); let s=head(W,'почему два минуса дают минус');
     const mid=W/2;
-    s+=rect(12,36,mid-18,96,'#eef2fa','#9db6d8',10,1.6);
-    s+=tx(mid/2-2,64,'на прямой',S(16),MUT,true);
-    s+=tx(mid/2-2,92,'оба сдвига влево,',S(16),INK);
-    s+=tx(mid/2-2,116,'поэтому складываем',S(16),INK);
-    s+=rect(mid+6,36,mid-18,96,'#fdecea','#e2a6a0',10,1.6);
-    s+=tx(mid+mid/2-2,64,'через долг',S(16),MUT,true);
-    s+=tx(mid+mid/2-2,92,'3 + 5 = 8, значит',S(16),INK);
-    s+=tx(mid+mid/2-2,116,'должен 8',S(16),INK);
+    s+=rect(20,36,mid-24,96,'#eef2fa','#9db6d8',10,1.6);
+    s+=tx(mid/2+8,64,'на прямой',S(16),MUT,true);
+    s+=tx(mid/2+8,92,'оба шага влево,',S(16),INK);
+    s+=tx(mid/2+8,116,'длины сложить',S(16),INK);
+    s+=rect(mid+4,36,mid-24,96,'#fdecea','#e2a6a0',10,1.6);
+    s+=tx(mid+mid/2-8,64,'через долг',S(16),MUT,true);
+    s+=tx(mid+mid/2-8,92,'3 + 5 = 8,',S(16),INK);
+    s+=tx(mid+mid/2-8,116,'должен 8',S(16),INK);
     s+=tx(W/2,164,'|−3| + |−5| = 3 + 5 = 8',S(20),GOLDD,true);
-    s+=tx(W/2,190,'модули сложились, знак остался «−»',S(16),MUT);
+    s+=tx(W/2,190,'модули сложились, знак «−»',S(16),MUT);
     s+=chip(W/2-84,206,168,36,'−3 + (−5) = −8',CHK_BG,OK,OK,S(16));
     s+=tx(W/2,270,'второй способ — через долг',S(16),GOLDD,true);
-    s+=tx(W/2,292,'долг 3 рубля и долг 5 рублей — 8 рублей долга',S(16),MUT);
+    s+=tx(W/2,292,'два долга вместе — снова долг',S(16),MUT);
     return paper(()=>s,H); };
 
   /* 5 · задание 2: −8 + 5 = −3 */
@@ -334,9 +349,9 @@
     s+=numberLine(W,140,-9,1,{extra:(sc)=>
       jump(sc,140,-8,-3,RED,true,'+5')+circ(sc.x(-8),140,4.8,INK)}).svg;
     s+=rect(16,196,W-32,86,CHK_BG,OK,10,1.8);
-    s+=tx(28,226,'Шаг 1. Отмечаем −8.',S(16),INK,false,'start');
-    s+=tx(28,250,'Шаг 2. Вправо на 5. Шаг 3. Попадаем в −3.',S(16),INK,false,'start');
-    s+=tx(28,274,'Проверка: 8 − 5 = 3, знак минус',S(16),OK,true,'start');
+    s+=tx(28,226,'Шаг 1: −8. Шаг 2: вправо на 5.',S(16),INK,false,'start');
+    s+=tx(28,250,'Шаг 3: попадаем в −3.',S(16),INK,false,'start');
+    s+=tx(28,274,'Проверка: 8 − 5 = 3, минус',S(16),OK,true,'start');
     return paper(()=>s,H); };
 
   /* 6 · принцип: вычитаем модули, знак большего */
@@ -354,11 +369,11 @@
     return paper(()=>s,H); };
 
   /* 7 · порядок не спасает: 8 + (−9) */
-  const sc7=()=>{ const H=296, W=paperW(); let s=head(W,'первое число может быть и положительным');
+  const sc7=()=>{ const H=296, W=paperW(); let s=head(W,'первое число бывает и с плюсом');
     s+=numberLine(W,144,-4,9,{extra:(sc)=>
       jump(sc,144,8,-1,BLUED,true,'−9')+circ(sc.x(8),144,4.8,INK)}).svg;
     s+=rect(16,204,W-32,80,ERR_BG,NO,10,1.8);
-    s+=tx(28,232,'доход 8, потеря 9 — снова должен 1',S(16),NO,true,'start');
+    s+=tx(28,232,'доход 8, потеря 9 — долг 1',S(16),NO,true,'start');
     s+=tx(28,256,'9 − 8 = 1, больший модуль у −9,',S(16),INK,false,'start');
     s+=tx(28,280,'значит 8 + (−9) = −1',S(20),INK,true,'start');
     return paper(()=>s,H); };
@@ -368,11 +383,11 @@
     const y=38, rh=100, x=12, w=W-24;
     s+=rect(x,y,w,rh,'#eef2fa','#9db6d8',10,1.8);
     s+=tx(x+14,y+30,'знаки одинаковые',S(20),BLUED,true,'start');
-    s+=tx(x+14,y+58,'модули складываем, знак оставляем',S(16),INK,false,'start');
+    s+=tx(x+14,y+58,'модули сложить, знак оставить',S(16),INK,false,'start');
     s+=tx(x+14,y+88,'−7 + (−2) = −9',S(20),BLUED,true,'start');
     s+=rect(x,y+rh+12,w,rh,'#eef6ef','#8fbf9f',10,1.8);
     s+=tx(x+14,y+rh+42,'знаки разные',S(20),OK,true,'start');
-    s+=tx(x+14,y+rh+70,'из большего модуля вычитаем меньший',S(16),INK,false,'start');
+    s+=tx(x+14,y+rh+70,'из большего модуля — меньший',S(16),INK,false,'start');
     s+=tx(x+14,y+rh+100,'6 + (−4) = 2',S(20),OK,true,'start');
     s+=tx(W/2,300,'проверь на прямой каждую строку',S(16),MUT);
     return paper(()=>s,H); };
@@ -395,7 +410,7 @@
     s+=tx(28,183,'5 − 8 = 5 + (−8) = −3',S(16),INK,true,'start');
     s+=rect(16,212,W-32,50,'#f7f0de',RULE,10,1.6);
     s+=tx(28,243,'−4 − 9 = −4 + (−9) = −13',S(16),INK,true,'start');
-    s+=tx(W/2,286,'проверка прямой: −3 правее −8, −13 левее −4',S(16),MUT);
+    s+=tx(W/2,286,'на прямой: −3 правее −8, −13 левее −4',S(16),MUT);
     return paper(()=>s,H); };
 
   /* 11 · 4 − (−6) = 10 */
@@ -403,8 +418,8 @@
     s+=numberLine(W,140,0,11,{extra:(sc)=>
       jump(sc,140,4,10,RED,true,'+6')+circ(sc.x(4),140,4.8,INK)}).svg;
     s+=rect(16,204,W-32,80,CHK_BG,OK,10,1.8);
-    s+=tx(28,226,'минус перед скобкой переворачивает знак:',S(16),INK,false,'start');
-    s+=tx(28,250,'−(−6) = +6 — идём вправо',S(16),INK,false,'start');
+    s+=tx(28,226,'минус перед скобкой:',S(16),INK,false,'start');
+    s+=tx(28,250,'−(−6) = +6, идём вправо',S(16),INK,false,'start');
     s+=tx(28,280,'4 − (−6) = 4 + 6 = 10',S(20),OK,true,'start');
     return paper(()=>s,H); };
 
@@ -427,8 +442,8 @@
       s+=tx(28,294,'затем 5 + (−7) = −2',S(16),INK,false,'start');
       s+=tx(28,316,'второй способ: 9 − 11 = −2',S(16),OK,true,'start');
     } else {
-      s+=tx(W/2,266,'идём слева направо, держим одно число',S(16),MUT);
-      s+=tx(W/2,294,'менять местами нельзя: 6 − 2 и 2 − 6 — разное',S(16),MUT);
+      s+=tx(W/2,266,'идём слева направо, шаг за шагом',S(16),MUT);
+      s+=tx(W/2,294,'местами не меняем: 6 − 2 ≠ 2 − 6',S(16),MUT);
     }
     return paper(()=>s,H);
   }
@@ -436,14 +451,14 @@
   /* 13 · долг и зарплата */
   const sc13=()=>{ const H=306, W=paperW(); let s=head(W,'задание 7 · долг 2500 и зарплата 4000');
     s+=rect(16,38,W-32,72,ERR_BG,NO,10,1.8);
-    s+=tx(32,66,'долг 2500 — это −2500',S(20),NO,true,'start');
+    s+=tx(32,66,'долг = −2500',S(20),NO,true,'start');
     s+=tx(32,94,'уменьшает счёт',S(16),INK,false,'start');
     s+=rect(16,122,W-32,72,CHK_BG,OK,10,1.8);
-    s+=tx(32,150,'зарплата 4000 — это +4000',S(20),OK,true,'start');
+    s+=tx(32,150,'зарплата = +4000',S(20),OK,true,'start');
     s+=tx(32,178,'увеличивает счёт',S(16),INK,false,'start');
-    s+=tx(W/2,236,'−2500 + 4000 = +1500',S(24),GOLDD,true);
-    s+=tx(W/2,262,'долг закрыт полностью — на счёте 1500 рублей',S(16),MUT);
-    s+=tx(W/2,288,'проверка: 4000 − 2500 = 1500, знак «+»',S(16),MUT);
+    s+=tx(W/2,236,'−2500 + 4000 = +1500',S(20),GOLDD,true);
+    s+=tx(W/2,262,'долг закрыт, на счёте 1500',S(16),MUT);
+    s+=tx(W/2,288,'проверка: 4000 − 2500 = 1500',S(16),MUT);
     return paper(()=>s,H); };
 
   /* 14 · температура: было −7, стало +3 */
@@ -478,7 +493,7 @@
     let s=head(W,'частые ошибки и проверка прямой');
     const rows=[
       ['−3 + (−5) = 8', 'нет знака'],
-      ['4 − (−6) = −2', 'знак перед скобкой'],
+      ['4 − (−6) = −2', 'минус у скобки'],
       ['−8 + 5 = 8', 'взял знак первого'],
       ['5 − 8 = −13', 'сложил модули']
     ];
@@ -500,10 +515,10 @@
     const st=st6(LV.id), go=st.go||0;
     let s=head(W,'проверь себя · −4 + 9 + (−7)');
     const lines=[
-      'Шаг 1. Из −4 вправо на 9 — попадаем в 5.',
-      'Шаг 2. Из 5 влево на 7 — попадаем в −2.',
-      'Шаг 3. Знаки разные: 7 − 5 = 2, у −7 знак минус.',
-      'Проверка. 9 − 11 = −2 — сходится.'
+      'Шаг 1. От −4 вправо на 9 → 5',
+      'Шаг 2. От 5 влево на 7 → −2',
+      'Шаг 3. 7 − 5 = 2, знак у −7',
+      'Проверка: 9 − 11 = −2, сходится'
     ];
     lines.slice(0,Math.min(4,go+1)).forEach((t,i)=>{
       const y=40+i*44;
@@ -555,13 +570,13 @@
   /* 18 · шпаргалка */
   const sc18=()=>{ const H=322, W=paperW(); let s=head(W,'шпаргалка урока');
     s+=chip(16,38,W-32,46,'сложение: знак и модули',CELL,GOLDT,INK,S(20));
-    s+=tx(W/2,110,'одинаковые знаки — модули сложить',S(16),INK);
-    s+=tx(W/2,134,'разные — вычесть и взять знак большего',S(16),INK);
+    s+=tx(W/2,110,'знаки равны — модули сложить',S(16),INK);
+    s+=tx(W/2,134,'разные — вычесть, знак большего',S(16),INK);
     s+=chip(16,150,W-32,46,'вычитание: a − b = a + (−b)',CELL,BLUED,INK,S(20));
-    s+=tx(W/2,222,'минус перед скобкой переворачивает знак',S(16),INK);
+    s+=tx(W/2,222,'минус у скобки меняет знак',S(16),INK);
     s+=rect(16,238,W-32,72,CHK_BG,OK,10,1.8);
     s+=tx(28,266,'проверка всегда одна:',S(16),OK,true,'start');
-    s+=tx(28,292,'шаги по прямой — вправо и влево',S(16),INK,false,'start');
+    s+=tx(28,292,'шаги по прямой: вправо, влево',S(16),INK,false,'start');
     return paper(()=>s,H); };
 
   /* ================= восемь заданий: ошибка, проверка, второй способ =================
@@ -570,7 +585,7 @@
   function taskScene(n){
     return function(){
       const W=paperW(), st=st6(LV.id), T=TASKS[n-1], mode=st.mode;
-      const H=362;
+      const H=392;
       let s=head(W,'задание '+n+' · '+T.head);
       s+=T.art(W);
       s+=btns(10,186,[
@@ -581,7 +596,7 @@
       const kind = mode==='err'?ERR_BG:(mode==='two'?TWO_BG:CHK_BG);
       const kcol = mode==='err'?NO:(mode==='two'?GOLDT:OK);
       const label= mode==='err'?'Ошибка: ':(mode==='two'?'Способ 2: ':'Проверка: ');
-      s+=note(10,246,W-20,106,kind,label,kcol,INK,body);
+      s+=note(10,246,W-20,136,kind,label,kcol,INK,body);
       return paper(()=>s,H);
     };
   }
@@ -637,7 +652,7 @@
     s+=rect(W/2+10,66,W/2-30,50,CHK_BG,OK,9,1.6);
     s+=tx(W*3/4-5,98,'+4500',S(20),OK,true);
     s+=tx(W/2,150,'4500 − 3000 = 1500',S(20),GOLDD,true);
-    s+=tx(W/2,176,'знак у числа с большим модулем — плюс',S(16),INK);
+    s+=tx(W/2,176,'знак у большего модуля — плюс',S(16),INK);
     s+=chip(W/2-96,188,192,34,'на счету +1500',CELL,RULE,INK,S(16));
     return s;
   }

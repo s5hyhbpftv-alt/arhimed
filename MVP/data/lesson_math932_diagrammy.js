@@ -277,24 +277,24 @@
     const в = s.таблица;
     return ВОПРОС('В таблице четыре строки. Какое занятие собрало больше всего голосов?') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="200" fill="url(#c932-стена)"/>
-        <rect x="0" y="0" width="336" height="200" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
+        <rect x="0" y="0" width="336" height="222" fill="url(#c932-стена)"/>
+        <rect x="0" y="0" width="336" height="222" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
         ${т(168,24,'Данные записываем в таблицу',14,GOLD,true)}
-        <rect x="34" y="40" width="268" height="132" rx="12" fill="rgba(255,255,255,.04)" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
+        <rect x="34" y="40" width="268" height="150" rx="12" fill="rgba(255,255,255,.04)" stroke="${ЛИНИЯ}" stroke-width="1.6"/>
         <rect x="34" y="40" width="268" height="32" rx="12" fill="rgba(255,215,106,.16)" stroke="${ЛИНИЯ}" stroke-width="1.2"/>
         ${т(90,61,'занятие',12,GOLD,true)}${т(250,61,'голосов',12,GOLD,true)}
         ${ОПРОС.map(([имя,ч],i)=>{
-          const y=96+i*28;
+          const y=94+i*28;
           return `<g>
             <line x1="34" y1="${y-19}" x2="302" y2="${y-19}" stroke="${ЛИНИЯ}" stroke-width=".8" opacity=".5"/>
-            <rect x="36" y="${y-15}" width="14" height="14" rx="3" fill="${ЦВЕТА[i]}" stroke="rgba(20,35,28,.5)" stroke-width="1"/>
-            ${т(58,y-3,имя,14,ИНК,false,'start')}
+            <rect x="44" y="${y-15}" width="14" height="14" rx="3" fill="${ЦВЕТА[i]}" stroke="rgba(20,35,28,.5)" stroke-width="1"/>
+            ${т(66,y-3,имя,14,ИНК,false,'start')}
             <g>${ан('opacity','0.3;0.3;1;1','9s','keyTimes="0;'+(0.1+i*0.16).toFixed(2)+';'+(0.24+i*0.16).toFixed(2)+';1"')}
               ${т(250,y-3,String(ч),16,GOLD,true)}</g>
           </g>`;
         }).join('')}
-        ${т(168,188,'итого 12 голосов',12,МУТ)}
-      `,200)}</div>` +
+        ${т(168,210,'итого 12 голосов',12,МУТ)}
+      `,222)}</div>` +
       `<div class="ask">
         ${BTN(3, в==='футбол'?'hit':(в?'miss':''), 'Футбол: 6 голосов — больше всех', "r932Tabl('футбол')")}
         ${BTN(4, в==='музыка'?'miss':'', 'Музыка: последняя строка', "r932Tabl('музыка')")}
