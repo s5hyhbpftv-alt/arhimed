@@ -146,12 +146,21 @@
   #lvis .s6.l1022{-webkit-text-size-adjust:100%}
   #lvis .s6.l1022 [data-anim]{animation:l1022rise 280ms cubic-bezier(.23,1,.32,1) both;animation-delay:calc(min(var(--i,0),5)*45ms)}
   @keyframes l1022rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-  /* ── цепочка переданных пар: какая сейчас, какие уже стоят ── */
-  #lvis .s6.l1022 .пары{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%}
-  #lvis .s6.l1022 .пары span{min-width:66px;padding:8px 10px;border-radius:12px;text-align:center;
-    font-size:20px;font-variant-numeric:tabular-nums;border:1.5px solid rgba(157,183,255,.35);color:var(--mut)}
+  /* ── цепочка переданных пар: какая сейчас, какие уже стоят ──
+     Геометрия ряда НЕ МЕНЯЕТСЯ ни в каком состоянии: фишки равной ширины в
+     одну строку, галочка — значок в углу, места не занимает. Раньше «✓ »
+     добавлялось к тексту, ряд на 360 px переносился после второго верного
+     тапа, и сетка прыгала вниз на 48 px прямо под пальцем. */
+  #lvis .s6.l1022 .пары{display:flex;gap:6px;flex-wrap:nowrap;width:100%}
+  #lvis .s6.l1022 .пары span{position:relative;flex:1 1 0;min-width:0;padding:8px 2px;border-radius:12px;
+    text-align:center;white-space:nowrap;font-size:18px;font-variant-numeric:tabular-nums;
+    border:1.5px solid rgba(157,183,255,.35);color:var(--mut)}
   #lvis .s6.l1022 .пары span.сейчас{border-color:${GOLD};color:${GOLD};background:rgba(255,215,106,.12);font-weight:700}
   #lvis .s6.l1022 .пары span.есть{border-color:${GREEN};color:${GREEN}}
+  #lvis .s6.l1022 .пары span i{position:absolute;top:-8px;right:-4px;width:18px;height:18px;border-radius:9px;
+    font-style:normal;font-size:12px;line-height:18px;text-align:center;color:#10231a;background:${GREEN};
+    visibility:hidden}
+  #lvis .s6.l1022 .пары span.есть i{visibility:visible}
   @media (prefers-reduced-motion: reduce){
     #lvis .s6.l1022 [data-anim]{animation:none!important}
     #lvis .s6.l1022 .уровни .точка.сейчас{animation:none!important}
@@ -192,8 +201,8 @@
   const ЛИСТ = (s) => {
     const всё = ДЕЛА.every(д=>сделано(s,д.ключ));
     return A(0,'лист',
-      `<div class="шапка"><span>Связь с кораблём</span><b class="${всё?'готово':''}">${
-        всё?'рисунок передан':'сетка 0…6'}</b></div>
+      `<div class="шапка"><span>Связь</span><b class="${всё?'готово':''}">${
+        всё?'передано':'сетка 0…6'}</b></div>
        <ul>${ДЕЛА.map(д=>{
          const есть = сделано(s,д.ключ);
          return `<li class="${есть?'есть':''}"><i>${есть?'✓':'·'}</i>${д.имя}
@@ -375,7 +384,7 @@
       ${анК('r','7;7;13;7','3s','0;0.4;0.7;1')}${анК('opacity','1;1;0.4;1','3s','0;0.4;0.7;1')}</circle>`;
   };
   const ПАРЫ = (список, сейчас) => A(3,'пары', список.map((п,i)=>
-    `<span class="${i<сейчас?'есть':(i===сейчас?'сейчас':'')}">${i<сейчас?'✓ ':''}${пара(п)}</span>`).join(''));
+    `<span class="${i<сейчас?'есть':(i===сейчас?'сейчас':'')}"><i aria-hidden="true">✓</i>${пара(п)}</span>`).join(''));
 
   /* ================= КАДРЫ ================= */
 
