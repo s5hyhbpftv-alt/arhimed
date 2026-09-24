@@ -253,7 +253,7 @@
         <path d="M-4 -96 Q${-4-40*парус} -54 -6 ${-96+вх*0.78} Z" fill="#efe2c4" stroke="${ОБВОД}" stroke-width="1.2" opacity="${парус?1:0}"/>
       </g>
       ${парус<1?`<path d="M-2 -8 h10 v-${f(10+ (1-парус)*14)} h-10z" fill="#e8dcc0" stroke="${ОБВОД}" stroke-width=".8"/>`:''}
-      <path d="${флаг1}" fill="#e05a3a" stroke="${ОБВОД}" stroke-width=".9">${ДВИЖ?`<animate attributeName="d" values="${флаг1};${флаг2};${флаг1}" dur="1.4s" repeatCount="indefinite"/>`:''}</path>
+      ${о.флаг===false?'':`<path d="${флаг1}" fill="#e05a3a" stroke="${ОБВОД}" stroke-width=".9">${ДВИЖ?`<animate attributeName="d" values="${флаг1};${флаг2};${флаг1}" dur="1.4s" repeatCount="indefinite"/>`:''}</path>`}
       <path d="${корпус}" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1.8"/>
       ${[4,12,20].map(yy=>`<path d="M${-74+yy*0.25} ${yy} Q-40 ${yy+4} 20 ${yy+3} T${86-yy*0.3} ${yy-6}" stroke="${ОБВОД}" stroke-width=".8" fill="none" opacity=".45"/>`).join('')}
       <path d="M-80 -6 L92 -12" stroke="#e8b878" stroke-width="3.2" stroke-linecap="round"/><path d="M-80 -6 L92 -12" stroke="${ОБВОД}" stroke-width="1" opacity=".6"/>
@@ -492,6 +492,80 @@
     </g>`;
   }
 
+
+  /* ---------- флаг на флагштоке: цвет, форма (треугольный / квадратный), полоса ---------- */
+  function флаг(x,y,цвет,форма,полоса,опц){
+    const о=опц||{}, в=о.в||70, ц={красный:['#f0664a','#b8321e'],синий:['#4a86d8','#1e4a9a'],жёлтый:['#ffd24a','#c8901a'],зелёный:['#6ac06a','#2e7a3a'],белый:['#fbfbf6','#c8ccd0']}[цвет]||['#ccc','#888'];
+    const кл=ид('флаг');
+    const f1 = форма==='треугольный' ? 'M0 0 q10 3 26 11 q-16 8 -26 11 z' : 'M0 0 q13 -3 26 1 v20 q-13 -4 -26 -1 z';
+    const f2 = форма==='треугольный' ? 'M0 0 q12 -2 26 13 q-14 6 -26 9 z' : 'M0 0 q13 3 26 -1 v20 q-13 4 -26 1 z';
+    return `<g transform="translate(${x} ${y})">
+      <ellipse cx="0" cy="1" rx="6" ry="1.8" fill="#231a12" opacity=".35"/>
+      <rect x="-1.6" y="${-в}" width="3.2" height="${в}" rx="1.2" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".6"/>
+      <circle cx="0" cy="${-в-2}" r="2.6" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".5"/>
+      <g transform="translate(1.6 ${-в+2})">
+        <clipPath id="${кл}"><path d="${f1}">${ДВИЖ&&о.вьётся!==false?`<animate attributeName="d" values="${f1};${f2};${f1}" dur="${(1.3+(x%7)*0.08).toFixed(2)}s" repeatCount="indefinite"/>`:''}</path></clipPath>
+        <path d="${f1}" fill="${ц[0]}" stroke="${ОБВОД}" stroke-width=".9">${ДВИЖ&&о.вьётся!==false?`<animate attributeName="d" values="${f1};${f2};${f1}" dur="${(1.3+(x%7)*0.08).toFixed(2)}s" repeatCount="indefinite"/>`:''}</path>
+        <g clip-path="url(#${кл})">
+          <rect x="0" y="12" width="30" height="12" fill="${ц[1]}" opacity=".45"/>
+          ${полоса?`<rect x="0" y="8" width="30" height="5" fill="#fbfbf6"/>`:''}
+          <rect x="0" y="-4" width="30" height="7" fill="#fff" opacity=".18"/>
+        </g>
+      </g></g>`;
+  }
+  /* ---------- рыночный прилавок с полосатым навесом ---------- */
+  function прилавок(x,y,ш,в){
+    const n=Math.round(ш/24);
+    return `<g transform="translate(${x} ${y})">
+      <rect x="${-ш/2+6}" y="${-в-44}" width="5" height="${в+44}" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".6"/>
+      <rect x="${ш/2-11}" y="${-в-44}" width="5" height="${в+44}" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".6"/>
+      ${Array.from({length:n},(_,k)=>`<path d="M${-ш/2+k*ш/n} ${-в-52} h${ш/n} v14 q-${ш/n/2} 8 -${ш/n} 0 z" fill="${k%2?'#fbf4e2':'#d0503a'}" stroke="${ОБВОД}" stroke-width=".7"/>`).join('')}
+      <path d="M${-ш/2} ${-в-52} h${ш}" stroke="${ОБВОД}" stroke-width="1.2"/>
+      <ellipse cx="4" cy="3" rx="${ш*0.52}" ry="4" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <rect x="${-ш/2}" y="${-в}" width="${ш}" height="${в}" rx="3" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1.3"/>
+      ${[0.33,0.66].map(t=>`<line x1="${-ш/2}" y1="${-в+в*t}" x2="${ш/2}" y2="${-в+в*t}" stroke="${ОБВОД}" stroke-width=".7" opacity=".45"/>`).join('')}
+      <rect x="${-ш/2-4}" y="${-в-6}" width="${ш+8}" height="7" rx="2" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width="1"/>
+    </g>`;
+  }
+  /* мяч, лента, яблоко — со светом и тенью */
+  function мяч(x,y,r,цвет){
+    const кл=ид('мяч');
+    return `<g><ellipse cx="${x+2}" cy="${y+r}" rx="${r*0.9}" ry="${r*0.2}" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <radialGradient id="${кл}" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#fff"/><stop offset="0.25" stop-color="${цвет}"/><stop offset="1" stop-color="#5a1408"/></radialGradient>
+      <circle cx="${x}" cy="${y}" r="${r}" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M${x-r} ${y} q${r} ${r*0.5} ${2*r} 0" stroke="#fff" stroke-width="${r*0.14}" fill="none" opacity=".8"/>
+      <path d="M${x} ${y-r} q${r*0.5} ${r} 0 ${2*r}" stroke="#fff" stroke-width="${r*0.1}" fill="none" opacity=".5"/></g>`;
+  }
+  function лента(x,y,м,цвет){
+    const d='M-30 0 q10 -16 20 -4 q10 12 20 -2 q10 -14 20 0 q6 8 0 16 q-8 -8 -16 2 q-10 12 -22 -2 q-10 -12 -22 6 z';
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <path d="${d}" fill="${цвет}" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M-26 -2 q8 -10 16 -2 M4 -6 q8 -8 14 -2" stroke="#fff" stroke-width="1.6" fill="none" opacity=".6"/>
+      <path d="M-30 0 q-6 10 -2 20 l6 -8 l6 6 q-4 -10 -10 -18z" fill="${цвет}" stroke="${ОБВОД}" stroke-width=".9"/></g>`;
+  }
+  function яблоко(x,y,r,цвет){
+    const кл=ид('ябл');
+    return `<g><ellipse cx="${x+2}" cy="${y+r*0.95}" rx="${r*0.9}" ry="${r*0.2}" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <radialGradient id="${кл}" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#ffd8c8"/><stop offset="0.3" stop-color="${цвет}"/><stop offset="1" stop-color="#6a1408"/></radialGradient>
+      <path d="M${x} ${y-r*0.7} q${r*1.1} ${-r*0.6} ${r*1.05} ${r*0.55} q0 ${r*0.9} ${-r*0.6} ${r*1.1} q${-r*0.45} ${r*0.1} ${-r*0.45} 0 q0 ${r*0.1} ${-r*0.45} 0 q${-r*0.6} ${-r*0.2} ${-r*0.6} ${-r*1.1} q0 ${-r*1.15} ${r*1.05} ${-r*0.55}z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M${x} ${y-r*0.7} q2 ${-r*0.4} 5 ${-r*0.6}" stroke="#5a3410" stroke-width="2" fill="none"/>
+      <path d="M${x+3} ${y-r*1.05} q${r*0.6} ${-r*0.4} ${r*0.9} ${r*0.05} q${-r*0.5} ${r*0.3} ${-r*0.9} ${-r*0.05}z" fill="#6ab04a" stroke="${ОБВОД}" stroke-width=".7"/>
+      <ellipse cx="${x-r*0.4}" cy="${y-r*0.2}" rx="${r*0.16}" ry="${r*0.28}" fill="#fff" opacity=".6"/></g>`;
+  }
+  /* обычная гладкая рыбка */
+  function рыбка(x,y,м,цвет,опц){
+    const о=опц||{};
+    const хв1='M16 0 l12 -9 q-3 9 0 18 z', хв2='M16 0 l12 -6 q-4 6 0 12 z';
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <path d="${хв1}" fill="${цвет}" stroke="${ОБВОД}" stroke-width=".8">${ДВИЖ&&о.плывёт!==false?`<animate attributeName="d" values="${хв1};${хв2};${хв1}" dur="0.6s" repeatCount="indefinite"/>`:''}</path>
+      <path d="M-20 0 q16 -14 38 0 q-22 14 -38 0z" fill="${цвет}" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M-18 1 q16 8 34 -1 q-16 12 -34 1z" fill="#fff" opacity=".35"/>
+      <path d="M-4 -8 q6 -6 12 0" fill="${цвет}" stroke="${ОБВОД}" stroke-width=".7"/>
+      <circle cx="-12" cy="-2" r="2.4" fill="#fff" stroke="${ОБВОД}" stroke-width=".5"/><circle cx="-12.4" cy="-2" r="1.2" fill="#1a120a"/>
+      <path d="M-16 -4 q10 -6 22 -2" stroke="#fff" stroke-width="1" fill="none" opacity=".5"/></g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
-    сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить};
+    сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
+    флаг, прилавок, мяч, лента, яблоко, рыбка};
 })();
