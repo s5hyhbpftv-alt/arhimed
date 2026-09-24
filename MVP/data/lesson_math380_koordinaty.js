@@ -1,80 +1,103 @@
-/* ============ МАТЕМАТИКА · УРОК 380 · «КООРДИНАТНАЯ ПЛОСКОСТЬ» ============
-   5–6 класс. Сюжет: робот-художник ждёт координаты, чтобы нарисовать картинку.
+/* ====== МАТЕМАТИКА · УРОК 380 · «КООРДИНАТНАЯ ПЛОСКОСТЬ» ============================
+   5–6 класс. Переделан с нуля по эталону 1022 (deploy/ЭТАЛОН_УРОКА.md), рисунки —
+   сцена из сюжета. Прежние версии (vis_wk.js visW380, vis_bw.js) остаются в
+   общих файлах; этот файл регистрируется поверх.
 
-   УРОК СОБРАН ПО ПРАВИЛАМ КОМАНДЫ ЭКСПЕРТОВ (аудит по коду, 12 правил):
-     1) ОТВЕТ НЕ ВИДЕН ДО ВЫБОРА — не только правило, но и РИСУНОК: подпись
-        координат, точка-ответ и итоговая панель появляются только после
-        ответа (условный рендер по «в!=null»);
-     2) верный вариант НЕ первый — детерминированный сдвиг порядка;
-     3) в каждом вопросе ТРИ варианта, неверные — реальные неверные шаги
-        (перепутал порядок, перепутал знак, посчитал от другого угла);
-     4) ЗАТУХАНИЕ ПОДСКАЗОК: кадр 4 «я» (образец), кадр 5 «мы» (шаг пуст),
-        кадр 6 «ты» (сам);
-     5) ИНТЕРЛИВИНГ в практике: 1–2 новая тема, 3 — прошлая (НОД и Евклид),
-        4 — смешанная, 5 — новая в незнакомой обёртке;
-     6) РАЗМИНКА в кадре 1 — задача прошлого урока (379, Евклид);
-     7) САМООБЪЯСНЕНИЕ — два кадра, где выбирают ПРИЧИНУ, а не число;
-     8) ОШИБКА КАК ДАННЫЕ — третий тренажёр показывает чужую запись;
-     9) ВАРИАТИВНОСТЬ: одна структура на разных масштабах + не-пример
-        (точка на оси и перепутанный порядок);
-    10) Я — МЫ — ТЫ: кадры 4, 5, 6;
-    11) ВЫХОДНОЙ БИЛЕТ после пяти уровней;
-    12) машинные проверки — qa_layout.py и аудит_методик.py.
+   ГЛАВНАЯ МЫСЛЬ. Точку на плоскости задают ДВА числа (x; y): сначала шаги по
+   горизонтали (x: вправо +, влево −), потом по вертикали (y: вверх +, вниз −)
+   от начала (0; 0). Порядок важен: (3; 2) и (2; 3) — разные точки.
 
-   ВСЕ ЧИСЛА И РИСУНКИ ПРОВЕРЕНЫ РАСЧЁТОМ:
-     ракета по координатам (0,0)-(0,4)-(1,5)-(2,5)-(2,6)-(3,5)-(4,5)-(4,4)-(4,0)
-       — ломаная проверена отрисовкой по клеткам, силуэт узнаваем ✓
-     домик (0,0)-(0,3)-(2,5)-(4,3)-(4,0) — проверен так же ✓
-     порядок пар: (3,5) — вверх, (5,3) — вправо; это разные точки
-     четверти: I (+,+), II (−,+), III (−,−), IV (+,−); на оси координата 0
-     разминка: НОД(24,15) = 3 (алгоритм Евклида из урока 379)
-     интерливинг-уровень: НОД(48,18) = 6, НОК(48,18) = 144
+   СЮЖЕТ. «Коготь Архимеда». 212 год до н. э., римский флот Марцелла идёт на
+   Сиракузы. Архимед расчертил гавань невидимой сеткой: начало — маяк, оси —
+   мол и береговая стена. Дозорные на башне выкрикивают координаты, ученик
+   наводит катапульту и «Коготь» — железную лапу, которая поднимает корабли.
 
-   СТАНДАРТ: deploy/АНИМАЦИЯ_УРОКОВ.md, deploy/РИСОВАНИЕ_ФИГУР.md.
-   Движение — сама математика: перо робота идёт вдоль ломаной, сетка
-   проявляется, точки ставятся по одной. reduced-motion глушит SMIL целиком. */
+   РУКАМИ: катапульта — касание узла сетки 44 × 44 (цели (3; 2), (−2; −3),
+   (−3; 0)); снаряд летит по дуге, промах даёт всплеск и разбор ошибки
+   («перепутал порядок», «минус — это влево/вниз»).
+
+   ВСЕ ОТВЕТЫ ПРОВЕРЕНЫ:
+     запись «3 вправо, 4 вверх» — (3; 4);
+     флагман в точке (−3; 1); четверть с двумя минусами — III;
+     (−2; 1) и (3; 1): одна высота, расстояние 3 − (−2) = 5 клеток;
+     зона Когтя: −2 ≤ x ≤ 2, −1 ≤ y ≤ 2 → из (3; 1), (1; −2), (−1; 1) внутри
+       только (−1; 1);
+     квадрат (1; 1), (1; −2), (−2; −2) → четвёртая вершина (−2; 1).
+
+   АНИМАЦИЯ по deploy/АНИМАЦИЯ_УРОКОВ.md; в каждом кадре есть <animate>. */
 (function(){
   'use strict';
 
   const ID = 380;
-  const GOLD='#ffd76a', GREEN='#8fd1a8', BLUE='#7fd1ff', RED='#e86a5a';
-  const ИНК='#fdf8ec', МУТ='#ded0b0', ЛИНИЯ='#4d8f70', ОБВОД='#241d14';
+  const GOLD='#ffd76a', GREEN='#8fe0b0', RED='#ff8a78', ЛАЗУРЬ='#8fd0f0', ОГОНЬ='#ffa050';
+  const ИНК='#f5efe2', МУТ='#b8bfcf', ЛИНИЯ='#4d5a80', ОБВОД='#0c0a08';
+
+  const ДЕЛА = [
+    {ключ:'катапульта', имя:'Три точных выстрела',   итог:'3 из 3'},
+    {ключ:'сигнал',     имя:'Найти флагман Марцелла', итог:'(−3; 1)'},
+    {ключ:'коготь',     имя:'Поднять корабль Когтем', итог:'(−1; 1)'}
+  ];
+  const сделано = (s,к) => !!s['дело_'+к];
+
+  /* цели катапульты по кадрам */
+  const ЦЕЛИ = { 2:[3,2], 3:[-2,-3], 4:[-3,0] };
 
   const CSS=`
   #lvis .s6.l380{gap:14px}
   #lvis .s6.l380 .pic{width:100%;max-width:352px;margin:0 auto}
-  #lvis .s6.l380 .pic svg{display:block;width:100%;height:auto}
+  #lvis .s6.l380 .pic svg{display:block;width:100%;height:auto;border-radius:14px}
+  #lvis .s6.l380 .pic svg .узел{cursor:pointer}
   #lvis .s6.l380 .карт{width:100%;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;
-    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line)}
-  #lvis .s6.l380 .карт.вопрос{border-color:${GOLD}}
+    background:linear-gradient(180deg,#1f2a44,#131a2e);border:1.5px solid var(--line)}
+  #lvis .s6.l380 .карт.задача{border-color:${GOLD}}
   #lvis .s6.l380 .карт.верно{border-color:${GREEN}}
   #lvis .s6.l380 .карт.ошибка{border-color:${RED}}
   #lvis .s6.l380 .карт .метка{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
   #lvis .s6.l380 .карт .текст{font-size:20px;line-height:1.45;color:var(--ink)}
+  #lvis .s6.l380 .карт .текст b{color:${GOLD}}
   #lvis .s6.l380 .правило{width:100%;padding:14px;border-radius:14px;border:2px solid ${GOLD};
     background:linear-gradient(180deg,rgba(255,215,106,.14),rgba(255,215,106,.05));font-size:20px;line-height:1.45}
   #lvis .s6.l380 .правило b{color:${GOLD}}
+  #lvis .s6.l380 .лист{width:100%;padding:12px 14px;border-radius:16px;
+    background:linear-gradient(180deg,rgba(255,160,80,.16),rgba(255,160,80,.04));
+    border:1.5px solid rgba(255,160,80,.5);display:flex;flex-direction:column;gap:7px}
+  #lvis .s6.l380 .лист .шапка{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  #lvis .s6.l380 .лист .шапка b{font-size:20px;letter-spacing:0;text-transform:none;color:${ОГОНЬ}}
+  #lvis .s6.l380 .лист .шапка b.готово{color:${GREEN}}
+  #lvis .s6.l380 .лист ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+  #lvis .s6.l380 .лист li{display:flex;align-items:center;gap:9px;font-size:16px;line-height:1.3;color:${МУТ}}
+  #lvis .s6.l380 .лист li i{flex:0 0 22px;width:22px;height:22px;border-radius:7px;font-style:normal;
+    display:inline-flex;align-items:center;justify-content:center;font-size:14px;
+    border:1.5px solid rgba(255,255,255,.22);color:var(--mut)}
+  #lvis .s6.l380 .лист li.есть{color:${ИНК}}
+  #lvis .s6.l380 .лист li.есть i{border-color:${GREEN};color:${GREEN};background:rgba(143,224,176,.14)}
+  #lvis .s6.l380 .лист li span{margin-left:auto;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--mut);font-size:14px}
+  #lvis .s6.l380 .лист li.есть span{color:${GREEN}}
   #lvis .s6.l380 .ask{display:flex;gap:10px;flex-wrap:wrap;width:100%}
-  #lvis .s6.l380 .ask button{flex:1 1 100%;min-height:56px;height:auto;padding:13px 16px;overflow-wrap:anywhere;word-break:break-word;font-size:16px;font-weight:600;line-height:1.3;text-align:left;
+  #lvis .s6.l380 .ask button{flex:1 1 100%;min-height:56px;height:auto;padding:13px 16px;
+    overflow-wrap:anywhere;word-break:break-word;font-size:16px;font-weight:600;line-height:1.3;text-align:left;
     touch-action:manipulation;-webkit-tap-highlight-color:transparent;
     transition:transform 150ms cubic-bezier(.23,1,.32,1),border-color 150ms cubic-bezier(.23,1,.32,1)}
   #lvis .s6.l380 .ask button:active{transform:translateY(2px)}
   #lvis .s6.l380 .ask button.hit{border-color:var(--ok)}
   #lvis .s6.l380 .ask button.miss{border-color:var(--no)}
+  #lvis .s6.l380 .ask.пара button{flex:1 1 calc(50% - 6px);text-align:center;font-variant-numeric:tabular-nums;font-size:18px}
+  #lvis .s6.l380 .ask.три button{flex:1 1 calc(33% - 8px);text-align:center;font-variant-numeric:tabular-nums;font-size:17px;padding:13px 4px;overflow-wrap:normal;word-break:keep-all}
   #lvis .s6.l380 .уровни{display:flex;gap:8px;align-items:center;width:100%}
-  #lvis .s6.l380 .уровни .точка{flex:1 1 0;height:10px;border-radius:6px;background:rgba(255,255,255,.09)}
+  #lvis .s6.l380 .уровни .точка{flex:1 1 0;height:10px;border-radius:6px;background:rgba(255,255,255,.09);
+    transition:background 200ms cubic-bezier(.23,1,.32,1)}
   #lvis .s6.l380 .уровни .точка.пройдено{background:${GREEN}}
   #lvis .s6.l380 .уровни .точка.сейчас{background:${GOLD};animation:l380dot 1.6s cubic-bezier(.23,1,.32,1) infinite}
-  @keyframes l380dot{0%,100%{opacity:1}50%{opacity:.45}}
+  @keyframes l380dot{0%,100%{opacity:1}50%{opacity:.6}}
   #lvis .s6.l380 .score{font-size:16px;color:var(--mut);text-align:center;font-variant-numeric:tabular-nums}
   #lvis .s6.l380{-webkit-text-size-adjust:100%}
   #lvis .s6.l380 [data-anim]{animation:l380rise 280ms cubic-bezier(.23,1,.32,1) both;animation-delay:calc(min(var(--i,0),5)*45ms)}
   @keyframes l380rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-  @media (max-width:370px){ #lvis .s6.l380 .ask button{flex:1 1 100%} }
   @media (prefers-reduced-motion: reduce){
     #lvis .s6.l380 [data-anim]{animation:none!important}
     #lvis .s6.l380 .уровни .точка.сейчас{animation:none!important}
-    #lvis .s6.l380 .ask button{transition:none}
+    #lvis .s6.l380 button{transition:none!important}
   }`;
 
   function css(){
@@ -85,721 +108,530 @@
       if(s.textContent!==CSS) s.textContent=CSS;
     }catch(e){}
   }
-
   const S = () => {
-    const lk = (typeof lidKey==='function') ? lidKey(String(ID)) : String(ID);
+    const lk = (typeof lidKey==='function') ? lidKey(ID) : String(ID);
     if(typeof CHS==='undefined') window.CHS={};
     if(!CHS[lk]) CHS[lk]={};
     return CHS[lk];
   };
   const A = (i,cls,html) => `<div data-anim style="--i:${i}" class="${cls||''}">${html}</div>`;
-  const BTN = (i,cls,html,on,off) =>
-    `<button type="button" data-anim style="--i:${i}" class="${cls||''}" ${off?'disabled':''} onclick="${on}">${html}</button>`;
-  const ВОПРОС = (текст) => A(2,'карт вопрос','<span class="метка">Вопрос</span><div class="текст">'+текст+'</div>');
+  const BTN = (i,cls,html,on,выкл) =>
+    `<button type="button" data-anim style="--i:${i}" class="${cls||''}" onclick="${on}"${выкл?' disabled':''}>${html}</button>`;
+  const ЗАДАЧА = (текст) => A(2,'карт задача','<span class="метка">Коготь Архимеда</span><div class="текст">'+текст+'</div>');
   const РАЗБОР = (верно,текст) =>
     A(9,'карт '+(верно?'верно':'ошибка'),
-      '<span class="метка">'+(верно?'Верно':'Разбор ошибки')+'</span><div class="текст">'+(верно?'✅ ':'❌ ')+текст+'</div>');
-  const ЖДЁТ = () => A(9,'карт','<span class="метка">Ответ</span><div class="текст">Выбери один из вариантов выше — разбор появится здесь.</div>');
+      '<span class="метка">'+(верно?'Верно':'Разбор')+'</span><div class="текст">'+(верно?'✅ ':'❌ ')+текст+'</div>');
+  const СКАЗ = (метка,текст) => A(9,'карт','<span class="метка">'+метка+'</span><div class="текст">'+текст+'</div>');
   const ПРАВИЛО = (текст) => A(40,'правило',текст);
-  /* правило без утечки ответа: до выбора — нейтрально, после — точно */
-  const ПРАВИЛО2 = (ответ, до, после) => (ответ!=null) ? ПРАВИЛО(после) : ПРАВИЛО(до);
   const ТОЧКИ = (всего,сейчас,пройдено) => A(1,'уровни',
     Array.from({length:всего},(_,к)=>
       `<span class="точка ${к<пройдено?'пройдено':(к===сейчас?'сейчас':'')}"></span>`).join(''));
+  const ОТВЕТЫ = (кл,варианты,верный,в,обр) => `<div class="ask ${кл}">${варианты.map((v,к)=>
+      BTN(5+к, в===к?(к===верный?'hit':'miss'):'', v, обр+"("+к+")")).join('')}</div>`;
+  const ЛИСТ = (s) => {
+    const всё = ДЕЛА.every(д=>сделано(s,д.ключ));
+    return A(0,'лист',
+      `<div class="шапка"><span>Оборона гавани</span><b class="${всё?'готово':''}">${
+        всё?'флот отбит':ДЕЛА.filter(д=>сделано(s,д.ключ)).length+' из 3'}</b></div>
+       <ul>${ДЕЛА.map(д=>{
+         const есть = сделано(s,д.ключ);
+         return `<li class="${есть?'есть':''}"><i>${есть?'✓':'·'}</i>${д.имя}
+           <span>${есть?д.итог:'—'}</span></li>`;
+       }).join('')}</ul>`);
+  };
+  const коорд = (x,y) => '('+String(x).replace('-','−')+'; '+String(y).replace('-','−')+')';
 
   /* ================= АНИМАЦИЯ ================= */
   const ДВИЖ = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const КРИВАЯ = '0.23 1 0.32 1';
   const сплайны = (n) => Array.from({length:n},()=>КРИВАЯ).join(';');
-  const ан = (имя,значения,длит,доп) =>
-    ДВИЖ ? `<animate attributeName="${имя}" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
   const анК = (имя,значения,длит,keyTimes,доп) =>
     ДВИЖ ? `<animate attributeName="${имя}" values="${значения}" dur="${длит}" repeatCount="indefinite"
               calcMode="spline" keyTimes="${keyTimes}" keySplines="${сплайны(keyTimes.split(';').length-1)}" ${доп||''}/>` : '';
-  const анД = (путь,длит,доп) =>
-    ДВИЖ ? `<animateMotion dur="${длит}" repeatCount="indefinite" path="${путь}" ${доп||''}/>` : '';
+  const анЛин = (имя,значения,длит,доп) =>
+    ДВИЖ ? `<animate attributeName="${имя}" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
+  const ЗАВОД = `<rect width="0" height="0" fill="none"><animate attributeName="x" values="0;0" dur="1s" repeatCount="indefinite"/></rect>`;
+  const анСдвиг = (значения,длит,keyTimes) =>
+    ДВИЖ ? `<animateTransform attributeName="transform" type="translate" values="${значения}" dur="${длит}"
+              repeatCount="indefinite" calcMode="spline" keyTimes="${keyTimes}"
+              keySplines="${сплайны(keyTimes.split(';').length-1)}"/>${ЗАВОД}` : '';
+  const анКач = (значения,длит) =>
+    ДВИЖ ? `<animateTransform attributeName="transform" type="rotate" values="${значения}" dur="${длит}" repeatCount="indefinite"
+              calcMode="spline" keyTimes="0;0.5;1" keySplines="${сплайны(2)}" additive="sum"/>${ЗАВОД}` : '';
   const кт = (v) => Math.min(0.95, Math.max(0.03, v)).toFixed(2);
-  const проявить = (длит,доля,конец) => анК('opacity','0.3;0.3;1;1',длит,
-    '0;'+кт(доля)+';'+кт(конец)+';1');
-  const рисуется = (длина,длит,доля,конец) =>
-    анК('stroke-dashoffset',длина+';'+длина+';0;0',длит,'0;'+кт(доля)+';'+кт(конец)+';1');
+  const проявить = (длит,доля,конец) => анК('opacity','0.55;0.55;1;1',длит,'0;'+кт(доля)+';'+кт(конец)+';1');
+  const вырасти = (длит,доля) => анК('opacity','0.15;0.15;1;1',длит,'0;'+кт(доля)+';'+кт(доля+0.06)+';1');
 
   /* ================= РИСУНОК ================= */
   const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const т = (x,y,текст,кегль,цвет,жирный,якорь) =>
+  const т = (x,y,текст,кегль,цвет,жирный,якорь,ореол) =>
     `<text x="${x}" y="${y}" text-anchor="${якорь||'middle'}" font-size="${кегль||14}"
        ${жирный?'font-weight="bold"':''} fill="${цвет||ИНК}"
+       ${ореол?`stroke="${ореол}" stroke-width="3" paint-order="stroke" stroke-linejoin="round"`:''}
        font-family="Georgia,'Times New Roman',serif">${esc(текст)}</text>`;
-
   const ОПРЕДЕЛЕНИЯ = `
     <defs>
-      <linearGradient id="c380-стол" x1="0" y1="0" x2="0.2" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#3f4a52"/><stop offset="0.45" stop-color="#2a3238"/>
-        <stop offset="1" stop-color="#161c20"/>
+      <linearGradient id="c380-закат" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1c1438"/><stop offset="0.35" stop-color="#6a2a4a"/><stop offset="0.7" stop-color="#d8603a"/><stop offset="1" stop-color="#ffb060"/>
       </linearGradient>
-      <pattern id="c380-накат" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-        <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(255,255,255,.05)" stroke-width="1.2"/>
-      </pattern>
-      <linearGradient id="c380-бумага" x1="0" y1="0" x2="0.3" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#fdfaf1"/><stop offset="0.5" stop-color="#f3ecd9"/>
-        <stop offset="1" stop-color="#dbd2b8"/>
+      <linearGradient id="c380-море" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3a5a88"/><stop offset="0.25" stop-color="#1e3e6a"/><stop offset="1" stop-color="#0a1a36"/>
       </linearGradient>
-      <linearGradient id="c380-металл" x1="0" y1="0" x2="1" y2="0" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#5d6a76"/><stop offset="0.18" stop-color="#e8eef4"/>
-        <stop offset="0.5" stop-color="#9fb0bd"/><stop offset="0.8" stop-color="#57636f"/>
-        <stop offset="1" stop-color="#434d57"/>
+      <linearGradient id="c380-вода" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#1e4a78"/><stop offset="1" stop-color="#0c2448"/>
       </linearGradient>
-      <linearGradient id="c380-краска" x1="0" y1="0" x2="0.4" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#ff8f7a"/><stop offset="0.5" stop-color="#d8503a"/>
-        <stop offset="1" stop-color="#8c2a1c"/>
-      </linearGradient>
-      <linearGradient id="c380-синь" x1="0" y1="0" x2="0.4" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#a8dcff"/><stop offset="0.5" stop-color="#3f8ec2"/>
-        <stop offset="1" stop-color="#1d4d70"/>
-      </linearGradient>
-      <linearGradient id="c380-стекло" x1="0" y1="0" x2="0.3" y2="1" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#eaf6ff" stop-opacity=".6"/>
-        <stop offset="0.5" stop-color="#bcdcf2" stop-opacity=".22"/>
-        <stop offset="1" stop-color="#6f9dbb" stop-opacity=".2"/>
-      </linearGradient>
-      <radialGradient id="c380-свет" cx="0.24" cy="0.12" r="0.85" color-interpolation="linearRGB">
-        <stop offset="0" stop-color="#eaf6ff" stop-opacity=".2"/>
-        <stop offset="0.6" stop-color="#eaf6ff" stop-opacity=".05"/>
-        <stop offset="1" stop-color="#000000" stop-opacity=".3"/>
+      <radialGradient id="c380-блик" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#ffd090" stop-opacity=".55"/><stop offset="1" stop-color="#ffd090" stop-opacity="0"/>
       </radialGradient>
-      <filter id="c380-тень" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="linearRGB">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="р"/>
-        <feOffset in="р" dx="3" dy="5" result="с"/>
-        <feFlood flood-color="#0a1418" flood-opacity="0.45" result="ц"/>
-        <feComposite in="ц" in2="с" operator="in"/>
-      </filter>
-      <filter id="c380-контакт" x="-70%" y="-150%" width="240%" height="400%" color-interpolation-filters="linearRGB">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="1.1" result="р"/>
-        <feOffset in="р" dx="0" dy="1" result="с"/>
-        <feFlood flood-color="#12100a" flood-opacity="0.45" result="ц"/>
-        <feComposite in="ц" in2="с" operator="in"/>
-      </filter>
-      <filter id="c380-мягко" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="linearRGB">
-        <feGaussianBlur stdDeviation="1.2"/>
-      </filter>
-      <filter id="c380-шум" x="0" y="0" width="100%" height="100%" color-interpolation-filters="linearRGB">
-        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" result="ш"/>
-        <feColorMatrix in="ш" type="saturate" values="0"/>
+      <radialGradient id="c380-солнце" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#fff4d0"/><stop offset="0.3" stop-color="#ffc070" stop-opacity=".9"/><stop offset="1" stop-color="#ff7040" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="c380-камень" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#c8b08a"/><stop offset="0.5" stop-color="#9a8260"/><stop offset="1" stop-color="#5a4a36"/>
+      </linearGradient>
+      <linearGradient id="c380-камень-т" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#6a5840"/><stop offset="0.4" stop-color="#b09a74"/><stop offset="1" stop-color="#5a4a36"/>
+      </linearGradient>
+      <linearGradient id="c380-дерево" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#a06a3a"/><stop offset="0.5" stop-color="#6a4020"/><stop offset="1" stop-color="#3a2010"/>
+      </linearGradient>
+      <linearGradient id="c380-корпус" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7a3a22"/><stop offset="0.45" stop-color="#4a2012"/><stop offset="1" stop-color="#1a0a06"/>
+      </linearGradient>
+      <linearGradient id="c380-парус" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#d8c8a8"/><stop offset="0.5" stop-color="#f6ecd6"/><stop offset="1" stop-color="#c0ae8a"/>
+      </linearGradient>
+      <linearGradient id="c380-парус-з" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#c89a30"/><stop offset="0.5" stop-color="#ffe08a"/><stop offset="1" stop-color="#b08420"/>
+      </linearGradient>
+      <linearGradient id="c380-железо" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#c8ccd4"/><stop offset="0.5" stop-color="#6a7080"/><stop offset="1" stop-color="#2a2e38"/>
+      </linearGradient>
+      <radialGradient id="c380-взрыв" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#fffae0"/><stop offset="0.3" stop-color="#ffc040"/><stop offset="0.7" stop-color="#ff5a20" stop-opacity=".7"/><stop offset="1" stop-color="#ff3010" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="c380-дым" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#4a3a40" stop-opacity=".75"/><stop offset="1" stop-color="#4a3a40" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="c380-туман" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#c8d4e8" stop-opacity=".55"/><stop offset="1" stop-color="#c8d4e8" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="c380-ядро" cx="0.35" cy="0.35" r="0.7">
+        <stop offset="0" stop-color="#d8d0c0"/><stop offset="1" stop-color="#4a4238"/>
+      </radialGradient>
+      <filter id="c380-тень" x="-30%" y="-30%" width="160%" height="170%">
+        <feDropShadow dx="0" dy="2" stdDeviation="1.8" flood-color="#000" flood-opacity=".55"/>
       </filter>
     </defs>`;
-
   const свг = (тело, высота) =>
-    `<svg viewBox="0 0 336 ${высота||252}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    `<svg viewBox="0 0 336 ${высота}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
        ${ОПРЕДЕЛЕНИЯ}${тело}</svg>`;
-
-  const фон = (высота) =>
-    `<rect x="0" y="0" width="336" height="${высота}" fill="url(#c380-стол)"/>
-     <rect x="0" y="0" width="336" height="${высота}" fill="url(#c380-накат)"/>
-     <rect x="0" y="0" width="336" height="${высота}" fill="url(#c380-свет)"/>
-     <rect x="0" y="0" width="336" height="${высота}" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>`;
-
+  const рамка = (в) => `<rect x="0.8" y="0.8" width="334.4" height="${в-1.6}" rx="14" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>`;
   const подпись = (x,y,текст,цвет,кегль) => {
-    const к=кегль||13, ш=String(текст).length*к*0.62+14, в=к+10;
-    return `<g>
-      <rect x="${(x-ш/2).toFixed(1)}" y="${(y-в+3).toFixed(1)}" width="${ш.toFixed(1)}" height="${в}"
-        rx="${(в/2).toFixed(1)}" fill="rgba(10,20,16,.86)" stroke="${цвет||GOLD}" stroke-width="1.2"/>
-      ${т(x,y-2,текст,к,цвет||GOLD,true)}
+    const к=кегль||14, ш=String(текст).length*к*0.66+20, в=к+11;
+    const cx = Math.min(336-ш/2-6, Math.max(ш/2+6, x));
+    return `<g filter="url(#c380-тень)">
+      <rect x="${(cx-ш/2).toFixed(1)}" y="${(y-в+4).toFixed(1)}" width="${ш.toFixed(1)}" height="${в}"
+        rx="${(в/2).toFixed(1)}" fill="rgba(12,10,8,.9)" stroke="${цвет||GOLD}" stroke-width="1.3"/>
+      ${т(cx,y-2,текст,к,цвет||GOLD,true)}
     </g>`;
   };
 
-  const стекло = (x,y,ш,в,нач) => `<g>
-    <rect x="${x+3}" y="${y+4}" width="${ш}" height="${в}" rx="8" fill="#0a1418" opacity=".34" filter="url(#c380-тень)"/>
-    <rect x="${x}" y="${y}" width="${ш}" height="${в}" rx="8" fill="url(#c380-стекло)" stroke="rgba(190,225,245,.5)" stroke-width="1.2">
-      ${нач!=null?проявить('15s',нач,нач+0.05):''}</rect>
-    <line x1="${x+4}" y1="${y+4}" x2="${x+ш-4}" y2="${y+4}" stroke="rgba(255,255,255,.45)" stroke-width="1.2"/>
-  </g>`;
-
-  /* ЛИСТ В КЛЕТКУ: поля в единицах координат, начало в (нx, нy) */
-  const КЛ=13;   /* пикселей на единицу */
-  const начало=[170,132];
-  const вЭкран=(x,y)=>[начало[0]+x*КЛ, начало[1]-y*КЛ];
-  const лист = (нач) => `<g>
-    <rect x="12" y="26" width="312" height="204" rx="4" fill="#0a1418" opacity=".5" filter="url(#c380-тень)"/>
-    <rect x="12" y="26" width="312" height="204" rx="4" fill="url(#c380-бумага)" stroke="rgba(90,80,55,.55)" stroke-width="1.2">
-      ${нач!=null?проявить('15s',нач,нач+0.05):''}</rect>
-    <rect x="12" y="26" width="312" height="204" rx="4" fill="none" filter="url(#c380-шум)" opacity=".1"/>
-  </g>`;
-
-  /* СЕТКА: тонкие линии по клетке и жирные каждые пять, оси */
-  function сетка(шаг, x0,y0,колонок,строк){
-    шаг=шаг||24; x0=x0==null?24:x0; y0=y0==null?40:y0; колонок=колонок||12; строк=строк||7;
-    const тонкие=[], жирные=[];
-    for(let i=0;i<=колонок;i++){ const x=x0+i*шаг; (i%5===0?жирные:тонкие).push(`<line x1="${x}" y1="${y0}" x2="${x}" y2="${y0+строк*шаг}"/>`); }
-    for(let j=0;j<=строк;j++){ const y=y0+j*шаг; (j%5===0?жирные:тонкие).push(`<line x1="${x0}" y1="${y}" x2="${x0+колонок*шаг}" y2="${y}"/>`); }
-    return `<g>
-      <g stroke="rgba(90,100,120,.22)" stroke-width="0.7">${тонкие.join('')}</g>
-      <g stroke="rgba(90,100,120,.42)" stroke-width="1.1">${жирные.join('')}</g>
-    </g>`;
-  }
-
-  /* ОСИ координат на листе */
-  const оси = (нач) => {
-    const [ox,oy]=вЭкран(0,0);
-    return `<g>${нач!=null?проявить('15s',нач,нач+0.05):''}
-      <line x1="16" y1="${oy}" x2="320" y2="${oy}" stroke="#3a4a58" stroke-width="1.8"/>
-      <line x1="${ox}" y1="30" x2="${ox}" y2="226" stroke="#3a4a58" stroke-width="1.8"/>
-      <path d="M320 ${oy} l-8 -4 l0 8 z" fill="#3a4a58"/>
-      <path d="M${ox} 30 l-4 8 l8 0 z" fill="#3a4a58"/>
-      ${т(312,oy-8,'x',14,'#2b3a46',true)}
-      ${т(ox+12,38,'y',14,'#2b3a46',true)}
-      ${т(ox+7,oy+18,'0',12,'#5a6a78',true)}
-      ${[2,4,6].map(i=>{const [px]=вЭкран(i,-1); return т(px,oy+16,String(i),12,'#6a7a88');}).join('')}
-      ${[-4].map(i=>{const [px]=вЭкран(i,-1); return т(px,oy+16,String(i),12,'#6a7a88');}).join('')}
-      ${[2,4].map(i=>{const [,py]=вЭкран(-1,i); return т(ox-13,py+4,String(i),12,'#6a7a88');}).join('')}
-      ${[-2].map(i=>{const [,py]=вЭкран(-1,i); return т(ox-13,py+4,String(i),12,'#6a7a88');}).join('')}
-    </g>`;
+  /* римская пентера: корпус с тараном и глазом, два ряда вёсел, парус с полосой */
+  const корабль = (x,y,м,опц) => { const о=опц||{};
+    const весла = Array.from({length:7},(_,i)=>{ const вx=-24+i*8;
+      return `<line x1="${вx}" y1="4" x2="${вx-4}" y2="14" stroke="#2a1608" stroke-width="1.3">
+        ${анЛин('x2',`${вx-6};${вx+2};${вx-6}`,'1.4s','begin="'+(i*0.08).toFixed(2)+'s"')}</line>`; }).join('');
+    return `<g transform="translate(${x} ${y}) scale(${м||1})${о.зеркало?' scale(-1 1)':''}" filter="url(#c380-тень)">
+      ${весла}
+      <path d="M-36 -2 q2 10 12 12 h40 q12 -2 18 -12 l6 -2 l-6 -2 h-70 z" fill="url(#c380-корпус)" stroke="${ОБВОД}" stroke-width=".7"/>
+      <path d="M-38 -4 q-4 -8 2 -14" fill="none" stroke="#4a2012" stroke-width="3"/>
+      <path d="M40 -2 l10 3 l-10 2 z" fill="url(#c380-железо)"/>
+      <circle cx="30" cy="0" r="2.4" fill="#f4efe4"/><circle cx="30.6" cy="0" r="1.2" fill="#1a0a06"/>
+      <line x1="-30" y1="-2" x2="34" y2="-2" stroke="#c89a50" stroke-width="1"/>
+      <line x1="2" y1="-2" x2="2" y2="-40" stroke="#3a2010" stroke-width="2"/>
+      <path d="M-14 -38 q16 4 32 0 v26 q-16 4 -32 0 z" fill="url(#c380-парус${о.флагман?'-з':''})" stroke="#8a7a5a" stroke-width=".6">
+        ${анЛин('d','M-14 -38 q16 4 32 0 v26 q-16 4 -32 0 z;M-14 -38 q16 7 32 0 v26 q-16 7 -32 0 z;M-14 -38 q16 4 32 0 v26 q-16 4 -32 0 z','3s')}</path>
+      <rect x="-14" y="-28" width="32" height="5" fill="${о.флагман?'#8a1a1a':'#b02a20'}" opacity=".9"/>
+      ${о.флагман?`<path d="M2 -40 l12 -4 l-12 -4 z" fill="#b02a20"/>`:''}</g>`;
   };
-
-  /* ТОЧКА-МАРКЕР: ставится пером */
-  const маркер = (x,y,цвет,нач,подписьТекста) => {
-    const [px,py]=вЭкран(x,y);
-    return `<g>${нач!=null?проявить('15s',нач,нач+0.04):''}
-      <circle cx="${px}" cy="${py}" r="6" fill="url(#c380-${цвет==='краска'?'краска':'синь'})" stroke="rgba(20,20,20,.5)" stroke-width="1"/>
-      <circle cx="${px-1.8}" cy="${py-2}" r="1.8" fill="#fff" opacity=".8"/>
-      ${подписьТекста?подпись(px,py-14,подписьТекста,цвет==='краска'?RED:BLUE,12):''}
-    </g>`;
+  /* маленький кораблик-метка для сетки */
+  const кораблик = (x,y,опц) => { const о=опц||{};
+    return `<g transform="translate(${x} ${y})" filter="url(#c380-тень)">
+      <path d="M-15 2 q2 6 8 7 h16 q6 -1 8 -7 z" fill="url(#c380-корпус)"/>
+      <path d="M17 2 l5 1 l-5 1 z" fill="#8a909c"/>
+      <line x1="0" y1="2" x2="0" y2="-18" stroke="#3a2010" stroke-width="1.6"/>
+      <path d="M-8 -17 q8 2 16 0 v12 q-8 2 -16 0 z" fill="url(#c380-парус${о.флагман?'-з':''})"/>
+      <rect x="-8" y="-12" width="16" height="3" fill="#b02a20"/>
+      ${о.горит?`<circle cx="0" cy="-6" r="10" fill="url(#c380-взрыв)">${анЛин('r','8;13;8','0.8s')}</circle>`:''}</g>`;
   };
+  /* стена Сиракуз с башнями */
+  const стена = (x0,y,ш,в) => `<g filter="url(#c380-тень)">
+    <rect x="${x0}" y="${y}" width="${ш}" height="${в}" fill="url(#c380-камень)"/>
+    ${Array.from({length:Math.floor(ш/12)},(_,i)=>`<rect x="${x0+i*12}" y="${y-6}" width="7" height="7" fill="url(#c380-камень)"/>`).join('')}
+    ${Array.from({length:Math.floor(в/10)},(_,r)=>`<line x1="${x0}" y1="${y+r*10}" x2="${x0+ш}" y2="${y+r*10}" stroke="#6a5840" stroke-width=".6" opacity=".6"/>`).join('')}</g>`;
+  const башня = (x,y,ш,в) => `<g filter="url(#c380-тень)">
+    <rect x="${x-ш/2}" y="${y-в}" width="${ш}" height="${в}" fill="url(#c380-камень-т)"/>
+    ${[0,1,2].map(i=>`<rect x="${x-ш/2+i*(ш/3)+1}" y="${y-в-7}" width="${ш/3-3}" height="8" fill="url(#c380-камень-т)"/>`).join('')}
+    <rect x="${x-3}" y="${y-в+10}" width="6" height="10" rx="3" fill="#2a1a10"/>
+    <circle cx="${x}" cy="${y-в+15}" r="6" fill="#ffb040" opacity=".35">${анЛин('opacity','0.2;0.5;0.2','1.6s')}</circle></g>`;
+  /* Коготь Архимеда: кран на стене, цепь и железная лапа */
+  const коготь = (x,y,м,длина) => `<g transform="translate(${x} ${y}) scale(${м||1})" filter="url(#c380-тень)">
+    <rect x="-6" y="-8" width="12" height="16" fill="url(#c380-дерево)"/>
+    <g>${анКач('-4;6;-4','5s')}
+      <path d="M0 -4 L${длина} -${длина*0.55}" stroke="url(#c380-дерево)" stroke-width="7" stroke-linecap="round"/>
+      <path d="M0 -4 L${длина} -${длина*0.55}" stroke="#3a2010" stroke-width="1" stroke-dasharray="3 5"/>
+      <line x1="${длина}" y1="-${длина*0.55}" x2="${длина}" y2="${-длина*0.55+44}" stroke="#4a4e58" stroke-width="2" stroke-dasharray="3 1.5"/>
+      <g transform="translate(${длина} ${-длина*0.55+46})">
+        <path d="M0 0 q-10 4 -10 14 q2 -6 6 -8 M0 0 q10 4 10 14 q-2 -6 -6 -8 M0 0 v16" fill="none" stroke="url(#c380-железо)" stroke-width="3.2" stroke-linecap="round"/></g></g></g>`;
+  const дым = (x,y,r,задерж) => `<circle cx="${x}" cy="${y}" r="${r}" fill="url(#c380-дым)" data-декор="1">
+    ${анЛин('cy',`${y};${y-30};${y}`,(6+задерж).toFixed(1)+'s')}${анЛин('r',`${r};${r*1.5};${r}`,(6+задерж).toFixed(1)+'s')}</circle>`;
 
-  /* ЛОМАНАЯ по координатам: рисуется пером */
-  function ломаная(точки,цвет,нач,замкнуть){
-    const частей=[]; let длина=0;
-    for(let i=0;i<точки.length-1;i++){
-      const [x1,y1]=точки[i], [x2,y2]=точки[i+1];
-      const a=вЭкран(x1,y1), b=вЭкран(x2,y2);
-      частей.push(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`);
-      длина+=Math.hypot(b[0]-a[0],b[1]-a[1]);
+  /* ---- координатная сетка гавани: −3..3, клетка 44 ---- */
+  const К=44, ОX=168, ОY=198;
+  const px = (x) => ОX + x*К, py = (y) => ОY - y*К;
+  const сетка = (опц) => { const о=опц||{};
+    let s = `<rect x="${ОX-3.5*К}" y="${ОY-3.5*К}" width="${7*К}" height="${7*К}" rx="10" fill="url(#c380-вода)"/>
+      ${[0,1,2,3,4].map(i=>`<path d="M${ОX-3.5*К} ${ОY-3*К+i*К*1.4} q30 -3 60 0 t60 0 t60 0 t60 0 t60 0" fill="none" stroke="#9fc8ff" stroke-width="1" opacity=".18" stroke-dasharray="12 16">${анЛин('stroke-dashoffset','0;-28',(3+i*0.5).toFixed(1)+'s')}</path>`).join('')}`;
+    for(let i=-3;i<=3;i++){
+      s += `<line x1="${px(i)}" y1="${py(3.4)}" x2="${px(i)}" y2="${py(-3.4)}" stroke="#6a8ac0" stroke-width=".7" opacity=".55"/>`;
+      s += `<line x1="${px(-3.4)}" y1="${py(i)}" x2="${px(3.4)}" y2="${py(i)}" stroke="#6a8ac0" stroke-width=".7" opacity=".55"/>`;
     }
-    if(замкнуть){
-      const a=вЭкран(...точки[точки.length-1]), b=вЭкран(...точки[0]);
-      частей.push(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`);
-      длина+=Math.hypot(b[0]-a[0],b[1]-a[1]);
+    s += `<line x1="${px(-3.45)}" y1="${ОY}" x2="${px(3.45)}" y2="${ОY}" stroke="${GOLD}" stroke-width="2"/>
+      <path d="M${px(3.45)} ${ОY} l-8 -4 v8 z" fill="${GOLD}"/>
+      <line x1="${ОX}" y1="${py(-3.45)}" x2="${ОX}" y2="${py(3.45)}" stroke="${GOLD}" stroke-width="2"/>
+      <path d="M${ОX} ${py(3.45)} l-4 8 h8 z" fill="${GOLD}"/>
+      ${т(px(3.45)-4,ОY-8,'x',14,GOLD,true,'end','#0a1a36')}${т(ОX+8,py(3.45)+12,'y',14,GOLD,true,'start','#0a1a36')}`;
+    if(!о.безЧисел){
+      for(let i=-3;i<=3;i++){ if(!i) continue;
+        s += т(px(i),ОY+15,String(i).replace('-','−'),11,МУТ,true,undefined,'#0a1a36');
+        s += т(ОX-8,py(i)+4,String(i).replace('-','−'),11,МУТ,true,'end','#0a1a36'); }
+      s += т(ОX-8,ОY+15,'0',11,МУТ,true,'end','#0a1a36');
     }
-    const d=частей.join(' ');
-    return `<g>
-      <path d="${d}" fill="none" stroke="${цвет==='краска'?'#8c2a1c':'#1d4d70'}" stroke-width="3.4"
-        stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="${длина.toFixed(0)}"
-        stroke-dashoffset="${длина.toFixed(0)}" opacity=".35" filter="url(#c380-мягко)">
-        ${рисуется(длина.toFixed(0),'16s',нач,нач+0.2)}</path>
-      <path d="${d}" fill="none" stroke="url(#c380-${цвет==='краска'?'краска':'синь'})" stroke-width="2.6"
-        stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="${длина.toFixed(0)}"
-        stroke-dashoffset="${длина.toFixed(0)}">
-        ${рисуется(длина.toFixed(0),'16s',нач,нач+0.2)}</path>
-      ${точки.map(([x,y])=>маркер(x,y,цвет,null,null)).join('')}
-    </g>`;
-  }
-
-  /* РОБОТ-ХУДОЖНИК: рука с пером */
-  const робот = (x,y,нач) => `<g>${нач!=null?проявить('15s',нач,нач+0.05):''}
-    <rect x="${x}" y="${y}" width="54" height="40" rx="8" fill="url(#c380-металл)" stroke="rgba(30,35,40,.6)" stroke-width="1.4"/>
-    <rect x="${x+8}" y="${y+8}" width="38" height="16" rx="3" fill="#101820" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
-    ${т(x+27,y+20,'(x, y)',12,'#8fd1a8',true)}
-    <rect x="${x+22}" y="${y+40}" width="10" height="22" rx="4" fill="url(#c380-металл)"/>
-    <path d="M${x+27} ${y+60} l-3 10 l6 0 z" fill="url(#c380-краска)"/>
-    <circle cx="${x+27}" cy="${y+70}" r="2.4" fill="#8c2a1c"/>
-  </g>`;
+    /* маяк в начале координат */
+    s += `<g filter="url(#c380-тень)"><rect x="${ОX-4}" y="${ОY-14}" width="8" height="14" fill="#e8dcc0"/>
+      <circle cx="${ОX}" cy="${ОY-16}" r="9" fill="url(#c380-взрыв)" opacity=".7">${анЛин('r','6;11;6','1.4s')}</circle></g>`;
+    return s;
+  };
+  const узлы = (f) => { let s=''; for(let x=-3;x<=3;x++) for(let y=-3;y<=3;y++)
+      s+=`<rect class="узел" x="${px(x)-К/2}" y="${py(y)-К/2}" width="${К}" height="${К}" fill="rgba(255,255,255,.001)" onclick="r380Выстрел(${f},${x},${y})"/>`;
+    return s; };
+  /* выстрел: дуга от катапульты (левый нижний угол) до узла, один раз */
+  const выстрел = (x,y,попал) => { const x0=18, y0=ОY+3.5*К+6, x1=px(x), y1=py(y), вершина=Math.min(y1,y0)-70;
+    const путь=`M${x0} ${y0} Q${(x0+x1)/2} ${вершина} ${x1} ${y1}`;
+    return `<path d="${путь}" fill="none" stroke="${ОГОНЬ}" stroke-width="1.6" stroke-dasharray="4 5" opacity=".7"/>
+      ${ДВИЖ?`<circle r="5" fill="url(#c380-ядро)"><animateMotion dur="0.8s" fill="freeze" path="${путь}" calcMode="spline" keyTimes="0;1" keyPoints="0;1" keySplines="0.4 0 0.6 1"/></circle>`:''}
+      ${попал
+        ? `<circle cx="${x1}" cy="${y1-6}" r="4" fill="url(#c380-взрыв)" opacity="0">
+             <animate attributeName="r" values="4;26;20" keyTimes="0;0.5;1" dur="0.9s" begin="${ДВИЖ?'0.75s':'0s'}" fill="freeze"/>
+             <animate attributeName="opacity" values="0;1;0.85" keyTimes="0;0.2;1" dur="0.9s" begin="${ДВИЖ?'0.75s':'0s'}" fill="freeze"/></circle>`
+        : `<circle cx="${x1}" cy="${y1}" r="4" fill="none" stroke="#dff2ff" stroke-width="2" opacity="0">
+             <animate attributeName="r" values="4;18" dur="0.8s" begin="${ДВИЖ?'0.75s':'0s'}" fill="freeze"/>
+             <animate attributeName="opacity" values="0;1;0.4" keyTimes="0;0.2;1" dur="0.8s" begin="${ДВИЖ?'0.75s':'0s'}" fill="freeze"/></circle>
+           <path d="M${x1-6} ${y1} q6 -20 12 0" fill="#dff2ff" opacity=".7"/>`}`;
+  };
+  const катапульта = () => `<g transform="translate(18 ${ОY+3.5*К+6})" filter="url(#c380-тень)">
+    <rect x="-12" y="-4" width="26" height="8" fill="url(#c380-дерево)"/><circle cx="-8" cy="5" r="4" fill="#3a2010"/><circle cx="10" cy="5" r="4" fill="#3a2010"/>
+    <line x1="0" y1="-2" x2="14" y2="-18" stroke="#6a4020" stroke-width="3"/></g>`;
 
   /* ================= КАДРЫ ================= */
 
-  /* 1. Разминка из прошлого урока + задача */
+  /* 1. Флот Марцелла */
   function F1(s){
-    const в = s.разминка;
-    return A(2,'cap','Разминка: вспомним прошлый урок') +
-      ВОПРОС('Робот ставит детали по 24 и по 15. Наибольший общий размер детали?') +
+    const Н=320, в=s.ответ1;
+    return ЛИСТ(s) +
+      ЗАДАЧА('212 год до н. э. На горизонте — шестьдесят римских пентер Марцелла. Архимед поднимается на стену: «Гавань — это <b>плоскость</b>. Маяк — <b>начало</b>, мол — ось <b>x</b>, береговая стена — ось <b>y</b>. Каждый корабль — это два числа». Дозорные будут кричать числа, а ты — наводить катапульты и Коготь.') +
       `<div class="pic">${свг(`
-        ${фон(252)}
-        ${т(168,24,'Робот-художник и его холст',14,GOLD,true)}
-        ${робот(140,120,0.06)}
-        ${/* детали 24 и 15 как две планки */''}
-        <g>${проявить('15s',0.3,0.4)}
-          <rect x="40" y="70" width="120" height="14" rx="3" fill="url(#c380-синь)" stroke="${ОБВОД}" stroke-width="1.2"/>
-          ${т(100,64,'планка 24',12,МУТ)}
-          <rect x="40" y="92" width="75" height="14" rx="3" fill="url(#c380-краска)" stroke="${ОБВОД}" stroke-width="1.2"/>
-          ${т(77,120,'планка 15',12,МУТ)}</g>
-        <g>${проявить('15s',0.52,0.62)}
-          ${стекло(24,150,288,42,0.52)}
-          ${т(168,176,'нужна одинаковая деталь для обеих планок',12,ИНК,true)}</g>
-        ${в!=null?`<g>${проявить('15s',0.72,0.84)}
-          ${подпись(168,216,'НОД(24, 15) = 3',GREEN,16)}</g>`:''}
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='три'?'hit':(в?'miss':''), '3 — это НОД(24, 15)', "r380Разминка('три')")}
-        ${BTN(4, в==='пять'?'miss':'', '5 — половина от 15', "r380Разминка('пять')")}
-        ${BTN(5, в==='девять'?'miss':'', '9 — разность 24 и 15', "r380Разминка('девять')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='три',
-        в==='три' ? 'Верно: алгоритм Евклида даёт НОД(24, 15) = 3, значит деталь 3 × 3.'
-                  : 'Нет: вспомни алгоритм Евклида из прошлого урока. 24 − 15 = 9, 15 − 9 = 6, 9 − 6 = 3.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Прошлый урок мы закончили алгоритмом Евклида — он ещё пригодится.',
-                 'НОД(24, 15) = 3 — деталь 3 × 3.');
+        <rect x="0" y="0" width="336" height="${Н}" fill="url(#c380-закат)"/>
+        <circle cx="236" cy="118" r="60" fill="url(#c380-солнце)"/>
+        ${дым(70,80,26,0)}${дым(120,60,20,1.5)}${дым(270,70,30,0.8)}
+        <rect x="0" y="130" width="336" height="${Н-130}" fill="url(#c380-море)"/>
+        <ellipse cx="236" cy="140" rx="70" ry="6" fill="url(#c380-блик)" data-декор="1">${анЛин('rx','60;78;60','4s')}</ellipse>
+        ${[0,1,2,3].map(i=>`<path d="M${-20+i*13} ${150+i*22} q30 -4 60 0 t60 0 t60 0 t60 0 t60 0 t60 0" fill="none" stroke="#ffc890" stroke-width="1" opacity="${(0.4-i*0.08).toFixed(2)}" stroke-dasharray="16 22">${анЛин('stroke-dashoffset','0;-38',(3+i*0.5).toFixed(1)+'s')}</path>`).join('')}
+        <g>${анСдвиг('0 0;-10 2;0 0','9s','0;0.5;1')}${корабль(250,150,0.55)}${корабль(300,160,0.5)}${корабль(200,168,0.6,{флагман:true})}</g>
+        ${стена(0,214,150,Н-214)}
+        ${башня(26,216,34,56)}${башня(126,216,30,44)}
+        <g>${анСдвиг('0 0;0 -8;0 0','4s','0;0.5;1')}<g transform="translate(236 226) rotate(-22)">${корабль(0,0,1.15)}</g>
+          <ellipse cx="206" cy="238" rx="30" ry="6" fill="#dff2ff" opacity=".5">${анЛин('rx','24;34;24','2s')}</ellipse></g>
+        ${коготь(96,214,1,120)}
+        <g>${анСдвиг('0 0;0 0;150 -100;150 -100','3s','0;0.2;0.8;1')}${ДВИЖ?`<circle cx="120" cy="206" r="5" fill="url(#c380-ядро)"/>`:''}</g>
+        ${подпись(168,30, в===1?'сначала x, потом y: (3; 4)':'каждый корабль — два числа', в===1?GREEN:GOLD,13)}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      СКАЗ('Координаты','Две оси пересекаются в <b>начале</b> (0; 0). Точку записывают парой <b>(x; y)</b>: x — сколько шагов по горизонтали, y — по вертикали. <b>Сначала x, потом y.</b>') +
+      ОТВЕТЫ('три',['(4; 3)','(3; 4)','(34)'],1,в,'r380Отв1') +
+      (в==null ? СКАЗ('Вопрос','Дозорный видит лодку: <b>3</b> шага вправо от маяка и <b>4</b> вверх. Как записать её место?') :
+        РАЗБОР(в===1, ['(4; 3) — это 4 вправо и 3 вверх, совсем другая точка. Сначала пишут x: <b>(3; 4)</b>.','3 шага по x, 4 по y: <b>(3; 4)</b>. Точка с запятой разделяет числа.','«34» — это одно число, тридцать четыре. Нужна пара в скобках: <b>(3; 4)</b>.'][в])) +
+      (в===1 ? ПРАВИЛО('Точку задают <b>пара чисел (x; y)</b>, и порядок важен.') : '');
   }
 
-  /* 2. Адрес точки: две оси */
-  function F2(s){
-    const в = s.адрес;
-    return ВОПРОС('Как объяснить роботу, куда поставить точку?') +
-      `<div class="pic">${свг(`
-        ${фон(252)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.16)}
-        ${в!=null?маркер(3,2,'синь',0.3,'(3, 2)'):''}
-        <g>${проявить('15s',0.5,0.6)}
-          ${стекло(24,196,288,42,0.5)}
-          ${т(168,222,'сначала по x, потом по y',12,ИНК,true)}</g>
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='пара'?'hit':(в?'miss':''), 'Двумя числами: сколько вправо и сколько вверх', "r380Адрес('пара')")}
-        ${BTN(4, в==='одно'?'miss':'', 'Одним числом: расстоянием от угла', "r380Адрес('одно')")}
-        ${BTN(5, в==='цвет'?'miss':'', 'Цветом и размером точки', "r380Адрес('цвет')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='пара',
-        в==='пара' ? 'Верно: у точки на плоскости два числа-адреса. Записывают их в скобках: сначала x, потом y.'
-                   : 'Нет: одного числа мало — точка может быть и выше, и ниже. Нужны два числа.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'У точки на плоскости <b>два</b> числа-адреса.',
-                 'Запись (x; y): сначала x, потом y.');
-  }
-
-  /* 3. Порядок важен — самообъяснение (причина) */
-  function F3(s){
-    const в = s.порядок;
-    return ВОПРОС('Почему (3, 5) и (5, 3) — разные точки?') +
-      `<div class="pic">${свг(`
-        ${фон(252)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.16)}
-        ${в!=null?маркер(3,5,'краска',0.3,'(3, 5)'):''}
-        ${в!=null?маркер(5,3,'синь',0.5,'(5, 3)'):''}
-        ${в==null?`<g>${проявить('15s',0.35,0.45)}
-          ${т(168,214,'где окажутся две точки?',12,МУТ)}</g>`:''}
-        ${в!=null?`<g>${проявить('15s',0.7,0.8)}
-          <line x1="${вЭкран(3,5)[0]}" y1="${вЭкран(3,5)[1]}" x2="${вЭкран(5,3)[0]}" y2="${вЭкран(5,3)[1]}"
-            stroke="${GOLD}" stroke-width="1.4" stroke-dasharray="5 4"/></g>`:''}
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='роли'?'hit':(в?'miss':''), 'Числа означают разные вещи: первое — вправо, второе — вверх', "r380Порядок('роли')")}
-        ${BTN(4, в==='сумма'?'miss':'', 'У них разная сумма: 8 и 8 — значит, точки разные', "r380Порядок('сумма')")}
-        ${BTN(5, в==='промах'?'miss':'', 'Это одна и та же точка, просто записана иначе', "r380Порядок('промах')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='роли',
-        в==='роли' ? 'Верно: первое число двигает вправо по оси x, второе — вверх по оси y. Поменяли роли — получили другую точку.'
-                   : 'Нет: суммы совпадают (8 и 8), но роли чисел разные. (3, 5) — выше, (5, 3) — правее. Это разные точки.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Порядок чисел в записи <b>имеет значение</b>.',
-                 'Порядок важен: (3, 5) и (5, 3) — <b>разные точки</b>.');
-  }
-
-  /* 4. Четверти — «я делаю» (образец) */
-  function F4(s){
-    const в = s.четверти;
-    return A(2,'cap','Я показываю: как определить четверть') +
-      ВОПРОС('В какой четверти лежит точка (−2, 3)?') +
-      `<div class="pic">${свг(`
-        ${фон(252)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.16)}
-        <g>${проявить('15s',0.3,0.42)}
-          ${т(120,60,'II',14,'#8a98a8',true)}${т(226,60,'I',14,'#8a98a8',true)}
-          ${т(120,206,'III',14,'#8a98a8',true)}${т(226,206,'IV',14,'#8a98a8',true)}</g>
-        ${в!=null?маркер(-2,3,'краска',0.5,'(−2; 3)'):''}
-        <g>${проявить('15s',0.62,0.72)}
-          ${стекло(24,196,288,42,0.62)}
-          ${т(168,222,'x отрицательный, y положительный',12,ИНК,true)}</g>
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='вторая'?'hit':(в?'miss':''), 'Во второй: x слева, y сверху', "r380Четв('вторая')")}
-        ${BTN(4, в==='первая'?'miss':'', 'В первой: обе координаты положительные', "r380Четв('первая')")}
-        ${BTN(5, в==='третья'?'miss':'', 'В третьей: обе координаты отрицательные', "r380Четв('третья')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='вторая',
-        в==='вторая' ? 'Верно: x = −2 — влево от оси y, y = 3 — вверх. Это вторая четверть, знаки (−, +).'
-                     : 'Нет: посмотри на знаки. x отрицательный (влево), y положительный (вверх) — вторая четверть.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Смотрим на знаки: куда идёт x и куда идёт y.',
-                 'Четверти: I (+,+), II (−,+), III (−,−), IV (+,−).');
-  }
-
-  /* 5. «Мы делаем»: шаг пуст (затухание подсказки) */
-  function F5(s){
-    const в = s.мы;
-    return A(2,'cap','Мы делаем вместе: один шаг пропущен') +
-      ВОПРОС('Ставим точку (4, −3). Какой шаг пропущен: «4 вправо, … вниз»?') +
-      `<div class="pic">${свг(`
-        ${фон(252)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.16)}
-        <g>${проявить('15s',0.3,0.42)}
-          ${подпись(96,58,'шаг 1: 4 вправо',GREEN,12)}
-          ${подпись(258,88,'шаг 2: ?',GOLD,12)}</g>
-        ${в!=null?`<g>${проявить('15s',0.5,0.62)}
-          <line x1="${вЭкран(0,0)[0]}" y1="${вЭкран(0,0)[1]}" x2="${вЭкран(4,0)[0]}" y2="${вЭкран(4,0)[1]}"
-            stroke="${GREEN}" stroke-width="2" stroke-dasharray="6 4"/>
-          <line x1="${вЭкран(4,0)[0]}" y1="${вЭкран(4,0)[1]}" x2="${вЭкран(4,-3)[0]}" y2="${вЭкран(4,-3)[1]}"
-            stroke="${GOLD}" stroke-width="2" stroke-dasharray="6 4"/>
-          ${маркер(4,-3,'синь',0.6,'(4; −3)')}</g>`:''}
-        ${в!=null?`<g>${проявить('15s',0.78,0.88)}
-          ${стекло(24,196,288,42,0.78)}
-          ${т(168,222,'4 вправо и 3 вниз',12,ИНК,true)}</g>`:''}
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='три'?'hit':(в?'miss':''), '3 — потому что y = −3', "r380Мы('три')")}
-        ${BTN(4, в==='четыре'?'miss':'', '4 — потому что вниз на 4', "r380Мы('четыре')")}
-        ${BTN(5, в==='минус'?'miss':'', 'Ничего: точка (4, −3) не существует', "r380Мы('минус')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='три',
-        в==='три' ? 'Верно: вниз идём на 3 — это вторая координата со знаком минус. Итого 4 вправо и 3 вниз.'
-                  : 'Нет: вниз двигает вторая координата, а она равна −3. Значит, вниз на 3.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Смотри, какое число отвечает за движение вниз.',
-                 'Вниз двигает <b>вторая</b> координата: (4; −3) — 4 вправо, 3 вниз.');
-  }
-
-  /* 6. «Ты делаешь»: сам */
-  function F6(s){
-    const в = s.ты;
-    return A(2,'cap','Теперь ты: отметь точку сам') +
-      ВОПРОС('Отметь точку (−3, −2). В какую сторону идти сначала?') +
-      `<div class="pic">${свг(`
-        ${фон(252)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.16)}
-        ${в!=null?`<g>${проявить('15s',0.3,0.42)}
-          <line x1="${вЭкран(0,0)[0]}" y1="${вЭкран(0,0)[1]}" x2="${вЭкран(-3,0)[0]}" y2="${вЭкран(-3,0)[1]}"
-            stroke="${RED}" stroke-width="2" stroke-dasharray="6 4"/>
-          <line x1="${вЭкран(-3,0)[0]}" y1="${вЭкран(-3,0)[1]}" x2="${вЭкран(-3,-2)[0]}" y2="${вЭкран(-3,-2)[1]}"
-            stroke="${BLUE}" stroke-width="2" stroke-dasharray="6 4"/>
-          ${маркер(-3,-2,'краска',0.5,'(−3; −2)')}</g>`:''}
-        ${в==null?`<g>${проявить('15s',0.3,0.42)}
-          ${т(168,214,'сначала по оси x, потом по оси y',12,МУТ)}</g>`:''}
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='влево'?'hit':(в?'miss':''), 'Сначала влево на 3, потом вниз на 2', "r380Ты('влево')")}
-        ${BTN(4, в==='вниз'?'miss':'', 'Сначала вниз на 3, потом влево на 2', "r380Ты('вниз')")}
-        ${BTN(5, в==='вправо'?'miss':'', 'Сначала вправо на 3, потом вниз на 2', "r380Ты('вправо')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='влево',
-        в==='влево' ? 'Верно: x = −3 — значит влево на 3; y = −2 — вниз на 2. Порядок движения: сначала по x.'
-                    : 'Нет: первое число в записи — это x. x = −3, значит влево. Потом вниз на 2.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Сначала первое число записи, потом второе.',
-                 '<b>Сначала по x, потом по y</b>: (−3; −2) — влево 3, вниз 2.');
-  }
-
-  /* 7. Рисуем по координатам (графический диктант) */
-  function F7(s){
-    const в = s.рисунок;
-    const ракета=[[0,0],[0,4],[1,5],[2,5],[2,6],[3,5],[4,5],[4,4],[4,0]];
-    return ВОПРОС('Соединим точки по порядку. Какая фигура получится?') +
-      `<div class="pic">${свг(`
-        ${фон(252)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.16)}
-        ${ломаная(ракета,'краска',0.3,true)}
-        ${в==null?`<g>${проявить('15s',0.8,0.88)}
-          ${стекло(24,196,288,40,0.8)}
-          ${т(168,221,'соединяем по порядку: (0,0) → (0,4) → …',12,МУТ)}</g>`:''}
-        ${в!=null?`<g>${проявить('15s',0.9,0.96)}
-          ${подпись(168,42,'ракета',GREEN,14)}</g>`:''}
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='ракета'?'hit':(в?'miss':''), 'Ракета: корпус, две лапы и нос', "r380Рис('ракета')")}
-        ${BTN(4, в==='домик'?'miss':'', 'Домик с крышей', "r380Рис('домик')")}
-        ${BTN(5, в==='звезда'?'miss':'', 'Звезда с пятью лучами', "r380Рис('звезда')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='ракета',
-        в==='ракета' ? 'Верно: точки (2,6) и (1,5), (3,5) дают острый нос, а низ — две лапы. Получилась ракета.'
-                     : 'Нет: смотри на верхние точки: (2,6) выше остальных, а (1,5) и (3,5) рядом — это нос ракеты.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Соединяя точки по порядку, получаем фигуру.',
-                 'Соединяем по порядку — получается <b>ракета</b>.');
-  }
-
-  /* 8. Самообъяснение: почему получилась такая фигура */
-  function F8(s){
-    const в = s.почемуРис;
-    return ВОПРОС('Почему при соединении по порядку получилась именно ракета?') +
-      `<div class="pic">${свг(`
-        ${фон(252)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.16)}
-        ${ломаная([[0,3],[1,4],[2,4],[3,3]],'синь',0.2,false)}
-        ${подпись(96,64,'верхние точки',GOLD,12)}
-        ${подпись(246,120,'нижние точки',GOLD,12)}
-        ${в!=null?ломаная([[0,3],[0,0],[3,0],[3,3]],'краска',0.6,false):''}
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='высота'?'hit':(в?'miss':''), 'Верхние точки выше остальных — они образуют нос', "r380ПочемуРис('высота')")}
-        ${BTN(4, в==='цвет'?'miss':'', 'Потому что мы рисовали красной краской', "r380ПочемуРис('цвет')")}
-        ${BTN(5, в==='порядок'?'miss':'', 'Потому что точек ровно девять', "r380ПочемуРис('порядок')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='высота',
-        в==='высота' ? 'Верно: форма зависит от расположения точек. Точка (2,6) выше всех — это вершина носа, а (1,5) и (3,5) — его скосы.'
-                     : 'Нет: цвет и количество точек форму не задают. Форму задаёт то, ГДЕ стоят точки: верхняя (2,6) даёт нос.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Форму задаёт расположение точек, а не их число.',
-                 'Форму задаёт <b>расположение</b> точек: верхняя точка — нос ракеты.');
-  }
-
-  /* 9. Обратная задача: назови координаты */
-  function F9(s){
-    const в = s.обратная;
-    return ВОПРОС('Точка отмечена. Как записать её координаты?') +
-      `<div class="pic">${свг(`
-        ${фон(252)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.16)}
-        ${маркер(4,2,'синь',0.2,null)}
-        ${в!=null?`<g>${проявить('15s',0.34,0.44)}
-          <line x1="${вЭкран(4,2)[0]}" y1="${вЭкран(4,2)[1]}" x2="${вЭкран(4,0)[0]}" y2="${вЭкран(4,0)[1]}"
-            stroke="${GREEN}" stroke-width="1.6" stroke-dasharray="5 4"/>
-          <line x1="${вЭкран(4,2)[0]}" y1="${вЭкран(4,2)[1]}" x2="${вЭкран(0,2)[0]}" y2="${вЭкран(0,2)[1]}"
-            stroke="${GREEN}" stroke-width="1.6" stroke-dasharray="5 4"/>
-          ${т(вЭкран(4,0)[0],вЭкран(0,0)[1]+15,'4',12,GREEN,true)}
-          ${т(вЭкран(0,0)[0]-10,вЭкран(0,2)[1]+4,'2',12,GREEN,true)}</g>`:''}
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='42'?'hit':(в?'miss':''), '(4; 2): 4 вправо, 2 вверх', "r380Обрат('42')")}
-        ${BTN(4, в==='24'?'miss':'', '(2; 4): 2 вправо, 4 вверх', "r380Обрат('24')")}
-        ${BTN(5, в==='минус42'?'miss':'', '(−4; 2): 4 влево, 2 вверх', "r380Обрат('минус42')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='42',
-        в==='42' ? 'Верно: опускаемся от точки на ось x — получаем 4; идём влево на ось y — получаем 2. Значит (4; 2).'
-                 : 'Нет: сначала смотрим, сколько вправо (это 4), потом сколько вверх (это 2). Запись (4; 2).') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Опустись на ось x — узнаешь первое число.',
-                 'Координаты: <b>(4; 2)</b> — 4 вправо, 2 вверх.');
-  }
-
-  /* 10. Ловушка: не-пример */
-  function F10(s){
-    const в = s.ловушка;
-    return ВОПРОС('Ученик записал точку как (0; 3) и сказал, что она в первой четверти. Что не так?') +
-      `<div class="pic">${свг(`
-        ${фон(252)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.16)}
-        ${маркер(0,3,'краска',0.2,null)}
-        ${в!=null?`<g>${проявить('15s',0.4,0.52)}
-          <line x1="${вЭкран(0,3)[0]-10}" y1="30" x2="${вЭкран(0,3)[0]-10}" y2="226"
-            stroke="${GOLD}" stroke-width="1.6" stroke-dasharray="5 4"/>
-          ${подпись(вЭкран(0,3)[0],52,'точка на оси y',GOLD,12)}</g>`:''}
-        ${в!=null?`<g>${проявить('15s',0.64,0.74)}
-          ${стекло(24,196,288,42,0.64)}
-          ${т(168,222,'на осях четверти не считают',12,ИНК,true)}</g>`:''}
-      `,252)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='ось'?'hit':(в?'miss':''), 'Точка лежит на оси y — она не в четверти', "r380Лов('ось')")}
-        ${BTN(4, в==='знак'?'miss':'', 'Ошибка в знаке: должно быть (−0; 3)', "r380Лов('знак')")}
-        ${BTN(5, в==='порядок'?'miss':'', 'Ошибка в порядке: должно быть (3; 0)', "r380Лов('порядок')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='ось',
-        в==='ось' ? 'Верно: x = 0, значит точка стоит прямо на оси y. Такие точки не относят ни к одной четверти.'
-                  : 'Нет: запись (0; 3) верна. Просто при x = 0 точка лежит на оси y, а не внутри четверти.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Проверь, не равна ли одна из координат нулю.',
-                 'Если координата равна <b>0</b>, точка лежит на оси — четверти не считают.');
-  }
-
-  /* 11. Сводка */
-  function F11(s){
-    const в = s.сводка;
-    return ВОПРОС('Что нужно помнить, читая координаты точки?') +
-      `<div class="pic">${свг(`
-        ${фон(260)}
-        ${лист(0.04)}
-        ${сетка(24,24,40,12,7)}
-        ${оси(0.14)}
-        ${маркер(2,2,'синь',0.3,null)}
-        ${в!=null?`<g>${проявить('15s',0.44,0.56)}
-          <line x1="${вЭкран(2,2)[0]}" y1="${вЭкран(2,2)[1]}" x2="${вЭкран(2,0)[0]}" y2="${вЭкран(2,0)[1]}"
-            stroke="${GREEN}" stroke-width="1.4" stroke-dasharray="5 4"/>
-          <line x1="${вЭкран(2,2)[0]}" y1="${вЭкран(2,2)[1]}" x2="${вЭкран(0,2)[0]}" y2="${вЭкран(0,2)[1]}"
-            stroke="${GREEN}" stroke-width="1.4" stroke-dasharray="5 4"/></g>`:''}
-        <g>${проявить('15s',0.5,0.62)}
-          ${стекло(24,192,288,44,0.5)}
-          ${т(168,212,'(x; y): сначала вправо-влево,',12,ИНК,true)}
-          ${т(168,228,'потом вверх-вниз',12,ИНК,true)}</g>
-        ${в!=null?`<g>${проявить('15s',0.72,0.84)}
-          ${подпись(168,250,'порядок чисел важен, знак — часть числа',GOLD,12)}</g>`:''}
-      `,260)}</div>` +
-      `<div class="ask">
-        ${BTN(3, в==='сначала'?'hit':(в?'miss':''), 'Первое число — по оси x, второе — по оси y', "r380Свод('сначала')")}
-        ${BTN(4, в==='как'?'miss':'', 'Можно читать в любом порядке — результат тот же', "r380Свод('как')")}
-        ${BTN(5, в==='модуль'?'miss':'', 'Знак числа можно не учитывать', "r380Свод('модуль')")}
-      </div>` +
-      (в!=null ? РАЗБОР(в==='сначала',
-        в==='сначала' ? 'Верно: (x; y) — сначала по горизонтали, потом по вертикали. Порядок и знаки обязательны.'
-                     : 'Нет: порядок менять нельзя, а знак — часть координаты. Иначе получится другая точка.') : ЖДЁТ()) +
-      ПРАВИЛО2(в,'Запомни, какое число идёт первым.',
-                 'Запись <b>(x; y)</b>: x — вправо-влево, y — вверх-вниз.');
-  }
-
-  /* 12. Практика: интерливинг + выходной билет */
-  const УРОВНИ=[
-    /* 1–2 новая тема */
-    { тип:'новая', вопрос:'Точка (3, 5). Куда идти сначала?', варианты:[
-        {т:'Вправо на 3', ок:true,  почему:'Первое число — это x.'},
-        {т:'Вверх на 3', ок:false, почему:'Вверх двигает второе число.'},
-        {т:'Влево на 3', ок:false, почему:'Знак плюс — значит вправо.'}]},
-    { тип:'новая', вопрос:'В какой четверти точка (−4, −1)?', варианты:[
-        {т:'В третьей', ок:true,  почему:'Обе координаты отрицательные: (−,−).'},
-        {т:'Во второй', ок:false, почему:'Во второй x отрицательный, а y положительный.'},
-        {т:'В четвёртой', ок:false, почему:'В четвёртой x положительный, y отрицательный.'}]},
-    /* 3 — прошлая тема (379, Евклид) */
-    { тип:'прошлая', вопрос:'Вспомним прошлый урок: НОД(48, 18) = ?', варианты:[
-        {т:'6', ок:true,  почему:'48:18 = 2 (12); 18:12 = 1 (6); 12:6 = 2 (0).'},
-        {т:'3', ок:false, почему:'3 — общий делитель, но не наибольший.'},
-        {т:'144', ок:false, почему:'144 — это НОК, наименьшее общее кратное.'}]},
-    /* 4 — смешанная */
-    { тип:'смешанная', вопрос:'Робот ставит точки через каждые 24 и 15 мм. Через сколько мм они совпадут?', варианты:[
-        {т:'Через 120 мм', ок:true,  почему:'НОК(24, 15) = 120.'},
-        {т:'Через 3 мм', ок:false, почему:'3 — это НОД, общий шаг, а не совпадение.'},
-        {т:'Через 360 мм', ок:false, почему:'360 — это произведение, а не наименьшее совпадение.'}]},
-    /* 5 — новая в незнакомой обёртке */
-    { тип:'обёртка', вопрос:'Точка (0; −5) на карте глубин. Где она?', варианты:[
-        {т:'На оси y, ниже нуля', ок:true,  почему:'x = 0 — точка на оси, y отрицательный — ниже.'},
-        {т:'В третьей четверти', ок:false, почему:'При x = 0 точка на оси, а не в четверти.'},
-        {т:'В четвёртой четверти', ок:false, почему:'Четвёртая требует x > 0.'}]}
-  ];
-  function F12(s){
-    const пройдено = s.практика||0;
-    const готово = пройдено>=УРОВНИ.length;
-    const и = Math.min(пройдено, УРОВНИ.length-1);
-    if(готово){
-      return ТОЧКИ(УРОВНИ.length, и, пройдено) +
-        ВОПРОС('Выходной билет: назови координаты своей точки в первой четверти и объясни, как ты её найдёшь.') +
-        РАЗБОР(true,'Например: (3; 2) — три клетки вправо по оси x и две вверх по оси y. Первое число всегда по x, второе по y.') +
-        `<div class="ask">${BTN(4,'','пройти заново','r380Reset()')}</div>`;
+  /* 2–4. Катапульта */
+  function FКатапульта(s,f,текст,разборПопал,правило){
+    const Н=374, цель=ЦЕЛИ[f], выстр=s['в'+f], попал=!!s['попал'+f];
+    const [tx,ty]=цель;
+    let разбор='';
+    if(выстр && !попал){
+      const [x,y]=выстр;
+      if(x===ty && y===tx) разбор='Ты выстрелил в '+коорд(x,y)+' — числа <b>переставлены</b>. Первое число — x (по горизонтали), второе — y (по вертикали).';
+      else if(x===-tx && y===ty) разбор='Всплеск в '+коорд(x,y)+'. Знак у x перепутан: <b>минус — влево</b>, плюс — вправо.';
+      else if(x===tx && y===-ty) разбор='Всплеск в '+коорд(x,y)+'. Знак у y перепутан: <b>минус — вниз</b>, плюс — вверх.';
+      else if(x===-tx && y===-ty) разбор='Всплеск в '+коорд(x,y)+' — перепутаны оба знака.';
+      else разбор='Всплеск в '+коорд(x,y)+'. Считай шаги от маяка: сначала по x, потом по y.';
     }
-    const ур=УРОВНИ[и];
-    const порядок=сдвиг(ур.варианты, и+1);
-    const выбран = (s.практикаУровень===и) ? s.практикаВыбор : null;
-    return ТОЧКИ(УРОВНИ.length, и, пройдено) +
-      A(2,'cap','Уровень '+(и+1)+' из '+УРОВНИ.length+' · '+ур.тип) +
-      ВОПРОС(ур.вопрос) +
-      '<div class="ask">' + порядок.map((в,к)=>
-        BTN(3+к, выбран===к?(в.ок?'hit':'miss'):'', в.т, `r380Pick(${и},${к})`)).join('') + '</div>' +
-      (выбран!=null ? РАЗБОР(порядок[выбран] && порядок[выбран].ок, (порядок[выбран]||{}).почему||'') : ЖДЁТ()) +
-      ПРАВИЛО('Читай запись <b>(x; y)</b> по порядку и следи за знаками.');
+    return ЛИСТ(s) + ЗАДАЧА(текст) +
+      `<div class="pic">${свг(`
+        <rect x="0" y="0" width="336" height="${Н}" fill="#0a1226"/>
+        ${сетка()}
+        ${попал?кораблик(px(tx),py(ty),{горит:true}):''}
+        ${[[-2,2,70],[2,-1,80],[-1,-2,64],[1,2,60],[3,1,50]].map(([x,y,r],i)=>`<ellipse cx="${px(x)}" cy="${py(y)}" rx="${r}" ry="${r*0.45}" fill="url(#c380-туман)" data-декор="1">${анЛин('cx',`${px(x)};${px(x)+18};${px(x)}`,(7+i).toFixed(0)+'s')}</ellipse>`).join('')}
+        ${катапульта()}
+        ${выстр?выстрел(выстр[0],выстр[1],попал):''}
+        ${узлы(f)}
+        ${подпись(168,24, 'дозорный: «'+коорд(tx,ty)+'!»', GOLD,14)}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      (попал ? РАЗБОР(true,разборПопал) + ПРАВИЛО(правило)
+             : (выстр ? РАЗБОР(false,разбор+' Коснись другой точки.') : СКАЗ('Как стрелять','Коснись узла сетки, где стоит корабль '+коорд(tx,ty)+'. Числа на осях — шаги от маяка.')));
+  }
+  const F2 = (s) => FКатапульта(s,2,'Над гаванью туман — кораблей не видно, только дозорный на башне слышит вёсла. Он кричит: «<b>(3; 2)</b>!» Коснись узла сетки — туда полетит камень катапульты.',
+    'Три шага вправо по x, два вверх по y — <b>(3; 2)</b>. Пентера горит!','Идём от начала: <b>сначала по оси x</b> (вправо — плюс), <b>потом по оси y</b> (вверх — плюс).');
+  const F3 = (s) => FКатапульта(s,3,'Второй корабль заходит с юго-запада. «<b>(−2; −3)</b>!» Минус — значит, в обратную сторону от маяка.',
+    'Два шага <b>влево</b> (x = −2) и три <b>вниз</b> (y = −3). Попадание!','Отрицательный <b>x — влево</b>, отрицательный <b>y — вниз</b>.');
+  const F4 = (s) => FКатапульта(s,4,'Третий корабль прижался прямо к молу. «<b>(−3; 0)</b>!» Что значит ноль?',
+    'y = 0 — ни шагу вверх или вниз: корабль стоит <b>на оси x</b>, три шага влево. Точно в цель!','Если <b>y = 0</b>, точка лежит на оси x; если <b>x = 0</b> — на оси y.');
+
+  /* 5. Флагман */
+  function F5(s){
+    const Н=374, в=s.ответ5;
+    const корабли=[[2,-1,false],[-3,1,true],[1,3,false],[3,-3,false]];
+    return ЛИСТ(s) +
+      ЗАДАЧА('Среди пентер — <b>флагман Марцелла</b> с золотым парусом. Если его поджечь, флот повернёт. Дозорный охрип — теперь ты кричишь координаты начальнику Когтя. Где флагман?') +
+      `<div class="pic">${свг(`
+        <rect x="0" y="0" width="336" height="${Н}" fill="#0a1226"/>
+        ${сетка()}
+        ${корабли.map(([x,y,ф],i)=>`<g>${анСдвиг('0 0;0 -2;0 0',(2+i*0.3).toFixed(1)+'s','0;0.5;1')}${кораблик(px(x),py(y),{флагман:ф})}</g>`).join('')}
+        ${в===1?`<line x1="${ОX}" y1="${ОY}" x2="${px(-3)}" y2="${ОY}" stroke="${GREEN}" stroke-width="3"/><line x1="${px(-3)}" y1="${ОY}" x2="${px(-3)}" y2="${py(1)}" stroke="${GREEN}" stroke-width="3"/>`:''}
+        ${подпись(168,24, в===1?'3 влево, 1 вверх: (−3; 1)':'где золотой парус?', в===1?GREEN:GOLD,14)}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      ОТВЕТЫ('три',['(1; −3)','(−3; 1)','(3; 1)'],1,в,'r380Отв5') +
+      (в==null ? СКАЗ('Вопрос','Координаты флагмана?') : РАЗБОР(в===1, ['(1; −3) — числа переставлены: это 1 вправо и 3 вниз. Флагман: 3 <b>влево</b>, 1 вверх — <b>(−3; 1)</b>.','От маяка 3 шага влево — x = −3, 1 шаг вверх — y = 1: <b>(−3; 1)</b>. Коготь разворачивается!','(3; 1) — это вправо. Флагман слева от оси y, поэтому x отрицательный: <b>(−3; 1)</b>.'][в])) +
+      (в===1 ? ПРАВИЛО('Чтобы прочитать координаты, опусти перпендикуляры на оси: <b>x — с горизонтальной, y — с вертикальной</b>.') : '');
   }
 
-  /* 13–15. Три тренажёра; третий — разбор чужой записи */
-  const Т1={
-    имя:'Тренажёр 1 · читаем адрес',
-    задания:[
-      { ф:'Точка (5, 2). Сколько вправо?', о:['5','2','7'], в:0, р:'Первое число — вправо.' },
-      { ф:'Точка (5, 2). Сколько вверх?', о:['2','5','3'], в:0, р:'Второе число — вверх.' },
-      { ф:'Точка (−3, 4). Куда идёт x?', о:['влево','вправо','вверх'], в:0, р:'Минус — влево.' },
-      { ф:'В какой четверти (2, −6)?', о:['в четвёртой','во второй','в третьей'], в:0, р:'(+,−) — четвёртая.' }
-    ]
-  };
-  const Т2={
-    имя:'Тренажёр 2 · ставим точки',
-    задания:[
-      { ф:'Куда встанет точка (0, 4)?', о:['на ось y','в первую четверть','на ось x'], в:0, р:'x = 0 — на оси y.' },
-      { ф:'Куда встанет точка (4, 0)?', о:['на ось x','на ось y','в четвёртую четверть'], в:0, р:'y = 0 — на оси x.' },
-      { ф:'Какая точка выше: (3, 1) или (1, 3)?', о:['(1, 3)','(3, 1)','одинаково'], в:0, р:'Выше та, у которой больше y.' },
-      { ф:'Какая точка правее: (7, 2) или (2, 7)?', о:['(7, 2)','(2, 7)','одинаково'], в:0, р:'Правее та, у которой больше x.' }
-    ]
-  };
-  const Т3={
-    имя:'Тренажёр 3 · разбор чужой записи',
-    задания:[
-      { ф:'Ученик отметил (2, 5) там, где нужно (5, 2). Что он перепутал?', о:['порядок чисел','знаки','оси местами'], в:0, р:'Он поставил числа наоборот — перепутал порядок.' },
-      { ф:'Ученик записал точку (−3, 4) в четвёртой четверти. Что не так?', о:['знаки: (−,+) — это вторая четверть','всё верно','точка не существует'], в:0, р:'Слева и вверх — вторая четверть.' },
-      { ф:'Ученик сказал, что (0, 5) — в первой четверти. Что не так?', о:['точка на оси y, а не в четверти','всё верно','должно быть (5, 0)'], в:0, р:'При x = 0 точка на оси.' },
-      { ф:'Ученик двигался вниз на 3 для точки (4, −3), но начал с оси y. Где сбой?', о:['сначала надо было идти по x','всё верно','надо было вверх'], в:0, р:'Порядок: сначала x, потом y.' }
-    ]
-  };
-
-  /* сдвиг вариантов: верный ответ не должен быть первым */
-  function сдвиг(варианты, ключ){
-    const н=варианты.length; if(н<2) return варианты;
-    const к=((ключ*7+3)%н);
-    return варианты.slice(к).concat(варианты.slice(0,к));
+  /* 6. Четверти */
+  function F6(s){
+    const Н=374, в=s.ответ6;
+    const ЧЕТВ=[['I','(+; +)',1,1],['II','(−; +)',-1,1],['III','(−; −)',-1,-1],['IV','(+; −)',1,-1]];
+    return ЛИСТ(s) +
+      ЗАДАЧА('Архимед делит гавань осями на <b>четыре четверти</b> и ставит в каждую свой отряд. Римляне высаживаются там, где у точек <b>оба числа отрицательные</b>. Куда послать отряд?') +
+      `<div class="pic">${свг(`
+        <rect x="0" y="0" width="336" height="${Н}" fill="#0a1226"/>
+        ${сетка({безЧисел:true})}
+        ${ЧЕТВ.map(([н,зн,sx,sy],i)=>{ const x=ОX+sx*1.75*К, y=ОY-sy*1.75*К, цель=н==='III';
+          return `<g>${вырасти('8s',0.04+i*0.14)}
+            <rect x="${ОX+(sx>0?4:-3.4*К)}" y="${ОY+(sy>0?-3.4*К:4)}" width="${3.4*К-4}" height="${3.4*К-4}" rx="8" fill="${цель&&в===2?'rgba(143,224,176,.18)':'rgba(255,255,255,.04)'}"/>
+            ${т(x,y-4,н,26,цель&&в===2?GREEN:GOLD,true,undefined,'#0a1a36')}
+            ${т(x,y+20,зн,14,ИНК,true,undefined,'#0a1a36')}</g>`; }).join('')}
+        ${подпись(168,24, в===2?'III четверть: x < 0 и y < 0':'знаки x и y в каждой четверти', в===2?GREEN:GOLD,13)}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      ОТВЕТЫ('три',['I','II','III'],2,в,'r380Отв6') +
+      (в==null ? СКАЗ('Вопрос','В какой четверти оба числа отрицательны?') : РАЗБОР(в===2, ['В I четверти оба числа <b>положительны</b>: вправо и вверх. Оба минуса — влево и вниз: <b>III</b>.','Во II четверти x отрицательный, а y положительный — влево и вверх. Оба минуса — <b>III</b>.','Влево — x < 0, вниз — y < 0: <b>III четверть</b>, левая нижняя. Отряд уже бежит!'][в])) +
+      (в===2 ? ПРАВИЛО('Четверти считают <b>против часовой стрелки</b> от правой верхней: I (+; +), II (−; +), III (−; −), IV (+; −).') : '');
   }
 
-  function тренер(набор, ключ, состояние, шаг){
-    const з=набор.задания[шаг % набор.задания.length];
-    const порядок=сдвиг(з.о.map((о,к)=>({о,к})), шаг+1).map(х=>х.о);
-    const верный=порядок.indexOf(з.о[з.в]);
-    const отв=состояние[ключ+'Ответ'], готово=отв!=null, верно=отв===верный;
-    const точки=Array.from({length:набор.задания.length},(_,к)=>
-      `<span class="точка ${к<шаг?'пройдено':(к===шаг?'сейчас':'')}"></span>`).join('');
-    return A(0,'уровни',точки) +
-      A(2,'карт вопрос','<span class="метка">'+набор.имя+'</span><div class="текст">'+з.ф+'</div>') +
-      A(3,'cap','Уровень '+(шаг+1)+' из '+набор.задания.length) +
-      '<div class="ask">' + порядок.map((о,к)=>
-        BTN(4+к, готово&&к===верный?'hit':(готово&&к===отв?'miss':''), о, `r380T('${ключ}',${к})`)).join('') + '</div>' +
-      (готово ? РАЗБОР(верно, з.р) : ЖДЁТ()) +
-      `<p class="score">верно: ${состояние[ключ+'Верно']||0} · ошибок: ${состояние[ключ+'Ошибки']||0} · всего: ${набор.задания.length}</p>` +
-      (готово ? `<div class="ask">${BTN(5,'','следующий вопрос',`r380TNext('${ключ}')`)}</div>` : '');
+  /* 7. Расстояние по сетке */
+  function F7(s){
+    const Н=374, в=s.ответ7;
+    const A1=[-2,1], B1=[3,1];
+    return ЛИСТ(s) +
+      ЗАДАЧА('Два римских корабля стоят на одной линии: в <b>(−2; 1)</b> и в <b>(3; 1)</b>. Между ними хотят натянуть цепь с огнём. Сколько клеток сетки должна покрыть цепь?') +
+      `<div class="pic">${свг(`
+        <rect x="0" y="0" width="336" height="${Н}" fill="#0a1226"/>
+        ${сетка()}
+        ${кораблик(px(A1[0]),py(A1[1]))}${кораблик(px(B1[0]),py(B1[1]))}
+        <path d="M${px(-2)} ${py(1)+10} Q${ОX+К/2} ${py(1)+26} ${px(3)} ${py(1)+10}" fill="none" stroke="${ОГОНЬ}" stroke-width="3" stroke-dasharray="6 4">${анЛин('stroke-dashoffset','0;-20','0.8s')}</path>
+        ${в===0?Array.from({length:5},(_,i)=>т(px(-2)+К/2+i*К,py(1)-8,String(i+1),14,GREEN,true,undefined,'#0a1a36')).join(''):''}
+        ${подпись(168,24, в===0?'3 − (−2) = 5 клеток':'одна высота y = 1 — считай по x', в===0?GREEN:GOLD,13)}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      ОТВЕТЫ('три',['5','1','3'],0,в,'r380Отв7') +
+      (в==null ? СКАЗ('Вопрос','Сколько клеток?') : РАЗБОР(в===0, ['От −2 до 0 — две клетки, от 0 до 3 — три: <b>5</b>. Это 3 − (−2).','1 = 3 − 2 — знак минуса у −2 потерян. От −2 до 3 через ноль: 2 + 3 = <b>5</b>.','3 — это только от маяка до правого корабля. Левый ещё на 2 клетки левее: <b>5</b>.'][в])) +
+      (в===0 ? ПРАВИЛО('Если y одинаковые, расстояние — это <b>разность x</b>: большее минус меньшее.') : '');
   }
-  function F13(s){ return тренер(Т1,'т1',s,s.т1Шаг||0); }
-  function F14(s){ return тренер(Т2,'т2',s,s.т2Шаг||0); }
-  function F15(s){ return тренер(Т3,'т3',s,s.т3Шаг||0); }
 
-  const L380={
-    id: ID, title:'Координатная плоскость', ico:'🎯',
-    src:'Математика · 5–6 класс · Координаты', subj:'math',
+  /* 8. Зона Когтя */
+  function F8(s){
+    const Н=374, в=s.ответ8;
+    const КОРАБЛИ=[[3,1],[1,-2],[-1,1]];
+    return ЛИСТ(s) +
+      ЗАДАЧА('<b>Коготь Архимеда</b> дотягивается до прямоугольника гавани: от x = −2 до x = 2 и от y = −1 до y = 2. Какой из трёх кораблей он может поднять за нос и перевернуть?') +
+      `<div class="pic">${свг(`
+        <rect x="0" y="0" width="336" height="${Н}" fill="#0a1226"/>
+        ${сетка()}
+        <rect x="${px(-2)}" y="${py(2)}" width="${4*К}" height="${3*К}" fill="rgba(255,160,80,.16)" stroke="${ОГОНЬ}" stroke-width="2.2" stroke-dasharray="8 5" data-декор="1">
+          ${анЛин('stroke-dashoffset','0;-26','1.4s')}</rect>
+        ${КОРАБЛИ.map(([x,y],i)=>`<g>${в===2&&i===2?анСдвиг('0 0;0 -22;0 -22;0 0','3s','0;0.4;0.7;1'):''}${кораблик(px(x),py(y))}</g>
+          ${т(px(x),py(y)+22,String(i+1),12,GOLD,true,undefined,'#0a1a36')}`).join('')}
+        ${подпись(168,24, в===2?'(−1; 1): −2 ≤ −1 ≤ 2 и −1 ≤ 1 ≤ 2':'проверь и x, и y', в===2?GREEN:GOLD,13)}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      ОТВЕТЫ('три',['(3; 1)','(1; −2)','(−1; 1)'],2,в,'r380Отв8') +
+      (в==null ? СКАЗ('Вопрос','Какой корабль в зоне Когтя?') : РАЗБОР(в===2, ['y = 1 подходит, но x = 3 больше 2 — корабль правее зоны. Внутри только <b>(−1; 1)</b>.','x = 1 подходит, но y = −2 меньше −1 — корабль ниже зоны. Внутри — <b>(−1; 1)</b>.','x = −1 между −2 и 2, y = 1 между −1 и 2 — <b>обе</b> координаты в зоне. Коготь поднимает пентеру!'][в])) +
+      (в===2 ? ПРАВИЛО('Точка внутри прямоугольника, если <b>и x, и y</b> лежат в своих границах.') : '');
+  }
+
+  /* 9. Четвёртая вершина */
+  function F9(s){
+    const Н=374, в=s.ответ9;
+    const В3=[[1,1],[1,-2],[-2,-2]], ОТВ=[-2,1];
+    return ЛИСТ(s) +
+      ЗАДАЧА('Архимед ставит на воде четыре горящих бочки — вершины квадрата-ловушки. Три уже плывут: <b>(1; 1)</b>, <b>(1; −2)</b>, <b>(−2; −2)</b>. Где поставить четвёртую?') +
+      `<div class="pic">${свг(`
+        <rect x="0" y="0" width="336" height="${Н}" fill="#0a1226"/>
+        ${сетка()}
+        <path d="M${px(1)} ${py(1)} L${px(1)} ${py(-2)} L${px(-2)} ${py(-2)}" fill="none" stroke="${ОГОНЬ}" stroke-width="2.4"/>
+        <path d="M${px(-2)} ${py(-2)} L${px(-2)} ${py(1)} L${px(1)} ${py(1)}" fill="none" stroke="${в===1?GREEN:GOLD}" stroke-width="2" stroke-dasharray="6 5">${анЛин('stroke-dashoffset','0;-22','1.2s')}</path>
+        ${В3.map(([x,y])=>`<g filter="url(#c380-тень)"><rect x="${px(x)-7}" y="${py(y)-9}" width="14" height="18" rx="4" fill="url(#c380-дерево)"/>
+          <circle cx="${px(x)}" cy="${py(y)-12}" r="8" fill="url(#c380-взрыв)">${анЛин('r','6;10;6','0.9s')}</circle></g>`).join('')}
+        <g>${анЛин('opacity','1;0.4;1','1.2s')}<circle cx="${px(ОТВ[0])}" cy="${py(ОТВ[1])}" r="10" fill="none" stroke="${в===1?GREEN:GOLD}" stroke-width="2"/></g>
+        ${подпись(168,24, в===1?'x как у (−2; −2), y как у (1; 1)':'стороны квадрата — по линиям сетки', в===1?GREEN:GOLD,13)}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      ОТВЕТЫ('три',['(1; −2)','(−2; 1)','(2; −1)'],1,в,'r380Отв9') +
+      (в==null ? СКАЗ('Вопрос','Координаты четвёртой бочки?') : РАЗБОР(в===1, ['(1; −2) уже занята — это вторая бочка. Четвёртая: x = −2 (над третьей), y = 1 (на высоте первой): <b>(−2; 1)</b>.','Четвёртая вершина стоит над (−2; −2) на высоте (1; 1): <b>(−2; 1)</b>. Сторона квадрата — 3 клетки.','(2; −1) — числа из «−2 и 1» переставлены и знаки сбиты. Нужно <b>(−2; 1)</b>.'][в])) +
+      (в===1 ? ПРАВИЛО('У точек на одной вертикали <b>одинаковый x</b>, на одной горизонтали — <b>одинаковый y</b>.') : '');
+  }
+
+  /* 10. Флот отбит */
+  function F10(s){
+    const всё = ДЕЛА.every(д=>сделано(s,д.ключ)), Н=320;
+    return ЛИСТ(s) +
+      ЗАДАЧА(всё
+        ? 'Флагман горит, Коготь переворачивает пентеры одну за другой. Марцелл отводит флот и, говорят, шутит: «Архимед черпает нашими кораблями воду из моря, как ковшом». Сиракузы выстояли — благодаря двум числам в скобках.'
+        : 'Оборона ещё не готова — вернись к делам в списке. Вот главное.') +
+      `<div class="pic">${свг(`
+        <rect x="0" y="0" width="336" height="${Н}" fill="url(#c380-закат)"/>
+        <circle cx="236" cy="118" r="60" fill="url(#c380-солнце)"/>
+        ${дым(210,90,30,0)}${дым(260,70,24,1)}
+        <rect x="0" y="130" width="336" height="${Н-130}" fill="url(#c380-море)"/>
+        <g>${анСдвиг('0 0;60 -6;60 -6','9s','0;0.8;1')}${корабль(250,156,0.5,{зеркало:true})}${корабль(290,166,0.45,{зеркало:true})}</g>
+        <g transform="translate(206 180) rotate(-24)">${корабль(0,0,0.7,{флагман:true})}</g>
+        <circle cx="206" cy="160" r="22" fill="url(#c380-взрыв)">${анЛин('r','18;26;18','0.9s')}</circle>
+        ${стена(0,214,150,Н-214)}
+        ${башня(26,216,34,56)}${башня(126,216,30,44)}
+        ${коготь(96,214,1,72)}
+        <g>${проявить('9s',0.1,0.2)}${подпись(168,30,'точка — пара чисел (x; y)',GOLD,12)}</g>
+        <g>${проявить('9s',0.3,0.4)}${подпись(168,58,'минус x — влево, минус y — вниз',GOLD,12)}</g>
+        <g>${проявить('9s',0.5,0.6)}${подпись(168,Н-12,'сначала x, потом y',GREEN,13)}</g>
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      СКАЗ('Итог','Координатная плоскость — две оси с общим <b>началом</b> (0; 0). Точку задают парой <b>(x; y)</b>: сначала x — по горизонтали (вправо +, влево −), потом y — по вертикали (вверх +, вниз −). Оси делят плоскость на четыре четверти. На одной горизонтали у точек одинаковый y, на одной вертикали — одинаковый x.') +
+      ПРАВИЛО('<b>Сначала x, потом y — и не теряй минус.</b>');
+  }
+
+  /* ================= ПРАКТИКА ================= */
+  const УРОВНИ = [
+    { вопрос:'Какая координата у точки (7; 3) первая?', варианты:[{т:'x = 7',ок:true},{т:'y = 7',ок:false}], разбор:'Сначала пишут x.' },
+    { вопрос:'Куда идти от начала в точку (−3; 2)?', варианты:[{т:'вправо 3, вверх 2',ок:false},{т:'влево 3, вверх 2',ок:true}], разбор:'Минус у x — влево.' },
+    { вопрос:'Где лежит точка (0; −4)?', варианты:[{т:'на оси y',ок:true},{т:'на оси x',ок:false}], разбор:'x = 0 — ни шагу по горизонтали.' },
+    { вопрос:'В какой четверти точка (5; −1)?', варианты:[{т:'IV',ок:true},{т:'II',ок:false}], разбор:'Вправо и вниз — IV.' },
+    { вопрос:'Расстояние между (−1; 4) и (−1; −2)?', варианты:[{т:'2',ок:false},{т:'6',ок:true}], разбор:'Один x, по y: 4 − (−2) = 6.' }
+  ];
+  function F11(s){
+    const пройдено = s.практика||0;
+    const уровень = Math.min(пройдено, УРОВНИ.length-1);
+    const всё = пройдено>=УРОВНИ.length;
+    const выбран = s.практикаУровень===уровень ? s.практикаВыбор : null;
+    const у = УРОВНИ[уровень];
+    if(всё){
+      return ТОЧКИ(УРОВНИ.length,-1,УРОВНИ.length) +
+        A(2,'карт верно','<span class="метка">Пять из пяти</span><div class="текст">✅ Все пять уровней пройдены. Дальше — три тренажёра.</div>') +
+        `<div class="ask">${BTN(3,'','Пройти заново',"r380Reset()")}</div>` +
+        ПРАВИЛО('<b>(x; y): сначала x, потом y.</b>');
+    }
+    return ТОЧКИ(УРОВНИ.length,уровень,пройдено) +
+      ЗАДАЧА('Уровень '+(уровень+1)+' из '+УРОВНИ.length+'. '+у.вопрос) +
+      `<div class="ask">` +
+      у.варианты.map((в,к)=>BTN(3+к, выбран===к ? (в.ок?'hit':'miss') : '', в.т, "r380Pick("+уровень+","+к+")")).join('') +
+      `</div>` +
+      (выбран!=null ? РАЗБОР(у.варианты[выбран].ок, у.разбор) : СКАЗ('Ответ','Выбери вариант выше.'));
+  }
+
+  /* ================= ТРЕНАЖЁРЫ ================= */
+  const Т1 = { имя:'Прочитай точку', задания:[
+    {q:'4 вправо и 1 вниз от начала — это…', в:1, варианты:['(1; −4)','(4; −1)'], раз:'Сначала x = 4, потом y = −1.'},
+    {q:'2 влево и 5 вверх — это…', в:0, варианты:['(−2; 5)','(5; −2)'], раз:'x = −2, y = 5.'},
+    {q:'Точка на оси x в 3 шагах влево — это…', в:1, варианты:['(0; −3)','(−3; 0)'], раз:'На оси x y = 0.'},
+    {q:'Начало координат — это…', в:0, варианты:['(0; 0)','(1; 1)'], раз:'Ноль шагов.'}
+  ]};
+  const Т2 = { имя:'Четверти и оси', задания:[
+    {q:'Точка (−4; −4) — в какой четверти?', в:1, варианты:['I','III'], раз:'Оба минуса.'},
+    {q:'Точка (−2; 6) — в какой четверти?', в:0, варианты:['II','IV'], раз:'Влево и вверх.'},
+    {q:'Точка (0; 5) лежит…', в:1, варианты:['на оси x','на оси y'], раз:'x = 0.'},
+    {q:'У точек на оси x вторая координата…', в:0, варианты:['0','1'], раз:'Ни вверх, ни вниз.'}
+  ]};
+  const Т3 = { имя:'Олимпиадные', задания:[
+    {q:'Прямоугольник (0; 0), (4; 0), (4; 3), (0; 3). Его площадь?', в:1, варианты:['7','12'], раз:'4 · 3.'},
+    {q:'Середина отрезка от (−4; 2) до (2; 2)?', в:0, варианты:['(−1; 2)','(−2; 2)'], раз:'(−4 + 2) : 2 = −1.'},
+    {q:'Точку (2; 5) отразили относительно оси x. Получилось…', в:1, варианты:['(−2; 5)','(2; −5)'], раз:'Меняется знак y.'},
+    {q:'Сколько узлов сетки с целыми координатами на отрезке от (0; 0) до (5; 0)?', в:0, варианты:['6','5'], раз:'0, 1, 2, 3, 4, 5.'}
+  ]};
+  function тренажёр(s,ключ,набор,номер){
+    const шаг = (s[ключ+'Шаг']||0) % набор.задания.length;
+    const з = набор.задания[шаг];
+    const ответ = s[ключ+'Ответ'];
+    const верно = s[ключ+'Верно']||0, ошибки = s[ключ+'Ошибки']||0;
+    return ТОЧКИ(набор.задания.length,шаг,шаг) +
+      A(1,'score','Тренажёр '+номер+' · '+набор.имя+' · верно '+верно+', ошибок '+ошибки) +
+      ЗАДАЧА(з.q) +
+      `<div class="ask пара">` +
+      з.варианты.map((в,к)=>BTN(3+к,
+        ответ===к ? (к===з.в?'hit':'miss') : (ответ!=null&&к===з.в?'hit':''),
+        в, "r380T('"+ключ+"',"+к+")")).join('') +
+      `</div>` +
+      (ответ!=null
+        ? РАЗБОР(ответ===з.в, з.раз) + `<div class="ask">${BTN(10,'','Следующее задание →',"r380TNext('"+ключ+"')")}</div>`
+        : СКАЗ('Ответ','Выбери вариант выше.'));
+  }
+
+  /* ================= СБОРКА ================= */
+  const L380 = {
+    id: ID,
+    title: 'Координатная плоскость',
+    ico: '🗺️',
+    src: 'Математика · 5–6 класс · Координаты',
+    subj: 'math',
     explain: [
-      'Начнём с разминки: на прошлом уроке мы разбирали алгоритм Евклида. Робот ставит детали длиной 24 и 15 миллиметров, и ему нужна одинаковая деталь для обеих планок. Алгоритм даёт НОД(24, 15) = 3. А теперь новая задача: робот-художник умеет рисовать, но не знает, куда ставить точку. Как объяснить ему место на листе?',
-
-      'Оказывается, у каждой точки на листе есть адрес из двух чисел. Проведём две оси: горизонтальную x и вертикальную y. Они пересекаются в точке, которую называют началом координат и обозначают (0; 0). Адрес точки записывают в скобках: сначала число по оси x, потом число по оси y. Первое число говорит, сколько шагов сделать вправо или влево, второе — сколько вверх или вниз.',
-
-      'Порядок чисел очень важен. Сравним (3; 5) и (5; 3). В первой записи тройка двигает нас вправо, а пятёрка — вверх: точка окажется высоко. Во второй записи пятёрка двигает вправо, а тройка — вверх: точка окажется правее и ниже. Числа одни и те же, суммы тоже равны восьми, но точки разные, потому что у чисел разные роли. Первое число всегда отвечает за ось x, второе — за ось y.',
-
-      'Оси делят плоскость на четыре части — четверти. Их нумеруют против часовой стрелки, начиная с правой верхней. В первой четверти обе координаты положительные. Во второй x отрицательный, а y положительный. В третьей обе отрицательные. В четвёртой x положительный, а y отрицательный. Чтобы определить четверть, достаточно посмотреть на знаки: например, у точки (−2; 3) знаки (−, +), значит это вторая четверть.',
-
-      'Теперь сделаем вместе. Нужно поставить точку (4; −3). Первое число 4 — значит, идём вправо на четыре шага. Второе число −3 — значит, вниз на три шага, потому что знак минус означает движение вниз по оси y. Я специально пропустил второе число: посмотри на знак и допиши шаг сам. Итог: четыре вправо и три вниз.',
-
-      'Попробуй сам: отметь точку (−3; −2). Действуем по правилу — сначала первое число, потом второе. Первое число −3: знак минус, значит влево на три шага. Второе число −2: тоже минус, значит вниз на два шага. Точка окажется в третьей четверти, где обе координаты отрицательные.',
-
-      'А теперь самое интересное: робот умеет рисовать по координатам. Дадим ему список точек: (0; 0), (0; 4), (1; 5), (2; 5), (2; 6), (3; 5), (4; 5), (4; 4), (4; 0) и снова (0; 0). Соединим их по порядку — и получится знакомая фигура. Верхняя точка (2; 6) выше всех остальных, а (1; 5) и (3; 5) стоят рядом с ней: вместе они дают острый нос. Две нижние пары образуют лапы. Получилась ракета.',
-
-      'Почему получилась именно ракета, а не что-то другое? Потому что форму задаёт расположение точек, а не их количество. Если бы верхняя точка стояла на высоте 4, а не 6, нос был бы тупым. Если бы точки шли подряд по горизонтали, получилась бы полоса. Значит, рисуя по координатам, мы полностью управляем формой: каждая точка — это место на листе.',
-
-      'Решим обратную задачу: точка отмечена, а координаты нужно назвать. Опустимся от точки вниз до оси x — получим первое число. Затем пройдём влево до оси y — получим второе число. Если точка стоит в четырёх шагах вправо и двух вверх, её адрес (4; 2). Важно смотреть на знаки: если бы точка была слева, первое число было бы отрицательным.',
-
-      'Разберём ловушку. Ученик записал точку как (0; 3) и сказал, что она в первой четверти. Запись верна: ноль по оси x и три по оси y. Но при x = 0 точка стоит прямо на оси y, а не внутри четверти. Четверти считают только для точек, у которых обе координаты не равны нулю. Если координата равна нулю, точка лежит на оси — это отдельный случай.',
-
-      'Соберём всё вместе. Координаты точки записывают в виде (x; y): сначала число по горизонтальной оси, потом по вертикальной. Порядок менять нельзя, знак — часть числа. Обе координаты положительные — первая четверть; x отрицательный, y положительный — вторая; обе отрицательные — третья; x положительный, y отрицательный — четвёртая. Если координата равна нулю, точка лежит на оси.',
-
-      'Пройти практику: пять уровней. Первые два — про чтение координат, третий вернёт нас к прошлому уроку про НОД, четвёртый смешает темы, а пятый спрячет координаты в жизненную задачу про карту глубин. В конце — выходной билет: назови координаты своей точки и объясни, как ты их найдёшь.',
-
-      'Первый тренажёр — читаем адрес: по записи точки определяем, куда и на сколько шагов идти.',
-
-      'Второй тренажёр — ставим точки: разбираем случаи на осях и сравниваем, какая точка выше или правее.',
-
-      'Третий тренажёр — разбор чужой записи: в каждой задаче кто-то ошибся, и нужно назвать, что именно он перепутал.'
+      'Римский флот идёт на Сиракузы. Архимед расчертил гавань: маяк — начало (0; 0), две оси — x и y. Точку задают парой (x; y): сначала x, потом y.',
+      'Катапульта: (3; 2) — три шага вправо по x и два вверх по y.',
+      'Отрицательные координаты: (−2; −3) — два шага влево и три вниз.',
+      'Ноль в координате: (−3; 0) лежит на оси x; точка с x = 0 — на оси y.',
+      'Чтобы прочитать координаты корабля, опускают перпендикуляры на оси: флагман — (−3; 1).',
+      'Оси делят плоскость на четыре четверти; в III четверти оба числа отрицательны.',
+      'У точек (−2; 1) и (3; 1) одинаковый y, расстояние между ними — 3 − (−2) = 5 клеток.',
+      'Точка внутри прямоугольника, если и x, и y лежат в своих границах: в зоне Когтя — (−1; 1).',
+      'Четвёртая вершина квадрата (1; 1), (1; −2), (−2; −2) — это (−2; 1): на одной вертикали одинаковый x, на одной горизонтали — y.',
+      'Итог: пара (x; y), знаки и направления, оси и четверти.',
+      'Практика: пять уровней подряд.',
+      'Тренажёр 1: прочитай точку.',
+      'Тренажёр 2: четверти и оси.',
+      'Тренажёр 3: олимпиадные задачи.'
     ],
     check: {
-      q:'Точка (5; 2). Куда идти сначала и на сколько?',
-      choices:['Вправо на 5','Вверх на 5','Влево на 5'],
-      ans:0,
-      exp:'Первое число записи — это x: пять шагов вправо. Второе число — y: два шага вверх.'
+      q: 'Точка: 3 по оси x и 4 по оси y. Как её записать?',
+      choices: ['(4; 3)','(3; 4)','(3, 4)','(34)'],
+      ans: 1,
+      exp: 'Сначала x, потом y: (3; 4).'
     },
     tasks: [
-      { q:'В какой четверти лежит точка (−4; −1)?', kind:'choice',
-        choices:['В третьей','Во второй'], ans:0,
-        hints:['Смотри на знаки.','Обе координаты отрицательные.'],
-        sol:'В третьей.' },
-      { q:'Куда попадёт точка (0; 4)?', kind:'choice',
-        choices:['На ось y','В первую четверть'], ans:0,
-        hints:['x = 0.','Точка стоит прямо на оси.'],
-        sol:'На ось y.' },
-      { q:'Какая точка выше: (3; 1) или (1; 3)?', kind:'choice',
-        choices:['(1; 3)','(3; 1)'], ans:0,
-        hints:['Высоту задаёт второе число.','Сравни y.'],
-        sol:'(1; 3).' },
-      { q:'Ученик поставил (2; 5) там, где нужно (5; 2). Что он перепутал?', kind:'choice',
-        choices:['Порядок чисел','Знаки координат'], ans:0,
-        hints:['Числа те же самые.','Поменялись роли x и y.'],
-        sol:'Порядок чисел.' }
+      { q:'Назови координату x точки (7; 3).', kind:'unit', ans:7, tol:0,
+        hints:['Первая координата — x.','x = 7.'], sol:'7' },
+      { q:'Куда идём от начала, чтобы попасть в точку (−3; 2)?', kind:'choice', choices:['вправо 3, вверх 2','влево 3, вверх 2','влево 3, вниз 2','вправо 3, вниз 2'], ans:1,
+        hints:['Отрицательный x — влево.','y = 2 — вверх.'], sol:'влево 3, вверх 2' },
+      { q:'Сколько клеток между точками (−2; 1) и (3; 1)?', kind:'unit', ans:5, tol:0,
+        hints:['y одинаковые — считай по x.','3 − (−2).'], sol:'5' }
     ]
   };
 
@@ -809,84 +641,40 @@
     const step = Math.max(0, Math.min(L380.explain.length-1, (typeof LV!=='undefined'&&LV.step)||0));
     const f = step+1;
     let сцена='';
-    if(f===1) сцена=F1(s);
-    else if(f===2) сцена=F2(s);
-    else if(f===3) сцена=F3(s);
-    else if(f===4) сцена=F4(s);
-    else if(f===5) сцена=F5(s);
-    else if(f===6) сцена=F6(s);
-    else if(f===7) сцена=F7(s);
-    else if(f===8) сцена=F8(s);
-    else if(f===9) сцена=F9(s);
-    else if(f===10) сцена=F10(s);
-    else if(f===11) сцена=F11(s);
-    else if(f===12) сцена=F12(s);
-    else if(f===13) сцена=F13(s);
-    else if(f===14) сцена=F14(s);
-    else сцена=F15(s);
-
-    const ЗАГОЛОВКИ={
-      1:['Разминка','И адрес точки'],
-      2:['Две оси','Запись (x; y)'],
-      3:['Порядок','(3; 5) и (5; 3)'],
-      4:['Четверти','Я показываю'],
-      5:['Мы делаем','Один шаг пропущен'],
-      6:['Ты делаешь','Точка (−3; −2)'],
-      7:['Рисуем по координатам','Графический диктант'],
-      8:['Почему так','Форма из точек'],
-      9:['Обратная задача','Назови координаты'],
-      10:['Ловушка','Точка на оси'],
-      11:['Сводка','Что помнить'],
-      12:['Практика','Пять уровней'],
-      13:['Тренажёр 1','Читаем адрес'],
-      14:['Тренажёр 2','Ставим точки'],
-      15:['Тренажёр 3','Разбор чужой записи']
-    };
-    const з=ЗАГОЛОВКИ[f]||['Координатная плоскость','Точки и адреса'];
-    el.innerHTML = `<div class="s6 l380" data-frame="${f}">
-        <h2>${з[1]}</h2>
-        ${сцена}
-      </div>`;
+    if(f===1) сцена=F1(s); else if(f===2) сцена=F2(s); else if(f===3) сцена=F3(s);
+    else if(f===4) сцена=F4(s); else if(f===5) сцена=F5(s); else if(f===6) сцена=F6(s);
+    else if(f===7) сцена=F7(s); else if(f===8) сцена=F8(s); else if(f===9) сцена=F9(s);
+    else if(f===10) сцена=F10(s); else if(f===11) сцена=F11(s);
+    else if(f===12) сцена=тренажёр(s,'т1',Т1,1); else if(f===13) сцена=тренажёр(s,'т2',Т2,2);
+    else сцена=тренажёр(s,'т3',Т3,3);
+    const ЗАГОЛОВКИ={1:'Флот Марцелла',2:'Первый выстрел',3:'Минус — назад',4:'Корабль на оси',5:'Флагман',
+      6:'Четыре четверти',7:'Огненная цепь',8:'Зона Когтя',9:'Квадрат-ловушка',10:'Флот отбит',11:'Практика',
+      12:'Тренажёр 1',13:'Тренажёр 2',14:'Тренажёр 3'};
+    el.innerHTML = `<div class="s6 l380" data-frame="${f}"><h2>${ЗАГОЛОВКИ[f]||'Координаты'}</h2>${сцена}</div>`;
   }
 
-  window.r380Разминка=(к)=>{ S().разминка=к; chRender(0); };
-  window.r380Адрес=(к)=>{ S().адрес=к; chRender(0); };
-  window.r380Порядок=(к)=>{ S().порядок=к; chRender(0); };
-  window.r380Четв=(к)=>{ S().четверти=к; chRender(0); };
-  window.r380Мы=(к)=>{ S().мы=к; chRender(0); };
-  window.r380Ты=(к)=>{ S().ты=к; chRender(0); };
-  window.r380Рис=(к)=>{ S().рисунок=к; chRender(0); };
-  window.r380ПочемуРис=(к)=>{ S().почемуРис=к; chRender(0); };
-  window.r380Обрат=(к)=>{ S().обратная=к; chRender(0); };
-  window.r380Лов=(к)=>{ S().ловушка=к; chRender(0); };
-  window.r380Свод=(к)=>{ S().сводка=к; chRender(0); };
-  window.r380Pick=(уровень,вариант)=>{
-    const s=S();
-    const порядок=сдвиг(УРОВНИ[уровень].варианты, уровень+1);
-    s.практикаУровень=уровень; s.практикаВыбор=вариант;
-    if(порядок[вариант] && порядок[вариант].ок) s.практика=уровень+1;
-    chRender(0);
-  };
+  /* ================= ОБРАБОТЧИКИ ================= */
+  window.r380Отв1=(к)=>{ S().ответ1=к; chRender(0); };
+  window.r380Выстрел=(f,x,y)=>{ const s=S(); if(s['попал'+f]) return;
+    const [tx,ty]=ЦЕЛИ[f]; s['в'+f]=[x,y];
+    if(x===tx && y===ty){ s['попал'+f]=true; if(s.попал2&&s.попал3&&s.попал4) s.дело_катапульта=true; }
+    chRender(0); };
+  window.r380Отв5=(к)=>{ const s=S(); s.ответ5=к; if(к===1) s.дело_сигнал=true; chRender(0); };
+  window.r380Отв6=(к)=>{ S().ответ6=к; chRender(0); };
+  window.r380Отв7=(к)=>{ S().ответ7=к; chRender(0); };
+  window.r380Отв8=(к)=>{ const s=S(); s.ответ8=к; if(к===2) s.дело_коготь=true; chRender(0); };
+  window.r380Отв9=(к)=>{ S().ответ9=к; chRender(0); };
+  window.r380Pick=(уровень,вариант)=>{ const s=S(); s.практикаУровень=уровень; s.практикаВыбор=вариант;
+    if(УРОВНИ[уровень].варианты[вариант].ок) s.практика=уровень+1; chRender(0); };
   window.r380Reset=()=>{ const s=S(); s.практика=0; s.практикаВыбор=null; s.практикаУровень=null; chRender(0); };
-  window.r380T=(ключ,вариант)=>{
-    const s=S();
-    if(s[ключ+'Ответ']!=null) return;
+  window.r380T=(ключ,вариант)=>{ const s=S(); if(s[ключ+'Ответ']!=null) return;
     const набор = ключ==='т1'?Т1:(ключ==='т2'?Т2:Т3);
-    const шаг=s[ключ+'Шаг']||0;
-    const з=набор.задания[шаг % набор.задания.length];
-    const порядок=сдвиг(з.о.map((о,к)=>({о,к})), шаг+1).map(х=>х.о);
-    const верный=порядок.indexOf(з.о[з.в]);
+    const з=набор.задания[(s[ключ+'Шаг']||0)%набор.задания.length];
     s[ключ+'Ответ']=вариант;
-    if(вариант===верный) s[ключ+'Верно']=(s[ключ+'Верно']||0)+1; else s[ключ+'Ошибки']=(s[ключ+'Ошибки']||0)+1;
-    chRender(0);
-  };
-  window.r380TNext=(ключ)=>{
-    const s=S();
-    const набор = ключ==='т1'?Т1:(ключ==='т2'?Т2:Т3);
-    s[ключ+'Шаг']=((s[ключ+'Шаг']||0)+1)%набор.задания.length;
-    s[ключ+'Ответ']=null;
-    chRender(0);
-  };
+    if(вариант===з.в) s[ключ+'Верно']=(s[ключ+'Верно']||0)+1; else s[ключ+'Ошибки']=(s[ключ+'Ошибки']||0)+1;
+    chRender(0); };
+  window.r380TNext=(ключ)=>{ const s=S(); const набор = ключ==='т1'?Т1:(ключ==='т2'?Т2:Т3);
+    s[ключ+'Шаг']=((s[ключ+'Шаг']||0)+1)%набор.задания.length; s[ключ+'Ответ']=null; chRender(0); };
 
   function зарегистрировать(){
     try{
@@ -894,10 +682,7 @@
       window.VISKW[ID]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
       if(window.WAVE_B) window.WAVE_B[ID]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
       const arr=window.ARH_LESSONS;
-      if(arr && arr.length){
-        const место=arr.findIndex(L=>L && L.id===ID);
-        if(место>=0) arr[место]=L380; else arr.push(L380);
-      }
+      if(arr && arr.length){ const м=arr.findIndex(L=>L && L.id===ID); if(м>=0) arr[м]=L380; else arr.push(L380); }
     }catch(e){}
   }
   зарегистрировать();
