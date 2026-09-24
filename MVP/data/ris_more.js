@@ -353,7 +353,8 @@
     const вверх='M-2 -2 Q-14 -18 -30 -12 Q-16 -6 -2 2', вниз='M-2 -2 Q-14 4 -28 10 Q-14 4 -2 2';
     const вверх2='M4 -2 Q16 -18 32 -12 Q18 -6 4 2', вниз2='M4 -2 Q16 4 30 10 Q16 4 4 2';
     const взмах=(a,b)=>ДВИЖ&&о.летит!==false?`<animate attributeName="d" values="${a};${b};${a}" dur="${о.темп||0.9}s" repeatCount="indefinite"/>`:'';
-    return `<g transform="translate(${x} ${y}) scale(${м})" data-декор="1">${о.дрейф?качать('0 0;'+о.дрейф+';0 0',(о.дрейфВр||6)+'s'):''}
+    const влево = о.влево!=null ? о.влево : (о.дрейф ? parseFloat(о.дрейф)<0 : false);
+    return `<g transform="translate(${x} ${y}) scale(${м})" data-декор="1">${о.дрейф?качать('0 0;0 '+(parseFloat(о.дрейф.split(' ')[1])||-4)+';0 0',(о.дрейфВр||4)+'s'):''}<g transform="scale(${влево?-1:1} 1)">
       <path d="${вверх}" fill="#c8d0d8" stroke="${ОБВОД}" stroke-width=".8">${взмах(вверх,вниз)}</path>
       <ellipse cx="1" cy="0" rx="11" ry="5" fill="#fbfbf8" stroke="${ОБВОД}" stroke-width=".9"/>
       <path d="M-10 0 l-6 -2 l2 4z" fill="#e8ecef" stroke="${ОБВОД}" stroke-width=".6"/>
@@ -362,7 +363,7 @@
       <circle cx="11" cy="-3" r=".9" fill="#1a120a"/>
       <path d="${вверх2}" fill="#b4bec8" stroke="${ОБВОД}" stroke-width=".8">${взмах(вверх2,вниз2)}</path>
       <path d="M26 -12 l6 0 l-3 3z" fill="#2a2e34"/>
-    </g>`;
+    </g></g>`;
   }
 
   /* ---------- предметы ---------- */
@@ -565,7 +566,37 @@
       <path d="M-16 -4 q10 -6 22 -2" stroke="#fff" stroke-width="1" fill="none" opacity=".5"/></g>`;
   }
 
+
+  /* ---------- дельфин: тело со светотенью, плавники, глаз с бликом, прыжок ---------- */
+  function дельфин(x,y,м,опц){
+    const о=опц||{}, кл=ид('дельф');
+    const тело='M-44 6 Q-30 -22 6 -20 Q30 -18 44 -4 Q50 0 58 -2 Q52 4 44 6 Q20 14 -10 14 Q-30 14 -44 6 Z';
+    return `<g transform="translate(${x} ${y}) scale(${м})">${о.прыжок&&ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 18;0 -22;0 18" dur="2.6s" repeatCount="indefinite" additive="sum" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.3 0 0.6 1;0.4 0 0.7 1"/>${ЗАВОД}`:''}<g transform="scale(${о.влево?-1:1} 1)">
+      <linearGradient id="${кл}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a7a98"/><stop offset="0.55" stop-color="#8aa8c4"/><stop offset="1" stop-color="#e6eef4"/></linearGradient>
+      <path d="M-40 4 L-58 -8 Q-54 4 -60 16 Z" fill="#5a7a98" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M-4 -18 Q2 -36 16 -38 Q10 -28 12 -18 Z" fill="#5a7a98" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="${тело}" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <path d="M0 8 Q-2 20 -12 24 Q-2 20 6 10 Z" fill="#6a8aa8" stroke="${ОБВОД}" stroke-width=".9"/>
+      <path d="M-30 -8 Q0 -22 30 -12" stroke="#c8dcec" stroke-width="2" fill="none" opacity=".7"/>
+      <path d="M44 -2 Q48 1 54 0" stroke="${ОБВОД}" stroke-width="1" fill="none"/>
+      <circle cx="34" cy="-8" r="2.6" fill="#1a120a"/><circle cx="33.2" cy="-8.8" r=".9" fill="#fff"/>
+      <path d="M31 -2 q6 3 12 1" stroke="${ОБВОД}" stroke-width=".9" fill="none"/>
+    </g></g>`;
+  }
+  /* ---------- бутылка с письмом: стекло с бликами, пробка, свёрток внутри ---------- */
+  function бутылка(x,y,м,опц){
+    const о=опц||{}, кл=ид('бут');
+    return `<g transform="translate(${x} ${y}) rotate(${о.угол||-18}) scale(${м})">
+      <ellipse cx="2" cy="16" rx="30" ry="4" fill="#231a12" opacity=".3" filter="url(#рм-мягко)"/>
+      <linearGradient id="${кл}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe8d0" stop-opacity=".85"/><stop offset="0.5" stop-color="#6ab090" stop-opacity=".7"/><stop offset="1" stop-color="#2e6a50" stop-opacity=".85"/></linearGradient>
+      ${о.открыта?'':`<rect x="-8" y="-4" width="34" height="14" rx="6" fill="url(#рм-бумага)" stroke="#a88a5a" stroke-width=".8"/><line x1="-4" y1="3" x2="22" y2="3" stroke="#c8a870" stroke-width=".8"/>`}
+      <path d="M-26 -10 Q-30 0 -26 12 H22 Q28 12 30 6 H44 V-4 H30 Q28 -10 22 -10 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.2"/>
+      <path d="M-22 -6 H18" stroke="#fff" stroke-width="2" opacity=".7" stroke-linecap="round"/>
+      ${о.открыта?'':`<rect x="44" y="-5" width="9" height="12" rx="2" fill="#b8844a" stroke="${ОБВОД}" stroke-width=".9"/>`}
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
-    флаг, прилавок, мяч, лента, яблоко, рыбка};
+    флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка};
 })();
