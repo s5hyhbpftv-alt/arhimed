@@ -817,11 +817,11 @@
   /* ---------- фонарь: кольцо, колпак, стекло с огоньком, ореол ---------- */
   function фонарь(x,y,м,горит){
     return `<g transform="translate(${x} ${y}) scale(${м})">
-      ${горит?`<circle cx="0" cy="18" r="30" fill="url(#рм-огонь)" opacity=".5" data-декор="1">${анЛин('opacity','0.45;0.6;0.42;0.55;0.45','1.3s')}</circle>`:''}
+      ${typeof горит==='string'?`<circle cx="0" cy="19" r="22" fill="${горит}" opacity=".45" filter="url(#рм-очмягко)" data-декор="1">${анЛин('opacity','0.4;0.6;0.4','1.6s')}</circle>`:горит?`<circle cx="0" cy="18" r="30" fill="url(#рм-огонь)" opacity=".5" data-декор="1">${анЛин('opacity','0.45;0.6;0.42;0.55;0.45','1.3s')}</circle>`:''}
       <circle cx="0" cy="2" r="3" fill="none" stroke="url(#рм-железо)" stroke-width="1.6"/>
       <path d="M-8 11 L-4 5 H4 L8 11 Z" fill="url(#рм-железо)" stroke="${ОБВОД}" stroke-width=".7"/>
-      <rect x="-6.5" y="11" width="13" height="16" rx="1.5" fill="${горит?'#ffd98a':'#3a4450'}" stroke="${ОБВОД}" stroke-width=".8"/>
-      ${горит?`<path d="M0 24 q-3.4 -4 0 -9 q3.4 5 0 9z" fill="#ff8a2a">${ДВИЖ?`<animateTransform attributeName="transform" type="scale" values="1 1;0.9 1.1;1 1" dur="0.7s" repeatCount="indefinite" additive="sum"/>`:''}</path>`:''}
+      <rect x="-6.5" y="11" width="13" height="16" rx="1.5" fill="${typeof горит==='string'?горит:горит?'#ffd98a':'#3a4450'}" stroke="${ОБВОД}" stroke-width=".8"/>
+      ${горит===true?`<path d="M0 24 q-3.4 -4 0 -9 q3.4 5 0 9z" fill="#ff8a2a">${ДВИЖ?`<animateTransform attributeName="transform" type="scale" values="1 1;0.9 1.1;1 1" dur="0.7s" repeatCount="indefinite" additive="sum"/>`:''}</path>`:''}
       <path d="M-2.2 11 v16 M2.2 11 v16" stroke="${ОБВОД}" stroke-width=".7" opacity=".7"/>
       <rect x="-8" y="27" width="16" height="3.4" rx="1" fill="url(#рм-железо)" stroke="${ОБВОД}" stroke-width=".6"/>
     </g>`;
@@ -889,8 +889,77 @@
     </g>`;
   }
 
+  /* ---------- штурвал: обод, спицы с рукоятями, латунная ступица, «королевская» спица с бандажом.
+     опц.подписи — неподвижные кружки вокруг; опц.угол — поворот штурвала (°), опц.было — откуда
+     повернуть один раз; опц.свет — номер подписи, на которую смотрит королевская спица ---------- */
+  function штурвал(x,y,r,опц){
+    const о=опц||{}, п=о.подписи||[], n=п.length||8, спиц=Math.max(n,6), угол=о.угол||0, было=о.было, свет=о.свет;
+    const спицы=Array.from({length:спиц},(_,k)=>{ const a=-90+k*360/спиц;
+      return `<g transform="rotate(${f(a+90)} ${x} ${y})">
+        <rect x="${f(x-r*0.05)}" y="${f(y-r*1.02)}" width="${f(r*0.1)}" height="${f(r*0.84)}" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".7"/>
+        <path d="M${f(x-r*0.07)} ${f(y-r*1.08)} Q${f(x-r*0.1)} ${f(y-r*1.2)} ${f(x-r*0.06)} ${f(y-r*1.32)} Q${x} ${f(y-r*1.4)} ${f(x+r*0.06)} ${f(y-r*1.32)} Q${f(x+r*0.1)} ${f(y-r*1.2)} ${f(x+r*0.07)} ${f(y-r*1.08)} Z" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".9"/>
+        ${k===0?`<rect x="${f(x-r*0.08)}" y="${f(y-r*1.2)}" width="${f(r*0.16)}" height="${f(r*0.06)}" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".5"/>`:''}
+      </g>`; }).join('');
+    const вращ = (было!=null&&ДВИЖ) ? `<animateTransform attributeName="transform" type="rotate" from="${было} ${x} ${y}" to="${угол} ${x} ${y}" dur="1s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.3 1.25 0.5 1"/>` : '';
+    const надписи=п.map((т0,k)=>{ const a=(-90+k*360/n)*Math.PI/180, R=r*1.62, на=свет===k;
+      return `<g><circle cx="${f(x+R*Math.cos(a))}" cy="${f(y+R*Math.sin(a))}" r="${f(r*0.24)}" fill="${на?'#ffd76a':'#1e2a3a'}" stroke="${на?'#fff4c0':'#c8a860'}" stroke-width="1.5"/>
+        <text x="${f(x+R*Math.cos(a))}" y="${f(y+R*Math.sin(a)+r*0.08)}" text-anchor="middle" font-size="${f(r*0.22)}" font-weight="bold" fill="${на?'#3a2408':'#ffe8b0'}" font-family="Georgia,serif">${т0}</text></g>`; }).join('');
+    return `<g>
+      <circle cx="${x+4}" cy="${y+5}" r="${r*1.05}" fill="none" stroke="#0b1c2a" stroke-width="${f(r*0.14)}" opacity=".3" filter="url(#рм-мягко)"/>
+      <g transform="rotate(${угол} ${x} ${y})">${вращ}
+        ${спицы}
+        <circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#5a3418" stroke-width="${f(r*0.16)}"/>
+        <circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="url(#рм-доска)" stroke-width="${f(r*0.12)}"/>
+        <circle cx="${x}" cy="${y}" r="${f(r*0.84)}" fill="none" stroke="url(#рм-латунь)" stroke-width="${f(r*0.05)}"/>
+        ${Array.from({length:спиц},(_,k)=>{ const a=(k*360/спиц+180/спиц)*Math.PI/180; return `<circle cx="${f(x+r*Math.cos(a))}" cy="${f(y+r*Math.sin(a))}" r="${f(r*0.025)}" fill="#e8c070"/>`; }).join('')}
+        <circle cx="${x}" cy="${y}" r="${f(r*0.24)}" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width="1"/>
+        <circle cx="${x}" cy="${y}" r="${f(r*0.12)}" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".8"/>
+        <circle cx="${f(x-r*0.07)}" cy="${f(y-r*0.08)}" r="${f(r*0.05)}" fill="#fff" opacity=".5"/>
+      </g>
+      ${свет!=null?`<path d="M${x} ${f(y-r*1.44)} l${f(-r*0.08)} ${f(-r*0.1)} h${f(r*0.16)} z" fill="#ffd76a" stroke="${ОБВОД}" stroke-width=".6" opacity="0"/>`:''}
+      ${надписи}
+    </g>`;
+  }
+
+  /* ---------- рында: кронштейн, бронзовый колокол, язык, плетёный линёк; звонит — качается и звучит ---------- */
+  function рында(x,y,м,опц){
+    const о=опц||{};
+    const кач = о.звонит&&ДВИЖ ? `<animateTransform attributeName="transform" type="rotate" values="0 0 14;16 0 14;-14 0 14;10 0 14;0 0 14" dur="1.2s" repeatCount="indefinite"/>` : '';
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <path d="M-34 -4 H0 q8 0 8 8 v6" stroke="url(#рм-железо)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <rect x="-38" y="-10" width="8" height="14" rx="2" fill="url(#рм-железо)" stroke="${ОБВОД}" stroke-width=".7"/>
+      <g transform="translate(8 0)"><g>${кач}
+        <circle cx="0" cy="12" r="4" fill="none" stroke="url(#рм-железо)" stroke-width="2.4"/>
+        <path d="M-7 18 Q-8 16 0 15 Q8 16 7 18 Q10 30 12 42 Q18 44 18 50 H-18 Q-18 44 -12 42 Q-10 30 -7 18 Z" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <path d="M-17 46 H17" stroke="#8a5a1a" stroke-width="1.4"/><path d="M-9 26 H9" stroke="#8a5a1a" stroke-width="1" opacity=".7"/>
+        <path d="M-5 20 Q-8 32 -11 42" stroke="#fff4c0" stroke-width="2" fill="none" opacity=".7"/>
+        <circle cx="0" cy="52" r="3.4" fill="url(#рм-железо)" stroke="${ОБВОД}" stroke-width=".6"/>
+        <path d="M0 55 q-3 10 1 20 q3 8 -1 14" stroke="#e8dcc0" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M0 55 q-3 10 1 20 q3 8 -1 14" stroke="#b8a888" stroke-width="3" fill="none" stroke-dasharray="1.6 2" />
+        <path d="M-4 88 q4 -4 8 0 l-1 8 h-6z" fill="#e8dcc0" stroke="${ОБВОД}" stroke-width=".6"/>
+      </g></g>
+      ${о.звонит?[0,1].map(k=>`<path d="M${-22-k*8} ${24-k*4} q${-6} 12 0 24 M${38+k*8} ${24-k*4} q6 12 0 24" stroke="#fff4c0" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8">${анЛин('opacity','0.9;0;0.9','0.6s',`begin="${k*0.3}s"`)}</path>`).join(''):''}
+    </g>`;
+  }
+
+  /* ---------- грифельная доска: деревянная рама, аспидное поле, разводы мела, полочка с мелом.
+     (x,y) — левый верхний угол ---------- */
+  function доска(x,y,ш,в,опц){
+    const о=опц||{};
+    return `<g>
+      <rect x="${x+3}" y="${y+5}" width="${ш}" height="${в}" rx="4" fill="#0b1c2a" opacity=".35" filter="url(#рм-мягко)"/>
+      <rect x="${x}" y="${y}" width="${ш}" height="${в}" rx="4" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <rect x="${x+7}" y="${y+7}" width="${ш-14}" height="${в-14}" rx="2" fill="${о.цвет||'#2c3a35'}" stroke="#1a120a" stroke-width="1"/>
+      <ellipse cx="${f(x+ш*0.3)}" cy="${f(y+в*0.4)}" rx="${f(ш*0.22)}" ry="${f(в*0.12)}" fill="#fff" opacity=".035" data-декор="1"/>
+      <ellipse cx="${f(x+ш*0.7)}" cy="${f(y+в*0.7)}" rx="${f(ш*0.18)}" ry="${f(в*0.08)}" fill="#fff" opacity=".03" data-декор="1"/>
+      <rect x="${x+7}" y="${y+7}" width="${ш-14}" height="3" fill="#fff" opacity=".06"/>
+      ${о.полка===false?'':`<rect x="${x+ш*0.1}" y="${y+в-3}" width="${ш*0.8}" height="6" rx="2" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".7"/>
+      <rect x="${f(x+ш*0.62)}" y="${y+в-7}" width="14" height="4" rx="2" fill="#f4f0e6" stroke="#c8c0b0" stroke-width=".5"/>`}
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
-    боцман, ящик, стрела, фонарь, трюмы, трюмыОтсеки, пристань, склад};
+    боцман, ящик, стрела, фонарь, трюмы, трюмыОтсеки, пристань, склад, штурвал, рында, доска};
 })();
