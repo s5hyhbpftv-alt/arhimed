@@ -1,5 +1,5 @@
 /* ============ РИСУНКИ МОРЯ · ОБЩАЯ БИБЛИОТЕКА ДЛЯ УРОКОВ 3 КЛАССА «ВДОЛЬ БЕРЕГА» ============
-   Подключается ДО уроков, которые её используют (сейчас 861, 862).
+   Подключается ДО уроков, которые её используют (861–876).
    window.РМ — функции, которые возвращают куски SVG в координатах кадра 336 × Н.
 
    МАНЕРА (deploy/РИСОВАНИЕ_ФИГУР.md): обводка #33291e, свет сверху-слева,
@@ -133,6 +133,24 @@
     </filter>
     <filter id="рм-мягко" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter>
     <filter id="рм-очмягко" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+    <linearGradient id="рм-шторм" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a2230"/><stop offset="0.5" stop-color="#34425a"/><stop offset="0.85" stop-color="#5a6a80"/><stop offset="1" stop-color="#7a8a9c"/>
+    </linearGradient>
+    <linearGradient id="рм-морешторм" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a6a78"/><stop offset="0.4" stop-color="#2a4a5a"/><stop offset="1" stop-color="#0e2230"/>
+    </linearGradient>
+    <linearGradient id="рм-туча" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a6678"/><stop offset="1" stop-color="#252c3a"/>
+    </linearGradient>
+    <radialGradient id="рм-вспышка" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fffbe6" stop-opacity=".9"/><stop offset="0.35" stop-color="#d8e4ff" stop-opacity=".45"/><stop offset="1" stop-color="#d8e4ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="рм-стена" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4a2a12"/><stop offset="0.5" stop-color="#6a3e1c"/><stop offset="1" stop-color="#3e220e"/>
+    </linearGradient>
+    <linearGradient id="рм-камень" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4e6c4"/><stop offset="0.6" stop-color="#e0c898"/><stop offset="1" stop-color="#b89868"/>
+    </linearGradient>
   </defs>`;
 
   /* ---------- небо, солнце, облака, звёзды ---------- */
@@ -177,7 +195,7 @@
       </g>`; }).join('');
     const блики = о.дорожка!=null ? Array.from({length:10},(_,k)=>{ const y=y0+4+k*(в*0.07), шир=6+k*2.2, x=о.дорожка+((k*37)%13)-6;
       return `<ellipse cx="${x}" cy="${f(y)}" rx="${f(шир)}" ry="1.2" fill="#fff8d8" opacity=".75">${анЛин('opacity','0.8;0.2;0.8',(1.2+(k%4)*0.35).toFixed(2)+'s')}</ellipse>`; }).join('') : '';
-    return `<g data-декор="1"><rect x="0" y="${y0}" width="${ш}" height="${в}" fill="url(#рм-${о.ночь?'мореночь':'море'})"/>
+    return `<g data-декор="1"><rect x="0" y="${y0}" width="${ш}" height="${в}" fill="url(#рм-${о.шторм?'морешторм':о.ночь?'мореночь':'море'})"/>
       <rect x="0" y="${y0}" width="${ш}" height="4" fill="#e8f6ff" opacity=".35"/>
       ${даль}${сред}${блики}${гребни}</g>`;
   }
@@ -958,8 +976,149 @@
     </g>`;
   }
 
+  /* ---------- шторм: свинцовое небо, рваные тучи, вспышки молний по всему кадру ---------- */
+  function шторм(ш,в,опц){
+    const о=опц||{};
+    const туча=(x,y,м,д)=>`<g transform="translate(${x} ${y}) scale(${м})" data-декор="1">${д?качать('0 0;'+д+' 0;0 0',(10+Math.abs(д)).toFixed(0)+'s'):''}
+      <path d="M-60 10 q-8 -22 16 -26 q6 -24 34 -20 q14 -20 40 -6 q26 -8 30 16 q20 4 14 26 z" fill="#161c28" opacity=".35" transform="translate(4 6)"/>
+      <path d="M-60 10 q-8 -22 16 -26 q6 -24 34 -20 q14 -20 40 -6 q26 -8 30 16 q20 4 14 26 z" fill="url(#рм-туча)" stroke="#1a2030" stroke-width="1"/>
+      <path d="M-40 -12 q10 -14 26 -10 M4 -24 q14 -10 30 0" stroke="#8a96a8" stroke-width="2" fill="none" opacity=".6" stroke-linecap="round"/>
+    </g>`;
+    const вспышка = о.вспышка!==false && ДВИЖ ? `<rect x="0" y="0" width="${ш}" height="${в}" fill="#e8f0ff" opacity="0" data-декор="1"><animate attributeName="opacity" values="0;0;0.5;0;0.3;0;0" keyTimes="0;0.6;0.62;0.66;0.69;0.73;1" dur="${о.такт||5}s" repeatCount="indefinite"/></rect>`:'';
+    return `<g><rect x="0" y="0" width="${ш}" height="${в}" fill="url(#рм-шторм)"/></g>
+      ${(о.тучи||[[60,30,1,6],[200,20,1.2,-8],[310,44,0.9,5]]).map(([x,y,м,д])=>туча(x,y,м,д)).join('')}
+      ${вспышка}`;
+  }
+  /* молния: (x,y) — где выходит из тучи; вспыхивает в такт шторму (опц.такт), опц.всегда — горит постоянно */
+  function молния(x,y,м,опц){
+    const о=опц||{}, такт=о.такт||5, всегда=о.всегда||!ДВИЖ;
+    const d='M0 0 L-10 34 L4 34 L-8 70 L2 70 L-12 108 L14 60 L2 60 L14 28 L2 28 L10 0 Z';
+    const миг = всегда ? (ДВИЖ?`<animate attributeName="opacity" values="1;0.7;1;1;0.85;1" keyTimes="0;0.08;0.16;0.6;0.66;1" dur="2.2s" repeatCount="indefinite"/>`:'') : `<animate attributeName="opacity" values="0;0;1;0.2;1;0;0" keyTimes="0;0.6;0.62;0.66;0.69;0.73;1" dur="${такт}s" repeatCount="indefinite"/>`;
+    return `<g transform="translate(${x} ${y}) scale(${м})" opacity="${всегда?1:0}" data-декор="1">${миг}
+      <circle cx="0" cy="54" r="64" fill="url(#рм-вспышка)"/>
+      <path d="${d}" fill="#fff4b0" stroke="#ffe070" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="${d}" fill="#fffef4" transform="translate(1 2) scale(.55 .96)"/>
+    </g>`;
+  }
+  /* косой дождь в прямоугольнике (0,y0)–(ш,y0+в), бесшовно идёт по кругу */
+  function дождь(ш,в,опц){
+    const о=опц||{}, n=о.капель||46, y0=о.y0||0, кл=ид('дождь'), сдв=в*5/14;
+    const линии=Array.from({length:n},(_,k)=>{ const x=(k*37)%(ш+сдв+60)-30, y=y0+((k*53)%в);
+      return `<line x1="${f(x)}" y1="${y}" x2="${f(x-5)}" y2="${y+14}" stroke="#c8d8ee" stroke-width="${k%3?1:1.4}" opacity="${k%2?0.45:0.7}" stroke-linecap="round"/>`; }).join('');
+    return `<g data-декор="1"><clipPath id="${кл}"><rect x="0" y="${y0}" width="${ш}" height="${в}"/></clipPath>
+      <g clip-path="url(#${кл})"><g>${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;${f(-сдв)} ${в}" dur="${о.темп||0.8}s" repeatCount="indefinite"/>`:''}
+        ${линии}<g transform="translate(${f(сдв)} ${-в})">${линии}</g></g></g></g>`;
+  }
+  /* всплеск: корона брызг. опц.раз — вспыхнуть один раз (после броска), опц.задержка — через сколько секунд */
+  function всплеск(x,y,м,опц){
+    const о=опц||{}, раз=о.раз, нач=(о.задержка||0).toFixed(2)+'s';
+    const анимация = ДВИЖ ? (раз
+      ? `<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.6;1" dur="1.3s" begin="${нач}" fill="freeze"/><animateTransform attributeName="transform" type="scale" values="0.3;1.15;1" dur="0.6s" begin="${нач}" fill="freeze" additive="sum"/>`
+      : `<animateTransform attributeName="transform" type="scale" values="0.7;1.05;0.7" dur="1.6s" repeatCount="indefinite" additive="sum"/>`) : '';
+    if(раз && !ДВИЖ) return '';
+    return `<g transform="translate(${x} ${y}) scale(${м})" data-декор="1"><g opacity="${раз?0:1}">${анимация}
+      <ellipse cx="0" cy="0" rx="24" ry="5" fill="#e8f6ff" opacity=".6"/>
+      <path d="M-18 0 q-6 -14 -2 -24 q4 10 8 12 q0 -18 8 -26 q2 16 6 16 q4 -14 12 -18 q-2 14 2 20 q6 -6 10 -2 q-6 10 -8 22 z" fill="#f4fbff" stroke="#8ac8e8" stroke-width="1"/>
+      ${[[-24,-30,2.4],[-6,-40,2],[14,-36,2.6],[26,-22,1.8]].map(([a,b,r])=>`<circle cx="${a}" cy="${b}" r="${r}" fill="#f4fbff" stroke="#8ac8e8" stroke-width=".7"/>`).join('')}
+    </g></g>`;
+  }
+  /* вал: штормовая волна с загнутым гребнем и пеной, (x,y) — середина подошвы */
+  function вал(x,y,м,опц){
+    const о=опц||{};
+    const тело='M-80 0 Q-60 -20 -30 -50 Q0 -80 30 -70 Q56 -62 50 -40 Q40 -54 24 -50 Q6 -44 10 -24 Q20 0 80 0 Z';
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})" data-декор="1">${качать('0 0;0 -4;0 0','2.6s')}
+      <path d="${тело}" fill="url(#рм-морешторм)" stroke="#0e2230" stroke-width="1.2"/>
+      <path d="M-70 -8 Q-44 -36 -24 -56 Q2 -76 30 -70" stroke="#8ab8c8" stroke-width="2" fill="none" opacity=".6"/>
+      <path d="M30 -70 Q56 -62 50 -40 Q40 -54 24 -50 Q14 -48 10 -40 Q16 -60 30 -70 Z" fill="#f4fbff" stroke="#bfe0ee" stroke-width="1"/>
+      ${[[40,-76,3],[54,-66,2.4],[60,-50,2],[48,-82,1.6]].map(([a,b,r])=>`<circle cx="${a}" cy="${b}" r="${r}" fill="#f4fbff">${анЛин('opacity','1;0.3;1',(1+r*0.2).toFixed(1)+'s')}</circle>`).join('')}
+      <path d="M-20 -20 q10 -6 20 0 M-50 -12 q10 -6 20 0" stroke="#bfe0ee" stroke-width="1.2" fill="none" opacity=".7"/>
+    </g>`;
+  }
+
+  /* ---------- каюта: стена из досок, балки, латунный иллюминатор с ночным морем, пол.
+     опц.иллюминатор [x,y], опц.r, опц.пол — высота пола (false — без пола), опц.лампа [x, длина подвеса] ---------- */
+  function каюта(ш,в,опц){
+    const о=опц||{}, кл=ид('илл'), пх=о.иллюминатор||[ш*0.78,в*0.3], r=о.r||26, пол=о.пол===false?0:(о.пол||40);
+    const стена=Array.from({length:Math.ceil(ш/28)},(_,k)=>`<rect x="${k*28}" y="0" width="28" height="${в}" fill="${k%2?'#5a3418':'#663c1c'}"/><line x1="${k*28}" y1="0" x2="${k*28}" y2="${в}" stroke="#2a160a" stroke-width="1" opacity=".6"/>
+       ${[0.3,0.62].map(t=>`<circle cx="${k*28+14}" cy="${f(в*t+(k%3)*7)}" r="1" fill="#2a160a" opacity=".5"/>`).join('')}
+       <path d="M${k*28+6} ${f(в*0.15+(k%4)*9)} q4 6 0 12" stroke="#7a4a24" stroke-width="1" fill="none" opacity=".5"/>`).join('');
+    const лампа = о.лампа ? `<g>${крутить(`-5 ${о.лампа[0]} 0;5 ${о.лампа[0]} 0;-5 ${о.лампа[0]} 0`,'3.4s')}
+        <line x1="${о.лампа[0]}" y1="0" x2="${о.лампа[0]}" y2="${о.лампа[1]}" stroke="#3a3e46" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+        ${фонарь(о.лампа[0],о.лампа[1],1,true)}</g>` : '';
+    return `<g>
+      ${стена}
+      <rect x="0" y="0" width="${ш}" height="${в}" fill="url(#рм-складка)" opacity=".5"/>
+      ${о.лампа?`<circle cx="${о.лампа[0]}" cy="${о.лампа[1]+20}" r="${Math.min(ш,в)*0.55}" fill="url(#рм-огонь)" opacity=".22" data-декор="1">${анЛин('opacity','0.2;0.28;0.2','1.6s')}</circle>`:''}
+      <rect x="0" y="0" width="${ш}" height="14" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width="1"/>
+      ${[0.12,0.5,0.88].map(t=>`<rect x="${f(ш*t-8)}" y="0" width="16" height="20" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".8"/>`).join('')}
+      <clipPath id="${кл}"><circle cx="${f(пх[0])}" cy="${f(пх[1])}" r="${r}"/></clipPath>
+      <g clip-path="url(#${кл})">
+        <rect x="${f(пх[0]-r)}" y="${f(пх[1]-r)}" width="${2*r}" height="${2*r}" fill="url(#рм-ночь)"/>
+        <rect x="${f(пх[0]-r)}" y="${f(пх[1]+r*0.3)}" width="${2*r}" height="${r}" fill="url(#рм-мореночь)"/>
+        <circle cx="${f(пх[0]+r*0.35)}" cy="${f(пх[1]-r*0.35)}" r="${f(r*0.22)}" fill="url(#рм-луна)"/>
+        <circle cx="${f(пх[0]-r*0.5)}" cy="${f(пх[1]-r*0.5)}" r=".9" fill="#fff"/><circle cx="${f(пх[0]-r*0.1)}" cy="${f(пх[1]-r*0.2)}" r=".7" fill="#fff"/>
+        <path d="M${f(пх[0]-r)} ${f(пх[1]+r*0.5)} q${f(r*0.3)} -3 ${f(r*0.6)} 0 t${f(r*0.6)} 0 t${f(r*0.6)} 0 t${f(r*0.6)} 0" stroke="#8aa8d0" stroke-width="1" fill="none" opacity=".7">${анЛин('opacity','0.7;0.3;0.7','2.4s')}</path>
+        <path d="M${f(пх[0]-r)} ${f(пх[1]+r*0.1)} l${2*r} ${f(-r*1.1)}" stroke="#fff" stroke-width="${f(r*0.28)}" opacity=".09"/>
+      </g>
+      <circle cx="${f(пх[0])}" cy="${f(пх[1])}" r="${r+3}" fill="none" stroke="${ОБВОД}" stroke-width="1"/>
+      <circle cx="${f(пх[0])}" cy="${f(пх[1])}" r="${r}" fill="none" stroke="url(#рм-латунь)" stroke-width="5"/>
+      ${Array.from({length:8},(_,k)=>{ const a=k*Math.PI/4; return `<circle cx="${f(пх[0]+(r+0.2)*Math.cos(a))}" cy="${f(пх[1]+(r+0.2)*Math.sin(a))}" r="1.2" fill="#8a5a10"/>`; }).join('')}
+      ${пол?`${доски(0,в-пол,ш,пол,true)}<rect x="0" y="${в-пол-3}" width="${ш}" height="4" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".6"/>`:''}
+      ${лампа}
+    </g>`;
+  }
+  /* белое перо с жёлтым кончиком (у какаду жёлтый хохолок) */
+  function перо(x,y,м,угол){
+    return `<g transform="translate(${x} ${y}) rotate(${угол||0}) scale(${м})">
+      <ellipse cx="2" cy="2" rx="7" ry="2" fill="#231a12" opacity=".3" filter="url(#рм-мягко)"/>
+      <path d="M0 0 Q-8 -12 -5 -30 Q-1 -40 3 -44 Q9 -30 7 -14 Q5 -4 0 0 Z" fill="#fbfbf6" stroke="${ОБВОД}" stroke-width=".9"/>
+      <path d="M0 3 Q1 -20 3 -42" stroke="#b8b098" stroke-width="1.2" fill="none"/>
+      ${[-36,-30,-24,-18,-12].map((yy,k)=>`<path d="M${f(1+(yy+44)*0.03)} ${yy} l${k%2?5:-5} -4" stroke="#d8d4c4" stroke-width=".7"/>`).join('')}
+      <path d="M-4 -32 Q-1 -41 3 -44 Q6 -38 7 -32 Q2 -35 -4 -32 Z" fill="#ffe070" opacity=".9"/>
+    </g>`;
+  }
+  /* туман: мягкие полосы, медленно плывут в разные стороны */
+  function туман(y0,в,ш,опц){
+    const о=опц||{}, n=о.полос||5, пл=о.плотность||0.75;
+    return `<g data-декор="1">${Array.from({length:n},(_,k)=>{ const y=y0+в*(k+0.5)/n, д=(k%2?-1:1)*(16+k*4);
+      return `<g>${качать('0 0;'+д+' 0;0 0',(9+k*2)+'s')}<ellipse cx="${f(ш*(0.3+((k*37)%50)/100))}" cy="${f(y)}" rx="${f(ш*0.72)}" ry="${f(в/n*0.95)}" fill="#e8eef2" opacity="${(пл*(0.5+0.1*(k%3))).toFixed(2)}" filter="url(#рм-очмягко)"/></g>`; }).join('')}</g>`;
+  }
+  /* Сиракузы на горизонте: холм, стена с зубцами, башни, дома с черепицей, храм с колоннами, кипарисы */
+  function сиракузы(x,y,м,опц){
+    const о=опц||{};
+    const башня=(bx,bw,bh)=>`<rect x="${bx}" y="${-bh}" width="${bw}" height="${bh}" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".8"/>
+      ${Array.from({length:Math.floor(bw/5)},(_,k)=>`<rect x="${bx+k*5+1}" y="${-bh-4}" width="3" height="4" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".5"/>`).join('')}
+      <rect x="${bx+bw/2-1.5}" y="${-bh+7}" width="3" height="6" rx="1.5" fill="#4a3a2a"/>`;
+    const дом=(dx,dw,dh)=>`<rect x="${dx}" y="${-dh}" width="${dw}" height="${dh}" fill="#f6ecd6" stroke="${ОБВОД}" stroke-width=".7"/><rect x="${dx+dw*0.6}" y="${-dh}" width="${dw*0.4}" height="${dh}" fill="#e0d2b4"/>
+      <path d="M${dx-2} ${-dh} L${dx+dw/2} ${-dh-6} L${dx+dw+2} ${-dh} Z" fill="#c8603a" stroke="${ОБВОД}" stroke-width=".6"/><rect x="${f(dx+dw*0.3)}" y="${-dh+4}" width="${f(dw*0.25)}" height="4" fill="#3a4a6a"/>`;
+    const храм=`<g transform="translate(-8 -30)">
+      <path d="M-30 -30 L0 -44 L30 -30 Z" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".9"/>
+      <path d="M-18 -33 L0 -41 L18 -33" stroke="#c8a870" stroke-width=".8" fill="none"/>
+      <rect x="-31" y="-30" width="62" height="5" fill="#e8d4a8" stroke="${ОБВОД}" stroke-width=".7"/>
+      ${Array.from({length:7},(_,k)=>`<rect x="${-28+k*9}" y="-25" width="4.4" height="22" fill="#f4e8cc" stroke="${ОБВОД}" stroke-width=".5"/><line x1="${-26.6+k*9}" y1="-24" x2="${-26.6+k*9}" y2="-4" stroke="#c8b08a" stroke-width=".6"/>`).join('')}
+      <rect x="-33" y="-3" width="66" height="4" fill="#e0c898" stroke="${ОБВОД}" stroke-width=".7"/></g>`;
+    return `<g transform="translate(${x} ${y}) scale(${м})" data-декор="1">
+      <path d="M-124 0 Q-92 -30 -40 -34 Q20 -40 60 -26 Q100 -16 132 0 Z" fill="url(#рм-холм)" stroke="${ОБВОД}" stroke-width="1"/>
+      ${дом(-82,16,24)}${дом(-62,14,28)}${дом(28,16,26)}${дом(50,14,30)}${дом(70,16,24)}
+      ${храм}
+      ${[[-44,-10,22],[16,-10,20],[88,-10,18]].map(([cx,cy,h])=>`<path d="M${cx} ${cy-h} q5 ${h*0.4} 3 ${h} h-6 q-2 -${f(h*0.6)} 3 -${h}z" fill="#2f5a36" stroke="${ОБВОД}" stroke-width=".6"/>`).join('')}
+      <path d="M-106 -12 H114 V0 H-106 Z" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".9"/>
+      ${Array.from({length:44},(_,k)=>`<rect x="${-106+k*5}" y="-15" width="3" height="3" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".4"/>`).join('')}
+      ${[-80,-40,0,40,80].map(xx=>`<path d="M${xx} -12 v12" stroke="${ОБВОД}" stroke-width=".5" opacity=".4"/>`).join('')}
+      ${башня(-104,14,28)}${башня(-30,12,32)}${башня(98,14,26)}
+      <rect x="-130" y="-78" width="270" height="80" fill="url(#рм-дымка)" opacity="${о.дымка==null?0.5:о.дымка}"/>
+    </g>`;
+  }
+  /* радуга после шторма */
+  function радуга(x,y,r,опц){
+    return `<g data-декор="1" opacity="${(опц&&опц.яркость)||0.55}">
+      ${['#ff6a5a','#ffb04a','#ffe86a','#7ad07a','#5aa8e8','#8a6ad8'].map((c,k)=>`<path d="M${x-r+k*5} ${y} A${r-k*5} ${r-k*5} 0 0 1 ${x+r-k*5} ${y}" stroke="${c}" stroke-width="5.4" fill="none"/>`).join('')}
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
-    боцман, ящик, стрела, фонарь, трюмы, трюмыОтсеки, пристань, склад, штурвал, рында, доска};
+    боцман, ящик, стрела, фонарь, трюмы, трюмыОтсеки, пристань, склад, штурвал, рында, доска,
+    шторм, молния, дождь, всплеск, вал, каюта, перо, туман, сиракузы, радуга};
 })();
