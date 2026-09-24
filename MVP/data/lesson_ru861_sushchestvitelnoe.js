@@ -197,33 +197,25 @@
        ${жирный?'font-weight="bold"':''} fill="${цвет||ИНК}"
        ${ореол?`stroke="${ореол}" stroke-width="3" paint-order="stroke" stroke-linejoin="round"`:''}
        font-family="Georgia,'Times New Roman',serif">${esc(текст)}</text>`;
+  const Р = () => window.РМ;
   const ОПРЕДЕЛЕНИЯ = `
     <defs>
-      <linearGradient id="c861-небо" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#6ab0e0"/><stop offset="1" stop-color="#d8eef8"/>
-      </linearGradient>
-      <linearGradient id="c861-море" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#2e86c0"/><stop offset="1" stop-color="#15406a"/>
-      </linearGradient>
-      <linearGradient id="c861-дерево" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#b07840"/><stop offset="1" stop-color="#6a4018"/>
-      </linearGradient>
-      <linearGradient id="c861-бумага" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#fbf4e2"/><stop offset="1" stop-color="#e2cfa4"/>
-      </linearGradient>
-      <linearGradient id="c861-трюм" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#5a3a1c"/><stop offset="1" stop-color="#2e1c0c"/>
-      </linearGradient>
-      <linearGradient id="c861-берег" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#9ac870"/><stop offset="1" stop-color="#5a8a3a"/>
-      </linearGradient>
       <filter id="c861-тень" x="-30%" y="-30%" width="160%" height="170%">
-        <feDropShadow dx="1.5" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity=".45"/>
+        <feDropShadow dx="1.5" dy="2" stdDeviation="1.6" flood-color="#0b1c2a" flood-opacity=".45"/>
       </filter>
+      <linearGradient id="c861-сталь" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f2f6fa"/><stop offset="0.5" stop-color="#a8b4c2"/><stop offset="1" stop-color="#5a6676"/>
+      </linearGradient>
+      <linearGradient id="c861-дно" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8a7a5a"/><stop offset="1" stop-color="#4a3e2a"/>
+      </linearGradient>
+      <linearGradient id="c861-туча" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7a8698"/><stop offset="1" stop-color="#3a4254"/>
+      </linearGradient>
     </defs>`;
   const свг = (тело, высота) =>
     `<svg viewBox="0 0 336 ${высота}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-       ${ОПРЕДЕЛЕНИЯ}${тело}</svg>`;
+       ${Р().defs()}${ОПРЕДЕЛЕНИЯ}${тело}</svg>`;
   const рамка = (в) => `<rect x="0.8" y="0.8" width="334.4" height="${в-1.6}" rx="14" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>`;
   const подпись = (x,y,текст,цвет,кегль) => {
     const к=кегль||14, ш=String(текст).length*к*0.6+20, в=к+11;
@@ -234,46 +226,46 @@
       ${т(cx,y-2,текст,к,цвет||GOLD,true)}
     </g>`;
   };
-  /* море с берегом и чайками */
-  const море = (Н,линия) => `<g><rect x="0" y="0" width="336" height="${линия}" fill="url(#c861-небо)"/></g>
-    <path d="M0 ${линия} q40 -26 90 -18 q40 6 70 -10 q30 -12 60 4 q58 14 116 14 V${линия} H0z" fill="url(#c861-берег)" data-декор="1"/>
-    <rect x="0" y="${линия}" width="336" height="${Н-линия}" fill="url(#c861-море)"/>
-    ${[0,1,2,3].map(k=>`<path d="M${10+k*84} ${линия+18+(k%2)*22} q12 -6 24 0 t24 0" stroke="#bfe4ff" stroke-width="1.4" fill="none" opacity=".6" data-декор="1">${анЛин('opacity','0.6;0.15;0.6',(2.2+k*0.4).toFixed(1)+'s')}</path>`).join('')}
-    ${[[250,26],[284,40]].map(([x,y],k)=>`<path d="M${x-9} ${y} q5 -6 9 0 q4 -6 9 0" stroke="${ОБВОД}" stroke-width="1.8" fill="none" data-декор="1">${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;-10 -3;0 0" dur="${4+k}s" repeatCount="indefinite"/>`:''}</path>`).join('')}`;
-  /* юнга в лодке с сачком */
-  const юнга = (x,y) => `<g transform="translate(${x} ${y})" filter="url(#c861-тень)">
-      <path d="M-46 0 h92 l-12 20 h-68 z" fill="url(#c861-дерево)" stroke="${ОБВОД}" stroke-width="1.4"/>
-      <rect x="-10" y="-34" width="20" height="34" rx="6" fill="#f4f0e6" stroke="${ОБВОД}" stroke-width="1.2"/>
-      ${[0,1,2].map(k=>`<line x1="-10" y1="${-27+k*9}" x2="10" y2="${-27+k*9}" stroke="#2a5a9a" stroke-width="3"/>`).join('')}
-      <circle cx="0" cy="-44" r="11" fill="${КОЖА}" stroke="${ОБВОД}" stroke-width="1.2"/>
-      <path d="M-11 -48 q11 -14 22 0 z" fill="#2a4a7a" stroke="${ОБВОД}" stroke-width="1"/>
-      <circle cx="-4" cy="-44" r="1.4" fill="${ОБВОД}"/><circle cx="4" cy="-44" r="1.4" fill="${ОБВОД}"/>
-      <path d="M-4 -39 q4 3 8 0" stroke="${ОБВОД}" stroke-width="1.2" fill="none"/>
-      <line x1="8" y1="-24" x2="54" y2="-58" stroke="#8a5a2a" stroke-width="3" stroke-linecap="round"/>
+  /* дощечка со словом, плывущая по воде */
+  const дощечка = (x,y,слово,ош,фаза) => `<g transform="translate(${x} ${y})">${Р().качать('0 0;0 3;0 0',(1.8+фаза*0.27).toFixed(2)+'s')}
+      <ellipse cx="0" cy="12" rx="40" ry="4" fill="#e8f6ff" opacity=".45">${анЛин('rx','34;42;34',(1.8+фаза*0.27).toFixed(2)+'s')}</ellipse>
+      <g filter="url(#c861-тень)"><rect x="-36" y="-12" width="72" height="24" rx="5" fill="${ош?'#ffd8cc':'url(#рм-бумага)'}" stroke="${ош?RED:ОБВОД}" stroke-width="${ош?2:1.2}"/></g>
+      <path d="M-32 -8 h64" stroke="#fff" stroke-width="1.4" opacity=".7"/>
+      <circle cx="-30" cy="0" r="1.4" fill="#8a6a3a"/><circle cx="30" cy="0" r="1.4" fill="#8a6a3a"/>
+      ${т(0,5,слово,14,ЧЕРНИЛА,true)}</g>`;
+  /* сачок: древко от руки юнги, латунный обод, сеть узлами, улов */
+  function сачок(x,y,слова,нов){
+    const кл='c861-сеть';
+    const ячейки = Array.from({length:7},(_,k)=>`<path d="M${-34+k*11} -2 q${4} 26 ${14-k*4} 50" stroke="#efe4c8" stroke-width=".8" fill="none"/>`).join('')+
+      Array.from({length:4},(_,k)=>`<path d="M-34 ${8+k*11} q34 ${10-k*2} 68 0" stroke="#efe4c8" stroke-width=".8" fill="none"/>`).join('');
+    return `<g transform="translate(${x} ${y})">
+      <line x1="-62" y1="54" x2="-30" y2="4" stroke="url(#рм-мачта)" stroke-width="4" stroke-linecap="round"/>
+      <clipPath id="${кл}"><path d="M-34 0 q4 48 34 56 q30 -8 34 -56 z"/></clipPath>
+      <path d="M-34 0 q4 48 34 56 q30 -8 34 -56 z" fill="rgba(240,230,210,.18)"/>
+      <g clip-path="url(#${кл})">${ячейки}</g>
+      ${слова.map((w,k)=>`<g>${нов&&k===слова.length-1?сдвигРаз('0 -40','0 0','0.55s',0):''}<g filter="url(#c861-тень)"><rect x="-26" y="${6+k*12}" width="52" height="11" rx="5.5" fill="${GREEN}" stroke="${ОБВОД}" stroke-width=".6"/></g>${т(0,14.5+k*12,w,9,ЧЕРНИЛА,true)}</g>`).join('')}
+      <ellipse cx="0" cy="0" rx="34" ry="9" fill="none" stroke="url(#рм-латунь)" stroke-width="3.2"/>
+      <ellipse cx="0" cy="0" rx="34" ry="9" fill="none" stroke="${ОБВОД}" stroke-width=".7"/>
     </g>`;
-  /* сеть сачка с пойманными словами */
-  const сеть = (x,y,слова,нов) => `<g transform="translate(${x} ${y})">
-      <ellipse cx="0" cy="0" rx="34" ry="10" fill="none" stroke="#8a5a2a" stroke-width="3"/>
-      <path d="M-34 0 q4 44 34 50 q30 -6 34 -50" fill="rgba(240,230,210,.25)" stroke="#e8dcc0" stroke-width="1.2"/>
-      ${[-20,-6,8,22].map(d=>`<path d="M${d} 4 q${d*0.2} 22 ${-d*0.3} 42" stroke="#e8dcc0" stroke-width=".8" fill="none"/>`).join('')}
-      ${слова.map((w,k)=>`<g>${нов&&k===слова.length-1?сдвигРаз('0 -30','0 0','0.5s',0):''}<rect x="-28" y="${6+k*11}" width="56" height="10" rx="5" fill="${GREEN}" opacity=".85"/>${т(0,14+k*11,w,9,ЧЕРНИЛА,true)}</g>`).join('')}
-    </g>`;
+  }
 
   /* ================= КАДРЫ ================= */
 
   /* 1. Сачок */
   function F1(s){
-    const Н=270, пойм=Array.isArray(s.пойм1)?s.пойм1:[], ош=s.ош1, всё=СУЩ1.every(i=>пойм.includes(i));
+    const Н=300, пойм=Array.isArray(s.пойм1)?s.пойм1:[], ош=s.ош1, всё=СУЩ1.every(i=>пойм.includes(i)), М=Р();
+    const юн = М.юнга(-6,20,0.62,{поза:'сачок',безНог:true,взгляд:1});
     return ЖУРНАЛ(s) +
-      ЗАДАЧА('Ночью был шторм. Волны размыли страницу судового журнала, и слова уплыли в море. Капитан говорит: «Юнга, лови сачком только <b>имена предметов</b> — слова, которые отвечают на вопрос <b>кто?</b> или <b>что?</b>». Касайся буйков со словами.') +
+      ЗАДАЧА('Ночью был шторм. Волны размыли страницу судового журнала, и слова уплыли в море. Капитан говорит: «Юнга, лови сачком только <b>имена предметов</b> — слова, которые отвечают на вопрос <b>кто?</b> или <b>что?</b>». Касайся дощечек со словами.') +
       `<div class="pic">${свг(`
-        ${море(Н,90)}
-        ${БУЙКИ.map((б,i)=>{ if(пойм.includes(i)) return ''; const x=46+(i%4)*82, y=112+Math.floor(i/4)*38;
-          return `<g>${качка((1.6+i*0.23).toFixed(2)+'s',3)}<g filter="url(#c861-тень)"><rect x="${x-36}" y="${y-13}" width="72" height="26" rx="13" fill="${ош===i?'#ffd8d0':'#fff6ea'}" stroke="${ош===i?RED:'#e86a5a'}" stroke-width="1.6"/></g>
-            ${т(x,y+5,б.с,14,ЧЕРНИЛА,true)}</g>`; }).join('')}
-        ${юнга(90,Н-30)}
-        ${сеть(150,Н-92,пойм.map(i=>БУЙКИ[i].с),s.поймал)}
-        ${т(240,Н-18,'в сачке: '+пойм.length+' из 4',14,всё?GREEN:ИНК,true)}
+        ${М.небо(336,96,{солнце:[292,34,11],облака:[[76,30,0.66,10],[196,52,0.5,-6]]})}
+        ${М.берег(96,{x1:210})}
+        ${М.море(96,Н-96,336,{дорожка:292})}
+        ${М.чайка(214,26,0.8,{дрейф:'-14 -4'})}${М.чайка(250,50,0.55,{темп:1.1,дрейф:'10 -2'})}
+        ${БУЙКИ.map((б,i)=>пойм.includes(i)?'':дощечка(46+(i%4)*82,124+Math.floor(i/4)*40,б.с,ош===i,i)).join('')}
+        ${М.лодка(88,Н-46,1,{внутри:`<g>${юн}</g>`,имя:''})}
+        ${сачок(172,Н-110,пойм.map(i=>БУЙКИ[i].с),s.поймал)}
+        ${подпись(270,Н-16,'в сачке: '+пойм.length+' из 4',всё?GREEN:ИНК,13)}
         ${рамка(Н)}
       `,Н)}</div>` +
       `<div class="буйки">${БУЙКИ.map((б,i)=>BTN(3+(i%5),пойм.includes(i)?'пойман':(ош===i?'мимо':''),б.с,'r861Буй('+i+')')).join('')}</div>` +
@@ -285,17 +277,32 @@
 
   /* 2. Предмет — не только вещь */
   function F2(s){
-    const Н=250, в=s.ответ2, ок=в===0;
-    const карточка=(x,y,слово,рис)=>`<g>${вырасти('8s',0.05+x/1200)}<g filter="url(#c861-тень)"><rect x="${x-46}" y="${y-44}" width="92" height="96" rx="10" fill="url(#c861-бумага)" stroke="${ОБВОД}" stroke-width="1.2"/></g>
-      ${рис}${т(x,y+40,слово,14,ЧЕРНИЛА,true)}</g>`;
+    const Н=270, в=s.ответ2, ок=в===0, М=Р();
+    const рама=(x,рис,слово,кл)=>`<g>${вырасти('8s',0.05+x/1400)}
+      <clipPath id="${кл}"><rect x="${x-48}" y="44" width="96" height="120" rx="8"/></clipPath>
+      <g filter="url(#c861-тень)"><rect x="${x-52}" y="40" width="104" height="160" rx="10" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1.4"/></g>
+      <g clip-path="url(#${кл})">${рис}</g>
+      <rect x="${x-48}" y="44" width="96" height="120" rx="8" fill="none" stroke="${ОБВОД}" stroke-width="1"/>
+      <rect x="${x-40}" y="170" width="80" height="22" rx="4" fill="url(#рм-бумага)" stroke="${ОБВОД}" stroke-width=".8"/>
+      ${т(x,186,слово,14,ЧЕРНИЛА,true)}</g>`;
+    const шторм = `<rect x="10" y="44" width="96" height="120" fill="#3a4a62"/>
+      <path d="M14 70 q8 -18 26 -14 q8 -14 26 -6 q16 -6 24 8 q10 2 8 14 H14z" fill="url(#c861-туча)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <path d="M58 86 l-8 16 h8 l-6 16 l16 -22 h-8 l6 -10z" fill="#ffe46a" stroke="${ОБВОД}" stroke-width=".7">${анЛин('opacity','1;0.2;1;1','1.4s')}</path>
+      ${Array.from({length:8},(_,k)=>`<line x1="${20+k*11}" y1="${92+(k%3)*6}" x2="${14+k*11}" y2="${108+(k%3)*6}" stroke="#a8c8e8" stroke-width="1.2">${анЛин('transform','0','1s')}</line>`).join('')}
+      <path d="M10 140 q12 -14 24 0 t24 0 t24 0 t24 0 V164 H10z" fill="#2a5a8a"/><path d="M10 140 q12 -14 24 0 t24 0 t24 0 t24 0" stroke="#e8f6ff" stroke-width="1.6" fill="none"/>`;
+    const радость = `<rect x="116" y="44" width="96" height="120" fill="#bfe4f6"/>${М.солнце(186,62,8)}
+      <rect x="116" y="146" width="96" height="18" fill="#f0dca8"/>
+      <g>${М.качать('0 0;0 -8;0 0','0.9s')}${М.юнга(160,150,0.62,{поза:'машет',шапка:true})}</g>`;
+    const дружба = `<rect x="222" y="44" width="96" height="120" fill="#d8ecd0"/>
+      <rect x="222" y="146" width="96" height="18" fill="#caa870"/>
+      ${М.капитан(250,160,0.5,{трубка:false,взгляд:1})}${М.юнга(290,160,0.56,{взгляд:-1})}
+      <path d="M270 128 q4 -6 8 0 q4 -6 8 0 q0 5 -8 10 q-8 -5 -8 -10z" fill="#e8604a" stroke="${ОБВОД}" stroke-width=".7">${анЛин('opacity','1;0.6;1','1.1s')}</path>`;
     return ЖУРНАЛ(s) +
       ЗАДАЧА('Юнга удивляется: «Шторм нельзя положить в сундук, радость — потрогать. Разве это предметы?» Капитан: «В грамматике <b>предмет</b> — всё, о чём можно спросить <b>что?</b> или <b>кто?</b>: и вещь, и зверь, и ветер, и чувство». Какое из слов — имя существительное?') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="${Н}" fill="#1e3a2c"/>
-        ${карточка(62,110,'шторм',`<g>${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;4 0;0 0" dur="0.9s" repeatCount="indefinite"/>`:''}${[0,1,2].map(k=>`<path d="M${36} ${86+k*12} q14 -8 26 0 t26 0" stroke="#2a6a9a" stroke-width="2.4" fill="none"/>`).join('')}</g>`)}
-        ${карточка(168,110,'радость',`<circle cx="168" cy="${96}" r="20" fill="#ffd76a" stroke="${ОБВОД}" stroke-width="1.2"/><circle cx="161" cy="92" r="2" fill="${ОБВОД}"/><circle cx="175" cy="92" r="2" fill="${ОБВОД}"/><path d="M159 101 q9 8 18 0" stroke="${ОБВОД}" stroke-width="1.6" fill="none"/>`)}
-        ${карточка(274,110,'дружба',`<path d="M254 104 q10 -12 20 -4 q10 -8 20 4 l-20 18 z" fill="#e86a5a" stroke="${ОБВОД}" stroke-width="1.2">${анЛин('opacity','1;0.7;1','1.2s')}</path>`)}
-        ${т(168,34,'что это? — шторм, радость, дружба',14,GOLD,true)}
+        ${М.доски(0,0,336,Н,true)}
+        ${т(168,28,'что это? — шторм, радость, дружба',14,GOLD,true,undefined,'#2a1808')}
+        ${рама(58,шторм,'шторм','c861-р1')}${рама(164,радость,'радость','c861-р2')}${рама(270,дружба,'дружба','c861-р3')}
         ${ок?подпись(168,Н-14,'смелость — что? это существительное',GREEN,13):''}
         ${рамка(Н)}
       `,Н)}</div>` +
@@ -309,22 +316,30 @@
 
   /* 3. Каюта и трюм */
   function F3(s){
-    const Н=240, реш=s.реш3||{}, все=ГРУЗ.every((_,i)=>реш[i]!=null), верно=все&&ГРУЗ.every((г,i)=>реш[i]===г.о);
+    const Н=280, реш=s.реш3||{}, все=ГРУЗ.every((_,i)=>реш[i]!=null), верно=все&&ГРУЗ.every((г,i)=>реш[i]===г.о), М=Р();
     const вКаюте=ГРУЗ.filter((г,i)=>реш[i]===0).map(г=>г.с), вТрюме=ГРУЗ.filter((г,i)=>реш[i]===1).map(г=>г.с);
+    const табличка=(x,y,w,светлая)=>`<g>${сдвигРаз('0 -24','0 0','0.45s',0)}<g filter="url(#c861-тень)"><rect x="${x-40}" y="${y-15}" width="80" height="22" rx="5" fill="${светлая?'url(#рм-бумага)':'#3a2410'}" stroke="${светлая?ОБВОД:'#c8a870'}" stroke-width="1"/></g>${т(x,y+1,w,15,светлая?ЧЕРНИЛА:'#f4e6c0',true)}</g>`;
+    const корпус='M14 70 H322 L302 238 Q168 262 34 238 Z';
     return ЖУРНАЛ(s) +
       ЗАДАЧА('Капитан велит навести порядок: всех, про кого спрашивают <b>кто?</b>, — в каюту, всё, про что спрашивают <b>что?</b>, — в трюм. Реши про каждое слово.') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="${Н}" fill="url(#c861-небо)"/>
-        <rect x="0" y="${Н-40}" width="336" height="40" fill="url(#c861-море)"/>
-        <g filter="url(#c861-тень)"><path d="M18 60 h300 l-24 150 h-252 z" fill="url(#c861-дерево)" stroke="${ОБВОД}" stroke-width="1.6"/></g>
-        <line x1="168" y1="60" x2="168" y2="208" stroke="${ОБВОД}" stroke-width="2"/>
-        <rect x="30" y="72" width="130" height="126" rx="6" fill="#f0e2c0" stroke="${ОБВОД}"/>
-        <rect x="176" y="72" width="130" height="126" rx="6" fill="url(#c861-трюм)" stroke="${ОБВОД}"/>
-        ${т(95,94,'каюта · кто?',14,'#7a2a10',true)}${т(241,94,'трюм · что?',14,GOLD,true)}
-        ${вКаюте.map((w,k)=>`<g>${сдвигРаз('0 -20','0 0','0.4s',0)}${т(95,120+k*24,w,16,ЧЕРНИЛА,true)}</g>`).join('')}
-        ${вТрюме.map((w,k)=>`<g>${сдвигРаз('0 -20','0 0','0.4s',0)}${т(241,120+k*24,w,16,'#f4e6c0',true)}</g>`).join('')}
-        <line x1="168" y1="60" x2="168" y2="18" stroke="${ОБВОД}" stroke-width="3"/>
-        <path d="M168 20 l40 16 l-40 12 z" fill="#e86a5a" stroke="${ОБВОД}">${анЛин('opacity','1;0.8;1','2s')}</path>
+        ${М.небо(336,90,{облака:[[60,26,0.6,8],[260,40,0.5,-6]]})}
+        ${М.море(90,Н-90,336,{})}
+        <line x1="168" y1="70" x2="168" y2="10" stroke="url(#рм-мачта)" stroke-width="6"/>
+        <path d="M170 12 q14 -4 28 0 q14 4 28 0 v14 q-14 4 -28 0 q-14 -4 -28 0z" fill="#e05a3a" stroke="${ОБВОД}" stroke-width=".9"/>
+        <line x1="168" y1="14" x2="24" y2="70" stroke="#6a5a44" stroke-width=".9"/><line x1="168" y1="14" x2="312" y2="70" stroke="#6a5a44" stroke-width=".9"/>
+        <g filter="url(#c861-тень)"><path d="${корпус}" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1.8"/></g>
+        <path d="M14 70 H322" stroke="#e8b878" stroke-width="4"/><path d="M14 70 H322" stroke="${ОБВОД}" stroke-width="1"/>
+        <rect x="32" y="84" width="128" height="140" rx="6" fill="#f3e4c2" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <rect x="176" y="84" width="128" height="140" rx="6" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width="1.2"/>
+        ${М.доски(176,84,128,140,true)}
+        <line x1="168" y1="72" x2="168" y2="244" stroke="${ОБВОД}" stroke-width="3"/>
+        <circle cx="140" cy="206" r="10" fill="#bfe4f6" stroke="url(#рм-латунь)" stroke-width="3"/><circle cx="137" cy="203" r="3" fill="#fff" opacity=".7"/>
+        <g transform="translate(48 206)"><line x1="0" y1="-12" x2="0" y2="-4" stroke="${ОБВОД}"/><rect x="-5" y="-4" width="10" height="14" rx="2" fill="#ffe7a0" stroke="${ОБВОД}" stroke-width=".8"/><circle cx="0" cy="3" r="9" fill="url(#рм-огонь)" opacity=".7">${анЛин('opacity','0.7;0.4;0.7','1.8s')}</circle></g>
+        ${М.бочка(290,222,0.55)}${М.бухта(196,222,0.7)}
+        ${т(96,100,'каюта · кто?',14,'#7a2a10',true)}${т(240,100,'трюм · что?',14,GOLD,true,undefined,'#2a1808')}
+        ${вКаюте.map((w,k)=>табличка(96,132+k*30,w,true)).join('')}
+        ${вТрюме.map((w,k)=>табличка(240,132+k*30,w,false)).join('')}
         ${рамка(Н)}
       `,Н)}</div>` +
       ГРУЗ.map((г,i)=>`<div class="случай">${A(3+i,'что',г.с)}<div class="ask пара">${['кто? — в каюту','что? — в трюм'].map((v,j)=>
@@ -337,20 +352,26 @@
 
   /* 4. Звезда и морская звезда */
   function F4(s){
-    const Н=250, в=s.ответ4, ок=в===0;
-    const звезда=(cx,cy,r,цв)=>`<path d="${Array.from({length:10},(_,k)=>{ const a=-Math.PI/2+k*Math.PI/5, rr=k%2?r*0.45:r; return (k?'L':'M')+(cx+rr*Math.cos(a)).toFixed(1)+' '+(cy+rr*Math.sin(a)).toFixed(1); }).join(' ')}z" fill="${цв}" stroke="${ОБВОД}" stroke-width="1.2"/>`;
+    const Н=290, в=s.ответ4, ок=в===0, М=Р();
+    const лучи=(cx,cy)=>`<g>${анЛин('opacity','1;0.35;1','1.6s')}${[0,1,2,3,4,5,6,7].map(k=>{ const a=k*Math.PI/4+Math.PI/8, r1=24, r2=k%2?32:38;
+      return `<line x1="${(cx+r1*Math.cos(a)).toFixed(1)}" y1="${(cy+r1*Math.sin(a)).toFixed(1)}" x2="${(cx+r2*Math.cos(a)).toFixed(1)}" y2="${(cy+r2*Math.sin(a)).toFixed(1)}" stroke="#fff4b0" stroke-width="1.8" stroke-linecap="round" data-декор="1"/>`; }).join('')}</g>`;
+    const водоросль=(x,в2,цв)=>`<path d="M${x} ${Н-20} q-8 -${в2*0.3} 0 -${в2*0.55} q8 -${в2*0.25} 0 -${в2*0.45}" stroke="${цв}" stroke-width="4" fill="none" stroke-linecap="round">${ДВИЖ?`<animateTransform attributeName="transform" type="rotate" values="-4 ${x} ${Н-20};4 ${x} ${Н-20};-4 ${x} ${Н-20}" dur="${(3+x%3).toFixed(0)}s" repeatCount="indefinite"/>`:''}</path>`;
     return ЖУРНАЛ(s) +
       ЗАДАЧА('Ночью юнга записал в журнал: «Над мачтой зажглась <b>звезда</b>». А утром нырнул и увидел на дне <b>морскую звезду</b> — она медленно ползла по камню. Про звезду на небе спрашивают «что?». А про морскую?') +
       `<div class="pic">${свг(`
-        <g><rect x="0" y="0" width="336" height="110" fill="#14203a"/></g>
-        ${звезда(84,52,22,'#ffe488')}<g>${анЛин('opacity','1;0.3;1','1.6s')}${[0,1,2,3].map(k=>{ const a=k*Math.PI/4+Math.PI/8; return `<line x1="${(84+28*Math.cos(a)).toFixed(1)}" y1="${(52+28*Math.sin(a)).toFixed(1)}" x2="${(84+36*Math.cos(a)).toFixed(1)}" y2="${(52+36*Math.sin(a)).toFixed(1)}" stroke="#ffe488" stroke-width="2" stroke-linecap="round" data-декор="1"/><line x1="${(84-28*Math.cos(a)).toFixed(1)}" y1="${(52-28*Math.sin(a)).toFixed(1)}" x2="${(84-36*Math.cos(a)).toFixed(1)}" y2="${(52-36*Math.sin(a)).toFixed(1)}" stroke="#ffe488" stroke-width="2" stroke-linecap="round" data-декор="1"/>`; }).join('')}</g>
-        ${т(84,98,'на небе: что?',14,'#dfe8ff',true)}
-        <rect x="0" y="110" width="336" height="${Н-110}" fill="url(#c861-море)"/>
-        <path d="M150 ${Н-22} q60 -30 170 -14 V${Н} H150z" fill="#6a5a44"/>
-        <g transform="translate(252 ${Н-44})">${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="240 ${Н-44};262 ${Н-46};240 ${Н-44}" dur="6s" repeatCount="indefinite"/>`:''}
-          ${звезда(0,0,22,'#f08a5a')}<circle cx="-4" cy="-4" r="2" fill="${ОБВОД}"/><circle cx="4" cy="-4" r="2" fill="${ОБВОД}"/></g>
-        ${т(250,140,'на дне: ?',14,'#dfe8ff',true)}
-        ${ок?подпись(250,178,'живая — кто?',GREEN,13):''}
+        ${М.небо(336,116,{ночь:true,луна:[296,30]})}
+        ${лучи(84,52)}${М.морзвезда(84,52,20,{цвет:'#ffe488'})}
+        ${т(84,104,'на небе: что?',14,'#dfe8ff',true,undefined,'#0a1428')}
+        <g><rect x="0" y="116" width="336" height="${Н-116}" fill="url(#рм-море)"/></g>
+        <path d="M0 116 h336" stroke="#bfe4ff" stroke-width="1.6" opacity=".6"/>
+        ${[0,1,2,3,4].map(k=>`<path d="M${k*80-20} ${150+k*6} q40 30 80 0" stroke="#bfe4ff" stroke-width="10" fill="none" opacity=".05" data-декор="1"/>`).join('')}
+        <path d="M0 ${Н-20} q60 -26 130 -18 q70 8 110 -14 q50 -18 96 -4 V${Н} H0z" fill="url(#c861-дно)" data-декор="1"/>
+        <path d="M150 ${Н-18} q30 -34 80 -38 q50 4 70 34z" fill="url(#рм-скала)" stroke="${ОБВОД}" stroke-width="1" data-декор="1"/>
+        ${водоросль(40,70,'#3f8a4a')}${водоросль(58,50,'#5aa85a')}${водоросль(316,64,'#3f8a4a')}
+        ${[0,1,2].map(k=>`<circle cx="${200+k*14}" cy="${Н-90}" r="${2+k}" fill="none" stroke="#e8f6ff" stroke-width="1" opacity=".7">${анЛин('cy',`${Н-60};${Н-150}`,(2.4+k*0.6).toFixed(1)+'s')}${анЛин('opacity','0.8;0','2.6s')}</circle>`).join('')}
+        <g transform="translate(0 0)">${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;16 -2;0 0" dur="7s" repeatCount="indefinite"/>`:''}${М.морзвезда(234,Н-60,22,{лицо:true})}</g>
+        ${т(250,144,'на дне: ?',14,'#dfe8ff',true,undefined,'#0f3f6c')}
+        ${ок?подпись(250,186,'живая — кто?',GREEN,13):''}
         ${рамка(Н)}
       `,Н)}</div>` +
       ОТВЕТЫ('пара',['кто?','что?'],0,в,4) +
@@ -362,19 +383,20 @@
 
   /* 5. Большие буквы */
   function F5(s){
-    const Н=200, выбор=Array.isArray(s.загл5)?s.загл5:[], пров=s.пров5;
+    const Н=230, выбор=Array.isArray(s.загл5)?s.загл5:[], пров=s.пров5, М=Р();
     const верно = пров && выбор.slice().sort((a,b)=>a-b).join(',')===ЗАГЛАВНЫЕ.join(',');
     const слова = СТРОКА.map((w,i)=>выбор.includes(i)?сБольшой(w):w);
-    let x=24, y=90; const куски=[];
-    слова.forEach((w,i)=>{ const ш=w.length*12.5+16; if(x+ш>318){ x=24; y+=38; }
+    let x=30, y=94; const куски=[];
+    слова.forEach((w,i)=>{ const ш=w.length*12.5+16; if(x+ш>300){ x=30; y+=40; }
       куски.push(`<g>${выбор.includes(i)?`<rect x="${x-2}" y="${y-22}" width="${ш}" height="30" rx="5" fill="rgba(42,106,154,.18)"/>`:''}${т(x+4,y,w,19,выбор.includes(i)?'#1a4a8a':ЧЕРНИЛА,выбор.includes(i),'start')}</g>`); x+=ш+4; });
     return ЖУРНАЛ(s) +
       ЗАДАЧА('Юнга переписывает строку журнала, но от волнения забыл про <b>большие буквы</b>. Имена людей, названия кораблей и городов пишут с заглавной. Коснись слов, которые надо написать с большой буквы, и нажми «Проверить».') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="${Н}" fill="#3a2410"/>
-        <g filter="url(#c861-тень)"><rect x="12" y="30" width="312" height="${Н-48}" rx="4" fill="url(#c861-бумага)"/></g>
-        ${[0,1,2].map(k=>`<line x1="20" y1="${98+k*38}" x2="316" y2="${98+k*38}" stroke="#c8b08a" stroke-width="1" data-декор="1"/>`).join('')}
-        ${т(24,56,'Журнал. День третий.',14,'#7a4a24',true,'start')}
+        ${М.доски(0,0,336,Н,true)}
+        ${М.лист(14,26,308,Н-44,{линии:3})}
+        ${т(30,54,'Журнал. День третий.',14,'#7a4a24',true,'start')}
+        <g transform="translate(290 46)"><path d="M-8 6 q8 -6 16 0 v10 q-8 4 -16 0z" fill="#2a3a52" stroke="${ОБВОД}" stroke-width=".8"/><ellipse cx="0" cy="6" rx="8" ry="2.4" fill="#0e1a2a"/>
+          <path d="M2 4 q10 -22 20 -30 q-2 12 -16 30" fill="#f4ecd8" stroke="${ОБВОД}" stroke-width=".7"/></g>
         ${куски.join('')}
         ${рамка(Н)}
       `,Н)}</div>` +
@@ -389,19 +411,19 @@
 
   /* 6. Род */
   function F6(s){
-    const Н=240, в=s.ответ6, ок=в===2;
-    const сундук=(x,подп,слово,свет)=>`<g filter="url(#c861-тень)"><rect x="${x-46}" y="110" width="92" height="70" rx="6" fill="url(#c861-дерево)" stroke="${свет?GREEN:ОБВОД}" stroke-width="${свет?3:1.4}"/>
-      <path d="M${x-48} 110 q48 -26 96 0 z" fill="#8a5a2a" stroke="${ОБВОД}" stroke-width="1.2"/></g>
-      ${т(x,146,подп,14,'#fff0d8',true)}${т(x,168,слово,14,GOLD,true)}`;
+    const Н=270, в=s.ответ6, ок=в===2, М=Р();
+    const сундук=(x,подп,слово,свет,знак)=>`${М.сундук(x,212,90,62,{надпись:true})}
+      ${свет?`<rect x="${x-49}" y="146" width="98" height="70" rx="6" fill="none" stroke="${GREEN}" stroke-width="3"/>`:''}
+      ${т(x,180,подп,13,ЧЕРНИЛА,true)}${т(x,198,слово,14,'#7a2a10',true)}${знак||''}`;
     return ЖУРНАЛ(s) +
       ЗАДАЧА('В трюме три сундука с надписями. Капитан объясняет: подставь к слову «<b>он, мой</b>», «<b>она, моя</b>» или «<b>оно, моё</b>» — и узнаешь, в какой сундук класть. Якорь — он мой, мачта — она моя. А куда положить <b>весло</b>?') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="${Н}" fill="url(#c861-трюм)"/>
+        ${М.доски(0,0,336,Н,true)}
+        <rect x="0" y="212" width="336" height="${Н-212}" fill="#2a1808" opacity=".6"/>
         ${сундук(62,'он, мой','якорь',false)}${сундук(168,'она, моя','мачта',false)}${сундук(274,'оно, моё',ок?'весло':'?',ок)}
-        <g transform="translate(168 60)">${ок?сдвигРаз('0 0','106 60','0.8s',0.2)+(ДВИЖ?ЗАВОД:''):качка('1.6s',-4)}
-          <g filter="url(#c861-тень)"><rect x="-44" y="-5" width="70" height="10" rx="5" fill="#c89458" stroke="${ОБВОД}"/><path d="M26 -9 q20 9 0 18 z" fill="#c89458" stroke="${ОБВОД}"/></g>
-          ${т(-8,-12,'весло',14,ИНК,true)}</g>
-        ${т(62,208,'мужской род',12,МУТ,true)}${т(168,208,'женский род',12,МУТ,true)}${т(274,208,'средний род',12,МУТ,true)}
+        ${т(62,244,'мужской род',12,МУТ,true)}${т(168,244,'женский род',12,МУТ,true)}${т(274,244,'средний род',12,МУТ,true)}
+        <g>${ок?сдвигРаз('0 0','14 40','0.8s',0.2)+(ДВИЖ?ЗАВОД:''):М.качать('0 0;0 -5;0 0','1.6s')}${М.весло(262,90,0.9,-14)}</g>
+        ${т(262,64,'весло',14,ИНК,true,undefined,'#2a1808')}
         ${рамка(Н)}
       `,Н)}</div>` +
       ОТВЕТЫ('три',['он, мой','она, моя','оно, моё'],2,в,6) +
@@ -414,16 +436,21 @@
 
   /* 7. Число */
   function F7(s){
-    const Н=230, в=s.ответ7, ок=в===0;
+    const Н=270, в=s.ответ7, ок=в===0, М=Р();
     return ЖУРНАЛ(s) +
       ЗАДАЧА('Капитан показывает: существительное меняется по <b>числам</b>. Один <b>парус</b> — много <b>парусов</b>, одна <b>чайка</b> — много <b>чаек</b>. Но есть хитрые слова, у которых нет «одного». Какое из них?') +
       `<div class="pic">${свг(`
-        ${море(Н,120)}
-        ${[0].map(()=>`<g transform="translate(70 150)" filter="url(#c861-тень)">${качка('2.4s',3)}<path d="M-30 0 h60 l-8 14 h-44 z" fill="url(#c861-дерево)" stroke="${ОБВОД}"/><line x1="0" y1="0" x2="0" y2="-46" stroke="${ОБВОД}" stroke-width="2"/><path d="M2 -44 q24 20 2 40 z" fill="#f4ead2" stroke="${ОБВОД}"/></g>`).join('')}
-        ${т(70,190,'один парус',14,ИНК,true)}
-        ${[0,1,2].map(k=>`<g transform="translate(${198+k*44} ${146+(k%2)*8})" filter="url(#c861-тень)">${качка((2+k*0.3).toFixed(1)+'s',3)}<path d="M-18 0 h36 l-5 9 h-26 z" fill="url(#c861-дерево)" stroke="${ОБВОД}"/><line x1="0" y1="0" x2="0" y2="-30" stroke="${ОБВОД}" stroke-width="1.6"/><path d="M1 -29 q16 13 1 26 z" fill="#f4ead2" stroke="${ОБВОД}"/></g>`).join('')}
-        ${т(242,190,'много парусов',14,ИНК,true)}
-        ${ок?`<g transform="translate(168 70)" filter="url(#c861-тень)"><circle cx="-10" cy="12" r="7" fill="none" stroke="${ОБВОД}" stroke-width="2.4"/><circle cx="10" cy="12" r="7" fill="none" stroke="${ОБВОД}" stroke-width="2.4"/><path d="M-6 6 L14 -22 M6 6 L-14 -22" stroke="#8a96a8" stroke-width="3" stroke-linecap="round"/></g>${т(168,102,'ножницы: и одни, и много',12,'#1a3a5a',true)}`:''}
+        ${М.небо(336,120,{солнце:[40,34,10],облака:[[150,30,0.55,8]]})}
+        ${М.берег(120,{x0:200,x1:336})}
+        ${М.море(120,Н-120,336,{дорожка:40})}
+        ${М.парусник(78,Н-66,0.55,{имя:''})}
+        ${[0,1,2].map(k=>М.парусник(206+k*46,Н-70+(k%2)*10,0.3,{якорь:false})).join('')}
+        ${подпись(78,Н-10,'один парус',ИНК,13)}${подпись(252,Н-10,'много парусов',ИНК,13)}
+        ${ок?`<g transform="translate(168 64)" filter="url(#c861-тень)">
+          <rect x="-58" y="-26" width="116" height="62" rx="8" fill="url(#рм-бумага)" stroke="${ОБВОД}" stroke-width="1"/>
+          <g transform="translate(0 -4) rotate(-12)"><path d="M-4 0 L-30 -14 l3 -3 L2 -3z" fill="url(#c861-сталь)" stroke="${ОБВОД}" stroke-width=".7"/><path d="M-4 0 L-30 14 l3 3 L2 3z" fill="url(#c861-сталь)" stroke="${ОБВОД}" stroke-width=".7"/>
+            <circle cx="6" cy="-6" r="6" fill="none" stroke="#c8402a" stroke-width="3"/><circle cx="6" cy="6" r="6" fill="none" stroke="#c8402a" stroke-width="3"/><circle cx="-2" cy="0" r="1.6" fill="${ОБВОД}"/></g>
+          ${т(0,28,'ножницы',13,'#1a3a5a',true)}</g>`:''}
         ${рамка(Н)}
       `,Н)}</div>` +
       ОТВЕТЫ('три',['ножницы','нож','ножик'],0,в,7) +
@@ -436,19 +463,23 @@
 
   /* 8. Мягкий знак после шипящих */
   function F8(s){
-    const Н=240, в=s.ответ8, ок=в===0;
-    const рыба=(x,y)=>`<g transform="translate(${x} ${y})" filter="url(#c861-тень)"><path d="M-26 0 q20 -16 40 0 q-20 16 -40 0 z" fill="#8aa0b0" stroke="${ОБВОД}"/><path d="M14 0 l12 -10 v20 z" fill="#8aa0b0" stroke="${ОБВОД}"/>
-      ${[-16,-8,0].map(d=>`<path d="M${d} -8 l3 -8 l3 8" stroke="${ОБВОД}" stroke-width="1" fill="none"/>`).join('')}<circle cx="-18" cy="-2" r="2" fill="${ОБВОД}"/></g>`;
+    const Н=270, в=s.ответ8, ок=в===0, М=Р();
+    const водоросль=(x,в2,цв)=>`<path d="M${x} ${Н} q-8 -${в2*0.3} 0 -${в2*0.55} q8 -${в2*0.25} 0 -${в2*0.45}" stroke="${цв}" stroke-width="4" fill="none" stroke-linecap="round">${ДВИЖ?`<animateTransform attributeName="transform" type="rotate" values="-5 ${x} ${Н};5 ${x} ${Н};-5 ${x} ${Н}" dur="${(3+x%3).toFixed(0)}s" repeatCount="indefinite"/>`:''}</path>`;
     return ЖУРНАЛ(s) +
       ЗАДАЧА('В сеть попалась колючая рыбка — <b>ёрш</b>. Юнга записал: «ёршь» — с мягким знаком, как «ночь» и «мышь». Капитан нахмурился. Как правильно?') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="${Н}" fill="url(#c861-море)"/>
-        <g>${качка('2.2s',4)}${рыба(84,80)}</g>
-        ${т(84,120,ок?'ёрш — он мой':'ёрш_ ?',16,ИНК,true)}
-        <g filter="url(#c861-тень)"><rect x="170" y="36" width="150" height="120" rx="8" fill="url(#c861-бумага)"/></g>
-        ${т(245,62,'она, моя: с ь',13,'#1a6a3a',true)}${т(245,84,'ночь, мышь, рожь',14,ЧЕРНИЛА,true)}
-        ${т(245,116,'он, мой: без ь',13,'#7a2a10',true)}${т(245,138,'нож, плащ, '+(ок?'ёрш':'?'),14,ЧЕРНИЛА,true)}
-        ${ок?подпись(168,Н-16,'ёрш — мужской род, без ь',GREEN,13):''}
+        <g><rect x="0" y="0" width="336" height="${Н}" fill="url(#рм-море)"/></g>
+        ${[0,1,2,3].map(k=>`<path d="M${k*90-30} 0 l40 ${Н}" stroke="#e8f6ff" stroke-width="18" opacity=".05" data-декор="1"/>`).join('')}
+        <path d="M0 ${Н-16} q80 -20 160 -6 q90 14 176 -8 V${Н} H0z" fill="url(#c861-дно)" data-декор="1"/>
+        ${водоросль(24,80,'#3f8a4a')}${водоросль(40,56,'#5aa85a')}${водоросль(150,50,'#3f8a4a')}
+        <g>${М.качать('0 0;-10 -4;0 0','3.4s')}${М.ёрш(80,96,1.35)}</g>
+        ${[0,1,2].map(k=>`<circle cx="${40+k*6}" cy="84" r="${1.6+k*0.8}" fill="none" stroke="#e8f6ff" stroke-width="1" opacity=".8">${анЛин('cy','84;20',(2+k*0.5).toFixed(1)+'s')}${анЛин('opacity','0.8;0','2.4s')}</circle>`).join('')}
+        ${т(84,150,ок?'ёрш — он мой':'ёрш_ ?',16,ИНК,true,undefined,'#0f3f6c')}
+        ${М.лист(172,34,150,136,{})}
+        ${т(247,64,'она, моя: с ь',13,'#1a6a3a',true)}${т(247,86,'ночь, мышь, рожь',14,ЧЕРНИЛА,true)}
+        <line x1="186" y1="100" x2="308" y2="100" stroke="#c8b08a" stroke-width="1"/>
+        ${т(247,122,'он, мой: без ь',13,'#7a2a10',true)}${т(247,144,'нож, плащ, '+(ок?'ёрш':'?'),14,ЧЕРНИЛА,true)}
+        ${ок?подпись(168,Н-18,'ёрш — мужской род, без ь',GREEN,13):''}
         ${рамка(Н)}
       `,Н)}</div>` +
       ОТВЕТЫ('пара',['ёрш','ёршь'],0,в,8) +
@@ -460,16 +491,20 @@
 
   /* 9. Сколько существительных в строке */
   function F9(s){
-    const Н=200, в=s.ответ9, ок=в===0;
+    const Н=250, в=s.ответ9, ок=в===0, М=Р();
     const слова=['Утром','чайка','села','на','мачту.'], сущ=[1,4];
-    let x=20; const куски=слова.map((w,i)=>{ const ш=w.length*11+8, g=`<g>${ок&&сущ.includes(i)?`<rect x="${x-4}" y="78" width="${ш}" height="34" rx="6" fill="rgba(143,209,168,.35)" stroke="${GREEN}"/>`:''}${ок&&i===0?`<rect x="${x-4}" y="78" width="${ш}" height="34" rx="6" fill="none" stroke="${RED}" stroke-dasharray="4 3"/>`:''}${т(x,104,w,20,ЧЕРНИЛА,false,'start')}</g>`; x+=ш+3; return g; });
+    let x=22; const куски=слова.map((w,i)=>{ const ш=w.length*11+8, g=`<g>${ок&&сущ.includes(i)?`<rect x="${x-4}" y="146" width="${ш}" height="34" rx="6" fill="rgba(143,209,168,.35)" stroke="${GREEN}"/>`:''}${ок&&i===0?`<rect x="${x-4}" y="146" width="${ш}" height="34" rx="6" fill="none" stroke="${RED}" stroke-dasharray="4 3"/>`:''}${т(x,172,w,20,ЧЕРНИЛА,false,'start')}</g>`; x+=ш+3; return {g,x0:x-ш-3,ш}; });
     return ЖУРНАЛ(s) +
       ЗАДАЧА('Последняя проверка. Капитан диктует: «<b>Утром чайка села на мачту.</b>» Сколько в этой строке имён существительных? Осторожно: не каждое слово, похожее на предмет, — существительное.') +
       `<div class="pic">${свг(`
-        <rect x="0" y="0" width="336" height="${Н}" fill="#3a2410"/>
-        <g filter="url(#c861-тень)"><rect x="12" y="40" width="312" height="${Н-70}" rx="4" fill="url(#c861-бумага)"/></g>
-        ${куски.join('')}
-        ${ок?т(26,140,'когда?',13,RED,true,'start')+т(84,140,'кто?',13,'#1a6a3a',true,'start')+т(236,140,'что?',13,'#1a6a3a',true,'start'):''}
+        ${М.небо(336,110,{солнце:[40,70,12],облака:[[220,30,0.5,6]]})}
+        <g><rect x="0" y="96" width="336" height="${Н-96}" fill="#3a2410"/></g>
+        <rect x="236" y="4" width="7" height="100" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".8"/>
+        <rect x="222" y="30" width="36" height="5" rx="2" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".6"/>
+        ${М.чайка(248,22,1,{летит:false})}
+        ${М.лист(12,116,312,Н-128,{})}
+        ${куски.map(к=>к.g).join('')}
+        ${ок?т(24,206,'когда?',13,RED,true,'start')+т(82,206,'кто?',13,'#1a6a3a',true,'start')+т(236,206,'что?',13,'#1a6a3a',true,'start'):''}
         ${рамка(Н)}
       `,Н)}</div>` +
       ОТВЕТЫ('три',['2','3','5'],0,в,9) +
@@ -482,19 +517,19 @@
 
   /* 10. Журнал восстановлен */
   function F10(s){
-    const всё = ДЕЛА.every(д=>сделано(s,д.ключ)), Н=260;
+    const всё = ДЕЛА.every(д=>сделано(s,д.ключ)), Н=300, М=Р();
     return ЖУРНАЛ(s) +
       ЗАДАЧА(всё
         ? 'Страница журнала снова целая. Капитан читает вслух и кивает: «Молодец, юнга. Все имена на месте, большие буквы тоже. Завтра поплывём дальше вдоль берега — к мысу, где живут слова-действия».'
         : 'Страница ещё не восстановлена — вернись к делам в журнале. Вот что получится в конце.') +
       `<div class="pic">${свг(`
-        ${море(Н,100)}
-        <g transform="translate(168 124)" filter="url(#c861-тень)">${качка('2.6s',3)}
-          <path d="M-70 0 h140 l-16 26 h-108 z" fill="url(#c861-дерево)" stroke="${ОБВОД}" stroke-width="1.6"/>
-          <line x1="0" y1="0" x2="0" y2="-86" stroke="${ОБВОД}" stroke-width="3"/>
-          <path d="M3 -84 q46 36 3 76 z" fill="#f4ead2" stroke="${ОБВОД}"/><path d="M-3 -78 q-38 30 -3 66 z" fill="#ede0c4" stroke="${ОБВОД}"/>
-          ${т(0,16,'«Чайка»',14,'#fff0d8',true)}</g>
-        ${[['кто? что? — существительное',GOLD],['он мой · она моя · оно моё',BLUE],['Лёва, «Чайка» — с большой',GREEN]].map(([t0,ц],i)=>`<g>${проявить('9s',0.1+i*0.18,0.16+i*0.18)}${подпись(168,Н-72+i*28,t0,ц,13)}</g>`).join('')}
+        ${М.небо(336,120,{закат:true,солнце:[268,96,16],облака:[[70,34,0.6,10]]})}
+        ${М.утёс(40,120,0.8)}
+        ${М.море(120,Н-120,336,{дорожка:268})}
+        ${М.маяк(310,122,0.36,true)}
+        ${М.чайка(200,40,0.8,{дрейф:'-16 -4'})}
+        ${М.парусник(150,176,0.95,{имя:'Чайка'})}
+        ${[['кто? что? — существительное',GOLD],['он мой · она моя · оно моё',BLUE],['Лёва, «Чайка» — с большой',GREEN]].map(([t0,ц],i)=>`<g>${проявить('9s',0.1+i*0.18,0.16+i*0.18)}${подпись(168,Н-70+i*28,t0,ц,13)}</g>`).join('')}
         ${рамка(Н)}
       `,Н)}</div>` +
       СКАЗ('Итог','<b>Имя существительное</b> обозначает предмет и отвечает на вопросы <b>кто?</b> или <b>что?</b> Предмет — это и вещь, и животное, и явление, и чувство. Кто? — одушевлённые, что? — неодушевлённые. Имена собственные пишутся с большой буквы. У существительных есть род (он мой, она моя, оно моё) и число; после шипящих ь пишут только у женского рода.') +
@@ -605,6 +640,7 @@
   };
 
   function render(el){
+    if(!window.РМ){ el.innerHTML=''; return; }
     css();
     const s = S();
     const step = Math.max(0, Math.min(L861.explain.length-1, (typeof LV!=='undefined'&&LV.step)||0));
