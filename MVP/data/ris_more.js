@@ -754,7 +754,7 @@
   /* ---------- боцман: плотный, чёрная борода, красная бандана, жилет поверх тельняшки,
      закатанные рукава, серьга, боцманская дудка. поза: 'свисток' | 'указывает' | 'стоит' ---------- */
   function боцман(x,y,м,опц){
-    const о=опц||{}, кл=ид('боцм'), поза=о.поза||'стоит';
+    const о=опц||{}, кл=ид('боцм'), поза=о.поза||'стоит', кок=!!о.кок;
     const тело='M-22 -78 Q0 -86 22 -78 Q29 -58 25 -38 Q0 -32 -25 -38 Q-29 -58 -22 -78 Z';
     const полосы=Array.from({length:9},(_,k)=>`<rect x="-30" y="${-82+k*5}" width="60" height="2.4" fill="#2a4f8a"/>`).join('');
     const рука=(d,кисть)=>`<path d="${d}" stroke="#f4f0e6" stroke-width="10" stroke-linecap="round" fill="none"/>
@@ -776,7 +776,7 @@
       <clipPath id="${кл}"><path d="${тело}"/></clipPath>
       <path d="${тело}" fill="#f6f2e8"/>
       <g clip-path="url(#${кл})">${полосы}
-        <path d="M-30 -86 L-9 -80 L-11 -30 L-30 -30 Z M30 -86 L9 -80 L11 -30 L30 -30 Z" fill="#23324e"/>
+        ${кок?'':'<path d="M-30 -86 L-9 -80 L-11 -30 L-30 -30 Z M30 -86 L9 -80 L11 -30 L30 -30 Z" fill="#23324e"/>'}
         <rect x="-30" y="-86" width="60" height="56" fill="url(#рм-складка)"/></g>
       <path d="${тело}" fill="none" stroke="${ОБВОД}" stroke-width="1.4"/>
       <path d="M-9 -80 L-11 -38 M9 -80 L11 -38" stroke="${ОБВОД}" stroke-width=".9"/>
@@ -784,6 +784,7 @@
       <path d="M-26 -41 Q0 -36 26 -41" stroke="#4a2c12" stroke-width="5" fill="none"/><rect x="-5" y="-44" width="10" height="7" rx="1.5" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".6"/>
       <path d="M-4 -80 q4 16 10 20" stroke="#c8ccd4" stroke-width="1" fill="none" stroke-dasharray="1.6 1.2"/>
       ${поза==='свисток'?'':`<g transform="translate(6 -60) rotate(20)"><rect x="-1" y="-2" width="11" height="4" rx="2" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".6"/><circle cx="11" cy="0" r="3" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".6"/></g>`}
+      ${кок?`<path d="M-17 -70 H17 L21 -20 Q0 -14 -21 -20 Z" fill="#fbfbf6" stroke="${ОБВОД}" stroke-width="1"/><path d="M-17 -70 Q0 -80 17 -70" stroke="${ОБВОД}" stroke-width=".8" fill="none"/><path d="M-10 -40 h20 v10 h-20z" fill="none" stroke="#c8c0b0" stroke-width=".8"/><path d="M-21 -44 q-6 4 -4 10 M21 -44 q6 4 4 10" stroke="#fbfbf6" stroke-width="2" fill="none"/>`:''}
       ${поза==='свисток'?'':прав}
       <rect x="-4.5" y="-86" width="9" height="7" fill="url(#рм-кожа)"/>
       <g transform="translate(0 -100)">
@@ -795,9 +796,9 @@
         <path d="M-9 14 q4 4 3 9 M0 16 v9 M9 14 q-4 4 -3 9" stroke="#4a3426" stroke-width="1.1" fill="none"/>
         ${лицо({рот:о.рот||'улыбка',мигать:4.4,взгляд:о.взгляд})}
         <path d="M-9 6.5 q9 -4 18 0" stroke="#2a1c14" stroke-width="3.4" fill="none" stroke-linecap="round"/>
-        <path d="M-17 -5 Q-16 -20 0 -20 Q16 -20 17 -5 Q0 -10 -17 -5 Z" fill="#c8322a" stroke="${ОБВОД}" stroke-width="1"/>
-        ${[-10,-2,6,13].map(xx=>`<circle cx="${xx}" cy="-12" r="1.3" fill="#fff" opacity=".85"/>`).join('')}
-        <g>${крутить('0 16 -8;6 16 -8;0 16 -8','1.7s')}<path d="M16 -8 q8 2 12 10 q-6 -2 -9 1z M16 -8 q10 -2 14 4 q-6 0 -9 3z" fill="#b02a22" stroke="${ОБВОД}" stroke-width=".7"/></g>
+        ${кок?`<rect x="-15" y="-16" width="30" height="10" rx="2" fill="#fbfbf6" stroke="${ОБВОД}" stroke-width=".9"/><path d="M-16 -15 Q-22 -30 -8 -32 Q-4 -44 6 -38 Q20 -40 18 -26 Q22 -20 15 -15 Z" fill="#fbfbf6" stroke="${ОБВОД}" stroke-width=".9"/><path d="M-6 -30 q4 -4 8 0 M4 -34 q4 -2 6 2" stroke="#d8d8d0" stroke-width="1" fill="none"/>`:`<path d="M-17 -5 Q-16 -20 0 -20 Q16 -20 17 -5 Q0 -10 -17 -5 Z" fill="#c8322a" stroke="${ОБВОД}" stroke-width="1"/>`}
+        ${кок?'':[-10,-2,6,13].map(xx=>`<circle cx="${xx}" cy="-12" r="1.3" fill="#fff" opacity=".85"/>`).join('')}
+        ${кок?'':`<g>${крутить('0 16 -8;6 16 -8;0 16 -8','1.7s')}<path d="M16 -8 q8 2 12 10 q-6 -2 -9 1z M16 -8 q10 -2 14 4 q-6 0 -9 3z" fill="#b02a22" stroke="${ОБВОД}" stroke-width=".7"/></g>`}
       </g>
       ${поза==='свисток'?прав:''}
     </g>`;
@@ -1286,8 +1287,8 @@
   /* ---------- Архимед: хитон и гиматий с синим меандром, седая борода, лысина, сандалии.
      поза: 'стоит' (циркуль в руке) | 'указывает' | 'читает' (свиток у груди); высота ~120 ---------- */
   function архимед(x,y,м,опц){
-    const о=опц||{}, поза=о.поза||'стоит', кл=ид('хитон'), царь=!!о.царь, поэт=!!о.поэт;
-    const гим=царь?'#7a2a6a':поэт?'#3a7a6a':'#e4d8bc', кайма=царь||поэт?'#e0b030':'#2a4f8a', бор=царь?'#b8b0a4':поэт?'#7a5a3a':'#f0ece4', борТ=царь?'#8a8274':поэт?'#4a3020':'#a8a090', вол=поэт?'#7a5a3a':'#f0ece4';
+    const о=опц||{}, поза=о.поза||'стоит', кл=ид('хитон'), царь=!!о.царь, поэт=!!о.поэт, старец=!!о.старец;
+    const гим=царь?'#7a2a6a':поэт?'#3a7a6a':старец?'#f4f0e6':'#e4d8bc', кайма=царь||поэт?'#e0b030':старец?'#b8321e':'#2a4f8a', бор=царь?'#b8b0a4':поэт?'#7a5a3a':'#f0ece4', борТ=царь?'#8a8274':поэт?'#4a3020':'#a8a090', вол=поэт?'#7a5a3a':'#f0ece4';
     const тело='M-18 -84 Q0 -90 18 -84 Q22 -50 24 -4 Q0 3 -24 -4 Q-22 -50 -18 -84 Z';
     const рука=(d,кисть)=>`<path d="${d}" stroke="url(#рм-хитон)" stroke-width="9" stroke-linecap="round" fill="none"/>
       <path d="${d}" stroke="${ОБВОД}" stroke-width="9" stroke-linecap="round" fill="none" opacity=".12"/>
@@ -1314,6 +1315,7 @@
         <path d="M-26 -1 H26" stroke="${кайма}" stroke-width="3" stroke-dasharray="3 1.6"/>
       </g>
       <path d="${тело}" fill="none" stroke="${ОБВОД}" stroke-width="1.3"/>
+      ${старец?`<path d="M-23 -46 Q0 -41 23 -46" stroke="#b8321e" stroke-width="3.4" fill="none"/><path d="M14 -44 l2 12 M18 -45 l3 11" stroke="#b8321e" stroke-width="1.6"/><path d="M-10 -84 V-62" stroke="#b8321e" stroke-width="2" stroke-dasharray="2 1.6"/>`:''}
       ${прав}
       <rect x="-4.5" y="-90" width="9" height="7" fill="url(#рм-кожа)"/>
       <g transform="translate(0 -103)">
@@ -1598,11 +1600,89 @@
     </g>`;
   }
 
+  /* ================= ПИР ================= */
+
+  /* ---------- пиршественный стол: скатерть со складками, хлеб, виноград, рыба на блюде,
+     кубки, светильник. (x,y) — середина переднего края столешницы; ш — ширина ---------- */
+  function пиршество(x,y,ш,опц){
+    const о=опц||{}, л=x-ш/2;
+    const виноград=(cx,cy,м)=>`<g transform="translate(${cx} ${cy}) scale(${м})"><path d="M0 -16 q4 -6 10 -6" stroke="#5a7a3a" stroke-width="1.6" fill="none"/><path d="M4 -18 q8 -8 14 -2 q-8 4 -14 2z" fill="#6a9a4a"/>
+      ${[[0,-12],[-5,-7],[5,-7],[-8,-1],[0,-2],[8,-1],[-4,4],[4,4],[0,9]].map(([a,b])=>`<circle cx="${a}" cy="${b}" r="4.2" fill="#6a2a7a" stroke="#3a1040" stroke-width=".5"/><circle cx="${a-1.3}" cy="${b-1.4}" r="1.2" fill="#d8a8e8" opacity=".8"/>`).join('')}</g>`;
+    const хлеб=(cx,cy,м)=>`<g transform="translate(${cx} ${cy}) scale(${м})"><ellipse cx="0" cy="0" rx="16" ry="9" fill="#c8843a" stroke="#6a3a10" stroke-width=".8"/><ellipse cx="-3" cy="-3" rx="10" ry="4" fill="#e8b068" opacity=".8"/>${[-8,0,8].map(a=>`<path d="M${a-3} -5 q3 4 6 0" stroke="#8a4a18" stroke-width="1" fill="none"/>`).join('')}</g>`;
+    const рыба=(cx,cy)=>`<g><ellipse cx="${cx}" cy="${cy+3}" rx="22" ry="6" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/><path d="M${cx-14} ${cy} q14 -9 26 0 q-12 8 -26 0z M${cx+12} ${cy} l7 -5 v10z" fill="url(#рм-рыба)" stroke="${ОБВОД}" stroke-width=".7"/><circle cx="${cx-8}" cy="${cy-1}" r="1.2" fill="#1a120a"/></g>`;
+    const кубок=(cx,cy)=>`<g><path d="M${cx-6} ${cy-16} h12 q0 9 -6 11 q-6 -2 -6 -11z" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".7"/><rect x="${cx-1}" y="${cy-5}" width="2" height="4" fill="url(#рм-бронза)"/><ellipse cx="${cx}" cy="${cy}" rx="5" ry="1.6" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".5"/><ellipse cx="${cx}" cy="${cy-16}" rx="6" ry="1.4" fill="#7a1a2a"/></g>`;
+    return `<g>
+      <rect x="${f(л+6)}" y="${y+4}" width="${ш-12}" height="${о.высота||40}" fill="#231a12" opacity=".3" filter="url(#рм-мягко)"/>
+      <path d="M${л} ${y-8} H${л+ш} L${л+ш+4} ${y+(о.высота||40)} H${л-4} Z" fill="#f4eee0" stroke="${ОБВОД}" stroke-width="1"/>
+      ${Array.from({length:Math.floor(ш/22)},(_,k)=>`<path d="M${f(л+11+k*22)} ${y} q-3 ${(о.высота||40)*0.5} 0 ${(о.высота||40)-2}" stroke="#d8ccb4" stroke-width="1.4" fill="none" data-декор="1"/>`).join('')}
+      <path d="M${л} ${y+6} ${Array.from({length:Math.floor(ш/22)},(_,k)=>`q11 6 22 0`).join(' ')}" stroke="#b8321e" stroke-width="2.4" fill="none"/>
+      <rect x="${л}" y="${y-12}" width="${ш}" height="6" fill="#e8dcc4" stroke="${ОБВОД}" stroke-width=".7"/>
+      ${хлеб(л+ш*0.14,y-16,1)}${виноград(л+ш*0.34,y-22,0.9)}${рыба(л+ш*0.55,y-18)}${кубок(л+ш*0.72,y-10)}${кубок(л+ш*0.78,y-10)}${виноград(л+ш*0.9,y-22,0.8)}
+      ${амфора(л+ш*0.46,y-8,0.34)}
+    </g>`;
+  }
+
+  /* ---------- гусли: крыловидный корпус, струны, резьба; (x,y) — нижний край ---------- */
+  function гусли(x,y,м,опц){
+    const о=опц||{};
+    return `<g transform="translate(${x} ${y}) scale(${м}) rotate(-12)">
+      <path d="M-26 0 L28 0 Q30 -10 18 -18 L-22 -26 Q-30 -14 -26 0 Z" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M-20 -6 L20 -6 Q22 -10 14 -13 L-18 -19 Q-22 -12 -20 -6 Z" fill="#8a5a2e" opacity=".5"/>
+      ${[0,1,2,3,4,5].map(k=>`<line x1="${-22+k*1}" y1="${-22+k*3.2}" x2="${24-k*1.4}" y2="${-14+k*2.4}" stroke="#f4ecd8" stroke-width=".7">${ДВИЖ&&о.звучит?`<animate attributeName="y2" values="${-14+k*2.4};${-13.4+k*2.4};${-14+k*2.4}" dur="${0.25+k*0.05}s" repeatCount="indefinite"/>`:''}</line>`).join('')}
+      <circle cx="-6" cy="-12" r="2.4" fill="none" stroke="#6a3a10" stroke-width=".8"/>
+      <path d="M-26 0 q-4 -6 -2 -12" stroke="#b8321e" stroke-width="1.6" fill="none"/>
+    </g>`;
+  }
+
+  /* ---------- сосна-зонтик (пиния): изогнутый ствол, плоская крона ---------- */
+  function сосна(x,y,м){
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <path d="M-4 0 Q-2 -40 -10 -70 Q-8 -90 4 -104 L10 -102 Q0 -88 0 -70 Q8 -40 6 0 Z" fill="#7a4a2a" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M-6 -80 q-14 -6 -24 -2 M4 -96 q12 -4 22 2" stroke="#7a4a2a" stroke-width="3" fill="none"/>
+      <path d="M-58 -98 Q-40 -126 0 -128 Q44 -128 62 -100 Q40 -88 0 -90 Q-38 -88 -58 -98 Z" fill="#3a6a3a" stroke="#1e3a24" stroke-width="1"/>
+      <path d="M-44 -104 Q-20 -120 10 -120 Q40 -118 52 -104" stroke="#5a8a4a" stroke-width="5" fill="none" opacity=".7"/>
+      ${[-40,-16,10,36].map(xx=>`<path d="M${xx} -96 q8 -6 16 0" stroke="#2a4a2a" stroke-width="1.4" fill="none"/>`).join('')}
+    </g>`;
+  }
+  /* ---------- белка: рыжая, пушистый хвост, ушки с кисточками ---------- */
+  function белка(x,y,м,опц){
+    const о=опц||{};
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <g>${крутить('0 -8 -6;6 -8 -6;0 -8 -6','1.4s')}<path d="M-6 -4 Q-24 -10 -20 -30 Q-16 -40 -6 -34 Q-14 -26 -8 -14 Z" fill="#c8642a" stroke="#6a2a10" stroke-width=".8"/><path d="M-16 -28 q2 -6 8 -6" stroke="#e8a060" stroke-width="2" fill="none"/></g>
+      <ellipse cx="2" cy="-8" rx="8" ry="9" fill="#d8743a" stroke="#6a2a10" stroke-width=".8"/>
+      <ellipse cx="4" cy="-5" rx="4" ry="5" fill="#f4d8b0"/>
+      <circle cx="8" cy="-19" r="6" fill="#d8743a" stroke="#6a2a10" stroke-width=".8"/>
+      <path d="M5 -24 l-1 -7 l4 5z M10 -24 l1 -7 l3 6z" fill="#c8642a" stroke="#6a2a10" stroke-width=".6"/>
+      <circle cx="10.5" cy="-20" r="1.4" fill="#1a120a"/><circle cx="14" cy="-18" r="1" fill="#3a1a0a"/>
+      <path d="M8 -12 q4 2 6 -2" stroke="#6a2a10" stroke-width="1.4" fill="none"/>
+      ${о.шишка?`<ellipse cx="14" cy="-12" rx="3" ry="4" fill="#8a5a2a" stroke="#4a2a10" stroke-width=".5"/>`:''}
+    </g>`;
+  }
+
+  /* ---------- кольчуга и кафтан — предметы старины ---------- */
+  function кольчуга(x,y,м){
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <path d="M-22 -60 L-8 -64 Q0 -58 8 -64 L22 -60 L34 -44 L26 -38 L20 -46 L20 0 H-20 L-20 -46 L-26 -38 L-34 -44 Z" fill="#8a8e98" stroke="${ОБВОД}" stroke-width="1"/>
+      <g opacity=".7" data-декор="1">${Array.from({length:9},(_,r)=>Array.from({length:8},(_,c)=>`<circle cx="${-17+c*5+(r%2)*2.5}" cy="${-56+r*6}" r="2" fill="none" stroke="#c8ccd4" stroke-width=".7"/>`).join('')).join('')}</g>
+      <path d="M-20 -6 H20" stroke="#5a5e68" stroke-width="2"/>
+    </g>`;
+  }
+  function кафтан(x,y,м){
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <path d="M-18 -62 L-6 -66 L0 -58 L6 -66 L18 -62 L30 -40 L22 -34 L18 -44 L24 0 H-24 L-18 -44 L-22 -34 L-30 -40 Z" fill="#8a2a2a" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M0 -58 V0" stroke="#e0b030" stroke-width="2"/>
+      ${[-50,-40,-30,-20,-10].map(yy=>`<path d="M-5 ${yy} h10" stroke="#e0b030" stroke-width="2.4"/><circle cx="-6" cy="${yy}" r="1.4" fill="#e0b030"/><circle cx="6" cy="${yy}" r="1.4" fill="#e0b030"/>`).join('')}
+      <path d="M-24 0 H24" stroke="#e0b030" stroke-width="3"/>
+      <path d="M-6 -66 q6 -6 12 0" stroke="#5a1a1a" stroke-width="3" fill="none"/>
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
     боцман, ящик, стрела, фонарь, трюмы, трюмыОтсеки, пристань, склад, штурвал, рында, доска,
     шторм, молния, дождь, всплеск, вал, каюта, перо, туман, сиракузы, радуга,
     портик, стела, амфора, весы, гиря, полкаСвитков, свиток, город, архимед, венец, слиток, ванна, сосуд,
-    крепость, галера, катапульта, коготь, восковая, винт, лира, ведро, листок, кольцо, театр};
+    крепость, галера, катапульта, коготь, восковая, винт, лира, ведро, листок, кольцо, театр,
+    пиршество, гусли, сосна, белка, кольчуга, кафтан};
 })();
