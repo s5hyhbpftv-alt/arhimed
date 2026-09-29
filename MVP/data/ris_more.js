@@ -1286,7 +1286,8 @@
   /* ---------- Архимед: хитон и гиматий с синим меандром, седая борода, лысина, сандалии.
      поза: 'стоит' (циркуль в руке) | 'указывает' | 'читает' (свиток у груди); высота ~120 ---------- */
   function архимед(x,y,м,опц){
-    const о=опц||{}, поза=о.поза||'стоит', кл=ид('хитон');
+    const о=опц||{}, поза=о.поза||'стоит', кл=ид('хитон'), царь=!!о.царь;
+    const гим=царь?'#7a2a6a':'#e4d8bc', кайма=царь?'#e0b030':'#2a4f8a', бор=царь?'#b8b0a4':'#f0ece4', борТ=царь?'#8a8274':'#a8a090';
     const тело='M-18 -84 Q0 -90 18 -84 Q22 -50 24 -4 Q0 3 -24 -4 Q-22 -50 -18 -84 Z';
     const рука=(d,кисть)=>`<path d="${d}" stroke="url(#рм-хитон)" stroke-width="9" stroke-linecap="round" fill="none"/>
       <path d="${d}" stroke="${ОБВОД}" stroke-width="9" stroke-linecap="round" fill="none" opacity=".12"/>
@@ -1308,9 +1309,9 @@
       <path d="${тело}" fill="url(#рм-хитон)" stroke="${ОБВОД}" stroke-width="1.3"/>
       <g clip-path="url(#${кл})">
         ${[-12,-5,3,11].map(xx=>`<path d="M${xx} -80 Q${xx+2} -40 ${xx*1.3} 0" stroke="#c8bca4" stroke-width="1.2" fill="none"/>`).join('')}
-        <path d="M-26 -88 L26 -30 L26 -16 L-26 -70 Z" fill="#e4d8bc" stroke="#a89a7c" stroke-width=".8"/>
-        <path d="M-26 -70 L26 -16" stroke="#2a4f8a" stroke-width="3.4" stroke-dasharray="3 1.6"/>
-        <path d="M-26 -1 H26" stroke="#2a4f8a" stroke-width="3" stroke-dasharray="3 1.6"/>
+        <path d="M-26 -88 L26 -30 L26 -16 L-26 -70 Z" fill="${гим}" stroke="#a89a7c" stroke-width=".8"/>
+        <path d="M-26 -70 L26 -16" stroke="${кайма}" stroke-width="3.4" stroke-dasharray="3 1.6"/>
+        <path d="M-26 -1 H26" stroke="${кайма}" stroke-width="3" stroke-dasharray="3 1.6"/>
       </g>
       <path d="${тело}" fill="none" stroke="${ОБВОД}" stroke-width="1.3"/>
       ${прав}
@@ -1321,12 +1322,83 @@
         <ellipse cx="0" cy="0" rx="15" ry="16" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
         <ellipse cx="-4" cy="-10" rx="5" ry="3" fill="#fff" opacity=".35"/>
         <path d="M-14.6 -5 q2 4 1 9 M14.6 -5 q-2 4 -1 9" stroke="#f0ece4" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M-15 3 q-3 20 9 27 q6 4 12 0 q12 -7 9 -27 q-6 9 -15 9 q-9 0 -15 -9z" fill="#f0ece4" stroke="#a8a090" stroke-width="1"/>
+        <path d="M-15 3 q-3 20 9 27 q6 4 12 0 q12 -7 9 -27 q-6 9 -15 9 q-9 0 -15 -9z" fill="${бор}" stroke="${борТ}" stroke-width="1"/>
         ${[-8,-3,2,7].map(xx=>`<path d="M${xx} 12 q1 8 ${xx>0?-1:1} 14" stroke="#c8c0b0" stroke-width=".9" fill="none"/>`).join('')}
         ${лицо({рот:о.рот||'ровно',мигать:4.8,взгляд:о.взгляд})}
         <path d="M-8.6 -7 q3 -2.4 5.6 -.6 M3 -7.6 q2.6 -1.8 5.6 .6" stroke="#f4f0e8" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M-6 7 q6 -3 12 0" stroke="#e8e4dc" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M-6 7 q6 -3 12 0" stroke="${царь?'#a8a094':'#e8e4dc'}" stroke-width="3" fill="none" stroke-linecap="round"/>
+        ${царь||о.венец?венец(0,-8,16.5,{дуга:true}):''}
       </g>
+    </g>`;
+  }
+
+  /* ---------- золотой венец: две лавровые ветви по эллипсу, ягоды, лента; (x,y) — центр ---------- */
+  function венец(x,y,r,опц){
+    const о=опц||{}, ry=r*0.5;
+    const лист=(a,сторона,k)=>{ const t=a*Math.PI/180, px=x+r*Math.cos(t), py=y+ry*Math.sin(t);
+      const ang=Math.atan2(ry*Math.cos(t), -r*Math.sin(t))*180/Math.PI*сторона + (k%2?35:-35);
+      return `<ellipse cx="${f(px)}" cy="${f(py)}" rx="${f(r*0.17)}" ry="${f(r*0.065)}" fill="url(#рм-латунь)" stroke="#7a5010" stroke-width=".6" transform="rotate(${f(ang)} ${f(px)} ${f(py)})"/>`; };
+    const ветвь=(от,до,сторона)=>{ const n=11, out=[];
+      for(let k=0;k<n;k++){ const a=от+(до-от)*k/(n-1); out.push(лист(a,сторона,k)); if(k%3===1){ const t=a*Math.PI/180; out.push(`<circle cx="${f(x+r*0.9*Math.cos(t))}" cy="${f(y+ry*0.9*Math.sin(t))}" r="${f(r*0.035)}" fill="#fff0b0" stroke="#8a5a10" stroke-width=".4"/>`); } }
+      return out.join(''); };
+    if(о.дуга) return `<g><path d="M${f(x-r)} ${y} A${r} ${f(ry)} 0 0 1 ${f(x+r)} ${y}" stroke="#a8781a" stroke-width="${f(r*0.05)}" fill="none"/>${ветвь(185,268,1)}${ветвь(-5,-88,-1)}</g>`;
+    return `<g>
+      ${о.свет?`<ellipse cx="${x}" cy="${y}" rx="${f(r*1.5)}" ry="${f(ry*1.8)}" fill="url(#рм-огонь)" opacity=".45" data-декор="1">${анЛин('opacity','0.3;0.55;0.3','2.4s')}</ellipse>`:''}
+      <ellipse cx="${x}" cy="${f(y+ry*0.9)}" rx="${f(r*0.9)}" ry="${f(ry*0.25)}" fill="#231a12" opacity=".25" filter="url(#рм-мягко)"/>
+      <ellipse cx="${x}" cy="${y}" rx="${r}" ry="${f(ry)}" fill="none" stroke="#a8781a" stroke-width="${f(r*0.04)}"/>
+      ${ветвь(95,265,1)}${ветвь(85,-85,-1)}
+      ${о.лента===false?'':`<path d="M${f(x-r*0.08)} ${f(y+ry)} q-6 10 -2 18 M${f(x+r*0.08)} ${f(y+ry)} q6 10 2 18" stroke="#b8321e" stroke-width="${f(r*0.06)}" fill="none" stroke-linecap="round"/>
+      <circle cx="${x}" cy="${f(y+ry)}" r="${f(r*0.07)}" fill="#c83a2a" stroke="#6a1a0e" stroke-width=".6"/>`}
+      ${ДВИЖ?`<path d="M${f(x-r*0.6)} ${f(y-ry*0.7)} l${f(r*0.05)} ${f(-r*0.05)} l${f(r*0.05)} ${f(r*0.05)} l${f(-r*0.05)} ${f(r*0.05)} z" fill="#fff" opacity="0">${анЛин('opacity','0;1;0;0','2.6s')}</path>`:''}
+    </g>`;
+  }
+
+  /* ---------- золотой слиток с клеймом; (x,y) — середина низа ---------- */
+  function слиток(x,y,м){
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <ellipse cx="2" cy="1" rx="22" ry="3" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <path d="M-20 0 L-14 -14 H14 L20 0 Z" fill="url(#рм-латунь)" stroke="#7a5010" stroke-width="1"/>
+      <path d="M-14 -14 H14 L11 -17 H-11 Z" fill="#fff4c0" stroke="#7a5010" stroke-width=".8"/>
+      <rect x="-6" y="-11" width="12" height="7" rx="1" fill="none" stroke="#8a5a10" stroke-width=".8"/>
+      <path d="M-12 -12 L-17 -2" stroke="#fffbe0" stroke-width="1.6" opacity=".8"/>
+    </g>`;
+  }
+
+  /* ---------- мраморная ванна: чаша, вода, пар; опц.перелив — вода льётся через край.
+     (x,y) — середина низа. Кого-то «в ванне» рисуют ДО неё, чтобы край закрыл ноги ---------- */
+  function ванна(x,y,ш,в,опц){
+    const о=опц||{}, край=y-в;
+    return `<g>
+      <ellipse cx="${x+4}" cy="${y+2}" rx="${f(ш*0.56)}" ry="5" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <path d="M${f(x-ш/2)} ${f(край)} Q${f(x-ш/2+4)} ${y} ${f(x-ш*0.38)} ${y} H${f(x+ш*0.38)} Q${f(x+ш/2-4)} ${y} ${f(x+ш/2)} ${f(край)} Z" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <path d="M${f(x-ш*0.3)} ${f(край+в*0.35)} q${f(ш*0.1)} ${f(-в*0.1)} ${f(ш*0.2)} 0 M${f(x+ш*0.05)} ${f(край+в*0.6)} q${f(ш*0.12)} ${f(в*0.08)} ${f(ш*0.22)} ${f(-в*0.04)}" stroke="#c8bca4" stroke-width=".9" fill="none" data-декор="1"/>
+      <path d="M${f(x-ш*0.46)} ${f(край+4)} Q${f(x-ш*0.44)} ${f(y-6)} ${f(x-ш*0.36)} ${f(y-3)}" stroke="#fff" stroke-width="2" fill="none" opacity=".5"/>
+      <ellipse cx="${x}" cy="${f(край)}" rx="${f(ш/2)}" ry="6" fill="#7ac0e8" stroke="${ОБВОД}" stroke-width="1"/>
+      <ellipse cx="${f(x-ш*0.1)}" cy="${f(край-1)}" rx="${f(ш*0.22)}" ry="2" fill="#e8f6ff" opacity=".6">${анЛин('rx',`${f(ш*0.18)};${f(ш*0.26)};${f(ш*0.18)}`,'2.4s')}</ellipse>
+      <rect x="${f(x-ш/2-3)}" y="${f(край-3)}" width="${f(ш+6)}" height="5" rx="2.5" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width="1"/>
+      ${о.перелив?[-1,1].map(с=>`<path d="M${f(x+с*ш/2)} ${f(край)} q${с*6} 4 ${с*5} ${f(в*0.55)} q0 ${f(в*0.3)} ${с*2} ${f(в*0.45)}" stroke="#7ac0e8" stroke-width="4" fill="none" stroke-linecap="round" opacity=".9" stroke-dasharray="10 6">${анЛин('stroke-dashoffset','32;0','0.8s')}</path>
+        <ellipse cx="${f(x+с*(ш/2+10))}" cy="${y}" rx="14" ry="3" fill="#7ac0e8" opacity=".6">${анЛин('rx','10;18;10','1.6s')}</ellipse>`).join(''):''}
+      ${о.пар===false?'':[0,1,2].map(k=>`<path d="M${f(x-ш*0.25+k*ш*0.25)} ${f(край-6)} q-5 -10 0 -18 q5 -8 0 -16" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0">${ДВИЖ?`<animate attributeName="opacity" values="0;0.55;0" dur="3.2s" begin="${k}s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="translate" values="0 0;0 -10" dur="3.2s" begin="${k}s" repeatCount="indefinite"/>`:''}</path>`).join('')}
+    </g>`;
+  }
+
+  /* ---------- сосуд с водой в разрезе: стекло, вода до уровня (0..1), риски, предмет на дне.
+     опц.было — прежний уровень (вода поднимется), опц.внутри — svg, (0,0) — середина дна;
+     (x,y) — середина низа ---------- */
+  function сосуд(x,y,ш,в,опц){
+    const о=опц||{}, ур=Math.max(0,Math.min(1,о.уровень==null?0.5:о.уровень)), было=о.было;
+    const вн=в-6, hв=вн*ур, hб=было==null?hв:вн*Math.max(0,Math.min(1,было));
+    const подъём=(было!=null&&ДВИЖ)?`<animate attributeName="y" from="${f(y-3-hб)}" to="${f(y-3-hв)}" dur="1.4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.3 0.8 0.4 1"/><animate attributeName="height" from="${f(hб)}" to="${f(hв)}" dur="1.4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.3 0.8 0.4 1"/>`:'';
+    return `<g>
+      <ellipse cx="${x+3}" cy="${y+2}" rx="${f(ш*0.58)}" ry="4" fill="#231a12" opacity=".3" filter="url(#рм-мягко)"/>
+      <rect x="${f(x-ш/2)}" y="${f(y-в)}" width="${ш}" height="${в}" rx="4" fill="#e8f6ff" opacity=".35" stroke="#8aa8c0" stroke-width="1.4"/>
+      ${о.внутри?`<g transform="translate(${x} ${f(y-3)})">${о.внутри}</g>`:''}
+      <rect x="${f(x-ш/2+2)}" y="${f(y-3-hв)}" width="${ш-4}" height="${f(hв)}" fill="#4a9ad8" opacity=".45">${подъём}</rect>
+      <rect x="${f(x-ш/2+2)}" y="${f(y-3-hв)}" width="${ш-4}" height="2.4" fill="#bfe6ff" opacity=".9">${(было!=null&&ДВИЖ)?`<animate attributeName="y" from="${f(y-3-hб)}" to="${f(y-3-hв)}" dur="1.4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.3 0.8 0.4 1"/>`:''}</rect>
+      ${Array.from({length:5},(_,k)=>`<line x1="${f(x+ш/2-8)}" y1="${f(y-3-вн*(k+1)/6)}" x2="${f(x+ш/2-2)}" y2="${f(y-3-вн*(k+1)/6)}" stroke="#5a7a90" stroke-width="1"/>`).join('')}
+      <rect x="${f(x-ш/2+4)}" y="${f(y-в+4)}" width="4" height="${f(в-10)}" rx="2" fill="#fff" opacity=".5"/>
+      <rect x="${f(x-ш/2-3)}" y="${f(y-в-3)}" width="${ш+6}" height="5" rx="2.5" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <rect x="${f(x-ш/2-3)}" y="${f(y-3)}" width="${ш+6}" height="5" rx="2" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/>
     </g>`;
   }
 
@@ -1335,5 +1407,5 @@
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
     боцман, ящик, стрела, фонарь, трюмы, трюмыОтсеки, пристань, склад, штурвал, рында, доска,
     шторм, молния, дождь, всплеск, вал, каюта, перо, туман, сиракузы, радуга,
-    портик, стела, амфора, весы, гиря, полкаСвитков, свиток, город, архимед};
+    портик, стела, амфора, весы, гиря, полкаСвитков, свиток, город, архимед, венец, слиток, ванна, сосуд};
 })();
