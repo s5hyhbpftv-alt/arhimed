@@ -1286,8 +1286,8 @@
   /* ---------- Архимед: хитон и гиматий с синим меандром, седая борода, лысина, сандалии.
      поза: 'стоит' (циркуль в руке) | 'указывает' | 'читает' (свиток у груди); высота ~120 ---------- */
   function архимед(x,y,м,опц){
-    const о=опц||{}, поза=о.поза||'стоит', кл=ид('хитон'), царь=!!о.царь;
-    const гим=царь?'#7a2a6a':'#e4d8bc', кайма=царь?'#e0b030':'#2a4f8a', бор=царь?'#b8b0a4':'#f0ece4', борТ=царь?'#8a8274':'#a8a090';
+    const о=опц||{}, поза=о.поза||'стоит', кл=ид('хитон'), царь=!!о.царь, поэт=!!о.поэт;
+    const гим=царь?'#7a2a6a':поэт?'#3a7a6a':'#e4d8bc', кайма=царь||поэт?'#e0b030':'#2a4f8a', бор=царь?'#b8b0a4':поэт?'#7a5a3a':'#f0ece4', борТ=царь?'#8a8274':поэт?'#4a3020':'#a8a090', вол=поэт?'#7a5a3a':'#f0ece4';
     const тело='M-18 -84 Q0 -90 18 -84 Q22 -50 24 -4 Q0 3 -24 -4 Q-22 -50 -18 -84 Z';
     const рука=(d,кисть)=>`<path d="${d}" stroke="url(#рм-хитон)" stroke-width="9" stroke-linecap="round" fill="none"/>
       <path d="${d}" stroke="${ОБВОД}" stroke-width="9" stroke-linecap="round" fill="none" opacity=".12"/>
@@ -1317,17 +1317,17 @@
       ${прав}
       <rect x="-4.5" y="-90" width="9" height="7" fill="url(#рм-кожа)"/>
       <g transform="translate(0 -103)">
-        <path d="M-16 8 q-6 -10 -3 -18 q3 -5 7 -4 M16 8 q6 -10 3 -18 q-3 -5 -7 -4" fill="#f0ece4" stroke="#b8b0a0" stroke-width=".8"/>
+        <path d="M-16 8 q-6 -10 -3 -18 q3 -5 7 -4 M16 8 q6 -10 3 -18 q-3 -5 -7 -4" fill="${вол}" stroke="#b8b0a0" stroke-width=".8"/>
         <ellipse cx="-15" cy="2" rx="3" ry="4.2" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/><ellipse cx="15" cy="2" rx="3" ry="4.2" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/>
         <ellipse cx="0" cy="0" rx="15" ry="16" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
         <ellipse cx="-4" cy="-10" rx="5" ry="3" fill="#fff" opacity=".35"/>
-        <path d="M-14.6 -5 q2 4 1 9 M14.6 -5 q-2 4 -1 9" stroke="#f0ece4" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M-14.6 -5 q2 4 1 9 M14.6 -5 q-2 4 -1 9" stroke="${вол}" stroke-width="3" fill="none" stroke-linecap="round"/>
         <path d="M-15 3 q-3 20 9 27 q6 4 12 0 q12 -7 9 -27 q-6 9 -15 9 q-9 0 -15 -9z" fill="${бор}" stroke="${борТ}" stroke-width="1"/>
         ${[-8,-3,2,7].map(xx=>`<path d="M${xx} 12 q1 8 ${xx>0?-1:1} 14" stroke="#c8c0b0" stroke-width=".9" fill="none"/>`).join('')}
         ${лицо({рот:о.рот||'ровно',мигать:4.8,взгляд:о.взгляд})}
-        <path d="M-8.6 -7 q3 -2.4 5.6 -.6 M3 -7.6 q2.6 -1.8 5.6 .6" stroke="#f4f0e8" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M-6 7 q6 -3 12 0" stroke="${царь?'#a8a094':'#e8e4dc'}" stroke-width="3" fill="none" stroke-linecap="round"/>
-        ${царь||о.венец?венец(0,-8,16.5,{дуга:true}):''}
+        <path d="M-8.6 -7 q3 -2.4 5.6 -.6 M3 -7.6 q2.6 -1.8 5.6 .6" stroke="${поэт?'#5a3a20':'#f4f0e8'}" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M-6 7 q6 -3 12 0" stroke="${царь?'#a8a094':поэт?'#5a3a20':'#e8e4dc'}" stroke-width="3" fill="none" stroke-linecap="round"/>
+        ${поэт?`<path d="M-15 -6 q0 -14 15 -15 q15 1 15 15 q-6 -8 -15 -8 q-9 0 -15 8z" fill="${вол}" stroke="${борТ}" stroke-width=".8"/>`:''}${царь||поэт||о.венец?венец(0,-8,16.5,{дуга:true}):''}
       </g>
     </g>`;
   }
@@ -1535,11 +1535,56 @@
     </g>`;
   }
 
+  /* ---------- лира: панцирь, два рога, перекладина, струны; (x,y) — низ ---------- */
+  function лира(x,y,м,опц){
+    const о=опц||{};
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <path d="M-10 -12 Q-22 -34 -14 -58 Q-10 -64 -6 -60 Q-12 -38 -4 -16 Z M10 -12 Q22 -34 14 -58 Q10 -64 6 -60 Q12 -38 4 -16 Z" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".9"/>
+      <rect x="-16" y="-58" width="32" height="4" rx="2" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".7"/>
+      <ellipse cx="0" cy="-8" rx="14" ry="10" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width="1"/>
+      <ellipse cx="-4" cy="-11" rx="5" ry="3" fill="#fff4c0" opacity=".5"/>
+      ${[-6,-2,2,6].map((xx,k)=>`<line x1="${xx}" y1="-54" x2="${xx*0.8}" y2="-10" stroke="#f4ecd8" stroke-width=".8">${ДВИЖ&&о.звучит?`<animate attributeName="x2" values="${xx*0.8};${xx*0.8+1.2};${xx*0.8}" dur="${0.3+k*0.07}s" repeatCount="indefinite"/>`:''}</line>`).join('')}
+      ${о.звучит&&ДВИЖ?[0,1,2].map(k=>`<g opacity="0"><animateTransform attributeName="transform" type="translate" values="16 -40;34 -70" dur="2.6s" begin="${k*0.85}s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="2.6s" begin="${k*0.85}s" repeatCount="indefinite"/><path d="M0 0 v-9 l6 -2 v9" stroke="#ffd76a" stroke-width="1.6" fill="none"/><ellipse cx="-1.6" cy="0" rx="2.4" ry="1.8" fill="#ffd76a"/></g>`).join(''):''}
+    </g>`;
+  }
+
+  /* ---------- ведро: деревянные клёпки, обручи, дужка; опц.вода — плещет ---------- */
+  function ведро(x,y,м,опц){
+    const о=опц||{};
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <path d="M-14 -30 Q0 -44 14 -30" stroke="url(#рм-железо)" stroke-width="2" fill="none"/>
+      <path d="M-14 -30 L-11 0 H11 L14 -30 Z" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1"/>
+      ${[-7,0,7].map(xx=>`<line x1="${xx}" y1="-29" x2="${xx*0.8}" y2="-1" stroke="${ОБВОД}" stroke-width=".5" opacity=".5"/>`).join('')}
+      ${[-24,-8].map(yy=>`<path d="M${-14+(yy+30)*0.1} ${yy} H${14-(yy+30)*0.1}" stroke="#5a5e68" stroke-width="2.4"/>`).join('')}
+      <ellipse cx="0" cy="-30" rx="14" ry="3" fill="${о.вода===false?'#3a2a1a':'#5ab4f4'}" stroke="${ОБВОД}" stroke-width=".8"/>
+      ${о.вода!==false&&ДВИЖ?`<path d="M8 -32 q6 -8 12 -4" stroke="#5ab4f4" stroke-width="2.4" fill="none" stroke-linecap="round">${анЛин('opacity','1;0.2;1','0.9s')}</path>`:''}
+    </g>`;
+  }
+
+  /* ---------- осенний лист: форма клёна, прожилки; угол — поворот ---------- */
+  function листок(x,y,м,цвет,угол){
+    const ц=цвет||'#e8a02a';
+    return `<g transform="translate(${x} ${y}) rotate(${угол||0}) scale(${м})">
+      <path d="M0 10 L0 2 M0 2 L-10 -2 L-7 -5 L-12 -10 L-5 -10 L-6 -17 L0 -12 L6 -17 L5 -10 L12 -10 L7 -5 L10 -2 Z" fill="${ц}" stroke="#8a4a10" stroke-width=".8"/>
+      <path d="M0 2 V-12 M0 -2 L-8 -8 M0 -2 L8 -8" stroke="#8a4a10" stroke-width=".6" fill="none"/>
+    </g>`;
+  }
+
+  /* ---------- золотое кольцо с камнем; (x,y) — низ ---------- */
+  function кольцо(x,y,м){
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <ellipse cx="0" cy="-8" rx="11" ry="8" fill="none" stroke="url(#рм-латунь)" stroke-width="3.4"/>
+      <ellipse cx="0" cy="-8" rx="11" ry="8" fill="none" stroke="#8a5a10" stroke-width=".6"/>
+      <path d="M-4 -17 L0 -22 L4 -17 L0 -14 Z" fill="#c83a5a" stroke="#6a1a2a" stroke-width=".6"/>
+      <path d="M-8 -12 q-2 3 0 6" stroke="#fffbe0" stroke-width="1.2" fill="none"/>
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
     боцман, ящик, стрела, фонарь, трюмы, трюмыОтсеки, пристань, склад, штурвал, рында, доска,
     шторм, молния, дождь, всплеск, вал, каюта, перо, туман, сиракузы, радуга,
     портик, стела, амфора, весы, гиря, полкаСвитков, свиток, город, архимед, венец, слиток, ванна, сосуд,
-    крепость, галера, катапульта, коготь, восковая, винт};
+    крепость, галера, катапульта, коготь, восковая, винт, лира, ведро, листок, кольцо};
 })();
