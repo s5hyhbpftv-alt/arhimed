@@ -1780,6 +1780,39 @@
     </g>`;
   }
 
+  /* ---------- сфера Архимеда (армиллярная): бронзовая стойка, меридиан, горизонт и шесть колец,
+     медленно вращающихся; опц.свет — номера колец, которые горят золотом; опц.ядро — svg в центре ---------- */
+  function сфера(x,y,r,опц){
+    const о=опц||{}, свет=о.свет||[], n=о.колец||6;
+    const кольцо=(k)=>{ const на=свет.includes(k), a=-60+k*24, ry=r*(0.22+0.07*k);
+      const вр=ДВИЖ&&о.вращать!==false?`<animateTransform attributeName="transform" type="rotate" from="${a} ${x} ${y}" to="${a+(k%2?360:-360)} ${x} ${y}" dur="${60+k*14}s" repeatCount="indefinite"/>`:'';
+      return `<g transform="rotate(${a} ${x} ${y})">${вр}
+        ${на?`<ellipse cx="${x}" cy="${y}" rx="${f(r*0.96)}" ry="${f(ry)}" fill="none" stroke="#ffd76a" stroke-width="7" opacity=".35" filter="url(#рм-мягко)"/>`:''}
+        <ellipse cx="${x}" cy="${y}" rx="${f(r*0.96)}" ry="${f(ry)}" fill="none" stroke="${на?'#ffd76a':'#8a5a2a'}" stroke-width="${на?3.2:2.4}"/>
+        <ellipse cx="${x}" cy="${y}" rx="${f(r*0.96)}" ry="${f(ry)}" fill="none" stroke="${на?'#fff4c0':'#c8905a'}" stroke-width=".8" stroke-dasharray="2 6"/>
+        <circle cx="${f(x+r*0.96)}" cy="${y}" r="${на?4:3}" fill="${на?'#ffd76a':'url(#рм-бронза)'}" stroke="${ОБВОД}" stroke-width=".6"/>
+      </g>`; };
+    return `<g>
+      <ellipse cx="${x+4}" cy="${f(y+r*1.5)}" rx="${f(r*0.7)}" ry="6" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <path d="M${f(x-r*0.5)} ${f(y+r*1.5)} L${f(x-r*0.3)} ${f(y+r*1.3)} H${f(x+r*0.3)} L${f(x+r*0.5)} ${f(y+r*1.5)} Z" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M${f(x-4)} ${f(y+r*1.3)} L${f(x-3)} ${f(y+r*1.02)} H${f(x+3)} L${f(x+4)} ${f(y+r*1.3)} Z" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <circle cx="${x}" cy="${y}" r="${f(r*1.04)}" fill="none" stroke="url(#рм-бронза)" stroke-width="5"/>
+      <circle cx="${x}" cy="${y}" r="${f(r*1.04)}" fill="none" stroke="${ОБВОД}" stroke-width=".8"/>
+      ${Array.from({length:36},(_,k)=>{ const t=k*Math.PI/18; return `<line x1="${f(x+r*1.0*Math.cos(t))}" y1="${f(y+r*1.0*Math.sin(t))}" x2="${f(x+r*1.08*Math.cos(t))}" y2="${f(y+r*1.08*Math.sin(t))}" stroke="#5a3414" stroke-width=".7"/>`; }).join('')}
+      <ellipse cx="${x}" cy="${y}" rx="${f(r*1.18)}" ry="${f(r*0.3)}" fill="none" stroke="url(#рм-бронза)" stroke-width="4"/>
+      ${Array.from({length:n},(_,k)=>кольцо(k)).join('')}
+      ${о.ядро?о.ядро:`<circle cx="${x}" cy="${y}" r="${f(r*0.2)}" fill="url(#рм-море)" stroke="${ОБВОД}" stroke-width=".8"/><ellipse cx="${f(x-r*0.06)}" cy="${f(y-r*0.07)}" rx="${f(r*0.07)}" ry="${f(r*0.04)}" fill="#fff" opacity=".5"/>`}
+      <circle cx="${x}" cy="${f(y-r*1.04)}" r="4" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".7"/>
+    </g>`;
+  }
+  /* ---------- цветы: охапка разноцветных соцветий с листьями; (x,y) — середина низа ---------- */
+  function цветы(x,y,ш,в,опц){
+    const о=опц||{}, n=о.сколько||Math.round(ш*в/180), ц=['#e8405a','#ffd24a','#f08a2a','#b84ab8','#fbfbf6','#ff7aa8','#4a86d8'];
+    return `<g>${Array.from({length:n},(_,k)=>{ const px=x-ш/2+((k*47)%100)/100*ш, py=y-((k*31)%100)/100*в, c=ц[k%ц.length], rr=3+(k%3);
+      return `<path d="M${f(px)} ${f(py+6)} q-4 -2 -6 -8" stroke="#3a7a3a" stroke-width="1.4" fill="none"/><ellipse cx="${f(px-5)}" cy="${f(py+2)}" rx="3.4" ry="1.6" fill="#4a8a3a" transform="rotate(-30 ${f(px-5)} ${f(py+2)})"/>
+        ${[0,72,144,216,288].map(a=>{ const t=a*Math.PI/180; return `<circle cx="${f(px+rr*Math.cos(t))}" cy="${f(py+rr*Math.sin(t))}" r="${f(rr*0.62)}" fill="${c}"/>`; }).join('')}<circle cx="${f(px)}" cy="${f(py)}" r="${f(rr*0.45)}" fill="${c==='#ffd24a'?'#c8601a':'#ffd24a'}"/>`; }).join('')}</g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -1788,5 +1821,5 @@
     портик, стела, амфора, весы, гиря, полкаСвитков, свиток, город, архимед, венец, слиток, ванна, сосуд,
     крепость, галера, катапульта, коготь, восковая, винт, лира, ведро, листок, кольцо, театр,
     пиршество, гусли, сосна, белка, кольчуга, кафтан,
-    трон, меч, гусь, конь, медведь, баклуши, воин};
+    трон, меч, гусь, конь, медведь, баклуши, воин, сфера, цветы};
 })();
