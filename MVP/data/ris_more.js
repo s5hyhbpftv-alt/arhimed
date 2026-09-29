@@ -1457,7 +1457,7 @@
   function катапульта(x,y,м,опц){
     const о=опц||{};
     const рычаг=`<g>${ДВИЖ&&о.выстрел?`<animateTransform attributeName="transform" type="rotate" values="-62 -14 -20;28 -14 -20;28 -14 -20;-62 -14 -20" keyTimes="0;0.12;0.6;1" dur="3s" repeatCount="indefinite"/>`:`<animateTransform attributeName="transform" type="rotate" values="-62 -14 -20;-62 -14 -20" dur="1s"/>`}
-        <path d="M-14 -20 L-14 -72" stroke="url(#рм-мачта)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M-14 -20 L-14 -72" stroke="#9a6a3a" stroke-width="5" stroke-linecap="round"/>
         <path d="M-22 -78 q8 -6 16 0 q-2 6 -8 6 q-6 0 -8 -6z" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".8"/>
       </g>`;
     return `<g transform="translate(${x} ${y}) scale(${м})">
@@ -1506,11 +1506,40 @@
     </g>`;
   }
 
+  /* ---------- винт Архимеда: наклонный цилиндр в разрезе, винтовая лопасть и порции воды
+     ползут вверх по оси (вращение), обручи, рукоять на верхнем конце.
+     (x,y) — нижний конец оси; L — длина; угол — наклон (°); опц.r — радиус ---------- */
+  function винт(x,y,L,угол,опц){
+    const о=опц||{}, r=о.r||14, p=r*1.7, n=Math.ceil(L/p)+2, кл=ид('винт');
+    const ход = ДВИЖ&&о.крутится!==false ? `<animateTransform attributeName="transform" type="translate" from="0 0" to="${f(p)} 0" dur="${о.темп||1.4}s" repeatCount="indefinite"/>` : '';
+    const лопасти=Array.from({length:n},(_,k)=>{ const x0=-p*2+k*p;
+      return `<ellipse cx="${f(x0+p*0.42)}" cy="${f(r*0.5)}" rx="${f(p*0.34)}" ry="${f(r*0.42)}" fill="#5ab4f4" transform="rotate(-38 ${f(x0+p*0.42)} ${f(r*0.5)})"/>
+        <ellipse cx="${f(x0+p*0.36)}" cy="${f(r*0.36)}" rx="${f(p*0.14)}" ry="${f(r*0.1)}" fill="#dff2ff" opacity=".8" transform="rotate(-38 ${f(x0+p*0.36)} ${f(r*0.36)})"/>
+        <path d="M${f(x0)} ${r} Q${f(x0+p*0.5)} 0 ${f(x0+p)} ${-r}" stroke="#a8743e" stroke-width="4" fill="none"/>
+        <path d="M${f(x0)} ${r} Q${f(x0+p*0.5)} 0 ${f(x0+p)} ${-r}" stroke="#e8b878" stroke-width="1" fill="none"/>`; }).join('');
+    const рукоять = `<g transform="translate(${L} 0)">${ДВИЖ&&о.крутится!==false?`<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="${f((о.темп||1.4)*1)}s" repeatCount="indefinite" additive="sum"/>`:''}
+        <line x1="0" y1="0" x2="0" y2="${f(-r*1.3)}" stroke="#5a5e68" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="0" cy="${f(-r*1.3)}" r="3" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".6"/></g>`;
+    return `<g transform="translate(${x} ${y}) rotate(${-угол})">
+      <rect x="-4" y="${f(r+2)}" width="${L+8}" height="6" rx="3" fill="#231a12" opacity=".25" filter="url(#рм-мягко)"/>
+      <clipPath id="${кл}"><rect x="0" y="${-r}" width="${L}" height="${2*r}"/></clipPath>
+      <rect x="0" y="${-r}" width="${L}" height="${2*r}" fill="#2a1a0e" opacity=".85"/>
+      <g clip-path="url(#${кл})"><g>${ход}${лопасти}</g></g>
+      <line x1="-6" y1="0" x2="${L+6}" y2="0" stroke="#5a3418" stroke-width="3.4"/>
+      <rect x="0" y="${-r}" width="${L}" height="${2*r}" fill="url(#рм-доска)" opacity=".12" stroke="${ОБВОД}" stroke-width="1.4"/>
+      <rect x="0" y="${-r-3}" width="${L}" height="4" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".6"/>
+      <line x1="0" y1="${f(-r*0.5)}" x2="${L}" y2="${f(-r*0.5)}" stroke="#fff" stroke-width="1.4" opacity=".35"/>
+      ${[0.02,0.33,0.66,0.98].map(t=>`<rect x="${f(L*t-2)}" y="${f(-r-1.5)}" width="4" height="${f(2*r+3)}" rx="1" fill="url(#рм-железо)" stroke="${ОБВОД}" stroke-width=".5"/>`).join('')}
+      <circle cx="0" cy="0" r="3.4" fill="url(#рм-железо)" stroke="${ОБВОД}" stroke-width=".6"/>
+      ${рукоять}
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
     боцман, ящик, стрела, фонарь, трюмы, трюмыОтсеки, пристань, склад, штурвал, рында, доска,
     шторм, молния, дождь, всплеск, вал, каюта, перо, туман, сиракузы, радуга,
     портик, стела, амфора, весы, гиря, полкаСвитков, свиток, город, архимед, венец, слиток, ванна, сосуд,
-    крепость, галера, катапульта, коготь, восковая};
+    крепость, галера, катапульта, коготь, восковая, винт};
 })();
