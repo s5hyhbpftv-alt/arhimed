@@ -1402,10 +1402,115 @@
     </g>`;
   }
 
+  /* ================= ОСАДА СИРАКУЗ ================= */
+
+  /* ---------- крепостная стена крупно: кладка, зубцы, бойницы, башня. (x,y) — левый низ ---------- */
+  function крепость(x,y,ш,в,опц){
+    const о=опц||{}, ряд=11, кл=ид('кладка');
+    const зубцы=(x0,w,yy)=>Array.from({length:Math.floor(w/14)},(_,k)=>`<rect x="${f(x0+k*14+2)}" y="${f(yy-9)}" width="9" height="9" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".7"/>`).join('');
+    const кладка=(x0,y0,w,h)=>`<clipPath id="${кл}${x0}"><rect x="${f(x0)}" y="${f(y0)}" width="${f(w)}" height="${f(h)}"/></clipPath>
+      <g clip-path="url(#${кл}${x0})" stroke="#8a7a60" stroke-width=".7" opacity=".7" data-декор="1">
+        ${Array.from({length:Math.ceil(h/ряд)},(_,r)=>`<line x1="${f(x0)}" y1="${f(y0+r*ряд)}" x2="${f(x0+w)}" y2="${f(y0+r*ряд)}"/>`+
+          Array.from({length:Math.ceil(w/22)+1},(_,c)=>`<line x1="${f(x0+c*22+(r%2)*11)}" y1="${f(y0+r*ряд)}" x2="${f(x0+c*22+(r%2)*11)}" y2="${f(y0+(r+1)*ряд)}"/>`).join('')).join('')}
+      </g>`;
+    const бx=x+ш*(о.башня==null?0.22:о.башня), бw=ш*0.2, бв=в*1.35;
+    return `<g>
+      <rect x="${x}" y="${y-в}" width="${ш}" height="${в}" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width="1.1"/>
+      ${кладка(x,y-в,ш,в)}
+      ${зубцы(x,ш,y-в)}
+      <rect x="${x}" y="${y-в}" width="${ш}" height="${f(в*0.12)}" fill="#fff" opacity=".12"/>
+      ${о.башня===false?'':`<rect x="${f(бx)}" y="${f(y-бв)}" width="${f(бw)}" height="${f(бв)}" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width="1.1"/>
+        ${кладка(бx,y-бв,бw,бв)}${зубцы(бx-2,бw+4,y-бв)}
+        ${[0.3,0.55].map(t=>`<rect x="${f(бx+бw/2-2.5)}" y="${f(y-бв+бв*t)}" width="5" height="12" rx="2.5" fill="#2a1e14"/>`).join('')}
+        <rect x="${f(бx)}" y="${f(y-бв)}" width="${f(бw*0.25)}" height="${f(бв)}" fill="#fff" opacity=".12"/>`}
+      <rect x="${x}" y="${y-8}" width="${ш}" height="8" fill="#6a5a44" opacity=".35"/>
+    </g>`;
+  }
+
+  /* ---------- римская галера: корпус с хвостом-завитком, бронзовый таран, щиты по борту,
+     ряд вёсел (гребут), мачта и полосатый парус. (x,y) — середина по ватерлинии, нос вправо ---------- */
+  function галера(x,y,м,опц){
+    const о=опц||{};
+    const корпус='M-86 -26 Q-94 -44 -80 -50 Q-86 -38 -74 -26 L70 -26 Q86 -26 92 -18 L108 -12 L92 -8 Q84 1 60 2 L-60 2 Q-80 0 -86 -26 Z';
+    const вёсла=Array.from({length:9},(_,k)=>{ const ox=-56+k*14;
+      return `<g transform="translate(${ox} -8)">${ДВИЖ&&о.гребут!==false?`<animateTransform attributeName="transform" type="rotate" values="0;-16;0" dur="1.6s" repeatCount="indefinite" additive="sum"/>`:''}<line x1="0" y1="0" x2="-12" y2="24" stroke="#8a5a2e" stroke-width="2"/></g>`; }).join('');
+    const парус=о.парус===false?'':`<path d="M-34 -104 Q0 -96 34 -104 L32 -50 Q0 -42 -32 -50 Z" fill="#f1e6cc" stroke="${ОБВОД}" stroke-width="1"/>
+      ${[-22,-6,10,26].map(xx=>`<path d="M${xx} ${-103+Math.abs(xx)*0.1} L${xx*0.95} ${-49+Math.abs(xx)*0.1}" stroke="#b8321e" stroke-width="6" opacity=".85"/>`).join('')}
+      <path d="M-36 -104 H36" stroke="#6a4020" stroke-width="3" stroke-linecap="round"/>`;
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <g opacity=".22" transform="translate(0 10) scale(1 -0.4)"><path d="${корпус}" fill="#0b2a4a"/></g>
+      ${вёсла}
+      <rect x="-2.5" y="-110" width="5" height="86" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".7"/>
+      ${парус}
+      <path d="${корпус}" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width="1.6"/>
+      <path d="M-78 -20 H86" stroke="#b8321e" stroke-width="3"/>
+      ${Array.from({length:10},(_,k)=>`<circle cx="${-60+k*13}" cy="-26" r="5" fill="${k%2?'#b8321e':'#e0b030'}" stroke="${ОБВОД}" stroke-width=".7"/><circle cx="${-60+k*13}" cy="-26" r="1.6" fill="url(#рм-бронза)"/>`).join('')}
+      <path d="M92 -18 L108 -12 L92 -8 Z" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <circle cx="80" cy="-14" r="3" fill="#fff" stroke="${ОБВОД}" stroke-width=".6"/><circle cx="80.6" cy="-14" r="1.4" fill="#1a120a"/>
+      <path d="M-80 -50 q-6 -2 -4 -8" stroke="#6a4020" stroke-width="2" fill="none"/>
+      <path d="M110 -2 q10 4 20 0 M-90 2 q-12 4 -24 0" stroke="#e8f6ff" stroke-width="1.4" fill="none" opacity=".8">${анЛин('opacity','0.8;0.2;0.8','2s')}</path>
+    </g>`;
+  }
+
+  /* ---------- катапульта: рама на колёсах, стойки, метательный рычаг с ложкой; выстрел — рычаг
+     бьёт вперёд, камень летит по дуге. (x,y) — середина низа, стреляет вправо ---------- */
+  function катапульта(x,y,м,опц){
+    const о=опц||{};
+    const рычаг=`<g>${ДВИЖ&&о.выстрел?`<animateTransform attributeName="transform" type="rotate" values="-62 -14 -20;28 -14 -20;28 -14 -20;-62 -14 -20" keyTimes="0;0.12;0.6;1" dur="3s" repeatCount="indefinite"/>`:`<animateTransform attributeName="transform" type="rotate" values="-62 -14 -20;-62 -14 -20" dur="1s"/>`}
+        <path d="M-14 -20 L-14 -72" stroke="url(#рм-мачта)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M-22 -78 q8 -6 16 0 q-2 6 -8 6 q-6 0 -8 -6z" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".8"/>
+      </g>`;
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <ellipse cx="2" cy="1" rx="40" ry="4" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      ${[-26,24].map(cx=>`<circle cx="${cx}" cy="-7" r="7" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width="1"/><circle cx="${cx}" cy="-7" r="2" fill="url(#рм-железо)"/>`).join('')}
+      <rect x="-40" y="-22" width="80" height="10" rx="2" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M-4 -22 L10 -60 L24 -22" stroke="url(#рм-доска)" stroke-width="5" fill="none" stroke-linejoin="round"/>
+      <path d="M-4 -22 L10 -60 L24 -22" stroke="${ОБВОД}" stroke-width="5" fill="none" opacity=".15"/>
+      <rect x="0" y="-62" width="20" height="5" rx="2" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".7"/>
+      <path d="M-24 -18 q10 -6 20 0" stroke="#c8b898" stroke-width="3" fill="none"/>
+      ${рычаг}
+      ${ДВИЖ&&о.выстрел?`<circle r="5" fill="#8a8a8a" stroke="${ОБВОД}" stroke-width=".7" opacity="0"><animateMotion path="M20 -80 Q90 -150 170 -60" dur="3s" keyTimes="0;0.12;0.6;1" keyPoints="0;0;1;1" calcMode="linear" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.12;0.58;0.6" dur="3s" repeatCount="indefinite"/></circle>`:''}
+    </g>`;
+  }
+
+  /* ---------- «коготь Архимеда»: противовес, бревно-журавль, цепь, железный захват.
+     (x,y) — ось на стене; длина бревна; угол — подъём бревна (°); цепь — длина цепи ---------- */
+  function коготь(x,y,длина,опц){
+    const о=опц||{}, у=о.угол==null?18:о.угол, цепь=о.цепь||40;
+    const кх=длина*Math.cos(у*Math.PI/180), ку=-длина*Math.sin(у*Math.PI/180);
+    return `<g transform="translate(${x} ${y})">
+      <g>${ДВИЖ&&о.качать!==false?`<animateTransform attributeName="transform" type="rotate" values="0;-5;0" dur="4s" repeatCount="indefinite"/>`:''}
+        <rect x="-30" y="-8" width="20" height="18" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".9"/>
+        <line x1="-20" y1="0" x2="${f(кх)}" y2="${f(ку)}" stroke="url(#рм-мачта)" stroke-width="7" stroke-linecap="round"/>
+        <line x1="-20" y1="0" x2="${f(кх)}" y2="${f(ку)}" stroke="${ОБВОД}" stroke-width="7" stroke-linecap="round" opacity=".15"/>
+        <path d="M${f(кх)} ${f(ку)} V${f(ку+цепь)}" stroke="#4a4e56" stroke-width="2.4" stroke-dasharray="3 1.4"/>
+        <g transform="translate(${f(кх)} ${f(ку+цепь)})">
+          <circle cx="0" cy="0" r="3.4" fill="url(#рм-железо)" stroke="${ОБВОД}" stroke-width=".7"/>
+          ${[-1,0,1].map(с=>`<path d="M0 2 q${с*10} 6 ${с*8} 16 q${-с*2} 4 ${-с*6} 2" stroke="url(#рм-железо)" stroke-width="3.2" fill="none" stroke-linecap="round"/>`).join('')}
+        </g>
+      </g>
+      <circle cx="0" cy="0" r="5" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".8"/>
+    </g>`;
+  }
+
+  /* ---------- восковая табличка писца: рама, тёмный воск, стилос. (x,y) — левый верх ---------- */
+  function восковая(x,y,ш,в,опц){
+    const о=опц||{};
+    return `<g>
+      <rect x="${x+3}" y="${y+5}" width="${ш}" height="${в}" rx="4" fill="#0b1c2a" opacity=".35" filter="url(#рм-мягко)"/>
+      <rect x="${x}" y="${y}" width="${ш}" height="${в}" rx="4" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <rect x="${x+8}" y="${y+8}" width="${ш-16}" height="${в-16}" rx="2" fill="#4a3418" stroke="#2a1a0a" stroke-width="1"/>
+      <rect x="${x+8}" y="${y+8}" width="${ш-16}" height="${в-16}" rx="2" fill="url(#рм-луч)" opacity=".12"/>
+      ${[0.25,0.75].map(t=>`<circle cx="${f(x+4)}" cy="${f(y+в*t)}" r="2" fill="url(#рм-бронза)"/>`).join('')}
+      ${о.стилос===false?'':`<g transform="translate(${x+ш-18} ${y+в+2}) rotate(-24)"><rect x="-2" y="-40" width="4" height="40" rx="2" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".6"/><path d="M-4 -44 h8 l-2 5 h-4z" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".6"/></g>`}
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
     боцман, ящик, стрела, фонарь, трюмы, трюмыОтсеки, пристань, склад, штурвал, рында, доска,
     шторм, молния, дождь, всплеск, вал, каюта, перо, туман, сиракузы, радуга,
-    портик, стела, амфора, весы, гиря, полкаСвитков, свиток, город, архимед, венец, слиток, ванна, сосуд};
+    портик, стела, амфора, весы, гиря, полкаСвитков, свиток, город, архимед, венец, слиток, ванна, сосуд,
+    крепость, галера, катапульта, коготь, восковая};
 })();
