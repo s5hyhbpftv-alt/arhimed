@@ -2928,6 +2928,105 @@
       <rect x="${f(x-4)}" y="${f(y-в*0.42)}" width="${f(ш+8)}" height="5" rx="2.4" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".7"/></g>`;
   }
 
+  /* ---------- циклоп Полифем: косматая голова и плечи великана, один глаз, клыкастый рот.
+     опц.глаз: 'открыт' | 'закрыт' | 'ищет' (зрачок бегает); опц.рука — огромная ладонь шарит рядом;
+     опц.зол — брови сдвинуты. (x,y) — середина низа груди; ширина ~150, высота ~150 ---------- */
+  function циклоп(x,y,м,опц){
+    const о=опц||{}, кл=ид('цикл'), глаз=о.глаз||'открыт';
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <radialGradient id="${кл}" cx="0.4" cy="0.3" r="0.9"><stop offset="0" stop-color="#e0c49a"/><stop offset="1" stop-color="#a8865a"/></radialGradient>
+      <path d="M-74 0 Q-78 -50 -40 -62 Q0 -72 40 -62 Q78 -50 74 0 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.4"/>
+      <path d="M-60 0 Q-40 -34 0 -30 Q40 -34 60 0 Z" fill="#7a5a3a" stroke="${ОБВОД}" stroke-width="1.1"/>
+      ${[[-40,-14],[-20,-22],[0,-24],[20,-22],[40,-14]].map(([sx,sy])=>`<path d="M${sx-7} ${sy} l7 8 l7 -8" stroke="#5a3e24" stroke-width="1.6" fill="none"/>`).join('')}
+      <g>${ДВИЖ?`<animateTransform attributeName="transform" type="rotate" values="0 0 -60;3 0 -60;0 0 -60;-3 0 -60;0 0 -60" dur="5s" repeatCount="indefinite"/>`:''}
+        <path d="M-50 -92 Q-64 -130 -40 -146 Q-44 -158 -28 -156 Q-20 -170 -4 -160 Q10 -172 22 -158 Q40 -162 40 -146 Q62 -132 50 -92 Z" fill="#4a3424" stroke="${ОБВОД}" stroke-width="1.3" stroke-linejoin="round"/>
+        <ellipse cx="-46" cy="-100" rx="9" ry="13" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.1"/><ellipse cx="46" cy="-100" rx="9" ry="13" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.1"/>
+        <ellipse cx="0" cy="-96" rx="44" ry="48" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.4"/>
+        <path d="M-40 -116 Q-30 -146 0 -146 Q30 -146 40 -116 Q20 -130 0 -128 Q-20 -130 -40 -116 Z" fill="#4a3424" stroke="${ОБВОД}" stroke-width="1"/>
+        ${глаз==='закрыт'
+          ? `<path d="M-18 -104 Q0 -94 18 -104" stroke="${ОБВОД}" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M-14 -100 l-3 5 M0 -96 v6 M14 -100 l3 5" stroke="${ОБВОД}" stroke-width="1.4" stroke-linecap="round"/>`
+          : `<ellipse cx="0" cy="-104" rx="19" ry="16" fill="#fffdf4" stroke="${ОБВОД}" stroke-width="1.3"/>
+             <g>${глаз==='ищет'&&ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="-8 0;8 0;-8 0" dur="2.2s" repeatCount="indefinite"/>`:''}<circle cx="0" cy="-103" r="9" fill="#6a9a3a" stroke="${ОБВОД}" stroke-width=".9"/><circle cx="0" cy="-103" r="4.4" fill="#1a120a"/><circle cx="-3" cy="-106" r="2" fill="#fff"/></g>`}
+        <path d="M-24 -${о.зол?122:126} Q0 -${о.зол?112:132} 24 -${о.зол?122:126}" stroke="#2e2014" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M-8 -86 Q0 -74 8 -86 Q4 -78 0 -78 Q-4 -78 -8 -86 Z" fill="#b8905e" stroke="${ОБВОД}" stroke-width="1"/>
+        <path d="M-22 -68 Q0 -${о.зол?62:54} 22 -68 Q0 -${о.зол?66:60} -22 -68 Z" fill="#5a2418" stroke="${ОБВОД}" stroke-width="1.1"/>
+        <path d="M-12 -67 l3 -7 l3 7 M6 -67 l3 -7 l3 7" fill="#fffdf4" stroke="${ОБВОД}" stroke-width=".7"/>
+        <path d="M-30 -60 Q0 -40 30 -60 Q14 -44 0 -44 Q-14 -44 -30 -60 Z" fill="#4a3424" stroke="${ОБВОД}" stroke-width="1"/>
+      </g>
+      ${о.рука?`<g>${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;14 6;0 0;-10 4;0 0" dur="3s" repeatCount="indefinite"/>`:''}
+        <path d="M70 -30 Q96 -20 110 8 L92 14 Q84 -6 64 -12 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <path d="M92 10 q-4 12 4 18 M100 8 q-2 14 6 20 M108 6 q2 14 10 18 M114 2 q6 10 14 12" stroke="url(#${кл})" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M92 10 q-4 12 4 18 M100 8 q-2 14 6 20 M108 6 q2 14 10 18 M114 2 q6 10 14 12" stroke="${ОБВОД}" stroke-width="7" stroke-linecap="round" fill="none" opacity=".15"/></g>`:''}
+    </g>`;
+  }
+  /* ---------- Одиссей: войлочный колпак-пилос, тёмная борода, синий хитон, красный плащ, меч у пояса.
+     поза: 'стоит' | 'указывает' | 'крадётся' (пригнулся). опц.влево. Высота ~116 ---------- */
+  function одиссей(x,y,м,опц){
+    const о=опц||{}, кл=ид('одис'), поза=о.поза||'стоит', крад=поза==='крадётся';
+    const тело='M-16 -78 Q0 -85 16 -78 L19 -36 Q0 -30 -19 -36 Z';
+    const кожа=(d)=>`<path d="${d}" stroke="url(#рм-кожа)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="${d}" stroke="${ОБВОД}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".12"/>`;
+    const кисть=(cx,cy)=>`<circle cx="${cx}" cy="${cy}" r="4.4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>`;
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <ellipse cx="0" cy="1" rx="21" ry="3.6" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <g${крад?' transform="rotate(14 0 -30) translate(0 6)"':''}>
+      <path d="M-15 -76 Q-30 -50 -26 -20 Q-10 -28 -8 -40 Z" fill="#b8321e" stroke="${ОБВОД}" stroke-width="1.1"/>
+      <rect x="-11" y="-38" width="8" height="35" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/><rect x="3" y="-38" width="8" height="35" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <path d="M-14 -2 q0 -5 8 -5 q6 0 6 5 z M1 -2 q0 -5 8 -5 q6 0 6 5 z" fill="#6a4a2a" stroke="${ОБВОД}" stroke-width=".9"/>
+      <path d="M-11 -14 h8 M3 -14 h8 M-11 -22 h8 M3 -22 h8" stroke="#6a4a2a" stroke-width="1.3"/>
+      <clipPath id="${кл}"><path d="${тело}"/></clipPath>
+      ${кожа('M-14 -74 q-9 14 -6 28')}${кисть(-20,-45)}
+      <path d="${тело}" fill="#3a6ab8" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <g clip-path="url(#${кл})"><rect x="-22" y="-88" width="44" height="62" fill="url(#рм-складка)"/>
+        <path d="M-22 -40 Q0 -34 22 -40" stroke="#f0c850" stroke-width="3.6" fill="none"/></g>
+      <path d="M-18 -56 Q0 -51 18 -56" stroke="#5a3a1e" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <g transform="translate(12 -54) rotate(24)"><rect x="-2" y="0" width="4" height="24" rx="1.4" fill="url(#рм-железо)" stroke="${ОБВОД}" stroke-width=".6"/><rect x="-5" y="-3" width="10" height="4" rx="1.4" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".5"/><rect x="-1.6" y="-9" width="3.2" height="7" rx="1" fill="#6a4a2a"/></g>
+      ${поза==='указывает'?`<g>${крутить('0 14 -74;-8 14 -74;0 14 -74','1.6s')}${кожа('M14 -74 L30 -80 L40 -90')}${кисть(41,-91)}</g>`:кожа('M14 -74 q9 14 6 28')+кисть(20,-45)}
+      <rect x="-3.8" y="-85" width="7.6" height="6" fill="url(#рм-кожа)"/>
+      <g transform="translate(0 -98)">
+        <ellipse cx="-14" cy="1" rx="2.9" ry="3.9" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/><ellipse cx="14" cy="1" rx="2.9" ry="3.9" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/>
+        <ellipse cx="0" cy="0" rx="14" ry="15" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <path d="M-13 3 q-1 15 13 16 q14 -1 13 -16 q-5 7 -13 7 q-8 0 -13 -7 z" fill="#3a2a1e" stroke="${ОБВОД}" stroke-width=".9"/>
+        ${лицо(Object.assign({глаза:'#3a4a5a'},о))}
+        <path d="M-6 6.4 q3 -2.6 6 0 q3 -2.6 6 0" stroke="#3a2a1e" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M-15 -5 Q-12 -30 0 -32 Q12 -30 15 -5 Q0 -11 -15 -5 Z" fill="#e8dcc0" stroke="${ОБВОД}" stroke-width="1"/>
+        <path d="M-15 -6 Q0 -12 15 -6" stroke="#b8a888" stroke-width="2" fill="none"/>
+      </g></g>
+    </g>`;
+  }
+  /* ---------- овца: кудрявое руно из завитков, тёмная морда и ноги. опц.снизу — под брюхом
+     видны ноги спрятавшегося человека; опц.поза 'идёт'; опц.влево. (x,y) — середина у копыт ---------- */
+  function овца(x,y,м,опц){
+    const о=опц||{}, идёт=о.поза==='идёт'&&ДВИЖ;
+    const нога=(nx,фаза)=>`<g>${идёт?`<animateTransform attributeName="transform" type="rotate" values="${фаза?12:-12} ${nx+2.5} -20;${фаза?-12:12} ${nx+2.5} -20;${фаза?12:-12} ${nx+2.5} -20" dur="0.7s" repeatCount="indefinite"/>`:''}<rect x="${nx}" y="-22" width="5" height="21" rx="2" fill="#3a3028" stroke="${ОБВОД}" stroke-width=".7"/></g>`;
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <ellipse cx="0" cy="1" rx="30" ry="3.6" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      ${о.снизу?`<path d="M-8 -14 L-10 -2 M2 -14 L4 -2" stroke="url(#рм-кожа)" stroke-width="5" stroke-linecap="round"/><path d="M-14 -1 h8 M0 -1 h8" stroke="#6a4a2a" stroke-width="3" stroke-linecap="round"/><path d="M-16 -22 Q-4 -12 10 -22" stroke="#3a6ab8" stroke-width="7" fill="none" stroke-linecap="round"/>`:''}
+      ${нога(-18,0)}${нога(12,1)}
+      ${[[-18,-32,12],[-4,-38,14],[12,-34,12],[-10,-24,11],[6,-24,11],[-22,-22,9],[18,-24,9],[0,-44,10]].map(([cx,cy,r])=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fbf8f0" stroke="#b8b0a0" stroke-width="1"/>`).join('')}
+      ${[[-14,-34],[2,-40],[-4,-26],[12,-28]].map(([cx,cy])=>`<path d="M${cx-4} ${cy} q4 -5 8 0" stroke="#d0c8b8" stroke-width="1.2" fill="none"/>`).join('')}
+      ${нога(-24,1)}${нога(6,0)}
+      <ellipse cx="28" cy="-36" rx="9" ry="8" fill="#3a3028" stroke="${ОБВОД}" stroke-width="1"/>
+      <ellipse cx="20" cy="-42" rx="5" ry="2.6" fill="#3a3028" stroke="${ОБВОД}" stroke-width=".7" transform="rotate(-30 20 -42)"/>
+      <circle cx="24" cy="-44" r="7" fill="#fbf8f0" stroke="#b8b0a0" stroke-width="1"/>
+      <circle cx="30" cy="-38" r="2.2" fill="#fff"/><circle cx="30.6" cy="-38" r="1.2" fill="#1a120a"/>
+      <path d="M33 -32 q2 1.4 4 0" stroke="#d8a8a0" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    </g>`;
+  }
+  /* ---------- театральная маска: лицо-личина с прорезями глаз и рта, лента. вид: 'комедия' | 'трагедия';
+     цвет — заливка; опц.свет — золотой ореол. (x,y) — центр ---------- */
+  function маска(x,y,м,вид,цвет,опц){
+    const о=опц||{}, ком=вид!=='трагедия', ц=цвет||'#f4ecd8';
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м})">
+      ${о.свет?`<circle cx="0" cy="0" r="26" fill="url(#рм-сияние)" opacity=".9"/>`:''}
+      <path d="M-16 -14 q-8 6 -10 20 M16 -14 q8 6 10 20" stroke="#b8321e" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M-17 -12 Q-18 -22 0 -22 Q18 -22 17 -12 Q18 8 0 20 Q-18 8 -17 -12 Z" fill="${ц}" stroke="${ОБВОД}" stroke-width="1.2"/>
+      <path d="M-13 -12 Q-14 -18 0 -18" stroke="#fff" stroke-width="2" fill="none" opacity=".6"/>
+      <path d="M-12 ${ком?-8:-5} q4 ${ком?-5:3} 8 0 q-4 ${ком?3:4} -8 0 z M4 ${ком?-8:-5} q4 ${ком?-5:3} 8 0 q-4 ${ком?3:4} -8 0 z" fill="#1e140a"/>
+      <path d="M-12 -${ком?13:11} q4 ${ком?-3:-5} 8 ${ком?0:-1} M12 -${ком?13:11} q-4 ${ком?-3:-5} -8 ${ком?0:-1}" stroke="${ОБВОД}" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+      <path d="M-9 ${ком?4:10} Q0 ${ком?16:0} 9 ${ком?4:10} Q0 ${ком?9:6} -9 ${ком?4:10} Z" fill="#1e140a"/>
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -2946,5 +3045,6 @@
     сырок, лиса, ворона, следы,
     диск, силач, стадион, пьедестал,
     молоток, плотник, борей, окно,
-    бык, пастух, абак, изгородь};
+    бык, пастух, абак, изгородь,
+    циклоп, одиссей, овца, маска};
 })();
