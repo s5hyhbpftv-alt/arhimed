@@ -1904,6 +1904,162 @@
     </g>`;
   }
 
+  /* ---------- снегопад: хлопья падают и чуть сносятся ветром ---------- */
+  function снегопад(ш,в,n){
+    return `<g data-декор="1">${Array.from({length:n||28},(_,k)=>{ const x=(k*53+17)%ш, r=0.9+(k%4)*0.45, d=5+(k%5)*1.1, y0=(k*37)%в;
+      return `<circle cx="${x}" cy="${y0}" r="${f(r)}" fill="#fff" opacity="${f(0.55+(k%3)*0.2)}">${ДВИЖ?`<animate attributeName="cy" values="-6;${в+6}" dur="${f(d)}s" begin="-${f(d*y0/в)}s" repeatCount="indefinite"/><animate attributeName="cx" values="${x};${x+8};${x-4};${x}" dur="${f(d*0.8)}s" repeatCount="indefinite"/>`:''}</circle>`; }).join('')}</g>`;
+  }
+
+  /* ---------- акведук: каменные опоры и арки, наверху жёлоб с бегущей водой.
+     (x,y) — левый низ; опц.арок — число пролётов; опц.струя — вода падает с правого края ---------- */
+  function акведук(x,y,ш,в,опц){
+    const о=опц||{}, n=о.арок||Math.max(2,Math.round(ш/46)), шаг=ш/n, оп=шаг*0.18, r=(шаг-2*оп)/2, верх=y-в, ys=Math.min(y-4,верх+16+r);
+    let d=`M${f(x)} ${f(y)} V${f(верх+8)} H${f(x+ш)} V${f(y)} Z`, дуги='', швы='', тени='';
+    for(let k=0;k<n;k++){ const a=x+k*шаг+оп, b=a+2*r, дуга=`M${f(a)} ${f(ys)} A${f(r)} ${f(r)} 0 0 1 ${f(b)} ${f(ys)}`;
+      d+=` M${f(a)} ${f(y)} V${f(ys)} A${f(r)} ${f(r)} 0 0 1 ${f(b)} ${f(ys)} V${f(y)} Z`;
+      дуги+=`<path d="${дуга}" stroke="#8a7656" stroke-width="3.4" fill="none"/><path d="${дуга}" stroke="#f4ead0" stroke-width="1" fill="none" stroke-dasharray="4 3" opacity=".75"/>`; }
+    for(let k=0;k<=n;k++){ const a=Math.max(x,x+k*шаг-оп), b=Math.min(x+ш,x+k*шаг+оп);
+      for(let yy=ys+7;yy<y-3;yy+=9) швы+=`<line x1="${f(a)}" y1="${f(yy)}" x2="${f(b)}" y2="${f(yy)}" stroke="#7a6a4e" stroke-width=".6" opacity=".6"/>`;
+      тени+=`<rect x="${f((a+b)/2)}" y="${f(ys)}" width="${f((b-a)/2)}" height="${f(y-ys)}" fill="#2a1e10" opacity=".16"/>`; }
+    return `<g>
+      <path d="${d}" fill="url(#рм-камень)" fill-rule="evenodd" stroke="${ОБВОД}" stroke-width="1"/>
+      ${тени}${швы}${дуги}
+      <line x1="${f(x)}" y1="${f(верх+15)}" x2="${f(x+ш)}" y2="${f(верх+15)}" stroke="#7a6a4e" stroke-width=".7" opacity=".6"/>
+      <rect x="${f(x-3)}" y="${f(верх)}" width="${f(ш+6)}" height="9" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".9"/>
+      <rect x="${f(x-3)}" y="${f(верх+1.5)}" width="${f(ш+6)}" height="3.4" fill="#5aa8e0"/>
+      <line x1="${f(x-3)}" y1="${f(верх+3.2)}" x2="${f(x+ш+3)}" y2="${f(верх+3.2)}" stroke="#e8f6ff" stroke-width="1.2" stroke-dasharray="8 10" opacity=".9" data-декор="1">${анЛин('stroke-dashoffset','18;0','1.4s')}</line>
+      ${о.струя?`<path d="M${f(x+ш+2)} ${f(верх+3)} q7 2 8 ${f(в-8)}" stroke="#8ccaf0" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-dasharray="7 4" data-декор="1">${анЛин('stroke-dashoffset','11;0','0.5s')}</path>
+        <ellipse cx="${f(x+ш+10)}" cy="${f(y-2)}" rx="9" ry="2.4" fill="none" stroke="#e8f6ff" stroke-width="1.2" data-декор="1">${анЛин('rx','5;12;5','1.2s')}</ellipse>`:''}
+    </g>`;
+  }
+
+  /* ---------- корабль на стапеле: киль на кильблоках, шпангоуты, пояса обшивки снизу вверх,
+     штевни, подпорки и леса с лестницей. (x,y) — середина у земли; опц.обшивка 0..1 — доля
+     готовых поясов из опц.поясов (6); опц.новая — верхний пояс проявляется; опц.леса:false ---------- */
+  function стапель(x,y,ш,в,опц){
+    const о=опц||{}, S=о.поясов||6, есть=Math.max(0,Math.min(S,Math.round((о.обшивка||0)*S))), N=18, n=о.рёбер||11;
+    const xt=(t)=>x-ш/2+ш*t, yK=(t)=>y-12-в*0.5*Math.pow(Math.abs(2*t-1),3), yT=(t)=>y-в+в*0.16*4*t*(1-t);
+    const yj=(t,j)=>yK(t)+(yT(t)-yK(t))*j/S;
+    const линия=(j,обр)=>{ const p=[]; for(let i=0;i<=N;i++){ const t=обр?1-i/N:i/N; p.push(f(xt(t))+' '+f(yj(t,j))); } return p; };
+    const xl=xt(0), xr=xt(1);
+    const рёбра=Array.from({length:n},(_,k)=>{ const t=(k+1)/(n+1);
+      return `<line x1="${f(xt(t))}" y1="${f(yK(t))}" x2="${f(xt(t))}" y2="${f(yT(t)-4)}" stroke="#b88a52" stroke-width="3.2" stroke-linecap="round"/>
+        <line x1="${f(xt(t)+1.4)}" y1="${f(yK(t))}" x2="${f(xt(t)+1.4)}" y2="${f(yT(t)-3)}" stroke="#6a4020" stroke-width=".7" opacity=".7"/>`; }).join('');
+    const пояса=Array.from({length:есть},(_,j)=>{ const новая=о.новая&&j===есть-1&&ДВИЖ;
+      const стыки=[0.22,0.47,0.71].map((t0,q)=>{ const t=t0+((j*0.13+q*0.05)%0.2); return `<line x1="${f(xt(t))}" y1="${f(yj(t,j))}" x2="${f(xt(t))}" y2="${f(yj(t,j+1))}" stroke="${ОБВОД}" stroke-width=".6" opacity=".5"/>`; }).join('');
+      const гвозди=Array.from({length:n},(_,k)=>{ const t=(k+1)/(n+1); return `<circle cx="${f(xt(t))}" cy="${f((yj(t,j)+yj(t,j+1))/2)}" r=".9" fill="#3a2008" opacity=".7"/>`; }).join('');
+      return `<g${новая?' opacity="0"':''}>${новая?`<animate attributeName="opacity" from="0" to="1" dur="0.7s" fill="freeze"/>`:''}
+        <path d="M${линия(j).join(' L')} L${линия(j+1,true).join(' L')} Z" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".8" stroke-linejoin="round"/>${стыки}${гвозди}</g>`; }).join('');
+    const блоки=[0.24,0.37,0.5,0.63,0.76].map(t=>`<rect x="${f(xt(t)-6)}" y="${f(yK(t)+2)}" width="12" height="${f(y-yK(t)-2)}" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".7"/>`).join('');
+    const подпорки=[[0.13,-16],[0.3,-12],[0.7,12],[0.87,16]].map(([t,dx])=>`<line x1="${f(xt(t)+dx)}" y1="${f(y)}" x2="${f(xt(t))}" y2="${f(yj(t,2.4))}" stroke="#8a5a2e" stroke-width="3" stroke-linecap="round"/>`).join('');
+    const леса=о.леса===false?'':`<g>
+        <rect x="${f(xl-16)}" y="${f(y-в-14)}" width="4" height="${f(в+14)}" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".5"/>
+        <rect x="${f(xr+12)}" y="${f(y-в-14)}" width="4" height="${f(в+14)}" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".5"/>
+        <rect x="${f(xl-20)}" y="${f(y-в*0.56)}" width="${f(ш*0.2)}" height="4" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".6"/>
+        <rect x="${f(xr+20-ш*0.2)}" y="${f(y-в*0.56)}" width="${f(ш*0.2)}" height="4" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".6"/>
+        <path d="M${f(xl-6)} ${f(y)} L${f(xl+6)} ${f(y-в*0.56)} M${f(xl+3)} ${f(y)} L${f(xl+15)} ${f(y-в*0.56)}" stroke="#7a4a24" stroke-width="1.6"/>
+        ${[0.15,0.35,0.55,0.75,0.92].map(q=>`<line x1="${f(xl-6+12*q)}" y1="${f(y-в*0.56*q)}" x2="${f(xl+3+12*q)}" y2="${f(y-в*0.56*q)}" stroke="#7a4a24" stroke-width="1.4"/>`).join('')}
+      </g>`;
+    return `<g>
+      <ellipse cx="${f(x)}" cy="${f(y+1)}" rx="${f(ш*0.52)}" ry="5" fill="#231a12" opacity=".3" filter="url(#рм-мягко)"/>
+      ${леса}${блоки}
+      <path d="M${f(xl)} ${f(yK(0))} Q${f(xl-13)} ${f(yT(0)-12)} ${f(xl-3)} ${f(yT(0)-30)} q7 -7 11 1" stroke="#6a4020" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M${f(xr)} ${f(yK(1))} Q${f(xr+11)} ${f(yT(1)-8)} ${f(xr+5)} ${f(yT(1)-26)}" stroke="#6a4020" stroke-width="5" fill="none" stroke-linecap="round"/>
+      ${рёбра}
+      <path d="M${линия(S).join(' L')}" stroke="#7a4a24" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
+      ${пояса}
+      <path d="M${линия(0).join(' L')}" stroke="#4a2a10" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M${линия(0).join(' L')}" stroke="#c89a5a" stroke-width="1" fill="none" opacity=".6" transform="translate(0 -1.6)"/>
+      ${подпорки}
+    </g>`;
+  }
+
+  /* ---------- «Сиракузия»: корабль-великан Гиерона — длинный корпус с цветными поясами и портами,
+     три мачты с полосатыми парусами, башни на носу и корме, палубный павильон с колоннами,
+     бронзовый таран. (x,y) — середина по ватерлинии, нос вправо; опц.качка:false ---------- */
+  function сиракузия(x,y,м,опц){
+    const о=опц||{};
+    const корпус='M-120 -30 Q-130 -54 -112 -64 Q-118 -46 -104 -30 L100 -30 Q118 -30 126 -20 L142 -13 L124 -7 Q112 5 84 5 L-84 5 Q-112 3 -120 -30 Z';
+    const парус=(xm,y1,w,h)=>`<path d="M${xm-w/2} ${y1} Q${xm} ${f(y1+h*0.1)} ${xm+w/2} ${y1} L${f(xm+w*0.46)} ${y1+h} Q${xm+6} ${f(y1+h*1.14)} ${f(xm-w*0.46)} ${y1+h} Z" fill="url(#рм-парус)" stroke="${ОБВОД}" stroke-width=".9"/>
+      ${[-0.3,0,0.3].map(k=>`<path d="M${f(xm+w*k)} ${f(y1+3)} Q${f(xm+w*k+3)} ${f(y1+h*0.6)} ${f(xm+w*k*0.94+2)} ${f(y1+h+2)}" stroke="#7a2a6a" stroke-width="${f(w*0.085)}" fill="none" opacity=".78"/>`).join('')}
+      <rect x="${xm-w/2-3}" y="${y1-1.5}" width="${w+6}" height="3" rx="1.5" fill="#6a4020"/>`;
+    const мачта=(xm,h)=>`<rect x="${xm-2}" y="${-30-h}" width="4" height="${h}" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".6"/>
+      <path d="M${xm+2} ${-30-h} q9 3 16 -1 q-5 7 -16 7z" fill="#b8321e" stroke="${ОБВОД}" stroke-width=".5"/>`;
+    const башня=(bx)=>`<rect x="${bx}" y="-58" width="16" height="24" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".8"/>
+      ${[0,1,2].map(k=>`<rect x="${bx+k*6}" y="-62" width="4" height="4" fill="url(#рм-камень)" stroke="${ОБВОД}" stroke-width=".5"/>`).join('')}
+      <rect x="${bx+6.5}" y="-52" width="3" height="7" rx="1.5" fill="#3a2a1a"/>`;
+    return `<g transform="translate(${x} ${y}) scale(${м})">${о.качка===false?'':качать('0 0;0 2;0 0','4.4s')}
+      <g opacity=".2" transform="translate(0 12) scale(1 -0.4)"><path d="${корпус}" fill="#0b2a4a"/></g>
+      ${мачта(0,122)}${парус(0,-146,60,58)}
+      ${мачта(-70,94)}${парус(-70,-118,48,50)}${мачта(68,88)}${парус(68,-112,44,46)}
+      <path d="M-70 -124 L-116 -40 M68 -118 L118 -36 M0 -152 L-70 -124 M0 -152 L68 -118" stroke="#5a4630" stroke-width=".7" opacity=".7"/>
+      ${башня(-100)}${башня(84)}
+      <rect x="-34" y="-62" width="68" height="28" fill="#f6efe0" stroke="${ОБВОД}" stroke-width=".8"/>
+      <rect x="-30" y="-58" width="60" height="24" fill="#5a4a3a"/>
+      ${[-28,-14,0,14,28].map(cx=>`<rect x="${cx-2.4}" y="-60" width="4.8" height="26" fill="url(#рм-колонна)" stroke="${ОБВОД}" stroke-width=".5"/>`).join('')}
+      <path d="M-38 -62 L0 -76 L38 -62 Z" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <path d="M-30 -63.5 L0 -73 L30 -63.5 Z" fill="#c8603a" opacity=".85"/>
+      <rect x="-106" y="-37" width="212" height="7" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".8"/>
+      ${Array.from({length:26},(_,k)=>`<line x1="${-102+k*8}" y1="-37" x2="${-102+k*8}" y2="-30" stroke="${ОБВОД}" stroke-width=".5" opacity=".5"/>`).join('')}
+      <path d="${корпус}" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width="1.6"/>
+      <rect x="-112" y="-25" width="234" height="3.2" rx="1.6" fill="#e0b030"/>
+      <rect x="-108" y="-13" width="226" height="2.4" rx="1.2" fill="#b8321e"/>
+      ${Array.from({length:16},(_,k)=>`<rect x="${-96+k*13}" y="-20" width="5" height="4.4" rx="1" fill="#1e120a" stroke="#8a6a3a" stroke-width=".5"/>`).join('')}
+      <path d="M-104 -2 Q0 8 104 -2" stroke="#2a1a0e" stroke-width=".8" fill="none" opacity=".5"/>
+      <path d="M126 -20 L142 -13 L124 -7 Z" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <circle cx="112" cy="-17" r="3.2" fill="#fff" stroke="${ОБВОД}" stroke-width=".6"/><circle cx="112.7" cy="-17" r="1.5" fill="#1a120a"/>
+      <path d="M-112 -64 q-9 -4 -6 -13 q7 -6 11 2" stroke="#e0b030" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M144 -2 q10 4 20 0 M-124 4 q-12 4 -24 0" stroke="#e8f6ff" stroke-width="1.4" fill="none" opacity=".8">${анЛин('opacity','0.8;0.2;0.8','2s')}</path>
+    </g>`;
+  }
+
+  /* ---------- полиспаст: два блока со шкивами и три ветви каната между ними;
+     (x1,y1) и (x2,y2) — блоки; опц.тяга — [x,y] свободного конца ---------- */
+  function полиспаст(x1,y1,x2,y2,опц){
+    const о=опц||{}, канат='#e0c890';
+    const блок=(bx,by)=>`<g><ellipse cx="${bx}" cy="${by}" rx="6.5" ry="8.5" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".9"/>
+      <circle cx="${bx}" cy="${by}" r="4" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".6"/><circle cx="${bx}" cy="${by}" r="1.2" fill="#3a2008"/></g>`;
+    return `<g>
+      ${[-3.4,0,3.4].map(k=>`<line x1="${f(x1)}" y1="${f(y1+k)}" x2="${f(x2)}" y2="${f(y2+k)}" stroke="${канат}" stroke-width="1.3"/>`).join('')}
+      ${о.тяга?`<path d="M${f(x1)} ${f(y1+4)} Q${f((x1+о.тяга[0])/2)} ${f(Math.max(y1,о.тяга[1])+8)} ${f(о.тяга[0])} ${f(о.тяга[1])}" stroke="${канат}" stroke-width="1.7" fill="none" stroke-linecap="round"/>`:''}
+      ${блок(x1,y1)}${блок(x2,y2)}
+    </g>`;
+  }
+
+  /* ---------- плащ на шесте и палатка из того же сукна (плащ-палатка); (x,y) — середина низа ---------- */
+  const ХАКИ = (кл) => `<linearGradient id="${кл}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8a868"/><stop offset=".55" stop-color="#8a8a50"/><stop offset="1" stop-color="#5e5e34"/></linearGradient>`;
+  function плащ(x,y,м){
+    const кл=ид('хаки');
+    return `<g transform="translate(${x} ${y}) scale(${м})">${ХАКИ(кл)}
+      <ellipse cx="2" cy="1" rx="26" ry="3.6" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <rect x="-2.5" y="-100" width="5" height="100" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".6"/>
+      <rect x="-24" y="-84" width="48" height="4" rx="2" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".6"/>
+      <path d="M-24 -82 Q0 -92 24 -82 L32 -10 Q20 -2 8 -8 Q0 -2 -8 -8 Q-20 -2 -32 -10 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.2"/>
+      <path d="M-12 -80 Q-16 -40 -18 -8 M0 -84 Q2 -44 0 -8 M12 -80 Q18 -40 20 -8" stroke="#4a4a26" stroke-width="1.2" fill="none" opacity=".6"/>
+      <path d="M-18 -78 Q-22 -44 -26 -12" stroke="#d0d090" stroke-width="2" fill="none" opacity=".55"/>
+      <path d="M-11 -84 Q0 -108 11 -84 Q0 -76 -11 -84 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M-5 -86 Q0 -98 5 -86" stroke="#3a3a1e" stroke-width="1" fill="none" opacity=".6"/>
+      <circle cx="0" cy="-76" r="2.6" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".6"/>
+    </g>`;
+  }
+  function палатка(x,y,м){
+    const кл=ид('хаки');
+    return `<g transform="translate(${x} ${y}) scale(${м})">${ХАКИ(кл)}
+      <ellipse cx="22" cy="1" rx="66" ry="5" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <line x1="0" y1="-64" x2="-56" y2="0" stroke="#d8c08a" stroke-width="1.2"/><line x1="58" y1="-54" x2="104" y2="0" stroke="#d8c08a" stroke-width="1.2"/>
+      <rect x="-59" y="-5" width="3" height="7" fill="#6a4020"/><rect x="103" y="-5" width="3" height="7" fill="#6a4020"/>
+      <path d="M0 -64 L58 -54 L86 0 L34 0 Z" fill="#5e5e34" stroke="${ОБВОД}" stroke-width="1.1"/>
+      <path d="M18 -60 L56 0 M38 -57 L72 0" stroke="#3a3a1e" stroke-width=".8" opacity=".6"/>
+      <path d="M-34 0 L0 -64 L34 0 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.2"/>
+      <path d="M-12 0 L0 -42 L12 0 Z" fill="#1e140a"/>
+      <path d="M0 -42 L12 0 L22 0 Q14 -22 0 -42 Z" fill="#b8b878" stroke="${ОБВОД}" stroke-width=".7"/>
+      <path d="M-24 -18 L-10 -44 M0 -64 L0 -42" stroke="#3a3a1e" stroke-width=".8" opacity=".55"/>
+      <path d="M-28 -4 L-4 -50" stroke="#d8d8a0" stroke-width="2" opacity=".5"/>
+      <rect x="-1.5" y="-72" width="3" height="10" fill="#6a4020"/><rect x="56.5" y="-61" width="3" height="9" fill="#6a4020"/>
+      <circle cx="0" cy="-56" r="2.2" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".5"/>
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -1912,5 +2068,6 @@
     портик, стела, амфора, весы, гиря, полкаСвитков, свиток, город, архимед, венец, слиток, ванна, сосуд,
     крепость, галера, катапульта, коготь, восковая, винт, лира, ведро, листок, кольцо, театр,
     пиршество, гусли, сосна, белка, кольчуга, кафтан,
-    трон, меч, гусь, конь, медведь, баклуши, воин, сфера, цветы, амфораМузей, витрина, подснежник, этна};
+    трон, меч, гусь, конь, медведь, баклуши, воин, сфера, цветы, амфораМузей, витрина, подснежник, этна,
+    снегопад, акведук, стапель, сиракузия, полиспаст, плащ, палатка};
 })();
