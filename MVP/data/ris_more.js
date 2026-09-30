@@ -3101,6 +3101,97 @@
     </g>`;
   }
 
+  /* ---------- гребец крупно: сидит на банке, тянет весло; туника и повязка цвета команды.
+     опц.цвет — [светлый, тёмный]; опц.гребёт:false — сидит спокойно; опц.влево.
+     (x,y) — сиденье; высота ~70 над сиденьем ---------- */
+  function гребец(x,y,м,опц){
+    const о=опц||{}, кл=ид('греб'), ц=о.цвет||['#c8402a','#7a1a0e'], греб=о.гребёт!==false&&ДВИЖ;
+    const тяга=греб?`<animateTransform attributeName="transform" type="rotate" values="-16 0 -34;18 0 -34;-16 0 -34" dur="1.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/>`:'';
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <linearGradient id="${кл}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${ц[0]}"/><stop offset="1" stop-color="${ц[1]}"/></linearGradient>
+      <rect x="-20" y="-3" width="40" height="6" rx="2" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <path d="M-4 -4 L20 -6 L22 14" stroke="url(#рм-кожа)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M22 14 h8" stroke="#6a4a2a" stroke-width="5" stroke-linecap="round"/>
+      <g>${тяга}
+        <path d="M-12 -40 Q0 -46 12 -40 L14 -4 Q0 0 -14 -4 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.1"/>
+        <path d="M-12 -40 Q-4 -30 -6 -12" stroke="#fff" stroke-width="1.4" fill="none" opacity=".35"/>
+        <path d="M10 -36 L30 -30 L38 -30" stroke="url(#рм-кожа)" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="39" cy="-30" r="4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>
+        <path d="M32 -40 L60 20" stroke="#8a5a2e" stroke-width="3.6" stroke-linecap="round"/>
+        <path d="M54 8 L66 34 L58 36 L50 12 Z" fill="#a8703a" stroke="${ОБВОД}" stroke-width=".8"/>
+        <rect x="-3" y="-47" width="6" height="6" fill="url(#рм-кожа)"/>
+        <g transform="translate(0 -58)">
+          <ellipse cx="0" cy="0" rx="11" ry="12" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.1"/>
+          <path d="M-11 -2 q-1 -12 11 -12 q12 0 11 12 q-4 -6 -11 -6 q-7 0 -11 6 z" fill="${о.волосы||'#4a3020'}" stroke="${ОБВОД}" stroke-width=".8"/>
+          <path d="M-11 -4 q11 -6 22 0" stroke="${ц[0]}" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="4" cy="1" r="1.6" fill="#1a120a"/><path d="M2 -3 l4 -1" stroke="#3a2418" stroke-width="1.1" stroke-linecap="round"/>
+          <path d="M3 7 q3 1 5 -1" stroke="${ОБВОД}" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <path d="M-4 3 q-2 3 0 5" stroke="#d8906a" stroke-width="1" fill="none"/>
+        </g>
+      </g>
+    </g>`;
+  }
+  /* ---------- келевст — задаёт гребцам ритм: стоит у барабана и бьёт колотушками; на барабане
+     надпись. опц.цвет — туника; опц.надпись; опц.влево. Высота ~112 ---------- */
+  function келевст(x,y,м,опц){
+    const о=опц||{}, ц=о.цвет||['#c8402a','#7a1a0e'], кл=ид('келев');
+    const бьёт=(фаза)=>ДВИЖ&&о.бьёт!==false?`<animateTransform attributeName="transform" type="rotate" values="${фаза?'-30':'10'} ${фаза?14:-14} -72;${фаза?'10':'-30'} ${фаза?14:-14} -72;${фаза?'-30':'10'} ${фаза?14:-14} -72" dur="0.8s" repeatCount="indefinite"/>`:'';
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <linearGradient id="${кл}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${ц[0]}"/><stop offset="1" stop-color="${ц[1]}"/></linearGradient>
+      <ellipse cx="0" cy="1" rx="30" ry="3.6" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <rect x="-10" y="-38" width="8" height="35" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/><rect x="2" y="-38" width="8" height="35" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <path d="M-13 -2 q0 -5 8 -5 q6 0 6 5 z M0 -2 q0 -5 8 -5 q6 0 6 5 z" fill="#6a4a2a" stroke="${ОБВОД}" stroke-width=".9"/>
+      <path d="M-16 -78 Q0 -84 16 -78 L19 -36 Q0 -30 -19 -36 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.2"/>
+      <path d="M-18 -56 Q0 -51 18 -56" stroke="#e0b030" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g transform="translate(0 -26)">
+        <rect x="-24" y="-10" width="48" height="24" rx="3" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width="1"/>
+        ${[-18,-9,0,9,18].map(zx=>`<path d="M${zx} -10 l4.5 24" stroke="#e0c890" stroke-width="1.2"/>`).join('')}
+        <ellipse cx="0" cy="-10" rx="24" ry="6" fill="#f0dcb0" stroke="${ОБВОД}" stroke-width="1"/>
+        ${о.надпись?`<text x="0" y="-7.5" text-anchor="middle" font-size="8" font-weight="bold" fill="#5a3a10" font-family="Georgia,serif">${о.надпись}</text>`:''}
+      </g>
+      <g>${бьёт(0)}<path d="M-14 -72 L-24 -56 L-16 -44" stroke="url(#рм-кожа)" stroke-width="6.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M-16 -44 L-6 -40" stroke="#6a4020" stroke-width="2.4" stroke-linecap="round"/><circle cx="-5" cy="-40" r="3" fill="#e8dcc0" stroke="${ОБВОД}" stroke-width=".7"/></g>
+      <g>${бьёт(1)}<path d="M14 -72 L24 -56 L16 -44" stroke="url(#рм-кожа)" stroke-width="6.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M16 -44 L6 -40" stroke="#6a4020" stroke-width="2.4" stroke-linecap="round"/><circle cx="5" cy="-40" r="3" fill="#e8dcc0" stroke="${ОБВОД}" stroke-width=".7"/></g>
+      <rect x="-3.6" y="-85" width="7.2" height="6" fill="url(#рм-кожа)"/>
+      <g transform="translate(0 -97)">
+        <ellipse cx="0" cy="0" rx="14" ry="15" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <path d="M-13 4 q0 13 13 14 q13 -1 13 -14 q-5 6 -13 6 q-8 0 -13 -6 z" fill="#8a8274" stroke="${ОБВОД}" stroke-width=".9"/>
+        ${лицо(Object.assign({глаза:'#3a2a1a',рот:'о'},о))}
+        <path d="M-14 -3 q-2 -14 12 -15 q14 -2 16 11 q-4 -6 -10 -6 q-6 2 -18 10 z" fill="#8a8274" stroke="${ОБВОД}" stroke-width=".9"/>
+        <path d="M-13.6 -6 q14 -8 27.6 -1" stroke="${ц[0]}" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </g>
+    </g>`;
+  }
+  /* ---------- гоночная ладья: длинный корпус с полосой цвета команды, парус с надписью, ряд гребцов
+     над бортом, вёсла, флажок, барабанщик на корме. (x,y) — середина по ватерлинии, нос вправо.
+     опц.цвет — [светлый, тёмный]; опц.надпись — на парусе; опц.гребцов (5); опц.пустое — одно место
+     свободно (номер); опц.гребут:false ---------- */
+  function ладья(x,y,м,опц){
+    const о=опц||{}, ц=о.цвет||['#c8402a','#7a1a0e'], n=о.гребцов||5, греб=о.гребут!==false&&ДВИЖ;
+    const корпус='M-96 -18 Q-104 -34 -92 -40 Q-96 -28 -86 -18 L86 -18 Q100 -18 106 -10 L120 -6 L104 -2 Q96 6 72 6 L-70 6 Q-92 4 -96 -18 Z';
+    const гребцы=о.безГребцов?'':Array.from({length:n},(_,k)=>{ const gx=-66+k*(132/(n-1)); if(о.пустое===k) return `<circle cx="${gx}" cy="-30" r="6" fill="none" stroke="#fff4c0" stroke-width="1.6" stroke-dasharray="3 2"/>`;
+      return `<g><g>${греб?`<animateTransform attributeName="transform" type="translate" values="-3 0;3 0;-3 0" dur="1.6s" repeatCount="indefinite" begin="${(k*0.05).toFixed(2)}s"/>`:''}
+        <path d="M${gx-6} -18 Q${gx} -32 ${gx+6} -18 Z" fill="${ц[0]}" stroke="${ОБВОД}" stroke-width=".7"/>
+        <circle cx="${gx}" cy="-34" r="5" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/><path d="M${gx-5} -35 q5 -4 10 0" stroke="${ц[0]}" stroke-width="2" fill="none"/></g></g>`; }).join('');
+    const вёсла=о.безГребцов?'':Array.from({length:n},(_,k)=>{ const gx=-66+k*(132/(n-1)); if(о.пустое===k) return '';
+      return `<g transform="translate(${f(gx+4)} -14)">${греб?`<animateTransform attributeName="transform" type="rotate" values="-18;16;-18" dur="1.6s" repeatCount="indefinite" additive="sum"/>`:''}<line x1="0" y1="0" x2="-14" y2="30" stroke="#8a5a2e" stroke-width="2.2"/><path d="M-16 26 L-20 36 L-12 36 L-11 28 Z" fill="#a8703a"/></g>`; }).join('');
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <g opacity=".22" transform="translate(0 10) scale(1 -0.4)"><path d="${корпус}" fill="#0b2a4a"/></g>
+      ${вёсла}
+      <rect x="-2.5" y="-112" width="5" height="96" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".7"/>
+      <path d="M-40 -106 Q0 -98 40 -106 L38 -52 Q0 -44 -38 -52 Z" fill="#f4ead0" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M-40 -106 Q0 -98 40 -106 L39 -94 Q0 -86 -39 -94 Z" fill="${ц[0]}" opacity=".85"/><path d="M-38 -60 Q0 -52 38 -60 L38 -52 Q0 -44 -38 -52 Z" fill="${ц[0]}" opacity=".85"/>
+      <rect x="-43" y="-108" width="86" height="4" rx="2" fill="#6a4020"/>
+      ${о.надпись?`<text x="0" y="-70" text-anchor="middle" font-size="${о.надпись.length>4?14:18}" font-weight="bold" fill="${ц[1]}" font-family="Georgia,serif" transform="${о.влево?'scale(-1 1)':''}">${о.надпись}</text>`:''}
+      <path d="M2.5 -112 q14 3 22 -1 q-6 8 -22 8 z" fill="${ц[0]}" stroke="${ОБВОД}" stroke-width=".6">${анЛин('d','M2.5 -112 q14 3 22 -1 q-6 8 -22 8 z;M2.5 -112 q14 -2 22 2 q-8 6 -22 6 z;M2.5 -112 q14 3 22 -1 q-6 8 -22 8 z','1.2s')}</path>
+      ${гребцы}
+      <path d="${корпус}" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width="1.5"/>
+      <path d="M-86 -12 H104" stroke="${ц[0]}" stroke-width="4"/><path d="M-84 -5 H100" stroke="#e0b030" stroke-width="1.6"/>
+      <path d="M104 -10 L120 -6 L104 -2 Z" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <circle cx="94" cy="-8" r="2.6" fill="#fff" stroke="${ОБВОД}" stroke-width=".5"/><circle cx="94.5" cy="-8" r="1.2" fill="#1a120a"/>
+      <path d="M122 0 q10 4 20 0" stroke="#e8f6ff" stroke-width="1.4" fill="none" opacity=".8">${анЛин('opacity','0.8;0.2;0.8','1s')}</path>
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -3121,5 +3212,6 @@
     молоток, плотник, борей, окно,
     бык, пастух, абак, изгородь,
     циклоп, одиссей, овца, маска,
-    шестерня, автомат};
+    шестерня, автомат,
+    гребец, келевст, ладья};
 })();
