@@ -2384,18 +2384,18 @@
         ${ноги}
         <clipPath id="${кл}"><path d="${хитон}"/></clipPath>
         ${рукаЛ}
-        <path d="${хитон}" fill="#c8402a" stroke="${ОБВОД}" stroke-width="1.3"/>
+        <path d="${хитон}" fill="${о.хитон||'#c8402a'}" stroke="${ОБВОД}" stroke-width="1.3"/>
         <g clip-path="url(#${кл})"><rect x="-20" y="-84" width="40" height="52" fill="url(#рм-складка)"/>
-          <path d="M-5 -56 Q-7 -46 -8 -38 M5 -56 Q6 -46 8 -38" stroke="#7a1a0e" stroke-width="1" fill="none" opacity=".7"/>
+          <path d="M-5 -56 Q-7 -46 -8 -38 M5 -56 Q6 -46 8 -38" stroke="#2a1a12" stroke-width="1" fill="none" opacity=".45"/>
           <path d="M-20 -43 Q0 -37 20 -43" stroke="#f0c850" stroke-width="3.4" fill="none"/></g>
         <path d="M-15 -58 Q0 -54 15 -58" stroke="#fffaf0" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M-10 -78 Q0 -69 10 -78" stroke="#7a1a0e" stroke-width="1.2" fill="none"/>
+        <path d="M-10 -78 Q0 -69 10 -78" stroke="#2a1a12" stroke-width="1.2" fill="none" opacity=".6"/>
         ${рукаП}
         <rect x="-3.4" y="-83" width="6.8" height="6" fill="url(#рм-кожа)"/>
         <g transform="translate(0 -95)">
           <ellipse cx="-13.5" cy="1" rx="2.8" ry="3.8" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/><ellipse cx="13.5" cy="1" rx="2.8" ry="3.8" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/>
           <ellipse cx="0" cy="0" rx="13.5" ry="14.5" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
-          <path d="M-14 -2 q-3 -15 11 -17 q14 -3 17 9 q1 4 0 8 q-3 -7 -7 -8 q-3 3 -7 1 q-4 3 -8 1 q-3 1 -6 6 z" fill="#5a3a1e" stroke="${ОБВОД}" stroke-width=".9"/>
+          <path d="M-14 -2 q-3 -15 11 -17 q14 -3 17 9 q1 4 0 8 q-3 -7 -7 -8 q-3 3 -7 1 q-4 3 -8 1 q-3 1 -6 6 z" fill="${о.волосы||'#5a3a1e'}" stroke="${ОБВОД}" stroke-width=".9"/>
           ${[[-8,-13],[-2,-16],[5,-15],[10,-11]].map(([hx,hy])=>`<path d="M${hx} ${hy} q3 -3 5 0" stroke="#8a6238" stroke-width="1.2" fill="none"/>`).join('')}
           <path d="M-13.4 -7 q13 -8 27 -1" stroke="#fffaf0" stroke-width="3" fill="none" stroke-linecap="round"/>
           <path d="M-13 -6 q-6 2 -8 9 M-13 -5 q-3 5 -3 11" stroke="#fffaf0" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -2690,6 +2690,74 @@
         <ellipse cx="0" cy="2" rx="3" ry="2.6" fill="${ц}"/>${[[-3.4,-1.6],[-1.2,-3.6],[1.2,-3.6],[3.4,-1.6]].map(([tx,ty])=>`<ellipse cx="${tx}" cy="${ty}" rx="1.2" ry="1.6" fill="${ц}"/>`).join('')}</g>`; }).join('')}</g>`;
   }
 
+  /* ---------- бронзовый диск для метания; (x,y) — центр ---------- */
+  function диск(x,y,м){
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м})"><ellipse cx="0" cy="0" rx="11" ry="4.6" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".9"/><ellipse cx="0" cy="-1" rx="7" ry="2.2" fill="none" stroke="#f8dcb0" stroke-width=".8" opacity=".7"/></g>`;
+  }
+  /* ---------- силач Милон: огромные плечи, лысина и усы, шкура через плечо, широкий пояс.
+     поза: 'стоит' | 'поднял' — держит над головой камень; опц.камень 0..2 — размер камня.
+     Высота ~118 (с камнем выше) ---------- */
+  function силач(x,y,м,опц){
+    const о=опц||{}, кл=ид('силач'), поднял=(о.поза||'стоит')==='поднял', к=о.камень||0, rk=15+к*6;
+    const тело='M-30 -84 Q0 -94 30 -84 Q34 -62 22 -40 Q0 -34 -22 -40 Q-34 -62 -30 -84 Z';
+    const рука=(d,w)=>`<path d="${d}" stroke="url(#рм-кожа)" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="${d}" stroke="${ОБВОД}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".12"/>`;
+    const кулак=(cx,cy)=>`<circle cx="${cx}" cy="${cy}" r="6.4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".9"/>`;
+    const руки = поднял
+      ? `${рука('M-27 -80 L-36 -104 L-24 -124',13)}${кулак(-24,-126)}${рука('M27 -80 L36 -104 L24 -124',13)}${кулак(24,-126)}
+         <g>${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;0 -3;0 0" dur="1.6s" repeatCount="indefinite"/>`:''}
+           <path d="M${-rk-10} -132 Q${-rk-14} ${-150-rk} 0 ${-152-rk*1.3} Q${rk+14} ${-150-rk} ${rk+10} -132 Q0 -124 ${-rk-10} -132 Z" fill="url(#рм-скала)" stroke="${ОБВОД}" stroke-width="1.2"/>
+           <path d="M${-rk} ${-142-rk*0.5} l${rk*0.6} -6 M${rk*0.2} ${-140-rk} l${rk*0.5} 8" stroke="${ОБВОД}" stroke-width="1" opacity=".5"/></g>`
+      : `${рука('M-27 -80 L-40 -62 L-34 -46',13)}${кулак(-34,-44)}${рука('M27 -80 L40 -62 L34 -46',13)}${кулак(34,-44)}`;
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <ellipse cx="0" cy="1" rx="30" ry="4" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <path d="M-15 -40 L-17 -5 h13 L-2 -32 L2 -32 L4 -5 h13 L15 -40 Z" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M-20 -3 q0 -7 10 -7 q8 0 8 7 z M2 -3 q0 -7 10 -7 q8 0 8 7 z" fill="#6a4a2a" stroke="${ОБВОД}" stroke-width=".9"/>
+      <clipPath id="${кл}"><path d="${тело}"/></clipPath>
+      <path d="${тело}" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <g clip-path="url(#${кл})">
+        <path d="M-34 -92 L10 -38 L36 -38 L36 -60 L-8 -96 Z" fill="#d8a040" stroke="${ОБВОД}" stroke-width="1"/>
+        ${[[-14,-74],[-2,-60],[10,-48],[-20,-84],[18,-56],[4,-70]].map(([sx,sy])=>`<ellipse cx="${sx}" cy="${sy}" rx="3" ry="2.2" fill="#5a3414" transform="rotate(40 ${sx} ${sy})"/>`).join('')}
+        <path d="M-12 -70 q-6 4 -12 0 M0 -62 v14" stroke="#c89a7a" stroke-width="1.2" fill="none" opacity=".7"/></g>
+      <path d="M-23 -44 Q0 -36 23 -44 L22 -34 Q0 -27 -22 -34 Z" fill="#7a4a20" stroke="${ОБВОД}" stroke-width="1"/>
+      <rect x="-6" y="-42" width="12" height="10" rx="2" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <path d="M-22 -36 Q0 -28 22 -36 L20 -22 Q0 -16 -20 -22 Z" fill="#a0402a" stroke="${ОБВОД}" stroke-width="1"/>
+      ${руки}
+      <rect x="-6" y="-94" width="12" height="8" fill="url(#рм-кожа)"/>
+      <g transform="translate(0 -106)">
+        <ellipse cx="-14.5" cy="1" rx="3" ry="4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/><ellipse cx="14.5" cy="1" rx="3" ry="4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/>
+        <ellipse cx="0" cy="0" rx="14.5" ry="15" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <ellipse cx="-4" cy="-9" rx="5" ry="2.4" fill="#fff" opacity=".4"/>
+        ${лицо(Object.assign({глаза:'#3a2a1a'},о))}
+        <path d="M-10 6 Q-5 2 0 6 Q5 2 10 6 Q6 10 0 8 Q-6 10 -10 6 Z" fill="#3a2418" stroke="${ОБВОД}" stroke-width=".7"/>
+        <path d="M-9 -8 q4 -3 8 -1 M1 -9 q4 -2 8 1" stroke="#3a2418" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+    </g>`;
+  }
+  /* ---------- стадион: небо, каменные ряды со зрителями, песчаная дорожка с разметкой.
+     y0 — верх дорожки; опц.дорожек — число линий ---------- */
+  function стадион(ш,Н,y0,опц){
+    const о=опц||{}, ряды=4, в=(y0-40)/ряды, n=о.дорожек||0;
+    const зрит=(ry,k)=>Array.from({length:Math.floor(ш/13)},(_,i)=>{ const zx=6+i*13+(k%2)*6; return `<circle cx="${zx}" cy="${f(ry-5)}" r="3.6" fill="${['#e8c8a0','#d8b088','#f0d4b0'][(i+k)%3]}"/><rect x="${zx-4}" y="${f(ry-2)}" width="8" height="6" rx="2" fill="${['#c8402a','#2a6ab8','#e8e0d0','#4a8a5a','#e0a030','#8a44aa'][(i*7+k*3)%6]}"/>`; }).join('');
+    return `<g data-декор="1">${небо(ш,44,{облака:о.облака||[[70,20,0.45,6],[260,16,0.4,-5]]})}
+      ${Array.from({length:ряды},(_,k)=>{ const ry=40+k*в; return `<rect x="0" y="${f(ry)}" width="${ш}" height="${f(в)}" fill="${k%2?'#e0d4b8':'#d2c4a4'}" stroke="#a89a7c" stroke-width=".6"/>${зрит(ry+в-2,k)}`; }).join('')}
+      <rect x="0" y="${f(y0-5)}" width="${ш}" height="6" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <rect x="0" y="${y0}" width="${ш}" height="${Н-y0}" fill="url(#рм-песок)"/>
+      ${Array.from({length:n},(_,k)=>`<line x1="0" y1="${f(y0+(Н-y0)*(k+1)/(n+1))}" x2="${ш}" y2="${f(y0+(Н-y0)*(k+1)/(n+1))}" stroke="#fff" stroke-width="1.4" stroke-dasharray="10 8" opacity=".7"/>`).join('')}
+    </g>`;
+  }
+  /* ---------- пьедестал: три мраморные ступени — I в центре, II слева, III справа.
+     (x,y) — середина низа; ш — ширина одной ступени ---------- */
+  function пьедестал(x,y,ш,опц){
+    const о=опц||{}, в=[о.в1||66,о.в2||46,о.в3||30];
+    const ступень=(sx,h,цифра,цв)=>`<rect x="${f(sx-ш/2)}" y="${f(y-h)}" width="${ш}" height="${h}" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width="1.1"/>
+      <rect x="${f(sx+ш*0.22)}" y="${f(y-h)}" width="${f(ш*0.28)}" height="${h}" fill="#8a7a5a" opacity=".18"/>
+      <rect x="${f(sx-ш/2-2)}" y="${f(y-h-4)}" width="${ш+4}" height="5" fill="#f6efe0" stroke="${ОБВОД}" stroke-width=".8"/>
+      <circle cx="${f(sx)}" cy="${f(y-h/2+2)}" r="${f(Math.min(10,h*0.3))}" fill="${цв}" stroke="${ОБВОД}" stroke-width=".9"/>
+      <text x="${f(sx)}" y="${f(y-h/2+6)}" text-anchor="middle" font-size="${f(Math.min(11,h*0.34))}" font-weight="bold" fill="#3a2008" font-family="Georgia,serif">${цифра}</text>`;
+    return `<g><ellipse cx="${f(x+4)}" cy="${f(y+2)}" rx="${f(ш*1.6)}" ry="4.4" fill="#231a12" opacity=".3" filter="url(#рм-мягко)"/>
+      ${ступень(x-ш,в[1],'II','#d8d8e0')}${ступень(x+ш,в[2],'III','#d8a070')}${ступень(x,в[0],'I','#ffd24a')}</g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -2705,5 +2773,6 @@
     девочка, ослик, сова, домик,
     пламя, факел, бегун, коза, сеятель, клепсидра, жертвенник,
     плод, нож, торговец,
-    сырок, лиса, ворона, следы};
+    сырок, лиса, ворона, следы,
+    диск, силач, стадион, пьедестал};
 })();
