@@ -2136,6 +2136,49 @@
     </g>`;
   }
 
+  /* ---------- чертёж на песке: бороздка с тенью и светлой кромкой. d — путь;
+     опц.рисуется — линия проводится один раз; опц.задержка, опц.толщ, опц.цвет ---------- */
+  function бороздка(d,опц){
+    const о=опц||{}, w=о.толщ||2.6, рис=о.рисуется&&ДВИЖ;
+    const ан=рис?`<animate attributeName="stroke-dashoffset" from="1" to="0" begin="${f(о.задержка||0)}s" dur="${f(о.длит||0.9)}s" fill="freeze"/>`:'';
+    const доп=рис?' pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"':'';
+    return `<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="${d}" stroke="#fff6d8" stroke-width="${f(w*0.55)}" opacity=".8" transform="translate(1 1.6)"${доп}>${ан}</path>
+      <path d="${d}" stroke="${о.цвет||'#946c38'}" stroke-width="${f(w)}"${доп}>${ан}</path></g>`;
+  }
+  function кругПесок(cx,cy,r,опц){
+    return бороздка(`M${f(cx-r)} ${f(cy)} a${f(r)} ${f(r)} 0 1 1 ${f(2*r)} 0 a${f(r)} ${f(r)} 0 1 1 ${f(-2*r)} 0`,опц);
+  }
+  /* ---------- прибой: вода от верха кадра до фронта y, пенная кромка дышит ---------- */
+  function прибой(y,ш,опц){
+    const о=опц||{}, верх=о.верх||0;
+    let фронт=`M${ш+42} ${y}`; for(let x=ш+42;x>-42;x-=42) фронт+=` q-10.5 9 -21 0 t-21 0`;
+    return `<g data-декор="1">${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;-8 5;0 0" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/>`:''}
+      <path d="${фронт} V${верх} H${ш+42} Z" fill="#e8d2a0" opacity=".55" transform="translate(0 9)"/>
+      <path d="${фронт} V${верх} H${ш+42} Z" fill="url(#рм-море)"/>
+      <path d="${фронт}" stroke="#bfe6fa" stroke-width="9" fill="none" opacity=".55" transform="translate(0 -5)"/>
+      <path d="${фронт}" stroke="#fff" stroke-width="4.4" fill="none" stroke-linecap="round"/>
+      <path d="${фронт}" stroke="#fff" stroke-width="1.6" fill="none" opacity=".6" stroke-dasharray="10 14" transform="translate(6 -13)"/>
+      ${Array.from({length:12},(_,k)=>`<circle cx="${(k*31+9)%ш}" cy="${f(y+2+(k%3)*2.4)}" r="${f(1+(k%3)*0.5)}" fill="#fff" opacity=".85"/>`).join('')}
+    </g>`;
+  }
+  /* ---------- остракон: глиняный черепок для записи; (x,y) — центр, вид 0..2 — форма излома;
+     опц.цвет — заливка поверх глины, опц.трещина ---------- */
+  function черепок(x,y,м,вид,опц){
+    const о=опц||{};
+    const формы=['M-46 -14 L-30 -22 L8 -20 L40 -24 L48 -6 L44 16 L10 22 L-24 18 L-44 20 L-50 2 Z',
+                 'M-48 -18 L-10 -22 L30 -18 L50 -10 L46 14 L20 22 L-18 20 L-46 14 Z',
+                 'M-44 -20 L-4 -18 L26 -24 L48 -14 L50 12 L28 20 L-10 24 L-40 16 L-50 -4 Z'];
+    const p=формы[(вид||0)%3];
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м})">
+      <path d="${p}" fill="#231a12" opacity=".3" transform="translate(3 4)" filter="url(#рм-мягко)"/>
+      <path d="${p}" fill="url(#рм-глина)" stroke="${ОБВОД}" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="${p}" fill="${о.цвет||'#f4d8b0'}" opacity="${о.цвет?0.78:0.5}" transform="scale(.9)"/>
+      <path d="M-38 -12 Q0 -17 40 -13" stroke="#fff" stroke-width="1.6" fill="none" opacity=".35"/>
+      ${о.трещина?`<path d="M-8 -20 l6 12 l-7 9 l8 10 l-4 10" stroke="${ОБВОД}" stroke-width="1.4" fill="none"/>`:''}
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -2146,5 +2189,6 @@
     пиршество, гусли, сосна, белка, кольчуга, кафтан,
     трон, меч, гусь, конь, медведь, баклуши, воин, сфера, цветы, амфораМузей, витрина, подснежник, этна,
     снегопад, акведук, стапель, сиракузия, полиспаст, плащ, палатка,
-    знамя, высотка, плотина};
+    знамя, высотка, плотина,
+    бороздка, кругПесок, прибой, черепок};
 })();
