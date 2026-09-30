@@ -66,6 +66,7 @@
     <linearGradient id="рл-студстол" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f3237"/><stop offset=".2" stop-color="#26292d"/><stop offset="1" stop-color="#16181b"/></linearGradient>
     <radialGradient id="рл-огонь" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd890"/><stop offset="1" stop-color="#ff9a40" stop-opacity="0"/></radialGradient>
     <radialGradient id="рл-линза" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".12"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></radialGradient>
+    <radialGradient id="рл-вспышка" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#f4f8ff" stop-opacity=".9"/><stop offset="1" stop-color="#bcd8ff" stop-opacity="0"/></radialGradient>
     <linearGradient id="рл-перчатка" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8ab8f0"/><stop offset=".5" stop-color="#4a86d8"/><stop offset="1" stop-color="#2a5aa8"/></linearGradient>
   </defs>`;
 
@@ -201,10 +202,22 @@
         <clipPath id="${кл}"><path d="${форма} Z"/></clipPath>
         <g clip-path="url(#${кл})"><rect x="-34" y="${f(yж)}" width="68" height="${f(-yж+2)}" fill="${ц}"/><rect x="-34" y="${f(yж)}" width="68" height="${f(-yж+2)}" fill="url(#рл-жидкость)"/></g>
         <ellipse cx="0" cy="${f(yж)}" rx="${f(шир(yж)-1.5)}" ry="2.4" fill="#fff" opacity=".3"/>`:''}
+      ${о.осадок?`<g clip-path="url(#${кл})"><path d="M-30 -4 Q-15 ${f(-6-о.осадок.h)} 0 ${f(-5-о.осадок.h)} Q15 ${f(-6-о.осадок.h)} 30 -4 V2 H-30 Z" fill="${о.осадок.цвет}"/>
+        ${Array.from({length:26},(_,k)=>{ const px=-24+((k*37)%48), py=-8-((k*23)%Math.max(8,52*ур-8)); return `<circle cx="${px}" cy="${py}" r="${f(1+(k%3)*0.5)}" fill="${о.осадок.цвет}" opacity=".85">${ДВИЖ&&о.осадок.падает?`<animate attributeName="cy" values="${py};-6" dur="${f(2+(k%5)*0.6)}s" repeatCount="indefinite"/>`:''}</circle>`; }).join('')}</g>`:''}
+      ${о.пузырьки&&ур>0?`<g clip-path="url(#${кл})">${Array.from({length:14},(_,k)=>{ const px=-20+((k*29)%40), r0=1+(k%3)*0.6; return `<circle cx="${px}" cy="-6" r="${f(r0)}" fill="none" stroke="#fff" stroke-width=".7" opacity=".85">${ДВИЖ?`<animate attributeName="cy" values="-6;${f(yж+2)}" dur="${f(0.9+(k%4)*0.35)}s" begin="${f((k%7)*0.15)}s" repeatCount="indefinite"/>`:''}</circle>`; }).join('')}</g>
+        <ellipse cx="0" cy="${f(yж-1)}" rx="${f(шир(yж)-3)}" ry="2" fill="#fff" opacity=".45"/>`:''}
+      ${о.пробирка?`<g transform="rotate(${о.пробирка.наклон||14} 0 -6)"><rect x="-4" y="-64" width="8" height="58" rx="4" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-width=".6"/><rect x="-3" y="-32" width="6" height="25" rx="3" fill="${о.пробирка.цвет||цвет('вода')}"/><path d="M-2 -60 V-12" stroke="#fff" stroke-width=".8" opacity=".6"/></g>`:''}
       <path d="${форма}" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".55" stroke-width="1"/>
       <path d="M-8 -86 V-58 L-26 -10" stroke="#fff" stroke-width="2.4" fill="none" opacity=".65" stroke-linecap="round"/>
       <path d="M7 -80 V-60 L22 -22" stroke="#fff" stroke-width="1.2" fill="none" opacity=".35"/>
       <ellipse cx="0" cy="-90" rx="11" ry="2.6" fill="none" stroke="#fff" stroke-width="1.6" opacity=".8"/>
+      ${о.пробка?`<path d="M-9 -100 H9 L7.5 -86 H-7.5 Z" fill="#8a3a2a"/><path d="M-9 -100 H9" stroke="#c8705a" stroke-width="1.4"/><path d="M-6 -98 V-88" stroke="#fff" stroke-width="1" opacity=".25"/>`:''}
+      ${о.шарик!=null?(()=>{ const k=Math.max(0,Math.min(1,о.шарик)), rx=6+16*k, ry=8+20*k, cy=-96-ry*0.9; const кш=ид('шар');
+        return `<radialGradient id="${кш}" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ff9a8a"/><stop offset=".5" stop-color="#e0402a"/><stop offset="1" stop-color="#8a1a10"/></radialGradient>
+          <path d="M-11 -92 Q-12 -100 -${f(rx*0.4)} ${f(cy+ry*0.8)} Q0 ${f(cy+ry+2)} ${f(rx*0.4)} ${f(cy+ry*0.8)} Q12 -100 11 -92 Z" fill="url(#${кш})" opacity=".92"/>
+          <ellipse cx="0" cy="${f(cy)}" rx="${f(rx)}" ry="${f(ry)}" fill="url(#${кш})" opacity=".92">${ДВИЖ&&о.дуется?`<animate attributeName="rx" values="${f(rx*0.9)};${f(rx)}" dur="1.2s" repeatCount="indefinite"/>`:''}</ellipse>
+          <ellipse cx="${f(-rx*0.35)}" cy="${f(cy-ry*0.4)}" rx="${f(rx*0.22)}" ry="${f(ry*0.28)}" fill="#fff" opacity=".45"/>
+          <rect x="-12" y="-95" width="24" height="5" rx="2" fill="#a82a1a"/>`; })():''}
     </g>`;
   }
 
@@ -388,7 +401,7 @@
       <text x="${f(x+ш/2)}" y="${f(y+ш*0.93)}" text-anchor="middle" font-size="${f(ш*0.14)}" font-weight="bold" fill="#8a1a1a" font-family="${ШРИФТ}">${String(e[2]).replace('.',',')}</text>`;
   }
   /* ---------- модель молекулы «шары и палочки»: (x,y) — центр, м — масштаб, вид — 'H2O'|'CO2'|'O2'|'CH4'|'NH3'|'N2'|'H2' ---------- */
-  const АТОМ = {H:['#ffffff','#b8c0c8',7],O:['#ff5a4a','#8a1a10',11],C:['#5a5e64','#1a1c1f',11],N:['#5a7aff','#1a2a8a',10.5],Cl:['#6ad84a','#1a6a10',12.5],Na:['#b87aff','#4a1a8a',13],S:['#ffd84a','#8a6a00',12.5]};
+  const АТОМ = {Mg:['#c8e8b0','#4a7a3a',13],H:['#ffffff','#b8c0c8',7],O:['#ff5a4a','#8a1a10',11],C:['#5a5e64','#1a1c1f',11],N:['#5a7aff','#1a2a8a',10.5],Cl:['#6ad84a','#1a6a10',12.5],Na:['#b87aff','#4a1a8a',13],S:['#ffd84a','#8a6a00',12.5]};
   const МОЛ = {
     H2O:[['O',0,0,0],['H',-17,12,4],['H',17,12,4]],
     CO2:[['O',-26,0,0],['C',0,0,0],['O',26,0,0]],
@@ -397,12 +410,14 @@
     N2:[['N',-10,0,0],['N',10,0,0]],
     CH4:[['C',0,0,0],['H',0,-20,0],['H',-18,8,-6],['H',18,8,-6],['H',4,10,10]],
     NH3:[['N',0,-2,0],['H',-18,8,2],['H',18,8,2],['H',0,14,10]],
-    NaCl:[['Na',-14,0,0],['Cl',14,0,0]]
+    NaCl:[['Na',-14,0,0],['Cl',14,0,0]],
+    MgO:[['Mg',-14,0,0],['O',13,0,0]],
+    Mg:[['Mg',0,0,0]]
   };
   function молекула(x,y,м,вид,опц){
     const о=опц||{}, ат=(МОЛ[вид]||[]).slice().sort((a,b)=>a[3]-b[3]), ц=МОЛ[вид]?МОЛ[вид][0]:null;
     let s=`<g transform="translate(${f(x)} ${f(y)}) scale(${м})">`;
-    if(вид!=='NaCl'&&ц){ const [e0,x0,y0]=МОЛ[вид][0];
+    if(вид!=='NaCl'&&вид!=='MgO'&&вид!=='Mg'&&ц){ const [e0,x0,y0]=МОЛ[вид][0];
       МОЛ[вид].slice(1).forEach(([e,xx,yy])=>{ s+=`<path d="M${x0} ${y0} L${xx} ${yy}" stroke="#9aa0a6" stroke-width="4.4" stroke-linecap="round"/><path d="M${x0} ${y0} L${xx} ${yy}" stroke="#e8ecef" stroke-width="1.4" stroke-linecap="round" opacity=".8"/>`; });
       if(вид==='O2'||вид==='CO2'||вид==='N2'){ s+=МОЛ[вид].slice(1).map(([e,xx,yy])=>`<path d="M${x0} ${y0-3.4} L${xx} ${yy-3.4}" stroke="#9aa0a6" stroke-width="2.6"/>`).join(''); if(вид==='O2') s+=`<path d="M-11 -3.4 L11 -3.4" stroke="#9aa0a6" stroke-width="2.6"/>`; } }
     ат.forEach(([e,xx,yy,zz])=>{ const [c1,c2,r]=АТОМ[e], кл=ид('ат'), rr=r*(1+zz*0.012);
@@ -495,6 +510,9 @@
       : что==='стакан'?стакан(32,54,34,38,{уровень:.5,деления:false})
       : что==='пипетка'?пипетка(32,62,0.75,true)
       : что==='лодочка'?лодочка(32,44,40,{горка:0})
+      : что==='щипцы'?щипцы(46,40,-28,{})
+      : что==='пробирка'?пробирка(32,60,0.6,{уровень:.4})
+      : что==='колбаЗ'?колба(32,58,0.46,{уровень:.4,цвет:цвет('купорос',.12),пробка:true,пробирка:{цвет:'hsla(0,0%,95%,.5)'}})
       : что==='палочка'?палочка(10,52,54,12)
       : что==='склянка'?склянка(32,58,28,46,{этикетка:['     ']})
       : что==='очки'?очки(32,40,0.9)
@@ -573,5 +591,32 @@
       ${горит&&ДВИЖ?[0,1,2].map(k=>`<path d="M${-10+k*10} -76 q-5 -8 0 -16 q5 -8 0 -16" stroke="#e8f0f6" stroke-width="3" fill="none" stroke-linecap="round" opacity="0"><animate attributeName="opacity" values="0;.55;0" dur="2.4s" begin="${k*0.8}s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="translate" values="0 0;0 -14" dur="2.4s" begin="${k*0.8}s" repeatCount="indefinite"/></path>`).join(''):''}
     </g>`;
   }
-  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок, палочка, склянка, мениск, глаз, диаграмма, выпаривание};
+
+  /* ---------- пробирка: (x,y) — низ; м; опц.уровень, опц.цвет, опц.угол, опц.осадок (цвет) ---------- */
+  function пробирка(x,y,м,опц){
+    const о=опц||{}, ур=о.уровень||0, h=70*ур;
+    return `<g transform="translate(${f(x)} ${f(y)}) rotate(${о.угол||0}) scale(${м||1})">
+      ${ур>0?`<path d="M-7 ${f(-6-h)} V-6 A7 7 0 0 0 7 -6 V${f(-6-h)} Z" fill="${о.цвет||цвет('вода')}"/>`:''}
+      ${о.осадок?`<path d="M-7 -8 A7 7 0 0 0 7 -8 V-14 Q0 -10 -7 -14 Z" fill="${о.осадок}"/>`:''}
+      <path d="M-8 -84 V-6 A8 8 0 0 0 8 -6 V-84" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".9"/>
+      <path d="M-5 -80 V-10" stroke="#fff" stroke-width="1.6" opacity=".6" stroke-linecap="round"/>
+      <ellipse cx="0" cy="-84" rx="9" ry="2" fill="none" stroke="#fff" stroke-width="1.2" opacity=".75"/>
+    </g>`;
+  }
+  /* ---------- тигельные щипцы с магниевой лентой: (x,y) — шарнир; угол; опц.горит — ослепительная вспышка; опц.зола ---------- */
+  function щипцы(x,y,угол,опц){
+    const о=опц||{};
+    return `<g transform="translate(${f(x)} ${f(y)}) rotate(${f(угол||0)})">
+      <path d="M-70 -3 L0 -1 L10 -3 M-70 3 L0 1 L10 3" stroke="url(#рл-сталь)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="0" cy="0" r="3" fill="#6a7078"/>
+      <path d="M-70 -3 Q-78 0 -70 3" stroke="#6a7078" stroke-width="3" fill="none"/>
+      <path d="M10 0 L40 -2" stroke="${о.зола?'#f4f4f0':'#c8ccd0'}" stroke-width="${о.зола?3:2}" stroke-linecap="round"/>
+      ${о.зола?`<path d="M14 -2 q4 -4 8 0 q4 4 8 0 q4 -3 8 0" stroke="#fff" stroke-width="2" fill="none" opacity=".9"/>`:''}
+      ${о.горит?`<g><circle cx="30" cy="-2" r="26" fill="url(#рл-вспышка)"><animate attributeName="r" values="22;30;24;28;22" dur=".5s" repeatCount="indefinite"/></circle>
+        <circle cx="30" cy="-2" r="8" fill="#fff"/>
+        ${[0,1,2,3,4,5].map(k=>`<path d="M30 -2 l${f(Math.cos(k)*18)} ${f(Math.sin(k)*18)}" stroke="#fff" stroke-width="1.2" opacity=".8"/>`).join('')}
+        ${ДВИЖ?[0,1,2].map(k=>`<circle cx="${30+k*6}" cy="-14" r="6" fill="#f6f6f4" opacity="0" filter="url(#рл-мягко)"><animate attributeName="opacity" values="0;.55;0" dur="1.8s" begin="${k*0.6}s" repeatCount="indefinite"/><animate attributeName="cy" values="-14;-60" dur="1.8s" begin="${k*0.6}s" repeatCount="indefinite"/><animate attributeName="r" values="4;14" dur="1.8s" begin="${k*0.6}s" repeatCount="indefinite"/></circle>`).join(''):''}</g>`:''}
+    </g>`;
+  }
+  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок, палочка, склянка, мениск, глаз, диаграмма, выпаривание, пробирка, щипцы, АТОМ, МОЛ};
 })();
