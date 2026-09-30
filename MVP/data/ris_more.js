@@ -3027,6 +3027,80 @@
     </g>`;
   }
 
+  /* ---------- шестерня: бронзовое колесо с зубьями и спицами; крутится, если опц.крутится ---------- */
+  function шестерня(cx,cy,r,z,опц){
+    const о=опц||{};
+    return `<g>${о.крутится&&ДВИЖ?`<animateTransform attributeName="transform" type="rotate" from="0 ${cx} ${cy}" to="${о.обратно?-360:360} ${cx} ${cy}" dur="${f(r/5)}s" repeatCount="indefinite"/>`:''}
+      ${Array.from({length:z},(_,k)=>`<rect x="${f(cx-r*0.13)}" y="${f(cy-r-r*0.22)}" width="${f(r*0.26)}" height="${f(r*0.3)}" rx="1" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".5" transform="rotate(${f(k*360/z)} ${cx} ${cy})"/>`).join('')}
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <circle cx="${cx}" cy="${cy}" r="${f(r*0.7)}" fill="#5a3414" opacity=".35"/>
+      ${[0,60,120].map(a=>`<rect x="${f(cx-r*0.1)}" y="${f(cy-r*0.7)}" width="${f(r*0.2)}" height="${f(r*1.4)}" fill="url(#рм-бронза)" transform="rotate(${a} ${cx} ${cy})"/>`).join('')}
+      <circle cx="${cx}" cy="${cy}" r="${f(r*0.22)}" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".6"/></g>`;
+  }
+  /* ---------- бронзовый автомат Архимеда: шлем с гребнем, светящиеся глаза в прорези, бочка-туловище
+     с окошком, где крутится шестерня, лампа на груди, руки-шарниры, ноги-поршни.
+     поза: 'стоит' | 'идёт' | 'несёт' (амфора) | 'метёт' (метла) | 'читает' (свиток) | 'пишет' (табличка)
+       | 'спит' | 'смеётся' | 'непонял' («?») | 'искрит' | 'мечтает'.
+     опц.лампа — цвет лампы и глаз; опц.жар 0..3 — перегрев; опц.влево. (x,y) — середина у ступней, высота ~118 ---------- */
+  function автомат(x,y,м,опц){
+    const о=опц||{}, поза=о.поза||'стоит', свет=о.лампа||'#7fd1ff', жар=Math.max(0,Math.min(3,о.жар||0)), спит=поза==='спит';
+    const сустав=(cx,cy,r)=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".8"/>`;
+    const рука=(pts)=>{ let d=`M${pts[0][0]} ${pts[0][1]}`; for(let i=1;i<pts.length;i++) d+=` L${pts[i][0]} ${pts[i][1]}`;
+      return `<path d="${d}" stroke="#5a3414" stroke-width="8.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="${d}" stroke="url(#рм-бронза)" stroke-width="6.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        ${pts.slice(1,-1).map(([px,py])=>сустав(px,py,3.4)).join('')}<path d="M${pts[pts.length-1][0]-3} ${pts[pts.length-1][1]+1} l-2 5 M${pts[pts.length-1][0]+3} ${pts[pts.length-1][1]+1} l2 5" stroke="#5a3414" stroke-width="2.4" stroke-linecap="round"/>`; };
+    const идёт=(поза==='идёт'||поза==='несёт')&&ДВИЖ;
+    const нога=(nx,фаза)=>`<g>${идёт?`<animateTransform attributeName="transform" type="rotate" values="${фаза?10:-10} ${nx+4.5} -40;${фаза?-10:10} ${nx+4.5} -40;${фаза?10:-10} ${nx+4.5} -40" dur="0.8s" repeatCount="indefinite"/>`:''}
+      <rect x="${nx}" y="-42" width="9" height="20" rx="3" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/>
+      ${сустав(nx+4.5,-22,4)}
+      <rect x="${nx+1}" y="-22" width="7" height="18" rx="2.4" fill="#8a5a2e" stroke="${ОБВОД}" stroke-width=".8"/>
+      <rect x="${nx-3}" y="-5" width="15" height="6" rx="3" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width=".8"/></g>`;
+    let руки='', предмет='', над='';
+    if(поза==='несёт'){ руки=рука([[-21,-80],[-18,-64],[-4,-58]])+рука([[21,-80],[18,-64],[6,-58]]);
+      предмет=`<path d="M-9 -78 Q-18 -64 -12 -48 Q0 -40 12 -48 Q18 -64 9 -78 Z" fill="url(#рм-глина)" stroke="${ОБВОД}" stroke-width="1"/><rect x="-6" y="-84" width="12" height="7" rx="2" fill="url(#рм-глина)" stroke="${ОБВОД}" stroke-width=".8"/><path d="M-10 -62 Q0 -58 10 -62" stroke="#1e140a" stroke-width="2" fill="none"/><ellipse cx="0" cy="-82" rx="5" ry="1.6" fill="#5aa8e0"/>`; }
+    else if(поза==='метёт'){ руки=рука([[-21,-80],[-24,-62],[-20,-46]])+`<g>${ДВИЖ?`<animateTransform attributeName="transform" type="rotate" values="-14 21 -80;16 21 -80;-14 21 -80" dur="0.9s" repeatCount="indefinite"/>`:''}${рука([[21,-80],[30,-64],[30,-50]])}
+        <path d="M30 -52 L38 -6" stroke="#8a5a2e" stroke-width="3" stroke-linecap="round"/><path d="M30 -8 L46 -8 L50 4 L28 4 Z" fill="#d8b868" stroke="${ОБВОД}" stroke-width=".9"/>${[32,36,40,44].map(bx=>`<line x1="${bx}" y1="-6" x2="${bx+1}" y2="4" stroke="#a8803c" stroke-width=".8"/>`).join('')}</g>`; }
+    else if(поза==='читает'||поза==='пишет'){ руки=рука([[-21,-80],[-22,-64],[-10,-60]])+рука([[21,-80],[22,-64],[10,-60]]);
+      предмет=поза==='читает'?`<rect x="-14" y="-74" width="28" height="18" fill="#f4ead0" stroke="#a88a5a" stroke-width=".9"/><rect x="-17" y="-76" width="4" height="22" rx="2" fill="url(#рм-доскатём)"/><rect x="13" y="-76" width="4" height="22" rx="2" fill="url(#рм-доскатём)"/>${[-70,-66,-62].map(ly=>`<line x1="-10" y1="${ly}" x2="10" y2="${ly}" stroke="#8a7a5a" stroke-width=".8"/>`).join('')}`
+        :`<rect x="-14" y="-72" width="28" height="18" rx="2" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".8"/><rect x="-11" y="-69" width="22" height="12" fill="#4a3418"/><g>${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="-6 0;6 0;-6 0" dur="1s" repeatCount="indefinite"/>`:''}<path d="M4 -58 L10 -76" stroke="url(#рм-бронза)" stroke-width="2.4" stroke-linecap="round"/></g>`; }
+    else if(поза==='мечтает'){ руки=рука([[-21,-80],[-24,-62],[-20,-46]])+рука([[21,-80],[26,-92],[16,-104]]); }
+    else if(поза==='смеётся'){ руки=рука([[-21,-80],[-30,-70],[-22,-58]])+рука([[21,-80],[30,-70],[22,-58]]); над=`<text x="22" y="-124" font-size="12" font-weight="bold" fill="#ffd76a" stroke="#3a2008" stroke-width="2.4" paint-order="stroke" font-family="Georgia,serif">ха-ха!</text>`; }
+    else { руки=рука([[-21,-80],[-24,-62],[-21,-46]])+рука([[21,-80],[24,-62],[21,-46]]); }
+    if(поза==='непонял') над=`<text x="0" y="-126" text-anchor="middle" font-size="26" font-weight="bold" fill="#ffd76a" stroke="#3a2008" stroke-width="3" paint-order="stroke" font-family="Georgia,serif">?${ДВИЖ?`<animate attributeName="opacity" values="1;0.4;1" dur="1s" repeatCount="indefinite"/>`:''}</text>`;
+    if(поза==='искрит') над=[[-18,-118],[16,-122],[-24,-96],[24,-100]].map(([sx,sy],k)=>`<path d="M${sx} ${sy} l4 -6 l-2 5 l5 -2 l-6 8 l2 -5 z" fill="#fff27a" stroke="#c89a1a" stroke-width=".6">${ДВИЖ?`<animate attributeName="opacity" values="1;0;1" dur="${0.3+k*0.1}s" repeatCount="indefinite"/>`:''}</path>`).join('');
+    if(спит) над=`<text x="16" y="-122" font-size="13" font-weight="bold" fill="#dfe8f8" font-family="Georgia,serif">z<tspan dy="-7" font-size="10">z</tspan><tspan dy="-6" font-size="8">z</tspan></text>`;
+    const глаза = спит ? `<path d="M-8 -101 h5 M3 -101 h5" stroke="#8a9aa8" stroke-width="1.6" stroke-linecap="round"/>`
+      : поза==='смеётся' ? `<path d="M-9 -100 q3 -3 6 0 M3 -100 q3 -3 6 0" stroke="${свет}" stroke-width="2" fill="none" stroke-linecap="round"/>`
+      : `<ellipse cx="-5.5" cy="-101" rx="3" ry="2.2" fill="${свет}"/><ellipse cx="5.5" cy="-101" rx="3" ry="2.2" fill="${свет}"/><circle cx="-5.5" cy="-101" r="6" fill="${свет}" opacity=".25"/><circle cx="5.5" cy="-101" r="6" fill="${свет}" opacity=".25"/>`;
+    const тряска = поза==='смеётся'&&ДВИЖ ? `<animateTransform attributeName="transform" type="rotate" values="-3 0 -40;3 0 -40;-3 0 -40" dur="0.3s" repeatCount="indefinite"/>` : спит&&ДВИЖ ? `<animateTransform attributeName="transform" type="translate" values="0 0;0 1.6;0 0" dur="2.6s" repeatCount="indefinite"/>` : '';
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <ellipse cx="0" cy="1" rx="24" ry="4" fill="#231a12" opacity=".4" filter="url(#рм-мягко)"/>
+      ${нога(-14,0)}${нога(5,1)}
+      <g>${тряска}
+        <path d="M-22 -86 Q0 -93 22 -86 L24 -44 Q0 -37 -24 -44 Z" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width="1.3"/>
+        <path d="M-20 -84 Q-24 -64 -21 -46" stroke="#f8dcb0" stroke-width="2" fill="none" opacity=".45"/>
+        ${[[-17,-80],[17,-80],[-18,-50],[18,-50],[0,-88]].map(([rx,ry])=>`<circle cx="${rx}" cy="${ry}" r="1.4" fill="#5a3414"/>`).join('')}
+        <circle cx="0" cy="-62" r="11" fill="#2a1a0e" stroke="${ОБВОД}" stroke-width="1"/>
+        ${шестерня(0,-62,7,8,{крутится:!спит})}
+        <circle cx="0" cy="-62" r="11" fill="#bfe6fa" opacity=".18"/>
+        <circle cx="0" cy="-79" r="4.4" fill="${свет}" stroke="${ОБВОД}" stroke-width=".8"/><circle cx="0" cy="-79" r="8" fill="${свет}" opacity=".3">${ДВИЖ&&!спит?`<animate attributeName="r" values="6;9;6" dur="1.6s" repeatCount="indefinite"/>`:''}</circle>
+        <rect x="-24" y="-48" width="48" height="6" rx="3" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".8"/>
+        ${жар?`<path d="M-22 -86 Q0 -93 22 -86 L24 -44 Q0 -37 -24 -44 Z" fill="#ff4a1a" opacity="${f(жар*0.16)}"/>${Array.from({length:жар},(_,k)=>`<circle cx="${-10+k*10}" cy="-120" r="5" fill="#e8eef4" opacity="0">${ДВИЖ?`<animate attributeName="cy" values="-112;-142" dur="1.4s" begin="${k*0.4}s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.8;0" dur="1.4s" begin="${k*0.4}s" repeatCount="indefinite"/>`:''}</circle>`).join('')}`:''}
+        ${руки}${предмет}
+        <rect x="-5" y="-92" width="10" height="7" fill="#8a5a2e" stroke="${ОБВОД}" stroke-width=".7"/>
+        <g${спит?' transform="rotate(10 0 -100)"':''}>
+          <rect x="-14" y="-116" width="28" height="26" rx="11" fill="url(#рм-бронза)" stroke="${ОБВОД}" stroke-width="1.2"/>
+          <path d="M-12 -114 Q-4 -118 4 -116" stroke="#fff" stroke-width="1.6" fill="none" opacity=".45"/>
+          <rect x="-11" y="-105" width="22" height="8" rx="3" fill="#1e140a"/>
+          ${глаза}
+          <path d="M-4 -92 v-3 M0 -92 v-3 M4 -92 v-3" stroke="#5a3414" stroke-width="1.2"/>
+          <path d="M-12 -116 Q0 -134 12 -116" stroke="#b8321e" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M-12 -116 Q0 -134 12 -116" stroke="#e86a4a" stroke-width="1.6" fill="none" stroke-dasharray="2 3"/>
+        </g>
+      </g>
+      ${над}
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -3046,5 +3120,6 @@
     диск, силач, стадион, пьедестал,
     молоток, плотник, борей, окно,
     бык, пастух, абак, изгородь,
-    циклоп, одиссей, овца, маска};
+    циклоп, одиссей, овца, маска,
+    шестерня, автомат};
 })();
