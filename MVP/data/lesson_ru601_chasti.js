@@ -548,9 +548,9 @@
       `<div class="pic">${свг(`
         ${верфь(Н,126)}
         ${М.фрегат(248,126,0.4,{})}
-        <g filter="url(#c601-тень)"><rect x="14" y="152" width="120" height="112" rx="6" fill="#f4ead0" stroke="#a88a5a" stroke-width="1.2"/></g>
-        ${т(74,170,'нанято:',11,КАМЕНЬ,true)}
-        ${НАЙМ.slice(0,n).map((x,i)=>т(20+(i%2)*60,188+Math.floor(i/2)*16,x.w,10,ЦВ[x.ч],true,'start')).join('')}
+        <g filter="url(#c601-тень)"><rect x="12" y="152" width="136" height="112" rx="6" fill="#f4ead0" stroke="#a88a5a" stroke-width="1.2"/></g>
+        ${т(80,170,'нанято:',11,КАМЕНЬ,true)}
+        ${НАЙМ.slice(0,n).map((x,i)=>т(20+(i%2)*64,188+Math.floor(i/2)*16,x.w,10,ЦВ[x.ч],true,'start')).join('')}
         ${М.архимед(180,Н-10,0.7,{поза:'читает'})}
         ${все||закрыт?'':`<g>${ДВИЖ&&отв&&отв.ок?`<animateTransform attributeName="transform" type="translate" from="60 0" to="0 0" dur="0.6s" fill="freeze"/>`:''}${бирка(262,Н-64,н.w,GOLD,{кегль:20})}</g>`}
         ${М.кот(300,Н-14,0.46,{поза:все?'прыгает':'сидит'})}
