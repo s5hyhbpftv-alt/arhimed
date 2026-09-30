@@ -61,6 +61,11 @@
     <radialGradient id="рл-виньетка" cx=".5" cy=".45" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient>
     <radialGradient id="рл-яйцо" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#fffaf2"/><stop offset=".6" stop-color="#f0dcc0"/><stop offset="1" stop-color="#c8a882"/></radialGradient>
     <filter id="рл-тень" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="1" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity=".3"/></filter>
+    <linearGradient id="рл-студия" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c4046"/><stop offset=".7" stop-color="#2a2d32"/><stop offset="1" stop-color="#1e2024"/></linearGradient>
+    <radialGradient id="рл-прожектор" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff" stop-opacity=".09"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="рл-студстол" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f3237"/><stop offset=".2" stop-color="#26292d"/><stop offset="1" stop-color="#16181b"/></linearGradient>
+    <radialGradient id="рл-огонь" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd890"/><stop offset="1" stop-color="#ff9a40" stop-opacity="0"/></radialGradient>
+    <radialGradient id="рл-линза" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".12"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></radialGradient>
     <linearGradient id="рл-перчатка" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8ab8f0"/><stop offset=".5" stop-color="#4a86d8"/><stop offset="1" stop-color="#2a5aa8"/></linearGradient>
   </defs>`;
 
@@ -320,7 +325,7 @@
     const в=ш*0.12;
     return `<g>${тень(x,y,ш,.35)}
       <ellipse cx="${f(x)}" cy="${f(y-в*0.5)}" rx="${f(ш/2)}" ry="${f(в)}" fill="#dcebf5" fill-opacity=".25" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".8"/>
-      ${вид==='вода'?`<ellipse cx="${f(x)}" cy="${f(y-в*0.6)}" rx="${f(ш*0.36)}" ry="${f(в*0.6)}" fill="${цвет('вода')}"/>`:кристаллы(x,y-в*0.5,ш*0.7,горка||ш*0.22,вид,Math.round(ш*(горка||ш*0.22)/(вид==='уголь'?14:4)),(x*7)|0)}
+      ${вид==='пусто'?'':вид==='вода'?`<ellipse cx="${f(x)}" cy="${f(y-в*0.6)}" rx="${f(ш*0.36)}" ry="${f(в*0.6)}" fill="${цвет('вода')}"/>`:кристаллы(x,y-в*0.5,ш*0.7,горка||ш*0.22,вид,Math.round(ш*(горка||ш*0.22)/(вид==='уголь'?14:4)),(x*7)|0)}
       <path d="M${f(x-ш/2+3)} ${f(y-в*0.7)} Q${f(x-ш*0.2)} ${f(y-в*1.4)} ${f(x+ш*0.1)} ${f(y-в*1.3)}" stroke="#fff" stroke-width="1.2" fill="none" opacity=".75"/></g>`;
   }
   /* ---------- монеты: стопка (n штук) — (x,y) середина низа, r — радиус ---------- */
@@ -405,5 +410,85 @@
         <circle cx="${xx}" cy="${yy}" r="${f(rr)}" fill="url(#${кл})"/>${о.подписи?`<text x="${xx}" y="${f(yy+rr*0.35)}" text-anchor="middle" font-size="${f(rr*0.9)}" font-weight="bold" fill="${e==='H'?'#333':'#fff'}" font-family="${ШРИФТ}">${e}</text>`:''}`; });
     return s+`</g>`;
   }
-  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула};
+
+  /* ================= СТУДИЯ «КАК В ВИРТУАЛЬНОЙ ЛАБОРАТОРИИ» =================
+     Тёмно-графитовый фон без комнаты: всё внимание на приборах (так устроены
+     виртуальные опыты). y0 — линия стола; стол глянцевый, с отражениями. */
+  function студия(Н,y0,опц){
+    const о=опц||{};
+    return `<rect width="336" height="${f(Н)}" fill="url(#рл-студия)"/>
+      <ellipse cx="168" cy="${f(y0*0.45)}" rx="220" ry="${f(y0*0.7)}" fill="url(#рл-прожектор)"/>
+      <rect x="0" y="${f(y0)}" width="336" height="${f(Н-y0)}" fill="url(#рл-студстол)"/>
+      <rect x="0" y="${f(y0)}" width="336" height="1" fill="#8a9098" opacity=".35"/>
+      ${о.сетка?Array.from({length:12},(_,k)=>`<path d="M${k*30} 0 V${f(y0)}" stroke="#fff" stroke-width=".3" opacity=".04"/>`).join(''):''}`;
+  }
+  /* подпись прибора в духе виртуальной лаборатории: мелкий светлый текст под предметом */
+  const имяПрибора = (x,y,t0) => `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" font-size="7.5" fill="#c8ced6" opacity=".85" font-family="${ШРИФТ}">${esc(t0)}</text>`;
+
+  /* ---------- спиртовка: (x,y) — середина низа, м; горит — пламя ---------- */
+  function спиртовка(x,y,м,горит){
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">${тень(0,0,40,.4)}
+      <path d="M-18 0 Q-22 -16 -12 -24 H12 Q22 -16 18 0 Z" fill="#dcebf5" fill-opacity=".22" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".8"/>
+      <path d="M-17 -2 Q-20 -12 -14 -16 H14 Q20 -12 17 -2 Z" fill="hsla(200,40%,80%,.35)"/>
+      <path d="M-14 -20 Q-16 -10 -15 -2" stroke="#fff" stroke-width="1.8" fill="none" opacity=".6"/>
+      <rect x="-5" y="-30" width="10" height="7" rx="1.5" fill="url(#рл-сталь)"/>
+      <rect x="-1" y="-36" width="2" height="7" fill="#f4ecd8"/>
+      ${горит?`<g><path d="M0 -36 Q-7 -46 0 -62 Q7 -46 0 -36 Z" fill="#ffb640" opacity=".9">${ДВИЖ?`<animate attributeName="d" values="M0 -36 Q-7 -46 0 -62 Q7 -46 0 -36 Z;M0 -36 Q-6 -47 1 -64 Q8 -46 0 -36 Z;M0 -36 Q-7 -46 0 -62 Q7 -46 0 -36 Z" dur=".7s" repeatCount="indefinite"/>`:''}</path><path d="M0 -37 Q-3 -43 0 -50 Q3 -43 0 -37 Z" fill="#7ab8ff" opacity=".8"/><circle cx="0" cy="-48" r="18" fill="url(#рл-огонь)" opacity=".35"/></g>`
+        :`<path d="M-7 -30 Q-7 -44 0 -44 Q7 -44 7 -30 Z" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".8"/>`}
+    </g>`;
+  }
+  /* ---------- пипетка с каплей ---------- */
+  function пипетка(x,y,м,капля){
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">
+      <path d="M-5 -60 Q-5 -72 0 -72 Q5 -72 5 -60 V-48 H-5 Z" fill="#c8402a"/><path d="M-3 -68 Q-2 -70 0 -70" stroke="#fff" stroke-width="1" opacity=".6" fill="none"/>
+      <path d="M-3 -48 H3 L1 -4 H-1 Z" fill="#dcebf5" fill-opacity=".35" stroke="#8fa8b8" stroke-width=".6"/>
+      <path d="M-2 -30 H2 L1 -4 H-1 Z" fill="${цвет('вода')}"/>
+      ${капля?`<path d="M0 0 Q-4 6 0 9 Q4 6 0 0 Z" fill="${цвет('вода')}" stroke="#bfe6fa" stroke-width=".5">${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;0 3;0 0" dur="1.6s" repeatCount="indefinite"/>`:''}</path>`:''}
+    </g>`;
+  }
+  /* ---------- частицы микромира внутри круга (cx,cy,r): вид 'вода'|'соль'|'сахар'|'железо'|'медь'|'сера'|'уголь' ---------- */
+  function частицы(вид,cx,cy,r){
+    const r0=слч(вид.length*13+7), шар=(x,y,rr,c1,c2,дрож)=>{ const кл=ид('мч');
+      return `<radialGradient id="${кл}" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></radialGradient><circle cx="${f(x)}" cy="${f(y)}" r="${f(rr)}" fill="url(#${кл})">${дрож&&ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;${f(r0()*2-1)} ${f(r0()*2-1)};0 0" dur="${f(0.4+r0()*0.5)}s" repeatCount="indefinite"/>`:''}</circle>`; };
+    let s='';
+    if(вид==='соль'){ const шаг=r*0.2; for(let i=-6;i<=6;i++) for(let j=-6;j<=6;j++){ const x=cx+i*шаг, y=cy+j*шаг; if((x-cx)**2+(y-cy)**2>(r+шаг)**2) continue; s+=(i+j)%2? шар(x,y,шаг*0.46,'#b87aff','#4a1a8a'):шар(x,y,шаг*0.62,'#6ad84a','#1a6a10'); } }
+    else if(вид==='железо'||вид==='медь'){ const шаг=r*0.22, c=вид==='железо'?['#b8c0c8','#4a5058']:['#f0a060','#8a4418'];
+      for(let j=-6;j<=6;j++) for(let i=-6;i<=6;i++){ const x=cx+i*шаг+(j%2?шаг/2:0), y=cy+j*шаг*0.87; if((x-cx)**2+(y-cy)**2>(r+шаг)**2) continue; s+=шар(x,y,шаг*0.5,c[0],c[1],true); } }
+    else if(вид==='уголь'){ const шаг=r*0.2; for(let j=-5;j<=5;j++) for(let i=-6;i<=6;i++){ const x=cx+i*шаг*0.87+(j%2?шаг*0.43:0), y=cy+j*шаг*0.75; if((x-cx)**2+(y-cy)**2>(r+шаг)**2) continue; s+=шар(x,y,шаг*0.32,'#6a6e74','#1a1c1f'); } }
+    else if(вид==='сера'){ for(let k=0;k<7;k++){ const ox=cx+(r0()-0.5)*r*1.5, oy=cy+(r0()-0.5)*r*1.5; for(let a=0;a<8;a++){ const ang=a*Math.PI/4; s+=шар(ox+Math.cos(ang)*r*0.12,oy+Math.sin(ang)*r*0.12,r*0.06,'#ffe24a','#8a6a00'); } } }
+    else if(вид==='сахар'){ for(let k=0;k<6;k++){ const ox=cx+(r0()-0.5)*r*1.4, oy=cy+(r0()-0.5)*r*1.4; for(let a=0;a<9;a++){ const ang=a*0.7, rr=r*0.05+r*0.08*(a%3); s+=шар(ox+Math.cos(ang)*rr,oy+Math.sin(ang)*rr,r*0.045,a%3===0?'#ff5a4a':a%3===1?'#5a5e64':'#ffffff',a%3===0?'#8a1a10':a%3===1?'#1a1c1f':'#b8c0c8'); } } }
+    else { for(let k=0;k<22;k++){ const ox=cx+(r0()-0.5)*r*1.8, oy=cy+(r0()-0.5)*r*1.8, a=r0()*6.28, d=r*0.09;
+      s+=`<g>${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;${f((r0()-0.5)*8)} ${f((r0()-0.5)*8)};0 0" dur="${f(1+r0()*1.5)}s" repeatCount="indefinite"/>`:''}${шар(ox,oy,r*0.08,'#ff5a4a','#8a1a10')}${шар(ox+Math.cos(a)*d,oy+Math.sin(a)*d,r*0.05,'#fff','#b8c0c8')}${шар(ox+Math.cos(a+1.8)*d,oy+Math.sin(a+1.8)*d,r*0.05,'#fff','#b8c0c8')}</g>`; } }
+    return s;
+  }
+  /* ---------- лупа «микромир»: круг с увеличенными частицами; (cx,cy) — центр стекла, r ---------- */
+  function лупа(cx,cy,r,вид,опц){
+    const о=опц||{}, кл=ид('лупа');
+    return `<g>
+      <path d="M${f(cx+r*0.72)} ${f(cy+r*0.72)} L${f(cx+r*1.25)} ${f(cy+r*1.25)}" stroke="#1a1c1f" stroke-width="${f(r*0.2)}" stroke-linecap="round"/>
+      <path d="M${f(cx+r*0.74)} ${f(cy+r*0.7)} L${f(cx+r*1.2)} ${f(cy+r*1.16)}" stroke="#4a5058" stroke-width="${f(r*0.06)}" stroke-linecap="round"/>
+      <clipPath id="${кл}"><circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}"/></clipPath>
+      <circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="#0e1a24"/>
+      <g clip-path="url(#${кл})">${частицы(вид,cx,cy,r)}<circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="url(#рл-линза)"/></g>
+      <circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="none" stroke="url(#рл-сталь)" stroke-width="${f(r*0.1)}"/>
+      <path d="M${f(cx-r*0.6)} ${f(cy-r*0.5)} A${f(r*0.8)} ${f(r*0.8)} 0 0 1 ${f(cx+r*0.1)} ${f(cy-r*0.78)}" stroke="#fff" stroke-width="${f(r*0.05)}" fill="none" opacity=".5"/>
+      ${о.подпись?`<text x="${f(cx)}" y="${f(cy+r+r*0.28)}" text-anchor="middle" font-size="${f(Math.max(7,r*0.16))}" fill="#9fd0ff" font-family="${ШРИФТ}">${esc(о.подпись)}</text>`:''}
+    </g>`;
+  }
+  /* ---------- значок прибора для лотка: маленький svg с тёмным фоном ---------- */
+  function значок(что){
+    const тело = что==='весы'?весы(32,52,52,{показ:'0.0'})
+      : что==='часовое'?часовое(32,44,44,'пусто')
+      : что==='шпатель'?шпатель(10,36,44,-18,{})
+      : что==='лупа'?лупа(28,28,16,'соль')
+      : что==='спиртовка'?спиртовка(32,54,0.9,false)
+      : что==='колба'?колба(32,56,0.52,{уровень:.4})
+      : что==='цилиндр'?цилиндр(32,58,12,52,{мл:50})
+      : что==='стакан'?стакан(32,54,34,38,{уровень:.5,деления:false})
+      : что==='пипетка'?пипетка(32,62,0.75,true)
+      : ['соль','сахар','железо','медь','сера','уголь','вода'].includes(что)?банка(32,56,30,42,{содержимое:что==='вода'?undefined:что,стекло:что==='вода'?'янтарь':'прозрачное',надпись:[{соль:'NaCl',сахар:'C₁₂H₂₂O₁₁',железо:'Fe',медь:'Cu',сера:'S',уголь:'C',вода:'H₂O'}[что]],мал:true})
+      : '';
+    return `<svg viewBox="0 0 64 64" aria-hidden="true">${defs()}<rect width="64" height="64" rx="8" fill="url(#рл-студия)"/>${тело}</svg>`;
+  }
+  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок};
 })();
