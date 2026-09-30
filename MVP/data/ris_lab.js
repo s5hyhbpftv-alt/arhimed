@@ -59,6 +59,8 @@
     <linearGradient id="рл-крышка" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#101214"/><stop offset=".3" stop-color="#4a5056"/><stop offset=".55" stop-color="#1c2024"/><stop offset="1" stop-color="#08090a"/></linearGradient>
     <linearGradient id="рл-стык" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></linearGradient>
     <radialGradient id="рл-виньетка" cx=".5" cy=".45" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient>
+    <radialGradient id="рл-яйцо" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#fffaf2"/><stop offset=".6" stop-color="#f0dcc0"/><stop offset="1" stop-color="#c8a882"/></radialGradient>
+    <filter id="рл-тень" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="1" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity=".3"/></filter>
     <linearGradient id="рл-перчатка" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8ab8f0"/><stop offset=".5" stop-color="#4a86d8"/><stop offset="1" stop-color="#2a5aa8"/></linearGradient>
   </defs>`;
 
@@ -72,12 +74,16 @@
 
   /* ---------- кристаллы: горка гранёных зёрен (x — центр, y — низ) ---------- */
   function кристаллы(x,y,ш,в,вид,n,seed){
-    const r=слч(seed||11), ц = вид==='купорос'?['#1f6fc8','#4a9ae8','#9fd0ff']: вид==='песок'?['#b8925a','#d8b47a','#8a6a3a']: вид==='сахар'?['#ffffff','#f1f4f7','#d9e0e8']:['#ffffff','#eef2f5','#cfd8e0'];
+    const r=слч(seed||11), ц = вид==='купорос'?['#1f6fc8','#4a9ae8','#9fd0ff']: вид==='песок'?['#b8925a','#d8b47a','#8a6a3a']: вид==='сахар'?['#ffffff','#f1f4f7','#d9e0e8']
+      : вид==='уголь'?['#1a1b1d','#2e3033','#0c0d0e']: вид==='железо'?['#5a5f66','#8a9098','#3a3e44']: вид==='медь'?['#b8622a','#e0884a','#8a4418']: вид==='сера'?['#f2d22a','#ffe86a','#d0a810']:['#ffffff','#eef2f5','#cfd8e0'];
     let s='';
     for(let i=0;i<n;i++){
-      const t=r(), u=r(), dx=(t-0.5)*ш*(1-u*0.6), dy=-u*в*(1-Math.abs(t-0.5)*1.4), k=вид==='песок'?1.1+r()*0.8:1.1+r()*1.3, a=r()*90;
+      const t=r(), u=r(), dx=(t-0.5)*ш*(1-u*0.6), dy=-u*в*(1-Math.abs(t-0.5)*1.4), k=вид==='песок'||вид==='сера'?1.1+r()*0.8:вид==='уголь'?1.8+r()*2:1.1+r()*1.3, a=r()*180;
       const cx=x+dx, cy=y+dy-k*0.5;
-      s+= вид==='песок'
+      if(вид==='медь'){ s+=`<circle cx="${f(cx)}" cy="${f(cy)}" r="${f(k*0.9)}" fill="${ц[i%3]}"/><circle cx="${f(cx-k*0.3)}" cy="${f(cy-k*0.3)}" r="${f(k*0.3)}" fill="#ffd0a0" opacity=".85"/>`; continue; }
+      if(вид==='железо'){ s+=`<g transform="translate(${f(cx)} ${f(cy)}) rotate(${f(a)})"><rect x="${f(-k)}" y="-.5" width="${f(k*2)}" height="1" fill="${ц[i%3]}"/><rect x="${f(-k)}" y="-.5" width="${f(k)}" height=".4" fill="#d8dde2" opacity=".8"/></g>`; continue; }
+      if(вид==='уголь'){ s+=`<g transform="translate(${f(cx)} ${f(cy)}) rotate(${f(a)})"><path d="M${f(-k)} ${f(k*0.2)} L${f(-k*0.3)} ${f(-k*0.8)} L${f(k*0.9)} ${f(-k*0.3)} L${f(k*0.6)} ${f(k*0.7)} Z" fill="${ц[i%3]}"/><path d="M${f(-k*0.3)} ${f(-k*0.8)} L${f(k*0.9)} ${f(-k*0.3)} L${f(k*0.1)} 0 Z" fill="#6a7078" opacity=".7"/></g>`; continue; }
+      s+= вид==='песок'||вид==='сера'
         ? `<circle cx="${f(cx)}" cy="${f(cy)}" r="${f(k*0.7)}" fill="${ц[i%3]}"/>`
         : `<g transform="translate(${f(cx)} ${f(cy)}) rotate(${f(a)})"><path d="M${f(-k)} 0 L0 ${f(-k*0.8)} L${f(k)} 0 L0 ${f(k*0.8)} Z" fill="${ц[i%3]}"/><path d="M${f(-k)} 0 L0 ${f(-k*0.8)} L0 0 Z" fill="#fff" opacity=".55"/></g>`;
     }
@@ -308,5 +314,96 @@
     </g>`;
   }
 
-  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука};
+
+  /* ---------- часовое стекло: плоская стеклянная чашка на столе с навеской вещества ---------- */
+  function часовое(x,y,ш,вид,горка){
+    const в=ш*0.12;
+    return `<g>${тень(x,y,ш,.35)}
+      <ellipse cx="${f(x)}" cy="${f(y-в*0.5)}" rx="${f(ш/2)}" ry="${f(в)}" fill="#dcebf5" fill-opacity=".25" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".8"/>
+      ${вид==='вода'?`<ellipse cx="${f(x)}" cy="${f(y-в*0.6)}" rx="${f(ш*0.36)}" ry="${f(в*0.6)}" fill="${цвет('вода')}"/>`:кристаллы(x,y-в*0.5,ш*0.7,горка||ш*0.22,вид,Math.round(ш*(горка||ш*0.22)/(вид==='уголь'?14:4)),(x*7)|0)}
+      <path d="M${f(x-ш/2+3)} ${f(y-в*0.7)} Q${f(x-ш*0.2)} ${f(y-в*1.4)} ${f(x+ш*0.1)} ${f(y-в*1.3)}" stroke="#fff" stroke-width="1.2" fill="none" opacity=".75"/></g>`;
+  }
+  /* ---------- монеты: стопка (n штук) — (x,y) середина низа, r — радиус ---------- */
+  function монеты(x,y,r,n,цв){
+    const ц=цв||['#c8962a','#f0c860','#8a6010'];
+    let s=тень(x,y,r*2,.4);
+    for(let i=0;i<n;i++){ const yy=y-i*2.2, dx=((i*37)%5-2)*0.6;
+      s+=`<ellipse cx="${f(x+dx)}" cy="${f(yy)}" rx="${f(r)}" ry="${f(r*0.3)}" fill="${ц[2]}"/><ellipse cx="${f(x+dx)}" cy="${f(yy-1.4)}" rx="${f(r)}" ry="${f(r*0.3)}" fill="${ц[0]}"/>`; }
+    const top=y-(n-1)*2.2-1.4;
+    return s+`<ellipse cx="${f(x)}" cy="${f(top)}" rx="${f(r*0.72)}" ry="${f(r*0.2)}" fill="none" stroke="${ц[2]}" stroke-width=".7"/><ellipse cx="${f(x-r*0.3)}" cy="${f(top-0.4)}" rx="${f(r*0.35)}" ry="${f(r*0.08)}" fill="${ц[1]}" opacity=".9"/>`;
+  }
+  /* ---------- лоток с дюжиной яиц: (x,y) — середина низа, м ---------- */
+  function яйца(x,y,м){
+    let s=`<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">${тень(0,0,90,.4)}
+      <path d="M-46 0 L-42 -14 H42 L46 0 Z" fill="#c8b89a"/><path d="M-42 -14 H42" stroke="#e0d4bc" stroke-width="1.2"/>`;
+    for(let r0=0;r0<2;r0++) for(let k=0;k<6;k++){ const ex=-35+k*14+r0*2, ey=-14-r0*6;
+      s+=`<ellipse cx="${ex}" cy="${ey-6}" rx="6" ry="7.4" fill="url(#рл-яйцо)"/><ellipse cx="${ex-2}" cy="${ey-9}" rx="1.8" ry="2.4" fill="#fff" opacity=".7"/>`; }
+    return s+`</g>`;
+  }
+  /* ---------- пачка бумаги (500 листов) ---------- */
+  function пачка(x,y,м){
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">${тень(0,0,70,.4)}
+      <path d="M-34 0 V-16 L-24 -24 H38 V-8 L28 0 Z" fill="#e8ecef"/><path d="M-34 -16 L-24 -24 H38 L28 -16 Z" fill="#fbfcfd"/>
+      <path d="M-34 -16 H28 V0 H-34 Z" fill="#2a6ab8"/><path d="M28 -16 L38 -24 V-8 L28 0 Z" fill="#1a4a8a"/>
+      <text x="-3" y="-5" text-anchor="middle" font-size="7" font-weight="bold" fill="#fff" font-family="${ШРИФТ}">A4 · 500</text></g>`;
+  }
+  /* ---------- пара перчаток на столе ---------- */
+  function перчатки(x,y,м){
+    const одна=(dx,угол)=>`<g transform="translate(${dx} 0) rotate(${угол})"><path d="M-8 0 Q-10 -14 -8 -22 L-8 -34 Q-6 -37 -4 -34 L-4 -24 L-2 -38 Q0 -41 2 -38 L2 -24 L4 -36 Q6 -39 8 -36 L7 -22 L10 -30 Q12 -32 13 -29 L10 -14 Q8 0 6 0 Z" fill="url(#рл-перчатка)"/><path d="M-6 -10 Q0 -12 6 -10" stroke="#bcdcff" stroke-width="1" fill="none" opacity=".6"/></g>`;
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">${тень(0,0,50,.35)}${одна(-10,-12)}${одна(10,14)}</g>`;
+  }
+  /* ---------- плакат «Периодическая система»: сетка 18×7 на стене; выдел — {символ:true} ----------
+     (x,y) — левый верх, ш — ширина; клетки известных элементов подписаны */
+  const ЭЛ = {H:[1,1,1,'водород'],He:[18,1,4,'гелий'],Li:[1,2,7,'литий'],C:[14,2,12,'углерод'],N:[15,2,14,'азот'],O:[16,2,16,'кислород'],F:[17,2,19,'фтор'],Ne:[18,2,20,'неон'],
+    Na:[1,3,23,'натрий'],Mg:[2,3,24,'магний'],Al:[13,3,27,'алюминий'],Si:[14,3,28,'кремний'],P:[15,3,31,'фосфор'],S:[16,3,32,'сера'],Cl:[17,3,35.5,'хлор'],Ar:[18,3,40,'аргон'],
+    K:[1,4,39,'калий'],Ca:[2,4,40,'кальций'],Fe:[8,4,56,'железо'],Cu:[11,4,64,'медь'],Zn:[12,4,65,'цинк'],Ag:[11,5,108,'серебро'],Au:[11,6,197,'золото']};
+  function таблица(x,y,ш,опц){
+    const о=опц||{}, к=ш/18, в=к*7+к*0.6;
+    const есть=(g,p)=> p===1?(g===1||g===18): p<=3?(g<=2||g>=13): true;
+    const цвет0=(g)=> g<=2?'#f4c8a0': g>=13&&g<=17?'#c8e4b0': g===18?'#c8d8f4':'#f4e4a8';
+    let s=`<g>${тень(x+ш/2,y+в+4,ш,.25)}<rect x="${f(x-3)}" y="${f(y-10)}" width="${f(ш+6)}" height="${f(в+14)}" rx="2" fill="#fbfbf7"/>
+      <text x="${f(x+ш/2)}" y="${f(y-3)}" text-anchor="middle" font-size="${f(к*0.62)}" textLength="${f(ш-4)}" lengthAdjust="spacingAndGlyphs" font-weight="bold" fill="#2a2a2a" font-family="${ШРИФТ}">ПЕРИОДИЧЕСКАЯ СИСТЕМА ЭЛЕМЕНТОВ Д. И. МЕНДЕЛЕЕВА</text>`;
+    for(let p=1;p<=7;p++) for(let g=1;g<=18;g++){ if(!есть(g,p)) continue;
+      const sym=Object.keys(ЭЛ).find(k0=>ЭЛ[k0][0]===g&&ЭЛ[k0][1]===p), вык=sym&&о.выдел&&о.выдел[sym];
+      const cx=x+(g-1)*к, cy=y+(p-1)*к+(p>5?0:0);
+      s+=`<rect x="${f(cx+0.3)}" y="${f(cy+0.3)}" width="${f(к-0.6)}" height="${f(к-0.6)}" fill="${вык?'#ffd76a':цвет0(g)}" stroke="${вык?'#c8402a':'#fff'}" stroke-width="${вык?1:0.4}"/>`;
+      if(sym) s+=`<text x="${f(cx+к/2)}" y="${f(cy+к*0.68)}" text-anchor="middle" font-size="${f(к*0.5)}" font-weight="bold" fill="#1a1a1a" font-family="${ШРИФТ}">${sym}</text>`;
+    }
+    return s+`<path d="M${f(x-3)} ${f(y+в+4)} H${f(x+ш+3)}" stroke="#000" stroke-width=".6" opacity=".2"/></g>`;
+  }
+  /* крупная клетка элемента: (x,y) — левый верх, ш — сторона */
+  function клетка(x,y,ш,сим){
+    const e=ЭЛ[сим]||[0,0,0,''], цв=e[0]<=2?'#f4c8a0': e[0]>=13&&e[0]<=17?'#c8e4b0': e[0]===18?'#c8d8f4':'#f4e4a8';
+    const Z={H:1,He:2,Li:3,C:6,N:7,O:8,F:9,Ne:10,Na:11,Mg:12,Al:13,Si:14,P:15,S:16,Cl:17,Ar:18,K:19,Ca:20,Fe:26,Cu:29,Zn:30,Ag:47,Au:79}[сим]||'';
+    return `<g filter="url(#рл-тень)">${тень(x+ш/2,y+ш,ш,.35)}<rect x="${f(x)}" y="${f(y)}" width="${f(ш)}" height="${f(ш)}" rx="3" fill="${цв}"/></g>
+      <rect x="${f(x)}" y="${f(y)}" width="${f(ш)}" height="${f(ш)}" rx="3" fill="none" stroke="#fff" stroke-width="1.4" opacity=".7"/>
+      <text x="${f(x+ш*0.1)}" y="${f(y+ш*0.2)}" font-size="${f(ш*0.14)}" font-weight="bold" fill="#333" font-family="${ШРИФТ}">${Z}</text>
+      <text x="${f(x+ш/2)}" y="${f(y+ш*0.58)}" text-anchor="middle" font-size="${f(ш*0.38)}" font-weight="bold" fill="#111" font-family="${ШРИФТ}">${esc(сим)}</text>
+      <text x="${f(x+ш/2)}" y="${f(y+ш*0.76)}" text-anchor="middle" font-size="${f(ш*0.13)}" fill="#333" font-family="${ШРИФТ}">${esc(e[3])}</text>
+      <text x="${f(x+ш/2)}" y="${f(y+ш*0.93)}" text-anchor="middle" font-size="${f(ш*0.14)}" font-weight="bold" fill="#8a1a1a" font-family="${ШРИФТ}">${String(e[2]).replace('.',',')}</text>`;
+  }
+  /* ---------- модель молекулы «шары и палочки»: (x,y) — центр, м — масштаб, вид — 'H2O'|'CO2'|'O2'|'CH4'|'NH3'|'N2'|'H2' ---------- */
+  const АТОМ = {H:['#ffffff','#b8c0c8',7],O:['#ff5a4a','#8a1a10',11],C:['#5a5e64','#1a1c1f',11],N:['#5a7aff','#1a2a8a',10.5],Cl:['#6ad84a','#1a6a10',12.5],Na:['#b87aff','#4a1a8a',13],S:['#ffd84a','#8a6a00',12.5]};
+  const МОЛ = {
+    H2O:[['O',0,0,0],['H',-17,12,4],['H',17,12,4]],
+    CO2:[['O',-26,0,0],['C',0,0,0],['O',26,0,0]],
+    O2:[['O',-11,0,0],['O',11,0,0]],
+    H2:[['H',-7,0,0],['H',7,0,0]],
+    N2:[['N',-10,0,0],['N',10,0,0]],
+    CH4:[['C',0,0,0],['H',0,-20,0],['H',-18,8,-6],['H',18,8,-6],['H',4,10,10]],
+    NH3:[['N',0,-2,0],['H',-18,8,2],['H',18,8,2],['H',0,14,10]],
+    NaCl:[['Na',-14,0,0],['Cl',14,0,0]]
+  };
+  function молекула(x,y,м,вид,опц){
+    const о=опц||{}, ат=(МОЛ[вид]||[]).slice().sort((a,b)=>a[3]-b[3]), ц=МОЛ[вид]?МОЛ[вид][0]:null;
+    let s=`<g transform="translate(${f(x)} ${f(y)}) scale(${м})">`;
+    if(вид!=='NaCl'&&ц){ const [e0,x0,y0]=МОЛ[вид][0];
+      МОЛ[вид].slice(1).forEach(([e,xx,yy])=>{ s+=`<path d="M${x0} ${y0} L${xx} ${yy}" stroke="#9aa0a6" stroke-width="4.4" stroke-linecap="round"/><path d="M${x0} ${y0} L${xx} ${yy}" stroke="#e8ecef" stroke-width="1.4" stroke-linecap="round" opacity=".8"/>`; });
+      if(вид==='O2'||вид==='CO2'||вид==='N2'){ s+=МОЛ[вид].slice(1).map(([e,xx,yy])=>`<path d="M${x0} ${y0-3.4} L${xx} ${yy-3.4}" stroke="#9aa0a6" stroke-width="2.6"/>`).join(''); if(вид==='O2') s+=`<path d="M-11 -3.4 L11 -3.4" stroke="#9aa0a6" stroke-width="2.6"/>`; } }
+    ат.forEach(([e,xx,yy,zz])=>{ const [c1,c2,r]=АТОМ[e], кл=ид('ат'), rr=r*(1+zz*0.012);
+      s+=`<radialGradient id="${кл}" cx=".36" cy=".32" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></radialGradient>
+        <circle cx="${xx}" cy="${yy}" r="${f(rr)}" fill="url(#${кл})"/>${о.подписи?`<text x="${xx}" y="${f(yy+rr*0.35)}" text-anchor="middle" font-size="${f(rr*0.9)}" font-weight="bold" fill="${e==='H'?'#333':'#fff'}" font-family="${ШРИФТ}">${e}</text>`:''}`; });
+    return s+`</g>`;
+  }
+  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула};
 })();
