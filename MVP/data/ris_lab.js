@@ -457,6 +457,14 @@
     else if(вид==='уголь'){ const шаг=r*0.2; for(let j=-5;j<=5;j++) for(let i=-6;i<=6;i++){ const x=cx+i*шаг*0.87+(j%2?шаг*0.43:0), y=cy+j*шаг*0.75; if((x-cx)**2+(y-cy)**2>(r+шаг)**2) continue; s+=шар(x,y,шаг*0.32,'#6a6e74','#1a1c1f'); } }
     else if(вид==='сера'){ for(let k=0;k<7;k++){ const ox=cx+(r0()-0.5)*r*1.5, oy=cy+(r0()-0.5)*r*1.5; for(let a=0;a<8;a++){ const ang=a*Math.PI/4; s+=шар(ox+Math.cos(ang)*r*0.12,oy+Math.sin(ang)*r*0.12,r*0.06,'#ffe24a','#8a6a00'); } } }
     else if(вид==='сахар'){ for(let k=0;k<6;k++){ const ox=cx+(r0()-0.5)*r*1.4, oy=cy+(r0()-0.5)*r*1.4; for(let a=0;a<9;a++){ const ang=a*0.7, rr=r*0.05+r*0.08*(a%3); s+=шар(ox+Math.cos(ang)*rr,oy+Math.sin(ang)*rr,r*0.045,a%3===0?'#ff5a4a':a%3===1?'#5a5e64':'#ffffff',a%3===0?'#8a1a10':a%3===1?'#1a1c1f':'#b8c0c8'); } } }
+    else if(вид==='раствор'||вид==='сироп'){
+      for(let k=0;k<18;k++){ const ox=cx+(r0()-0.5)*r*1.8, oy=cy+(r0()-0.5)*r*1.8, aa=r0()*6.28, d=r*0.07;
+        s+=`<g>${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;${f((r0()-0.5)*8)} ${f((r0()-0.5)*8)};0 0" dur="${f(1+r0()*1.5)}s" repeatCount="indefinite"/>`:''}${шар(ox,oy,r*0.065,'#ff5a4a','#8a1a10')}${шар(ox+Math.cos(aa)*d,oy+Math.sin(aa)*d,r*0.04,'#fff','#b8c0c8')}${шар(ox+Math.cos(aa+1.8)*d,oy+Math.sin(aa+1.8)*d,r*0.04,'#fff','#b8c0c8')}</g>`; }
+      const n=вид==='раствор'?3:3, НА=[[-0.5,-0.25],[0.4,-0.5],[0.15,0.45]], ХЛ=[[0.05,-0.05],[-0.35,0.45],[0.55,0.1]], СХ=[[-0.35,-0.35],[0.35,0.3],[-0.1,0.5]];
+      for(let k=0;k<n;k++){ const ox=cx+(вид==='раствор'?НА[k][0]:СХ[k][0])*r, oy=cy+(вид==='раствор'?НА[k][1]:СХ[k][1])*r;
+        if(вид==='раствор'){ s+=шар(ox,oy,r*0.1,'#b87aff','#4a1a8a',true)+`<text x="${f(ox)}" y="${f(oy+r*0.035)}" text-anchor="middle" font-size="${f(r*0.09)}" font-weight="bold" fill="#fff" font-family="${ШРИФТ}">Na⁺</text>`;
+          const ox2=cx+ХЛ[k][0]*r, oy2=cy+ХЛ[k][1]*r; s+=шар(ox2,oy2,r*0.14,'#6ad84a','#1a6a10',true)+`<text x="${f(ox2)}" y="${f(oy2+r*0.04)}" text-anchor="middle" font-size="${f(r*0.1)}" font-weight="bold" fill="#fff" font-family="${ШРИФТ}">Cl⁻</text>`; }
+        else { for(let a2=0;a2<9;a2++){ const ang=a2*0.7, rr=r*0.04+r*0.06*(a2%3); s+=шар(ox+Math.cos(ang)*rr,oy+Math.sin(ang)*rr,r*0.04,a2%3===0?'#ff5a4a':a2%3===1?'#5a5e64':'#ffffff',a2%3===0?'#8a1a10':a2%3===1?'#1a1c1f':'#b8c0c8'); } } } }
     else { for(let k=0;k<22;k++){ const ox=cx+(r0()-0.5)*r*1.8, oy=cy+(r0()-0.5)*r*1.8, a=r0()*6.28, d=r*0.09;
       s+=`<g>${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;${f((r0()-0.5)*8)} ${f((r0()-0.5)*8)};0 0" dur="${f(1+r0()*1.5)}s" repeatCount="indefinite"/>`:''}${шар(ox,oy,r*0.08,'#ff5a4a','#8a1a10')}${шар(ox+Math.cos(a)*d,oy+Math.sin(a)*d,r*0.05,'#fff','#b8c0c8')}${шар(ox+Math.cos(a+1.8)*d,oy+Math.sin(a+1.8)*d,r*0.05,'#fff','#b8c0c8')}</g>`; } }
     return s;
@@ -486,9 +494,83 @@
       : что==='цилиндр'?цилиндр(32,58,12,52,{мл:50})
       : что==='стакан'?стакан(32,54,34,38,{уровень:.5,деления:false})
       : что==='пипетка'?пипетка(32,62,0.75,true)
+      : что==='лодочка'?лодочка(32,44,40,{горка:0})
+      : что==='палочка'?палочка(10,52,54,12)
+      : что==='склянка'?склянка(32,58,28,46,{этикетка:['     ']})
+      : что==='очки'?очки(32,40,0.9)
       : ['соль','сахар','железо','медь','сера','уголь','вода'].includes(что)?банка(32,56,30,42,{содержимое:что==='вода'?undefined:что,стекло:что==='вода'?'янтарь':'прозрачное',надпись:[{соль:'NaCl',сахар:'C₁₂H₂₂O₁₁',железо:'Fe',медь:'Cu',сера:'S',уголь:'C',вода:'H₂O'}[что]],мал:true})
       : '';
     return `<svg viewBox="0 0 64 64" aria-hidden="true">${defs()}<rect width="64" height="64" rx="8" fill="url(#рл-студия)"/>${тело}</svg>`;
   }
-  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок};
+
+  /* ---------- стеклянная палочка на столе: от (x1,y1) до (x2,y2) ---------- */
+  function палочка(x1,y1,x2,y2){
+    return `<g><path d="M${f(x1+2)} ${f(y1+3)} L${f(x2+2)} ${f(y2+3)}" stroke="#000" stroke-width="3" opacity=".35" filter="url(#рл-мягко)"/>
+      <path d="M${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)}" stroke="#d8ecf6" stroke-width="3.4" stroke-linecap="round" opacity=".85"/>
+      <path d="M${f(x1)} ${f(y1-0.8)} L${f(x2)} ${f(y2-0.8)}" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".9"/></g>`;
+  }
+  /* ---------- склянка с притёртой пробкой: (x,y) — середина дна; опц.уровень, опц.цвет, опц.этикетка — строки ---------- */
+  function склянка(x,y,ш,в,опц){
+    const о=опц||{}, кл=ид('скл'), л=x-ш/2, плечо=y-в*0.72, горло=ш*0.34, ур=о.уровень||0, ц=о.цвет||цвет('вода');
+    const форма=`M${f(л)} ${f(y-4)} Q${f(л)} ${f(y)} ${f(л+4)} ${f(y)} H${f(л+ш-4)} Q${f(л+ш)} ${f(y)} ${f(л+ш)} ${f(y-4)} V${f(плечо)} Q${f(л+ш)} ${f(плечо-в*0.12)} ${f(x+горло/2)} ${f(плечо-в*0.14)} V${f(y-в)} H${f(x-горло/2)} V${f(плечо-в*0.14)} Q${f(л)} ${f(плечо-в*0.12)} ${f(л)} ${f(плечо)} Z`;
+    const yж=y-3-(в*0.7)*ур;
+    const строки=[].concat(о.этикетка||[]);
+    return `<g>${тень(x,y,ш,.45)}
+      ${ур>0?`<clipPath id="${кл}"><path d="${форма}"/></clipPath><g clip-path="url(#${кл})"><rect x="${f(л)}" y="${f(yж)}" width="${f(ш)}" height="${f(y-yж)}" fill="${ц}"/><rect x="${f(л)}" y="${f(yж)}" width="${f(ш)}" height="${f(y-yж)}" fill="url(#рл-жидкость)"/></g><ellipse cx="${f(x)}" cy="${f(yж)}" rx="${f(ш/2-1.5)}" ry="2" fill="#fff" opacity=".3"/>`:''}
+      <path d="${форма}" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".9"/>
+      <rect x="${f(л+3)}" y="${f(плечо+4)}" width="${f(Math.max(2,ш*0.06))}" height="${f(y-плечо-10)}" rx="1" fill="#fff" opacity=".65"/>
+      <path d="M${f(x-горло/2-1)} ${f(y-в)} h${f(горло+2)} v-3 h${f(-горло-2)} Z" fill="#dcebf5" opacity=".7"/>
+      <path d="M${f(x-горло*0.42)} ${f(y-в-3)} L${f(x-горло*0.3)} ${f(y-в-10)} Q${f(x)} ${f(y-в-16)} ${f(x+горло*0.3)} ${f(y-в-10)} L${f(x+горло*0.42)} ${f(y-в-3)} Z" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-width=".8"/>
+      ${строки.length?`<rect x="${f(л+ш*0.12)}" y="${f(плечо+в*0.08)}" width="${f(ш*0.76)}" height="${f(в*0.38)}" rx="1.5" fill="url(#рл-этикетка)"/><rect x="${f(л+ш*0.12)}" y="${f(плечо+в*0.08)}" width="${f(ш*0.76)}" height="2" fill="${о.полоса||'#2a6ab8'}"/>
+        ${строки.map((s0,i)=>{ const к=i?ш*0.1:ш*0.13, нужно=String(s0).length*к*0.56, влез=ш*0.68; return `<text x="${f(x)}" y="${f(плечо+в*0.08+5+(i+1)*в*0.38/(строки.length+0.6))}" text-anchor="middle" ${нужно>влез?`textLength="${f(влез)}" lengthAdjust="spacingAndGlyphs"`:''} font-size="${f(к)}" font-weight="${i?'normal':'bold'}" fill="#1a1a1a" font-family="${ШРИФТ}">${esc(s0)}</text>`; }).join('')}`:''}
+    </g>`;
+  }
+  /* ---------- вставка «мениск крупно»: круг (cx,cy,r) со шкалой цилиндра около отметки мл;
+     жидкость с вогнутым мениском, нижний край на отметке; опц.глаз — линия взгляда ---------- */
+  function мениск(cx,cy,r,мл,опц){
+    const о=опц||{}, кл=ид('мен'), шаг=r*0.28, y0=cy; /* отметка мл — по центру */
+    let дел=''; for(let k=-4;k<=4;k++){ const v=Math.round(мл)+k, yy=y0-(v-мл)*шаг; дел+=`<path d="M${f(cx-r*0.1)} ${f(yy)} H${f(cx+r*(v%5===0?0.55:0.3))}" stroke="#fff" stroke-width="${v%5===0?1.6:1}"/>${v%5===0?`<text x="${f(cx-r*0.16)}" y="${f(yy+r*0.06)}" text-anchor="end" font-size="${f(r*0.18)}" font-weight="bold" fill="#fff" font-family="${ШРИФТ}">${v}</text>`:''}`; }
+    const жверх=y0-(0)*шаг;
+    return `<g><clipPath id="${кл}"><circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}"/></clipPath>
+      <circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="#1a2430"/>
+      <g clip-path="url(#${кл})">
+        <rect x="${f(cx-r*0.9)}" y="${f(cy-r)}" width="${f(r*1.8)}" height="${f(r*2)}" fill="#dcebf5" opacity=".08"/>
+        <path d="M${f(cx-r*0.9)} ${f(жверх-r*0.2)} Q${f(cx)} ${f(жверх+r*0.2)} ${f(cx+r*0.9)} ${f(жверх-r*0.2)} V${f(cy+r)} H${f(cx-r*0.9)} Z" fill="${цвет('вода')}"/>
+        <path d="M${f(cx-r*0.9)} ${f(жверх-r*0.2)} Q${f(cx)} ${f(жверх+r*0.2)} ${f(cx+r*0.9)} ${f(жверх-r*0.2)}" stroke="#bfe6fa" stroke-width="2" fill="none"/>
+        ${дел}
+        ${о.глаз?`<path d="M${f(cx-r)} ${f(жверх)} H${f(cx+r)}" stroke="#ffd76a" stroke-width="1.4" stroke-dasharray="4 3"/>`:''}
+      </g>
+      <circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="none" stroke="url(#рл-сталь)" stroke-width="${f(r*0.08)}"/>
+      ${о.глаз?глаз(cx-r-16,жверх,1):''}
+    </g>`;
+  }
+  /* ---------- глаз наблюдателя (для правила чтения мениска) ---------- */
+  function глаз(x,y,м){
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})"><path d="M-12 0 Q0 -9 12 0 Q0 9 -12 0 Z" fill="#fff" stroke="#c8ced6" stroke-width="1"/><circle cx="2" cy="0" r="4.4" fill="#3a6a9a"/><circle cx="2" cy="0" r="2" fill="#111"/><circle cx="1" cy="-1.2" r=".9" fill="#fff"/></g>`;
+  }
+  /* ---------- круговая диаграмма состава раствора: доля вещества (0..1) ---------- */
+  function диаграмма(cx,cy,r,доля,цв){
+    const д=Math.max(0.0001,Math.min(0.9999,доля)), a=д*2*Math.PI, x1=cx+r*Math.sin(a), y1=cy-r*Math.cos(a), big=д>0.5?1:0;
+    return `<g><circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="#3a8ac8"/>
+      <path d="M${f(cx)} ${f(cy)} L${f(cx)} ${f(cy-r)} A${f(r)} ${f(r)} 0 ${big} 1 ${f(x1)} ${f(y1)} Z" fill="${цв||'#f0f2f4'}"/>
+      <circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="none" stroke="#15171a" stroke-width="1.4"/>
+      <circle cx="${f(cx-r*0.3)}" cy="${f(cy-r*0.35)}" r="${f(r*0.5)}" fill="#fff" opacity=".08"/></g>`;
+  }
+
+  /* ---------- выпаривание: треножник с сеткой, фарфоровая чашка, спиртовка под ней, пар ---------- */
+  function выпаривание(x,y,м,горит,ур){
+    const уровень=ур==null?0.5:ур;
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">
+      ${спиртовка(0,0,0.9,горит)}
+      <path d="M-30 0 L-22 -66 M30 0 L22 -66 M0 4 L0 -66" stroke="url(#рл-сталь)" stroke-width="2.6"/>
+      <ellipse cx="0" cy="-66" rx="28" ry="4" fill="none" stroke="url(#рл-сталь)" stroke-width="2.6"/>
+      <path d="M-26 -67 H26" stroke="#8a9098" stroke-width="1.2" stroke-dasharray="1.6 1.4"/>
+      <path d="M-24 -70 Q-22 -58 0 -56 Q22 -58 24 -70 Z" fill="#f4f2ec" stroke="#b8b4a8" stroke-width=".8"/>
+      <ellipse cx="0" cy="-70" rx="24" ry="3.6" fill="#e8e4da" stroke="#b8b4a8" stroke-width=".8"/>
+      <ellipse cx="0" cy="-69" rx="${f(20*уровень+2)}" ry="${f(2.6*уровень+0.4)}" fill="${цвет('вода')}"/>
+      <path d="M-20 -66 Q-14 -60 -4 -59" stroke="#fff" stroke-width="1.2" fill="none" opacity=".8"/>
+      ${горит&&ДВИЖ?[0,1,2].map(k=>`<path d="M${-10+k*10} -76 q-5 -8 0 -16 q5 -8 0 -16" stroke="#e8f0f6" stroke-width="3" fill="none" stroke-linecap="round" opacity="0"><animate attributeName="opacity" values="0;.55;0" dur="2.4s" begin="${k*0.8}s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="translate" values="0 0;0 -14" dur="2.4s" begin="${k*0.8}s" repeatCount="indefinite"/></path>`).join(''):''}
+    </g>`;
+  }
+  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок, палочка, склянка, мениск, глаз, диаграмма, выпаривание};
 })();
