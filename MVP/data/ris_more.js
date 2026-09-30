@@ -2060,6 +2060,82 @@
     </g>`;
   }
 
+  /* ---------- знамя-вексиллум: древко, перекладина с навершием, полотнище со складками и бахромой.
+     (x,y) — середина перекладины; ш, в — полотнище; цвет — [светлый, тёмный] ---------- */
+  function знамя(x,y,ш,в,цвет,опц){
+    const о=опц||{}, кл=ид('знамя'), ц=цвет||['#c8402a','#7a1a0e'];
+    return `<g>
+      <linearGradient id="${кл}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${ц[0]}"/><stop offset=".6" stop-color="${ц[0]}"/><stop offset="1" stop-color="${ц[1]}"/></linearGradient>
+      ${о.древко===false?'':`<rect x="${f(x-2)}" y="${f(y-16)}" width="4" height="${f(в+(о.длина||70))}" fill="url(#рм-мачта)" stroke="${ОБВОД}" stroke-width=".6"/>
+        <path d="M${f(x)} ${f(y-28)} l5 8 l-5 6 l-5 -6 z" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".7"/>`}
+      <rect x="${f(x-ш/2-5)}" y="${f(y-3)}" width="${f(ш+10)}" height="5" rx="2.5" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".7"/>
+      <circle cx="${f(x-ш/2-5)}" cy="${f(y-0.5)}" r="3" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".5"/><circle cx="${f(x+ш/2+5)}" cy="${f(y-0.5)}" r="3" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".5"/>
+      <g>${ДВИЖ&&о.качка!==false?`<animateTransform attributeName="transform" type="skewX" values="0;1.6;0;-1.6;0" dur="5s" repeatCount="indefinite"/>`:''}
+        <path d="M${f(x-ш/2)} ${f(y+2)} H${f(x+ш/2)} V${f(y+в)} Q${f(x+ш/4)} ${f(y+в+5)} ${f(x)} ${f(y+в)} Q${f(x-ш/4)} ${f(y+в-5)} ${f(x-ш/2)} ${f(y+в)} Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.1"/>
+        <path d="M${f(x-ш*0.22)} ${f(y+4)} Q${f(x-ш*0.26)} ${f(y+в*0.5)} ${f(x-ш*0.2)} ${f(y+в-3)} M${f(x+ш*0.24)} ${f(y+4)} Q${f(x+ш*0.2)} ${f(y+в*0.5)} ${f(x+ш*0.26)} ${f(y+в)}" stroke="${ц[1]}" stroke-width="1.4" fill="none" opacity=".5"/>
+        <rect x="${f(x-ш/2+3)}" y="${f(y+5)}" width="${f(ш-6)}" height="${f(в-10)}" fill="none" stroke="#f0c850" stroke-width="1.2" opacity=".85"/>
+        ${Array.from({length:Math.floor(ш/5)},(_,k)=>`<line x1="${f(x-ш/2+2.5+k*5)}" y1="${f(y+в-1)}" x2="${f(x-ш/2+2.5+k*5)}" y2="${f(y+в+6)}" stroke="#f0c850" stroke-width="1.3"/>`).join('')}
+        ${о.тело||''}
+      </g>
+    </g>`;
+  }
+
+  /* ---------- высотка университета: ступенчатая башня со шпилем и звездой, боковые крылья
+     с башенками, ряды окон, часы, деревья у подножия. (x,y) — середина низа ---------- */
+  function высотка(x,y,м,опц){
+    const о=опц||{};
+    const окна=(x0,y0,w,h,шаг,вш)=>{ let s2=''; for(let yy=y0+4;yy<y0+h-3;yy+=(вш||7)) for(let xx=x0+3;xx<x0+w-3;xx+=(шаг||5)) s2+=`<rect x="${f(xx)}" y="${f(yy)}" width="2" height="3.4" fill="${((xx*7+yy*3)|0)%5?'#5a6a86':'#ffe9a0'}"/>`; return s2; };
+    const блок=(x0,y0,w,h)=>`<rect x="${x0}" y="${y0}" width="${w}" height="${h}" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <rect x="${x0+w*0.62}" y="${y0}" width="${w*0.38}" height="${h}" fill="#8a7a5a" opacity=".22"/>
+      <rect x="${x0-1.5}" y="${y0-2.5}" width="${w+3}" height="3" fill="#f6efe0" stroke="${ОБВОД}" stroke-width=".5"/>${окна(x0,y0,w,h)}`;
+    const шпиль=(cx,y0,h)=>`<path d="M${cx-3} ${y0} L${cx} ${y0-h} L${cx+3} ${y0} Z" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".6"/>`;
+    return `<g transform="translate(${x} ${y}) scale(${м})">
+      <ellipse cx="0" cy="1" rx="104" ry="5" fill="#231a12" opacity=".3" filter="url(#рм-мягко)"/>
+      ${блок(-100,-34,44,34)}${блок(56,-34,44,34)}
+      ${блок(-84,-66,18,32)}${блок(66,-66,18,32)}${шпиль(-75,-68,18)}${шпиль(75,-68,18)}
+      ${блок(-56,-52,112,52)}
+      ${блок(-34,-96,68,44)}
+      ${блок(-22,-136,44,40)}
+      ${блок(-13,-160,26,24)}
+      <circle cx="0" cy="-148" r="6" fill="#fffaf0" stroke="${ОБВОД}" stroke-width=".8"/><path d="M0 -148 V-152 M0 -148 H3" stroke="${ОБВОД}" stroke-width=".9"/>
+      <rect x="-7" y="-172" width="14" height="12" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width=".7"/>
+      <path d="M-5 -172 L0 -214 L5 -172 Z" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".7"/>
+      <path d="M0 -224 l2 5 l5 0 l-4 3.4 l1.6 5 l-4.6 -3 l-4.6 3 l1.6 -5 l-4 -3.4 l5 0 z" fill="#ffd24a" stroke="#8a5a10" stroke-width=".6">${о.звезда===false?'':анЛин('opacity','1;0.6;1','2.4s')}</path>
+      <rect x="-9" y="-22" width="18" height="22" rx="1" fill="#4a3420" stroke="${ОБВОД}" stroke-width=".7"/>
+      ${[-46,-34,34,46].map(cx=>`<rect x="${cx-1.6}" y="-50" width="3.2" height="50" fill="url(#рм-колонна)"/>`).join('')}
+      <rect x="-62" y="-4" width="124" height="4" fill="#f6efe0" stroke="${ОБВОД}" stroke-width=".5"/>
+      ${[-112,-92,-70,70,92,112].map((cx,k)=>`<rect x="${cx-1.2}" y="-10" width="2.4" height="10" fill="#6a4a2a"/><circle cx="${cx}" cy="${-15-(k%2)*2}" r="${7+(k%2)}" fill="${k%2?'#4f8a4a':'#3f7a44'}" stroke="#1e3a24" stroke-width=".6"/><circle cx="${cx-2}" cy="${-18-(k%2)*2}" r="3" fill="#7ab06a" opacity=".8"/>`).join('')}
+    </g>`;
+  }
+
+  /* ---------- плотина ГЭС: бетонная стена с контрфорсами, водосбросы с падающей водой, пена,
+     дорога по гребню с фонарями (опц.огни — сколько горит), здание станции. (x,y) — левый низ ---------- */
+  function плотина(x,y,ш,в,опц){
+    const о=опц||{}, n=о.сбросов||4, огни=о.огни==null?0:о.огни, L=о.фонарей||4, верх=y-в, шаг=ш/(n+1);
+    const сбросы=Array.from({length:n},(_,k)=>{ const cx=x+шаг*(k+1), w=шаг*0.42;
+      return `<rect x="${f(cx-w/2)}" y="${f(верх+14)}" width="${f(w)}" height="${f(в-14)}" fill="#bfe4f8"/>
+        <rect x="${f(cx-w/2)}" y="${f(верх+14)}" width="${f(w*0.3)}" height="${f(в-14)}" fill="#fff" opacity=".45"/>
+        ${[0.25,0.5,0.75].map((t,q)=>`<line x1="${f(cx-w/2+w*t)}" y1="${f(верх+14)}" x2="${f(cx-w/2+w*t)}" y2="${f(y)}" stroke="#fff" stroke-width="1.6" stroke-dasharray="7 9" opacity=".9" data-декор="1">${анЛин('stroke-dashoffset','16;0',(0.5+q*0.12).toFixed(2)+'s')}</line>`).join('')}
+        <rect x="${f(cx-w/2-2)}" y="${f(верх+8)}" width="${f(w+4)}" height="7" rx="2" fill="#5a6470" stroke="${ОБВОД}" stroke-width=".6"/>
+        <ellipse cx="${f(cx)}" cy="${f(y+1)}" rx="${f(w*0.8)}" ry="5" fill="#fff" opacity=".85" data-декор="1">${анЛин('rx',`${f(w*0.6)};${f(w*0.95)};${f(w*0.6)}`,'1.3s')}</ellipse>`; }).join('');
+    const опоры=Array.from({length:n+1},(_,k)=>{ const cx=x+шаг*(k+0.5);
+      return `<path d="M${f(cx-5)} ${f(верх+14)} L${f(cx-9)} ${f(y)} H${f(cx+9)} L${f(cx+5)} ${f(верх+14)} Z" fill="#aab2ba" stroke="${ОБВОД}" stroke-width=".6"/><path d="M${f(cx)} ${f(верх+14)} L${f(cx+2)} ${f(y)} H${f(cx+9)} L${f(cx+5)} ${f(верх+14)} Z" fill="#6a7480" opacity=".5"/>`; }).join('');
+    const фонари=Array.from({length:L},(_,k)=>{ const cx=x+ш*(k+0.5)/L, на=k<огни;
+      return `<rect x="${f(cx-1)}" y="${f(верх-20)}" width="2" height="20" fill="#3a4450"/>
+        ${на?`<circle cx="${f(cx)}" cy="${f(верх-23)}" r="13" fill="url(#рм-сияние)" data-декор="1">${анЛин('r','11;15;11','2s')}</circle>`:''}
+        <circle cx="${f(cx)}" cy="${f(верх-23)}" r="4.4" fill="${на?'#ffe680':'#6a747e'}" stroke="${ОБВОД}" stroke-width=".8"/>`; }).join('');
+    return `<g>
+      <rect x="${f(x)}" y="${f(верх+6)}" width="${f(ш)}" height="${f(в-6)}" fill="#c4ccd4" stroke="${ОБВОД}" stroke-width="1"/>
+      ${[0.3,0.55,0.8].map(t=>`<line x1="${f(x)}" y1="${f(верх+в*t)}" x2="${f(x+ш)}" y2="${f(верх+в*t)}" stroke="#8a949e" stroke-width=".6" opacity=".7"/>`).join('')}
+      ${сбросы}${опоры}
+      <rect x="${f(x-2)}" y="${f(верх)}" width="${f(ш+4)}" height="9" fill="#d8dee4" stroke="${ОБВОД}" stroke-width=".9"/>
+      <rect x="${f(x-2)}" y="${f(верх)}" width="${f(ш+4)}" height="2.4" fill="#fff" opacity=".6"/>
+      ${Array.from({length:Math.floor(ш/10)},(_,k)=>`<line x1="${f(x+k*10+5)}" y1="${f(верх-5)}" x2="${f(x+k*10+5)}" y2="${f(верх)}" stroke="#3a4450" stroke-width=".8"/>`).join('')}
+      <line x1="${f(x)}" y1="${f(верх-5)}" x2="${f(x+ш)}" y2="${f(верх-5)}" stroke="#3a4450" stroke-width="1"/>
+      ${фонари}
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -2069,5 +2145,6 @@
     крепость, галера, катапульта, коготь, восковая, винт, лира, ведро, листок, кольцо, театр,
     пиршество, гусли, сосна, белка, кольчуга, кафтан,
     трон, меч, гусь, конь, медведь, баклуши, воин, сфера, цветы, амфораМузей, витрина, подснежник, этна,
-    снегопад, акведук, стапель, сиракузия, полиспаст, плащ, палатка};
+    снегопад, акведук, стапель, сиракузия, полиспаст, плащ, палатка,
+    знамя, высотка, плотина};
 })();
