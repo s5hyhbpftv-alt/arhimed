@@ -2512,6 +2512,102 @@
     </g>`;
   }
 
+  /* ---------- плод с рынка: 'арбуз' | 'дыня' | 'лимон' | 'яблоко' | 'сыр' | 'хлеб' | 'тыква' | 'апельсин'.
+     (x,y) — центр, r — полуширина. опц.разрезан — две половинки срезом к зрителю;
+     опц.режется — половинки разъезжаются один раз ---------- */
+  function плод(вид,x,y,r,опц){
+    const о=опц||{}, кл=ид('плод');
+    const В={
+      арбуз:{ц:['#5aa04a','#1e5a24'],мякоть:'#e8453a',корка:'#2e7a34',бел:'#e8f4d0',rx:1.15,ry:0.9},
+      дыня:{ц:['#f4dc7a','#c89a2a'],мякоть:'#f8c878',корка:'#d8b040',бел:'#fbe8b0',rx:1.2,ry:0.85},
+      лимон:{ц:['#fff07a','#d8b020'],мякоть:'#fbf0a0',корка:'#e8c830',бел:'#fffbe0',rx:1.15,ry:0.82},
+      яблоко:{ц:['#f07a5a','#a82a1a'],мякоть:'#fbf6e0',корка:'#c8402a',бел:'#fbf6e0',rx:1,ry:0.95},
+      сыр:{ц:['#f8dc7a','#d8a83a'],мякоть:'#f4d060',корка:'#c8922a',бел:'#f4d060',rx:1.2,ry:0.62},
+      хлеб:{ц:['#d8a058','#8a5a24'],мякоть:'#f4e6c0',корка:'#9a6a2e',бел:'#f4e6c0',rx:1.2,ry:0.7},
+      тыква:{ц:['#f09a3a','#b85a14'],мякоть:'#f8b858',корка:'#c86a1a',бел:'#fbd890',rx:1.2,ry:0.9},
+      апельсин:{ц:['#ffb040','#d8701a'],мякоть:'#ffc060',корка:'#e8801a',бел:'#fff0d0',rx:1,ry:1}
+    }[вид]||{ц:['#ccc','#888'],мякоть:'#eee',корка:'#888',бел:'#fff',rx:1,ry:1};
+    const rx=r*В.rx, ry=r*В.ry;
+    const тень=`<ellipse cx="2" cy="${f(ry*0.98)}" rx="${f(rx*0.9)}" ry="${f(r*0.16)}" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>`;
+    const целый=()=>{ let дет='';
+      if(вид==='арбуз') дет=[-0.6,-0.2,0.2,0.6].map(t=>`<path d="M${f(rx*t)} ${f(-ry*Math.sqrt(1-t*t))} Q${f(rx*t*1.3)} 0 ${f(rx*t)} ${f(ry*Math.sqrt(1-t*t))}" stroke="#1e4a20" stroke-width="${f(r*0.12)}" fill="none" opacity=".75"/>`).join('');
+      if(вид==='дыня') дет=[-0.5,0,0.5].map(t=>`<path d="M${f(-rx*0.9)} ${f(ry*t*0.8)} Q0 ${f(ry*t*1.3)} ${f(rx*0.9)} ${f(ry*t*0.8)}" stroke="#b88a2a" stroke-width=".9" fill="none" opacity=".6"/>`).join('')+`<circle cx="${f(rx)}" cy="0" r="${f(r*0.1)}" fill="#8a6a2a"/>`;
+      if(вид==='лимон') дет=`<path d="M${f(-rx)} 0 q${f(-r*0.2)} ${f(-r*0.06)} ${f(-r*0.24)} 0 M${f(rx)} 0 q${f(r*0.2)} ${f(-r*0.06)} ${f(r*0.24)} 0" stroke="#d8b020" stroke-width="${f(r*0.22)}" stroke-linecap="round"/>`;
+      if(вид==='яблоко') дет=`<path d="M0 ${f(-ry*0.9)} q2 ${f(-r*0.4)} 5 ${f(-r*0.55)}" stroke="#5a3410" stroke-width="2" fill="none"/><ellipse cx="${f(r*0.5)}" cy="${f(-ry*1.15)}" rx="${f(r*0.4)}" ry="${f(r*0.16)}" fill="#6ab04a" stroke="${ОБВОД}" stroke-width=".6" transform="rotate(-20 ${f(r*0.5)} ${f(-ry*1.15)})"/>`;
+      if(вид==='сыр') дет=`<path d="M${f(-rx)} ${f(-ry*0.2)} Q0 ${f(ry*0.5)} ${f(rx)} ${f(-ry*0.2)}" stroke="#c8922a" stroke-width="1" fill="none"/>${[[-0.4,0.3],[0.2,0.5],[0.55,0.2]].map(([a,b])=>`<ellipse cx="${f(rx*a)}" cy="${f(ry*b)}" rx="${f(r*0.1)}" ry="${f(r*0.07)}" fill="#c8922a" opacity=".7"/>`).join('')}`;
+      if(вид==='хлеб') дет=[-0.4,0,0.4].map(t=>`<path d="M${f(rx*t-r*0.18)} ${f(-ry*0.55)} l${f(r*0.36)} ${f(ry*0.5)}" stroke="#f4dcae" stroke-width="${f(r*0.12)}" stroke-linecap="round"/>`).join('');
+      if(вид==='тыква') дет=[-0.5,0,0.5].map(t=>`<path d="M${f(rx*t)} ${f(-ry*0.9)} Q${f(rx*t*1.5)} 0 ${f(rx*t)} ${f(ry*0.9)}" stroke="#a84a10" stroke-width="1.2" fill="none" opacity=".7"/>`).join('')+`<rect x="${f(-r*0.1)}" y="${f(-ry*1.2)}" width="${f(r*0.2)}" height="${f(r*0.34)}" rx="2" fill="#5a7a3a" stroke="${ОБВОД}" stroke-width=".6"/>`;
+      if(вид==='апельсин') дет=`<circle cx="0" cy="${f(-ry*0.92)}" r="${f(r*0.1)}" fill="#5a7a3a"/>`;
+      return `<ellipse cx="0" cy="0" rx="${f(rx)}" ry="${f(ry)}" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.1"/>${дет}
+        <ellipse cx="${f(-rx*0.4)}" cy="${f(-ry*0.45)}" rx="${f(rx*0.2)}" ry="${f(ry*0.14)}" fill="#fff" opacity=".45" transform="rotate(-24 ${f(-rx*0.4)} ${f(-ry*0.45)})"/>`; };
+    const срез=(зн)=>{ const qx=rx*0.62, qy=ry*0.96; let дет='';
+      if(вид==='арбуз') дет=[[-0.3,-0.2],[0.2,-0.35],[0.35,0.2],[-0.15,0.35],[0,0]].map(([a,b])=>`<ellipse cx="${f(qx*a)}" cy="${f(qy*b)}" rx="${f(r*0.06)}" ry="${f(r*0.1)}" fill="#2a1a12"/>`).join('');
+      if(вид==='дыня'||вид==='тыква') дет=`<ellipse cx="0" cy="0" rx="${f(qx*0.4)}" ry="${f(qy*0.5)}" fill="#fbe8b0" stroke="#d8a040" stroke-width=".8"/>${[[-0.12,-0.2],[0.12,0],[-0.1,0.22]].map(([a,b])=>`<ellipse cx="${f(qx*a)}" cy="${f(qy*b)}" rx="${f(r*0.05)}" ry="${f(r*0.09)}" fill="#e8c070"/>`).join('')}`;
+      if(вид==='лимон'||вид==='апельсин') дет=Array.from({length:8},(_,k)=>{ const a=k*Math.PI/4; return `<line x1="0" y1="0" x2="${f(qx*0.8*Math.cos(a))}" y2="${f(qy*0.8*Math.sin(a))}" stroke="${В.бел}" stroke-width="1.2"/>`; }).join('')+`<circle r="${f(r*0.08)}" fill="${В.бел}"/>`;
+      if(вид==='яблоко') дет=`<path d="M0 ${f(-qy*0.35)} q${f(qx*0.4)} ${f(qy*0.35)} 0 ${f(qy*0.7)} q${f(-qx*0.4)} ${f(-qy*0.35)} 0 ${f(-qy*0.7)}z" fill="#f0e6b8" stroke="#c8b070" stroke-width=".7"/><ellipse cx="${f(-qx*0.08)}" cy="0" rx="${f(r*0.05)}" ry="${f(r*0.1)}" fill="#5a3414"/><ellipse cx="${f(qx*0.1)}" cy="${f(qy*0.1)}" rx="${f(r*0.05)}" ry="${f(r*0.1)}" fill="#5a3414"/>`;
+      if(вид==='сыр') дет=[[-0.3,-0.2],[0.25,0.1],[-0.05,0.4],[0.3,-0.4]].map(([a,b],k)=>`<ellipse cx="${f(qx*a)}" cy="${f(qy*b)}" rx="${f(r*(0.1+k%2*0.04))}" ry="${f(r*0.08)}" fill="#d8a83a"/>`).join('');
+      if(вид==='хлеб') дет=[[-0.3,-0.2],[0.2,0.2],[0,-0.4],[-0.1,0.4],[0.35,-0.2]].map(([a,b])=>`<circle cx="${f(qx*a)}" cy="${f(qy*b)}" r="${f(r*0.05)}" fill="#e0c890"/>`).join('');
+      return `<g transform="translate(${f(зн*rx*0.72)} 0) rotate(${зн*8})">
+        <ellipse cx="2" cy="${f(qy*0.98)}" rx="${f(qx*0.9)}" ry="${f(r*0.14)}" fill="#231a12" opacity=".3" filter="url(#рм-мягко)"/>
+        <ellipse cx="${f(зн*r*0.14)}" cy="0" rx="${f(qx)}" ry="${f(qy)}" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1"/>
+        <ellipse cx="0" cy="0" rx="${f(qx)}" ry="${f(qy)}" fill="${В.корка}" stroke="${ОБВОД}" stroke-width="1"/>
+        <ellipse cx="0" cy="0" rx="${f(qx*0.88)}" ry="${f(qy*0.9)}" fill="${В.бел}"/>
+        <ellipse cx="0" cy="0" rx="${f(qx*(вид==='арбуз'?0.78:0.84))}" ry="${f(qy*(вид==='арбуз'?0.8:0.86))}" fill="${В.мякоть}"/>
+        ${дет}</g>`; };
+    const едет=(зн)=>о.режется&&ДВИЖ?`<animateTransform attributeName="transform" type="translate" from="${f(-зн*rx*0.7)} 0" to="0 0" dur="0.6s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.2 0.7 0.3 1"/>`:'';
+    return `<g transform="translate(${f(x)} ${f(y)})">
+      <radialGradient id="${кл}" cx="0.35" cy="0.3" r="0.85"><stop offset="0" stop-color="${В.ц[0]}"/><stop offset="1" stop-color="${В.ц[1]}"/></radialGradient>
+      ${о.разрезан?`<g>${едет(-1)}${срез(-1)}</g><g>${едет(1)}${срез(1)}</g>`:тень+целый()}
+    </g>`;
+  }
+  /* ---------- нож: бронзовый клинок, деревянная рукоять; (x,y) — конец рукояти, угол — поворот ---------- */
+  function нож(x,y,м,угол){
+    return `<g transform="translate(${f(x)} ${f(y)}) rotate(${угол||0}) scale(${м})">
+      <rect x="0" y="-3" width="16" height="6" rx="2.4" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <circle cx="5" cy="0" r="1" fill="url(#рм-латунь)"/><circle cx="11" cy="0" r="1" fill="url(#рм-латунь)"/>
+      <path d="M16 -3.4 H40 Q48 -2 50 3.4 H16 Z" fill="url(#рм-железо)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <path d="M18 -1.6 H40" stroke="#fff" stroke-width="1" opacity=".6"/>
+    </g>`;
+  }
+  /* ---------- торговец Главк: плотный, чёрная курчавая борода, зелёный хитон, кожаный фартук.
+     поза: 'стоит' | 'режет' (в руке нож) | 'сердит' (руки в боки, брови сдвинуты). Высота ~116 ---------- */
+  function торговец(x,y,м,опц){
+    const о=опц||{}, кл=ид('торг'), поза=о.поза||'стоит';
+    const тело='M-22 -80 Q0 -88 22 -80 Q30 -50 26 -24 Q0 -17 -26 -24 Q-30 -50 -22 -80 Z';
+    const кожа=(d)=>`<path d="${d}" stroke="url(#рм-кожа)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="${d}" stroke="${ОБВОД}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".12"/>`;
+    const кисть=(cx,cy)=>`<circle cx="${cx}" cy="${cy}" r="4.8" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>`;
+    const рукаЛ = поза==='сердит' ? кожа('M-20 -74 L-34 -58 L-24 -46')+кисть(-24,-45) : кожа('M-20 -74 q-10 14 -8 30')+кисть(-28,-43);
+    const рукаП = поза==='сердит' ? кожа('M20 -74 L34 -58 L24 -46')+кисть(24,-45)
+      : поза==='режет' ? `<g>${ДВИЖ?`<animateTransform attributeName="transform" type="rotate" values="0 20 -74;14 20 -74;0 20 -74" dur="1s" repeatCount="indefinite"/>`:''}${нож(40,-62,0.8,28)}${кожа('M20 -74 q12 2 22 12')}${кисть(42,-62)}</g>`
+      : кожа('M20 -74 q10 14 8 30')+кисть(28,-43);
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <ellipse cx="0" cy="1" rx="26" ry="3.8" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <rect x="-13" y="-26" width="9" height="23" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/><rect x="4" y="-26" width="9" height="23" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <path d="M-17 -2 q0 -6 9 -6 q7 0 7 6 z M1 -2 q0 -6 9 -6 q7 0 7 6 z" fill="#6a4a2a" stroke="${ОБВОД}" stroke-width=".9"/>
+      <clipPath id="${кл}"><path d="${тело}"/></clipPath>
+      ${рукаЛ}
+      <path d="${тело}" fill="#4a8a5a" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <g clip-path="url(#${кл})"><rect x="-30" y="-90" width="60" height="76" fill="url(#рм-складка)"/>
+        <path d="M-15 -64 L15 -64 L19 -20 L-19 -20 Z" fill="#a8703a" stroke="${ОБВОД}" stroke-width="1"/>
+        <path d="M-12 -60 H12" stroke="#7a4a20" stroke-width="1" stroke-dasharray="2 2"/>
+        <rect x="-8" y="-44" width="16" height="11" rx="2" fill="none" stroke="#7a4a20" stroke-width="1"/></g>
+      <path d="M-15 -64 L-10 -82 M15 -64 L10 -82" stroke="#a8703a" stroke-width="3"/>
+      ${рукаП}
+      <rect x="-4.4" y="-88" width="8.8" height="7" fill="url(#рм-кожа)"/>
+      <g transform="translate(0 -101)">
+        <ellipse cx="-15" cy="1" rx="3" ry="4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/><ellipse cx="15" cy="1" rx="3" ry="4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/>
+        <ellipse cx="0" cy="0" rx="15" ry="15.5" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <path d="M-14 2 q-2 17 14 19 q16 -2 14 -19 q-5 8 -14 8 q-9 0 -14 -8 z" fill="#2a2018" stroke="${ОБВОД}" stroke-width=".9"/>
+        ${[[-8,14],[0,17],[8,14],[-4,10],[5,10]].map(([bx,by])=>`<path d="M${bx-2} ${by} q2 -3 4 0" stroke="#5a4a3a" stroke-width="1.1" fill="none"/>`).join('')}
+        ${лицо(Object.assign({глаза:'#3a2a1a',рот:поза==='сердит'?'ровно':undefined},о))}
+        ${поза==='сердит'?`<path d="M-9 -8 l7 3 M9 -8 l-7 3" stroke="#2a2018" stroke-width="2.2" stroke-linecap="round"/>`:''}
+        <path d="M-6 7 q3 -3 6 0 q3 -3 6 0" stroke="#2a2018" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M-15 -4 q-1 -13 15 -13 q16 0 15 13 q-4 -6 -8 -6 q-3 -3 -7 -1 q-4 -2 -7 1 q-4 0 -8 6 z" fill="#2a2018" stroke="${ОБВОД}" stroke-width=".9"/>
+        <path d="M-15 -6 q15 -7 30 0" stroke="#e8e0d0" stroke-width="2.4" fill="none"/>
+      </g>
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -2525,5 +2621,6 @@
     знамя, высотка, плотина,
     бороздка, кругПесок, прибой, черепок,
     девочка, ослик, сова, домик,
-    пламя, факел, бегун, коза, сеятель, клепсидра, жертвенник};
+    пламя, факел, бегун, коза, сеятель, клепсидра, жертвенник,
+    плод, нож, торговец};
 })();
