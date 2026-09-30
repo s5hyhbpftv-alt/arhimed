@@ -561,8 +561,9 @@
   function выпаривание(x,y,м,горит,ур){
     const уровень=ур==null?0.5:ур;
     return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">
+      <path d="M0 -8 L0 -66" stroke="#5a6068" stroke-width="2.2"/>
       ${спиртовка(0,0,0.9,горит)}
-      <path d="M-30 0 L-22 -66 M30 0 L22 -66 M0 4 L0 -66" stroke="url(#рл-сталь)" stroke-width="2.6"/>
+      <path d="M-30 0 L-22 -66 M30 0 L22 -66" stroke="url(#рл-сталь)" stroke-width="2.6"/>
       <ellipse cx="0" cy="-66" rx="28" ry="4" fill="none" stroke="url(#рл-сталь)" stroke-width="2.6"/>
       <path d="M-26 -67 H26" stroke="#8a9098" stroke-width="1.2" stroke-dasharray="1.6 1.4"/>
       <path d="M-24 -70 Q-22 -58 0 -56 Q22 -58 24 -70 Z" fill="#f4f2ec" stroke="#b8b4a8" stroke-width=".8"/>
