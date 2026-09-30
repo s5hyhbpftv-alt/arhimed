@@ -3192,6 +3192,57 @@
     </g>`;
   }
 
+  /* ---------- корабельный кот Рыжик: рыжий в полоску, белые грудка и лапки, зелёные глаза.
+     поза: 'сидит' (хвост качается) | 'прыгает' (в полёте) | 'спит' (клубком). опц.влево.
+     (x,y) — середина у лап ---------- */
+  function кот(x,y,м,опц){
+    const о=опц||{}, кл=ид('кот'), поза=о.поза||'сидит';
+    const голова=(hx,hy,угол,спит)=>`<g transform="translate(${hx} ${hy}) rotate(${угол||0})">
+      <path d="M-13 -6 L-15 -22 L-4 -13 Z M13 -6 L15 -22 L4 -13 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1" stroke-linejoin="round"/>
+      <path d="M-12 -9 L-13 -18 L-7 -13 Z M12 -9 L13 -18 L7 -13 Z" fill="#f4b0a8"/>
+      <ellipse cx="0" cy="0" rx="15" ry="13" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.1"/>
+      <path d="M-5 -12 l1 5 M0 -13 v5 M5 -12 l-1 5" stroke="#b8581a" stroke-width="1.6" stroke-linecap="round"/>
+      <ellipse cx="0" cy="6" rx="8" ry="5.5" fill="#fbf6ea"/>
+      ${спит?`<path d="M-9 -1 q3 3 6 0 M3 -1 q3 3 6 0" stroke="${ОБВОД}" stroke-width="1.3" fill="none" stroke-linecap="round"/>`
+        :`<g>${ДВИЖ?`<animateTransform attributeName="transform" type="scale" values="1 1;1 1;1 0.12;1 1" keyTimes="0;0.9;0.95;1" dur="3.8s" repeatCount="indefinite" additive="sum"/>`:''}
+          <ellipse cx="-6" cy="-2" rx="3.4" ry="3.8" fill="#8ad05a" stroke="${ОБВОД}" stroke-width=".7"/><ellipse cx="-6" cy="-2" rx="1" ry="3" fill="#1a120a"/>
+          <ellipse cx="6" cy="-2" rx="3.4" ry="3.8" fill="#8ad05a" stroke="${ОБВОД}" stroke-width=".7"/><ellipse cx="6" cy="-2" rx="1" ry="3" fill="#1a120a"/>
+          <circle cx="-7" cy="-3.4" r=".8" fill="#fff"/><circle cx="5" cy="-3.4" r=".8" fill="#fff"/></g>`}
+      <path d="M-1.6 3 h3.2 l-1.6 2 z" fill="#e87a8a"/><path d="M0 5 q-2 3 -4 2 M0 5 q2 3 4 2" stroke="${ОБВОД}" stroke-width=".9" fill="none" stroke-linecap="round"/>
+      <path d="M-6 5 l-10 -2 M-6 7 l-10 2 M6 5 l10 -2 M6 7 l10 2" stroke="#fff" stroke-width=".8" opacity=".9"/>
+    </g>`;
+    let тело='';
+    if(поза==='спит'){
+      тело=`<path d="M-26 -2 Q-30 -26 -4 -28 Q24 -28 26 -8 Q26 0 16 0 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.2"/>
+        ${[-14,-4,6].map(sx=>`<path d="M${sx} -26 q2 8 -1 14" stroke="#b8581a" stroke-width="2.4" fill="none" stroke-linecap="round"/>`).join('')}
+        <path d="M26 -8 Q34 4 10 2 Q-10 4 -24 -2" stroke="url(#${кл})" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M-24 -2 q-2 -3 2 -5" stroke="#fbf6ea" stroke-width="5" stroke-linecap="round"/>
+        ${голова(-16,-14,-10,true)}
+        <text x="10" y="-36" font-size="10" font-weight="bold" fill="#dfe8f8" font-family="Georgia,serif">z<tspan dy="-5" font-size="8">z</tspan></text>`;
+    } else if(поза==='прыгает'){
+      тело=`<g>${ДВИЖ?`<animateTransform attributeName="transform" type="translate" values="0 0;0 -8;0 0" dur="1.2s" repeatCount="indefinite"/>`:''}
+        <path d="M-24 -30 Q-44 -40 -48 -56" stroke="url(#${кл})" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M-26 -22 Q-6 -40 20 -32 Q30 -28 26 -18 Q0 -12 -24 -14 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.2"/>
+        ${[-14,-4,6].map(sx=>`<path d="M${sx} -34 q2 7 -1 12" stroke="#b8581a" stroke-width="2.2" fill="none" stroke-linecap="round"/>`).join('')}
+        <path d="M18 -20 L32 -8 M12 -18 L24 -4 M-18 -16 L-32 -4 M-22 -18 L-36 -10" stroke="url(#${кл})" stroke-width="5" stroke-linecap="round"/>
+        <path d="M32 -8 h3 M24 -4 h3 M-32 -4 h-3 M-36 -10 h-3" stroke="#fbf6ea" stroke-width="4" stroke-linecap="round"/>
+        ${голова(28,-36,10,false)}</g>`;
+    } else {
+      тело=`<g>${ДВИЖ?`<animateTransform attributeName="transform" type="rotate" values="0 -14 -4;14 -14 -4;0 -14 -4" dur="2.4s" repeatCount="indefinite"/>`:''}
+          <path d="M-14 -4 Q-34 -6 -32 -28 Q-31 -38 -24 -40" stroke="url(#${кл})" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M-24 -40 q3 -3 6 -1" stroke="#fbf6ea" stroke-width="5" stroke-linecap="round"/></g>
+        <path d="M-16 0 Q-22 -26 -8 -38 Q0 -44 8 -38 Q22 -26 16 0 Z" fill="url(#${кл})" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <path d="M-6 -36 Q0 -20 -2 -6 Q4 -20 6 -36 Z" fill="#fbf6ea"/>
+        ${[-13,-11,11,13].map((sx,k)=>`<path d="M${sx} ${-30+(k%2)*8} q${sx<0?5:-5} 2 ${sx<0?6:-6} 6" stroke="#b8581a" stroke-width="2" fill="none" stroke-linecap="round"/>`).join('')}
+        <ellipse cx="-6" cy="-1" rx="5" ry="3" fill="#fbf6ea" stroke="${ОБВОД}" stroke-width=".8"/><ellipse cx="6" cy="-1" rx="5" ry="3" fill="#fbf6ea" stroke="${ОБВОД}" stroke-width=".8"/>
+        ${голова(0,-48,0,false)}`;
+    }
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <linearGradient id="${кл}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4a050"/><stop offset="1" stop-color="#d06a20"/></linearGradient>
+      ${поза==='прыгает'?'':`<ellipse cx="0" cy="1" rx="${поза==='спит'?30:18}" ry="3.2" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>`}
+      ${тело}
+    </g>`;
+  }
+
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -3213,5 +3264,5 @@
     бык, пастух, абак, изгородь,
     циклоп, одиссей, овца, маска,
     шестерня, автомат,
-    гребец, келевст, ладья};
+    гребец, келевст, ладья, кот};
 })();
