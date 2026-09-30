@@ -3347,6 +3347,117 @@
         <path d="M17 -7 q-2 -6 1 -12 q3 6 1 12 z" fill="#ffd060" stroke="#e07a20" stroke-width=".6">${ДВИЖ?`<animateTransform attributeName="transform" type="scale" values="1 1;1 1.15;1 .95;1 1" dur="0.9s" repeatCount="indefinite" additive="sum"/>`:''}</path></g>`}
     </g>`;
   }
+  /* ---------- глашатай Стентор (урок 877): рыжая хламида, петас за спиной, в руке медная труба.
+     поза 'кричит' (труба у губ, звуковые волны) | 'стоит' | 'объявляет' (рука с жезлом вверх).
+     (x,y) — середина ступней; высота ~112 ---------- */
+  function глашатай(x,y,м,опц){
+    const о=опц||{}, кл=ид('глаш'), поза=о.поза||'стоит';
+    const хит='M-14 -76 Q0 -82 14 -76 L17 -30 Q0 -25 -17 -30 Z';
+    const рука=(d,к)=>`<path d="${d}" stroke="url(#рм-кожа)" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="${d}" stroke="${ОБВОД}" stroke-width="6.4" stroke-linecap="round" fill="none" opacity=".12"/><circle cx="${к[0]}" cy="${к[1]}" r="4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>`;
+    const труба=`<g transform="translate(10 -92) rotate(-12)"><path d="M0 -2 L40 -3 L40 3 L0 2 Z" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".8"/><path d="M40 -3 L52 -10 L52 10 L40 3 Z" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".9"/><ellipse cx="52" cy="0" rx="2.6" ry="10" fill="#8a5a10" stroke="${ОБВОД}" stroke-width=".7"/></g>`;
+    const волны=поза==='кричит'?[0,1,2].map(k=>`<path d="M${70+k*12} ${-120+k*2} q10 ${14} 0 ${28-k*2}" stroke="#fff4c0" stroke-width="${3-k*0.6}" fill="none" stroke-linecap="round" opacity="0">${ДВИЖ?`<animate attributeName="opacity" values="0;.95;0" dur="1.2s" begin="${(k*0.3).toFixed(1)}s" repeatCount="indefinite"/>`:''}</path>`).join('')+(ДВИЖ?'':`<path d="M72 -118 q10 14 0 28 M84 -116 q10 13 0 26" stroke="#fff4c0" stroke-width="2.4" fill="none"/>`):'';
+    const руки = поза==='кричит'
+      ? рука('M-12 -72 q-8 14 -6 28',[-18,-43]) + рука('M12 -72 L20 -84 L14 -92',[13,-93]) + труба
+      : поза==='объявляет'
+      ? рука('M-12 -72 q-8 14 -6 28',[-18,-43]) + `<path d="M24 -140 V-60" stroke="#8a5a2e" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="-142" r="4" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".8"/>` + рука('M12 -72 L22 -86 L24 -100',[24,-101])
+      : рука('M-12 -72 q-8 14 -6 28',[-18,-43]) + рука('M12 -72 q8 14 6 28',[18,-43]) + `<g transform="translate(22 -46) rotate(80)"><path d="M0 -2 L30 -3 L30 3 L0 2 Z" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".8"/><path d="M30 -3 L40 -8 L40 8 L30 3 Z" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".8"/></g>`;
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <ellipse cx="0" cy="1" rx="19" ry="3.4" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <rect x="-10" y="-34" width="7" height="31" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/><rect x="3" y="-34" width="7" height="31" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>
+      <path d="M-10 -20 l7 -3 M-10 -12 l7 -3 M3 -20 l7 -3 M3 -12 l7 -3" stroke="#6a3e1a" stroke-width="1.2"/>
+      <path d="M-13 -2 q0 -5 7 -5 q6 0 6 5 z M1 -2 q0 -5 7 -5 q6 0 6 5 z" fill="#6a3e1a" stroke="${ОБВОД}" stroke-width=".9"/>
+      <circle cx="-4" cy="-84" r="15" fill="#c8a060" stroke="${ОБВОД}" stroke-width="1"/><ellipse cx="-4" cy="-84" rx="8" ry="15" fill="#b08040" stroke="${ОБВОД}" stroke-width=".6"/>
+      <clipPath id="${кл}"><path d="${хит}"/></clipPath>
+      <path d="${хит}" fill="#f0e8d4" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <g clip-path="url(#${кл})"><rect x="-20" y="-84" width="40" height="60" fill="url(#рм-складка)"/></g>
+      <path d="M-16 -78 Q4 -74 18 -54 L14 -30 Q-4 -40 -18 -40 Z" fill="#c8402a" stroke="${ОБВОД}" stroke-width="1.1"/>
+      <path d="M-10 -72 Q4 -66 12 -48" stroke="#8a2a1a" stroke-width="1.2" fill="none"/>
+      <circle cx="-12" cy="-74" r="3" fill="url(#рм-латунь)" stroke="${ОБВОД}" stroke-width=".6"/>
+      ${руки}
+      <rect x="-3.4" y="-83" width="6.8" height="6" fill="url(#рм-кожа)"/>
+      <g transform="translate(0 -95)">
+        <ellipse cx="-13.5" cy="1" rx="2.8" ry="3.8" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/><ellipse cx="13.5" cy="1" rx="2.8" ry="3.8" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/>
+        <ellipse cx="0" cy="0" rx="13.5" ry="14.5" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <path d="M-14 0 q-4 -17 12 -18 q16 -1 17 13 q-2 -4 -6 -6 q-2 4 -8 2 q-5 3 -11 1 q-2 4 -4 8 z" fill="#8a3a1a" stroke="${ОБВОД}" stroke-width=".9"/>
+        <path d="M-12 6 q2 10 12 11 q10 -1 12 -11 q-4 6 -12 6 q-8 0 -12 -6z" fill="#8a3a1a" opacity=".85"/>
+        ${лицо(Object.assign({глаза:'#3a6a3a',рот:поза==='кричит'?'о':undefined},о))}
+      </g>
+      ${волны}
+    </g>`;
+  }
+  /* ---------- актёр в маске и длинном хитоне на котурнах (урок 877). опц.маска 'комедия' |
+     'трагедия' | нет; опц.цвет — хитон; поза 'говорит' (рука вперёд-вверх) | 'слушает'
+     (рука у груди) | 'кланяется'. (x,y) — середина ступней; высота ~120 ---------- */
+  function актёр(x,y,м,опц){
+    const о=опц||{}, кл=ид('актёр'), поза=о.поза||'слушает', ц=о.цвет||'#2a6ab8';
+    const хит='M-15 -80 Q0 -86 15 -80 L24 -10 Q0 -4 -24 -10 Z';
+    const рука=(d,к)=>`<path d="${d}" stroke="${ц}" stroke-width="7.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="${d}" stroke="${ОБВОД}" stroke-width="7.6" stroke-linecap="round" fill="none" opacity=".18"/><circle cx="${к[0]}" cy="${к[1]}" r="4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>`;
+    const руки = поза==='говорит'
+      ? рука('M-13 -76 q-8 16 -4 30',[-17,-44]) + `<g>${ДВИЖ?крутить('0 13 -76;-10 13 -76;0 13 -76','1.6s'):''}${рука('M13 -76 L30 -88 L42 -104',[43,-106])}</g>`
+      : поза==='кланяется'
+      ? рука('M-13 -76 q-4 18 4 30',[5,-44]) + рука('M13 -76 q10 16 18 26',[32,-49])
+      : рука('M-13 -76 q-8 16 -4 30',[-17,-44]) + рука('M13 -76 q-2 12 -10 16',[-2,-58]);
+    const наклон = поза==='кланяется' ? 'rotate(18 0 -10)' : '';
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <ellipse cx="0" cy="1" rx="22" ry="3.6" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <path d="M-15 0 v-9 h12 v9 z M3 0 v-9 h12 v9 z" fill="#3a2418" stroke="${ОБВОД}" stroke-width=".9"/>
+      <g transform="${наклон}">
+      <clipPath id="${кл}"><path d="${хит}"/></clipPath>
+      <path d="${хит}" fill="${ц}" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <g clip-path="url(#${кл})"><rect x="-26" y="-88" width="52" height="80" fill="url(#рм-складка)" opacity=".8"/>
+        <path d="M-8 -60 Q-10 -36 -12 -10 M6 -60 Q7 -36 10 -10 M-18 -56 Q-20 -34 -22 -12" stroke="#000" stroke-width="1" fill="none" opacity=".2"/>
+        <path d="M-26 -18 Q0 -12 26 -18" stroke="#ffd76a" stroke-width="3.4" fill="none"/>
+        <path d="M-26 -24 Q0 -18 26 -24" stroke="#fff4c0" stroke-width="1" fill="none" stroke-dasharray="3 2"/></g>
+      <path d="M-16 -60 Q0 -54 16 -60" stroke="#ffd76a" stroke-width="3" fill="none" stroke-linecap="round"/>
+      ${руки}
+      <rect x="-3.4" y="-87" width="6.8" height="6" fill="url(#рм-кожа)"/>
+      <g transform="translate(0 -99)">
+        <path d="M-15 -4 q-6 14 -2 26 M15 -4 q6 14 2 26" stroke="#2a1a10" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="0" cy="0" rx="13.5" ry="14.5" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <path d="M-14 -2 q-3 -16 12 -17 q16 -2 17 12 q-2 -5 -8 -6 q-8 4 -21 11 z" fill="#2a1a10" stroke="${ОБВОД}" stroke-width=".9"/>
+        ${о.маска?Р_маска(о.маска):лицо(Object.assign({глаза:'#4a3a26'},о))}
+      </g>
+      </g>
+    </g>`;
+  }
+  const Р_маска = (вид) => маска(0,1,0.84,вид,вид==='трагедия'?'#e8dcc8':'#f8ecd0',{});
+  /* ---------- Эпихарм, сиракузский сочинитель комедий (урок 877): полный, весёлый, венок из
+     плюща, пурпурный гиматий через плечо, свиток. поза 'стоит' | 'читает' (свиток раскрыт) |
+     'смеётся' (рука на животе). (x,y) — середина ступней; высота ~114 ---------- */
+  function эпихарм(x,y,м,опц){
+    const о=опц||{}, кл=ид('эпих'), поза=о.поза||'стоит';
+    const тело='M-16 -78 Q0 -84 16 -78 Q26 -50 20 -8 Q0 -2 -20 -8 Q-26 -50 -16 -78 Z';
+    const рука=(d,к,цв)=>`<path d="${d}" stroke="${цв||'url(#рм-кожа)'}" stroke-width="7.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="${d}" stroke="${ОБВОД}" stroke-width="7.6" stroke-linecap="round" fill="none" opacity=".12"/><circle cx="${к[0]}" cy="${к[1]}" r="4.4" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".8"/>`;
+    const свиток0 = (sx,sy,откр)=> откр
+      ? `<g transform="translate(${sx} ${sy})"><rect x="-4" y="-18" width="30" height="24" fill="#f4ead0" stroke="#a88a5a" stroke-width=".9"/>${[0,1,2,3].map(k=>`<path d="M1 ${-13+k*5} h${18-k%2*5}" stroke="#8a7a5a" stroke-width="1"/>`).join('')}<rect x="-7" y="-20" width="5" height="28" rx="2.4" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".6"/><rect x="24" y="-20" width="5" height="28" rx="2.4" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".6"/></g>`
+      : `<g transform="translate(${sx} ${sy}) rotate(-30)"><rect x="-4" y="-16" width="8" height="30" rx="3.6" fill="#f4ead0" stroke="#a88a5a" stroke-width=".9"/><path d="M-4 -12 h8 M-4 10 h8" stroke="#c8402a" stroke-width="1.4"/></g>`;
+    const руки = поза==='читает'
+      ? рука('M-14 -72 q-6 12 2 22',[4,-48])+рука('M14 -72 q8 12 16 18',[30,-52])+свиток0(6,-40,true)
+      : поза==='смеётся'
+      ? рука('M-14 -72 q-6 16 6 26',[8,-44])+`<g>${ДВИЖ?крутить('0 14 -72;8 14 -72;0 14 -72','0.6s'):''}${рука('M14 -72 L28 -86 L30 -100',[30,-101])}</g>`
+      : рука('M-14 -72 q-8 16 -6 30',[-20,-41])+рука('M14 -72 q8 16 6 30',[20,-41])+свиток0(22,-44,false);
+    return `<g transform="translate(${x} ${y}) scale(${о.влево?-м:м} ${м})">
+      <ellipse cx="0" cy="1" rx="22" ry="3.6" fill="#231a12" opacity=".35" filter="url(#рм-мягко)"/>
+      <path d="M-13 -2 q0 -6 7 -6 q7 0 7 6 z M0 -2 q0 -6 7 -6 q7 0 7 6 z" fill="#8a5a2e" stroke="${ОБВОД}" stroke-width=".9"/>
+      <clipPath id="${кл}"><path d="${тело}"/></clipPath>
+      <path d="${тело}" fill="#f4ecd8" stroke="${ОБВОД}" stroke-width="1.3"/>
+      <g clip-path="url(#${кл})"><rect x="-28" y="-86" width="56" height="80" fill="url(#рм-складка)"/>
+        <path d="M-26 -60 Q0 -30 30 -70 L30 -4 L-26 -4 Z" fill="#7a2a6a" stroke="${ОБВОД}" stroke-width="1"/>
+        <path d="M-20 -40 Q4 -20 26 -50 M-22 -26 Q4 -10 26 -34" stroke="#5a1a4a" stroke-width="1.2" fill="none"/>
+        <path d="M-26 -60 Q0 -30 30 -70" stroke="#ffd76a" stroke-width="2.4" fill="none"/></g>
+      ${руки}
+      <rect x="-3.6" y="-85" width="7.2" height="7" fill="url(#рм-кожа)"/>
+      <g transform="translate(0 -97)">
+        <ellipse cx="-14" cy="1" rx="2.8" ry="3.8" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/><ellipse cx="14" cy="1" rx="2.8" ry="3.8" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width=".7"/>
+        <ellipse cx="0" cy="1" rx="14.5" ry="15" fill="url(#рм-кожа)" stroke="${ОБВОД}" stroke-width="1.2"/>
+        <path d="M-14 -4 q0 -14 14 -14 q14 0 14 14 q-4 -8 -14 -8 q-10 0 -14 8 z" fill="#9a9488" stroke="${ОБВОД}" stroke-width=".8"/>
+        ${лицо(Object.assign({глаза:'#4a3a26',рот:поза==='смеётся'?'о':undefined},о))}
+        <path d="M-12 6 Q-12 20 0 21 Q12 20 12 6 Q6 12 0 11 Q-6 12 -12 6 Z" fill="#b8b2a6" stroke="#8a8478" stroke-width=".8"/>
+        ${[-14,-9,-3,3,9,14].map((lx,k)=>`<g transform="translate(${lx} ${-11-Math.abs(lx)*-0.15-(k%2)*2}) rotate(${lx*3})"><path d="M0 0 q-5 -3 -4 -8 q4 0 5 4 q1 -4 5 -4 q1 5 -4 8 z" fill="#3a8a3a" stroke="#1e4a1e" stroke-width=".7"/></g>`).join('')}
+        <circle cx="-15" cy="-6" r="2.6" fill="#2a3a8a" stroke="${ОБВОД}" stroke-width=".5"/><circle cx="15" cy="-6" r="2.6" fill="#2a3a8a" stroke="${ОБВОД}" stroke-width=".5"/>
+      </g>
+    </g>`;
+  }
   window.РМ = {ДВИЖ, defs, небо, солнце, облако, море, берег, утёс, лодка, парусник, юнга, капитан, чайка,
     сундук, бочка, якорь, бухта, краб, морзвезда, ёрш, весло, маяк, лист, доски, качать, крутить,
     флаг, прилавок, мяч, лента, яблоко, рыбка, дельфин, бутылка, фрегат, роза, какаду, карта, штурман,
@@ -3369,5 +3480,6 @@
     циклоп, одиссей, овца, маска,
     шестерня, автомат,
     гребец, келевст, ладья, кот,
-    ювелир, сорока, бусина, верстак};
+    ювелир, сорока, бусина, верстак,
+    глашатай, актёр, эпихарм};
 })();

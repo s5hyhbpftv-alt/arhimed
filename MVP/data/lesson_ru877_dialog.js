@@ -1,118 +1,204 @@
-/* ============ РУССКИЙ ЯЗЫК · УРОК 877 · «ЯЗЫК И РЕЧЬ: МОНОЛОГ И ДИАЛОГ» ============
-   5 класс, ФРП, I четверть («Язык и речь»). Урок сделан так же, как переделанные
-   уроки 601, 603–604 и 610: свой рендерер поверх WAVE_B, каркас .s6 из RUKIT,
-   у каждого кадра своя сцена и своё движение, вопрос-проверка внутри кадра,
-   в конце — тренажёр со счётом.
+/* ============ РУССКИЙ ЯЗЫК · УРОК 877 · «ЯЗЫК И РЕЧЬ: МОНОЛОГ И ДИАЛОГ» · НОВАЯ ВЕРСИЯ ============
+   5 класс, ФРП, I четверть («Язык и речь»). Урок переделан по просьбе владельца: вместо
+   плашек и облачков из CSS — сюжет и рисованные сцены из общей библиотеки
+   MVP/data/ris_more.js. НОВЫЕ ГЕРОИ: глашатай Стентор (глашатай), сиракузский
+   сочинитель комедий Эпихарм (эпихарм) и актёры в масках (актёр).
 
-   ЧТО В УРОКЕ. Девять кадров: устная и письменная речь; монолог; диалог;
-   сборка диалога из реплик; запись диалога на письме (тире, новая строка);
-   слова автора и прямая речь; речевой этикет; что мешает разговору; тренажёр.
+   СЮЖЕТ. «Театр Эпихарма». В Сиракузах готовят премьеру новой комедии. Глашатай
+   кричит о ней на агоре, а на белёной доске ту же весть пишут буквами — так видно, чем
+   устная речь отличается от письменной. Эпихарм один читает пролог — монолог; два
+   актёра в масках спорят — диалог. Мирто покупает лепёшки у торговца Главка — диалог
+   собирают по репликам. Эпихарм записывает сцену на свиток: каждая реплика с новой
+   строки и с тире. Юнга пересказывает слова Мирто — прямая речь со словами автора.
+   Стентор встречает зрителей вежливыми словами. На репетиции хор перебивает актёров —
+   что мешает разговору. В конце — премьера.
 
-   СТАНДАРТ. Кегли как в каркасе: заголовок 24, лид 20, подпись 16, реплика 20,
-   служебное 14. Цели касания не меньше 44 px (кнопки 48–56). Текст не
-   масштабируется анимацией — только перенос и прозрачность. Есть
-   `prefers-reduced-motion`. Замерено на 390, 768 и 1200 px.
+   РУКАМИ: сказать или записать объявление; три части монолога; реплики идут навстречу;
+   сборка диалога на рынке; две записи сцены — юнги и Эпихарма; слова автора и прямая
+   речь по частям; сортировка вежливых слов; неудачная реплика; игра «Репетиция» —
+   десять сцен, три ошибки — занавес опущен.
 
-   МЕСТО. Модуль подключается в MVP/index.html после data/soon_lessons.js:
-   тот регистрирует экран-заглушку для 877, этот файл её перекрывает —
-   и рисовальщиком, и записью урока в ARH_LESSONS. */
+   ТРЕНАЖЁРЫ НОВОГО ВИДА: монолог или диалог; устная или письменная речь; уместная
+   реплика (круг из восьми, серия, звёзды).
+
+   ПРОВЕРЕНО ПО ПРОГРАММЕ 5 КЛАССА (Ладыженская, «Язык и общение», «Текст»): речь
+   устная (говорим, слушаем) и письменная (пишем, читаем); монолог — речь одного лица;
+   диалог — разговор двух и более лиц, реплики; при записи диалога каждая реплика с
+   новой строки, перед ней тире; прямая речь — чужая речь дословно, после слов автора
+   двоеточие, прямая речь в кавычках (схема А: «П»); речевой этикет — приветствие,
+   просьба, благодарность, извинение. */
 (function(){
   'use strict';
 
   const ID = 877;
-
   const GOLD='#ffd76a', GREEN='#8fd1a8', BLUE='#7fd1ff', RED='#e86a5a';
+  const ИНК='#f6efe0', МУТ='#cbb89a', ЛИНИЯ='#3f7a5f', ОБВОД='#33291e';
+  const ЧЕРНИЛА='#2e2416', КАМЕНЬ='#6a5a40';
+  const ЦЛ='#c8402a', ЦП='#2a6ab8';   /* цвета двух собеседников */
+
+  const ДЕЛА = [
+    {ключ:'сборка',    имя:'Собрать диалог на рынке', итог:'5 из 5'},
+    {ключ:'этикет',    имя:'Встретить зрителей',     итог:'8 из 8'},
+    {ключ:'репетиция', имя:'Провести репетицию',     итог:'10 из 10'}
+  ];
+  const сделано = (s,к) => !!s['дело_'+к];
+
+  const ПРОЛОГ = [
+    {ч:'начало',   т:'Слушайте, сиракузцы! Расскажу вам о хитрой козе.'},
+    {ч:'середина', т:'Коза залезла в сад и съела весь урожай.'},
+    {ч:'конец',    т:'Вот и сказке конец — берегите сады!'}
+  ];
+  const СПОР = [
+    {к:0, т:'Чья это коза?'},
+    {к:1, т:'Моя! А что?'},
+    {к:0, т:'Она съела мой сад!'},
+    {к:1, т:'Прости, я её привяжу.'}
+  ];
+  const РЫНОК = [
+    {к:'Г', т:'Добрый день! Что тебе, девочка?'},
+    {к:'М', т:'Здравствуйте! Дайте три лепёшки.'},
+    {к:'Г', т:'Держи. С тебя три обола.'},
+    {к:'М', т:'Спасибо! Вот монеты.'},
+    {к:'Г', т:'Приходи ещё!'}
+  ];
+  const ПЕРЕМЕШАНО = [3,0,4,2,1];     /* порядок кнопок на экране */
+  const ЭТИКЕТ = ['приветствие','просьба','благодарность','извинение'];
+  const ФРАЗЫ = [
+    {т:'Добро пожаловать!', в:0}, {т:'Пройдите, пожалуйста, наверх.', в:1},
+    {т:'Благодарю за подарок!', в:2}, {т:'Простите, я наступил вам на ногу.', в:3},
+    {т:'Доброго вечера!', в:0}, {т:'Будьте добры, подвиньтесь.', в:1},
+    {т:'Спасибо, что пришли!', в:2}, {т:'Извините за опоздание.', в:3}
+  ];
+  const МЕШАЕТ = [
+    {т:'— Дай я скажу, я лучше знаю!', ок:false, р:'Хор перебил: актёр не договорил мысль.'},
+    {т:'— А у меня дома есть кот!', ок:false, р:'Не в тему: разговор ушёл в сторону.'},
+    {т:'— Я тебя понял. Что было дальше?', ок:true, р:'Так и ведут разговор: выслушал, ответил по теме.'}
+  ];
+  const ВИД = ['монолог','диалог','письменная речь'];
+  const РЕПЕТИЦИЯ = [
+    {т:'Эпихарм читает зрителям пролог.', в:0},
+    {т:'Два актёра спорят о козе.', в:1},
+    {т:'Мирто пишет подруге письмо.', в:2},
+    {т:'Глашатай объявляет начало спектакля.', в:0},
+    {т:'Главк и Мирто торгуются на рынке.', в:1},
+    {т:'Над входом в театр вырезали надпись.', в:2},
+    {т:'Юнга рассказывает классу о походе.', в:0},
+    {т:'Зритель спросил соседа о месте, тот ответил.', в:1},
+    {т:'Эпихарм записывает сцену на свиток.', в:2},
+    {т:'Учитель и ученик разбирают задачу.', в:1}
+  ];
+
+  /* наборы тренажёров */
+  const МЕСТО = (i) => +'0110100110010110'[i%16];
+  const поМесту = (сп) => { const н=сп.filter(x=>!x[1]), е=сп.filter(x=>x[1]); return сп.map((_,i)=>МЕСТО(i)?(е.shift()||н.shift()):(н.shift()||е.shift())); };
+  const П1 = поМесту([['Эпихарм один читает пролог.',0],['Мирто и юнга договариваются о встрече.',1],['Учитель объясняет новую тему.',0],['Продавец и покупатель торгуются.',1],
+    ['Глашатай объявляет новости.',0],['Двое друзей спорят, кто быстрее.',1],['Экскурсовод рассказывает о храме.',0],['Врач спрашивает, больной отвечает.',1],
+    ['Ученик отвечает доклад у доски.',0],['Мама и сын обсуждают ужин.',1],['Капитан произносит речь перед командой.',0],['Двое звонят друг другу по телефону.',1],
+    ['Поэт читает свои стихи.',0],['Трое ребят решают, во что играть.',1],['Диктор читает прогноз погоды.',0],['Бабушка расспрашивает внука о школе.',1]])
+    .map(([ф,в])=>({q:ф+' Что это?', ф:ф, вар:['монолог','диалог'], в:в, раз:в?'Говорят двое и больше, реплики идут навстречу — это диалог.':'Говорит один человек на одну тему — это монолог.'}));
+  const П2 = поМесту([['Разговор по телефону',0],['Записка на столе',1],['Ответ у доски',0],['Письмо бабушке',1],['Объявление глашатая',0],['Надпись на стене',1],
+    ['Песня у костра',0],['Сочинение в тетради',1],['Рассказ другу на перемене',0],['Сообщение в телефоне',1],['Спор на рынке',0],['Свиток Эпихарма',1],
+    ['Доклад вслух',0],['Открытка другу',1],['Приветствие соседу',0],['Вывеска над лавкой',1]])
+    .map(([ф,в],i)=>({q:'«'+ф+'» — какая это речь?', ф:ф, вар:['устная','письменная'], в:в, раз:в?'Её пишут и читают — письменная речь.':'Её произносят и слушают — устная речь.'}));
+  const П3 = [['Тебе подарили книгу.','Спасибо большое!','Ага, давай.'],['Ты опоздал на урок.','Извините за опоздание.','Ну, пришёл я.'],
+    ['Нужна ручка соседа.','Дай, пожалуйста, ручку.','Ручку давай!'],['Ты встретил учителя утром.','Доброе утро!','Привет, как жизнь?'],
+    ['Тебя поблагодарили.','Пожалуйста!','Ну и что?'],['Ты толкнул прохожего.','Простите, я нечаянно.','Смотри, куда идёшь!'],
+    ['Друг рассказывает, а ты хочешь добавить.','Можно, я добавлю?','Стоп, я лучше знаю!'],['Ты уходишь из гостей.','Спасибо, до свидания!','Всё, я пошёл.'],
+    ['Просишь подвинуться в театре.','Будьте добры, подвиньтесь.','Подвинься, а?'],['Ты не расслышал вопрос.','Повторите, пожалуйста.','Чего?'],
+    ['Тебя угостили лепёшкой.','Спасибо, очень вкусно!','Мало.'],['Друг ошибся в игре.','Ничего, в следующий раз получится!','Ха-ха, неудачник!'],
+    ['Ты вошёл в лавку.','Здравствуйте!','Эй, продавец!'],['Мама зовёт ужинать, ты занят.','Сейчас приду, только допишу.','Отстань!']]
+    .map(([ф,ок,нет],i)=>{ const м=МЕСТО(i+2); return {q:ф+' Как лучше сказать?', ф:ф, вар:м?[нет,ок]:[ок,нет], в:м, раз:'Уместно: «'+ок+'»'}; });
 
   const CSS=`
-  #lvis .s6.l877{gap:14px}
-  #lvis .s6.l877 .scene{display:flex;gap:12px;width:100%;flex-wrap:wrap;justify-content:center}
-  #lvis .s6.l877 .who{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 12px;border-radius:16px;
-    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);flex:1 1 44%;min-width:132px}
-  #lvis .s6.l877 .who .face{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-    font-size:24px;font-weight:700;color:#17261e;background:linear-gradient(180deg,#ffd76a,#d9a441)}
-  #lvis .s6.l877 .who.blue .face{background:linear-gradient(180deg,#a9dcff,#5aa9d8)}
-  #lvis .s6.l877 .who b{font-size:20px;line-height:1.2;color:var(--gold)}
-  #lvis .s6.l877 .who i{font-style:normal;font-size:16px;line-height:1.35;color:var(--mut);text-align:center}
-  #lvis .s6.l877 .bubble{position:relative;width:100%;padding:12px 14px;border-radius:14px;font-size:20px;line-height:1.4;
-    background:rgba(255,215,106,.1);border:1.5px solid rgba(255,215,106,.34);color:var(--ink);text-align:left}
-  #lvis .s6.l877 .bubble.reply{background:rgba(127,209,255,.1);border-color:rgba(127,209,255,.34)}
-  #lvis .s6.l877 .bubble:after{content:'';position:absolute;left:22px;bottom:-9px;width:14px;height:14px;
-    background:inherit;border-right:1.5px solid rgba(255,215,106,.34);border-bottom:1.5px solid rgba(255,215,106,.34);
-    transform:rotate(45deg)}
-  #lvis .s6.l877 .bubble.reply:after{border-color:rgba(127,209,255,.34)}
-  #lvis .s6.l877 .bubble small{display:block;font-size:14px;color:var(--mut);margin-top:4px}
-  #lvis .s6.l877 .lines{display:flex;flex-direction:column;gap:10px;width:100%}
-  #lvis .s6.l877 .ln{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:14px;
-    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);font-size:20px;line-height:1.4}
-  #lvis .s6.l877 .ln .dash{color:var(--gold);font-weight:700;flex:none}
-  #lvis .s6.l877 .ln.right{background:linear-gradient(180deg,#1d2f3a,#152530);border-color:rgba(127,209,255,.3)}
-  #lvis .s6.l877 .ln.right .dash{color:${BLUE}}
-  #lvis .s6.l877 .ln.empty{opacity:.45;border-style:dashed}
-  #lvis .s6.l877 .marks{display:flex;gap:10px;width:100%;flex-wrap:wrap;justify-content:center}
-  #lvis .s6.l877 .marks .m{flex:1 1 30%;min-width:110px;padding:12px;border-radius:14px;text-align:center;
+  #lvis .s6.l877n .ряд button.был{opacity:.55;text-decoration:line-through;border-color:#e86a5a}
+  #lvis .s6.l877n .ряд button{padding:10px 14px!important;line-height:1.3}
+  #lvis .s6.l877n{gap:14px}
+  #lvis .s6.l877n .pic{width:100%;max-width:352px;margin:0 auto}
+  #lvis .s6.l877n .pic svg{display:block;width:100%;height:auto;border-radius:14px}
+  #lvis .s6.l877n .карт{width:100%;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;
     background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line)}
-  #lvis .s6.l877 .marks .m b{display:block;font-size:20px;line-height:1.2;color:var(--gold)}
-  #lvis .s6.l877 .marks .m i{font-style:normal;font-size:16px;line-height:1.35;color:var(--mut)}
-  #lvis .s6.l877 .ask{display:flex;gap:10px;flex-wrap:wrap;width:100%}
-  #lvis .s6.l877 .ask button{flex:1 1 44%;min-height:56px;padding:12px 14px;font-size:16px;font-weight:600;line-height:1.3;text-align:left}
-  #lvis .s6.l877 .ask button.hit{border-color:var(--ok)}
-  #lvis .s6.l877 .ask button.miss{border-color:var(--no)}
-  #lvis .s6.l877 .pick{display:flex;gap:10px;flex-wrap:wrap;width:100%}
-  #lvis .s6.l877 .pick button{flex:1 1 44%;min-height:56px;padding:12px 14px;font-size:16px;line-height:1.3;text-align:left}
-  #lvis .s6.l877 .pick button.done{opacity:.45}
-  #lvis .s6.l877 .verdict{font-size:16px;line-height:1.45}
-  #lvis .s6.l877 .verdict.ok{color:var(--ok)}
-  #lvis .s6.l877 .verdict.no{color:var(--no)}
-  #lvis .s6.l877 .score{font-size:16px;color:var(--mut);text-align:center;font-variant-numeric:tabular-nums}
-  /* карточки задания: вопрос и разбор — отдельными карточками, вопрос всегда первый */
-  #lvis .s6.l877 .карт{width:100%;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;
-    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line)}
-  #lvis .s6.l877 .карт.вопрос{border-color:${GOLD}}
-  #lvis .s6.l877 .карт.верно{border-color:${GREEN}}
-  #lvis .s6.l877 .карт.ошибка{border-color:${RED}}
-  #lvis .s6.l877 .карт .метка{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
-  #lvis .s6.l877 .карт .текст{font-size:20px;line-height:1.45;color:var(--ink)}
-  #lvis .s6.l877 .уровни{display:flex;gap:8px;align-items:center;width:100%}
-  #lvis .s6.l877 .уровни .точка{flex:1 1 0;height:10px;border-radius:6px;background:rgba(255,255,255,.09)}
-  #lvis .s6.l877 .уровни .точка.пройдено{background:${GREEN}}
-  #lvis .s6.l877 .уровни .точка.сейчас{background:${GOLD}}
-  #lvis .s6.l877 [data-anim]{animation:l877rise .42s cubic-bezier(.23,1,.32,1) both;animation-delay:calc(var(--i,0)*70ms)}
-  #lvis .s6.l877[data-frame="4"] [data-anim]{animation-name:l877pop}
-  #lvis .s6.l877[data-frame="5"] [data-anim]{animation-name:l877side}
-  #lvis .s6.l877[data-frame="6"] [data-anim]{animation-name:l877pop}
-  #lvis .s6.l877[data-frame="9"] [data-anim]{animation-name:l877pop}
-  @keyframes l877rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-  @keyframes l877pop{0%{opacity:0;transform:scale(.94)}70%{transform:scale(1.03)}100%{opacity:1;transform:none}}
-  @keyframes l877side{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
-  @media (max-width:370px){
-    #lvis .s6.l877 .who{flex:1 1 100%}
-    #lvis .s6.l877 .ask button,#lvis .s6.l877 .pick button{flex:1 1 100%}
-  }
+  #lvis .s6.l877n .карт.задача{border-color:${GOLD}}
+  #lvis .s6.l877n .карт.верно{border-color:${GREEN}}
+  #lvis .s6.l877n .карт.ошибка{border-color:${RED}}
+  #lvis .s6.l877n .карт .метка{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  #lvis .s6.l877n .карт .текст{font-size:20px;line-height:1.45;color:var(--ink)}
+  #lvis .s6.l877n .карт .текст b{color:${GOLD}}
+  #lvis .s6.l877n .правило{width:100%;padding:14px;border-radius:14px;border:2px solid ${GOLD};
+    background:linear-gradient(180deg,rgba(255,215,106,.14),rgba(255,215,106,.05));font-size:20px;line-height:1.45}
+  #lvis .s6.l877n .правило b{color:${GOLD}}
+  #lvis .s6.l877n .журнал{width:100%;padding:12px 14px;border-radius:6px 16px 16px 6px;
+    background:linear-gradient(90deg,#efe2c0,#dcc79a);border-left:7px solid #7a4a24;display:flex;flex-direction:column;gap:7px;color:${ЧЕРНИЛА}}
+  #lvis .s6.l877n .журнал .шапка{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#6a4a24}
+  #lvis .s6.l877n .журнал .шапка b{font-size:18px;letter-spacing:0;text-transform:none;color:#7a2a10;font-family:Georgia,serif}
+  #lvis .s6.l877n .журнал .шапка b.готово{color:#1a6a3a}
+  #lvis .s6.l877n .журнал ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+  #lvis .s6.l877n .журнал li{display:flex;align-items:center;gap:9px;font-size:16px;line-height:1.3;color:#6a5236}
+  #lvis .s6.l877n .журнал li i{flex:0 0 22px;width:22px;height:22px;border-radius:50%;font-style:normal;
+    display:inline-flex;align-items:center;justify-content:center;font-size:14px;border:1.5px solid #a88a5a;color:#8a6a3a}
+  #lvis .s6.l877n .журнал li.есть{color:${ЧЕРНИЛА}}
+  #lvis .s6.l877n .журнал li.есть i{border-color:#1a4a6a;background:#2a6a9a;color:#fff}
+  #lvis .s6.l877n .журнал li span{margin-left:auto;white-space:nowrap;font-size:14px;color:#8a6a3a;font-family:Georgia,serif}
+  #lvis .s6.l877n .журнал li.есть span{color:#1a6a3a;font-weight:700}
+  #lvis .s6.l877n .буйки{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%}
+  #lvis .s6.l877n .буйки button{min-height:56px;border-radius:28px;cursor:pointer;font:inherit;font-size:19px;font-weight:700;
+    font-family:Georgia,serif;border:2px solid #e86a5a;background:linear-gradient(180deg,#fff6ea,#f0dcc0);color:${ЧЕРНИЛА};
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+    transition:transform 140ms cubic-bezier(.23,1,.32,1),opacity 200ms}
+  #lvis .s6.l877n .буйки button:active{transform:scale(.96)}
+  #lvis .s6.l877n .буйки button.пойман{opacity:.35;border-color:${GREEN};text-decoration:line-through}
+  #lvis .s6.l877n .буйки button.мимо{border-color:${RED};animation:l877nнет 360ms cubic-bezier(.23,1,.32,1)}
+  @keyframes l877nнет{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  #lvis .s6.l877n .ряд{display:grid;gap:8px;width:100%}
+  #lvis .s6.l877n .ряд button{min-height:56px;border-radius:14px;cursor:pointer;font:inherit;font-size:18px;font-weight:700;
+    border:1.5px solid rgba(127,209,255,.5);background:rgba(127,209,255,.1);color:${ИНК};padding:6px 4px;font-family:Georgia,serif;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform 140ms cubic-bezier(.23,1,.32,1)}
+  #lvis .s6.l877n .ряд button:active{transform:translateY(2px)}
+  #lvis .s6.l877n .ряд button.вкл{border-color:${GOLD};background:rgba(255,215,106,.22);color:${GOLD}}
+  #lvis .s6.l877n .случай{width:100%;display:flex;flex-direction:column;gap:6px}
+  #lvis .s6.l877n .случай .что{font-size:19px;color:var(--ink);font-family:Georgia,serif}
+  #lvis .s6.l877n .ask{display:flex;gap:10px;flex-wrap:wrap;width:100%}
+  #lvis .s6.l877n .ask button{flex:1 1 100%;min-height:56px;height:auto;padding:13px 16px;
+    overflow-wrap:anywhere;word-break:break-word;font-size:17px;font-weight:600;line-height:1.3;text-align:left;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+    transition:transform 150ms cubic-bezier(.23,1,.32,1),border-color 150ms cubic-bezier(.23,1,.32,1)}
+  #lvis .s6.l877n .ask button:active{transform:translateY(2px)}
+  #lvis .s6.l877n .ask button.hit{border-color:var(--ok)}
+  #lvis .s6.l877n .ask button.miss{border-color:var(--no)}
+  #lvis .s6.l877n .ask.пара button{flex:1 1 calc(50% - 6px);text-align:center;font-size:18px}
+  #lvis .s6.l877n .ask.три button{flex:1 1 calc(33% - 8px);text-align:center;font-size:18px;padding:13px 4px;overflow-wrap:normal;word-break:keep-all}
+  #lvis .s6.l877n .уровни{display:flex;gap:8px;align-items:center;width:100%}
+  #lvis .s6.l877n .уровни .точка{flex:1 1 0;height:10px;border-radius:6px;background:rgba(255,255,255,.09)}
+  #lvis .s6.l877n .уровни .точка.пройдено{background:${GREEN}}
+  #lvis .s6.l877n .уровни .точка.сейчас{background:${GOLD};animation:l877ndot 1.6s cubic-bezier(.23,1,.32,1) infinite}
+  @keyframes l877ndot{0%,100%{opacity:1}50%{opacity:.55}}
+  #lvis .s6.l877n .score{font-size:16px;color:var(--mut);text-align:center;font-variant-numeric:tabular-nums}
+  #lvis .s6.l877n{-webkit-text-size-adjust:100%}
+  #lvis .s6.l877n [data-anim]{animation:l877nrise 280ms cubic-bezier(.23,1,.32,1) both;animation-delay:calc(min(var(--i,0),5)*45ms)}
+  @keyframes l877nrise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  #lvis .s6.l877n .падежи{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+  #lvis .s6.l877n .падежи button{min-height:56px;border-radius:14px;cursor:pointer;font:inherit;font-size:16px;font-family:Georgia,serif;
+    border:1.5px solid rgba(255,215,106,.45);background:rgba(255,215,106,.08);color:${ИНК};padding:6px 4px;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform 140ms cubic-bezier(.23,1,.32,1),background 160ms}
+  #lvis .s6.l877n .падежи button b{color:${GOLD};font-size:18px;margin-right:4px}
+  #lvis .s6.l877n .падежи button.был{border-color:rgba(143,209,168,.6)}
+  #lvis .s6.l877n .падежи button.вкл{border-color:${GOLD};background:rgba(255,215,106,.24)}
+  #lvis .s6.l877n .падежи button:active{transform:translateY(2px)}
+  #lvis .s6.l877n .ask.шесть button{flex:1 1 calc(16% - 8px);text-align:center;font-size:17px;padding:13px 2px;min-width:44px;font-family:Georgia,serif}
   @media (prefers-reduced-motion: reduce){
-    /* карточки задания: вопрос и разбор — отдельными карточками, вопрос всегда первый */
-  #lvis .s6.l877 .карт{width:100%;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;
-    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line)}
-  #lvis .s6.l877 .карт.вопрос{border-color:${GOLD}}
-  #lvis .s6.l877 .карт.верно{border-color:${GREEN}}
-  #lvis .s6.l877 .карт.ошибка{border-color:${RED}}
-  #lvis .s6.l877 .карт .метка{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
-  #lvis .s6.l877 .карт .текст{font-size:20px;line-height:1.45;color:var(--ink)}
-  #lvis .s6.l877 .уровни{display:flex;gap:8px;align-items:center;width:100%}
-  #lvis .s6.l877 .уровни .точка{flex:1 1 0;height:10px;border-radius:6px;background:rgba(255,255,255,.09)}
-  #lvis .s6.l877 .уровни .точка.пройдено{background:${GREEN}}
-  #lvis .s6.l877 .уровни .точка.сейчас{background:${GOLD}}
-  #lvis .s6.l877 [data-anim]{animation:none!important}
+    #lvis .s6.l877n [data-anim]{animation:none!important}
+    #lvis .s6.l877n .уровни .точка.сейчас{animation:none!important}
+    #lvis .s6.l877n button{transition:none!important;animation:none!important}
   }`;
 
   function css(){
     try{
       if(window.RUKIT && RUKIT.frameCss) RUKIT.frameCss();
-      let e=document.getElementById('l877-style');
-      if(!e){ e=document.createElement('style'); e.id='l877-style'; document.head.appendChild(e); }
-      if(e.textContent!==CSS) e.textContent=CSS;
+      let s=document.getElementById('l877n-style');
+      if(!s){ s=document.createElement('style'); s.id='l877n-style'; document.head.appendChild(s); }
+      if(s.textContent!==CSS) s.textContent=CSS;
     }catch(e){}
   }
-
   const S = () => {
     const lk = (typeof lidKey==='function') ? lidKey(ID) : String(ID);
     if(typeof CHS==='undefined') window.CHS={};
@@ -120,209 +206,469 @@
     return CHS[lk];
   };
   const A = (i,cls,html) => `<div data-anim style="--i:${i}" class="${cls||''}">${html}</div>`;
-  const BTN = (i,cls,html,on) => `<button type="button" data-anim style="--i:${i}" class="${cls||''}" onclick="${on}">${html}</button>`;
+  const BTN = (i,cls,html,on) =>
+    `<button type="button" data-anim style="--i:${i}" class="${cls||''}" onclick="${on}">${html}</button>`;
+  const ЗАДАЧА = (текст) => A(2,'карт задача','<span class="метка">Судовой журнал</span><div class="текст">'+текст+'</div>');
+  const РАЗБОР = (верно,текст) =>
+    A(9,'карт '+(верно?'верно':'ошибка'),
+      '<span class="метка">'+(верно?'Верно':'Разбор')+'</span><div class="текст">'+(верно?'✅ ':'❌ ')+текст+'</div>');
+  const СКАЗ = (метка,текст) => A(9,'карт','<span class="метка">'+метка+'</span><div class="текст">'+текст+'</div>');
+  const ПРАВИЛО = (текст) => A(40,'правило',текст);
+  const ТОЧКИ = (всего,сейчас,пройдено) => A(1,'уровни',
+    Array.from({length:всего},(_,к)=>
+      `<span class="точка ${к<пройдено?'пройдено':(к===сейчас?'сейчас':'')}"></span>`).join(''));
+  const ОТВЕТЫ = (кл,варианты,верный,в,f) => `<div class="ask ${кл}">${варианты.map((v,к)=>
+      BTN(5+к, в===к?(к===верный?'hit':'miss'):'', v, 'r877Отв('+f+','+к+')')).join('')}</div>`;
+  const ЖУРНАЛ = (s) => {
+    const всё = ДЕЛА.every(д=>сделано(s,д.ключ));
+    return A(0,'журнал',
+      `<div class="шапка"><span>Театр Эпихарма</span><b class="${всё?'готово':''}">${
+        всё?'премьера!':ДЕЛА.filter(д=>сделано(s,д.ключ)).length+' из 3'}</b></div>
+       <ul>${ДЕЛА.map(д=>{
+         const есть = сделано(s,д.ключ);
+         return `<li class="${есть?'есть':''}"><i>${есть?'✓':'·'}</i>${д.имя}<span>${есть?д.итог:'—'}</span></li>`;
+       }).join('')}</ul>`);
+  };
 
-  /* ---------- сцены кадров ---------- */
+  /* ================= АНИМАЦИЯ ================= */
+  const ДВИЖ = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const КРИВАЯ = '0.23 1 0.32 1';
+  const сплайны = (n) => Array.from({length:n},()=>КРИВАЯ).join(';');
+  const анК = (имя,значения,длит,keyTimes,доп) =>
+    ДВИЖ ? `<animate attributeName="${имя}" values="${значения}" dur="${длит}" repeatCount="indefinite"
+              calcMode="spline" keyTimes="${keyTimes}" keySplines="${сплайны(keyTimes.split(';').length-1)}" ${доп||''}/>` : '';
+  const анЛин = (имя,значения,длит,доп) =>
+    ДВИЖ ? `<animate attributeName="${имя}" values="${значения}" dur="${длит}" repeatCount="indefinite" ${доп||''}/>` : '';
+  const ЗАВОД = `<rect width="0" height="0" fill="none"><animate attributeName="x" values="0;0" dur="1s" repeatCount="indefinite"/></rect>`;
+  const кт = (v) => Math.min(0.95, Math.max(0.03, v)).toFixed(2);
+  const проявить = (длит,доля,конец) => анК('opacity','0.45;0.45;1;1',длит,'0;'+кт(доля)+';'+кт(конец)+';1');
+  const сдвигРаз = (из,в,длит,задержка) => ДВИЖ ?
+    `<animateTransform attributeName="transform" type="translate" from="${из}" to="${в}" dur="${длит}" begin="${(задержка||0).toFixed(2)}s"
+       fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="${КРИВАЯ}"/>` : '';
 
-  /* 1. Устная и письменная речь */
-  const F1 = `
-    <div class="scene">
-      ${A(1,'who','<div class="face">А</div><b>Говорим</b><i>звуки слышны, слова летят</i>')}
-      ${A(2,'who blue','<div class="face">Б</div><b>Пишем</b><i>буквы остаются на бумаге</i>')}
-    </div>
-    ${A(3,'','<div class="bubble">— Ты сделал уроки?<small>это устная речь: мы слышим голос</small></div>')}
-    ${A(4,'','<div class="bubble reply">«Уроки сделаны».<small>это письменная речь: мы видим буквы</small></div>')}`;
+  /* ================= РИСУНОК ================= */
+  const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const т = (x,y,текст,кегль,цвет,жирный,якорь,ореол) =>
+    `<text x="${x}" y="${y}" text-anchor="${якорь||'middle'}" font-size="${кегль||14}"
+       ${жирный?'font-weight="bold"':''} fill="${цвет||ИНК}"
+       ${ореол?`stroke="${ореол}" stroke-width="3" paint-order="stroke" stroke-linejoin="round"`:''}
+       font-family="Georgia,'Times New Roman',serif">${esc(текст)}</text>`;
+  /* слово с выделенным окончанием */
+  const тОк = (x,y,осн,ок,кегль,цвет,цветОк,якорь) =>
+    `<text x="${x}" y="${y}" text-anchor="${якорь||'middle'}" font-size="${кегль}" font-weight="bold" fill="${цвет}" font-family="Georgia,'Times New Roman',serif">${esc(осн)}<tspan fill="${цветОк}">${esc(ок)}</tspan></text>`;
+  const Р = () => window.РМ;
+  const ОПРЕДЕЛЕНИЯ = `
+    <defs>
+      <filter id="c877-тень" x="-30%" y="-30%" width="160%" height="170%">
+        <feDropShadow dx="1.5" dy="2" stdDeviation="1.6" flood-color="#0b1c2a" flood-opacity=".45"/>
+      </filter>
+      <radialGradient id="c877-лампа" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#ffd890" stop-opacity=".5"/><stop offset="1" stop-color="#ff9a40" stop-opacity="0"/>
+      </radialGradient>
+    </defs>`;
+  const свг = (тело, высота) =>
+    `<svg viewBox="0 0 336 ${высота}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+       ${Р().defs()}${ОПРЕДЕЛЕНИЯ}${тело}</svg>`;
+  const рамка = (в) => `<rect x="0.8" y="0.8" width="334.4" height="${в-1.6}" rx="14" fill="none" stroke="${ЛИНИЯ}" stroke-width="1.6"/>`;
+  const подпись = (x,y,текст,цвет,кегль) => {
+    const к=кегль||14, ш=String(текст).length*к*0.64+20, в=к+11;
+    const cx = Math.min(336-ш/2-6, Math.max(ш/2+6, x));
+    return `<g filter="url(#c877-тень)">
+      <rect x="${(cx-ш/2).toFixed(1)}" y="${(y-в+4).toFixed(1)}" width="${ш.toFixed(1)}" height="${в}"
+        rx="${(в/2).toFixed(1)}" fill="rgba(14,26,20,.92)" stroke="${цвет||GOLD}" stroke-width="1.3"/>
+      ${т(cx,y-2,текст,к,цвет||GOLD,true)}
+    </g>`;
+  };
+  /* облачко-реплика */
+  const реплика = (x,y,ш,текст,хвост) => `<g filter="url(#c877-тень)">
+      <rect x="${x}" y="${y}" width="${ш}" height="30" rx="14" fill="#fffaf0" stroke="${ОБВОД}" stroke-width="1"/>
+      <path d="M${хвост[0]} ${y+29} l${хвост[1]} 12 l6 -12z" fill="#fffaf0" stroke="${ОБВОД}" stroke-width="1"/>
+      <rect x="${хвост[0]-1}" y="${y+26}" width="10" height="5" fill="#fffaf0"/></g>
+      ${т(x+ш/2,y+20,текст,14,ЧЕРНИЛА,true)}`;
+  /* плиты агоры: перспектива к центру, стыки камня */
+  const плиты = (y0,Н) => `<linearGradient id="c877-плиты" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eadfc4"/><stop offset="1" stop-color="#c4ad84"/></linearGradient>
+    <rect x="0" y="${y0}" width="336" height="${Н-y0}" fill="url(#c877-плиты)"/>
+    <g data-декор="1" stroke="#a8926a" stroke-width=".7" opacity=".55">
+      ${[0.08,0.2,0.36,0.56,0.8].map(t=>`<line x1="0" y1="${(y0+(Н-y0)*t).toFixed(1)}" x2="336" y2="${(y0+(Н-y0)*t).toFixed(1)}"/>`).join('')}
+      ${[-3,-2,-1,0,1,2,3,4].map(k=>`<line x1="${168+k*30}" y1="${y0}" x2="${168+k*110}" y2="${Н}"/>`).join('')}
+    </g>`;
+  /* мраморная табличка со словом; (0,0) — низ */
+  const табличка = (текст,цвет,кегль) => `<g><rect x="-31" y="-24" width="62" height="24" rx="3" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width=".9"/>
+    <text x="0" y="-7.5" text-anchor="middle" font-size="${кегль||11}" font-weight="bold" fill="${цвет||КАМЕНЬ}" font-family="Georgia,serif">${esc(текст)}</text></g>`;
+  const ударение = (w) => esc(w).replace(/([А-ЯЁ])/g,'<tspan fill="#b8321e">$1</tspan>');
+  const ударениеH = (w) => esc(w).replace(/([А-ЯЁ])/g,'<span style="color:#ff8a6a">$1</span>');
 
-  /* 2. Монолог */
-  const F2 = `
-    ${A(1,'','<div class="bubble">Сегодня я расскажу, как зимуют птицы. Осенью они сбиваются в стаи и улетают на юг. Весной возвращаются обратно.<small>говорит один — это монолог</small></div>')}
-    <div class="marks">
-      ${A(2,'m','<b>один</b><i>говорящий</i>')}
-      ${A(3,'m','<b>одна</b><i>тема</i>')}
-      ${A(4,'m','<b>три части</b><i>начало, середина, конец</i>')}
-    </div>`;
+  const бирка = (cx,y,t0,цвет,опц) => { const о=опц||{}, к=о.кегль||14, ш=String(t0).length*к*0.64+20, в=к+13;
+    const x=Math.min(336-ш/2-4, Math.max(ш/2+4, cx));
+    return `<g filter="url(#c877-тень)"><rect x="${(x-ш/2).toFixed(1)}" y="${y}" width="${ш.toFixed(1)}" height="${в}" rx="${(в/2).toFixed(1)}" fill="${о.фон||'#fffaf0'}" stroke="${цвет||ОБВОД}" stroke-width="${цвет?2.2:1}"/></g>${т(x,y+в/2+к*0.35,t0,к,о.цветТ||ЧЕРНИЛА,true)}`; };
+  /* облачко реплики: строки текста, хвостик к говорящему (хx — куда указывает, хy — кончик) */
+  const облачко = (cx,y,строки,цвет,хx,хy,опц) => { const о=опц||{}, к=о.кегль||14, стр=[].concat(строки);
+    const ш=Math.max(...стр.map(x=>String(x).length))*к*0.56+26, в=стр.length*(к+5)+14;
+    const x=Math.min(336-ш/2-6, Math.max(ш/2+6, cx)), л=x-ш/2, низ=y+в;
+    const hx=Math.min(л+ш-18, Math.max(л+18, хx==null?x:хx));
+    return `<g filter="url(#c877-тень)">
+      <rect x="${л.toFixed(1)}" y="${y}" width="${ш.toFixed(1)}" height="${в}" rx="14" fill="#fffaf0" stroke="${цвет||ОБВОД}" stroke-width="2"/>
+      ${хy!=null?`<path d="M${(hx-7).toFixed(1)} ${низ-1} L${хx==null?hx:хx} ${хy} L${(hx+7).toFixed(1)} ${низ-1} Z" fill="#fffaf0" stroke="${цвет||ОБВОД}" stroke-width="2" stroke-linejoin="round"/><rect x="${(hx-8).toFixed(1)}" y="${низ-4}" width="16" height="5" fill="#fffaf0"/>`:''}</g>
+      ${стр.map((s0,i)=>т(x,y+14+к*0.8+i*(к+5),s0,к,ЧЕРНИЛА,true)).join('')}`; };
 
-  /* 3. Диалог */
-  const F3 = `
-    ${A(1,'','<div class="bubble">— Ты пойдёшь сегодня в библиотеку?<small>вопрос</small></div>')}
-    ${A(2,'','<div class="bubble reply">— Пойду после уроков. А ты?<small>ответ и новый вопрос — реплики идут навстречу</small></div>')}
-    <div class="marks">
-      ${A(3,'m','<b>двое</b><i>и больше</i>')}
-      ${A(4,'m','<b>по очереди</b><i>реплика за репликой</i>')}
-      ${A(5,'m','<b>навстречу</b><i>вопрос — ответ</i>')}
-    </div>`;
+  /* скена театра: небо, фасад с колоннами и дверью, расписные щиты, плющ, дощатая сцена;
+     опц.зрители — ряд голов внизу */
+  const скена = (Н,y0,опц) => { const М=Р(), о=опц||{};
+    const кол=[36,116,220,300];
+    return `${М.небо(336,y0,о.вечер?{закат:true,солнце:[300,40,12],облака:[]}:{облака:[[70,16,0.36,4]]})}
+      <rect x="10" y="30" width="316" height="${y0-30}" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width="1"/>
+      <rect x="4" y="18" width="328" height="14" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width="1"/>
+      ${Array.from({length:20},(_,k)=>`<rect x="${10+k*16.4}" y="21" width="5" height="9" fill="#5a6a8a" opacity=".7"/>`).join('')}
+      ${[[56,104],[236,284]].map(([a,b])=>`<rect x="${a}" y="52" width="${b-a}" height="${y0-86}" fill="#8ec4e4" stroke="#6a5a40" stroke-width="2"/>
+        <path d="M${a} ${y0-60} Q${(a+b)/2} ${y0-86} ${b} ${y0-66} V${y0-34} H${a} Z" fill="#6aa060"/><path d="M${a} ${y0-44} Q${(a+b)/2} ${y0-56} ${b} ${y0-46} V${y0-34} H${a} Z" fill="#4a8a4a"/>
+        <circle cx="${a+14}" cy="68" r="6" fill="#ffd76a"/>`).join('')}
+      <rect x="146" y="${y0-86}" width="44" height="86" fill="#3a2a1a" stroke="${ОБВОД}" stroke-width="1"/>
+      <rect x="148" y="${y0-84}" width="19" height="84" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".7"/><rect x="169" y="${y0-84}" width="19" height="84" fill="url(#рм-доска)" stroke="${ОБВОД}" stroke-width=".7"/>
+      ${кол.map(cx=>`<rect x="${cx-8}" y="32" width="16" height="${y0-32}" fill="url(#рм-колонна)" stroke="${ОБВОД}" stroke-width=".8"/><rect x="${cx-11}" y="30" width="22" height="6" fill="url(#рм-мрамор)" stroke="${ОБВОД}" stroke-width=".7"/>`).join('')}
+      <path d="M4 34 ${Array.from({length:8},(_,k)=>`Q${20+k*41} 50 ${41+k*41} 34`).join(' ')}" stroke="#3a7a3a" stroke-width="3" fill="none"/>
+      ${Array.from({length:16},(_,k)=>`<path d="M${14+k*20.5} ${40+(k%2)*4} q-4 -3 -3 -7 q3 0 4 3 q1 -3 4 -3 q1 4 -5 7 z" fill="#4a9a4a" stroke="#1e4a1e" stroke-width=".5"/>`).join('')}
+      ${М.доски(0,y0,336,Н-y0)}<rect x="0" y="${y0-3}" width="336" height="6" fill="url(#рм-доскатём)" stroke="${ОБВОД}" stroke-width=".6"/>
+      ${о.зрители?`<g>${Array.from({length:12},(_,k)=>{ const hx=10+k*29+(k%2)*6, hy=Н-10+(k%3)*3; return `<path d="M${hx-16} ${Н} Q${hx-14} ${hy-12} ${hx} ${hy-12} Q${hx+14} ${hy-12} ${hx+16} ${Н} Z" fill="#2a2016"/><circle cx="${hx}" cy="${hy-20}" r="9" fill="#2a2016"/>`; }).join('')}</g>`:''}
+      ${о.вечер?`<rect width="336" height="${Н}" fill="#ff9a50" opacity=".12"/>`:''}`; };
+  /* агора: небо, портик в глубине, плиты */
+  const агора = (Н,y0) => { const М=Р();
+    return `${М.небо(336,y0,{облака:[[60,26,0.5,6],[250,36,0.4,-6]]})}${М.город(y0-4,{x0:0,x1:200})}${М.портик(150,y0+2,180,150,{колонн:5})}${плиты(y0,Н)}`; };
+  /* белёная доска объявлений на столбах; строки проступают, если записано */
+  const доскаОбъявлений = (x,y,ш,в,строки,вид) => `<rect x="${x+14}" y="${y+в}" width="6" height="60" fill="url(#рм-доскатём)"/><rect x="${x+ш-20}" y="${y+в}" width="6" height="60" fill="url(#рм-доскатём)"/>
+    <g filter="url(#c877-тень)"><rect x="${x}" y="${y}" width="${ш}" height="${в}" rx="3" fill="#f8f4e8" stroke="#8a6a40" stroke-width="3"/></g>
+    ${строки.map((s0,i)=>`<g opacity="${вид?1:0}">${вид&&ДВИЖ?`<animate attributeName="opacity" from="0" to="1" begin="${(0.2+i*0.35).toFixed(2)}s" dur="0.5s" fill="freeze"/>`:''}${т(x+ш/2,y+22+i*18,s0,13,'#2a1a10',true)}</g>`).join('')}`;
 
-  /* 4. Сборка диалога: реплики перемешаны, надо нажимать по порядку */
-  const ДИАЛОГ = [
-    { к:'П', т:'— Здравствуйте! Дайте, пожалуйста, чай и булочку.' },
-    { к:'П', т:'— Спасибо большое!' },
-    { к:'П', т:'— Сколько с меня?' },
-    { к:'Б', т:'— С вас сорок рублей. Приятного аппетита!' },
-    { к:'Б', т:'— Добрый день! Что будете брать?' }
-  ];
-  const ПОРЯДОК = [4, 0, 2, 3, 1];   /* правильная последовательность реплик */
+  /* ================= КАДРЫ ================= */
 
-  function F4(s){
-    const собрано = s.сборка||0;
-    const строки = ПОРЯДОК.slice(0, собрано).map(и=>{
-      const р=ДИАЛОГ[и];
-      return `<div class="ln${р.к==='Б'?' right':''}"><span class="dash">—</span><span>${р.т.replace(/^—\s*/,'')}</span></div>`;
-    }).join('');
-    const пусто = Array.from({length: Math.max(0, ПОРЯДОК.length-собрано)}, () =>
-      `<div class="ln empty"><span class="dash">—</span><span>реплика</span></div>`).join('');
-    const осталось = ДИАЛОГ.map((р,и)=>({р,и})).filter(x=>ПОРЯДОК.slice(0,собрано).indexOf(x.и)<0);
-    const готово = собрано === ПОРЯДОК.length;
-    return `${A(0,'cap','Нажимай реплики по порядку — как они звучат в разговоре.')}
-      <div class="lines">${строки}${пусто}</div>
-      ${готово ? A(1,'verdict ok','Диалог собран: пять реплик, каждая с новой строки и с тире.')
-               : `<div class="pick">` + осталось.map((x,к)=>
-                   BTN(2+к, s.мимо===x.и?'miss':'', x.р.т, `r877Reply(${x.и})`)).join('') + `</div>`}
-      ${!готово && s.мимо!=null ? A(3,'verdict no','Эта реплика здесь не подходит: разговор идёт по очереди — сначала приветствие и вопрос продавца.') : ''}
-      ${готово ? `<div class="ask">${BTN(4,'','сначала','r877Reset()')}</div>` : ''}`;
+  /* 1. Сказать или записать */
+  function F1(s){
+    const Н=300, М=Р(), реж=s.реж1||0, вид=s.вид1||{}, оба=вид[1]&&вид[2], в=s.ответ1, ок=в===0;
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА('Сиракузы, весна. Сегодня премьера новой комедии <b>Эпихарма</b>! Глашатай <b>Стентор</b> кричит весть на агоре, а писец выводит её буквами на белёной доске. Сравни две вести: сказанную и записанную.') +
+      `<div class="pic">${свг(`
+        ${агора(Н,196)}
+        ${доскаОбъявлений(196,110,128,62,['Вечером в театре','комедия Эпихарма'],реж===2||вид[2])}
+        ${М.глашатай(80,Н-14,0.9,{поза:реж===1?'кричит':'стоит'})}
+        ${реж===1?облачко(110,20,['Вечером — комедия','Эпихарма!'],ЦЛ,94,78,{кегль:14}):''}
+        ${реж===2?бирка(120,20,'буквы остаются на доске',ЦП,{кегль:13}):''}
+        ${реж===1?бирка(250,180,'звук летит и тает',ЦЛ,{кегль:12}):''}
+        ${М.девочка(290,Н-10,0.62,{поза:реж===2?'стоит':'машет',влево:true})}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      `<div class="ask пара">${BTN(3,реж===1?'hit':'','🗣 Сказать вслух',"r877реж(1)")}${BTN(4,реж===2?'hit':'','✍ Записать',"r877реж(2)")}</div>` +
+      (!оба ? СКАЗ('Попробуй','Нажми обе кнопки: пусть Стентор скажет, а писец запишет.') :
+        ОТВЕТЫ('пара',['разговор по телефону','записка на столе'],0,в,1) +
+        (в==null ? СКАЗ('Вопрос','Где здесь <b>устная</b> речь?') :
+          РАЗБОР(ок,['Верно: по телефону мы говорим и слушаем — это устная речь.',
+            'Записку пишут и читают — это письменная речь. Устная — та, что звучит.'][в]))) +
+      (ок ? ПРАВИЛО('<b>Устная речь</b> звучит: мы говорим и слушаем. <b>Письменная речь</b> записана: мы пишем и читаем. Устная летит и тает, письменная остаётся.') : '');
   }
 
-  /* 5. Как записать диалог */
-  const F5 = `
-    <div class="lines">
-      ${A(1,'ln','<span class="dash">—</span><span>Доброе утро! Ты готов к уроку?</span>')}
-      ${A(2,'ln right','<span class="dash">—</span><span>Да, я повторил правило.</span>')}
-      ${A(3,'ln','<span class="dash">—</span><span>Тогда начнём с примера у доски.</span>')}
-    </div>
-    <div class="marks">
-      ${A(4,'m','<b>тире</b><i>перед каждой репликой</i>')}
-      ${A(5,'m','<b>новая строка</b><i>каждая реплика с начала</i>')}
-      ${A(6,'m','<b>без кавычек</b><i>это не прямая речь</i>')}
-    </div>`;
+  /* 2. Монолог: пролог Эпихарма */
+  function F2(s){
+    const Н=300, М=Р(), n=Math.min(s.пр2||0,3), в=s.ответ2, ок=в===0;
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА('Вечер. Эпихарм выходит на сцену <b>один</b> и читает пролог — вступление к комедии. Он говорит, а зрители молчат и слушают. Нажимай — и пролог прозвучит по частям.') +
+      `<div class="pic">${свг(`
+        ${скена(Н,200,{зрители:true})}
+        ${М.эпихарм(168,Н-40,0.86,{поза:n>0&&n<3?'читает':n>=3?'смеётся':'стоит'})}
+        ${n>0?облачко(168,16,[ПРОЛОГ[n-1].т.length>30?ПРОЛОГ[n-1].т.slice(0,ПРОЛОГ[n-1].т.lastIndexOf(' ',30)):ПРОЛОГ[n-1].т].concat(ПРОЛОГ[n-1].т.length>30?[ПРОЛОГ[n-1].т.slice(ПРОЛОГ[n-1].т.lastIndexOf(' ',30)+1)]:[]),GOLD,170,Н-150,{кегль:13}):''}
+        ${n>0?бирка(60,100,ПРОЛОГ[n-1].ч,GOLD,{кегль:12}):''}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      (n<3 ? `<div class="ask">${BTN(4,'',n===0?'Начать пролог':'Дальше',"r877пролог()")}</div>` : '') +
+      A(5,'карт','<span class="метка">Пролог</span><div class="текст">'+ПРОЛОГ.map((x,i)=>i<n?x.т:'<span style="opacity:.3">…</span>').join(' ')+'</div>') +
+      (n<3 ? '' :
+        ОТВЕТЫ('',['речь одного человека на одну тему','разговор двух собеседников'],0,в,2) +
+        (в==null ? СКАЗ('Вопрос','Пролог Эпихарма — это…') :
+          РАЗБОР(ок,['Верно: говорит один, тема одна — про козу, и у речи есть начало, середина и конец. Это <b>монолог</b>.',
+            'Эпихарм говорил один, ему никто не отвечал. Это <b>монолог</b>.'][в]))) +
+      (ок ? ПРАВИЛО('<b>Монолог</b> — речь одного человека. Тема одна, есть начало, середина и конец. Монолог — рассказ, доклад, объявление, ответ у доски.') : '');
+  }
 
-  /* 6. Прямая речь и слова автора */
-  const F6 = `
-    ${A(1,'','<div class="bubble">Мама сказала: «Помой руки и садись за стол».<small>«Мама сказала» — слова автора, дальше чужая речь в кавычках</small></div>')}
-    <div class="marks">
-      ${A(2,'m','<b>слова автора</b><i>кто говорит</i>')}
-      ${A(3,'m','<b>кавычки</b><i>чужая речь дословно</i>')}
-      ${A(4,'m','<b>двоеточие</b><i>после слов автора</i>')}
-    </div>`;
+  /* 3. Диалог: спор о козе */
+  function F3(s){
+    const Н=300, М=Р(), n=Math.min(s.сп3||0,СПОР.length), в=s.ответ3, ок=в===0;
+    const р=n>0?СПОР[n-1]:null;
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА('Пролог кончился — выходят два актёра в масках. Хозяин сада и хозяин козы спорят. Слово переходит от одного к другому: вопрос — ответ. Нажимай — актёры заговорят по очереди.') +
+      `<div class="pic">${свг(`
+        ${скена(Н,200,{зрители:true})}
+        ${М.актёр(80,Н-38,0.82,{маска:'трагедия',цвет:ЦЛ,поза:р&&р.к===0?'говорит':'слушает'})}
+        ${М.актёр(256,Н-38,0.82,{маска:'комедия',цвет:ЦП,поза:р&&р.к===1?'говорит':'слушает',влево:true})}
+        ${М.коза(168,Н-40,0.5,{})}
+        ${р?облачко(р.к?230:106,20,'— '+р.т,р.к?ЦП:ЦЛ,р.к?256:80,Н-150,{кегль:15}):''}
+        ${n>0?`<path d="M${р.к?220:116} 110 Q168 ${р.к?96:124} ${р.к?116:220} 110" stroke="${GOLD}" stroke-width="2.4" fill="none" stroke-dasharray="5 4">${анЛин('stroke-dashoffset','18;0','0.9s')}</path>`:''}
+        ${бирка(168,Н-26,'реплика '+n+' из '+СПОР.length,GOLD,{кегль:11})}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      (n<СПОР.length ? `<div class="ask">${BTN(4,'',n===0?'Поднять занавес':'Следующая реплика',"r877спор()")}</div>` : '') +
+      A(5,'карт','<span class="метка">Реплики</span><div class="текст">'+СПОР.slice(0,n).map(x=>'<span style="color:'+(x.к?'#9ac8ff':'#ff9a8a')+'">— '+x.т+'</span>').join('<br>')+(n?'':'Пока тишина.')+'</div>') +
+      (n<СПОР.length ? '' :
+        ОТВЕТЫ('',['реплики идут навстречу: вопрос — ответ','в нём больше слов'],0,в,3) +
+        (в==null ? СКАЗ('Вопрос','Чем диалог отличается от монолога?') :
+          РАЗБОР(ок,['Верно: в диалоге говорят двое или больше, и каждая <b>реплика</b> отвечает на предыдущую.',
+            'Дело не в длине: монолог бывает длинным. В диалоге говорят <b>двое и больше</b>, реплики идут навстречу.'][в]))) +
+      (ок ? ПРАВИЛО('<b>Диалог</b> — разговор двух или нескольких людей. Слова каждого — <b>реплика</b>. Реплики идут навстречу: вопрос — ответ, ответ — новый вопрос.') : '');
+  }
 
-  /* 7. Речевой этикет */
-  const ЭТИКЕТ = [
-    ['приветствие','Здравствуйте! Доброе утро!',GREEN],
-    ['просьба','Будьте добры, передайте, пожалуйста.',GOLD],
-    ['благодарность','Спасибо! Большое спасибо!',BLUE],
-    ['извинение','Извините, я нечаянно.',RED]
-  ];
-  const F7 = `
-    ${A(0,'cap','Вежливые слова — часть разговора: они открывают его и держат добрым.')}
-    <div class="marks">${ЭТИКЕТ.map(([н,п,ц],и)=>
-      A(1+и,'m',`<b>${н}</b><i>${п}</i>`)).join('')}</div>`;
+  /* 4. Сборка диалога на рынке */
+  function F4(s){
+    const Н=300, М=Р(), n=Math.min(s.сб4||0,РЫНОК.length), мимо=s.мимо4, все=n>=РЫНОК.length;
+    const р=n>0?РЫНОК[n-1]:null;
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА('Перед спектаклем Мирто бежит на рынок за лепёшками. Разговор с торговцем <b>Главком</b> рассыпался — реплики перемешались. Собери его по порядку, как он звучал.') +
+      `<div class="pic">${свг(`
+        ${М.небо(336,180,{облака:[[70,26,0.45,6]]})}${М.город(170,{})}${плиты(170,Н)}
+        ${М.прилавок(186,Н-34,120,46)}
+        ${[0,1,2].map(k=>М.плод('хлеб',154+k*32,Н-90,13,{})).join('')}
+        ${М.торговец(290,Н-10,0.84,{влево:true})}
+        ${М.девочка(84,Н-10,0.8,{поза:р&&р.к==='М'?'ведёт':'стоит'})}
+        ${р?облачко(р.к==='Г'?220:110,16,'— '+р.т,р.к==='Г'?ЦП:ЦЛ,р.к==='Г'?290:84,Н-134,{кегль:14}):бирка(168,20,'разговор рассыпался',RED,{кегль:13})}
+        ${все?бирка(168,78,'диалог собран!',GREEN,{кегль:13}):''}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      A(3,'карт','<span class="метка">Разговор · '+n+' из 5</span><div class="текст" style="font-size:17px">'+(n?РЫНОК.slice(0,n).map(x=>'<span style="color:'+(x.к==='Г'?'#9ac8ff':'#ff9a8a')+'">— '+x.т+'</span>').join('<br>'):'Нажимай реплики внизу по порядку.')+'</div>') +
+      (все ? РАЗБОР(true,'Пять реплик: приветствие и вопрос, просьба, ответ, благодарность, прощание. Так и звучит вежливый разговор.') + `<div class="ask">${BTN(5,'','Собрать заново',"r877сбНоново()")}</div>`
+        : `<div class="ряд" style="grid-template-columns:1fr">${ПЕРЕМЕШАНО.filter(i=>i>=n).map(i=>BTN(4,мимо===i?'был':'','<span style="font-size:16px">'+(РЫНОК[i].к==='Г'?'Главк':'Мирто')+': — '+РЫНОК[i].т+'</span>','r877рынок('+i+')')).join('')}</div>` +
+          (мимо!=null ? РАЗБОР(false,'Эта реплика ещё рано. '+(n===0?'Кто начинает разговор в лавке? Продавец встречает покупателя.':'Что обычно отвечают на «'+РЫНОК[n-1].т+'»?')) : ''));
+  }
+
+  /* 5. Запись диалога на свитке */
+  function F5(s){
+    const Н=300, М=Р(), как=s.запись5===1, вид=s.видз5||{}, оба=вид[0]&&вид[1], в=s.ответ5, ок=в===0;
+    const строки = как
+      ? ['— Чья это коза?','— Моя! А что?','— Она съела мой сад!','— Прости, я её привяжу.']
+      : ['«Чья это коза?» «Моя!','А что?» «Она съела мой','сад!» «Прости, я её','привяжу.»'];
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА('После спектакля Эпихарм просит записать спор актёров на свиток. Юнга записал по-своему, а у Эпихарма — по правилам. Сравни две записи.') +
+      `<div class="pic">${свг(`
+        ${скена(Н,210,{})}
+        <g filter="url(#c877-тень)">${М.свиток(52,40,232,142)}</g>
+        ${строки.map((x,i)=>`<text x="66" y="${74+i*28}" font-size="${как?16:13}" font-weight="bold" fill="${как?(i%2?'#1a4a8a':'#8a2a1a'):'#3a2a1a'}" font-family="Georgia,serif">${esc(x)}</text>`).join('')}
+        ${как?[0,1,2,3].map(i=>`<circle cx="62" cy="${69+i*28}" r="11" fill="none" stroke="${GOLD}" stroke-width="2">${анЛин('opacity','1;.3;1','1.4s')}</circle>`).join(''):''}
+        ${бирка(168,188,как?'запись Эпихарма':'запись юнги',как?GREEN:RED,{кегль:12})}
+        ${как?М.эпихарм(300,Н-8,0.66,{поза:'читает',влево:true}):М.юнга(300,Н-8,0.64,{поза:'пишет',влево:true})}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      `<div class="ask пара">${BTN(3,!как?'hit':'','Запись юнги',"r877запись(0)")}${BTN(4,как?'hit':'','Запись Эпихарма',"r877запись(1)")}</div>` +
+      (!оба ? СКАЗ('Сравни','Посмотри обе записи.') :
+        ОТВЕТЫ('',['каждая реплика с новой строки, перед ней тире','все подряд, каждая реплика в кавычках'],0,в,5) +
+        (в==null ? СКАЗ('Вопрос','Как записывают диалог?') :
+          РАЗБОР(ок,['Верно: у Эпихарма каждая реплика с <b>новой строки</b> и начинается с <b>тире</b>. Так сразу видно, где кто говорит.',
+            'У юнги всё слиплось: не понять, где кончается одна реплика и начинается другая. Нужна новая строка и тире.'][в]))) +
+      (ок ? ПРАВИЛО('При записи диалога <b>каждую реплику</b> пишут <b>с новой строки</b> и ставят перед ней <b>тире</b>. Кавычки не нужны.') : '');
+  }
+
+  /* 6. Слова автора и прямая речь */
+  function F6(s){
+    const Н=280, М=Р(), ч=s.ч6||{}, оба=ч.а&&ч.п, в=s.ответ6, ок=в===0;
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА('Юнга рассказывает друзьям, как Мирто открыла вечер. Он передаёт её слова точь-в-точь — это <b>прямая речь</b>. А слова юнги о том, кто говорил, — <b>слова автора</b>. Нажми обе части.') +
+      `<div class="pic">${свг(`
+        ${скена(Н,190,{})}
+        <g filter="url(#c877-тень)"><rect x="14" y="54" width="308" height="64" rx="12" fill="#fffaf0" stroke="${ОБВОД}" stroke-width="1.2"/></g>
+        <text x="168" y="94" text-anchor="middle" font-size="19" font-weight="bold" font-family="Georgia,serif"><tspan fill="${ч.а?ЦЛ:ЧЕРНИЛА}">Мирто сказала</tspan><tspan fill="${ЧЕРНИЛА}">: </tspan><tspan fill="${ч.п?ЦП:ЧЕРНИЛА}">«Начинаем!»</tspan></text>
+        ${ч.а?`<path d="M34 104 H176" stroke="${ЦЛ}" stroke-width="3"/>`+бирка(96,126,'слова автора',ЦЛ,{кегль:12}):''}
+        ${ч.п?`<path d="M194 104 H306" stroke="${ЦП}" stroke-width="3"/>`+бирка(250,126,'прямая речь',ЦП,{кегль:12}):''}
+        ${оба?бирка(168,16,'схема:  А: «П»',GOLD,{кегль:16}):''}
+        ${М.юнга(60,Н-8,0.66,{поза:'машет'})}${М.девочка(276,Н-10,0.62,{поза:'машет',влево:true})}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      `<div class="ask пара">${BTN(3,ч.а?'hit':'','Мирто сказала',"r877часть('а')")}${BTN(4,ч.п?'hit':'','«Начинаем!»',"r877часть('п')")}</div>` +
+      (!оба ? СКАЗ('Найди','Какая часть сообщает, <b>кто</b> говорил, а какая передаёт его слова?') :
+        ОТВЕТЫ('пара',['двоеточие и кавычки','тире с новой строки'],0,в,6) +
+        (в==null ? СКАЗ('Вопрос','Какие знаки нужны, если слова автора стоят перед прямой речью?') :
+          РАЗБОР(ок,['Верно: после слов автора — <b>двоеточие</b>, прямая речь — в <b>кавычках</b>, с большой буквы.',
+            'Тире с новой строки — это для диалога. Для прямой речи после слов автора: двоеточие и кавычки.'][в]))) +
+      (ок ? ПРАВИЛО('<b>Прямая речь</b> — чужие слова, переданные дословно. <b>Слова автора</b> сообщают, кто говорит. Схема: <b>А: «П».</b>') : '');
+  }
+
+  /* 7. Вежливые слова: встреча зрителей */
+  function F7(s){
+    const Н=290, М=Р(), n=Math.min(s.эт7||0,ФРАЗЫ.length), отв=s.отв7, все=n>=ФРАЗЫ.length;
+    const ф=ФРАЗЫ[Math.min(n,ФРАЗЫ.length-1)];
+    const счёт=[0,1,2,3].map(j=>ФРАЗЫ.slice(0,n).filter(x=>x.в===j).length);
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА('Зрители идут в театр. Стентор встречает их вежливыми словами — это <b>речевой этикет</b>. У вежливых слов четыре дела: поприветствовать, попросить, поблагодарить, извиниться. Разложи восемь фраз по делам.') +
+      `<div class="pic">${свг(`
+        ${М.небо(336,Н,{закат:true,солнце:[290,60,14],облака:[]})}
+        ${М.театр(168,176,150,{})}
+        ${плиты(200,Н)}
+        ${М.глашатай(60,Н-10,0.8,{поза:'объявляет'})}
+        ${М.пастух(196,Н-16,0.5,{влево:true})}${М.девочка(232,Н-10,0.5,{влево:true})}${М.юнга(266,Н-14,0.5,{влево:true})}${М.торговец(304,Н-8,0.52,{влево:true})}
+        ${все?'':облачко(180,14,'— '+ф.т,GOLD,70,Н-110,{кегль:14})}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      A(3,'карт','<span class="метка">Разложено</span><div class="текст" style="font-size:16px">'+ЭТИКЕТ.map((e,j)=>e+': <b>'+счёт[j]+'</b>').join(' · ')+'</div>') +
+      (все ? РАЗБОР(true,'Все восемь фраз на местах: по две на каждое дело. Вежливые слова открывают разговор и держат его добрым.')
+        : `<div class="ряд" style="grid-template-columns:repeat(2,minmax(0,1fr))">${ЭТИКЕТ.map((e,j)=>BTN(4+j,отв&&!отв.ок&&отв.j===j?'был':'',e,'r877этикет('+j+')')).join('')}</div>` +
+          (отв ? (отв.ок ? РАЗБОР(true,'«'+ФРАЗЫ[отв.i].т+'» — '+ЭТИКЕТ[ФРАЗЫ[отв.i].в]+'.') : РАЗБОР(false,'Не то дело. Подумай: этими словами здороваются, просят, благодарят или извиняются?'))
+               : СКАЗ('Фраза '+(n+1)+' из 8','Какое дело у этой фразы?'))) +
+      (все ? ПРАВИЛО('<b>Речевой этикет</b> — вежливые слова разговора: <b>приветствие</b> (здравствуйте), <b>просьба</b> (пожалуйста, будьте добры), <b>благодарность</b> (спасибо), <b>извинение</b> (простите, извините).') : '');
+  }
 
   /* 8. Что мешает разговору */
-  const F8 = (s)=>{
-    const выбор = s.мешает;
-    const варианты=[
-      {к:'перебил', т:'— Нет, ты не прав! Дай я скажу, я знаю лучше…', ок:0,
-       разбор:'перебивать нельзя: собеседник не договорил мысль'},
-      {к:'не в тему', т:'— А я вчера видел смешного кота. Он спал в коробке!', ок:0,
-       разбор:'реплика не отвечает на вопрос — разговор ушёл в сторону'},
-      {к:'по делу', т:'— Да, я согласен. Давай проверим по учебнику.', ок:1,
-       разбор:'так и ведут разговор: ответ по теме, спокойно, с уважением'}
-    ];
-    const выбран = варианты.find(в=>в.к===выбор);
-    return `${A(0,'cap','Один из ответов мешает разговору. Найди неудачную реплику.')}
-      <div class="ask">${варианты.map((в,и)=>BTN(1+и, выбор&&выбран===в?(в.ок?'hit':'miss'):'', в.т, `r877Bad('${в.к}')`)).join('')}</div>
-      ${выбор ? A(4, 'verdict '+(выбран.ок?'ok':'no'), (выбран.ок?'Верно: ':'Не так: ')+выбран.разбор) : ''}`;
-  };
+  function F8(s){
+    const Н=290, М=Р(), к=s.меш8, в=s.ответ8, ок=в===0;
+    const выб=к==null?null:МЕШАЕТ[к];
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА('Репетиция следующей сцены. Актёр рассказывает: «Вчера я поймал огромную рыбу…» — и тут вступает хор. Какая реплика хора <b>помогает</b> разговору, а какие мешают?') +
+      `<div class="pic">${свг(`
+        ${скена(Н,190,{})}
+        ${М.актёр(70,Н-14,0.8,{маска:'комедия',цвет:ЦЛ,поза:'говорит'})}
+        ${[0,1,2].map(k=>М.актёр(206+k*44,Н-14-(k%2)*8,0.6,{маска:k===1?'трагедия':'комедия',цвет:['#3a8a4a','#8a6a2a','#6a3a8a'][k],поза:выб&&k===к?'говорит':'слушает',влево:true})).join('')}
+        ${облачко(110,14,'— Вчера я поймал рыбу…',ЦЛ,70,Н-126,{кегль:13})}
+        ${выб?облачко(230,64,МЕШАЕТ[к].т,выб.ок?GREEN:RED,206+к*44,Н-100-(к%2)*8,{кегль:13}):''}
+        ${выб?бирка(256,108,выб.ок?'помогает':'мешает!',выб.ок?GREEN:RED,{кегль:12}):''}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      `<div class="ряд" style="grid-template-columns:1fr">${МЕШАЕТ.map((x,i)=>BTN(3+i,к===i?(x.ок?'вкл':'был'):'','<span style="font-size:16px">'+x.т+'</span>','r877мешает('+i+')')).join('')}</div>` +
+      (выб ? РАЗБОР(выб.ок,выб.р) : СКАЗ('Выбери','Нажми реплики хора — посмотри, как их встретит актёр.')) +
+      (выб&&выб.ок ? ОТВЕТЫ('пара',['перебивать и отвечать не в тему','слушать и отвечать по теме'],0,в,8) +
+        (в==null ? СКАЗ('Вопрос','Что <b>мешает</b> разговору?') :
+          РАЗБОР(ок,['Верно: перебивать и уходить от темы — так разговор разваливается.','Слушать и отвечать по теме — это как раз помогает. Мешает — перебивать и уходить в сторону.'][в])) : '') +
+      (ок ? ПРАВИЛО('Хороший собеседник <b>слушает</b>, не перебивает и <b>отвечает по теме</b>. Перебивать и уходить в сторону — значит мешать разговору.') : '');
+  }
 
-  /* 9. Тренажёр */
-  const ТРЕНАЖЁР = [
-    { ф:'Учитель рассказывает новую тему, класс слушает.', о:['монолог','диалог'], в:0,
-      р:'говорит один — это монолог.' },
-    { ф:'Двое ребят обсуждают, кто победил в игре.', о:['монолог','диалог'], в:1,
-      р:'реплики идут навстречу — это диалог.' },
-    { ф:'Перед каждой репликой в записи ставят…', о:['тире','кавычки','двоеточие'], в:0,
-      р:'реплику диалога открывает тире.' },
-    { ф:'«Спасибо!» — что уместно ответить?', о:['Пожалуйста','Ага, ладно','ничего не отвечать'], в:0,
-      р:'на благодарность отвечают «пожалуйста».' }
-  ];
-
+  /* 9. Игра «Репетиция» */
   function F9(s){
-    const и = (s.тНомер||0) % ТРЕНАЖЁР.length;
-    const з = ТРЕНАЖЁР[и], отв = s.тОтвет, готово = отв != null;
-    const верно = отв === з.в;
-    const точки = Array.from({length:ТРЕНАЖЁР.length},(_,к)=>
-      `<span class="точка ${к<и?'пройдено':(к===и?'сейчас':'')}"></span>`).join('');
-    return `${A(0,'уровни',точки)}
-      ${A(1,'cap','Уровень '+(и+1)+' из '+ТРЕНАЖЁР.length)}
-      ${A(2,'карт вопрос','<span class="метка">Вопрос</span><div class="текст">'+з.ф+'</div>')}
-      <div class="ask">${з.о.map((о,к)=>BTN(3+к, готово&&к===з.в?'hit':(готово&&к===отв?'miss':''), о, `r877Train(${к})`)).join('')}</div>
-      ${готово
-        ? A(8,'карт '+(верно?'верно':'ошибка'),
-            '<span class="метка">'+(верно?'Верно':'Разбор ошибки')+'</span><div class="текст">'+
-            (верно?'✅ ':'❌ ')+з.р+'</div>')
-        : A(8,'карт','<span class="метка">Ответ</span><div class="текст">Выбери один из вариантов выше.</div>')}
-      <p class="score">верно: ${s.тВерно||0} · ошибок: ${s.тОшибки||0} · всего: ${ТРЕНАЖЁР.length}</p>
-      ${готово ? `<div class="ask">${BTN(9,'','следующий уровень','r877Next()')}</div>` : ''}`;
+    const Н=300, М=Р(), р9=s.реп9||{}, n=Math.min(р9.n||0,РЕПЕТИЦИЯ.length), ош=Math.min(р9.ош||0,3), отв=s.отв9, все=n>=РЕПЕТИЦИЯ.length, закрыт=ош>=3&&!все;
+    const з=РЕПЕТИЦИЯ[Math.min(n,РЕПЕТИЦИЯ.length-1)];
+    const занавес=закрыт?1:0;
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА(закрыт ? 'Три ошибки — Эпихарм опустил занавес: «Стоп! Путаница. Начинаем репетицию сначала».'
+        : 'Генеральная репетиция! Эпихарм называет сцену, а ты скажи, что в ней: <b>монолог</b>, <b>диалог</b> или <b>письменная речь</b>. Три ошибки — занавес опустится.') +
+      `<div class="pic">${свг(`
+        ${скена(Н,200,{зрители:true})}
+        ${все?М.актёр(110,Н-38,0.72,{маска:'комедия',цвет:ЦЛ,поза:'кланяется'})+М.актёр(226,Н-38,0.72,{маска:'трагедия',цвет:ЦП,поза:'кланяется',влево:true}):М.эпихарм(168,Н-38,0.8,{поза:отв&&!отв.ок?'стоит':'читает'})}
+        ${все?бирка(168,20,'репетиция удалась!',GREEN,{кегль:15}):закрыт?'':облачко(168,16,з.т.length>28?[з.т.slice(0,з.т.lastIndexOf(' ',28)),з.т.slice(з.т.lastIndexOf(' ',28)+1)]:з.т,GOLD,168,Н-150,{кегль:14})}
+        ${закрыт?`<rect x="0" y="0" width="336" height="${Н-30}" fill="#8a1a1a"/>${Array.from({length:12},(_,k)=>`<path d="M${k*28+14} 0 V${Н-30}" stroke="#5a0a0a" stroke-width="6" opacity=".5"/>`).join('')}<path d="M0 ${Н-30} Q84 ${Н-14} 168 ${Н-30} Q252 ${Н-14} 336 ${Н-30}" fill="#8a1a1a"/>${т(168,120,'занавес',26,'#ffd76a',true,'middle','#3a0a0a')}`:''}
+        ${все||закрыт?'':подпись(70,Н-12,'сцена '+(n+1)+' из 10',GOLD,11)}
+        ${все||закрыт?'':[0,1,2].map(i=>`<g transform="translate(${258+i*24} ${Н-24})">${М.маска(0,0,0.42,'комедия',i<3-ош?'#ffd76a':'#6a5a4a',{})}</g>`).join('')}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      (все ? РАЗБОР(true,'Все десять сцен угаданы. Один говорит — монолог; двое и больше отвечают друг другу — диалог; пишут и читают — письменная речь.')
+        : закрыт ? РАЗБОР(false,'Подсказка: «'+з.т+'» — это '+ВИД[з.в]+'.') + `<div class="ask">${BTN(4,'','Поднять занавес заново',"r877заново()")}</div>`
+        : `<div class="ряд" style="grid-template-columns:repeat(3,minmax(0,1fr))">${ВИД.map((v,j)=>BTN(4+j,отв&&!отв.ок&&отв.j===j?'был':'','<span style="font-size:15px">'+v+'</span>','r877реп('+j+')')).join('')}</div>` +
+          (отв ? (отв.ок ? РАЗБОР(true,'«'+РЕПЕТИЦИЯ[отв.i].т+'» — '+ВИД[РЕПЕТИЦИЯ[отв.i].в]+'.') : РАЗБОР(false,'Не так. Сколько человек говорит? Звучит речь или её пишут?'))
+               : СКАЗ('Подсказка','Сначала спроси: речь звучит или записана? Если звучит — сколько человек говорит?'))) +
+      (все ? ПРАВИЛО('Сначала реши: речь <b>звучит</b> или <b>записана</b>. Если звучит — сколько говорящих: <b>один</b> — монолог, <b>двое и больше</b> — диалог.') : '');
   }
 
-  /* ---------- вопрос-проверка в кадре ---------- */
-  const ВОПРОСЫ = {
-    1: ['Где устная речь?', [
-      {к:'a', т:'в разговоре по телефону', ок:1, fb:'верно: говорим и слышим'},
-      {к:'b', т:'в записке на столе', ок:0, fb:'записку читают — это письменная речь'}]],
+  /* 10. Премьера */
+  function F10(s){
+    const всё = ДЕЛА.every(д=>сделано(s,д.ключ)), Н=330, М=Р();
+    return ЖУРНАЛ(s) +
+      ЗАДАЧА(всё
+        ? 'Премьера! Театр полон. Эпихарм прочёл пролог, актёры сыграли спор о козе, зрители смеются и хлопают. Стентор уже кричит на агоре: «Завтра — снова!» Речь звучит, речь записана — и всё это язык.'
+        : 'До премьеры ещё есть дела — вернись к списку. Вот что будет в конце.') +
+      `<div class="pic">${свг(`
+        ${скена(Н,200,{вечер:true,зрители:true})}
+        ${М.актёр(76,Н-40,0.7,{маска:'трагедия',цвет:ЦЛ,поза:'кланяется'})}${М.эпихарм(168,Н-40,0.74,{поза:'смеётся'})}${М.актёр(260,Н-40,0.7,{маска:'комедия',цвет:ЦП,поза:'кланяется',влево:true})}
+        ${ДВИЖ?[0,1,2,3,4,5].map(k=>`<circle cx="${30+k*55}" cy="60" r="3" fill="${['#ffd76a','#ff9ab0','#9ac8ff'][k%3]}"><animate attributeName="cy" values="${40+k*4};${Н-60};${40+k*4}" dur="${(2.4+k*0.3).toFixed(1)}s" repeatCount="indefinite"/></circle>`).join(''):''}
+        ${[['устная — звучит, письменная — записана',GOLD],['монолог — говорит один','#ffb0a0'],['диалог — реплики навстречу','#9ac8ff'],['вежливость держит разговор','#8fe0b0']].map(([t0,ц],i)=>`<g opacity="${ДВИЖ?0:1}">${ДВИЖ?`<animate attributeName="opacity" from="0" to="1" begin="${(0.4+i*0.45).toFixed(1)}s" dur="0.6s" fill="freeze"/>`:''}${подпись(168,30+i*23,t0,ц,11)}</g>`).join('')}
+        ${рамка(Н)}
+      `,Н)}</div>` +
+      СКАЗ('Итог','Речь бывает <b>устной</b> (говорим, слушаем) и <b>письменной</b> (пишем, читаем). <b>Монолог</b> — речь одного, <b>диалог</b> — разговор двух и больше; слова каждого — реплика. На письме реплики диалога пишут с новой строки и с тире. <b>Прямая речь</b>: А: «П». Разговор держат вежливые слова и умение слушать.') +
+      ПРАВИЛО('<b>Один говорит — монолог. Двое отвечают друг другу — диалог.</b>');
+  }
 
-    2: ['Монолог — это…', [
-      {к:'a', т:'речь одного человека на одну тему', ок:1, fb:'верно'},
-      {к:'b', т:'разговор двух собеседников', ок:0, fb:'это диалог'}]],
+  /* ================= ПРАКТИКА ================= */
+  const УРОВНИ = [
+    { вопрос:'Письмо бабушке — это…', варианты:[{т:'устная речь',ок:false},{т:'письменная речь',ок:true}], разбор:'Письмо пишут и читают.' },
+    { вопрос:'Учитель рассказывает новую тему. Это…', варианты:[{т:'монолог',ок:true},{т:'диалог',ок:false}], разбор:'Говорит один человек.' },
+    { вопрос:'Перед репликой диалога ставят…', варианты:[{т:'кавычки',ок:false},{т:'тире',ок:true}], разбор:'Каждая реплика — с новой строки и с тире.' },
+    { вопрос:'Мама сказала: «Садись». Где слова автора?', варианты:[{т:'Мама сказала',ок:true},{т:'Садись',ок:false}], разбор:'Слова автора сообщают, кто говорит.' },
+    { вопрос:'«Извините за опоздание» — это…', варианты:[{т:'просьба',ок:false},{т:'извинение',ок:true}], разбор:'Извиниться — одно из дел вежливых слов.' }
+  ];
+  function F11(s){
+    const пройдено = s.практика||0;
+    const уровень = Math.min(пройдено, УРОВНИ.length-1);
+    const всё = пройдено>=УРОВНИ.length;
+    const выбран = s.практикаУровень===уровень ? s.практикаВыбор : null;
+    const у = УРОВНИ[уровень];
+    if(всё){
+      return ТОЧКИ(УРОВНИ.length,-1,УРОВНИ.length) +
+        A(2,'карт верно','<span class="метка">Пять из пяти</span><div class="текст">✅ Все пять уровней пройдены. Дальше — три тренажёра в театре.</div>') +
+        `<div class="ask">${BTN(3,'','Пройти заново',"r877Reset()")}</div>` +
+        ПРАВИЛО('<b>Один говорит — монолог. Двое отвечают друг другу — диалог.</b>');
+    }
+    return ТОЧКИ(УРОВНИ.length,уровень,пройдено) +
+      ЗАДАЧА('Уровень '+(уровень+1)+' из '+УРОВНИ.length+'. '+у.вопрос) +
+      `<div class="ask пара">` +
+      у.варианты.map((в,к)=>BTN(3+к, выбран===к ? (в.ок?'hit':'miss') : '', в.т, "r877Pick("+уровень+","+к+")")).join('') +
+      `</div>` +
+      (выбран!=null ? РАЗБОР(у.варианты[выбран].ок, у.разбор) : СКАЗ('Ответ','Выбери вариант выше.'));
+  }
 
-    3: ['Чем диалог отличается от монолога?', [
-      {к:'a', т:'реплики идут навстречу: вопрос — ответ', ок:1, fb:'верно'},
-      {к:'b', т:'в нём больше слов', ок:0, fb:'дело не в длине, а в числе говорящих'}]],
-
-    5: ['Как записывают реплики диалога?', [
-      {к:'a', т:'каждую с новой строки, перед ней тире', ок:1, fb:'верно'},
-      {к:'b', т:'все подряд, в кавычках', ок:0, fb:'в кавычках пишут прямую речь, а не диалог'}]],
-
-    6: ['«Мама сказала: „Помой руки“». Где слова автора?', [
-      {к:'a', т:'«Мама сказала»', ок:1, fb:'верно: это слова автора'},
-      {к:'b', т:'«Помой руки»', ок:0, fb:'это чужая речь, она в кавычках'}]],
-
-    7: ['Какая реплика вежливая?', [
-      {к:'a', т:'Будьте добры, передайте, пожалуйста.', ок:1, fb:'верно'},
-      {к:'b', т:'Эй, дай быстро!', ок:0, fb:'так говорить нельзя: нет ни просьбы, ни вежливости'}]],
-
-    8: ['Что мешает разговору?', [
-      {к:'a', т:'перебивать и отвечать не в тему', ок:1, fb:'верно'},
-      {к:'b', т:'слушать собеседника', ок:0, fb:'наоборот, это помогает разговору'}]]
+  /* ================= ТРЕНАЖЁРЫ НОВОГО ВИДА ================= */
+  const КРУГ = 8;
+  const строки2 = (t0,n) => t0.length<=n ? [t0] : [t0.slice(0,t0.lastIndexOf(' ',n)), t0.slice(t0.lastIndexOf(' ',n)+1)];
+  const Т = {
+    т1:{ имя:'Монолог или диалог', пул:П1, класс:'пара',
+      сцена:(з,ст)=>{ const М=Р(), Н=190, отв=ст.ответ!=null;
+        return свг(`${скена(Н,120,{})}${облачко(168,12,строки2(з.ф,30),GOLD,null,null,{кегль:14})}
+        ${отв&&з.в===1?М.актёр(110,Н-4,0.5,{маска:'трагедия',цвет:ЦЛ,поза:'говорит'})+М.актёр(226,Н-4,0.5,{маска:'комедия',цвет:ЦП,поза:'слушает',влево:true})
+          :отв?М.эпихарм(168,Н-4,0.56,{поза:'читает'}):М.эпихарм(168,Н-4,0.56,{})}
+        ${ст.серия>=3?подпись(60,Н-12,'серия: '+ст.серия,GREEN,11):''}${рамка(Н)}`,Н); } },
+    т2:{ имя:'Устная или письменная', пул:П2, класс:'пара',
+      сцена:(з,ст)=>{ const М=Р(), Н=190, отв=ст.ответ!=null;
+        return свг(`${агора(Н,140)}${бирка(168,20,з.ф,GOLD,{кегль:15})}
+        ${отв&&з.в===0?М.глашатай(90,Н-8,0.56,{поза:'кричит'}):М.глашатай(90,Н-8,0.56,{})}
+        ${доскаОбъявлений(200,70,110,40,['АБВГД'],отв&&з.в===1)}
+        ${ст.серия>=3?подпись(270,Н-12,'серия: '+ст.серия,GREEN,11):''}${рамка(Н)}`,Н); } },
+    т3:{ имя:'Уместная реплика', пул:П3, класс:'',
+      сцена:(з,ст)=>{ const М=Р(), Н=190, отв=ст.ответ!=null;
+        return свг(`${скена(Н,130,{})}${облачко(168,14,строки2(з.ф,30),ЦП,null,null,{кегль:14})}
+        ${М.девочка(70,Н-6,0.6,{поза:отв&&ст.ответ===з.в?'машет':'стоит'})}${М.глашатай(266,Н-6,0.6,{влево:true})}
+        ${ст.серия>=3?подпись(168,Н-12,'серия: '+ст.серия,GREEN,11):''}${рамка(Н)}`,Н); } }
   };
-
-  /* Карточка вопроса: показывается первой, до рисунка и вариантов.
-     Варианты ответа у каждого кадра свои — здесь только вопрос. */
-  function pred(f, st){
-    const в = ВОПРОСЫ[f]; if(!в) return '';
-    return A(0,'карт вопрос','<span class="метка">Вопрос</span><div class="текст">'+в[0]+'</div>');
+  const сост = (s,ключ) => Object.assign({круг:0,шаг:0,верно:0,ош:0,серия:0,лучшая:0,ответ:null}, s[ключ]||{});
+  const задание = (ключ,ст) => { const пул=Т[ключ].пул; return пул[(ст.круг*КРУГ+ст.шаг)%пул.length]; };
+  function тренажёр(s,ключ,номер){
+    const т0=Т[ключ], ст=сост(s,ключ);
+    if(ст.шаг>=КРУГ){
+      const звёзд = ст.ош===0?3:ст.ош<=2?2:1;
+      return ТОЧКИ(КРУГ,-1,КРУГ) +
+        A(2,'карт верно','<span class="метка">Круг '+(ст.круг+1)+' пройден</span><div class="текст"><span style="font-size:30px;letter-spacing:4px">'+'★'.repeat(звёзд)+'<span style="opacity:.25">'+'★'.repeat(3-звёзд)+'</span></span><br>Верно с первого раза: <b>'+ст.верно+' из '+КРУГ+'</b>. Лучшая серия: <b>'+ст.лучшая+'</b>.</div>') +
+        СКАЗ('Дальше',звёзд===3?'Три звезды! В новом круге — другие сцены.':'В новом круге сцены другие. Попробуй взять все три звезды.') +
+        `<div class="ask">${BTN(3,'','Новый круг →',"r877Круг('"+ключ+"')")}</div>`;
+    }
+    const з=задание(ключ,ст);
+    return ТОЧКИ(КРУГ,ст.шаг,ст.шаг) +
+      A(1,'score','Тренажёр '+номер+' · '+т0.имя+' · круг '+(ст.круг+1)+' · верно '+ст.верно+' · серия '+ст.серия) +
+      `<div class="pic">${т0.сцена(з,ст)}</div>` +
+      ЗАДАЧА(з.q) +
+      `<div class="ask ${т0.класс}">` +
+      з.вар.map((в,к)=>BTN(3+к,
+        ст.ответ===к ? (к===з.в?'hit':'miss') : (ст.ответ!=null&&к===з.в?'hit':''),
+        '<span style="font-size:16px;font-family:Georgia,serif">'+в+'</span>', "r877T('"+ключ+"',"+к+")")).join('') +
+      `</div>` +
+      (ст.ответ!=null
+        ? РАЗБОР(ст.ответ===з.в, з.раз) + `<div class="ask">${BTN(10,'',ст.шаг+1>=КРУГ?'Итог круга →':'Дальше →',"r877TNext('"+ключ+"')")}</div>`
+        : СКАЗ('Ответ','Выбери вариант.'));
   }
 
-  /* ---------- запись урока ---------- */
+  /* ================= СБОРКА ================= */
   const L877 = {
     id: ID, title:'Язык и речь: монолог и диалог', ico:'💬',
     src:'Русский язык · 5 класс · Речь и общение', subj:'rus',
     explain: [
-      'Речь бывает устная и письменная. Устная — та, что мы произносим и слышим: разговор, ответ у доски, звонок другу. Письменная — та, что мы пишем и читаем: записка, письмо, сообщение в чате. Слова одни и те же, но в устной речи работают звуки и голос, а в письменной — буквы и знаки препинания. Посмотри на кадр: слева говорят, справа пишут.',
-
-      'Монолог — это речь одного человека на одну тему. Его признаки: говорит один; тема одна и держится до конца; есть начало, середина и конец. Монолог бывает в рассказе, в докладе, в ответе у доски. Частая ошибка — назвать монологом любую длинную фразу: дело не в длине, а в том, что говорит один. Как проверить себя: посчитай говорящих — если один, перед тобой монолог.',
-
-      'Диалог — разговор двух или нескольких человек. Реплики идут навстречу: вопрос — ответ, ответ — новый вопрос. Каждая реплика короткая и отвечает собеседнику. Признаки диалога: говорящих двое или больше; реплики идут по очереди; есть обращение друг к другу. Частая ошибка — считать диалогом две реплики, которые не связаны по смыслу. Как проверить себя: спроси, отвечает ли вторая реплика на первую.',
-
-      'Собери диалог сам. В разговоре у буфета пять реплик, но они перемешаны. Нажимай их по порядку: сначала приветствие продавца, потом просьба покупателя, потом вопрос о деньгах, ответ продавца и благодарность. Если нажать не ту реплику, разговор рассыпается — на кадре сразу видно, что порядок нарушен. Частая ошибка — начинать разговор со своей просьбы, не поздоровавшись. Как проверить себя: прочитай собранный диалог вслух — он должен звучать как настоящий разговор.',
-
-      'На письме диалог записывают по правилам. Каждая реплика — с новой строки. Перед каждой репликой ставят тире. Кавычки не нужны: это не прямая речь, а разговор. Вот так: тире, реплика, новая строка, снова тире. Частая ошибка — писать все реплики подряд в одну строку или ставить кавычки. Как проверить себя: каждая новая строка должна начинаться с тире.',
-
-      'Слова автора и чужая речь — это другое. «Мама сказала: „Помой руки“». Здесь «Мама сказала» — слова автора: они сообщают, кто говорит. Дальше после двоеточия идёт чужая речь дословно, и её берут в кавычки. Разница с диалогом простая: в диалоге пишут тире и новую строку, а прямую речь берут в кавычки и присоединяют двоеточием. Частая ошибка — путать тире и кавычки в одной записи.',
-
-      'Разговор держится на вежливых словах. Приветствие открывает разговор: здравствуйте, доброе утро. Просьба звучит мягко: будьте добры, пожалуйста. Благодарность отвечает на помощь: спасибо. Извинение исправляет неловкость: извините, я нечаянно. Вежливые слова — не украшение, а рабочие детали речи: с ними разговор идёт легче. Частая ошибка — думать, что вежливость нужна только со взрослыми.',
-
-      'Что мешает разговору. Перебивать: собеседник не договорил мысль, а его уже перебили. Отвечать не в тему: разговор уходит в сторону и теряет смысл. Говорить непонятно и слишком быстро. А помогает разговору простое: выслушать до конца, ответить по делу, сказать спокойно. Сравни три реплики на кадре и найди ту, что разрушает разговор.',
-
-      'Проверим себя. Сначала смотрим, сколько человек говорит: один — монолог, двое и больше — диалог. Потом смотрим, как записано: реплики с новой строки и с тире — диалог; кавычки после двоеточия — прямая речь. И наконец вежливость: есть ли приветствие, просьба, благодарность. Дальше — короткий тренажёр со счётом.'
+      'Устная и письменная речь: сказать или записать.',
+      'Монолог: Эпихарм один читает пролог.',
+      'Диалог: реплики идут навстречу.',
+      'Собери диалог на рынке.',
+      'Как записать диалог: новая строка и тире.',
+      'Слова автора и прямая речь: А: «П».',
+      'Речевой этикет: встречаем зрителей.',
+      'Что мешает разговору.',
+      'Репетиция: десять сцен, три ошибки — занавес.',
+      'Премьера: итог урока.',
+      'Практика: пять уровней подряд.',
+      'Тренажёр 1: монолог или диалог.',
+      'Тренажёр 2: устная или письменная.',
+      'Тренажёр 3: уместная реплика.'
     ],
     check: {
       q:'Чем диалог отличается от монолога?',
@@ -349,81 +695,61 @@
     ]
   };
 
-  /* ---------- рисовальщик ---------- */
   function render(el){
+    if(!window.РМ || !window.РМ.эпихарм){ el.innerHTML=''; return; }
     css();
     const s = S();
     const step = Math.max(0, Math.min(L877.explain.length-1, (typeof LV!=='undefined'&&LV.step)||0));
     const f = step+1;
-    /* интерактивные кадры */
-    let сцена='', низ='';
-    if(f===1) сцена = F1;
-    else if(f===2) сцена = F2;
-    else if(f===3) сцена = F3;
-    else if(f===4) сцена = F4(s);
-    else if(f===5) сцена = F5;
-    else if(f===6) сцена = F6;
-    else if(f===7) сцена = F7;
-    else if(f===8) сцена = F8(s);
-    else сцена = F9(s);
-
-    /* заголовки кадров: у каждого свой, а не один шаблон на все */
-    const ЗАГОЛОВКИ = {
-      1:['Речь','Устная и письменная речь'],
-      2:['Монолог','Говорит один'],
-      3:['Диалог','Реплики идут навстречу'],
-      4:['Сборка','Собери разговор в буфете'],
-      5:['Запись','Как диалог выглядит на письме'],
-      6:['Прямая речь','Слова автора и чужая речь'],
-      7:['Этикет','Вежливые слова разговора'],
-      8:['Помехи','Что мешает разговору'],
-      9:['Практика','Тренажёр: монолог или диалог']
-    };
-    const [кикер, заголовок] = ЗАГОЛОВКИ[f] || ['Речь','Язык и речь'];
-
-    el.innerHTML = `<div class="s6 l877" data-frame="${f}">
-        <h2>${заголовок}</h2>
-        ${pred(f, s)}
-        ${сцена}
-      </div>`;
+    const Ф=[F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11];
+    const сцена = f<=11 ? Ф[f-1](s) : тренажёр(s,'т'+(f-11),f-11);
+    const ЗАГОЛОВКИ={1:'Сказать или записать',2:'Пролог Эпихарма',3:'Спор о козе',4:'На рынке у Главка',5:'Два свитка',
+      6:'Слова автора',7:'Встречаем зрителей',8:'Хор перебивает',9:'Репетиция',10:'Премьера',11:'Практика',
+      12:'Тренажёр 1',13:'Тренажёр 2',14:'Тренажёр 3'};
+    el.innerHTML = `<div class="s6 l877n" data-frame="${f}"><h2>${ЗАГОЛОВКИ[f]||'Язык и речь'}</h2>${сцена}</div>`;
   }
 
-  /* ---------- действия ---------- */
-  window.r877Ask = (f,k) => { S()['в'+f]=k; chRender(0); };
-  window.r877Reply = (и) => {
-    const s=S();
-    const ожидаемая = ПОРЯДОК[s.сборка||0];
-    if(и === ожидаемая){ s.сборка=(s.сборка||0)+1; s.мимо=null; }
-    else { s.мимо=и; }
-    chRender(0);
-  };
-  window.r877Reset = () => { const s=S(); s.сборка=0; s.мимо=null; chRender(0); };
-  window.r877Bad = (к) => { S().мешает=к; chRender(0); };
-  window.r877Train = (к) => {
-    const s=S();
-    if(s.тОтвет != null) return;                 /* ответ уже дан */
-    const и=(s.тНомер||0)%ТРЕНАЖЁР.length;
-    s.тОтвет=к;
-    if(к===ТРЕНАЖЁР[и].в) s.тВерно=(s.тВерно||0)+1; else s.тОшибки=(s.тОшибки||0)+1;
-    chRender(0);
-  };
-  window.r877Next = () => {
-    const s=S();
-    s.тНомер=((s.тНомер||0)+1)%ТРЕНАЖЁР.length;
-    s.тОтвет=null;
-    chRender(0);
-  };
+  /* ================= ОБРАБОТЧИКИ ================= */
+  window.r877Отв=(f,к)=>{ const s=S(); s['ответ'+f]=к; chRender(0); };
+  window.r877реж=(р)=>{ const s=S(); s.реж1=р; const в=Object.assign({},s.вид1||{}); в[р]=true; s.вид1=в; chRender(0); };
+  window.r877пролог=()=>{ const s=S(); s.пр2=Math.min(3,(s.пр2||0)+1); chRender(0); };
+  window.r877спор=()=>{ const s=S(); s.сп3=Math.min(СПОР.length,(s.сп3||0)+1); chRender(0); };
+  window.r877рынок=(i)=>{ const s=S(); const n=s.сб4||0; if(n>=РЫНОК.length) return;
+    if(i===n){ s.сб4=n+1; s.мимо4=null; if(n+1>=РЫНОК.length) s.дело_сборка=true; } else s.мимо4=i;
+    chRender(0); };
+  window.r877сбНоново=()=>{ const s=S(); s.сб4=0; s.мимо4=null; chRender(0); };
+  window.r877запись=(к)=>{ const s=S(); s.запись5=к; const в=Object.assign({},s.видз5||{}); в[к]=true; s.видз5=в; chRender(0); };
+  window.r877часть=(ч)=>{ const s=S(); const в=Object.assign({},s.ч6||{}); в[ч]=true; s.ч6=в; chRender(0); };
+  window.r877этикет=(j)=>{ const s=S(); const n=s.эт7||0; if(n>=ФРАЗЫ.length) return;
+    if(ФРАЗЫ[n].в===j){ s.эт7=n+1; s.отв7={i:n,ок:true}; if(n+1>=ФРАЗЫ.length) s.дело_этикет=true; } else s.отв7={i:n,ок:false,j:j};
+    chRender(0); };
+  window.r877мешает=(i)=>{ const s=S(); s.меш8=i; chRender(0); };
+  window.r877реп=(j)=>{ const s=S(); const р=Object.assign({n:0,ош:0},s.реп9||{}); if(р.n>=РЕПЕТИЦИЯ.length||р.ош>=3) return;
+    if(РЕПЕТИЦИЯ[р.n].в===j){ s.отв9={i:р.n,ок:true}; р.n++; if(р.n>=РЕПЕТИЦИЯ.length) s.дело_репетиция=true; }
+    else { р.ош++; s.отв9={i:р.n,ок:false,j:j}; }
+    s.реп9=р; chRender(0); };
+  window.r877заново=()=>{ const s=S(); s.реп9={n:0,ош:0}; s.отв9=null; chRender(0); };
+  window.r877Pick=(уровень,вариант)=>{ const s=S(); s.практикаУровень=уровень; s.практикаВыбор=вариант;
+    if(УРОВНИ[уровень].варианты[вариант].ок) s.практика=уровень+1; chRender(0); };
+  window.r877Reset=()=>{ const s=S(); s.практика=0; s.практикаВыбор=null; s.практикаУровень=null; chRender(0); };
+  window.r877T=(ключ,вариант)=>{ const s=S(); const ст=сост(s,ключ); if(ст.ответ!=null||ст.шаг>=КРУГ) return;
+    const з=задание(ключ,ст); ст.ответ=вариант;
+    if(вариант===з.в){ ст.верно++; ст.серия++; ст.лучшая=Math.max(ст.лучшая,ст.серия); } else { ст.ош++; ст.серия=0; }
+    s[ключ]=ст; chRender(0); };
+  window.r877TNext=(ключ)=>{ const s=S(); const ст=сост(s,ключ); if(ст.ответ==null) return; ст.шаг++; ст.ответ=null; s[ключ]=ст; chRender(0); };
+  window.r877Круг=(ключ)=>{ const s=S(); const ст=сост(s,ключ); s[ключ]={круг:ст.круг+1,шаг:0,верно:0,ош:0,серия:0,лучшая:0,ответ:null}; chRender(0); };
 
-  /* ---------- регистрация ---------- */
-  if(window.WAVE_B){
-    const прежний = window.WAVE_B[ID];
-    window.WAVE_B[ID] = function(el){ try{ render(el); }catch(e){ try{ прежний(el); }catch(e2){} } };
+  function зарегистрировать(){
+    try{
+      if(!window.VISKW) window.VISKW={};
+      window.VISKW[ID]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
+      if(window.WAVE_B) window.WAVE_B[ID]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
+      const arr=window.ARH_LESSONS;
+      if(arr && arr.length){ const м=arr.findIndex(L=>L && L.id===ID); if(м>=0) arr[м]=Object.assign(L877,{__планПорядок:arr[м].__планПорядок}); else arr.push(L877); }
+    }catch(e){}
   }
-  (function(){
-    const arr = window.ARH_LESSONS;
-    if(!arr || !arr.length) return;
-    const место = arr.findIndex(L=>L && L.id===ID);
-    if(место >= 0) arr[место]=L877; else arr.push(L877);
-  })();
-  window.RU877 = {render:render, L:L877};
+  зарегистрировать();
+  document.addEventListener('DOMContentLoaded', зарегистрировать);
+  window.addEventListener('load', зарегистрировать);
+  window.RU877={render:render, L:L877};
 })();
