@@ -412,12 +412,15 @@
     NH3:[['N',0,-2,0],['H',-18,8,2],['H',18,8,2],['H',0,14,10]],
     NaCl:[['Na',-14,0,0],['Cl',14,0,0]],
     MgO:[['Mg',-14,0,0],['O',13,0,0]],
-    Mg:[['Mg',0,0,0]]
+    Mg:[['Mg',0,0,0]],
+    C:[['C',0,0,0]],
+    S:[['S',0,0,0]],
+    SO2:[['S',0,0,0],['O',-20,10,2],['O',20,10,2]]
   };
   function молекула(x,y,м,вид,опц){
     const о=опц||{}, ат=(МОЛ[вид]||[]).slice().sort((a,b)=>a[3]-b[3]), ц=МОЛ[вид]?МОЛ[вид][0]:null;
     let s=`<g transform="translate(${f(x)} ${f(y)}) scale(${м})">`;
-    if(вид!=='NaCl'&&вид!=='MgO'&&вид!=='Mg'&&ц){ const [e0,x0,y0]=МОЛ[вид][0];
+    if(вид!=='NaCl'&&вид!=='MgO'&&вид!=='Mg'&&вид!=='C'&&вид!=='S'&&ц){ const [e0,x0,y0]=МОЛ[вид][0];
       МОЛ[вид].slice(1).forEach(([e,xx,yy])=>{ s+=`<path d="M${x0} ${y0} L${xx} ${yy}" stroke="#9aa0a6" stroke-width="4.4" stroke-linecap="round"/><path d="M${x0} ${y0} L${xx} ${yy}" stroke="#e8ecef" stroke-width="1.4" stroke-linecap="round" opacity=".8"/>`; });
       if(вид==='O2'||вид==='CO2'||вид==='N2'){ s+=МОЛ[вид].slice(1).map(([e,xx,yy])=>`<path d="M${x0} ${y0-3.4} L${xx} ${yy-3.4}" stroke="#9aa0a6" stroke-width="2.6"/>`).join(''); if(вид==='O2') s+=`<path d="M-11 -3.4 L11 -3.4" stroke="#9aa0a6" stroke-width="2.6"/>`; } }
     ат.forEach(([e,xx,yy,zz])=>{ const [c1,c2,r]=АТОМ[e], кл=ид('ат'), rr=r*(1+zz*0.012);
@@ -510,6 +513,14 @@
       : что==='стакан'?стакан(32,54,34,38,{уровень:.5,деления:false})
       : что==='пипетка'?пипетка(32,62,0.75,true)
       : что==='лодочка'?лодочка(32,44,40,{горка:0})
+      : что==='газосборник'?газосборник(32,58,24,46,{})
+      : что==='лучинка'?лучинка(14,40,-20,'тлеет')
+      : что==='ложечка'?ложечка(32,58,'уголь',false)
+      : что==='свеча'?свеча(32,58,0.8,true)
+      : что==='пластинка'?`<rect x='10' y='34' width='44' height='4' rx='1' fill='#dcebf5' fill-opacity='.6' stroke='#a8bccb'/>`
+      : что==='вата'?`<path d='M18 40 q-6 -6 2 -12 q4 -8 12 -2 q8 -4 12 4 q6 4 0 10 q-4 6 -12 2 q-8 4 -14 -2 Z' fill='#f4f4f0'/>`
+      : что==='kmno4'?банка(32,56,30,42,{стекло:'янтарь',надпись:['KMnO₄'],мал:true})
+      : что==='пробиркаП'?пробиркаKMnO4(4,32,8,{})
       : что==='насос'?насос(30,60,0.66)
       : что==='шарКолба'?шарКолба(32,62,0.5,{})
       : что==='анВесы'?анВесы(32,58,50,{показ:'0.000'})
@@ -752,5 +763,80 @@
       <text x="${f(x)}" y="${f(y+r*0.45)}" text-anchor="middle" font-size="${f(r*0.28)}" font-weight="bold" fill="#222" font-family="${ШРИФТ}">${esc(значение)}</text>
       <text x="${f(x)}" y="${f(y+r+r*0.55)}" text-anchor="middle" font-size="${f(r*0.3)}" fill="#c8ced6" font-family="${ШРИФТ}">${esc(подпись)}</text></g>`;
   }
-  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок, палочка, склянка, мениск, глаз, диаграмма, выпаривание, пробирка, щипцы, АТОМ, МОЛ, шарКолба, анВесы, анВерх, баллон, насос, кристаллизатор, цилиндрВверхДном, штатив, трубка, пузыри, куб, мячБ, циферблат};
+
+  /* ================= ГОРЕНИЕ (урок 52) ================= */
+  /* ---------- газосборник (цилиндрическая склянка) с пластинкой: опц.газ ('O2'|'воздух'|'CO2'), опц.вода (доля воды внутри), опц.пластинка, опц.внутри ---------- */
+  function газосборник(x,y,ш,в,опц){
+    const о=опц||{}, кл=ид('гсб'), л=x-ш/2, вода=о.вода||0, цг=о.газ==='O2'?'#9fd0ff':о.газ==='CO2'?'#c8c8c8':null;
+    return `<g>${о.безТени?'':тень(x,y,ш,.4)}
+      <clipPath id="${кл}"><rect x="${f(л+2)}" y="${f(y-в+2)}" width="${f(ш-4)}" height="${f(в-4)}" rx="3"/></clipPath>
+      <g clip-path="url(#${кл})">
+        ${цг?`<rect x="${f(л)}" y="${f(y-в)}" width="${f(ш)}" height="${f(в)}" fill="${цг}" opacity=".12"/>`:''}
+        ${вода>0?`<rect x="${f(л)}" y="${f(y-в*вода)}" width="${f(ш)}" height="${f(в*вода)}" fill="${цвет('вода')}"/><rect x="${f(л)}" y="${f(y-в*вода)}" width="${f(ш)}" height="${f(в*вода)}" fill="#6ab0d8" opacity=".22"/><rect x="${f(л)}" y="${f(y-в*вода)}" width="${f(ш)}" height="${f(в*вода)}" fill="url(#рл-жидкость)"/>${вода<1?`<path d="M${f(л)} ${f(y-в*вода)} H${f(л+ш)}" stroke="#bfe6fa" stroke-width="1.4"/>`:''}`:''}
+        ${о.внутри||''}
+      </g>
+      <rect x="${f(л)}" y="${f(y-в)}" width="${f(ш)}" height="${f(в)}" rx="4" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".6" stroke-width="1"/>
+      <rect x="${f(л+3)}" y="${f(y-в+6)}" width="2.4" height="${f(в-12)}" rx="1" fill="#fff" opacity=".65"/>
+      ${о.пластинка?`<rect x="${f(л-6)}" y="${f(о.перевёрнут?y-1:y-в-3)}" width="${f(ш+12)}" height="3.4" rx="1" fill="#dcebf5" fill-opacity=".55" stroke="#a8bccb" stroke-width=".6"/>`:''}
+    </g>`;
+  }
+  /* ---------- лучинка: (x,y) — тлеющий конец, угол; вид 'тлеет'|'горит'|'нет' ---------- */
+  function лучинка(x,y,угол,вид){
+    return `<g transform="translate(${f(x)} ${f(y)}) rotate(${f(угол||0)})">
+      <rect x="0" y="-2" width="70" height="4" rx="1.4" fill="#d8b47a"/><path d="M0 -1 H70" stroke="#a8844a" stroke-width=".6"/>
+      <rect x="-3" y="-2.4" width="6" height="4.8" rx="2" fill="${вид==='нет'?'#2a2a2a':'#1a1210'}"/>
+      ${вид==='тлеет'?`<circle cx="-2" cy="0" r="2.6" fill="#ff7a2a"><animate attributeName="opacity" values="1;.5;1" dur="1.2s" repeatCount="indefinite"/></circle><circle cx="-2" cy="0" r="7" fill="url(#рл-огонь)" opacity=".7"/>
+        <path d="M-3 -4 q-3 -6 0 -12 q3 -6 0 -12" stroke="#9aa0a6" stroke-width="1.6" fill="none" opacity=".45"/>`:''}
+      ${вид==='горит'?`<g transform="rotate(${f(-(угол||0))} 0 0)"><path d="M-3 0 Q-12 -14 -4 -30 Q4 -14 3 0 Z" fill="#ffb640">${ДВИЖ?`<animate attributeName="d" values="M-3 0 Q-12 -14 -4 -30 Q4 -14 3 0 Z;M-3 0 Q-10 -15 -2 -33 Q5 -14 3 0 Z;M-3 0 Q-12 -14 -4 -30 Q4 -14 3 0 Z" dur=".6s" repeatCount="indefinite"/>`:''}</path><path d="M-2 0 Q-6 -8 -2 -16 Q2 -8 2 0 Z" fill="#fff4a0"/><circle cx="-3" cy="-12" r="16" fill="url(#рл-огонь)" opacity=".45"/></g>`:''}
+    </g>`;
+  }
+  /* ---------- ложечка для сжигания: (x,y) — чашечка; вещество и вид горения ---------- */
+  function ложечка(x,y,вещ,горит,вКислороде){
+    const пламя = !горит?'' : вещ==='сера' ? `<path d="M-7 -4 Q-9 ${вКислороде?-26:-14} 0 ${вКислороде?-34:-20} Q9 ${вКислороде?-26:-14} 7 -4 Z" fill="${вКислороде?'#5a7aff':'#8a9aff'}" opacity=".85">${ДВИЖ?`<animate attributeName="opacity" values=".85;.6;.85" dur=".5s" repeatCount="indefinite"/>`:''}</path><path d="M-3 -4 Q-4 -12 0 -18 Q4 -12 3 -4 Z" fill="#c8d8ff"/>`
+      : вещ==='уголь' ? `<circle cx="0" cy="-3" r="${вКислороде?9:6}" fill="#ff8a2a" opacity=".9">${ДВИЖ?`<animate attributeName="r" values="${вКислороде?'8;10;8':'5;6;5'}" dur=".7s" repeatCount="indefinite"/>`:''}</circle><circle cx="0" cy="-3" r="${вКислороде?18:10}" fill="url(#рл-огонь)" opacity=".8"/>`
+      : вещ==='железо' ? (вКислороде? `<circle cx="0" cy="0" r="14" fill="url(#рл-вспышка)"/>`+Array.from({length:12},(_,k)=>{ const a=k*0.52, d=14+(k%3)*8; return `<path d="M${f(Math.cos(a)*6)} ${f(Math.sin(a)*6)} L${f(Math.cos(a)*d)} ${f(Math.sin(a)*d)}" stroke="#ffe08a" stroke-width="1.4" stroke-linecap="round">${ДВИЖ?`<animate attributeName="opacity" values="1;0;1" dur="${f(0.3+(k%4)*0.1)}s" repeatCount="indefinite"/>`:''}</path>`; }).join('') : `<circle cx="0" cy="0" r="4" fill="#ff8a2a" opacity=".8"/>`)
+      : '';
+    return `<g transform="translate(${f(x)} ${f(y)})">
+      <path d="M0 0 V-70" stroke="url(#рл-сталь)" stroke-width="2.4"/>
+      ${вещ==='железо'?`<path d="M0 0 q4 6 0 10 q-4 4 0 8 q4 4 0 8" stroke="#6a7078" stroke-width="1.4" fill="none"/>`
+        :`<path d="M-8 -2 Q-8 6 0 6 Q8 6 8 -2 Z" fill="url(#рл-сталь)"/>${вещ==='сера'?`<ellipse cx="0" cy="-2" rx="6" ry="2.4" fill="#f2d22a"/>`:вещ==='уголь'?`<path d="M-5 -2 l3 -4 4 1 3 3 Z" fill="#1a1b1d"/>`:''}`}
+      ${пламя}
+      <rect x="-12" y="-74" width="24" height="4" rx="2" fill="#dcebf5" fill-opacity=".5" stroke="#a8bccb" stroke-width=".6"/>
+    </g>`;
+  }
+  /* ---------- свеча: (x,y) — низ; горит; опц.колпак — стеклянный стакан сверху (гасит) ---------- */
+  function свеча(x,y,м,горит,колпак){
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">${тень(0,0,30,.4)}
+      <rect x="-7" y="-40" width="14" height="40" rx="2" fill="#f4ece0"/><rect x="-7" y="-40" width="5" height="40" fill="#fff" opacity=".5"/>
+      <path d="M-7 -40 Q0 -36 7 -40" stroke="#e8dcc8" stroke-width="2" fill="none"/>
+      <path d="M0 -40 V-46" stroke="#2a2018" stroke-width="1.4"/>
+      ${горит?`<path d="M0 -44 Q-6 -54 0 -68 Q6 -54 0 -44 Z" fill="#ffb640">${ДВИЖ?`<animate attributeName="d" values="M0 -44 Q-6 -54 0 -68 Q6 -54 0 -44 Z;M0 -44 Q-5 -55 1 -70 Q6 -54 0 -44 Z;M0 -44 Q-6 -54 0 -68 Q6 -54 0 -44 Z" dur=".8s" repeatCount="indefinite"/>`:''}</path><path d="M0 -45 Q-2 -50 0 -54 Q2 -50 0 -45 Z" fill="#7ab8ff"/><circle cx="0" cy="-56" r="20" fill="url(#рл-огонь)" opacity=".4"/>`
+        :`<path d="M0 -46 q-3 -8 0 -14 q3 -8 0 -16" stroke="#9aa0a6" stroke-width="1.6" fill="none" opacity=".5"/>`}
+      ${колпак?`<path d="M-22 0 V-86 Q-22 -92 -16 -92 H16 Q22 -92 22 -86 V0" fill="#dcebf5" fill-opacity=".12" stroke="#a8bccb" stroke-opacity=".7" stroke-width="1"/><rect x="-19" y="-88" width="2.4" height="80" fill="#fff" opacity=".5"/>`:''}
+    </g>`;
+  }
+  /* ---------- пробирка с KMnO₄, закреплённая горизонтально: дно слева, горло справа и чуть ниже (угол > 0); вата у горла ---------- */
+  function пробиркаKMnO4(x,y,угол,опц){
+    const о=опц||{};
+    return `<g transform="translate(${f(x)} ${f(y)}) rotate(${f(угол)})">
+      <path d="M88 -8 H8 A8 8 0 0 0 8 8 H88" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-width=".9"/>
+      ${о.вещество!==false?`<path d="M2 3 Q2 7 8 7.4 H34 Q30 2 18 2.6 Z" fill="${о.остаток?'#2e2622':'#4a1a5a'}"/>${Array.from({length:9},(_,k)=>`<rect x="${4+k*3.2}" y="${3+(k%3)*0.8}" width="2" height="2" fill="${о.остаток?'#4a3a30':'#8a3a9a'}" transform="rotate(${k*30} ${5+k*3.2} ${4+(k%3)})"/>`).join('')}`:''}
+      ${о.вата?`<path d="M78 -6 q-3 3 0 6 q-3 3 0 6 h8 v-12 Z" fill="#f4f4f0"/><path d="M80 -5 q2 2 0 4" stroke="#d8d8d0" stroke-width=".8" fill="none"/>`:''}
+      <path d="M10 -5 H86" stroke="#fff" stroke-width="1.2" opacity=".55"/>
+      ${о.пробка?`<rect x="86" y="-7" width="10" height="14" rx="2" fill="#8a3a2a"/>`:''}
+      ${о.пары?`<path d="M40 -2 q8 -4 16 0 q8 4 16 0" stroke="#d0b0e0" stroke-width="2" fill="none" opacity=".5">${ДВИЖ?`<animate attributeName="opacity" values=".1;.5;.1" dur="1.2s" repeatCount="indefinite"/>`:''}</path>`:''}
+    </g>`;
+  }
+  /* ---------- треугольник огня: три стороны — горючее, кислород, температура; включено — объект {г,к,т} ---------- */
+  function треугольникОгня(cx,cy,r,вкл){
+    const p=[[cx,cy-r],[cx+r*0.87,cy+r*0.5],[cx-r*0.87,cy+r*0.5]];
+    const стор=[[0,1,'к','кислород'],[1,2,'т','температура'],[2,0,'г','горючее']];
+    const все=вкл.г&&вкл.к&&вкл.т;
+    return `<g>${стор.map(([a,b,к,имя])=>{ const ок=вкл[к], mx=(p[a][0]+p[b][0])/2, my=(p[a][1]+p[b][1])/2, dx=mx-cx, dy=my-cy, dl=Math.hypot(dx,dy);
+        return `<path d="M${f(p[a][0])} ${f(p[a][1])} L${f(p[b][0])} ${f(p[b][1])}" stroke="${ок?'#ff9a40':'#4a525c'}" stroke-width="7" stroke-linecap="round" ${ок?'':'stroke-dasharray="6 6"'}/>
+          <text x="${f(mx+dx/dl*12)}" y="${f(my+dy/dl*14+4)}" text-anchor="${Math.abs(dx/dl)<0.3?'middle':dx>0?'start':'end'}" font-size="11" font-weight="bold" fill="${ок?'#ffd0a0':'#7a838d'}" font-family="${ШРИФТ}">${имя}</text>`; }).join('')}
+      ${все?`<path d="M${f(cx)} ${f(cy+10)} Q${f(cx-12)} ${f(cy-6)} ${f(cx)} ${f(cy-26)} Q${f(cx+12)} ${f(cy-6)} ${f(cx)} ${f(cy+10)} Z" fill="#ff9a40">${ДВИЖ?`<animate attributeName="d" values="M${f(cx)} ${f(cy+10)} Q${f(cx-12)} ${f(cy-6)} ${f(cx)} ${f(cy-26)} Q${f(cx+12)} ${f(cy-6)} ${f(cx)} ${f(cy+10)} Z;M${f(cx)} ${f(cy+10)} Q${f(cx-10)} ${f(cy-8)} ${f(cx+2)} ${f(cy-30)} Q${f(cx+12)} ${f(cy-6)} ${f(cx)} ${f(cy+10)} Z;M${f(cx)} ${f(cy+10)} Q${f(cx-12)} ${f(cy-6)} ${f(cx)} ${f(cy-26)} Q${f(cx+12)} ${f(cy-6)} ${f(cx)} ${f(cy+10)} Z" dur=".7s" repeatCount="indefinite"/>`:''}</path><path d="M${f(cx)} ${f(cy+8)} Q${f(cx-5)} ${f(cy)} ${f(cx)} ${f(cy-10)} Q${f(cx+5)} ${f(cy)} ${f(cx)} ${f(cy+8)} Z" fill="#fff4a0"/>`
+        :`<path d="M${f(cx)} ${f(cy+6)} q-4 -8 0 -14 q4 -8 0 -16" stroke="#7a838d" stroke-width="2" fill="none"/>`}</g>`;
+  }
+  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок, палочка, склянка, мениск, глаз, диаграмма, выпаривание, пробирка, щипцы, АТОМ, МОЛ, шарКолба, анВесы, анВерх, баллон, насос, кристаллизатор, цилиндрВверхДном, штатив, трубка, пузыри, куб, мячБ, циферблат, газосборник, лучинка, ложечка, свеча, пробиркаKMnO4, треугольникОгня};
 })();
