@@ -503,7 +503,7 @@
       <path d="M${f(cx+r*0.74)} ${f(cy+r*0.7)} L${f(cx+r*1.2)} ${f(cy+r*1.16)}" stroke="#4a5058" stroke-width="${f(r*0.06)}" stroke-linecap="round"/>
       <clipPath id="${кл}"><circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}"/></clipPath>
       <circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="#0e1a24"/>
-      <g clip-path="url(#${кл})">${частицы(вид,cx,cy,r)}<circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="url(#рл-линза)"/></g>
+      <g clip-path="url(#${кл})">${о.внутри!=null?о.внутри:частицы(вид,cx,cy,r)}<circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="url(#рл-линза)"/></g>
       <circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="none" stroke="url(#рл-сталь)" stroke-width="${f(r*0.1)}"/>
       <path d="M${f(cx-r*0.6)} ${f(cy-r*0.5)} A${f(r*0.8)} ${f(r*0.8)} 0 0 1 ${f(cx+r*0.1)} ${f(cy-r*0.78)}" stroke="#fff" stroke-width="${f(r*0.05)}" fill="none" opacity=".5"/>
       ${о.подпись?`<text x="${f(cx)}" y="${f(cy+r+r*0.28)}" text-anchor="middle" font-size="${f(Math.max(7,r*0.16))}" fill="#9fd0ff" font-family="${ШРИФТ}">${esc(о.подпись)}</text>`:''}
