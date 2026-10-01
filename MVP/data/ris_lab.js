@@ -510,6 +510,16 @@
       : что==='стакан'?стакан(32,54,34,38,{уровень:.5,деления:false})
       : что==='пипетка'?пипетка(32,62,0.75,true)
       : что==='лодочка'?лодочка(32,44,40,{горка:0})
+      : что==='насос'?насос(30,60,0.66)
+      : что==='шарКолба'?шарКолба(32,62,0.5,{})
+      : что==='анВесы'?анВесы(32,58,50,{показ:'0.000'})
+      : что==='балH2'?баллон(32,62,0.38,'H2')
+      : что==='балO2'?баллон(32,62,0.38,'O2')
+      : что==='балCO2'?баллон(32,62,0.38,'CO2')
+      : что==='кристаллизатор'?кристаллизатор(32,52,50,26,{})
+      : что==='штатив'?штатив(22,60,52,24,26)
+      : что==='цинк'?банка(32,56,30,42,{содержимое:'железо',надпись:['Zn'],мал:true})
+      : что==='кислота'?склянка(32,58,26,44,{уровень:.5,этикетка:['HCl']})
       : что==='щипцы'?щипцы(46,40,-28,{})
       : что==='пробирка'?пробирка(32,60,0.6,{уровень:.4})
       : что==='колбаЗ'?колба(32,58,0.46,{уровень:.4,цвет:цвет('купорос',.12),пробка:true,пробирка:{цвет:'hsla(0,0%,95%,.5)'}})
@@ -618,5 +628,129 @@
         ${ДВИЖ?[0,1,2].map(k=>`<circle cx="${30+k*6}" cy="-14" r="6" fill="#f6f6f4" opacity="0" filter="url(#рл-мягко)"><animate attributeName="opacity" values="0;.55;0" dur="1.8s" begin="${k*0.6}s" repeatCount="indefinite"/><animate attributeName="cy" values="-14;-60" dur="1.8s" begin="${k*0.6}s" repeatCount="indefinite"/><animate attributeName="r" values="4;14" dur="1.8s" begin="${k*0.6}s" repeatCount="indefinite"/></circle>`).join(''):''}</g>`:''}
     </g>`;
   }
-  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок, палочка, склянка, мениск, глаз, диаграмма, выпаривание, пробирка, щипцы, АТОМ, МОЛ};
+
+  /* ================= ГАЗЫ (урок 42) ================= */
+  /* ---------- стеклянный шар для взвешивания газа, 1 л, с краном: (x,y) — низ подставки; опц.газ — подсветка, опц.открыт ---------- */
+  function шарКолба(x,y,м,опц){
+    const о=опц||{}, кл=ид('шар1'), газ=о.газ;
+    const цг = газ==='H2'?'#9fe0a0':газ==='O2'?'#9fd0ff':газ==='CO2'?'#d8d8d8':газ==='воздух'?'#e8f0f8':null;
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">
+      <ellipse cx="4" cy="1" rx="30" ry="3.4" fill="#000" opacity=".4" filter="url(#рл-мягко)"/>
+      <path d="M-18 0 L-12 -10 H12 L18 0 Z" fill="#2a2f35"/><path d="M-12 -10 H12" stroke="#5a626b" stroke-width="1.2"/>
+      <radialGradient id="${кл}" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="${цг||'#dcebf5'}" stop-opacity="${цг?.45:.1}"/><stop offset="1" stop-color="${цг||'#dcebf5'}" stop-opacity="${цг?.18:.04}"/></radialGradient>
+      <circle cx="0" cy="-46" r="36" fill="url(#${кл})"/>
+      ${цг&&газ!=='воздух'&&ДВИЖ?Array.from({length:10},(_,k)=>`<circle cx="${-20+(k*13)%40}" cy="${-66+(k*17)%40}" r="1.3" fill="${цг}"><animateTransform attributeName="transform" type="translate" values="0 0;${(k%3)*3-3} ${(k%4)*2-3};0 0" dur="${0.7+(k%5)*0.2}s" repeatCount="indefinite"/></circle>`).join(''):''}
+      <circle cx="0" cy="-46" r="36" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".6" stroke-width="1"/>
+      <path d="M-24 -66 A30 30 0 0 1 -6 -78" stroke="#fff" stroke-width="3" fill="none" opacity=".65" stroke-linecap="round"/>
+      <rect x="-5" y="-96" width="10" height="16" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-width=".8"/>
+      <rect x="-12" y="-104" width="24" height="9" rx="3" fill="url(#рл-сталь)"/>
+      <g transform="rotate(${о.открыт?90:0} 0 -100)"><rect x="-2" y="-118" width="4" height="16" rx="2" fill="#2a2f35"/></g>
+      <path d="M-2 -110 H-18 V-114" stroke="#8fa8b8" stroke-width="3" fill="none"/>
+    </g>`;
+  }
+  /* ---------- аналитические весы со стеклянным боксом: (x,y) — середина низа, ш; опц.показ (строка), опц.дверь ---------- */
+  function анВесы(x,y,ш,опц){
+    const о=опц||{}, в=ш*0.9, л=x-ш/2;
+    return `<g>${тень(x,y,ш,.5)}
+      <rect x="${f(л)}" y="${f(y-ш*0.16)}" width="${f(ш)}" height="${f(ш*0.16)}" rx="3" fill="url(#рл-пластик)"/>
+      <rect x="${f(x-ш*0.36)}" y="${f(y-ш*0.13)}" width="${f(ш*0.44)}" height="${f(ш*0.1)}" rx="2" fill="url(#рл-жк)"/>
+      <text x="${f(x+ш*0.06)}" y="${f(y-ш*0.05)}" text-anchor="end" font-size="${f(ш*0.07)}" font-weight="bold" fill="#7dffb0" font-family="'Courier New',monospace" filter="url(#рл-свечение)">${esc(о.показ==null?'0.000':о.показ)}</text>
+      <text x="${f(x+ш*0.09)}" y="${f(y-ш*0.05)}" font-size="${f(ш*0.05)}" fill="#6ad89a" font-family="${ШРИФТ}">г</text>
+      ${[0,1].map(k=>`<ellipse cx="${f(x+ш*0.28+k*ш*0.1)}" cy="${f(y-ш*0.08)}" rx="${f(ш*0.03)}" ry="${f(ш*0.025)}" fill="${k?'#3a8a5a':'#c8c8c4'}"/>`).join('')}
+      <rect x="${f(л+2)}" y="${f(y-ш*0.16-в)}" width="${f(ш-4)}" height="${f(в)}" fill="#dcebf5" fill-opacity=".07" stroke="#a8bccb" stroke-opacity=".7" stroke-width="1.2"/>
+      <rect x="${f(л)}" y="${f(y-ш*0.16-в-6)}" width="${f(ш)}" height="7" rx="2" fill="url(#рл-пластик)"/>
+      <path d="M${f(л+8)} ${f(y-ш*0.16-в+6)} L${f(л+20)} ${f(y-ш*0.2)} M${f(л+ш-12)} ${f(y-ш*0.16-в+10)} L${f(л+ш-6)} ${f(y-ш*0.4)}" stroke="#fff" stroke-width="2" opacity=".35"/>
+      ${о.дверь?`<rect x="${f(л+ш-6)}" y="${f(y-ш*0.16-в)}" width="${f(ш*0.35)}" height="${f(в)}" fill="#dcebf5" fill-opacity=".05" stroke="#a8bccb" stroke-opacity=".5" transform="skewY(-8)"/>`:''}
+      <ellipse cx="${f(x)}" cy="${f(y-ш*0.19)}" rx="${f(ш*0.28)}" ry="${f(ш*0.035)}" fill="url(#рл-чаша)"/>
+    </g>`;
+  }
+  /* верх чаши аналитических весов */
+  const анВерх = (y,ш) => y-ш*0.19;
+  /* ---------- газовый баллон по российской маркировке: газ 'H2' тёмно-зелёный, 'O2' голубой, 'CO2' чёрный, 'N2' чёрный ---------- */
+  function баллон(x,y,м,газ){
+    const Ц={H2:['#1e5a2e','#e03a2a','ВОДОРОД'],O2:['#4a9ad8','#111','КИСЛОРОД'],CO2:['#1a1c1f','#f0c020','УГЛЕКИСЛОТА'],N2:['#1a1c1f','#f0c020','АЗОТ'],He:['#6a4a2a','#fff','ГЕЛИЙ']}[газ]||['#555','#fff',''];
+    const кл=ид('бал');
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">
+      <ellipse cx="4" cy="1" rx="22" ry="3" fill="#000" opacity=".45" filter="url(#рл-мягко)"/>
+      <linearGradient id="${кл}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset=".3" stop-color="#fff" stop-opacity=".25"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></linearGradient>
+      <path d="M-18 0 V-110 Q-18 -126 0 -128 Q18 -126 18 -110 V0 Z" fill="${Ц[0]}"/>
+      <path d="M-18 0 V-110 Q-18 -126 0 -128 Q18 -126 18 -110 V0 Z" fill="url(#${кл})"/>
+      <text x="0" y="-60" text-anchor="middle" font-size="7" font-weight="bold" fill="${Ц[1]}" font-family="${ШРИФТ}" transform="rotate(-90 0 -60)">${Ц[2]}</text>
+      <rect x="-6" y="-138" width="12" height="11" fill="url(#рл-сталь)"/><rect x="-10" y="-146" width="20" height="9" rx="2" fill="url(#рл-латунь)"/>
+      <circle cx="12" cy="-142" r="7" fill="#f4f4f0" stroke="#8a9098" stroke-width="1.4"/><path d="M12 -142 L15 -146" stroke="#c8402a" stroke-width="1.2"/>
+    </g>`;
+  }
+  /* ---------- ручной вакуумный насос ---------- */
+  function насос(x,y,м){
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">${тень(0,0,40,.35)}
+      <rect x="-8" y="-60" width="16" height="56" rx="3" fill="url(#рл-сталь)"/><rect x="-14" y="-4" width="28" height="4" rx="2" fill="#2a2f35"/>
+      <rect x="-2" y="-78" width="4" height="20" fill="#8a9098"/><rect x="-14" y="-82" width="28" height="6" rx="3" fill="#1a1c1f"/>
+      <path d="M8 -20 Q30 -20 34 -40" stroke="#1a1c1f" stroke-width="3" fill="none"/>
+    </g>`;
+  }
+  /* ---------- кристаллизатор с водой: (x,y) — середина низа, ш×в ---------- */
+  function кристаллизатор(x,y,ш,в,опц){
+    const о=опц||{}, л=x-ш/2, ур=y-в*0.72;
+    return `<g>${тень(x,y,ш,.4)}
+      <rect x="${f(л+2)}" y="${f(ур)}" width="${f(ш-4)}" height="${f(y-ур-2)}" rx="3" fill="${цвет('вода')}"/>
+      <rect x="${f(л+2)}" y="${f(ур)}" width="${f(ш-4)}" height="${f(y-ур-2)}" rx="3" fill="url(#рл-глубина)"/>
+      <path d="M${f(л+2)} ${f(ур)} H${f(л+ш-2)}" stroke="#bfe6fa" stroke-width="1.4"/>
+      ${о.внутри||''}
+      <path d="M${f(л)} ${f(y-в)} V${f(y-3)} Q${f(л)} ${f(y)} ${f(л+3)} ${f(y)} H${f(л+ш-3)} Q${f(л+ш)} ${f(y)} ${f(л+ш)} ${f(y-3)} V${f(y-в)}" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".6" stroke-width="1"/>
+      <rect x="${f(л+3)}" y="${f(y-в+4)}" width="2" height="${f(в-8)}" fill="#fff" opacity=".6"/>
+      <ellipse cx="${f(x)}" cy="${f(y-в)}" rx="${f(ш/2)}" ry="3" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7"/>
+    </g>`;
+  }
+  /* ---------- перевёрнутый мерный цилиндр в кристаллизаторе: газ вытесняет воду; (x,yНиз) — край у дна, ш×в, мл газа из объёма ---------- */
+  function цилиндрВверхДном(x,yНиз,ш,в,мл,объём){
+    const V=объём||250, л=x-ш/2, верх=yНиз-в, газВ=(в-8)*Math.min(1,мл/V);
+    let дел=''; for(let v=25; v<V; v+=25){ const yy=верх+4+(в-8)*v/V; дел+=`<path d="M${f(x-ш*0.1)} ${f(yy)} H${f(л+ш-2)}" stroke="#fff" stroke-width="${v%50?0.6:1}" opacity=".85"/>${v%50===0?`<text x="${f(x-ш*0.14)}" y="${f(yy+2)}" text-anchor="end" font-size="5.2" fill="#fff" font-family="${ШРИФТ}">${v}</text>`:''}`; }
+    return `<g>
+      <rect x="${f(л+1.5)}" y="${f(верх+4+газВ)}" width="${f(ш-3)}" height="${f(в-8-газВ)}" fill="${цвет('вода')}"/>
+      ${газВ>0?`<path d="M${f(л+1.5)} ${f(верх+4+газВ)} Q${f(x)} ${f(верх+4+газВ+3)} ${f(л+ш-1.5)} ${f(верх+4+газВ)}" stroke="#bfe6fa" stroke-width="1" fill="none"/>`:''}
+      <rect x="${f(л)}" y="${f(верх)}" width="${f(ш)}" height="${f(в)}" rx="2" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".9"/>
+      <rect x="${f(л+2)}" y="${f(верх+4)}" width="2" height="${f(в-8)}" fill="#fff" opacity=".6"/>${дел}
+    </g>`;
+  }
+  /* ---------- штатив с лапкой ---------- */
+  function штатив(x,y,высота,лапкаY,лапкаДлина){
+    return `<g>${тень(x+20,y,70,.4)}<rect x="${f(x-8)}" y="${f(y-6)}" width="60" height="6" rx="2" fill="#2a2f35"/>
+      <rect x="${f(x-2)}" y="${f(y-высота)}" width="4" height="${f(высота-6)}" fill="url(#рл-сталь)"/>
+      <rect x="${f(x-5)}" y="${f(лапкаY-4)}" width="10" height="8" rx="2" fill="#3a4048"/>
+      <rect x="${f(x)}" y="${f(лапкаY-1.6)}" width="${f(лапкаДлина)}" height="3.2" fill="url(#рл-сталь)"/></g>`;
+  }
+  /* ---------- газоотводная трубка по точкам ---------- */
+  const трубка = (d) => `<path d="${d}" stroke="#8fa8b8" stroke-width="4" fill="none" opacity=".75" stroke-linejoin="round"/><path d="${d}" stroke="#fff" stroke-width="1" fill="none" opacity=".6"/>`;
+  /* ---------- пузырьки, поднимающиеся от (x,y1) к (x,y2) ---------- */
+  const пузыри = (x,y1,y2,n) => ДВИЖ ? Array.from({length:n||6},(_,k)=>`<circle cx="${f(x+(k%3-1)*2)}" cy="${f(y1)}" r="${f(1.4+(k%3)*0.6)}" fill="none" stroke="#fff" stroke-width=".8" opacity=".85"><animate attributeName="cy" values="${f(y1)};${f(y2)}" dur="${f(0.8+(k%4)*0.25)}s" begin="${f(k*0.18)}s" repeatCount="indefinite"/></circle>`).join('') : '';
+  /* ---------- прозрачный куб объёмом 22,4 л с размерной линией ---------- */
+  function куб(x,y,a,газ,подпись){
+    const цг = газ==='H2'?'#9fe0a0':газ==='O2'?'#9fd0ff':газ==='CO2'?'#c8c8c8':газ==='N2'?'#c8b8ff':'#e8f0f8', d=a*0.32;
+    return `<g>${тень(x+a/2,y,a*1.2,.35)}
+      <path d="M${f(x)} ${f(y)} h${f(a)} l${f(d)} ${f(-d)} v${f(-a)} h${f(-a)} l${f(-d)} ${f(d)} Z" fill="${цг}" fill-opacity=".16"/>
+      <path d="M${f(x)} ${f(y-a)} h${f(a)} l${f(d)} ${f(-d)} h${f(-a)} Z" fill="${цг}" fill-opacity=".22" stroke="#cfe2ee" stroke-width="1"/>
+      <path d="M${f(x+a)} ${f(y)} l${f(d)} ${f(-d)} v${f(-a)} l${f(-d)} ${f(d)} Z" fill="${цг}" fill-opacity=".12" stroke="#cfe2ee" stroke-width="1"/>
+      <rect x="${f(x)}" y="${f(y-a)}" width="${f(a)}" height="${f(a)}" fill="${цг}" fill-opacity=".1" stroke="#e8f4fa" stroke-width="1.4"/>
+      <path d="M${f(x)} ${f(y)} l${f(d)} ${f(-d)} v${f(-a)} M${f(x+d)} ${f(y-d)} h${f(a)}" stroke="#cfe2ee" stroke-width=".8" stroke-dasharray="3 2" opacity=".6"/>
+      ${ДВИЖ?Array.from({length:14},(_,k)=>`<circle cx="${f(x+8+(k*29)%(a-12))}" cy="${f(y-8-(k*17)%(a-12))}" r="1.6" fill="${цг}"><animateTransform attributeName="transform" type="translate" values="0 0;${(k%3)*4-4} ${(k%4)*3-4};0 0" dur="${0.8+(k%5)*0.2}s" repeatCount="indefinite"/></circle>`).join(''):''}
+      <path d="M${f(x)} ${f(y+8)} h${f(a)} M${f(x)} ${f(y+4)} v8 M${f(x+a)} ${f(y+4)} v8" stroke="#ffd76a" stroke-width="1.2"/>
+      <text x="${f(x+a/2)}" y="${f(y+20)}" text-anchor="middle" font-size="9" fill="#ffd76a" font-family="${ШРИФТ}">${esc(подпись||'28,2 см')}</text></g>`;
+  }
+  /* ---------- баскетбольный мяч для масштаба ---------- */
+  function мячБ(x,y,r){
+    const кл=ид('мяч');
+    return `<g>${тень(x,y+r,r*2,.4)}<radialGradient id="${кл}" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffb070"/><stop offset=".5" stop-color="#e0702a"/><stop offset="1" stop-color="#8a3a10"/></radialGradient>
+      <circle cx="${f(x)}" cy="${f(y)}" r="${f(r)}" fill="url(#${кл})"/>
+      <path d="M${f(x-r)} ${f(y)} H${f(x+r)} M${f(x)} ${f(y-r)} V${f(y+r)} M${f(x-r*0.7)} ${f(y-r*0.7)} Q${f(x-r*0.2)} ${f(y)} ${f(x-r*0.7)} ${f(y+r*0.7)} M${f(x+r*0.7)} ${f(y-r*0.7)} Q${f(x+r*0.2)} ${f(y)} ${f(x+r*0.7)} ${f(y+r*0.7)}" stroke="#2a1408" stroke-width="1.2" fill="none"/></g>`;
+  }
+  /* ---------- стрелочный прибор (манометр/термометр-циферблат): значение 0..1 по шкале ---------- */
+  function циферблат(x,y,r,доля,подпись,значение){
+    const a=(-135+270*Math.max(0,Math.min(1,доля)))*Math.PI/180;
+    return `<g>${тень(x,y+r,r*2,.3)}<circle cx="${f(x)}" cy="${f(y)}" r="${f(r)}" fill="#f4f4f0" stroke="url(#рл-сталь)" stroke-width="${f(r*0.14)}"/>
+      ${Array.from({length:11},(_,k)=>{ const b=(-135+27*k)*Math.PI/180; return `<path d="M${f(x+Math.sin(b)*r*0.72)} ${f(y-Math.cos(b)*r*0.72)} L${f(x+Math.sin(b)*r*0.86)} ${f(y-Math.cos(b)*r*0.86)}" stroke="#333" stroke-width="${k%5?0.7:1.4}"/>`; }).join('')}
+      <path d="M${f(x)} ${f(y)} L${f(x+Math.sin(a)*r*0.75)} ${f(y-Math.cos(a)*r*0.75)}" stroke="#c8402a" stroke-width="1.6" stroke-linecap="round"/><circle cx="${f(x)}" cy="${f(y)}" r="${f(r*0.08)}" fill="#333"/>
+      <text x="${f(x)}" y="${f(y+r*0.45)}" text-anchor="middle" font-size="${f(r*0.28)}" font-weight="bold" fill="#222" font-family="${ШРИФТ}">${esc(значение)}</text>
+      <text x="${f(x)}" y="${f(y+r+r*0.55)}" text-anchor="middle" font-size="${f(r*0.3)}" fill="#c8ced6" font-family="${ШРИФТ}">${esc(подпись)}</text></g>`;
+  }
+  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок, палочка, склянка, мениск, глаз, диаграмма, выпаривание, пробирка, щипцы, АТОМ, МОЛ, шарКолба, анВесы, анВерх, баллон, насос, кристаллизатор, цилиндрВверхДном, штатив, трубка, пузыри, куб, мячБ, циферблат};
 })();
