@@ -223,6 +223,7 @@
   #lvis .s6.l40n .падежи button.вкл{border-color:${GOLD};background:rgba(255,215,106,.24)}
   #lvis .s6.l40n .падежи button:active{transform:translateY(2px)}
   #lvis .s6.l40n .ask.шесть button{flex:1 1 calc(16% - 8px);text-align:center;font-size:17px;padding:13px 2px;min-width:44px;font-family:Georgia,serif}
+  #lvis .s6.l40n .вкладки button{font-size:13px!important;padding-left:1px!important;padding-right:1px!important;letter-spacing:0!important}
   @media (prefers-reduced-motion: reduce){
     #lvis .s6.l40n [data-anim]{animation:none!important}
     #lvis .s6.l40n .уровни .точка.сейчас{animation:none!important}

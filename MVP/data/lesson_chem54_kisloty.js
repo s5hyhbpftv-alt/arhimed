@@ -236,6 +236,7 @@
   #lvis .s6.l54n .акт span.вод{background:#1f4a6e;color:#bfe6fa}
   #lvis .s6.l54n .акт span.вкл{border-color:#ffd76a;box-shadow:0 0 0 1.5px #ffd76a inset}
   #lvis .s6.l54n .акт-подпись{display:flex;justify-content:space-between;gap:8px;margin-top:6px;font-size:12.5px;color:#9aa3ad}
+  #lvis .s6.l54n .вкладки button{font-size:13px!important;padding-left:1px!important;padding-right:1px!important;letter-spacing:0!important}
   @media (prefers-reduced-motion: reduce){
     #lvis .s6.l54n [data-anim]{animation:none!important}
     #lvis .s6.l54n .уровни .точка.сейчас{animation:none!important}
