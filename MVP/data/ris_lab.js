@@ -452,7 +452,7 @@
   const имяПрибора = (x,y,t0) => `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" font-size="7.5" fill="#c8ced6" opacity=".85" font-family="${ШРИФТ}">${esc(t0)}</text>`;
 
   /* ---------- спиртовка: (x,y) — середина низа, м; горит — пламя ---------- */
-  function спиртовка(x,y,м,горит){
+  function спиртовка(x,y,м,горит,безКолпачка){
     return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">${тень(0,0,40,.4)}
       <path d="M-18 0 Q-22 -16 -12 -24 H12 Q22 -16 18 0 Z" fill="#dcebf5" fill-opacity=".22" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".8"/>
       <path d="M-17 -2 Q-20 -12 -14 -16 H14 Q20 -12 17 -2 Z" fill="hsla(200,40%,80%,.35)"/>
@@ -460,7 +460,7 @@
       <rect x="-5" y="-30" width="10" height="7" rx="1.5" fill="url(#рл-сталь)"/>
       <rect x="-1" y="-36" width="2" height="7" fill="#f4ecd8"/>
       ${горит?`<g><path d="M0 -36 Q-7 -46 0 -62 Q7 -46 0 -36 Z" fill="#ffb640" opacity=".9">${ДВИЖ?`<animate attributeName="d" values="M0 -36 Q-7 -46 0 -62 Q7 -46 0 -36 Z;M0 -36 Q-6 -47 1 -64 Q8 -46 0 -36 Z;M0 -36 Q-7 -46 0 -62 Q7 -46 0 -36 Z" dur=".7s" repeatCount="indefinite"/>`:''}</path><path d="M0 -37 Q-3 -43 0 -50 Q3 -43 0 -37 Z" fill="#7ab8ff" opacity=".8"/><circle cx="0" cy="-48" r="18" fill="url(#рл-огонь)" opacity=".35"/></g>`
-        :`<path d="M-7 -30 Q-7 -44 0 -44 Q7 -44 7 -30 Z" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".8"/>`}
+        :безКолпачка?'':`<path d="M-7 -30 Q-7 -44 0 -44 Q7 -44 7 -30 Z" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".6" stroke-width=".8"/>`}
     </g>`;
   }
   /* ---------- пипетка с каплей ---------- */
@@ -935,5 +935,82 @@
       ${[0,1,2].map(k=>`<path d="M${f(x+18+k*8)} ${f(y-10-k*4)} q6 ${f(10+k*4)} 0 ${f(20+k*8)}" stroke="#ffe08a" stroke-width="${2-k*0.4}" fill="none" opacity=".8"/>`).join('')}
       <text x="${f(x+34)}" y="${f(y-16)}" font-size="13" font-weight="bold" fill="#ffd76a" font-family="${ШРИФТ}">${чистый?'пах!':'гав!'}</text></g>`;
   }
-  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок, палочка, склянка, мениск, глаз, диаграмма, выпаривание, пробирка, щипцы, АТОМ, МОЛ, шарКолба, анВесы, анВерх, баллон, насос, кристаллизатор, цилиндрВверхДном, штатив, трубка, пузыри, куб, мячБ, циферблат, газосборник, лучинка, ложечка, свеча, пробиркаKMnO4, треугольникОгня, плитка, термометр, газировка, штативПробирок, хлопок};
+
+  /* ---------- колпачок спиртовки отдельно: (x,y) — низ ---------- */
+  function колпачок(x,y,м){
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})"><ellipse cx="1" cy="0.5" rx="9" ry="1.6" fill="#000" opacity=".35"/><path d="M-7 0 Q-7 -14 0 -14 Q7 -14 7 0 Z" fill="url(#рл-стекло)" stroke="#8fa8b8" stroke-opacity=".7" stroke-width=".8"/><path d="M-4 -3 Q-4 -10 -1 -11" stroke="#fff" stroke-width="1.2" fill="none" opacity=".7"/></g>`;
+  }
+  /* ---------- спичка: (x,y) — головка; угол; горит ---------- */
+  function спичка(x,y,угол,горит){
+    return `<g transform="translate(${f(x)} ${f(y)}) rotate(${f(угол||0)})">
+      <rect x="0" y="-1.4" width="40" height="2.8" rx="1" fill="#e8c890"/><path d="M2 -0.6 H40" stroke="#c8a060" stroke-width=".6"/>
+      <ellipse cx="0" cy="0" rx="3.6" ry="2.6" fill="${горит?'#3a2a20':'#b8302a'}"/>
+      ${горит?`<g transform="rotate(${f(-(угол||0))} 0 0)"><path d="M-3 0 Q-9 -10 -1 -22 Q5 -10 3 0 Z" fill="#ffb640">${ДВИЖ?`<animate attributeName="d" values="M-3 0 Q-9 -10 -1 -22 Q5 -10 3 0 Z;M-3 0 Q-8 -11 0 -24 Q6 -10 3 0 Z;M-3 0 Q-9 -10 -1 -22 Q5 -10 3 0 Z" dur=".6s" repeatCount="indefinite"/>`:''}</path><path d="M-1.4 -1 Q-3 -6 0 -10 Q2 -6 1.4 -1 Z" fill="#7ab8ff" opacity=".8"/><circle cx="0" cy="-8" r="12" fill="url(#рл-огонь)" opacity=".4"/></g>`:''}
+    </g>`;
+  }
+  /* ---------- коробок спичек: (x,y) — низ середины ---------- */
+  function коробок(x,y,м){
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">${тень(0,0,40,.35)}<rect x="-20" y="-12" width="40" height="12" rx="1.5" fill="#e8dcc0"/><rect x="-20" y="-12" width="40" height="5" fill="#c8402a"/><rect x="-20" y="-3" width="40" height="3" fill="#6a4a3a"/><text x="0" y="-8" text-anchor="middle" font-size="4" font-weight="bold" fill="#fff" font-family="${ШРИФТ}">СПИЧКИ</text></g>`;
+  }
+  /* ---------- держатель для пробирок: (x,y) — зажим; ручка уходит влево-вниз по углу ---------- */
+  function держатель(x,y,угол){
+    return `<g transform="translate(${f(x)} ${f(y)}) rotate(${f(угол||0)})">
+      <rect x="-76" y="-3" width="58" height="6" rx="2" fill="url(#рл-доска)"/><path d="M-74 -1.5 H-20" stroke="#f0d0a0" stroke-width=".8" opacity=".7"/>
+      <path d="M-20 -3 L4 -5 M-20 3 L4 5" stroke="url(#рл-сталь)" stroke-width="2.2" fill="none"/><path d="M-14 -3 Q-10 -9 -6 -4" stroke="#9aa0a8" stroke-width="1.4" fill="none"/>
+      <rect x="2" y="-8" width="4" height="16" rx="1" fill="#9aa0a8"/>
+    </g>`;
+  }
+  /* ---------- водопроводный кран: (x,y) — носик; течёт — струя длиной д ---------- */
+  function кран(x,y,м,течёт,д){
+    const к=м||1, дл=д||70;
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${к})">
+      <rect x="-64" y="-40" width="14" height="40" rx="3" fill="url(#рл-сталь)"/><rect x="-62" y="-44" width="10" height="6" rx="2" fill="#c8ccd0"/>
+      <path d="M-50 -30 H-14 Q0 -30 0 -16 V-4" stroke="url(#рл-сталь)" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <path d="M-50 -33 H-14 Q-2 -33 -2 -20" stroke="#fff" stroke-width="1.6" fill="none" opacity=".6"/>
+      <rect x="-40" y="-46" width="14" height="10" rx="2" fill="#2a6ab8"/><rect x="-46" y="-50" width="26" height="5" rx="2.5" fill="#3a8ae8"/>
+      ${течёт?`<rect x="-3" y="-2" width="6" height="${f(дл/к)}" rx="3" fill="hsla(198,80%,75%,.65)"/><path d="M-1 -2 V${f(дл/к)}" stroke="#fff" stroke-width="1.2" opacity=".7" stroke-dasharray="5 7">${ДВИЖ?`<animate attributeName="stroke-dashoffset" values="24;0" dur=".4s" repeatCount="indefinite"/>`:''}</path>`:''}
+    </g>`;
+  }
+  /* ---------- знак опасности (ромб с красной каймой): (x,y) — центр, р — от центра до вершины;
+     вид 'огонь' | 'едкое' | 'череп' | '!' ---------- */
+  function знак(x,y,р,вид){
+    const к=р/30;
+    const рис = вид==='огонь' ? `<path d="M-11 9 Q-15 -2 -7 -9 Q-7 -3 -3 -2 Q-6 -12 3 -18 Q2 -9 8 -5 Q10 -9 9 -12 Q16 -3 11 9 Z" fill="#111"/><rect x="-13" y="10" width="26" height="3" fill="#111"/>`
+      : вид==='едкое' ? `<g transform="rotate(-35 -8 -14)"><rect x="-12" y="-20" width="8" height="13" rx="1.5" fill="#111"/></g><g transform="rotate(35 8 -14)"><rect x="4" y="-20" width="8" height="13" rx="1.5" fill="#111"/></g>
+          <path d="M-6 -6 v3 M-6 0 v2 M6 -6 v3 M6 0 v2" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <path d="M-17 13 V8 H-9 L-7 6 L-5 8 H-1 V13 Z" fill="#111"/>
+          <path d="M3 13 V7 Q3 5 4.6 5 V1.5 Q5.4 0 6.2 1.5 V5 L7 0.5 Q7.8 -1 8.6 0.5 V5 L9.4 1 Q10.2 -0.5 11 1 V5.5 L11.8 3 Q12.8 2 13.4 3.4 L13 9 Q12 13 9 13 Z" fill="#111"/><path d="M6 5 l1.5 2 l1.5 -2" stroke="#fff" stroke-width=".9" fill="none"/>`
+      : вид==='череп' ? `<path d="M-9 -3 Q-10 -16 0 -16 Q10 -16 9 -3 Q9 2 5 3 V7 H-5 V3 Q-9 2 -9 -3 Z" fill="#111"/><circle cx="-4" cy="-6" r="2.8" fill="#fff"/><circle cx="4" cy="-6" r="2.8" fill="#fff"/><path d="M0 -2 L-1.4 1 H1.4 Z" fill="#fff"/>
+          <path d="M-14 6 L14 16 M-14 16 L14 6" stroke="#111" stroke-width="3" stroke-linecap="round"/>`
+      : `<rect x="-3" y="-17" width="6" height="22" rx="2" fill="#111"/><circle cx="0" cy="11" r="3.4" fill="#111"/>`;
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${f(к)})"><path d="M0 -30 L30 0 L0 30 L-30 0 Z" fill="#fff" stroke="#d81e1e" stroke-width="4.4" stroke-linejoin="round"/>${рис}</g>`;
+  }
+  /* ---------- лаборант в полный рост: (x,y) — ступни; э = {халат, очки, перчатки, волосы:'собраны'|'распущены', шарф} ---------- */
+  function лаборант(x,y,м,э){
+    const о=э||{}, кожа='#f2c8a0', волос='#6a3a1a', свитер='#3a8a8a';
+    const рука=(з)=>`<path d="M${30*з} -124 Q${42*з} -120 ${43*з} -100 L${45*з} -72 H${35*з} L${32*з} -100 Z" fill="${о.халат?'#f4f6f8':свитер}" ${о.халат?'stroke="#c8ccd0" stroke-width=".8"':''}/>`;
+    const кисть=(з)=>о.перчатки ? `<path d="M${40*з-6} -74 h12 v6 Q${40*з+7} -58 ${40*з} -56 Q${40*з-7} -58 ${40*з-6} -68 Z" fill="url(#рл-перчатка)"/><rect x="${40*з-7}" y="-76" width="14" height="4" rx="1.5" fill="#2a5aa8"/>`
+      : `<circle cx="${40*з}" cy="-66" r="6" fill="${кожа}"/>`;
+    return `<g transform="translate(${f(x)} ${f(y)}) scale(${м||1})">
+      <ellipse cx="0" cy="0" rx="34" ry="4" fill="#000" opacity=".35"/>
+      <rect x="-17" y="-62" width="14" height="58" rx="3" fill="#34405a"/><rect x="3" y="-62" width="14" height="58" rx="3" fill="#34405a"/>
+      <ellipse cx="-11" cy="-3" rx="11" ry="4.4" fill="#22252a"/><ellipse cx="11" cy="-3" rx="11" ry="4.4" fill="#22252a"/>
+      <path d="M-26 -128 Q-30 -128 -30 -118 L-28 -58 H28 L30 -118 Q30 -128 26 -128 Z" fill="${свитер}"/>
+      ${о.халат?`<path d="M-31 -126 Q-34 -126 -31 -116 L-35 -32 H35 L31 -116 Q34 -126 31 -126 L9 -131 L0 -100 L-9 -131 Z" fill="#f4f6f8" stroke="#c8ccd0" stroke-width=".9"/>
+        <path d="M-9 -131 L0 -100 L9 -131" fill="${свитер}"/><path d="M-9 -131 L-2 -96 M9 -131 L2 -96" stroke="#c8ccd0" stroke-width="1.2" fill="none"/><path d="M0 -98 V-34" stroke="#d8dce0" stroke-width="1"/>
+        ${[-86,-68,-50].map(yy=>`<circle cx="3" cy="${yy}" r="1.6" fill="#9aa0a8"/>`).join('')}<rect x="12" y="-72" width="13" height="11" rx="1.5" fill="none" stroke="#c8ccd0"/><rect x="-25" y="-108" width="10" height="8" rx="1" fill="none" stroke="#c8ccd0"/><path d="M-22 -110 v-5" stroke="#2a6ab8" stroke-width="1.6"/>`:''}
+      ${рука(-1)}${рука(1)}${кисть(-1)}${кисть(1)}
+      <rect x="-6" y="-138" width="12" height="11" fill="${кожа}"/>
+      ${о.шарф?`<path d="M-15 -137 Q0 -128 15 -137 L15 -127 Q0 -118 -15 -127 Z" fill="#d83a3a"/><path d="M5 -128 L13 -76 L4 -74 L-1 -125 Z" fill="#c82a2a"/>${[0,1,2].map(k=>`<path d="M${5+k*3} -75 v6" stroke="#d83a3a" stroke-width="1.4"/>`).join('')}`:''}
+      ${о.волосы==='собраны'?'':`<path d="M-18 -158 Q-27 -130 -23 -106 H-14 Q-18 -128 -13 -150 Z" fill="${волос}"/><path d="M18 -158 Q27 -130 23 -106 H14 Q18 -128 13 -150 Z" fill="${волос}"/>`}
+      <circle cx="-18" cy="-152" r="4" fill="${кожа}"/><circle cx="18" cy="-152" r="4" fill="${кожа}"/>
+      <circle cx="0" cy="-153" r="18" fill="${кожа}"/>
+      <circle cx="-6" cy="-155" r="1.9" fill="#2a2a2a"/><circle cx="6" cy="-155" r="1.9" fill="#2a2a2a"/>
+      <path d="M-5 -145 Q0 -141 5 -145" stroke="#9a4a3a" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="-11" cy="-148" r="3" fill="#ff9a9a" opacity=".35"/><circle cx="11" cy="-148" r="3" fill="#ff9a9a" opacity=".35"/>
+      <path d="M-19 -154 Q-21 -175 0 -175 Q21 -175 19 -154 Q12 -167 0 -165 Q-12 -167 -19 -154 Z" fill="${волос}"/>
+      ${о.волосы==='собраны'?`<circle cx="0" cy="-178" r="7.5" fill="${волос}"/><rect x="-5" y="-173" width="10" height="3" rx="1.5" fill="#e85a9a"/>`:''}
+      ${о.очки?`<path d="M-19 -157 H-15 M15 -157 H19" stroke="#2a3a4a" stroke-width="2.4"/><rect x="-15" y="-162" width="30" height="11" rx="5" fill="rgba(200,232,250,.45)" stroke="#2a3a4a" stroke-width="1.5"/><path d="M-11 -160 h6" stroke="#fff" stroke-width="1.2" opacity=".8"/>`:''}
+    </g>`;
+  }
+  window.РЛ = {ДВИЖ, defs, виньетка, цвет, кристаллы, комната, отражение, тень, стакан, колба, цилиндр, весы, весыВерх, банка, лодочка, шпатель, очки, струя, рука, часовое, монеты, яйца, пачка, перчатки, ЭЛ, таблица, клетка, молекула, студия, имяПрибора, спиртовка, пипетка, частицы, лупа, значок, палочка, склянка, мениск, глаз, диаграмма, выпаривание, пробирка, щипцы, АТОМ, МОЛ, шарКолба, анВесы, анВерх, баллон, насос, кристаллизатор, цилиндрВверхДном, штатив, трубка, пузыри, куб, мячБ, циферблат, газосборник, лучинка, ложечка, свеча, пробиркаKMnO4, треугольникОгня, плитка, термометр, газировка, штативПробирок, хлопок, колпачок, спичка, коробок, держатель, кран, знак, лаборант};
 })();
